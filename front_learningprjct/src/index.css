@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* Definición de fuentes personalizadas Rondana */
+@font-face {
+    font-family: 'Rondana';
+    src: url('/Corporatives/Typography/Rondana Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rondana';
+    src: url('/Corporatives/Typography/Rondana Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rondana';
+    src: url('/Corporatives/Typography/Rondana Ultra Light.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rondana';
+    src: url('/Corporatives/Typography/Rondana Black.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Aplicar Rondana como fuente principal */
+html,
+body {
+    font-family: 'Rondana', sans-serif;
+}
+
+/* Estilo para scrollbar personalizado */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(161, 219, 135, 0.4);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(161, 219, 135, 0.6);
+}
+
+/* Para Firefox */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(161, 219, 135, 0.4) rgba(255, 255, 255, 0.05);
+}
+
+/* CONFIGURACIÓN MEJORADA PARA GOOGLE TRANSLATE */
+
+/* Ocultar completamente el banner y elementos no deseados */
+.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.goog-te-spinner,
+.goog-te-spinner-pos,
+.goog-te-loading {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Asegurar posicionamiento correcto del body */
+body {
+    top: 0px !important;
+    position: static !important;
+    margin-top: 0 !important;
+}
+
+html {
+    margin-top: 0 !important;
+}
+
+/* Ocultar el elemento de traducción por defecto */
+#google_translate_element_hidden {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* Permitir que solo el combo funcione cuando sea necesario */
+.goog-te-gadget {
+    display: none !important;
+}
+
+.goog-te-combo {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* Cuando Google Translate esté activo, mostrar solo lo necesario */
+.translated-ltr .goog-te-combo,
+.translated-rtl .goog-te-combo {
+    display: block !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Ocultar otros elementos de interfaz */
+.goog-te-menu-frame,
+.goog-te-menu-value,
+.goog-te-menu2,
+.goog-te-menu2-item,
+.goog-te-balloon-frame,
+.goog-te-ftab {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Ocultar iframes */
+iframe.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+/* Ocultar elementos skiptranslate */
+.skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Estilos para elementos traducidos - mejorados */
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Asegurar que las traducciones no afecten el layout */
+.translated-ltr,
+.translated-rtl {
+    position: relative !important;
+    top: 0 !important;
+}
+
+/* Prevenir saltos de layout durante la traducción */
+body.translated-ltr,
+body.translated-rtl {
+    top: 0 !important;
+    position: static !important;
+    margin-top: 0 !important;
+}
+
+/* Mejorar la carga inicial */
+body {
+    transition: opacity 0.3s ease;
+}
+
+body.loading {
+    opacity: 0.9;
+}
+
+/* Asegurar que el contenido no se mueva */
+#root {
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Ocultar scrollbars en breadcrumbs */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari and Opera */
+}

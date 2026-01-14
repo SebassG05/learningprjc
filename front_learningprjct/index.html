@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/Corporatives/Images/Logo/Logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evenor-Tech_DTAS</title>
+
+  <!-- Configuración de idioma -->
+  <meta http-equiv="Content-Language" content="es">
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- Google Translate Element - VISIBLE pero pequeño -->
+  <div id="google_translate_element"
+    style="position: fixed; top: -100px; left: -100px; z-index: -1; opacity: 0; pointer-events: none;"></div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'es',
+        includedLanguages: 'en,es,fr,de,it,pt',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
