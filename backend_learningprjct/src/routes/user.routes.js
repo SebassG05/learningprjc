@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { registerUser } from '../controller/userController.js';
+import { registerUser, loginUser } from '../controller/userController.js';
 
 const router = express.Router();
 
@@ -18,6 +18,16 @@ router.post(
     })
   ],
   registerUser
+);
+
+// Iniciar sesión
+router.post(
+  '/login',
+  [
+    body('email').isEmail().withMessage('Email inválido'),
+    body('password').notEmpty().withMessage('La contraseña es obligatoria')
+  ],
+  loginUser
 );
 
 export default router;

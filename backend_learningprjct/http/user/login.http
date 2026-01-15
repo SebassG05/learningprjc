@@ -1,0 +1,15 @@
+### Variables
+@baseURL = http://localhost:3007/api
+
+###############################################
+# 2. INICIAR SESIÓN USUARIO
+###############################################
+
+### Login usuario
+POST {{baseURL}}/users/login
+Content-Type: application/json
+
+{
+  "email": "sebastiangandiagutierrez@gmail.com",
+  "password": "Sebas2019"
+}
