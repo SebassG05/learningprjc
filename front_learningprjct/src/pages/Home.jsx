@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Container from '../components/ui/Container';
 import { 
   TrendingUp, Building2, Clock, ArrowRight, Sparkles, 
-  Award, FileText, Euro
+  Award, FileText, Euro, Video, ListChecks
 } from 'lucide-react';
 
 const HeroSection = () => {
@@ -58,7 +58,7 @@ const HeroSection = () => {
           className="text-center mb-8"
         >
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-[#a1db87] to-white bg-clip-text text-transparent mb-3">
-            CAMPUS
+            <span className="font-[Rondana]">CAMPUS</span>
           </h1>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -123,35 +123,41 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="text-2xl sm:text-3xl font-bold text-white mb-3"
+                  className="font-[Rondana] text-2xl sm:text-3xl font-bold text-white mb-3"
                 >
-                  Qué puedes esperar
+                  ¿Qué puedes esperar de los cursos?
                 </motion.h2>
               </div>
 
           
 
-              {/* Footer con información adicional */}
+              {/* Tarjetas de características del curso */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
-                className="mt-8 pt-6 border-t border-[#333333] text-center"
+                className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
               >
-                <div className="flex items-center justify-center space-x-6 text-sm text-gray-400">
-                  <div className="flex items-center space-x-2">
-                    <TrendingUp className="w-4 h-4 text-[#a1db87]" />
-                    <span>Conexion directa con el equipo</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4 text-[#a1db87]" />
-                    <span>Acceso 24/7</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Sparkles className="w-4 h-4 text-[#a1db87]" />
-                    <span>Datos verificados</span>
-                  </div>
-                </div>
+                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
+                  <Clock className="w-8 h-8 text-[#a1db87] mb-2" />
+                  <h3 className="font-bold text-lg text-white mb-1">Acceso 24/7 durante 7 semanas</h3>
+                  <p className="text-gray-400 text-sm">(11 marzo - 29 abril 2026)</p>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
+                  <Video className="w-8 h-8 text-[#a1db87] mb-2" />
+                  <h3 className="font-bold text-lg text-white mb-1">Vídeos, lecturas y material técnico</h3>
+                  <p className="text-gray-400 text-sm">Todo descargable y disponible online</p>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
+                  <ListChecks className="w-8 h-8 text-[#a1db87] mb-2" />
+                  <h3 className="font-bold text-lg text-white mb-1">Ejercicios prácticos + tests</h3>
+                  <p className="text-gray-400 text-sm">Autoevaluación por módulo y guía paso a paso</p>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
+                  <Award className="w-8 h-8 text-[#a1db87] mb-2" />
+                  <h3 className="font-bold text-lg text-white mb-1">Certificado profesional autorizado</h3>
+                  <p className="text-gray-400 text-sm">Evaluación final y diploma Evenor-Tech</p>
+                </motion.div>
               </motion.div>
             </motion.div>
 
