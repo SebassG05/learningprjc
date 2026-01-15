@@ -240,4 +240,139 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+
+// FAQ Section Component con animaciones y diseño profesional
+import { ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion as m } from 'framer-motion';
+
+const FAQSection = () => {
+  const faqs = [
+    {
+      question: '¿Cómo me registro en la plataforma?',
+      answer: 'Haz clic en “Regístrate” en la parte superior derecha, completa el formulario y confirma tu correo electrónico para activar tu cuenta.'
+    },
+    {
+      question: '¿Puedo acceder a los cursos desde cualquier dispositivo?',
+      answer: 'Sí, puedes acceder desde ordenador, tablet o móvil, solo necesitas conexión a internet.'
+    },
+    {
+      question: '¿Cuánto tiempo tengo para completar un curso?',
+      answer: 'Tienes acceso 24/7 durante el periodo indicado en la descripción del curso, normalmente 7 semanas.'
+    },
+    {
+      question: '¿Recibo un certificado al finalizar?',
+      answer: 'Sí, al superar todos los módulos y tests recibirás un diploma profesional de Evenor-Tech.'
+    },
+    {
+      question: '¿Qué hago si tengo problemas técnicos?',
+      answer: 'Puedes contactar con soporte desde la sección de ayuda o escribiendo a soporte@evenor-tech.com.'
+    },
+  ];
+  const [openIdx, setOpenIdx] = useState(null);
+  return (
+    <section className="relative pt-0 pb-8 sm:pt-0 sm:pb-10 bg-transparent">
+      <div className="max-w-6xl mx-auto px-2">
+        <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-12 underline underline-offset-8 decoration-[#a1db87]">Preguntas frecuentes</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+          {/* FAQ a la izquierda */}
+          <ul className="space-y-6 md:pr-4">
+            {faqs.map((faq, idx) => (
+              <li key={idx} className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl overflow-hidden transition-all duration-300">
+                <button
+                  className={`w-full flex justify-between items-center px-7 py-6 text-left focus:outline-none group transition-colors duration-300 ${openIdx === idx ? 'bg-[#23272f]/80 border-l-4 border-[#a1db87]' : ''}`}
+                  onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
+                  aria-expanded={openIdx === idx}
+                  aria-controls={`faq-answer-${idx}`}
+                >
+                  <span className="text-lg font-semibold text-white group-hover:text-[#a1db87] transition-colors flex-1">
+                    {faq.question}
+                  </span>
+                  <m.span
+                    animate={{ rotate: openIdx === idx ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="ml-4"
+                  >
+                    <ChevronDown className="w-7 h-7 text-[#a1db87]" />
+                  </m.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {openIdx === idx && (
+                    <m.div
+                      key="content"
+                      id={`faq-answer-${idx}`}
+                      initial={{ height: 0 }}
+                      animate={{ height: 'auto' }}
+                      exit={{ height: 0 }}
+                      transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ overflow: 'hidden' }}
+                      className="px-7 pb-6 text-gray-300 text-base origin-top"
+                      layout
+                    >
+                      <m.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.28, ease: 'easeOut' }}
+                      >
+                        {faq.answer}
+                      </m.div>
+                    </m.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            ))}
+          </ul>
+          {/* CTA y recursos útiles a la derecha */}
+          <div className="w-full flex flex-col items-center justify-start">
+            <m.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+              className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#23272f] to-[#1a1a1a] border border-[#a1db87]/30 rounded-2xl shadow-xl p-10 min-h-[340px]"
+            >
+              <div className="flex flex-col items-center mb-6">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#a1db87" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="mb-2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span className="text-xl font-bold text-white mb-1">¿No encuentras tu respuesta?</span>
+                <span className="text-[#a1db87] text-base">Estamos aquí para ayudarte</span>
+              </div>
+              <a
+                href="mailto:soporte@evenor-tech.com"
+                className="mt-4 inline-block px-7 py-3 rounded-lg bg-[#a1db87] text-[#1a1a1a] font-bold text-lg shadow-md hover:bg-emerald-400 transition-colors duration-200"
+              >
+                Contáctanos
+              </a>
+            </m.div>
+            {/* Recursos útiles */}
+            <m.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+              className="w-full mt-8 flex flex-col items-center justify-center bg-[#23272f] border border-[#a1db87]/20 rounded-2xl shadow-lg p-7"
+            >
+              <span className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                <svg width="22" height="22" fill="none" stroke="#a1db87" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M8 16h8M8 8h8"/></svg>
+                Recursos útiles
+              </span>
+              <ul className="space-y-2 w-full">
+                <li>
+                  <a href="#" className="block px-4 py-2 rounded-md text-[#a1db87] font-semibold bg-[#1a1a1a] hover:bg-[#a1db87] hover:text-[#1a1a1a] transition-colors duration-200 text-center">Guía de usuario</a>
+                </li>
+              </ul>
+            </m.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Home = () => (
+  <>
+    <HeroSection />
+    <FAQSection />
+  </>
+);
+
+export default Home;
