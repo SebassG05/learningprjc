@@ -1,3 +1,6 @@
+// Carrusel de reseñas de estudiantes
+import { Star } from 'lucide-react';
+import { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Container from '../components/ui/Container';
@@ -19,32 +22,6 @@ const HeroSection = () => {
     checkDevice();
     window.addEventListener('resize', checkDevice);
     return () => window.removeEventListener('resize', checkDevice);
-  }, []);
-
-  // Cargar estadísticas al montar el componente
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await getLicitacionesStats();
-        if (response.success) {
-          setStats(response.data);
-        }
-      } catch (error) {
-        console.error('Error obteniendo estadísticas:', error);
-        // Usar datos por defecto en caso de error
-        setStats({
-          total: 15000,
-          breakdown: {
-            bancoMundial: 2500,
-            comisionEuropea: 8100,
-            nacionesUnidas: 1800,
-            contratacionEstadoEspana: 2600
-          }
-        });
-      }
-    };
-
-    fetchStats();
   }, []);
 
   return (
@@ -368,11 +345,185 @@ const FAQSection = () => {
   );
 };
 
-const Home = () => (
-  <>
-    <HeroSection />
-    <FAQSection />
-  </>
-);
+const reviewsMock = [
+  {
+    name: 'María López',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    rating: 5,
+    text: 'El campus superó mis expectativas. Los contenidos son claros y el soporte es excelente. ¡Repetiría sin dudarlo!'
+  },
+  {
+    name: 'Carlos García',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+    rating: 4,
+    text: 'Muy buena experiencia, los tests ayudan mucho a afianzar los conocimientos. Recomiendo el curso a todos.'
+  },
+  {
+    name: 'Lucía Fernández',
+    avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
+    rating: 5,
+    text: 'Me encantó la flexibilidad y la calidad del material. El certificado me ayudó a mejorar mi CV.'
+  },
+  {
+    name: 'Javier Ruiz',
+    avatar: 'https://randomuser.me/api/portraits/men/41.jpg',
+    rating: 5,
+    text: 'Plataforma intuitiva y profesores muy atentos. Aprendí mucho más de lo que esperaba.'
+  },
+  {
+    name: 'Ana Torres',
+    avatar: 'https://randomuser.me/api/portraits/women/22.jpg',
+    rating: 4,
+    text: 'El contenido es actual y práctico. Me gustó poder avanzar a mi ritmo y repetir los módulos.'
+  },
+  {
+    name: 'Pedro Sánchez',
+    avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
+    rating: 5,
+    text: 'Excelente atención y material descargable. Lo recomiendo para quienes buscan formación profesional.'
+  },
+];
+
+const ReviewsCarousel = () => {
+  const carouselRef = useRef(null);
+  const [modalReview, setModalReview] = useState(null);
+  const reviews = [...reviewsMock, ...reviewsMock];
+  const truncate = (str, n) => (str.length > n ? str.slice(0, n) + '…' : str);
+  return (
+    <section className="relative py-16 bg-transparent">
+      <Container>
+        <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-12 underline underline-offset-8 decoration-[#a1db87]">
+          ¿Qué opinan nuestros estudiantes?
+        </h2>
+        <div className="overflow-x-hidden">
+          <div
+            ref={carouselRef}
+            className="flex gap-10 animate-carousel whitespace-nowrap"
+            style={{ willChange: 'transform' }}
+          >
+            {reviews.map((review, idx) => {
+              const maxLen = 110;
+              const isLong = review.text.length > maxLen;
+              return (
+                <div
+                  key={idx}
+                  className="min-w-[400px] max-w-md bg-[#23272f] border border-[#a1db87]/20 rounded-2xl shadow-lg px-10 py-8 flex flex-col items-center text-center relative"
+                >
+                  <img
+                    src={review.avatar}
+                    alt={review.name}
+                    className="w-20 h-20 rounded-full border-2 border-[#a1db87] mb-4 object-cover"
+                    loading="lazy"
+                  />
+                  <div className="flex items-center justify-center mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className={`w-6 h-6 ${i < review.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i < review.rating ? '#a1db87' : 'none'} />
+                    ))}
+                  </div>
+                  <div className="w-full flex flex-col items-center">
+                    <p className="text-gray-200 text-lg mb-2 w-full line-clamp-3 break-words">“{review.text}”</p>
+                    {isLong && (
+                      <button
+                        className="text-[#a1db87] underline text-sm hover:text-emerald-400 transition-colors mb-2"
+                        onClick={() => setModalReview(review)}
+                      >
+                        Ver reseña completa
+                      </button>
+                    )}
+                  </div>
+                  <span className="font-bold text-[#a1db87] text-xl">{review.name}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        {/* Modal para reseña completa */}
+        {modalReview && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+            <div className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 max-w-lg w-full relative animate-fadeIn">
+              <button
+                className="absolute top-3 right-3 text-[#a1db87] text-2xl font-bold hover:text-emerald-400 transition-colors"
+                onClick={() => setModalReview(null)}
+                aria-label="Cerrar"
+              >
+                ×
+              </button>
+              <img
+                src={modalReview.avatar}
+                alt={modalReview.name}
+                className="w-20 h-20 rounded-full border-2 border-[#a1db87] mb-4 object-cover mx-auto"
+                loading="lazy"
+              />
+              <div className="flex items-center justify-center mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className={`w-6 h-6 ${i < modalReview.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i < modalReview.rating ? '#a1db87' : 'none'} />
+                ))}
+              </div>
+              <p className="text-gray-200 text-lg mb-4 text-center">“{modalReview.text}”</p>
+              <span className="font-bold text-[#a1db87] text-xl block text-center">{modalReview.name}</span>
+            </div>
+            <style>{`
+              .animate-fadeIn { animation: fadeIn .3s cubic-bezier(.4,0,.2,1); }
+              @keyframes fadeIn { from { opacity: 0; transform: scale(.96);} to { opacity: 1; transform: scale(1);} }
+            `}</style>
+          </div>
+        )}
+        {/* Clamp multiline utility for tailwind (if not presente in tu config, add @tailwindcss/line-clamp to tailwind.config.js) */}
+        <style>{`
+          .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        `}</style>
+      </Container>
+      {/* Animación CSS para el carrusel */}
+      <style>{`
+        @keyframes carousel {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-carousel {
+          animation: carousel 40s linear infinite;
+        }
+      `}</style>
+    </section>
+  );
+};
+
+
+const Home = () => {
+  return (
+    <>
+      <HeroSection />
+      <FAQSection />
+      <ReviewsCarousel />
+      {/* Sección CTA inspirada en la imagen */}
+      <section className="relative flex items-center justify-center py-16 sm:py-20">
+        <Container>
+          <div className="relative bg-[#23272f] border border-[#a1db87] rounded-2xl shadow-2xl px-6 sm:px-16 py-12 sm:py-16 flex flex-col items-center text-center overflow-hidden">
+            {/* Borde decorativo */}
+            <div className="absolute inset-0 rounded-2xl border border-[#a1db87]/40 pointer-events-none" aria-hidden="true"></div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 leading-tight">
+              ¿Listo para encontrar tu próxima <span className="text-[#a1db87]">oportunidad</span>?
+            </h2>
+            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">Únete a miles de empresas que ya están aprovechando nuestras herramientas</p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <span className="flex items-center gap-2 bg-black/70 border border-[#a1db87]/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-[#a1db87]">✔</span> Registro gratuito</span>
+              <span className="flex items-center gap-2 bg-black/70 border border-[#a1db87]/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-[#a1db87]">✔</span> Acceso inmediato</span>
+              <span className="flex items-center gap-2 bg-black/70 border border-[#a1db87]/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-[#a1db87]">✔</span> Sin compromiso</span>
+            </div>
+            <button className="bg-[#a1db87] hover:bg-emerald-400 text-black font-bold text-lg rounded-xl px-10 py-4 shadow-lg transition-colors flex items-center gap-2 mb-2">
+              Comenzar ahora <ArrowRight className="w-5 h-5" />
+            </button>
+            <span className="text-xs text-gray-400 mt-2">No se requiere tarjeta de crédito</span>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
+};
 
 export default Home;
