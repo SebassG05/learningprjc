@@ -1,0 +1,19 @@
+### Variables
+@baseURL = http://localhost:3007/api
+@userId = 68f9d50df4443c9e70beaa5d
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGM1YzQ1OWRiYWE2OWI1NjA5ZDBjNiIsImlhdCI6MTc2MjQxNzgxNCwiZXhwIjoxNzYzMDIyNjE0fQ.M9bGtAZAyRgngsCxM-ZCpM_Cp5Py7UTaFII8SuozV6A
+
+###############################################
+# 1. REGISTRAR NUEVO USUARIO
+###############################################
+
+### Registrar usuario - Administración
+POST {{baseURL}}/users/register
+Content-Type: application/json
+
+{
+  "name": "Sebas",
+  "email": "sebastiangandiagutierrez@gmail.com",
+  "password": "Sebas2019",
+  "confirmPassword": "Sebas2019"
+}
