@@ -171,6 +171,71 @@ const HeroSection = () => {
           </div>
         </div>
       </Container>
+      {/* Proceso de inscripción - vertical stepper */}
+      <section className="relative py-24 sm:py-32 flex items-center justify-center bg-transparent">
+        <Container>
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="flex flex-col items-center justify-center w-full"
+          >
+            <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-16 underline underline-offset-8 decoration-[#a1db87]">
+              ¿Cómo funciona el proceso?
+            </h2>
+            <ol className="relative mx-auto min-h-[520px] max-w-4xl w-full">
+              {[{
+                icon: <ArrowRight className='w-6 h-6 text-[#a1db87]' />,
+                title: 'Inicia sesión o regístrate',
+                desc: 'Crea tu cuenta o accede con tus credenciales para comenzar tu formación.'
+              }, {
+                icon: <FileText className='w-6 h-6 text-[#a1db87]' />,
+                title: 'Aplica al curso de tu interés',
+                desc: 'Explora el catálogo, selecciona el curso y completa tu inscripción en pocos pasos.'
+              }, {
+                icon: <ListChecks className='w-6 h-6 text-[#a1db87]' />,
+                title: 'Supera los temarios y tests',
+                desc: 'Avanza a tu ritmo, estudia los módulos y aprueba los tests de autoevaluación.'
+              }, {
+                icon: <Award className='w-6 h-6 text-[#a1db87]' />,
+                title: 'Obtén tu certificado',
+                desc: 'Recibe tu diploma profesional al finalizar y aprobar el curso, listo para tu CV.'
+              }].map((step, idx) => (
+                <motion.li
+                  key={idx}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.3 + idx * 0.4 }}
+                  className={`relative flex w-full min-h-[140px] ${idx !== 3 ? 'mb-12' : ''}`}
+                >
+                  {/* Timeline vertical line */}
+                  <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full flex flex-col items-center z-0">
+                    <div className={`w-1 h-full bg-[#a1db87]/60 ${idx === 0 ? 'rounded-t-full' : ''} ${idx === 3 ? 'rounded-b-full' : ''}`}></div>
+                  </div>
+                  {/* Icon */}
+                  <span className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-14 h-14 bg-[#23272f] border-4 border-[#a1db87] rounded-full shadow-lg z-10">
+                    {step.icon}
+                  </span>
+                  {/* Text block, alternate left/right, not centered */}
+                  {idx % 2 === 0 ? (
+                    <div className="w-1/2 flex flex-col justify-center items-end pr-16 text-right ml-0 mr-auto" style={{minHeight:'140px'}}>
+                      <h3 className="font-bold text-xl text-white mb-2 mt-1"><span className="text-[#a1db87] mr-2">{idx+1}.</span>{step.title}</h3>
+                      <p className="text-gray-300 text-base max-w-md">{step.desc}</p>
+                    </div>
+                  ) : (
+                    <div className="w-1/2 flex flex-col justify-center items-start pl-16 text-left ml-auto mr-0" style={{minHeight:'140px'}}>
+                      <h3 className="font-bold text-xl text-white mb-2 mt-1"><span className="text-[#a1db87] mr-2">{idx+1}.</span>{step.title}</h3>
+                      <p className="text-gray-300 text-base max-w-md">{step.desc}</p>
+                    </div>
+                  )}
+                </motion.li>
+              ))}
+            </ol>
+          </motion.div>
+        </Container>
+      </section>
     </section>
   );
 };
