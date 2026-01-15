@@ -58,7 +58,7 @@ const HeroSection = () => {
           className="text-center mb-8"
         >
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-[#a1db87] to-white bg-clip-text text-transparent mb-3">
-            Evenor-Tech _ CAMPUS
+            CAMPUS
           </h1>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -125,7 +125,7 @@ const HeroSection = () => {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="text-2xl sm:text-3xl font-bold text-white mb-3"
                 >
-                  Qué puedes esperar del Campus
+                  Qué puedes esperar
                 </motion.h2>
               </div>
 
