@@ -8,6 +8,7 @@ import {
   TrendingUp, Building2, Clock, ArrowRight, Sparkles, 
   Award, FileText, Euro, Video, ListChecks
 } from 'lucide-react';
+import Footer from '../components/layout/Footer';
 
 const HeroSection = () => {
     const [showBoxes, setShowBoxes] = useState(true);
