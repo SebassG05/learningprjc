@@ -1,0 +1,16 @@
+### Variables
+@baseURL = http://localhost:3007/api
+
+### Crear reseña (requiere login)
+POST {{baseURL}}/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NjhmMGMyYzM2Yzg0MTBmMDZkZTEyNyIsImVtYWlsIjoic2ViYXN0aWFuZ2FuZGlhZ3V0aWVycmV6QGdtYWlsLmNvbSIsImlhdCI6MTc2ODU2OTM5OSwiZXhwIjoxNzY5MTc0MTk5fQ.nka7fev3fv0ID1JDobkcn330JmzNN1HzSsN5R1y9M8U
+
+{
+  "rating": 5,
+  "description": "¡Excelente experiencia en la web!"
+}
+
+### Listar reseñas
+GET {{baseURL}}/reviews
+Content-Type: application/json
