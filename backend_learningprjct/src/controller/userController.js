@@ -52,3 +52,11 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
   }
 };
+
+export const logoutUser = async (req, res) => {
+  // El logout en JWT se realiza eliminando el token en el frontend.
+  // Para mantener la misma estructura que login, respondemos con un mensaje y el usuario (si lo deseas, puedes enviar el usuario desde el token).
+  res.json({
+    message: 'Sesión cerrada correctamente'
+  });
+};

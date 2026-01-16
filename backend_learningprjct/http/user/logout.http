@@ -1,0 +1,11 @@
+### Variables
+@baseURL = http://localhost:3007/api
+
+### Prueba de logout de usuario
+
+POST {{baseURL}}/users/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NjhmMGMyYzM2Yzg0MTBmMDZkZTEyNyIsImVtYWlsIjoic2ViYXN0aWFuZ2FuZGlhZ3V0aWVycmV6QGdtYWlsLmNvbSIsImlhdCI6MTc2ODU2ODkyOCwiZXhwIjoxNzY5MTczNzI4fQ.IxMcnk7VdPLCOxtQdq5Gf-9zpWKtD3RjIwLNuLU_jX8
+
+{
+}

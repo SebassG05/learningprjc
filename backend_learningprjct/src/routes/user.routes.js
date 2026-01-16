@@ -1,6 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { registerUser, loginUser } from '../controller/userController.js';
+import { registerUser, loginUser, logoutUser } from '../controller/userController.js';
+import { authenticateJWT } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -29,5 +30,8 @@ router.post(
   ],
   loginUser
 );
+
+// Cerrar sesión
+router.post('/logout', authenticateJWT, logoutUser);
 
 export default router;
