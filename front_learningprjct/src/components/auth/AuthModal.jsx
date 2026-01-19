@@ -1,9 +1,13 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
+import { useToast } from '../../context/ToastContext.jsx';
+import { useUser } from '../../context/UserContext.jsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const AuthModal = ({ open, onClose }) => {
   const navigate = useNavigate();
+  const { login: setUserLogin } = useUser();
+  const { showToast } = useToast();
   const [tab, setTab] = useState('login');
   // Registro
   const [registerData, setRegisterData] = useState({ email: '', password: '', confirmPassword: '', name: '' });
@@ -32,6 +36,17 @@ const AuthModal = ({ open, onClose }) => {
       });
     }
   }, [tab]);
+
+
+  // Limpiar mensajes al abrir modal
+  React.useEffect(() => {
+    if (open) {
+      setLoginError('');
+      setLoginSuccess('');
+      setRegisterError('');
+      setRegisterSuccess('');
+    }
+  }, [open]);
 
   if (!open) return null;
 
@@ -111,14 +126,15 @@ const AuthModal = ({ open, onClose }) => {
                       if (!res.ok) {
                         setLoginError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al iniciar sesión');
                       } else {
-                        localStorage.setItem('token', data.token);
-                        setLoginSuccess('¡Bienvenido! Redirigiendo...');
+                        setUserLogin(data.user, data.token);
+                        setLoginSuccess('');
+                        showToast('¡Bienvenido! Has iniciado sesión correctamente.', 'info');
                         setTimeout(() => {
                           onClose && onClose();
                           setTimeout(() => {
                             navigate('/', { replace: true });
                           }, 400);
-                        }, 1200);
+                        }, 700);
                       }
                     } catch (err) {
                       setLoginError('Error de red');
@@ -149,7 +165,6 @@ const AuthModal = ({ open, onClose }) => {
                     {loginLoading ? 'Accediendo...' : 'Acceder'}
                   </button>
                   {loginError && <div className="text-red-400 font-semibold text-center mt-2">{loginError}</div>}
-                  {loginSuccess && <div className="text-green-400 font-semibold text-center mt-2">{loginSuccess}</div>}
                   <div className="text-sm mt-2 text-right">
                     <a href="#" className="text-green-300 hover:underline">¿Has olvidado tu contraseña?</a>
                   </div>
@@ -183,14 +198,15 @@ const AuthModal = ({ open, onClose }) => {
                       if (!res.ok) {
                         setRegisterError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al registrar');
                       } else {
-                        setRegisterSuccess('¡Registro exitoso! Redirigiendo...');
+                        setUserLogin(data.user, data.token);
+                        setRegisterSuccess('');
+                        showToast('¡Registro exitoso! Ya puedes disfrutar del campus.', 'success');
                         setTimeout(() => {
-                          // Animación de salida
                           onClose && onClose();
                           setTimeout(() => {
                             navigate('/', { replace: true });
-                          }, 400); // Espera a que termine la animación
-                        }, 1200);
+                          }, 400);
+                        }, 700);
                         setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
                       }
                     } catch (err) {
@@ -253,7 +269,6 @@ const AuthModal = ({ open, onClose }) => {
                     {registerLoading ? 'Registrando...' : 'Registrarse'}
                   </button>
                   {registerError && <div className="text-red-400 font-semibold text-center mt-2">{registerError}</div>}
-                  {registerSuccess && <div className="text-green-400 font-semibold text-center mt-2">{registerSuccess}</div>}
                 </motion.form>
               )}
             </AnimatePresence>

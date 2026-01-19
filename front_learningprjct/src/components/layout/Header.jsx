@@ -1,6 +1,10 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AuthModal from '../auth/AuthModal';
+import { useUser } from '../../context/UserContext.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '../../context/ToastContext.jsx';
 import MobileMenu from './MobileMenu';
 const navLinks = [
   { to: '/', label: 'Inicio' },
@@ -12,6 +16,23 @@ const navLinks = [
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+
+  // Cerrar menú usuario al hacer click fuera
+  useEffect(() => {
+    if (!userMenuOpen) return;
+    function handleClick(e) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [userMenuOpen]);
   const menuItems = [
     { name: 'Inicio', path: '/' },
     { name: 'Cursos', path: '/cursos' },
@@ -48,13 +69,71 @@ const Header = () => {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <button
-              className="cursor-pointer relative px-5 py-2 rounded-md font-semibold bg-gradient-to-r from-green-400 to-green-700 text-white shadow-md overflow-hidden group transition-all duration-300 hover:from-green-700 hover:to-green-400 hover:shadow-xl"
-              onClick={() => setAuthOpen(true)}
-            >
-              <span className="relative z-10">Acceder</span>
-              <span className="absolute left-0 top-0 w-0 h-full bg-white/10 group-hover:w-full transition-all duration-500"></span>
-            </button>
+            {!user ? (
+              <button
+                className="cursor-pointer relative px-5 py-2 rounded-md font-semibold bg-gradient-to-r from-green-400 to-green-700 text-white shadow-md overflow-hidden group transition-all duration-300 hover:from-green-700 hover:to-green-400 hover:shadow-xl"
+                onClick={() => setAuthOpen(true)}
+              >
+                <span className="relative z-10">Acceder</span>
+                <span className="absolute left-0 top-0 w-0 h-full bg-white/10 group-hover:w-full transition-all duration-500"></span>
+              </button>
+            ) : (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-400 to-green-700 text-white font-semibold shadow-md hover:from-green-700 hover:to-green-400 transition-all duration-300 focus:outline-none border-2 border-green-400 ${userMenuOpen ? 'ring-2 ring-green-300' : ''}`}
+                  onClick={() => setUserMenuOpen((v) => !v)}
+                  aria-haspopup="true"
+                  aria-expanded={userMenuOpen}
+                >
+                  <span className="w-9 h-9 rounded-full bg-green-200 flex items-center justify-center text-green-900 font-bold text-lg border-2 border-green-400">
+                    {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                  </span>
+                  <span className="hidden md:inline font-bold text-green-100 text-base">{user.name || user.email}</span>
+                  <svg className={`w-4 h-4 ml-1 text-green-100 transition-transform duration-200 ${userMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <AnimatePresence>
+                  {userMenuOpen && (
+                    <motion.div
+                      key="user-menu"
+                      initial={{ opacity: 0, y: -16, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                      transition={{ duration: 0.22, ease: 'easeInOut' }}
+                      className="absolute right-[-40px] mt-3 w-80 bg-[#181f1b] border border-green-700 rounded-2xl shadow-2xl py-3 z-50 flex flex-col gap-0"
+                      style={{ minWidth: 320 }}
+                    >
+                      <div className="flex items-center gap-3 px-5 py-3 border-b border-green-900">
+                        <span className="w-11 h-11 rounded-full bg-green-200 flex items-center justify-center text-green-900 font-bold text-xl border-2 border-green-400">
+                          {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                        </span>
+                        <div className="flex flex-col">
+                          <span className="font-bold text-green-200 text-lg">{user.name || 'Usuario'}</span>
+                          <span className="text-green-300 text-xs">{user.email}</span>
+                        </div>
+                      </div>
+                      <button
+                        className="w-full text-left px-5 py-3 text-green-300 hover:bg-green-900/30 font-semibold transition flex items-center gap-2 border-b border-green-900"
+                        onClick={() => { setUserMenuOpen(false); navigate('/ajustes'); }}
+                      >
+                        Ajustes
+                      </button>
+                      <button
+                        className="w-full text-left px-5 py-3 text-red-400 hover:bg-green-900/30 font-bold transition rounded-b-2xl"
+                        onClick={async () => {
+                          setUserMenuOpen(false);
+                          await new Promise(res => setTimeout(res, 350));
+                          logout();
+                          navigate('/');
+                          showToast('Sesión cerrada correctamente', 'success');
+                        }}
+                      >
+                        Cerrar sesión
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
