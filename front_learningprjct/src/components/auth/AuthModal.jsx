@@ -48,18 +48,36 @@ const AuthModal = ({ open, onClose }) => {
     }
   }, [open]);
 
-  if (!open) return null;
+  const [isVisible, setIsVisible] = useState(open);
+  React.useEffect(() => {
+    if (open) setIsVisible(true);
+  }, [open]);
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose && onClose();
+    }, 350);
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1e2d23]/60 animate-fade-in">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 40 }}
-        transition={{ duration: 0.3 }}
-        className="relative flex w-full max-w-6xl min-h-[750px] animate-slide-up overflow-hidden rounded-2xl"
-        style={{ minHeight: 750 }}
-      >
+    <AnimatePresence>
+      {open || isVisible ? (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1e2d23]/60"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35 }}
+          style={{ pointerEvents: open ? 'auto' : 'none' }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: -60 }}
+            exit={{ opacity: 0, y: -60 }}
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+            className="relative flex w-full max-w-6xl min-h-[750px] overflow-hidden rounded-2xl"
+            style={{ minHeight: 750 }}
+          >
         {/* Left: Logo & frase */}
         <div className="hidden md:flex flex-col items-center justify-center text-green-300 p-20 w-1/2 border-r border-[#22332a] min-h-[750px]" style={{background:'#2D3C40'}}>
           <img src="/imgs/logo.png" alt="Logo" className="w-40 h-40 mb-8" />
@@ -67,7 +85,7 @@ const AuthModal = ({ open, onClose }) => {
         </div>
         {/* Right: Tabs & Forms */}
         <div className="flex-1 pt-8 pb-20 px-20 flex flex-col justify-center relative min-w-[500px] min-h-[750px] bg-[#232e26]" style={{background: '#0D0D0D'}}>
-          <button onClick={onClose} className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-green-400">&times;</button>
+          <button onClick={handleClose} className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-green-400">&times;</button>
           <div className="relative flex justify-between mb-8">
             <button
               ref={tabRefs.login}
@@ -166,7 +184,16 @@ const AuthModal = ({ open, onClose }) => {
                   </button>
                   {loginError && <div className="text-red-400 font-semibold text-center mt-2">{loginError}</div>}
                   <div className="text-sm mt-2 text-right">
-                    <Link to="/forgot-password" className="text-green-300 hover:underline">¿Has olvidado tu contraseña?</Link>
+                    <span
+                      className="text-green-300 hover:underline cursor-pointer"
+                      onClick={() => {
+                        setIsVisible(false);
+                        setTimeout(() => {
+                          onClose && onClose();
+                          navigate('/forgot-password');
+                        }, 350);
+                      }}
+                    >¿Has olvidado tu contraseña?</span>
                   </div>
                 </motion.form>
               ) : (
@@ -275,7 +302,9 @@ const AuthModal = ({ open, onClose }) => {
           </div>
         </div>
       </motion.div>
-    </div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
 };
 
