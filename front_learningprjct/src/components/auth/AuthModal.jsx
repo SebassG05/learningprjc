@@ -147,12 +147,12 @@ const AuthModal = ({ open, onClose }) => {
                         setUserLogin(data.user, data.token);
                         setLoginSuccess('');
                         showToast('¡Bienvenido! Has iniciado sesión correctamente.', 'info');
+                        // Cierra el modal y elimina el overlay inmediatamente y sin retardo
+                        setIsVisible(false);
+                        onClose && onClose();
                         setTimeout(() => {
-                          onClose && onClose();
-                          setTimeout(() => {
-                            navigate('/', { replace: true });
-                          }, 400);
-                        }, 700);
+                          navigate('/', { replace: true });
+                        }, 10);
                       }
                     } catch (err) {
                       setLoginError('Error de red');
@@ -228,12 +228,11 @@ const AuthModal = ({ open, onClose }) => {
                         setUserLogin(data.user, data.token);
                         setRegisterSuccess('');
                         showToast('¡Registro exitoso! Ya puedes disfrutar del campus.', 'success');
+                        setIsVisible(false);
+                        onClose && onClose();
                         setTimeout(() => {
-                          onClose && onClose();
-                          setTimeout(() => {
-                            navigate('/', { replace: true });
-                          }, 400);
-                        }, 700);
+                          navigate('/', { replace: true });
+                        }, 10);
                         setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
                       }
                     } catch (err) {
