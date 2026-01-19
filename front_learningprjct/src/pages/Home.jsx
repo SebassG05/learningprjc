@@ -3,6 +3,7 @@ import { Star } from 'lucide-react';
 import { useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import Container from '../components/ui/Container';
 import { 
   TrendingUp, Building2, Clock, ArrowRight, Sparkles, 
@@ -11,6 +12,8 @@ import {
 import Footer from '../components/layout/Footer';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const [animating, setAnimating] = useState(false);
     const [showBoxes, setShowBoxes] = useState(true);
     const [hideAnim, setHideAnim] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -223,7 +226,7 @@ const HeroSection = () => {
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion as m } from 'framer-motion';
 
-const FAQSection = () => {
+const FAQSection = ({ animating, setAnimating, navigate }) => {
   const faqs = [
     {
       question: '¿Cómo me registro en la plataforma?',
@@ -314,12 +317,31 @@ const FAQSection = () => {
                 <span className="text-xl font-bold text-white mb-1">¿No encuentras tu respuesta?</span>
                 <span className="text-[#a1db87] text-base">Estamos aquí para ayudarte</span>
               </div>
-              <a
-                href="mailto:soporte@evenor-tech.com"
-                className="mt-4 inline-block px-7 py-3 rounded-lg bg-[#a1db87] text-[#1a1a1a] font-bold text-lg shadow-md hover:bg-emerald-400 transition-colors duration-200"
+              <motion.button
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ scale: 1.04 }}
+                onClick={() => {
+                  setAnimating(true);
+                  setTimeout(() => {
+                    navigate('/contacto');
+                  }, 600);
+                }}
+                className="cursor-pointer mt-4 inline-block px-7 py-3 rounded-lg bg-[#a1db87] text-[#1a1a1a] font-bold text-lg shadow-md hover:bg-emerald-400 transition-colors duration-200"
               >
                 Contáctanos
-              </a>
+              </motion.button>
+              {/* Overlay animado para transición profesional */}
+              <AnimatePresence>
+                {animating && (
+                  <m.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeInOut', opacity: { duration: 1.1, ease: 'easeInOut' } }}
+                    style={{ position: 'fixed', inset: 0, zIndex: 100, background: '#23272f' }}
+                  />
+                )}
+              </AnimatePresence>
             </m.div>
             {/* Recursos útiles */}
             <m.div
@@ -496,10 +518,12 @@ const ReviewsCarousel = () => {
 
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [animating, setAnimating] = useState(false);
   return (
     <>
       <HeroSection />
-      <FAQSection />
+      <FAQSection animating={animating} setAnimating={setAnimating} navigate={navigate} />
       <ReviewsCarousel />
       {/* Sección CTA inspirada en la imagen */}
       <section className="relative flex items-center justify-center py-16 sm:py-20">

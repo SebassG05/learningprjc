@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy } from 'react';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
+import Contacto from './pages/Contacto';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <ForgotPassword />
             </Suspense>
           } />
+          <Route path="/contacto" element={<Contacto />} />
         </Routes>
       </Layout>
     </Router>
