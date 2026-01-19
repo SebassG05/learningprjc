@@ -10,21 +10,37 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const token = searchParams.get('token');
   const id = searchParams.get('id');
 
+  // Reglas de validación
+  const rules = [
+    { label: 'Al menos 8 caracteres', valid: password.length >= 8 },
+    { label: 'Una letra mayúscula', valid: /[A-Z]/.test(password) },
+    { label: 'Una letra minúscula', valid: /[a-z]/.test(password) },
+    { label: 'Un número', valid: /\d/.test(password) },
+    { label: 'Un símbolo', valid: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password) },
+  ];
+  const allValid = rules.every(r => r.valid);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTouched(true);
     setError('');
     setSuccess('');
     if (!password || !confirmPassword) {
-      setError('Por favor, completa ambos campos.');
+      showToast('Por favor, completa ambos campos.', 'error');
       return;
     }
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden.');
+      showToast('Las contraseñas no coinciden.', 'error');
+      return;
+    }
+    if (!allValid) {
+      showToast('La contraseña no cumple todos los requisitos.', 'error');
       return;
     }
     setLoading(true);
@@ -62,13 +78,108 @@ export default function ResetPassword() {
           <h2 style={{ color: '#5aa833', fontFamily: 'Rondana, Arial, sans-serif', marginBottom: 4, fontSize: 22 }}>Actualiza tu contraseña</h2>
           <p style={{ color: '#595959', fontSize: 15 }}>Introduce y confirma tu nueva contraseña para tu cuenta.</p>
         </div>
+        {/* Bloque de requisitos de contraseña: esquina superior derecha en escritorio, debajo en móvil */}
+        <div
+          className="password-rules-block"
+          style={{
+            position: 'absolute',
+            top: 24,
+            right: 424,
+            background: '#f7fafc',
+            borderRadius: 10,
+            boxShadow: '0 1px 6px rgba(90,168,51,0.07)',
+            padding: '14px 18px',
+            border: '1.5px solid #e0e0e0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 6,
+            minWidth: 210,
+            maxWidth: 240,
+            zIndex: 2
+          }}
+        >
+          <div style={{fontWeight: 600, fontSize: 13, color: '#5aa833', marginBottom: 2}}>Requisitos de la contraseña:</div>
+          {rules.map((rule, i) => (
+            <div key={i} style={{
+              color: rule.valid ? '#5aa833' : '#bdbdbd',
+              fontWeight: rule.valid ? 600 : 500,
+              fontSize: 13,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              opacity: rule.valid ? 1 : 0.7
+            }}>
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                border: rule.valid ? '2px solid #5aa833' : '2px solid #bdbdbd',
+                background: rule.valid ? '#eafbe7' : '#f7fafc',
+                marginRight: 6,
+                fontSize: 14,
+                transition: 'all 0.2s'
+              }}>{rule.valid ? (
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#eafbe7"/><path d="M6 10.5l3 3 5-5" stroke="#5aa833" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#f7fafc"/><path d="M7 7l6 6M13 7l-6 6" stroke="#bdbdbd" strokeWidth="2" strokeLinecap="round"/></svg>
+              )}</span>
+              {rule.label}
+            </div>
+          ))}
+        </div>
+      {/* Responsive: mostrar el bloque de requisitos debajo en móvil */}
+      <style>{`
+        @media (max-width: 600px) {
+          .password-rules-block {
+            position: static !important;
+            margin: 24px auto 0 auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
+          }
+        }
+      `}</style>
+
         <div style={{ marginBottom: 18 }}>
           <label style={{ color: '#595959', fontWeight: 600, fontSize: 14 }}>Nueva contraseña</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', padding: 12, borderRadius: 8, border: '1.5px solid #a1db87', marginTop: 6, fontSize: 15, outline: 'none', transition: 'border-color 0.2s' }} />
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onBlur={() => setTouched(true)}
+            style={{
+              width: '100%',
+              padding: 12,
+              borderRadius: 8,
+              border: touched && !allValid ? '2px solid #e57373' : '1.5px solid #a1db87',
+              marginTop: 6,
+              fontSize: 15,
+              outline: 'none',
+              transition: 'border-color 0.2s',
+              background: touched && !allValid ? '#fff6f6' : undefined
+            }}
+          />
         </div>
         <div style={{ marginBottom: 18 }}>
           <label style={{ color: '#595959', fontWeight: 600, fontSize: 14 }}>Confirmar nueva contraseña</label>
-          <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={{ width: '100%', padding: 12, borderRadius: 8, border: '1.5px solid #a1db87', marginTop: 6, fontSize: 15, outline: 'none', transition: 'border-color 0.2s' }} />
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+            style={{
+              width: '100%',
+              padding: 12,
+              borderRadius: 8,
+              border: touched && confirmPassword && password !== confirmPassword ? '2px solid #e57373' : '1.5px solid #a1db87',
+              marginTop: 6,
+              fontSize: 15,
+              outline: 'none',
+              transition: 'border-color 0.2s',
+              background: touched && confirmPassword && password !== confirmPassword ? '#fff6f6' : undefined
+            }}
+          />
         </div>
         {/* Notificaciones visuales solo con toast, no texto aquí */}
         <button type="submit" disabled={loading} style={{ background: '#a1db87', color: '#333333', fontWeight: 700, padding: '14px 0', borderRadius: 8, border: 'none', width: '100%', fontSize: 16, boxShadow: '0 2px 8px rgba(161,219,135,0.10)', cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useToast } from '../context/ToastContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +25,9 @@ export default function ForgotPassword() {
       if (res.ok) {
         showToast('Si el email está registrado, recibirás instrucciones.', 'success');
         setEmail('');
+        setTimeout(() => {
+          navigate('/');
+        }, 1800);
       } else {
         showToast(data.error || 'Error al enviar el correo.', 'error');
       }
@@ -43,7 +48,7 @@ export default function ForgotPassword() {
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: 12, borderRadius: 8, border: '1.5px solid #a1db87', marginTop: 6, fontSize: 15, outline: 'none', transition: 'border-color 0.2s' }} />
         </div>
         <button type="submit" disabled={loading} style={{ background: '#a1db87', color: '#333333', fontWeight: 700, padding: '14px 0', borderRadius: 8, border: 'none', width: '100%', fontSize: 16, boxShadow: '0 2px 8px rgba(161,219,135,0.10)', cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>
-          {loading ? 'Enviando...' : 'Enviar instrucciones'}
+          {loading ? 'Enviando...' : 'Enviar Mail'}
         </button>
       </form>
     </div>
