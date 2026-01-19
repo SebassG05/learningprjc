@@ -2,7 +2,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const AuthModal = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -166,7 +166,7 @@ const AuthModal = ({ open, onClose }) => {
                   </button>
                   {loginError && <div className="text-red-400 font-semibold text-center mt-2">{loginError}</div>}
                   <div className="text-sm mt-2 text-right">
-                    <a href="#" className="text-green-300 hover:underline">¿Has olvidado tu contraseña?</a>
+                    <Link to="/forgot-password" className="text-green-300 hover:underline">¿Has olvidado tu contraseña?</Link>
                   </div>
                 </motion.form>
               ) : (

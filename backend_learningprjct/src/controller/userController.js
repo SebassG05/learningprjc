@@ -110,7 +110,7 @@ export const resetPassword = async (req, res) => {
       console.error('Usuario no encontrado:', userId);
       return res.status(404).json({ error: 'Usuario no encontrado.' });
     }
-    user.password = await bcrypt.hash(newPassword, 10);
+    user.password = newPassword;
     await user.save();
     await PasswordResetToken.deleteMany({ userId });
     console.log('Contraseña actualizada y tokens eliminados');

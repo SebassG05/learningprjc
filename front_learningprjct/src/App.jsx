@@ -14,6 +14,11 @@ function App() {
               <ResetPassword />
             </Suspense>
           } />
+          <Route path="/forgot-password" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <ForgotPassword />
+            </Suspense>
+          } />
         </Routes>
       </Layout>
     </Router>
@@ -21,5 +26,6 @@ function App() {
 }
 
 const ResetPassword = lazy(() => import('./pages/ResetPassword.jsx'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword.jsx'));
 
 export default App;
