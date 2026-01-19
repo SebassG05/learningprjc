@@ -1,4 +1,3 @@
-
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 
@@ -32,6 +31,29 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
           <p style="color: #595959;">Si no solicitaste este cambio, puedes ignorar este correo y tu contraseña seguirá siendo la misma.</p>
           <hr style="margin: 32px 0; border: none; border-top: 1px solid #a1db87;">
           <p style="font-size: 13px; color: #a1db87; text-align: center; font-family: 'Rondana', Arial, sans-serif;">Campus Evenor &copy; 2026</p>
+        </div>
+      </div>
+    `
+  };
+  await transporter.sendMail(mailOptions);
+};
+
+export const sendContactEmail = async ({ name, email, phone, company, subject, message }) => {
+  const mailOptions = {
+    from: `Campus Contacto <${process.env.EMAIL_USER}>`,
+    to: 'campusevenor@gmail.com',
+    subject: `[Contacto Campus] ${subject}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; background: #f8fafc; padding: 32px; color: #333;">
+        <div style="max-width: 480px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
+          <h2 style="color: #5aa833; margin-bottom: 16px;">Nuevo mensaje de contacto</h2>
+          <p><b>Nombre:</b> ${name}</p>
+          <p><b>Email:</b> ${email}</p>
+          <p><b>Teléfono:</b> ${phone || '-'} </p>
+          <p><b>Empresa/Organización:</b> ${company || '-'} </p>
+          <p><b>Asunto:</b> ${subject}</p>
+          <p><b>Mensaje:</b></p>
+          <div style="background: #f0f9ea; border-radius: 6px; padding: 16px; margin-bottom: 16px; color: #222;">${message.replace(/\n/g, '<br>')}</div>
         </div>
       </div>
     `

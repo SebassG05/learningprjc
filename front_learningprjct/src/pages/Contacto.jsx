@@ -1,3 +1,16 @@
+// Validación simple de campos requeridos
+function validateContactForm(data) {
+  const errors = {};
+  if (!data.name) errors.name = 'El nombre es obligatorio.';
+  if (!data.email) errors.email = 'El email es obligatorio.';
+  else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) errors.email = 'El email no es válido.';
+  if (!data.subject) errors.subject = 'El asunto es obligatorio.';
+  if (!data.message) errors.message = 'El mensaje es obligatorio.';
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors
+  };
+}
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
@@ -467,5 +480,19 @@ const Contact = () => {
     </div>
   );
 };
+
+// Envía el mensaje de contacto al backend
+async function sendContactMessage(data) {
+  const res = await fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.error || 'Error al enviar el mensaje');
+  }
+  return await res.json();
+}
 
 export default Contact;
