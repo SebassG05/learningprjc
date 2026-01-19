@@ -13,6 +13,7 @@ const configureExpress = (app) => {
         origin: (origin, callback) => {
             const allowedOrigins = [
                 'http://localhost:5175',
+                'http://localhost:5173',
             ];
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);

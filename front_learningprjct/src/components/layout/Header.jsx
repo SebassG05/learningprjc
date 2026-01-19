@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import AuthModal from '../auth/AuthModal';
 import MobileMenu from './MobileMenu';
 const navLinks = [
   { to: '/', label: 'Inicio' },
@@ -10,6 +11,7 @@ const navLinks = [
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
   const menuItems = [
     { name: 'Inicio', path: '/' },
     { name: 'Cursos', path: '/cursos' },
@@ -46,14 +48,13 @@ const Header = () => {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/login" className="relative px-5 py-2 rounded-md font-semibold border-2 border-green-400 text-green-300 bg-[#1e2d23]/80 overflow-hidden group transition-all duration-300 hover:bg-gradient-to-r hover:from-green-700 hover:to-green-900 hover:text-white hover:shadow-lg">
-              <span className="relative z-10 group-hover:text-white transition-colors duration-300">Iniciar sesión</span>
-              <span className="absolute left-0 top-0 w-0 h-full bg-gradient-to-r from-green-700 to-green-900 opacity-80 group-hover:w-full transition-all duration-500"></span>
-            </Link>
-            <Link to="/registro" className="relative px-5 py-2 rounded-md font-semibold bg-gradient-to-r from-green-400 to-green-700 text-white shadow-md overflow-hidden group transition-all duration-300 hover:from-green-700 hover:to-green-400 hover:shadow-xl">
-              <span className="relative z-10">Regístrate</span>
+            <button
+              className="cursor-pointer relative px-5 py-2 rounded-md font-semibold bg-gradient-to-r from-green-400 to-green-700 text-white shadow-md overflow-hidden group transition-all duration-300 hover:from-green-700 hover:to-green-400 hover:shadow-xl"
+              onClick={() => setAuthOpen(true)}
+            >
+              <span className="relative z-10">Acceder</span>
               <span className="absolute left-0 top-0 w-0 h-full bg-white/10 group-hover:w-full transition-all duration-500"></span>
-            </Link>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -84,6 +85,7 @@ const Header = () => {
           // Puedes usar navigate(path) si usas useNavigate
         }}
       />
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   );
 };

@@ -1,0 +1,211 @@
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
+const AuthModal = ({ open, onClose }) => {
+  const navigate = useNavigate();
+  const [tab, setTab] = useState('login');
+  // Registro
+  const [registerData, setRegisterData] = useState({ email: '', password: '', confirmPassword: '', name: '' });
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [registerError, setRegisterError] = useState('');
+  const [registerSuccess, setRegisterSuccess] = useState('');
+
+  const tabRefs = {
+    login: useRef(null),
+    register: useRef(null),
+  };
+  const [tabBarStyle, setTabBarStyle] = useState({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    const ref = tabRefs[tab].current;
+    if (ref) {
+      setTabBarStyle({
+        left: ref.offsetLeft,
+        width: ref.offsetWidth,
+      });
+    }
+  }, [tab]);
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1e2d23]/60 animate-fade-in">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 40 }}
+        transition={{ duration: 0.3 }}
+        className="relative flex w-full max-w-6xl min-h-[750px] animate-slide-up overflow-hidden rounded-2xl"
+        style={{ minHeight: 750 }}
+      >
+        {/* Left: Logo & frase */}
+        <div className="hidden md:flex flex-col items-center justify-center text-green-300 p-20 w-1/2 border-r border-[#22332a] min-h-[750px]" style={{background:'#2D3C40'}}>
+          <img src="/imgs/logo.png" alt="Logo" className="w-40 h-40 mb-8" />
+          <p className="text-3xl font-extrabold text-center leading-tight">“CADA JUGADA CUENTA,<br/>CADA PASO IMPORTA”</p>
+        </div>
+        {/* Right: Tabs & Forms */}
+        <div className="flex-1 pt-8 pb-20 px-20 flex flex-col justify-center relative min-w-[500px] min-h-[750px] bg-[#232e26]" style={{background: '#0D0D0D'}}>
+          <button onClick={onClose} className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-green-400">&times;</button>
+          <div className="relative flex justify-between mb-8">
+            <button
+              ref={tabRefs.login}
+              className={`cursor-pointer flex-1 pb-3 text-center font-bold transition-colors duration-200 ${tab === 'login' ? 'text-green-300' : 'text-gray-400'}`}
+              style={{ letterSpacing: 0.5 }}
+              onClick={() => setTab('login')}
+            >
+              ¿YA TIENES TU CUENTA?
+            </button>
+            <button
+              ref={tabRefs.register}
+              className={`cursor-pointer flex-1 pb-3 text-center font-bold transition-colors duration-200 ${tab === 'register' ? 'text-green-300' : 'text-gray-400'}`}
+              style={{ letterSpacing: 0.5 }}
+              onClick={() => setTab('register')}
+            >
+              ¿ERES NUEVO CLIENTE?
+            </button>
+            {/* Animated tab bar */}
+            <motion.div
+              className="absolute bottom-0 h-1 rounded-full"
+              style={{
+                left: tabBarStyle.left,
+                width: tabBarStyle.width,
+                background: '#95D982',
+                zIndex: 40,
+              }}
+              layout
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            />
+          </div>
+          <div className="relative flex-1 flex flex-col justify-start min-h-[500px] mt-8">
+            <AnimatePresence mode="wait" initial={false}>
+              {tab === 'login' ? (
+                <motion.form
+                  key="login"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.35, ease: 'easeInOut' }}
+                  className="flex flex-col gap-3 absolute w-full"
+                  style={{ minHeight: 500 }}
+                >
+                  <label className="font-bold text-green-200">Correo electrónico</label>
+                  <input type="email" placeholder="email" className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <label className="font-bold text-green-200">Contraseña</label>
+                  <input type="password" placeholder="contraseña" className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <button type="submit" className="cursor-pointer mt-4 px-6 py-2 rounded-lg font-bold shadow-md text-white transition" style={{background:'#95D982', color:'#181f1b'}}>Acceder</button>
+                  <div className="text-sm mt-2 text-right">
+                    <a href="#" className="text-green-300 hover:underline">¿Has olvidado tu contraseña?</a>
+                  </div>
+                </motion.form>
+              ) : (
+                <motion.form
+                  key="register"
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 40 }}
+                  transition={{ duration: 0.35, ease: 'easeInOut' }}
+                  className="flex flex-col gap-3 absolute w-full"
+                  style={{ minHeight: 500 }}
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setRegisterError('');
+                    setRegisterSuccess('');
+                    setRegisterLoading(true);
+                    try {
+                      const res = await fetch('/api/users/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          name: registerData.name,
+                          email: registerData.email,
+                          password: registerData.password,
+                          confirmPassword: registerData.confirmPassword,
+                        }),
+                      });
+                      const data = await res.json();
+                      if (!res.ok) {
+                        setRegisterError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al registrar');
+                      } else {
+                        setRegisterSuccess('¡Registro exitoso! Redirigiendo...');
+                        setTimeout(() => {
+                          // Animación de salida
+                          onClose && onClose();
+                          setTimeout(() => {
+                            navigate('/', { replace: true });
+                          }, 400); // Espera a que termine la animación
+                        }, 1200);
+                        setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
+                      }
+                    } catch (err) {
+                      setRegisterError('Error de red');
+                    } finally {
+                      setRegisterLoading(false);
+                    }
+                  }}
+                >
+                  <div className="flex flex-col gap-2">
+                    <label className="font-bold text-green-200 mb-0">Nombre</label>
+                    <input
+                      type="text"
+                      placeholder="nombre"
+                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      value={registerData.name}
+                      onChange={e => setRegisterData(d => ({ ...d, name: e.target.value }))}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 mt-3">
+                    <label className="font-bold text-green-200 mb-0">Correo electrónico</label>
+                    <input
+                      type="email"
+                      placeholder="email"
+                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      value={registerData.email}
+                      onChange={e => setRegisterData(d => ({ ...d, email: e.target.value }))}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 mt-3">
+                    <label className="font-bold text-green-200 mb-0">Contraseña</label>
+                    <input
+                      type="password"
+                      placeholder="contraseña"
+                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      value={registerData.password}
+                      onChange={e => setRegisterData(d => ({ ...d, password: e.target.value }))}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 mt-3">
+                    <label className="font-bold text-green-200 mb-0">Repetir contraseña</label>
+                    <input
+                      type="password"
+                      placeholder="repite la contraseña"
+                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      value={registerData.confirmPassword}
+                      onChange={e => setRegisterData(d => ({ ...d, confirmPassword: e.target.value }))}
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="cursor-pointer mt-4 px-6 py-2 rounded-lg font-bold shadow-md text-white transition disabled:opacity-60"
+                    style={{background:'#95D982', color:'#181f1b'}}
+                    disabled={registerLoading}
+                  >
+                    {registerLoading ? 'Registrando...' : 'Registrarse'}
+                  </button>
+                  {registerError && <div className="text-red-400 font-semibold text-center mt-2">{registerError}</div>}
+                  {registerSuccess && <div className="text-green-400 font-semibold text-center mt-2">{registerSuccess}</div>}
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default AuthModal;
