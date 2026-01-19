@@ -11,6 +11,12 @@ const AuthModal = ({ open, onClose }) => {
   const [registerError, setRegisterError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState('');
 
+    // Login
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState('');
+
   const tabRefs = {
     login: useRef(null),
     register: useRef(null),
@@ -88,12 +94,62 @@ const AuthModal = ({ open, onClose }) => {
                   transition={{ duration: 0.35, ease: 'easeInOut' }}
                   className="flex flex-col gap-3 absolute w-full"
                   style={{ minHeight: 500 }}
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setLoginError('');
+                    setLoginLoading(true);
+                    try {
+                      const res = await fetch('/api/users/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          email: loginData.email,
+                          password: loginData.password,
+                        }),
+                      });
+                      const data = await res.json();
+                      if (!res.ok) {
+                        setLoginError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al iniciar sesión');
+                      } else {
+                        localStorage.setItem('token', data.token);
+                        setLoginSuccess('¡Bienvenido! Redirigiendo...');
+                        setTimeout(() => {
+                          onClose && onClose();
+                          setTimeout(() => {
+                            navigate('/', { replace: true });
+                          }, 400);
+                        }, 1200);
+                      }
+                    } catch (err) {
+                      setLoginError('Error de red');
+                    } finally {
+                      setLoginLoading(false);
+                    }
+                  }}
                 >
                   <label className="font-bold text-green-200">Correo electrónico</label>
-                  <input type="email" placeholder="email" className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" />
+                  <input
+                    type="email"
+                    placeholder="email"
+                    className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                    value={loginData.email}
+                    onChange={e => setLoginData(d => ({ ...d, email: e.target.value }))}
+                    required
+                  />
                   <label className="font-bold text-green-200">Contraseña</label>
-                  <input type="password" placeholder="contraseña" className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400" />
-                  <button type="submit" className="cursor-pointer mt-4 px-6 py-2 rounded-lg font-bold shadow-md text-white transition" style={{background:'#95D982', color:'#181f1b'}}>Acceder</button>
+                  <input
+                    type="password"
+                    placeholder="contraseña"
+                    className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                    value={loginData.password}
+                    onChange={e => setLoginData(d => ({ ...d, password: e.target.value }))}
+                    required
+                  />
+                  <button type="submit" className="cursor-pointer mt-4 px-6 py-2 rounded-lg font-bold shadow-md text-white transition" style={{background:'#95D982', color:'#181f1b'}} disabled={loginLoading}>
+                    {loginLoading ? 'Accediendo...' : 'Acceder'}
+                  </button>
+                  {loginError && <div className="text-red-400 font-semibold text-center mt-2">{loginError}</div>}
+                  {loginSuccess && <div className="text-green-400 font-semibold text-center mt-2">{loginSuccess}</div>}
                   <div className="text-sm mt-2 text-right">
                     <a href="#" className="text-green-300 hover:underline">¿Has olvidado tu contraseña?</a>
                   </div>
