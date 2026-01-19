@@ -9,10 +9,10 @@ export default {
     jwtSecret: process.env.JWT_SECRET || 'fallback-secret-key',
     // Configuración de email
     email: {
-        host: process.env.MAIL_HOST || 'smtp.gmail.com',
-        port: parseInt(process.env.MAIL_PORT) || 587,
-        user: process.env.MAIL_USER || '',
-        pass: process.env.MAIL_PASS || ''
+        host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+        port: parseInt(process.env.EMAIL_PORT) || 587,
+        user: process.env.EMAIL_USER || '',
+        pass: process.env.EMAIL_PASS || ''
     },
     // URLs de la aplicación
     app: {

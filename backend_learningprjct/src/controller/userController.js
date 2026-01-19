@@ -2,6 +2,9 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
+import crypto from 'crypto';
+import PasswordResetToken from '../models/PasswordResetToken.js';
+import { sendPasswordResetEmail } from '../service/mailService.js';
 
 export const registerUser = async (req, res) => {
   const errors = validationResult(req);
@@ -59,4 +62,53 @@ export const logoutUser = async (req, res) => {
   res.json({
     message: 'Sesión cerrada correctamente'
   });
+};
+
+export const requestPasswordReset = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'El email es obligatorio.' });
+  }
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      // No revelar si el email existe o no
+      return res.status(200).json({ message: 'Si el email está registrado, se enviará un correo con instrucciones.' });
+    }
+    // Eliminar tokens previos
+    await PasswordResetToken.deleteMany({ userId: user._id });
+    // Generar token seguro
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60); // 1 hora
+    await PasswordResetToken.create({ userId: user._id, token, expiresAt });
+    // Aquí se debe enviar el email con el enlace (pendiente)
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}&id=${user._id}`;
+    await sendPasswordResetEmail(user.email, resetLink);
+    return res.status(200).json({ message: 'Si el email está registrado, se enviará un correo con instrucciones.' });
+  } catch (err) {
+    return res.status(500).json({ error: 'Error en el servidor', details: err.message });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { userId, token, newPassword } = req.body;
+  if (!userId || !token || !newPassword) {
+    return res.status(400).json({ error: 'Datos incompletos.' });
+  }
+  try {
+    const resetToken = await PasswordResetToken.findOne({ userId, token });
+    if (!resetToken || resetToken.expiresAt < new Date()) {
+      return res.status(400).json({ error: 'Token inválido o expirado.' });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado.' });
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    await PasswordResetToken.deleteMany({ userId });
+    return res.status(200).json({ message: 'Contraseña actualizada correctamente.' });
+  } catch (err) {
+    return res.status(500).json({ error: 'Error en el servidor', details: err.message });
+  }
 };
