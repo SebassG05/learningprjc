@@ -81,7 +81,7 @@ const Header = () => {
             ) : (
               <div className="relative" ref={userMenuRef}>
                 <button
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-400 to-green-700 text-white font-semibold shadow-md hover:from-green-700 hover:to-green-400 transition-all duration-300 focus:outline-none border-2 border-green-400 ${userMenuOpen ? 'ring-2 ring-green-300' : ''}`}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-400 to-green-700 text-white font-semibold shadow-md hover:from-green-700 hover:to-green-400 transition-all duration-300 focus:outline-none border-2 border-green-400 cursor-pointer ${userMenuOpen ? 'ring-2 ring-green-300' : ''}`}
                   onClick={() => setUserMenuOpen((v) => !v)}
                   aria-haspopup="true"
                   aria-expanded={userMenuOpen}
@@ -113,13 +113,13 @@ const Header = () => {
                         </div>
                       </div>
                       <button
-                        className="w-full text-left px-5 py-3 text-green-300 hover:bg-green-900/30 font-semibold transition flex items-center gap-2 border-b border-green-900"
+                        className="cursor-pointer w-full text-left px-5 py-3 text-green-300 hover:bg-green-900/30 font-semibold transition flex items-center gap-2 border-b border-green-900"
                         onClick={() => { setUserMenuOpen(false); navigate('/ajustes'); }}
                       >
                         Ajustes
                       </button>
                       <button
-                        className="w-full text-left px-5 py-3 text-red-400 hover:bg-green-900/30 font-bold transition rounded-b-2xl"
+                        className="cursor-pointer w-full text-left px-5 py-3 text-red-400 hover:bg-green-900/30 font-bold transition rounded-b-2xl"
                         onClick={async () => {
                           setUserMenuOpen(false);
                           await new Promise(res => setTimeout(res, 350));
