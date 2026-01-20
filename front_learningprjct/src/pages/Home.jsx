@@ -448,7 +448,33 @@ const ReviewsCarousel = () => {
             ) : error ? (
               <div className="text-center text-red-400 w-full py-12">{error}</div>
             ) : reviews.length === 0 ? (
-              <div className="text-center text-gray-400 w-full py-12">No hay reseñas aún.</div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto bg-[#23272f]/90 border border-[#a1db87]/10 rounded-2xl shadow-xl px-10 py-16 relative"
+              >
+                <div className="flex flex-col items-center mb-4 w-full">
+                  <Star className="w-16 h-16 text-[#a1db87] mb-2 animate-bounce" />
+                  <span className="text-2xl font-bold text-[#a1db87] mb-2 text-center w-full">¡Aún no hay reseñas!</span>
+                  <p className="text-gray-300 text-base text-center mb-2 w-full">Sé el primero en compartir tu experiencia y ayuda a conocer Evenor-Tech.</p>
+                  <div className="flex gap-2 mt-2 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-6 h-6 text-gray-600 animate-pulse" />
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => window.location.href = '/reseñas'}
+                    className="cursor-pointer mt-2 px-6 py-2 rounded-full bg-[#a1db87] text-[#23272f] font-semibold shadow hover:bg-emerald-400 transition-colors text-base focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2"
+                  >
+                    Ir a reseñas
+                  </button>
+                </div>
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute left-10 top-10 w-32 h-32 bg-[#a1db87]/10 rounded-full blur-2xl animate-pulse" />
+                  <div className="absolute right-10 bottom-10 w-32 h-32 bg-[#a1db87]/10 rounded-full blur-2xl animate-pulse" />
+                </div>
+              </motion.div>
             ) : (
               reviews.map((review, idx) => {
                 const description = typeof review.description === 'string' ? review.description : '';
