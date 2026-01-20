@@ -3,6 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Contacto from './pages/Contacto';
+import ReviewsPage from './pages/Reviews.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             </Suspense>
           } />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/reseñas" element={<ReviewsPage />} />
         </Routes>
       </Layout>
     </Router>

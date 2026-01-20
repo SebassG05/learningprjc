@@ -368,130 +368,173 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
   );
 };
 
-const reviewsMock = [
-  {
-    name: 'María López',
-    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-    rating: 5,
-    text: 'El campus superó mis expectativas. Los contenidos son claros y el soporte es excelente. ¡Repetiría sin dudarlo!'
-  },
-  {
-    name: 'Carlos García',
-    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-    rating: 4,
-    text: 'Muy buena experiencia, los tests ayudan mucho a afianzar los conocimientos. Recomiendo el curso a todos.'
-  },
-  {
-    name: 'Lucía Fernández',
-    avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
-    rating: 5,
-    text: 'Me encantó la flexibilidad y la calidad del material. El certificado me ayudó a mejorar mi CV.'
-  },
-  {
-    name: 'Javier Ruiz',
-    avatar: 'https://randomuser.me/api/portraits/men/41.jpg',
-    rating: 5,
-    text: 'Plataforma intuitiva y profesores muy atentos. Aprendí mucho más de lo que esperaba.'
-  },
-  {
-    name: 'Ana Torres',
-    avatar: 'https://randomuser.me/api/portraits/women/22.jpg',
-    rating: 4,
-    text: 'El contenido es actual y práctico. Me gustó poder avanzar a mi ritmo y repetir los módulos.'
-  },
-  {
-    name: 'Pedro Sánchez',
-    avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
-    rating: 5,
-    text: 'Excelente atención y material descargable. Lo recomiendo para quienes buscan formación profesional.'
-  },
-];
+
+
+const fetchReviews = async () => {
+  const res = await fetch('/api/reviews');
+  if (!res.ok) throw new Error('Error al cargar reseñas');
+  return res.json();
+};
 
 const ReviewsCarousel = () => {
   const carouselRef = useRef(null);
   const [modalReview, setModalReview] = useState(null);
-  const reviews = [...reviewsMock, ...reviewsMock];
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchReviews()
+      .then(data => setReviews(data))
+      .catch(() => setError('No se pudieron cargar las reseñas'))
+      .finally(() => setLoading(false));
+  }, []);
+
   const truncate = (str, n) => (str.length > n ? str.slice(0, n) + '…' : str);
+  // Drag to scroll horizontal
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    const handleMouseDown = (e) => {
+      isDown = true;
+      carousel.classList.add('dragging');
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    };
+    const handleMouseLeave = () => {
+      isDown = false;
+      carousel.classList.remove('dragging');
+    };
+    const handleMouseUp = () => {
+      isDown = false;
+      carousel.classList.remove('dragging');
+    };
+    const handleMouseMove = (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 1.2; // scroll speed
+      carousel.scrollLeft = scrollLeft - walk;
+    };
+    carousel.addEventListener('mousedown', handleMouseDown);
+    carousel.addEventListener('mouseleave', handleMouseLeave);
+    carousel.addEventListener('mouseup', handleMouseUp);
+    carousel.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      carousel.removeEventListener('mousedown', handleMouseDown);
+      carousel.removeEventListener('mouseleave', handleMouseLeave);
+      carousel.removeEventListener('mouseup', handleMouseUp);
+      carousel.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   return (
     <section className="relative py-16 bg-transparent">
       <Container>
         <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-12 underline underline-offset-8 decoration-[#a1db87]">
           ¿Qué opinan nuestros estudiantes?
         </h2>
-        <div className="overflow-x-hidden">
-          <div
-            ref={carouselRef}
-            className="flex gap-10 animate-carousel whitespace-nowrap"
-            style={{ willChange: 'transform' }}
-          >
-            {reviews.map((review, idx) => {
-              const maxLen = 110;
-              const isLong = review.text.length > maxLen;
-              return (
-                <div
-                  key={idx}
-                  className="min-w-[400px] max-w-md bg-[#23272f] border border-[#a1db87]/20 rounded-2xl shadow-lg px-10 py-8 flex flex-col items-center text-center relative"
-                >
-                  <img
-                    src={review.avatar}
-                    alt={review.name}
-                    className="w-20 h-20 rounded-full border-2 border-[#a1db87] mb-4 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="flex items-center justify-center mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-6 h-6 ${i < review.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i < review.rating ? '#a1db87' : 'none'} />
-                    ))}
+        <div className="overflow-x-auto select-none custom-scrollbar">
+            <div
+              ref={carouselRef}
+              className="flex gap-10 whitespace-nowrap mb-6"
+              style={{ willChange: 'transform' }}
+            >
+            {loading ? (
+              <div className="text-center text-gray-400 w-full py-12">Cargando reseñas...</div>
+            ) : error ? (
+              <div className="text-center text-red-400 w-full py-12">{error}</div>
+            ) : reviews.length === 0 ? (
+              <div className="text-center text-gray-400 w-full py-12">No hay reseñas aún.</div>
+            ) : (
+              reviews.map((review, idx) => {
+                const description = typeof review.description === 'string' ? review.description : '';
+                let user = review.name || review.user || 'Usuario';
+                const maxLen = 70;
+                const isLong = description.length > maxLen;
+                return (
+                  <div
+                    key={idx}
+                    className="min-w-[400px] max-w-md bg-[#23272f] border border-[#a1db87]/20 rounded-2xl shadow-lg px-10 py-8 flex flex-col items-center text-center relative"
+                  >
+                    <img
+                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.charAt(0))}`}
+                      alt={user}
+                      className="w-20 h-20 rounded-full border-2 border-[#a1db87] mb-4 object-cover"
+                      loading="lazy"
+                    />
+                    <div className="flex items-center justify-center mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`w-6 h-6 ${i < review.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i < review.rating ? '#a1db87' : 'none'} />
+                      ))}
+                    </div>
+                    <div className="w-full flex flex-col items-center">
+                      <p className="text-gray-200 text-lg mb-2 w-full line-clamp-3 break-words">“{isLong ? description.slice(0, maxLen) + '…' : description}”</p>
+                      {isLong && (
+                        <button
+                          className="text-[#a1db87] underline text-sm hover:text-emerald-400 transition-colors mb-2 cursor-pointer"
+                          onClick={() => setModalReview({ ...review, user })}
+                        >
+                          Ver más
+                        </button>
+                      )}
+                    </div>
+                    <span className="font-bold text-[#a1db87] text-xl">{user}</span>
                   </div>
-                  <div className="w-full flex flex-col items-center">
-                    <p className="text-gray-200 text-lg mb-2 w-full line-clamp-3 break-words">“{review.text}”</p>
-                    {isLong && (
-                      <button
-                        className="text-[#a1db87] underline text-sm hover:text-emerald-400 transition-colors mb-2"
-                        onClick={() => setModalReview(review)}
-                      >
-                        Ver reseña completa
-                      </button>
-                    )}
-                  </div>
-                  <span className="font-bold text-[#a1db87] text-xl">{review.name}</span>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
         {/* Modal para reseña completa */}
-        {modalReview && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-            <div className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 max-w-lg w-full relative animate-fadeIn">
-              <button
-                className="absolute top-3 right-3 text-[#a1db87] text-2xl font-bold hover:text-emerald-400 transition-colors"
-                onClick={() => setModalReview(null)}
-                aria-label="Cerrar"
+        {/* Modal animado para reseña completa */}
+        <AnimatePresence>
+          {modalReview && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <motion.div
+                className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 max-w-xl w-full sm:w-auto relative"
+                style={{wordBreak: 'break-word', minWidth: 280, maxWidth: '90vw'}}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.25 }}
               >
-                ×
-              </button>
-              <img
-                src={modalReview.avatar}
-                alt={modalReview.name}
-                className="w-20 h-20 rounded-full border-2 border-[#a1db87] mb-4 object-cover mx-auto"
-                loading="lazy"
-              />
-              <div className="flex items-center justify-center mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className={`w-6 h-6 ${i < modalReview.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i < modalReview.rating ? '#a1db87' : 'none'} />
-                ))}
-              </div>
-              <p className="text-gray-200 text-lg mb-4 text-center">“{modalReview.text}”</p>
-              <span className="font-bold text-[#a1db87] text-xl block text-center">{modalReview.name}</span>
-            </div>
-            <style>{`
-              .animate-fadeIn { animation: fadeIn .3s cubic-bezier(.4,0,.2,1); }
-              @keyframes fadeIn { from { opacity: 0; transform: scale(.96);} to { opacity: 1; transform: scale(1);} }
-            `}</style>
-          </div>
-        )}
-        {/* Clamp multiline utility for tailwind (if not presente in tu config, add @tailwindcss/line-clamp to tailwind.config.js) */}
+                <button
+                  className="absolute top-3 right-3 text-[#a1db87] text-2xl font-bold hover:text-emerald-400 transition-colors cursor-pointer"
+                  onClick={() => setModalReview(null)}
+                  aria-label="Cerrar"
+                >
+                  ×
+                </button>
+                <img
+                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent((modalReview.user || 'U').charAt(0))}`}
+                  alt={modalReview.user || 'Usuario'}
+                  className="w-20 h-20 rounded-full border-2 border-[#a1db87] mb-4 object-cover mx-auto"
+                  loading="lazy"
+                />
+                <div className="flex items-center justify-center mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className={`w-6 h-6 ${i < modalReview.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i < modalReview.rating ? '#a1db87' : 'none'} />
+                  ))}
+                </div>
+                <p className="text-gray-200 text-lg mb-4 text-center break-words" style={{wordBreak: 'break-word', overflowWrap: 'break-word'}}>
+                  “{modalReview.description}”
+                </p>
+                <span className="font-bold text-[#a1db87] text-xl block text-center">{modalReview.user || 'Usuario'}</span>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Clamp multiline utility y scrollbar personalizada */}
         <style>{`
           .line-clamp-3 {
             display: -webkit-box;
@@ -500,16 +543,28 @@ const ReviewsCarousel = () => {
             overflow: hidden;
             text-overflow: ellipsis;
           }
+          .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #a1db87 #23272f;
+          }
+          .custom-scrollbar::-webkit-scrollbar {
+            height: 10px;
+            background: #23272f;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #a1db87;
+            border-radius: 8px;
+            border: 2px solid #23272f;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #7ed957;
+          }
         `}</style>
       </Container>
-      {/* Animación CSS para el carrusel */}
       <style>{`
-        @keyframes carousel {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-carousel {
-          animation: carousel 40s linear infinite;
+        .dragging {
+          cursor: grabbing !important;
+          user-select: none;
         }
       `}</style>
     </section>

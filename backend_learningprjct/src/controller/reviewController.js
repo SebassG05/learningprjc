@@ -6,8 +6,8 @@ export const createReview = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { rating, description } = req.body;
-  const user = req.user?.email || req.user?.name || 'Usuario';
+  const { rating, description, name } = req.body;
+  const user = name || req.user?.name || req.user?.email || 'Usuario';
   try {
     const review = new Review({ user, rating, description });
     await review.save();

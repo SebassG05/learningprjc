@@ -11,6 +11,7 @@ const navLinks = [
   { to: '/cursos', label: 'Cursos' },
   { to: '/sobre', label: 'Sobre Nosotros' },
   { to: '/contacto', label: 'Contacto' },
+  { to: '/reseñas', label: 'Reseñas' },
 ];
 
 const Header = () => {
