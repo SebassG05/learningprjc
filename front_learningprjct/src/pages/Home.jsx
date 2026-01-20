@@ -323,7 +323,7 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
                 onClick={() => {
                   setAnimating(true);
                   setTimeout(() => {
-                    navigate('/contacto');
+                    navigate('/contacto', { state: { scrollToForm: true } });
                   }, 600);
                 }}
                 className="cursor-pointer mt-4 inline-block px-7 py-3 rounded-lg bg-[#a1db87] text-[#1a1a1a] font-bold text-lg shadow-md hover:bg-emerald-400 transition-colors duration-200"

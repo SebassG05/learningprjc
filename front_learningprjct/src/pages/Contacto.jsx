@@ -12,7 +12,7 @@ function validateContactForm(data) {
   };
 }
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { 
   MapPin, 
@@ -34,6 +34,7 @@ import Container from '../components/ui/Container';
 
 const Contact = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formStatus, setFormStatus] = useState({
     submitted: false,
     loading: false,
@@ -48,6 +49,7 @@ const Contact = () => {
   const formRef = useRef(null);
   const sectionRef = useRef(null);
   const mainRef = useRef(null);
+  const containerRef = useRef(null);
   
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const mainInView = useInView(mainRef, { once: true, margin: "-100px" });
@@ -60,6 +62,18 @@ const Contact = () => {
     window.addEventListener('resize', checkDevice);
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
+
+  // Scroll al contenedor principal si viene desde FAQ
+  useEffect(() => {
+    if (location.state && location.state.scrollToForm && containerRef.current) {
+      const headerOffset = 80; // Ajusta según el alto de tu header
+      const elementPosition = containerRef.current.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - headerOffset,
+        behavior: 'smooth'
+      });
+    }
+  }, [location.state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -168,8 +182,8 @@ const Contact = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-transparent py-12 sm:py-16 md:py-20">
+    return (
+      <div ref={containerRef} className="min-h-screen bg-transparent py-12 sm:py-16 md:py-20">
       {/* Decoraciones de fondo */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-[#a1db87]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#a1db87]/5 rounded-full blur-3xl" />
