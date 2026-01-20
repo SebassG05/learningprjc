@@ -40,8 +40,8 @@ export default defineConfig({
       },
       includeAssets: ['Corporatives/Images/Logo/Logo.png', 'Corporatives/Typography/Rondana Regular.otf', 'pwa-icons/*.png'],
       manifest: {
-        name: 'Licitanor',
-        short_name: 'Licitanor',
+        name: 'Campus Evenor - Soluciones Tecnológicas',
+        short_name: 'Campus Evenor - Soluciones Tecnológicas',
         description: 'Soluciones tecnológicas innovadoras para el uso sostenible y la protección de suelos',
         theme_color: '#a1db87',
         background_color: '#222222',
@@ -110,14 +110,14 @@ export default defineConfig({
           {
             name: 'Inicio',
             short_name: 'Inicio',
-            description: 'Licitanor',
+            description: 'Campus Evenor - Soluciones Tecnológicas',
             url: '/',
             icons: [{ src: '/pwa-icons/icon-96x96.png', sizes: '96x96' }]
           },
           {
             name: 'Contacto',
             short_name: 'Contacto',
-            description: 'Contactar con Licitanor',
+            description: 'Contactar con Campus Evenor - Soluciones Tecnológicas',
             url: '/contacto',
             icons: [{ src: '/pwa-icons/icon-96x96.png', sizes: '96x96' }]
           }

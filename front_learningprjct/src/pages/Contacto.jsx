@@ -148,10 +148,10 @@ const Contact = () => {
       id: 2,
       icon: <Mail className="w-5 h-5" />,
       title: "Email",
-      details: "licitanor@gmail.com",
+      details: "campusevenor@gmail.com",
       action: {
         label: "Enviar",
-        url: "mailto:licitanor@gmail.com",
+        url: "mailto:campusevenor@gmail.com",
         icon: <Send className="w-3 h-3" />
       },
       color: '#8bc96a'
