@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import ReviewsPage from './pages/Reviews.jsx';
+import Ajustes from './pages/Ajustes.jsx';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           } />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/reseñas" element={<ReviewsPage />} />
+          <Route path="/ajustes" element={<Ajustes />} />
         </Routes>
       </Layout>
     </Router>
