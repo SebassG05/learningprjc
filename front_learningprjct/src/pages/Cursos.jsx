@@ -55,11 +55,12 @@ export default function Cursos() {
       </section>
 
       {/* Tarjetas de cursos */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-120 place-items-center">
+    
         {loading ? (
-          <div className="text-center text-gray-400 col-span-2">Cargando cursos...</div>
+          <div className="text-center text-gray-400 col-span-3">Cargando cursos...</div>
         ) : courses.length === 0 ? (
-          <div className="text-center text-gray-400 col-span-2">No hay cursos disponibles.</div>
+          <div className="text-center text-gray-400 col-span-3">No hay cursos disponibles.</div>
         ) : (
           courses.map(course => (
             <motion.div
@@ -67,18 +68,18 @@ export default function Cursos() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-              style={{ minHeight: 340 }}
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full"
+              style={{ minHeight: 340, minWidth: 450 }}
               onClick={() => window.location.href = `/curso/${course._id}`}
             >
-              <div className="w-full h-36 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
+              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
                 {course.image ? (
                   <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 ) : (
                   <BookOpen className="w-16 h-16 text-[#a1db87]" />
                 )}
               </div>
-              <div className="flex-1 flex flex-col justify-between p-6">
+              <div className="flex-1 flex flex-col justify-between p-10">
                 <div>
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {course.title}
