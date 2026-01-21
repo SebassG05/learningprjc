@@ -55,8 +55,8 @@ export default function Cursos() {
       </section>
 
       {/* Tarjetas de cursos */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-120 place-items-center">
-    
+      {/* Grid original: visible en móvil y escritorio, oculto en md (tablet) */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-120 place-items-center block md:hidden lg:grid">
         {loading ? (
           <div className="text-center text-gray-400 col-span-3">Cargando cursos...</div>
         ) : courses.length === 0 ? (
@@ -68,8 +68,62 @@ export default function Cursos() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full"
-              style={{ minHeight: 340, minWidth: 450 }}
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full lg:min-w-[450px] lg:min-h-[340px] xl:min-w-[450px] xl:min-h-[340px] sm:max-w-[95vw] sm:min-h-[220px]"
+              style={{}}
+              onClick={() => window.location.href = `/curso/${course._id}`}
+            >
+              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
+                {course.image ? (
+                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                ) : (
+                  <BookOpen className="w-16 h-16 text-[#a1db87]" />
+                )}
+              </div>
+              <div className="flex-1 flex flex-col justify-between p-10">
+                <div>
+                  <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-300 text-base mb-6 min-h-[48px]">{course.description}</p>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
+                    {course.duration}
+                  </span>
+                  {Array.isArray(course.category)
+                    ? course.category.map((cat, idx) => (
+                        <span key={idx} className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                          {cat}
+                        </span>
+                      ))
+                    : course.category && (
+                        <span className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                          {course.category}
+                        </span>
+                      )
+                  }
+                </div>
+              </div>
+            </motion.div>
+          ))
+        )}
+      </section>
+
+      {/* Grid alternativo SOLO para tablets (md) */}
+      <section className="grid grid-cols-1 gap-y-10 gap-x-8 hidden md:grid lg:hidden md:place-items-center">
+        {loading ? (
+          <div className="text-center text-gray-400 col-span-1">Cargando cursos...</div>
+        ) : courses.length === 0 ? (
+          <div className="text-center text-gray-400 col-span-1">No hay cursos disponibles.</div>
+        ) : (
+          courses.map(course => (
+            <motion.div
+              key={course._id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full max-w-md min-h-[320px]"
+              style={{}}
               onClick={() => window.location.href = `/curso/${course._id}`}
             >
               <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
