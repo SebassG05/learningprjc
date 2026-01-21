@@ -1,13 +1,14 @@
 ### Crear curso de ejemplo
+### Crear curso de ejemplo con varias categorías
 POST http://localhost:3007/api/courses
 Content-Type: application/json
 
 {
   "title": "Sistemas de Big Data",
-  "image": "https://via.placeholder.com/400x120.png?text=Big+Data",
+  "image": "https://res.cloudinary.com/dgbmy60sc/image/upload/v1768986200/939862_czz3ns.jpg",
   "description": "Curso introductorio a los sistemas de Big Data y su aplicación en la industria.",
   "duration": "20 horas",
-  "category": "Tecnología"
+  "category": ["Tecnología", "Big Data"]
 }
 
 ### Obtener todos los cursos

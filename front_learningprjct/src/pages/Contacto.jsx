@@ -214,7 +214,7 @@ const Contact = () => {
             </span>
           </motion.div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-[Rondana]">
             ¿Listo para empezar con <span className="text-[#a1db87]">tu proyecto</span>?
           </h1>
 

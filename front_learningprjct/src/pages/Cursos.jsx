@@ -1,9 +1,21 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Cursos() {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3007/api/courses")
+      .then(res => res.json())
+      .then(data => {
+        setCourses(data);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="max-w-5xl mx-auto py-12 px-4">
       {/* Encabezado animado */}
@@ -40,6 +52,60 @@ export default function Cursos() {
         >
           Nuestros <span className="text-[#a1db87]">Cursos</span>
         </motion.h1>
+      </section>
+
+      {/* Tarjetas de cursos */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {loading ? (
+          <div className="text-center text-gray-400 col-span-2">Cargando cursos...</div>
+        ) : courses.length === 0 ? (
+          <div className="text-center text-gray-400 col-span-2">No hay cursos disponibles.</div>
+        ) : (
+          courses.map(course => (
+            <motion.div
+              key={course._id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+              style={{ minHeight: 340 }}
+              onClick={() => window.location.href = `/curso/${course._id}`}
+            >
+              <div className="w-full h-36 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
+                {course.image ? (
+                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                ) : (
+                  <BookOpen className="w-16 h-16 text-[#a1db87]" />
+                )}
+              </div>
+              <div className="flex-1 flex flex-col justify-between p-6">
+                <div>
+                  <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-300 text-base mb-6 min-h-[48px]">{course.description}</p>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
+                    {course.duration}
+                  </span>
+                  {Array.isArray(course.category)
+                    ? course.category.map((cat, idx) => (
+                        <span key={idx} className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                          {cat}
+                        </span>
+                      ))
+                    : course.category && (
+                        <span className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                          {course.category}
+                        </span>
+                      )
+                  }
+                </div>
+              </div>
+            </motion.div>
+          ))
+        )}
       </section>
     </div>
   );

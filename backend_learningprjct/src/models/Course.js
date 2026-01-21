@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema({
   image: { type: String }, // URL de la imagen
   description: { type: String },
   duration: { type: String }, // Ej: "20 horas"
-  category: { type: String },
+  category: [{ type: String }],
   // Puedes añadir más campos si lo necesitas
 });
 
