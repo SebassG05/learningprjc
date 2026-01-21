@@ -1,6 +1,6 @@
 import React from "react";
 import { Briefcase, Users, Award, HeartHandshake, Star, Globe, MessageCircle, Target, Eye, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const team = [
   { name: 'Maria Anaya Romero', role: 'CEO & Fundador', img: '', linkedin: '#' },
@@ -19,6 +19,52 @@ const values = [
 ];
 
 export default function SobreNosotros() {
+  // Testimonios hooks deben estar aquí para cumplir las reglas de hooks
+  const testimonials = [
+    {
+      text: 'I have been working with Evenor tech for several years and they have never disappointed me. Their solutions are reliable and efficient. The team is knowledgeable, responsive...',
+      name: 'Amy Brenna',
+      source: 'Trustburn',
+      rating: 4,
+      initials: 'AB',
+      color: 'bg-[#a1db87]/90',
+    },
+    {
+      text: 'Evenor tech has exceeded my expectations. Their soil solutions are exceptional and have greatly improved the quality of my land.',
+      name: 'Patricia Langford',
+      source: 'Trustburn',
+      rating: 4,
+      initials: 'PS',
+      color: 'bg-blue-400/80',
+    },
+    {
+      text: 'I had a great experience with this company. The team was responsive and answered all my questions promptly. The solutions they offer for soil use and protection are innovative and effective.',
+      name: 'Jeff Conley',
+      source: 'Trustburn',
+      rating: 5,
+      initials: 'JF',
+      color: 'bg-[#a1db87]/90',
+    },
+    {
+      text: 'Evenor tech is simply amazing! Their expertise in soil use and protection is unparalleled.',
+      name: 'Gillianne Uvia',
+      source: 'Trustburn',
+      rating: 5,
+      initials: 'GU',
+      color: 'bg-[#a1db87]/90',
+    },
+  ];
+  const [idx, setIdx] = React.useState(0);
+  const [direction, setDirection] = React.useState(0); // 1: next, -1: prev
+  const t = testimonials[idx];
+  const next = () => {
+    setDirection(1);
+    setIdx((i) => (i + 1) % testimonials.length);
+  };
+  const prev = () => {
+    setDirection(-1);
+    setIdx((i) => (i - 1 + testimonials.length) % testimonials.length);
+  };
   return (
     <div className="max-w-5xl mx-auto py-12 px-4">
       {/* Encabezado animado */}
@@ -48,7 +94,9 @@ export default function SobreNosotros() {
           </motion.div>
         </motion.div>
 
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 text-center">Sobre Evenor-Tech</h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-16 text-center">
+          Sobre <span className="text-[#a1db87]">Evenor-Tech</span>
+        </h1>
         <div className="flex flex-wrap justify-center gap-6 mt-8">
           {values.map((v, i) => (
             <div key={i} className="bg-[#181b20] rounded-xl p-6 w-64 flex flex-col items-center shadow-md border border-[#a1db87]/10">
@@ -64,7 +112,7 @@ export default function SobreNosotros() {
       {/* Nuestra Esencia */}
       <section className="mb-20">
         <div className="flex flex-col items-center mb-8">
-          <span className="inline-block bg-[#a1db87]/80 text-[#23272f] font-semibold px-6 py-1 rounded-full mb-2 text-sm tracking-wide shadow">NUESTRA ESENCIA</span>
+          <span className="inline-block bg-[#a1db87]/80 text-[#23272f] font-semibold px-6 py-1 rounded-full mb-16 text-sm tracking-wide shadow">NUESTRA ESENCIA</span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center mb-2" style={{fontFamily: 'inherit'}}>Misión, Visión y Valores</h2>
           <div className="w-24 h-1 bg-[#a1db87] rounded mx-auto mt-2 mb-2"></div>
         </div>
@@ -105,7 +153,7 @@ export default function SobreNosotros() {
 
       {/* Equipo */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2"><Users className="w-6 h-6 text-[#a1db87]" />Nuestro Equipo</h2>
+        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 justify-center text-center"><Users className="w-6 h-6 text-[#a1db87]" />Nuestro Equipo</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
           {team.slice(0, 3).map((m, i) => (
             <div key={i} className="bg-[#23272f] rounded-xl p-5 flex flex-col items-center shadow border border-[#a1db87]/10">
@@ -134,99 +182,71 @@ export default function SobreNosotros() {
 
       {/* Testimonios Slider */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2"><MessageCircle className="w-6 h-6 text-[#a1db87]" />Testimonios</h2>
-        {/** Testimonial Data */}
-        {(() => {
-          const testimonials = [
-            {
-              text: 'I have been working with Evenor tech for several years and they have never disappointed me. Their solutions are reliable and efficient. The team is knowledgeable, responsive...',
-              name: 'Amy Brenna',
-              source: 'Trustburn',
-              rating: 4,
-              initials: 'AB',
-              color: 'bg-[#a1db87]/90',
-            },
-            {
-              text: 'Evenor tech has exceeded my expectations. Their soil solutions are exceptional and have greatly improved the quality of my land.',
-              name: 'Patricia Langford',
-              source: 'Trustburn',
-              rating: 4,
-              initials: 'PS',
-              color: 'bg-blue-400/80',
-            },
-            {
-              text: 'I had a great experience with this company. The team was responsive and answered all my questions promptly. The solutions they offer for soil use and protection are innovative and effective.',
-              name: 'Jeff Conley',
-              source: 'Trustburn',
-              rating: 5,
-              initials: 'JF',
-              color: 'bg-[#a1db87]/90',
-            },
-            {
-              text: 'Evenor tech is simply amazing! Their expertise in soil use and protection is unparalleled.',
-              name: 'Gillianne Uvia',
-              source: 'Trustburn',
-              rating: 5,
-              initials: 'GU',
-              color: 'bg-[#a1db87]/90',
-            },
-          ];
-          const [idx, setIdx] = React.useState(0);
-          const t = testimonials[idx];
-          const next = () => setIdx((i) => (i + 1) % testimonials.length);
-          const prev = () => setIdx((i) => (i - 1 + testimonials.length) % testimonials.length);
-          return (
-            <div className="relative flex flex-col items-center">
-              {/* Card */}
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.5 }}
-                className="w-full max-w-3xl bg-[#23272f]/90 border border-[#a1db87]/10 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center relative"
-              >
-                <MessageCircle className="w-12 h-12 text-[#a1db87] absolute -top-6 left-8 bg-[#23272f] rounded-full p-2 shadow" />
-                <p className="text-white text-lg md:text-xl font-medium text-center mb-8 mt-4 leading-relaxed" style={{ fontFamily: 'inherit' }}>
-                  "{t.text}"
-                </p>
-                <div className="flex items-center gap-4 mt-4">
-                  <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-[#23272f] shadow ${t.color}`}>
-                    {t.initials}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-white font-semibold text-base">{t.name}</span>
-                    <span className="text-[#a1db87] text-sm">{t.source}</span>
-                    <div className="flex items-center mt-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-4 h-4 ${i < t.rating ? 'text-[#a1db87]' : 'text-gray-500'}`} fill={i < t.rating ? '#a1db87' : 'none'} />
-                      ))}
-                    </div>
+        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 justify-center text-center"><MessageCircle className="w-6 h-6 text-[#a1db87]" />Testimonios</h2>
+        {/* Testimonial Data */}
+        <div className="relative flex flex-col items-center">
+          {/* Card */}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: direction === 1 ? 40 : -40, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: direction === 1 ? -40 : 40, scale: 0.96 }}
+              transition={{ duration: 0.7, ease: [0.4, 0.0, 0.2, 1] }}
+              className="w-full max-w-3xl bg-[#23272f]/90 border border-[#a1db87]/10 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center relative"
+            >
+              <MessageCircle className="w-12 h-12 text-[#a1db87] absolute -top-6 left-8 bg-[#23272f] rounded-full p-2 shadow" />
+              <p className="text-white text-lg md:text-xl font-medium text-center mb-8 mt-4 leading-relaxed" style={{ fontFamily: 'inherit' }}>
+                "{t.text}"
+              </p>
+              <div className="flex items-center gap-4 mt-4">
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-[#23272f] shadow ${t.color}`}>
+                  {t.initials}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-white font-semibold text-base">{t.name}</span>
+                  <span className="text-[#a1db87] text-sm">{t.source}</span>
+                  <div className="flex items-center mt-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className={`w-4 h-4 ${i < t.rating ? 'text-[#a1db87]' : 'text-gray-500'}`} fill={i < t.rating ? '#a1db87' : 'none'} />
+                    ))}
                   </div>
                 </div>
-              </motion.div>
-              {/* Nav Buttons */}
-              <button onClick={prev} aria-label="Anterior" className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
-                <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
-              </button>
-              <button onClick={next} aria-label="Siguiente" className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
-                <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
-              </button>
-              {/* Dots */}
-              <div className="flex gap-2 mt-8">
-                {testimonials.map((_, i) => (
-                  <span key={i} className={`w-3 h-3 rounded-full ${i === idx ? 'bg-[#a1db87]' : 'bg-gray-600'}`}></span>
-                ))}
               </div>
-            </div>
-          );
-        })()}
+            </motion.div>
+          </AnimatePresence>
+          {/* Nav Buttons */}
+          <button onClick={prev} aria-label="Anterior" className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <button onClick={next} aria-label="Siguiente" className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
+          {/* Dots */}
+          <div className="flex gap-2 mt-8">
+            {testimonials.map((_, i) => (
+              <span key={i} className={`w-3 h-3 rounded-full ${i === idx ? 'bg-[#a1db87]' : 'bg-gray-600'}`}></span>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Contacto directo */}
       <section className="mb-8 text-center">
         <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 justify-center"><HeartHandshake className="w-6 h-6 text-[#a1db87]" />¿Quieres colaborar o tienes dudas?</h2>
-        <p className="text-gray-300 mb-4">Escríbenos a <a href="mailto:info@evenor-tech.com" className="text-[#a1db87] underline">info@evenor-tech.com</a> o rellena nuestro <a href="/contacto" className="text-[#a1db87] underline">formulario de contacto</a>.</p>
+        <p className="text-gray-300 mb-4">
+          Escríbenos a{' '}
+          <a
+            href="https://outlook.live.com/mail/0/deeplink/compose?to=info@evenor-tech.com"
+            className="text-[#a1db87] underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Abrir Outlook para escribir a info@evenor-tech.com"
+          >
+            info@evenor-tech.com
+          </a>
+          {' '}o rellena nuestro <a href="/contacto" className="text-[#a1db87] underline">formulario de contacto</a>.
+        </p>
       </section>
     </div>
   );
