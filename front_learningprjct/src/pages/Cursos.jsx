@@ -103,6 +103,13 @@ export default function Cursos() {
                       )
                   }
                 </div>
+                {/* Barra de progreso */}
+                <div className="w-full mt-4">
+                  <div className="w-full h-2 bg-[#23272f] rounded-full overflow-hidden border border-[#a1db87]/40">
+                    <div className="h-full bg-[#a1db87] transition-all duration-500" style={{ width: '0%' }}></div>
+                  </div>
+                  <div className="text-xs text-[#a1db87] mt-1 text-right">0%</div>
+                </div>
               </div>
             </motion.div>
           ))
