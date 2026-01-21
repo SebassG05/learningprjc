@@ -24,4 +24,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Obtener curso por id
+router.get('/:id', async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+    res.json(course);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al obtener el curso' });
+  }
+});
 export default router;

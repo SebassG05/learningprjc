@@ -4,11 +4,11 @@ POST http://localhost:3007/api/courses
 Content-Type: application/json
 
 {
-  "title": "Sistemas de Big Data",
-  "image": "https://res.cloudinary.com/dgbmy60sc/image/upload/v1768986200/939862_czz3ns.jpg",
-  "description": "Curso introductorio a los sistemas de Big Data y su aplicación en la industria.",
-  "duration": "20 horas",
-  "category": ["Tecnología", "Big Data"]
+  "title": "Curso Profesional en Gestión de Suelos, Carbono y Cambio Climático",
+  "image": "https://res.cloudinary.com/dgbmy60sc/image/upload/v1768991275/PXL_20250116_120807825_1_vhqvfd.jpg",
+  "description": "Programa diseñado a partir de la experiencia de Evenor-Tech en proyectos europeos de la Misión Europea de Suelos, con especial referencia a NOVASOIL.",
+  "duration": "18 horas",
+  "category": ["cambio climático", "ciclo del carbono y emisiones agrícolas","GIS"]
 }
 
 ### Obtener todos los cursos

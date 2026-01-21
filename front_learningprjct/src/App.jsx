@@ -29,6 +29,11 @@ function App() {
           <Route path="/reseñas" element={<ReviewsPage />} />
           <Route path="/ajustes" element={<Ajustes />} />
           <Route path="/sobre" element={<SobreNosotros />} />
+          <Route path="/curso/:id" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <CursoDetalle />
+            </Suspense>
+          } />
         </Routes>
       </Layout>
     </Router>
@@ -37,5 +42,6 @@ function App() {
 
 const ResetPassword = lazy(() => import('./pages/ResetPassword.jsx'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword.jsx'));
+const CursoDetalle = lazy(() => import('./pages/CursoDetalle.jsx'));
 
 export default App;
