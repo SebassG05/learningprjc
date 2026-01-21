@@ -158,9 +158,21 @@ export default function ReviewsPage() {
               <label className="block text-sm mb-1 text-gray-300">Puntuación</label>
               <div className="flex gap-1">
                 {[1,2,3,4,5].map(i => (
-                  <button type="button" key={i} onClick={() => handleRating(i)} className="focus:outline-none">
-                    <Star className={`w-7 h-7 ${i <= form.rating ? 'text-[#a1db87]' : 'text-gray-600'}`} fill={i <= form.rating ? '#a1db87' : 'none'} />
-                  </button>
+                  <motion.button
+                    type="button"
+                    key={i}
+                    onClick={() => handleRating(i)}
+                    className="focus:outline-none"
+                    whileHover={{ scale: 1.2, rotate: -8 }}
+                    whileTap={{ scale: 1.35, rotate: 8 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  >
+                    <Star
+                      className={`w-7 h-7 ${i <= form.rating ? 'text-[#a1db87]' : 'text-gray-600'}`}
+                      fill={i <= form.rating ? '#a1db87' : 'none'}
+                      style={{ filter: i <= form.rating ? 'drop-shadow(0 0 6px #a1db87aa)' : 'none', transition: 'filter 0.2s' }}
+                    />
+                  </motion.button>
                 ))}
               </div>
             </div>
