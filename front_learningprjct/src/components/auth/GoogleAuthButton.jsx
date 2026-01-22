@@ -36,9 +36,25 @@ const GoogleAuthButton = ({ onSuccess }) => {
       <GoogleLogin
         onSuccess={handleGoogleSuccess}
         onError={() => showToast('Error al autenticar con Google', 'error')}
-        width="100%"
         locale="es"
         useOneTap
+        width="100%"
+        theme="filled_black"
+        text="signin_with"
+        shape="pill"
+        logo_alignment="left"
+        render={renderProps => (
+          <button
+            type="button"
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+            className="flex items-center justify-center gap-3 w-full py-2 mt-2 rounded-lg shadow-md font-semibold text-base transition bg-[#181f1b] border border-[#22332a] hover:bg-[#232e26] text-green-200 hover:text-green-100 focus:outline-none focus:ring-2 focus:ring-green-400"
+            style={{ minHeight: 44 }}
+          >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-6 h-6" />
+            <span>Iniciar sesión con Google</span>
+          </button>
+        )}
       />
     </div>
   );
