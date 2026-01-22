@@ -9,6 +9,7 @@ import Ajustes from './pages/Ajustes.jsx';
 import SobreNosotros from './pages/SobreNosotros.jsx';
 import Cursos from './pages/Cursos.jsx';
 import LoginPage from './pages/Login.jsx';
+import PoliticaCookies from './pages/PoliticaCookies.jsx';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
               <CursoDetalle />
             </Suspense>
           } />
+          <Route path="/cookies" element={<PoliticaCookies />} />
+          <Route path="/politica-cookies" element={<PoliticaCookies />} />
         </Routes>
       </Layout>
     </Router>

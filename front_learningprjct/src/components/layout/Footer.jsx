@@ -69,8 +69,12 @@ const Footer = () => {
           <span className="text-xs text-gray-400">info@evenor-tech.com</span>
         </div>
       </div>
-      <div className="mt-8 border-t border-[#a1db87]/10 pt-4 text-center text-xs text-gray-500">
-        © 2026 CAMPUS. Todos los derechos reservados.
+      <div className="mt-8 border-t border-[#a1db87]/10 pt-4 text-xs text-gray-500 flex flex-col items-center">
+        <span className="text-center">© 2026 CAMPUS. Todos los derechos reservados.</span>
+        <div className="flex flex-row gap-4 justify-center mt-2">
+          <Link to="/politica-cookies" className="hover:text-[#a1db87] transition-colors">Cookies</Link>
+          <Link to="/politica-cookies" className="hover:text-[#a1db87] transition-colors">Política de Cookies</Link>
+        </div>
       </div>
     </footer>
   );
