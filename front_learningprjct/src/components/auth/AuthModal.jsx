@@ -1,4 +1,5 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
+import GoogleAuthButton from './GoogleAuthButton.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -295,6 +296,14 @@ const AuthModal = ({ open, onClose }) => {
                     {registerLoading ? 'Registrando...' : 'Registrarse'}
                   </button>
                   {registerError && <div className="text-red-400 font-semibold text-center mt-2">{registerError}</div>}
+                  {/* Google Auth Button debajo del registro */}
+                  <GoogleAuthButton onSuccess={() => {
+                    setIsVisible(false);
+                    onClose && onClose();
+                    setTimeout(() => {
+                      navigate('/', { replace: true });
+                    }, 10);
+                  }} />
                 </motion.form>
               )}
             </AnimatePresence>

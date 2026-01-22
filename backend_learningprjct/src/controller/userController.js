@@ -5,6 +5,7 @@ import { validationResult } from 'express-validator';
 import crypto from 'crypto';
 import PasswordResetToken from '../models/PasswordResetToken.js';
 import { sendPasswordResetEmail } from '../service/mailService.js';
+import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT } from '../service/googleAuthService.js';
 
 export const registerUser = async (req, res) => {
   const errors = validationResult(req);
@@ -118,5 +119,38 @@ export const resetPassword = async (req, res) => {
   } catch (err) {
     console.error('Error en resetPassword:', err);
     return res.status(500).json({ error: 'Error en el servidor', details: err.message });
+  }
+};
+
+/**
+ * Login/Register user with Google OAuth
+ * @route POST /auth/google
+ * @param {string} req.body.credential - Google ID token
+ */
+export const googleLogin = async (req, res, next) => {
+  try {
+    const { credential } = req.body;
+    if (!credential) {
+      return res.status(400).json({ message: 'No credential provided' });
+    }
+    // 1. Verificar el token de Google
+    let googlePayload;
+    try {
+      googlePayload = await verifyGoogleToken(credential);
+    } catch (err) {
+      return res.status(401).json({ message: 'Invalid Google token', error: err.message });
+    }
+    // 2. Buscar o crear usuario
+    const user = await findOrCreateGoogleUser(googlePayload);
+    // 3. Generar JWT propio
+    const token = generateJWT(user);
+    // 4. Responder con datos de usuario y token
+    return res.status(200).json({
+      message: 'Inicio de sesión con Google exitoso',
+      token,
+      user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar }
+    });
+  } catch (error) {
+    next(error);
   }
 };

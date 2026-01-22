@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { registerUser, loginUser, logoutUser, requestPasswordReset, resetPassword } from '../controller/userController.js';
+import { registerUser, loginUser, logoutUser, requestPasswordReset, resetPassword, googleLogin } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -50,5 +50,8 @@ router.post(
   ],
   resetPassword
 );
+
+// Google Auth endpoint
+router.post('/auth/google', googleLogin);
 
 export default router;
