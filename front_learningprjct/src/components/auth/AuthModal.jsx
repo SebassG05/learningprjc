@@ -184,9 +184,9 @@ const AuthModal = ({ open, onClose }) => {
                     {loginLoading ? 'Accediendo...' : 'Acceder'}
                   </button>
                   {loginError && <div className="text-red-400 font-semibold text-center mt-2">{loginError}</div>}
-                  <div className="text-sm mt-2 text-right">
+                  <div className="flex items-start justify-between mt-2 w-full">
                     <span
-                      className="text-green-300 hover:underline cursor-pointer"
+                      className="text-sm text-green-300 hover:underline cursor-pointer mt-2"
                       onClick={() => {
                         setIsVisible(false);
                         setTimeout(() => {
@@ -195,6 +195,15 @@ const AuthModal = ({ open, onClose }) => {
                         }, 350);
                       }}
                     >¿Has olvidado tu contraseña?</span>
+                    <div style={{ marginLeft: '0.5rem', marginTop: '-1rem' }}>
+                      <GoogleAuthButton onSuccess={() => {
+                        setIsVisible(false);
+                        onClose && onClose();
+                        setTimeout(() => {
+                          navigate('/', { replace: true });
+                        }, 10);
+                      }} />
+                    </div>
                   </div>
                 </motion.form>
               ) : (
