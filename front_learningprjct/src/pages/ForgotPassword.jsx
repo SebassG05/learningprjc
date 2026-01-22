@@ -39,15 +39,30 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <form onSubmit={handleSubmit} style={{ background: '#fff', padding: 40, borderRadius: 16, boxShadow: '0 8px 32px rgba(90,168,51,0.10)', border: 'none', maxWidth: 400, width: '100%' }}>
-        <h2 style={{ color: '#5aa833', fontFamily: 'Rondana, Arial, sans-serif', marginBottom: 24, textAlign: 'center' }}>¿Olvidaste tu contraseña?</h2>
-        <p style={{ color: '#595959', fontSize: 15, textAlign: 'center', marginBottom: 24 }}>Introduce tu email y te enviaremos instrucciones para restablecer tu contraseña.</p>
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ color: '#595959', fontWeight: 600, fontSize: 14 }}>Email</label>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: 12, borderRadius: 8, border: '1.5px solid #a1db87', marginTop: 6, fontSize: 15, outline: 'none', transition: 'border-color 0.2s' }} />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#23272f] via-[#1e2d23] to-[#23272f] py-12 px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-[#181f1b] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center"
+        style={{ boxShadow: '0 8px 32px rgba(90,168,51,0.10)' }}
+      >
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#a1db87] mb-2 text-center font-[Rondana]">¿Olvidaste tu contraseña?</h2>
+        <p className="text-gray-300 text-base text-center mb-6">Introduce tu email y te enviaremos instrucciones para restablecer tu contraseña.</p>
+        <div className="w-full mb-6">
+          <label className="block text-[#a1db87] font-semibold mb-2">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            className="w-full px-4 py-3 rounded-lg border border-[#a1db87] bg-[#23272f] text-[#a1db87] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition"
+            placeholder="tu@email.com"
+            required
+          />
         </div>
-        <button type="submit" disabled={loading} style={{ background: '#a1db87', color: '#333333', fontWeight: 700, padding: '14px 0', borderRadius: 8, border: 'none', width: '100%', fontSize: 16, boxShadow: '0 2px 8px rgba(161,219,135,0.10)', cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-[#a1db87] text-[#181f1b] hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 disabled:opacity-60"
+        >
           {loading ? 'Enviando...' : 'Enviar Mail'}
         </button>
       </form>

@@ -8,6 +8,7 @@ import ReviewsPage from './pages/Reviews.jsx';
 import Ajustes from './pages/Ajustes.jsx';
 import SobreNosotros from './pages/SobreNosotros.jsx';
 import Cursos from './pages/Cursos.jsx';
+import LoginPage from './pages/Login.jsx';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <ForgotPassword />
             </Suspense>
           } />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/cursos" element={<Cursos />} />
           <Route path="/reseñas" element={<ReviewsPage />} />

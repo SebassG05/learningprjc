@@ -10,6 +10,8 @@ import {
   Award, FileText, Euro, Video, ListChecks
 } from 'lucide-react';
 import Footer from '../components/layout/Footer';
+import { useUser } from '../context/UserContext';
+import AuthModal from '../components/auth/AuthModal';
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -601,8 +603,11 @@ const ReviewsCarousel = () => {
 const Home = () => {
   const navigate = useNavigate();
   const [animating, setAnimating] = useState(false);
+  const { user } = useUser();
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <>
+      {showLogin && <AuthModal open={showLogin} onClose={() => setShowLogin(false)} />}
       <HeroSection />
       <FAQSection animating={animating} setAnimating={setAnimating} navigate={navigate} />
       <ReviewsCarousel />
@@ -621,10 +626,20 @@ const Home = () => {
               <span className="flex items-center gap-2 bg-black/70 border border-[#a1db87]/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-[#a1db87]">✔</span> Acceso inmediato</span>
               <span className="flex items-center gap-2 bg-black/70 border border-[#a1db87]/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-[#a1db87]">✔</span> Sin compromiso</span>
             </div>
-            <button className="bg-[#a1db87] hover:bg-emerald-400 text-black font-bold text-lg rounded-xl px-10 py-4 shadow-lg transition-colors flex items-center gap-2 mb-2">
+            <button
+              className="cursor-pointer bg-[#a1db87] hover:bg-emerald-400 text-black font-bold text-lg rounded-xl px-10 py-4 shadow-lg transition-colors flex items-center gap-2 mb-2"
+              onClick={() => {
+                if (user) {
+                  navigate('/cursos');
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setShowLogin(true);
+                }
+              }}
+            >
               Comenzar ahora <ArrowRight className="w-5 h-5" />
             </button>
-            <span className="text-xs text-gray-400 mt-2">No se requiere tarjeta de crédito</span>
+            <span className="text-xs text-gray-400 mt-2">Cursos gratuitos y sin compromiso</span>
           </div>
         </Container>
       </section>
