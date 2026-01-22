@@ -61,7 +61,7 @@ export default function ForgotPassword() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-[#a1db87] text-[#181f1b] hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 disabled:opacity-60"
+          className="cursor-pointer w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-[#a1db87] text-[#181f1b] hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 disabled:opacity-60"
         >
           {loading ? 'Enviando...' : 'Enviar Mail'}
         </button>

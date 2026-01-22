@@ -12,6 +12,7 @@ export default function ResetPassword() {
   const [success, setSuccess] = useState('');
   const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const token = searchParams.get('token');
   const id = searchParams.get('id');
@@ -69,123 +70,106 @@ export default function ResetPassword() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent' }}>
-      <form onSubmit={handleSubmit} style={{ background: '#fff', padding: 40, borderRadius: 16, boxShadow: '0 8px 32px rgba(90,168,51,0.10)', border: 'none', maxWidth: 400, width: '100%', position: 'relative' }}>
-        <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <span style={{ display: 'inline-block', background: '#a1db87', borderRadius: '50%', padding: 12, marginBottom: 8 }}>
-            <svg width="32" height="32" fill="#5aa833" viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-7V8a6 6 0 1 0-12 0v2a4 4 0 0 0-2 3.465V18a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-3.535A4 4 0 0 0 18 10zm-8-2a4 4 0 1 1 8 0v2H6V8zm10 10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-3.535A2 2 0 0 1 8 12h8a2 2 0 0 1 2 2.465V18z"/></svg>
-          </span>
-          <h2 style={{ color: '#5aa833', fontFamily: 'Rondana, Arial, sans-serif', marginBottom: 4, fontSize: 22 }}>Actualiza tu contraseña</h2>
-          <p style={{ color: '#595959', fontSize: 15 }}>Introduce y confirma tu nueva contraseña para tu cuenta.</p>
-        </div>
-        {/* Bloque de requisitos de contraseña: esquina superior derecha en escritorio, debajo en móvil */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#23272f] via-[#1e2d23] to-[#23272f] py-12 px-4">
+      <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl gap-8">
+        {/* Bloque de requisitos de contraseña */}
         <div
-          className="password-rules-block"
+          className="password-rules-block mb-8 md:mb-0"
           style={{
-            position: 'absolute',
-            top: 24,
-            right: 424,
-            background: '#f7fafc',
-            borderRadius: 10,
+            marginTop: '-38.5%',
+            background: '#181f1b',
+            borderRadius: 16,
             boxShadow: '0 1px 6px rgba(90,168,51,0.07)',
-            padding: '14px 18px',
-            border: '1.5px solid #e0e0e0',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 6,
-            minWidth: 210,
-            maxWidth: 240,
-            zIndex: 2
+            padding: '20px 24px',
+            border: '1.5px solid #a1db87',
+            minWidth: 240,
+            maxWidth: 260,
+            zIndex: 2,
           }}
         >
-          <div style={{fontWeight: 600, fontSize: 13, color: '#5aa833', marginBottom: 2}}>Requisitos de la contraseña:</div>
+          <div style={{ fontWeight: 'bold', color: '#a1db87', marginBottom: '0.5rem', fontSize: '1rem' }}>Requisitos de la contraseña:</div>
           {rules.map((rule, i) => (
-            <div key={i} style={{
-              color: rule.valid ? '#5aa833' : '#bdbdbd',
-              fontWeight: rule.valid ? 600 : 500,
-              fontSize: 13,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              opacity: rule.valid ? 1 : 0.7
-            }}>
-              <span style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 20,
-                height: 20,
-                borderRadius: '50%',
-                border: rule.valid ? '2px solid #5aa833' : '2px solid #bdbdbd',
-                background: rule.valid ? '#eafbe7' : '#f7fafc',
-                marginRight: 6,
-                fontSize: 14,
-                transition: 'all 0.2s'
-              }}>{rule.valid ? (
-                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#eafbe7"/><path d="M6 10.5l3 3 5-5" stroke="#5aa833" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <div key={i} className={`flex items-center gap-2 mb-1 text-sm font-semibold ${rule.valid ? 'text-[#a1db87]' : 'text-gray-500'}`}> 
+              <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full border-2 ${rule.valid ? 'border-[#a1db87] bg-[#23272f]' : 'border-gray-500 bg-[#23272f]'}`}>{rule.valid ? (
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#23272f"/><path d="M6 10.5l3 3 5-5" stroke="#a1db87" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               ) : (
-                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#f7fafc"/><path d="M7 7l6 6M13 7l-6 6" stroke="#bdbdbd" strokeWidth="2" strokeLinecap="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#23272f"/><path d="M7 7l6 6M13 7l-6 6" stroke="#bdbdbd" strokeWidth="2" strokeLinecap="round"/></svg>
               )}</span>
               {rule.label}
             </div>
           ))}
         </div>
-      {/* Responsive: mostrar el bloque de requisitos debajo en móvil */}
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md bg-[#181f1b] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center relative"
+          style={{ boxShadow: '0 8px 32px rgba(90,168,51,0.10)' }}
+        >
+          <div className="flex flex-col items-center mb-6">
+            <span className="inline-block bg-[#a1db87] rounded-full p-3 mb-3">
+              <svg width="32" height="32" fill="#23272f" viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-7V8a6 6 0 1 0-12 0v2a4 4 0 0 0-2 3.465V18a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-3.535A4 4 0 0 0 18 10zm-8-2a4 4 0 1 1 8 0v2H6V8zm10 10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-3.535A2 2 0 0 1 8 12h8a2 2 0 0 1 2 2.465V18z"/></svg>
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#a1db87] mb-2 text-center font-[Rondana]">Actualiza tu contraseña</h2>
+            <p className="text-gray-300 text-base text-center">Introduce y confirma tu nueva contraseña para tu cuenta.</p>
+          </div>
+          <div className="w-full mb-6 relative">
+            <label className="block text-[#a1db87] font-semibold mb-2">Nueva contraseña</label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              onBlur={() => setTouched(true)}
+              className={`w-full px-4 py-3 rounded-lg border ${touched && !allValid ? 'border-red-400 bg-[#2a2323]' : 'border-[#a1db87] bg-[#23272f]'} text-[#a1db87] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition`}
+              placeholder="Nueva contraseña"
+              required
+            />
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              className="absolute right-3 top-[44px] text-[#a1db87] hover:text-emerald-400 focus:outline-none"
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+              onClick={() => setShowPassword(v => !v)}
+            >
+              {showPassword ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#a1db87" strokeWidth="2" d="M3 3l18 18M10.7 10.7A2 2 0 0 0 12 14a2 2 0 0 0 1.3-3.3m-2.6 0A2 2 0 0 1 12 10a2 2 0 0 1 2 2c0 .5-.2 1-.5 1.4m-2.6-2.7C7.6 10.7 5.5 12.5 4 14c2.5 2.5 6.5 4 8 4s5.5-1.5 8-4c-1.1-1.1-2.7-2.5-4.6-3.3"/></svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#a1db87" strokeWidth="2" d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Zm11-3a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/></svg>
+              )}
+            </button>
+          </div>
+          <div className="w-full mb-6">
+            <label className="block text-[#a1db87] font-semibold mb-2">Confirmar nueva contraseña</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              className={`w-full px-4 py-3 rounded-lg border ${touched && confirmPassword && password !== confirmPassword ? 'border-red-400 bg-[#2a2323]' : 'border-[#a1db87] bg-[#23272f]'} text-[#a1db87] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition`}
+              placeholder="Confirma la contraseña"
+              required
+              onCopy={e => e.preventDefault()}
+              onPaste={e => e.preventDefault()}
+              onCut={e => e.preventDefault()}
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-[#a1db87] text-[#181f1b] hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 disabled:opacity-60"
+          >
+            {loading ? 'Actualizando...' : 'Actualizar contraseña'}
+          </button>
+        </form>
+      </div>
       <style>{`
-        @media (max-width: 600px) {
+        @media (max-width: 900px) {
           .password-rules-block {
             position: static !important;
-            margin: 24px auto 0 auto !important;
+            margin: 0 0 24px 0 !important;
             max-width: 100% !important;
             width: 100% !important;
           }
         }
       `}</style>
-
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ color: '#595959', fontWeight: 600, fontSize: 14 }}>Nueva contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            onBlur={() => setTouched(true)}
-            style={{
-              width: '100%',
-              padding: 12,
-              borderRadius: 8,
-              border: touched && !allValid ? '2px solid #e57373' : '1.5px solid #a1db87',
-              marginTop: 6,
-              fontSize: 15,
-              outline: 'none',
-              transition: 'border-color 0.2s',
-              background: touched && !allValid ? '#fff6f6' : undefined
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: 18 }}>
-          <label style={{ color: '#595959', fontWeight: 600, fontSize: 14 }}>Confirmar nueva contraseña</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            style={{
-              width: '100%',
-              padding: 12,
-              borderRadius: 8,
-              border: touched && confirmPassword && password !== confirmPassword ? '2px solid #e57373' : '1.5px solid #a1db87',
-              marginTop: 6,
-              fontSize: 15,
-              outline: 'none',
-              transition: 'border-color 0.2s',
-              background: touched && confirmPassword && password !== confirmPassword ? '#fff6f6' : undefined
-            }}
-          />
-        </div>
-        {/* Notificaciones visuales solo con toast, no texto aquí */}
-        <button type="submit" disabled={loading} style={{ background: '#a1db87', color: '#333333', fontWeight: 700, padding: '14px 0', borderRadius: 8, border: 'none', width: '100%', fontSize: 16, boxShadow: '0 2px 8px rgba(161,219,135,0.10)', cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>
-          {loading ? 'Actualizando...' : 'Actualizar contraseña'}
-        </button>
-      </form>
     </div>
   );
 }
