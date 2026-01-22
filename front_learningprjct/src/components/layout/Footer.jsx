@@ -1,4 +1,5 @@
 import { Linkedin, Instagram, Mail, Globe, X, MapPin, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -16,10 +17,10 @@ const Footer = () => {
         <div className="flex-1 flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <span className="uppercase text-xs text-[#a1db87] font-semibold mb-2">Enlaces</span>
           <nav className="flex flex-col gap-1 text-sm">
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Inicio</a>
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Cursos</a>
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Reseñas</a>
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Contacto</a>
+            <Link to="/" className="hover:text-[#a1db87] transition-colors">Inicio</Link>
+            <Link to="/cursos" className="hover:text-[#a1db87] transition-colors">Cursos</Link>
+            <Link to="/reseñas" className="hover:text-[#a1db87] transition-colors">Reseñas</Link>
+            <Link to="/contacto" className="hover:text-[#a1db87] transition-colors">Contacto</Link>
           </nav>
         </div>
 
@@ -27,10 +28,10 @@ const Footer = () => {
         <div className="flex-1 flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <span className="uppercase text-xs text-[#a1db87] font-semibold mb-2">Soporte</span>
           <nav className="flex flex-col gap-1 text-sm">
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Centro de Ayuda</a>
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Documentación</a>
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Contacto</a>
-            <a href="#" className="hover:text-[#a1db87] transition-colors">Reseñas</a>
+            <Link to="/" className="hover:text-[#a1db87] transition-colors">Centro de Ayuda</Link>
+            <Link to="/" className="hover:text-[#a1db87] transition-colors">Documentación</Link>
+            <Link to="/contacto" className="hover:text-[#a1db87] transition-colors">Contacto</Link>
+            <Link to="/reseñas" className="hover:text-[#a1db87] transition-colors">Reseñas</Link>
           </nav>
         </div>
 

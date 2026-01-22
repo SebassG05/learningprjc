@@ -246,7 +246,7 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
     },
     {
       question: '¿Qué hago si tengo problemas técnicos?',
-      answer: 'Puedes contactar con soporte desde la sección de ayuda o escribiendo a soporte@evenor-tech.com.'
+      answer: 'Puedes contactar con soporte desde la sección de ayuda o escribiendo a info@evenor-tech.com.'
     },
   ];
   const [openIdx, setOpenIdx] = useState(null);

@@ -42,6 +42,9 @@ export default function ObjetivosSuelos() {
           </li>
         </ul>
       </div>
+
+        <h2 className="mt-12 text-3xl font-extrabold text-[#a1db87] text-center">Estructura del Curso</h2>
+        
     </div>
   );
 }

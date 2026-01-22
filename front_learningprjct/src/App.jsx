@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/layout/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
@@ -11,6 +12,7 @@ import Cursos from './pages/Cursos.jsx';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
