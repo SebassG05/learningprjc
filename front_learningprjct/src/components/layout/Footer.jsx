@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-[#23272f] border-t border-[#a1db87]/20 pt-10 pb-6 mt-auto text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row md:justify-between md:items-start gap-10">
         {/* Logo y descripción */}
-        <div className="flex-1 flex flex-col items-center md:items-start mb-6 md:mb-0 text-center md:text-left">
+        <div className="flex-1 flex flex-col items-center md:items-start mb-6 md:mb-0 text-center md:text-leftre">
           <div className="flex items-center gap-2 mb-2">
             <Globe className="w-7 h-7 text-[#a1db87]" />
             <span className="font-bold text-xl text-white tracking-wide">CAMPUS</span>
@@ -18,9 +18,8 @@ const Footer = () => {
           <span className="uppercase text-xs text-[#a1db87] font-semibold mb-2">Enlaces</span>
           <nav className="flex flex-col gap-1 text-sm">
             <Link to="/" className="hover:text-[#a1db87] transition-colors">Inicio</Link>
+            <Link to="/sobre" className="hover:text-[#a1db87] transition-colors">Sobre Nosotros</Link>
             <Link to="/cursos" className="hover:text-[#a1db87] transition-colors">Cursos</Link>
-            <Link to="/reseñas" className="hover:text-[#a1db87] transition-colors">Reseñas</Link>
-            <Link to="/contacto" className="hover:text-[#a1db87] transition-colors">Contacto</Link>
           </nav>
         </div>
 
@@ -28,8 +27,6 @@ const Footer = () => {
         <div className="flex-1 flex flex-col items-center md:items-start gap-2 text-center md:text-left">
           <span className="uppercase text-xs text-[#a1db87] font-semibold mb-2">Soporte</span>
           <nav className="flex flex-col gap-1 text-sm">
-            <Link to="/" className="hover:text-[#a1db87] transition-colors">Centro de Ayuda</Link>
-            <Link to="/" className="hover:text-[#a1db87] transition-colors">Documentación</Link>
             <Link to="/contacto" className="hover:text-[#a1db87] transition-colors">Contacto</Link>
             <Link to="/reseñas" className="hover:text-[#a1db87] transition-colors">Reseñas</Link>
           </nav>
