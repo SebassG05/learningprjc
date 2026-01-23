@@ -97,15 +97,34 @@ export default function SobreNosotros() {
         <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-16 text-center">
           Sobre <span className="text-[#a1db87]">Evenor-Tech</span>
         </h1>
-        <div className="flex flex-wrap justify-center gap-6 mt-8">
+        <motion.div
+          className="flex flex-wrap justify-center gap-6 mt-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.18
+              }
+            },
+            hidden: {}
+          }}
+        >
           {values.map((v, i) => (
-            <div key={i} className="bg-[#181b20] rounded-xl p-6 w-64 flex flex-col items-center shadow-md border border-[#a1db87]/10">
+            <motion.div
+              key={i}
+              className="bg-[#181b20] rounded-xl p-6 w-64 flex flex-col items-center shadow-md border border-[#a1db87]/10"
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+              }}
+            >
               {v.icon}
               <h3 className="text-lg font-bold text-[#a1db87] mt-2 mb-1">{v.title}</h3>
               <p className="text-gray-400 text-sm text-center">{v.desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
 
