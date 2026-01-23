@@ -144,7 +144,7 @@ export default function SobreNosotros() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-center mb-12">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-stretch justify-center mb-12">
           {/* Misión */}
           <div className="bg-[#181b20] rounded-2xl shadow-xl border border-[#a1db87]/20 p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
             <div className="flex items-center gap-2 mb-3">
@@ -157,7 +157,7 @@ export default function SobreNosotros() {
             </p>
           </div>
           {/* Visión */}
-          <div className="bg-[#181b20] rounded-2xl shadow-xl border border-blue-400/20 p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
+          <div style={{backgroundColor: '#181b20', borderColor: 'rgba(59, 130, 246, 0.5)', paddingBottom: '3.5rem'}} className="rounded-2xl shadow-xl border p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-8 h-8 text-blue-400" />
               <span className="text-2xl font-bold text-blue-400">Visión</span>
@@ -235,10 +235,10 @@ export default function SobreNosotros() {
             </motion.div>
           </AnimatePresence>
           {/* Nav Buttons */}
-          <button onClick={prev} aria-label="Anterior" className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
+          <button onClick={prev} aria-label="Anterior" className="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
           </button>
-          <button onClick={next} aria-label="Siguiente" className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
+          <button onClick={next} aria-label="Siguiente" className="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
           </button>
           {/* Dots */}
