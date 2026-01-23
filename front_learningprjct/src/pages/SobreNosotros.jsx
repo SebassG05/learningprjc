@@ -3,11 +3,11 @@ import { Briefcase, Users, Award, HeartHandshake, Star, Globe, MessageCircle, Ta
 import { motion, AnimatePresence } from 'framer-motion';
 
 const team = [
-  { name: 'Maria Anaya Romero', role: 'CEO & Fundador', img: '', linkedin: '#' },
-  { name: 'Javier Bravo Garcia', role: 'Responsable en GIS, Teledetección y Medio Ambiente', img: '', linkedin: '#' },
-  { name: 'Francisco José Blanco-Velázquez', role: 'Project Manager', img: '', linkedin: '#' },
-  { name: 'Sebastián Gandía Gutiérrez', role: 'Desarrollador Full Stack', img: '', linkedin: '#' },
-  { name: 'Jesús Manuel Vázquez Herrera', role: 'Desarrollador Full Stack', img: '', linkedin: '#' },
+  { name: 'Maria Anaya Romero', role: 'CEO & Fundador', img: '', linkedin: 'https://www.linkedin.com/in/mar%C3%ADa-anaya-romero-95005727/' },
+  { name: 'Javier Bravo Garcia', role: 'Responsable en GIS, Teledetección y Medio Ambiente', img: '', linkedin: 'https://www.linkedin.com/in/javier-bravo-garc%C3%ADa-5158b720a/' },
+  { name: 'Francisco José Blanco-Velázquez', role: 'Project Manager', img: '', linkedin: 'https://www.linkedin.com/in/francisco-jos%C3%A9-blanco-vel%C3%A1zquez-19138b103/' },
+  { name: 'Sebastián Gandía Gutiérrez', role: 'Desarrollador Full Stack', img: '', linkedin: 'https://www.linkedin.com/in/sebasti%C3%A1n-gand%C3%ADa-guti%C3%A8rrez-7880662b5/' },
+  { name: 'Jesús Manuel Vázquez Herrera', role: 'Desarrollador Full Stack', img: '', linkedin: 'https://www.linkedin.com/in/jes%C3%BAs-manuel-v%C3%A1zquez-herrera-8191462a3/' },
 ];
 
 const values = [
