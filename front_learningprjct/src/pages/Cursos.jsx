@@ -1,11 +1,17 @@
-
 import React, { useEffect, useState } from "react";
+import AuthModal from '../components/auth/AuthModal';
 import { BookOpen, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cursos() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const [showLogin, setShowLogin] = useState(false);
+  const [pendingCourseId, setPendingCourseId] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3007/api/courses")
@@ -15,6 +21,23 @@ export default function Cursos() {
         setLoading(false);
       });
   }, []);
+
+  // Cuando se cierra el modal, si no hay usuario, redirige al home
+  const handleCloseLogin = () => {
+    setShowLogin(false);
+    setPendingCourseId(null);
+    if (!user) navigate('/');
+  };
+
+  // Cuando el usuario hace clic en un curso
+  const handleCourseClick = (courseId) => {
+    if (!user) {
+      setPendingCourseId(courseId);
+      setShowLogin(true);
+    } else {
+      navigate(`/curso/${courseId}`);
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-4">
@@ -39,7 +62,7 @@ export default function Cursos() {
           >
             <Sparkles className="w-4 h-4 text-[#a1db87] mr-2 ml-2" />
             <span className="text-xs sm:text-sm font-semibold text-[#a1db87] mr-2">
-               Cursos
+              Cursos
             </span>
           </motion.div>
         </motion.div>
@@ -54,6 +77,8 @@ export default function Cursos() {
         </motion.h1>
       </section>
 
+      {/* Modal de login si es necesario */}
+      <AuthModal open={showLogin} onClose={handleCloseLogin} />
       {/* Tarjetas de cursos */}
       {/* Grid original: visible en móvil y escritorio, oculto en md (tablet) */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-120 place-items-center block md:hidden lg:grid">
@@ -70,7 +95,7 @@ export default function Cursos() {
               transition={{ duration: 0.5 }}
               className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full lg:min-w-[450px] lg:min-h-[340px] xl:min-w-[450px] xl:min-h-[340px] sm:max-w-[95vw] sm:min-h-[220px]"
               style={{}}
-              onClick={() => window.location.href = `/curso/${course._id}`}
+              onClick={() => handleCourseClick(course._id)}
             >
               <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
                 {course.image ? (
@@ -106,7 +131,6 @@ export default function Cursos() {
                 {/* Barra de progreso */}
                 <div className="w-full mt-4">
                   <div className="w-full h-2 bg-[#23272f] rounded-full overflow-hidden border border-[#a1db87]/40">
-                    <div className="h-full bg-[#a1db87] transition-all duration-500" style={{ width: '0%' }}></div>
                   </div>
                   <div className="text-xs text-[#a1db87] mt-1 text-right">0%</div>
                 </div>
@@ -131,7 +155,7 @@ export default function Cursos() {
               transition={{ duration: 0.5 }}
               className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full max-w-md min-h-[320px]"
               style={{}}
-              onClick={() => window.location.href = `/curso/${course._id}`}
+              onClick={() => handleCourseClick(course._id)}
             >
               <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
                 {course.image ? (
