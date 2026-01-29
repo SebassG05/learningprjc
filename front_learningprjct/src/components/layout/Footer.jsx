@@ -58,10 +58,10 @@ const Footer = () => {
         <div className="flex-1 flex flex-col items-center md:items-end gap-2 text-center md:text-right">
           <span className="uppercase text-xs text-[#a1db87] font-semibold mb-2">Síguenos</span>
           <div className="flex gap-4 mb-2">
-            <a href="#" aria-label="Instagram" className="hover:text-[#a1db87] transition-colors"><Instagram className="w-5 h-5" /></a>
+            <a href="https://www.instagram.com/evenortech/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#a1db87] transition-colors"><Instagram className="w-5 h-5" /></a>
             <a href="#" aria-label="Linkedin" className="hover:text-[#a1db87] transition-colors"><Linkedin className="w-5 h-5" /></a>
-            <a href="#" aria-label="X" className="hover:text-[#a1db87] transition-colors"><X className="w-5 h-5" /></a>
-            <a href="#" aria-label="Email" className="hover:text-[#a1db87] transition-colors"><Mail className="w-5 h-5" /></a>
+            <a href="http://x.com/evenor_tech" target="_blank" rel="noopener noreferrer" aria-label="X" className="hover:text-[#a1db87] transition-colors"><X className="w-5 h-5" /></a>
+            <a href="mailto:info@evenor-tech.com" aria-label="Email" className="hover:text-[#a1db87] transition-colors"><Mail className="w-5 h-5" /></a>
           </div>
           <span className="text-xs text-gray-400">info@evenor-tech.com</span>
         </div>
