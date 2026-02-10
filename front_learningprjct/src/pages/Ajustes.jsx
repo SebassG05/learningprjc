@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { MailCheck, ShieldCheck } from 'lucide-react';
+import { MailCheck, ShieldCheck, Cookie } from 'lucide-react';
+import CookiePreferences from '../components/configuration/CookiePreferences';
 
 export default function Ajustes() {
   const navigate = useNavigate();
   return (
-    <div className="max-w-2xl md:max-w-3xl mx-auto py-12 px-4">
+    <div className="max-w-4xl mx-auto py-12 px-4 space-y-8">
+      {/* Configuración de Seguridad */}
       <div className="bg-[#23272f]/80 backdrop-blur-md rounded-2xl shadow-2xl p-0 border border-[#a1db87]/20 relative overflow-hidden">
         {/* Glow decorativo */}
         <div className="absolute -top-10 -left-10 w-60 h-60 bg-[#a1db87]/10 rounded-full blur-3xl z-0" />
@@ -33,6 +35,20 @@ export default function Ajustes() {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Configuración de Cookies */}
+      <div className="bg-[#23272f]/80 backdrop-blur-md rounded-2xl shadow-2xl p-0 border border-[#a1db87]/20 relative overflow-hidden">
+        <div className="absolute -top-10 -right-10 w-60 h-60 bg-[#a1db87]/10 rounded-full blur-3xl z-0" />
+        <div className="relative z-10 p-6 md:p-10">
+          <div className="flex flex-col items-center mb-8">
+            <div className="flex items-center gap-3 justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow text-center">Configuración de Privacidad</h2>
+              <Cookie className="w-7 h-7 text-[#a1db87] animate-pulse ml-2" />
+            </div>
+          </div>
+          <CookiePreferences />
         </div>
       </div>
     </div>
