@@ -359,7 +359,7 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
               </span>
               <ul className="space-y-2 w-full">
                 <li>
-                  <a href="#" className="block px-4 py-2 rounded-md text-[#a1db87] font-semibold bg-[#1a1a1a] hover:bg-[#a1db87] hover:text-[#1a1a1a] transition-colors duration-200 text-center">Guía de usuario</a>
+                  <button onClick={() => navigate('/guia-usuario')} className="w-full block px-4 py-2 rounded-md text-[#a1db87] font-semibold bg-[#1a1a1a] hover:bg-[#a1db87] hover:text-[#1a1a1a] transition-colors duration-200 text-center cursor-pointer">Guía de usuario</button>
                 </li>
               </ul>
             </m.div>

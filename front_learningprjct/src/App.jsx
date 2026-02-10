@@ -10,6 +10,7 @@ import SobreNosotros from './pages/SobreNosotros.jsx';
 import Cursos from './pages/Cursos.jsx';
 import LoginPage from './pages/Login.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
+import GuiaUsuario from './pages/GuiaUsuario.jsx';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           } />
           <Route path="/cookies" element={<PoliticaCookies />} />
           <Route path="/politica-cookies" element={<PoliticaCookies />} />
+          <Route path="/guia-usuario" element={<GuiaUsuario />} />
         </Routes>
       </Layout>
     </Router>

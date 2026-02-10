@@ -81,8 +81,8 @@ const AuthModal = ({ open, onClose }) => {
           >
         {/* Left: Logo & frase */}
         <div className="hidden md:flex flex-col items-center justify-center text-green-300 p-20 w-1/2 border-r border-[#22332a] min-h-[750px]" style={{background:'#2D3C40'}}>
-          <img src="/imgs/logo.png" alt="Logo" className="w-40 h-40 mb-8" />
-          <p className="text-3xl font-extrabold text-center leading-tight">“CADA JUGADA CUENTA,<br/>CADA PASO IMPORTA”</p>
+          <img src="https://res.cloudinary.com/dd9pjmuy9/image/upload/v1770629257/Gemini_Generated_Image_ufiqyxufiqyxufiq-removebg-preview_lohtpf.png" alt="Logo" className="w-40 h-40 mb-8 object-contain" />
+          <p className="text-3xl font-extrabold text-center leading-tight">“EL CAMBIO COMIENZA CON LA FORMACIÓN”</p>
         </div>
         {/* Right: Tabs & Forms */}
         <div className="flex-1 pt-8 pb-20 px-20 flex flex-col justify-center relative min-w-[500px] min-h-[750px] bg-[#232e26]" style={{background: '#0D0D0D'}}>
@@ -103,7 +103,7 @@ const AuthModal = ({ open, onClose }) => {
               onClick={() => setTab('register')}
             >
               ¿ERES NUEVO CLIENTE?
-            </button>
+            </button>9
             {/* Animated tab bar */}
             <motion.div
               className="absolute bottom-0 h-1 rounded-full"
