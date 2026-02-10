@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Book,
   UserPlus,
@@ -369,25 +369,44 @@ const GuiaUsuario = () => {
               key={section.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="bg-[#23272f] rounded-xl border border-[#a1db87]/20 overflow-hidden shadow-lg hover:border-[#a1db87]/40 transition-all duration-300"
+              transition={{ 
+                duration: 0.5,
+                delay: index * 0.08,
+                ease: [0.4, 0.0, 0.2, 1]
+              }}
+              className="bg-[#23272f] rounded-xl border border-[#a1db87]/20 overflow-hidden shadow-lg hover:border-[#a1db87]/50 hover:shadow-[#a1db87]/10 hover:shadow-2xl transition-all duration-500"
             >
               {/* Título clickeable */}
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-[#2a2e36] transition-colors duration-200"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-[#2a2e36] transition-all duration-400"
               >
                 <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-[#a1db87]/10 rounded-lg flex items-center justify-center text-[#a1db87]">
+                  <motion.div 
+                    className="flex-shrink-0 w-12 h-12 bg-[#a1db87]/10 rounded-lg flex items-center justify-center text-[#a1db87]"
+                    whileHover={{ 
+                      scale: 1.1,
+                      backgroundColor: "rgba(161, 219, 135, 0.2)"
+                    }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 17
+                    }}
+                  >
                     {section.icon}
-                  </div>
+                  </motion.div>
                   <h3 className="text-xl font-semibold text-white font-[Rondana]">
                     {section.title}
                   </h3>
                 </div>
                 <motion.div
                   animate={{ rotate: activeSection === section.id ? 90 : 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ 
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20
+                  }}
                   className="text-[#a1db87]"
                 >
                   <ChevronRight className="w-6 h-6" />
@@ -395,19 +414,54 @@ const GuiaUsuario = () => {
               </button>
 
               {/* Contenido expandible */}
-              <motion.div
-                initial={false}
-                animate={{
-                  height: activeSection === section.id ? 'auto' : 0,
-                  opacity: activeSection === section.id ? 1 : 0,
-                }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="overflow-hidden"
-              >
-                <div className="p-6 pt-0 border-t border-[#a1db87]/10">
-                  {section.content}
-                </div>
-              </motion.div>
+              <AnimatePresence initial={false}>
+                {activeSection === section.id && (
+                  <motion.div
+                    key="content"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ 
+                      height: 'auto',
+                      opacity: 1
+                    }}
+                    exit={{ 
+                      height: 0,
+                      opacity: 0
+                    }}
+                    transition={{ 
+                      height: {
+                        duration: 0.6,
+                        ease: [0.4, 0.0, 0.2, 1]
+                      },
+                      opacity: {
+                        duration: 0.5,
+                        ease: 'easeInOut',
+                        delay: 0.1
+                      }
+                    }}
+                    className="overflow-hidden"
+                  >
+                    <motion.div 
+                      className="p-6 pt-0 border-t border-[#a1db87]/10"
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ 
+                        y: 0,
+                        opacity: 1
+                      }}
+                      exit={{ 
+                        y: -20,
+                        opacity: 0
+                      }}
+                      transition={{
+                        duration: 0.5,
+                        ease: [0.4, 0.0, 0.2, 1],
+                        delay: 0.15
+                      }}
+                    >
+                      {section.content}
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>
@@ -416,24 +470,60 @@ const GuiaUsuario = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 bg-gradient-to-r from-[#a1db87]/10 to-[#a1db87]/5 rounded-2xl p-8 border border-[#a1db87]/20"
+          transition={{ 
+            duration: 0.7,
+            delay: 0.5,
+            ease: [0.4, 0.0, 0.2, 1]
+          }}
+          className="mt-16 bg-gradient-to-r from-[#a1db87]/10 to-[#a1db87]/5 rounded-2xl p-8 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-500"
         >
           <div className="text-center">
-            <MessageCircle className="w-12 h-12 text-[#a1db87] mx-auto mb-4" />
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
+            >
+              <MessageCircle className="w-12 h-12 text-[#a1db87] mx-auto mb-4" />
+            </motion.div>
             <h3 className="text-2xl font-bold text-white mb-3 font-[Rondana]">
               ¿Necesitas más ayuda?
             </h3>
             <p className="text-gray-300 mb-6">
               Nuestro equipo de soporte está aquí para ayudarte con cualquier pregunta o problema que tengas.
             </p>
-            <a
+            <motion.a
               href="/contacto"
-              className="inline-flex items-center gap-2 bg-[#a1db87] text-[#1a1a1a] px-8 py-3 rounded-lg font-semibold hover:bg-[#8bc76d] transition-colors duration-200"
+              className="inline-flex items-center gap-2 bg-[#a1db87] text-[#1a1a1a] px-8 py-3 rounded-lg font-semibold hover:bg-[#8bc76d] transition-colors duration-300"
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 10px 30px rgba(161, 219, 135, 0.3)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 400,
+                damping: 17
+              }}
             >
               Contáctanos
-              <ChevronRight className="w-5 h-5" />
-            </a>
+              <motion.span
+                animate={{ x: [0, 3, 0] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </motion.span>
+            </motion.a>
           </div>
         </motion.div>
 
@@ -441,35 +531,102 @@ const GuiaUsuario = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ 
+            duration: 0.7,
+            delay: 0.6,
+            ease: [0.4, 0.0, 0.2, 1]
+          }}
           className="mt-8 grid md:grid-cols-3 gap-4"
         >
-          <a
+          <motion.a
             href="/sobre"
-            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-300 text-center group"
+            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-400 text-center group"
+            whileHover={{ 
+              y: -5,
+              boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
+            }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}
           >
-            <FileText className="w-8 h-8 text-[#a1db87] mx-auto mb-3 group-hover:scale-110 transition-transform duration-200" />
+            <motion.div
+              whileHover={{ 
+                scale: 1.15,
+                rotate: 5
+              }}
+              transition={{ 
+                type: "spring",
+                stiffness: 400,
+                damping: 17
+              }}
+            >
+              <FileText className="w-8 h-8 text-[#a1db87] mx-auto mb-3" />
+            </motion.div>
             <h4 className="text-white font-semibold mb-2">Sobre nosotros</h4>
             <p className="text-sm text-gray-400">Conoce más sobre Evenor-Tech</p>
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href="/cookies"
-            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-300 text-center group"
+            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-400 text-center group"
+            whileHover={{ 
+              y: -5,
+              boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
+            }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}
           >
-            <Shield className="w-8 h-8 text-[#a1db87] mx-auto mb-3 group-hover:scale-110 transition-transform duration-200" />
+            <motion.div
+              whileHover={{ 
+                scale: 1.15,
+                rotate: -5
+              }}
+              transition={{ 
+                type: "spring",
+                stiffness: 400,
+                damping: 17
+              }}
+            >
+              <Shield className="w-8 h-8 text-[#a1db87] mx-auto mb-3" />
+            </motion.div>
             <h4 className="text-white font-semibold mb-2">Política de Cookies</h4>
             <p className="text-sm text-gray-400">Información sobre cookies</p>
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href="/cursos"
-            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-300 text-center group"
+            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-400 text-center group"
+            whileHover={{ 
+              y: -5,
+              boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
+            }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}
           >
-            <Book className="w-8 h-8 text-[#a1db87] mx-auto mb-3 group-hover:scale-110 transition-transform duration-200" />
+            <motion.div
+              whileHover={{ 
+                scale: 1.15,
+                rotate: 5
+              }}
+              transition={{ 
+                type: "spring",
+                stiffness: 400,
+                damping: 17
+              }}
+            >
+              <Book className="w-8 h-8 text-[#a1db87] mx-auto mb-3" />
+            </motion.div>
             <h4 className="text-white font-semibold mb-2">Ver cursos</h4>
             <p className="text-sm text-gray-400">Explora nuestro catálogo</p>
-          </a>
+          </motion.a>
         </motion.div>
       </div>
     </div>

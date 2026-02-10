@@ -260,9 +260,9 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
           {/* FAQ a la izquierda */}
           <ul className="space-y-6 md:pr-4">
             {faqs.map((faq, idx) => (
-              <li key={idx} className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl overflow-hidden transition-all duration-300">
+              <li key={idx} className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:border-[#a1db87]/50 hover:shadow-[#a1db87]/10 hover:shadow-2xl">
                 <button
-                  className={`w-full flex justify-between items-center px-7 py-6 text-left focus:outline-none group transition-colors duration-300 ${openIdx === idx ? 'bg-[#23272f]/80 border-l-4 border-[#a1db87]' : ''}`}
+                  className={`w-full flex justify-between items-center px-7 py-6 text-left focus:outline-none group transition-colors duration-400 ${openIdx === idx ? 'bg-[#23272f]/80 border-l-4 border-[#a1db87]' : ''}`}
                   onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
                   aria-expanded={openIdx === idx}
                   aria-controls={`faq-answer-${idx}`}
@@ -272,7 +272,11 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
                   </span>
                   <m.span
                     animate={{ rotate: openIdx === idx ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 20
+                    }}
                     className="ml-4"
                   >
                     <ChevronDown className="w-7 h-7 text-[#a1db87]" />
@@ -283,19 +287,33 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
                     <m.div
                       key="content"
                       id={`faq-answer-${idx}`}
-                      initial={{ height: 0 }}
-                      animate={{ height: 'auto' }}
-                      exit={{ height: 0 }}
-                      transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ 
+                        height: {
+                          duration: 0.5,
+                          ease: [0.4, 0.0, 0.2, 1]
+                        },
+                        opacity: {
+                          duration: 0.4,
+                          ease: 'easeInOut',
+                          delay: 0.1
+                        }
+                      }}
                       style={{ overflow: 'hidden' }}
                       className="px-7 pb-6 text-gray-300 text-base origin-top"
                       layout
                     >
                       <m.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: -15 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.28, ease: 'easeOut' }}
+                        exit={{ opacity: 0, y: -15 }}
+                        transition={{ 
+                          duration: 0.5,
+                          ease: [0.4, 0.0, 0.2, 1],
+                          delay: 0.15
+                        }}
                       >
                         {faq.answer}
                       </m.div>
