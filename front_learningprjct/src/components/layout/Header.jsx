@@ -10,8 +10,8 @@ const navLinks = [
   { to: '/', label: 'Inicio' },
   { to: '/cursos', label: 'Cursos' },
   { to: '/sobre', label: 'Sobre Nosotros' },
-  { to: '/contacto', label: 'Contacto' },
   { to: '/reseñas', label: 'Reseñas' },
+  { to: '/contacto', label: 'Contacto' },
 ];
 
 const Header = () => {

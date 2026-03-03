@@ -93,7 +93,17 @@ export default function Cursos() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full lg:min-w-[450px] lg:min-h-[340px] xl:min-w-[450px] xl:min-h-[340px] sm:max-w-[95vw] sm:min-h-[220px]"
+              whileHover={{ 
+                y: -10, 
+                scale: 1.02,
+                boxShadow: "0 20px 40px rgba(161, 219, 135, 0.2)",
+                borderColor: "rgba(161, 219, 135, 0.6)"
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                transition: { duration: 0.1 }
+              }}
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full lg:min-w-[450px] lg:min-h-[340px] xl:min-w-[450px] xl:min-h-[340px] sm:max-w-[95vw] sm:min-h-[220px]"
               style={{}}
               onClick={() => handleCourseClick(course._id)}
             >
@@ -153,7 +163,17 @@ export default function Cursos() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full max-w-md min-h-[320px]"
+              whileHover={{ 
+                y: -10, 
+                scale: 1.02,
+                boxShadow: "0 20px 40px rgba(161, 219, 135, 0.2)",
+                borderColor: "rgba(161, 219, 135, 0.6)"
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                transition: { duration: 0.1 }
+              }}
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full max-w-md min-h-[320px]"
               style={{}}
               onClick={() => handleCourseClick(course._id)}
             >

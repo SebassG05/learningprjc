@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToTop from './components/layout/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
 import Layout from './components/layout/Layout';
+import { AnimatePresence, motion } from 'framer-motion';
 import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import ReviewsPage from './pages/Reviews.jsx';
@@ -12,38 +13,64 @@ import LoginPage from './pages/Login.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import GuiaUsuario from './pages/GuiaUsuario.jsx';
 
+function AnimatedRoutes() {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+          <Route path="/reset-password" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <PageTransition><ResetPassword /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/forgot-password" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <PageTransition><ForgotPassword /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
+          <Route path="/contacto" element={<PageTransition><Contacto /></PageTransition>} />
+          <Route path="/cursos" element={<PageTransition><Cursos /></PageTransition>} />
+          <Route path="/reseñas" element={<PageTransition><ReviewsPage /></PageTransition>} />
+          <Route path="/ajustes" element={<PageTransition><Ajustes /></PageTransition>} />
+          <Route path="/sobre" element={<PageTransition><SobreNosotros /></PageTransition>} />
+          <Route path="/curso/:id" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <PageTransition><CursoDetalle /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/cookies" element={<PageTransition><PoliticaCookies /></PageTransition>} />
+          <Route path="/politica-cookies" element={<PageTransition><PoliticaCookies /></PageTransition>} />
+          <Route path="/guia-usuario" element={<PageTransition><GuiaUsuario /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
+  );
+}
+
+function PageTransition({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ 
+        duration: 0.4,
+        ease: [0.4, 0.0, 0.2, 1]
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function App() {
   return (
     <Router>
       <ScrollToTop />
       <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/reset-password" element={
-            <Suspense fallback={<div>Cargando...</div>}>
-              <ResetPassword />
-            </Suspense>
-          } />
-          <Route path="/forgot-password" element={
-            <Suspense fallback={<div>Cargando...</div>}>
-              <ForgotPassword />
-            </Suspense>
-          } />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/cursos" element={<Cursos />} />
-          <Route path="/reseñas" element={<ReviewsPage />} />
-          <Route path="/ajustes" element={<Ajustes />} />
-          <Route path="/sobre" element={<SobreNosotros />} />
-          <Route path="/curso/:id" element={
-            <Suspense fallback={<div>Cargando...</div>}>
-              <CursoDetalle />
-            </Suspense>
-          } />
-          <Route path="/cookies" element={<PoliticaCookies />} />
-          <Route path="/politica-cookies" element={<PoliticaCookies />} />
-          <Route path="/guia-usuario" element={<GuiaUsuario />} />
-        </Routes>
+        <AnimatedRoutes />
       </Layout>
     </Router>
   );
