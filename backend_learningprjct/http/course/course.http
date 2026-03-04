@@ -4,12 +4,71 @@ POST http://localhost:3007/api/courses
 Content-Type: application/json
 
 {
-  "title": "Curso Profesional en Gestión de Suelos, Carbono y Cambio Climático",
-  "image": "https://res.cloudinary.com/dgbmy60sc/image/upload/v1768991275/PXL_20250116_120807825_1_vhqvfd.jpg",
-  "description": "Programa diseñado a partir de la experiencia de Evenor-Tech en proyectos europeos de la Misión Europea de Suelos, con especial referencia a NOVASOIL.",
+  "title": "Curso Modelización Dinámica de Carbono",
+  "image": "https://res.cloudinary.com/dgbmy60sc/image/upload/v1772527759/8c2dd540-ce40-4375-86e0-8b1fbf1d3416_hthqfl.jpg",
+  "description": "Curso e-learning orientado a la modelización del carbono orgánico del suelo mediante modelos compartimentales y enfoque multi-model ensemble, aplicado a la evaluación de stocks de SOC y flujos de CO₂ bajo distintos escenarios climáticos y de manejo.",
   "duration": "18 horas",
-  "category": ["cambio climático", "ciclo del carbono y emisiones agrícolas","GIS"]
+  "category": ["modelización del carbono del suelo", "multi-model ensemble","ciclo del carbono","monitorización y MRV","cambio climático"],
+  "objetivosGenerales": [
+    "Comprender los fundamentos teóricos de la dinámica del carbono orgánico en el suelo y su papel en la mitigación del cambio climático",
+    "Desarrollar competencias prácticas en el uso de modelos compartimentales para simular procesos de carbono del suelo",
+    "Aplicar enfoques multi-model ensemble para reducir incertidumbres en las proyecciones de SOC bajo diferentes escenarios"
+  ],
+  "objetivosEspecificos": [
+    "Dominar los principales modelos compartimentales de carbono del suelo (RothC, Century, ICBM, DNDC) y sus aplicaciones",
+    "Implementar estrategias de calibración y validación de modelos utilizando datos experimentales y de campo",
+    "Realizar análisis de sensibilidad e incertidumbre en las simulaciones de stocks y flujos de carbono",
+    "Evaluar el impacto de diferentes prácticas de manejo agrícola en el secuestro de carbono mediante modelización",
+    "Integrar proyecciones climáticas futuras en las simulaciones para evaluar la resiliencia de los stocks de SOC",
+    "Aplicar técnicas de multi-model ensemble para obtener estimaciones robustas de carbono del suelo"
+  ]
 }
 
 ### Obtener todos los cursos
 GET http://localhost:3007/api/courses
+
+### Obtener curso específico por ID
+GET http://localhost:3007/api/courses/69a6a0a4c8289d012745af63
+
+### Actualizar curso existente (sustituye el ID por el de tu curso)
+PUT http://localhost:3007/api/courses/69a6a0a4c8289d012745af63
+Content-Type: application/json
+
+{
+  "objetivosGenerales": [
+    "Comprender el funcionamiento interno de los modelos de carbono del suelo.",
+    "Interpretar la dinámica temporal del carbono orgánico del suelo (SOC).",
+    "Analizar las diferencias entre modelos bajo un mismo escenario ambiental para obtener estimaciones más robustas.",
+    "Aprender los fundamentos teóricos de la dinámica del carbono y su aplicación práctica en modelización avanzada y sistemas socio-ecológicos."
+  ],
+  "objetivosEspecificos": [
+    "Desarrollar competencias en modelización ambiental reproducible y manejo de datos climáticos y edáficos.",
+    "Realizar un análisis crítico de resultados multimodelo",
+    "Familiarizarse con herramientas computacionales de investigación real, específicamente la ejecución de scripts en el lenguaje de programación R.",
+    "Dominar la estructuración modular del código y la gestión de datos de entrada (\"forcing data\").",
+    "Interpretar outputs gráficos y numéricos, como las trayectorias de stocks de SOC y los flujos de mineralización de CO2",
+    "Aprender el flujo estándar de modelización, incluyendo la preparación de datos, la fase de spin-up para estabilización y la simulación prospectiva."
+  ]
+}
+
+### Crear curso Big Data con objetivos
+POST http://localhost:3007/api/courses
+Content-Type: application/json
+
+{
+  "title": "Sistemas de Big Data",
+  "image": "https://res.cloudinary.com/dgbmy60sc/image/upload/v1234567890/bigdata_example.jpg",
+  "description": "Curso introductorio a los sistemas de Big Data y su aplicación en la industria.",
+  "duration": "20 horas",
+  "category": ["Tecnología", "Big Data"],
+  "objetivosGenerales": [
+    "Adquirir conocimientos fundamentales sobre sistemas de Big Data y su arquitectura",
+    "Comprender las tecnologías y herramientas principales del ecosistema Big Data"
+  ],
+  "objetivosEspecificos": [
+    "Conocer las bases de datos NoSQL y sus casos de uso",
+    "Implementar pipelines de procesamiento de datos distribuidos",
+    "Utilizar frameworks como Hadoop y Spark para análisis de grandes volúmenes de datos",
+    "Aplicar técnicas de visualización de datos masivos"
+  ]
+}

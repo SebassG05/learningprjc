@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
+import ObjetivosCurso from '../components/curso/ObjetivosCurso';
+import { BookOpen } from 'lucide-react';
 
 export default function CursoDetalle() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [curso, setCurso] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +28,7 @@ export default function CursoDetalle() {
 
   return (
     <div className="max-w-3xl mx-auto py-16 px-4">
-      <div className="flex flex-row items-center justify-between w-full mb-10 gap-8">
+      <div className="flex flex-row items-center justify-between w-full mb-6 gap-8">
         {/* Título a la izquierda */}
         <h1 className="text-2xl md:text-4xl font-extrabold text-white text-left flex-1">
           {curso.title}
@@ -36,7 +39,31 @@ export default function CursoDetalle() {
         </div>
       </div>
 
-      {/* Objetivos - Card moderno */}
+      {/* Descripción del curso */}
+      {curso.description && (
+        <p className="text-gray-300 text-base leading-relaxed mb-10 text-justify">
+          {curso.description}
+        </p>
+      )}
+
+      {/* Objetivos genéricos del curso (desde la BD) */}
+      <ObjetivosCurso 
+        objetivosGenerales={curso.objetivosGenerales}
+        objetivosEspecificos={curso.objetivosEspecificos}
+      />
+
+      {/* Botón para ver la estructura del curso */}
+      <div className="flex justify-center mb-12">
+        <button
+          onClick={() => navigate(`/curso/${id}/estructura`)}
+          className="cursor-pointer group flex items-center gap-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-[#a1db87]/30 transform hover:scale-105 transition-all duration-300"
+        >
+          <BookOpen className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+          <span className="text-lg">Ver Estructura del Curso</span>
+        </button>
+      </div>
+
+      {/* Componente específico para el curso de Suelos (mantener compatibilidad) */}
       {curso.title === 'Curso Profesional en Gestión de Suelos, Carbono y Cambio Climático' && (
         <ObjetivosSuelos />
       )}

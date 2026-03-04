@@ -36,4 +36,22 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener el curso' });
   }
 });
+
+// Actualizar curso por id
+router.put('/:id', async (req, res) => {
+  try {
+    const course = await Course.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+    res.json(course);
+  } catch (err) {
+    res.status(400).json({ error: 'Error al actualizar el curso' });
+  }
+});
+
 export default router;

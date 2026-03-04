@@ -6,6 +6,8 @@ const courseSchema = new mongoose.Schema({
   description: { type: String },
   duration: { type: String }, // Ej: "20 horas"
   category: [{ type: String }],
+  objetivosGenerales: [{ type: String }], // Array de objetivos generales
+  objetivosEspecificos: [{ type: String }], // Array de objetivos específicos
   // Puedes añadir más campos si lo necesitas
 });
 

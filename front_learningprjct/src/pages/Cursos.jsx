@@ -103,7 +103,7 @@ export default function Cursos() {
                 scale: 0.98,
                 transition: { duration: 0.1 }
               }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full lg:min-w-[450px] lg:min-h-[340px] xl:min-w-[450px] xl:min-h-[340px] sm:max-w-[95vw] sm:min-h-[220px]"
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full lg:w-[450px] lg:h-[600px] xl:w-[450px] xl:h-[600px] sm:max-w-[95vw] sm:h-[600px]"
               style={{}}
               onClick={() => handleCourseClick(course._id)}
             >
@@ -119,7 +119,7 @@ export default function Cursos() {
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {course.title}
                   </h3>
-                  <p className="text-gray-300 text-base mb-6 min-h-[48px]">{course.description}</p>
+                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{course.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
@@ -173,7 +173,7 @@ export default function Cursos() {
                 scale: 0.98,
                 transition: { duration: 0.1 }
               }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full max-w-md min-h-[320px]"
+              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full max-w-md h-[600px]"
               style={{}}
               onClick={() => handleCourseClick(course._id)}
             >
@@ -189,7 +189,7 @@ export default function Cursos() {
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {course.title}
                   </h3>
-                  <p className="text-gray-300 text-base mb-6 min-h-[48px]">{course.description}</p>
+                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{course.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
