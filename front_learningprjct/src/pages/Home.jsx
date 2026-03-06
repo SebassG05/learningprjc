@@ -391,7 +391,8 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
 
 
 const fetchReviews = async () => {
-  const res = await fetch('/api/reviews');
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const res = await fetch(`${apiUrl}/api/reviews`);
   if (!res.ok) throw new Error('Error al cargar reseñas');
   return res.json();
 };

@@ -13,7 +13,8 @@ const GoogleAuthButton = ({ onSuccess }) => {
       return;
     }
     try {
-      const res = await fetch('/api/users/auth/google', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+      const res = await fetch(`${apiUrl}/api/users/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential: credentialResponse.credential }),

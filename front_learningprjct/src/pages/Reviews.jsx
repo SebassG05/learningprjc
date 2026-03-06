@@ -6,13 +6,15 @@ import { motion, useInView } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 const fetchReviews = async () => {
-  const res = await fetch('/api/reviews');
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const res = await fetch(`${apiUrl}/api/reviews`);
   if (!res.ok) throw new Error('Error al cargar reseñas');
   return res.json();
 };
 
 const postReview = async (review, token) => {
-  const res = await fetch('/api/reviews', {
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const res = await fetch(`${apiUrl}/api/reviews`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
