@@ -14,7 +14,8 @@ export default function Cursos() {
   const [pendingCourseId, setPendingCourseId] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3007/api/courses")
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+    fetch(`${apiUrl}/api/courses`)
       .then(res => res.json())
       .then(data => {
         setCourses(data);

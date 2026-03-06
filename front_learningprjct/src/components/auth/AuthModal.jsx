@@ -133,7 +133,8 @@ const AuthModal = ({ open, onClose }) => {
                     setLoginError('');
                     setLoginLoading(true);
                     try {
-                      const res = await fetch('/api/users/login', {
+                      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+                      const res = await fetch(`${apiUrl}/api/users/login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -221,7 +222,8 @@ const AuthModal = ({ open, onClose }) => {
                     setRegisterSuccess('');
                     setRegisterLoading(true);
                     try {
-                      const res = await fetch('/api/users/register', {
+                      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+                      const res = await fetch(`${apiUrl}/api/users/register`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
