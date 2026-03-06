@@ -17,6 +17,7 @@ const temaSchema = new mongoose.Schema({
   titulo: { type: String, required: true },
   descripcion: { type: String },
   materiales: [materialSchema],
+  actividadesOptativas: [materialSchema], // Actividades optativas del tema
   completado: { type: Boolean, default: false }
 }, { _id: true });
 

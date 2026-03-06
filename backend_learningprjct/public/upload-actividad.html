@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Actividad Optativa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #23272f;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            color: #5ec6a6;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #888;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            color: #5ec6a6;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #5ec6a6;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: #1a1a1a;
+            border: 2px dashed #5ec6a6;
+            border-radius: 8px;
+            color: #5ec6a6;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .file-input-label:hover {
+            background: #252525;
+            border-color: #4da992;
+        }
+        
+        .file-name {
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #5ec6a6 0%, #4da992 100%);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(94, 198, 166, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .message.success {
+            background: #5ec6a6;
+            color: #1a1a1a;
+        }
+        
+        .message.error {
+            background: #ff6b6b;
+            color: #fff;
+        }
+        
+        .help-text {
+            color: #888;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .step {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #5ec6a6;
+        }
+        
+        .step-number {
+            color: #5ec6a6;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .info-box {
+            background: rgba(94, 198, 166, 0.1);
+            border: 1px solid rgba(94, 198, 166, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            color: #5ec6a6;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .tema-list {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .tema-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #23272f;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .tema-item:hover {
+            border-color: #5ec6a6;
+            background: #2a2e36;
+        }
+
+        .tema-item.selected {
+            border-color: #5ec6a6;
+            background: rgba(94, 198, 166, 0.1);
+        }
+
+        .tema-numero {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #5ec6a6;
+            color: #1a1a1a;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .tema-titulo {
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Subir Actividad Optativa</h1>
+        <p class="subtitle">Agrega ejercicios y actividades prácticas opcionales a tus temas</p>
+        
+        <div class="info-box">
+            <p>💡 Las actividades optativas son ejercicios complementarios que aparecerán debajo del material de estudio en cada tema.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">Paso 1: Seleccionar Curso y Tema</div>
+            <form id="cursoTemaForm">
+                <div class="form-group">
+                    <label>ID del Curso *</label>
+                    <input type="text" id="courseId" required placeholder="Ej: 507f1f77bcf86cd799439011">
+                    <div class="help-text">Lo encuentras en la URL del curso</div>
+                </div>
+                
+                <button type="submit" class="btn" id="btnCargarTemas">Cargar Temas del Curso</button>
+            </form>
+        </div>
+
+        <div class="step" id="stepTemas" style="display: none;">
+            <div class="step-number">Paso 2: Selecciona el Tema</div>
+            <div id="temasList" class="tema-list"></div>
+            <input type="hidden" id="temaId">
+        </div>
+        
+        <div class="step" id="stepActividad" style="display: none;">
+            <div class="step-number">Paso 3: Subir Actividad Optativa</div>
+            <form id="actividadForm">
+                <div class="form-group">
+                    <label>Título de la Actividad *</label>
+                    <input type="text" id="tituloActividad" required placeholder="Ej: Ejercicios Prácticos - Tema 1">
+                </div>
+                
+                <div class="form-group">
+                    <label>Descripción de la Actividad</label>
+                    <textarea id="descripcionActividad" placeholder="Describe los ejercicios o actividades incluidas..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Archivo PDF *</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="pdfFile" accept=".pdf" required>
+                        <label for="pdfFile" class="file-input-label">
+                            📄 Seleccionar archivo PDF
+                        </label>
+                    </div>
+                    <div class="file-name" id="fileName"></div>
+                    <div class="help-text">Sube el PDF con la actividad o ejercicios opcionales</div>
+                </div>
+                
+                <button type="submit" class="btn" id="btnSubirActividad">Subir Actividad Optativa</button>
+            </form>
+        </div>
+        
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3007/api';
+        let selectedTemaId = null;
+        
+        // Manejar cambio de archivo
+        document.getElementById('pdfFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || '';
+            document.getElementById('fileName').textContent = fileName || 'Ningún archivo seleccionado';
+        });
+        
+        // Paso 1: Cargar temas del curso
+        document.getElementById('cursoTemaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const courseId = document.getElementById('courseId').value;
+            const btn = document.getElementById('btnCargarTemas');
+            btn.disabled = true;
+            btn.textContent = 'Cargando...';
+            
+            try {
+                const response = await fetch(`${API_URL}/courses/${courseId}`);
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el curso. Verifica el ID.');
+                }
+                
+                const course = await response.json();
+                
+                if (!course.temas || course.temas.length === 0) {
+                    throw new Error('El curso no tiene temas. Crea un tema primero.');
+                }
+                
+                // Mostrar lista de temas
+                const temasList = document.getElementById('temasList');
+                temasList.innerHTML = '';
+                
+                course.temas.forEach(tema => {
+                    const temaItem = document.createElement('div');
+                    temaItem.className = 'tema-item';
+                    temaItem.innerHTML = `
+                        <span class="tema-numero">${tema.numeroTema}</span>
+                        <span class="tema-titulo">${tema.titulo}</span>
+                    `;
+                    temaItem.onclick = () => selectTema(tema._id, temaItem);
+                    temasList.appendChild(temaItem);
+                });
+                
+                document.getElementById('stepTemas').style.display = 'block';
+                showMessage('✓ Curso cargado. Selecciona un tema.', 'success');
+                btn.textContent = '✓ Curso Cargado';
+                
+            } catch (error) {
+                showMessage(error.message, 'error');
+                btn.disabled = false;
+                btn.textContent = 'Cargar Temas del Curso';
+            }
+        });
+        
+        // Seleccionar tema
+        function selectTema(temaId, element) {
+            selectedTemaId = temaId;
+            document.getElementById('temaId').value = temaId;
+            
+            // Remover selección previa
+            document.querySelectorAll('.tema-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Marcar como seleccionado
+            element.classList.add('selected');
+            
+            // Mostrar formulario de actividad
+            document.getElementById('stepActividad').style.display = 'block';
+            showMessage('✓ Tema seleccionado. Ahora sube la actividad optativa.', 'success');
+        }
+        
+        // Paso 3: Subir actividad
+        document.getElementById('actividadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!selectedTemaId) {
+                showMessage('Por favor selecciona un tema primero', 'error');
+                return;
+            }
+            
+            const courseId = document.getElementById('courseId').value;
+            const temaId = selectedTemaId;
+            const titulo = document.getElementById('tituloActividad').value;
+            const descripcion = document.getElementById('descripcionActividad').value;
+            const file = document.getElementById('pdfFile').files[0];
+            
+            if (!file) {
+                showMessage('Por favor selecciona un archivo PDF', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('archivo', file);
+            formData.append('tipo', 'pdf');
+            formData.append('titulo', titulo);
+            formData.append('descripcion', descripcion);
+            formData.append('orden', '1');
+            
+            const btn = document.getElementById('btnSubirActividad');
+            btn.disabled = true;
+            btn.textContent = 'Subiendo...';
+            
+            try {
+                const response = await fetch(`${API_URL}/courses/${courseId}/temas/${temaId}/actividades-optativas`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.mensaje || errorData.error || 'Error al subir la actividad');
+                }
+                
+                showMessage('✓ Actividad optativa subida exitosamente. Recarga la página del curso para verla.', 'success');
+                btn.textContent = '✓ Actividad Subida';
+                
+                // Resetear formulario después de 2 segundos
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+                
+            } catch (error) {
+                showMessage(error.message, 'error');
+                btn.disabled = false;
+                btn.textContent = 'Subir Actividad Optativa';
+            }
+        });
+        
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + type;
+            messageDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

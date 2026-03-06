@@ -162,6 +162,63 @@ export default function MaterialEstudio({ temas, completedMaterials, setComplete
                   })}
                 </div>
               )}
+
+              {tema.actividadesOptativas && tema.actividadesOptativas.length > 0 && (
+                <div className="mt-6 space-y-2">
+                  <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
+                    Actividades Optativas
+                  </h4>
+                  {tema.actividadesOptativas.map((actividad) => {
+                    const isCompleted = completedMaterials[actividad._id];
+                    
+                    return (
+                      <div
+                        key={actividad._id}
+                        onClick={() => actividad.archivo && handleOpenMaterial(actividad.archivo, actividad.titulo)}
+                        className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
+                          isCompleted 
+                            ? 'bg-[#5ec6a6]/10 border-[#5ec6a6]/40 hover:bg-[#5ec6a6]/15' 
+                            : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/30'
+                        } ${actividad.archivo ? 'cursor-pointer' : ''}`}
+                      >
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-[#5ec6a6]' : 'text-[#5ec6a6]'}`}>
+                            {getIconByType(actividad.tipo)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className={`font-medium transition-colors truncate ${isCompleted ? 'text-[#5ec6a6]' : 'text-white'}`}>
+                              {actividad.titulo}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        {actividad.archivo && (
+                          <button
+                            onClick={(e) => toggleCompleted(e, actividad._id)}
+                            className={`cursor-pointer flex-shrink-0 ml-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+                              isCompleted
+                                ? 'bg-[#5ec6a6] text-[#1a1a1a] hover:bg-[#4da992] scale-100 opacity-100'
+                                : 'bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 transform hover:scale-105 opacity-0 group-hover:opacity-100'
+                            }`}
+                          >
+                            {isCompleted ? (
+                              <>
+                                <Check className="w-4 h-4" />
+                                <span className="text-sm">Completado</span>
+                              </>
+                            ) : (
+                              <>
+                                <Check className="w-4 h-4" />
+                                <span className="text-sm">Marcar</span>
+                              </>
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
           })}

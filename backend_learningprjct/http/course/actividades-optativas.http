@@ -1,0 +1,55 @@
+### ==========================================
+### GESTIÓN DE ACTIVIDADES OPTATIVAS
+### ==========================================
+
+### Variables
+@baseUrl = http://localhost:3007/api
+@courseId = REEMPLAZA_CON_EL_ID_DEL_CURSO
+@temaId = REEMPLAZA_CON_EL_ID_DEL_TEMA
+
+### ==========================================
+### 1. Obtener curso con sus temas y actividades
+### ==========================================
+GET {{baseUrl}}/courses/{{courseId}}
+
+### ==========================================
+### 2. Agregar actividad optativa a un tema (SIN archivo)
+### ==========================================
+POST {{baseUrl}}/courses/{{courseId}}/temas/{{temaId}}/actividades-optativas
+Content-Type: application/json
+
+{
+  "tipo": "pdf",
+  "titulo": "Actividad Práctica 1",
+  "descripcion": "Ejercicios opcionales para reforzar los conceptos del tema",
+  "orden": 1
+}
+
+### ==========================================
+### 3. Agregar actividad optativa con PDF (usando form-data)
+### NOTA: Para subir archivos, usa Postman, Thunder Client o curl
+### ==========================================
+# POST {{baseUrl}}/courses/{{courseId}}/temas/{{temaId}}/actividades-optativas
+# Content-Type: multipart/form-data
+#
+# Form Data:
+# - archivo: [seleccionar archivo PDF]
+# - tipo: pdf
+# - titulo: Actividad Optativa - Tema 1
+# - descripcion: Ejercicios prácticos opcionales
+# - orden: 1
+
+### ==========================================
+### 4. Eliminar una actividad optativa
+### ==========================================
+DELETE {{baseUrl}}/courses/{{courseId}}/temas/{{temaId}}/actividades-optativas/ACTIVIDAD_ID
+
+### ==========================================
+### EJEMPLO CON CURL (Windows PowerShell)
+### ==========================================
+# curl -X POST "http://localhost:3007/api/courses/{{courseId}}/temas/{{temaId}}/actividades-optativas" `
+#   -F "archivo=@C:\ruta\al\archivo.pdf" `
+#   -F "tipo=pdf" `
+#   -F "titulo=Actividad Optativa 1" `
+#   -F "descripcion=Ejercicios prácticos opcionales" `
+#   -F "orden=1"

@@ -215,3 +215,98 @@ export const eliminarTema = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar tema', detalle: err.message });
   }
 };
+
+// ============= ACTIVIDADES OPTATIVAS =============
+
+// Agregar actividad optativa a un tema
+export const agregarActividadOptativa = async (req, res) => {
+  try {
+    const { id, temaId } = req.params;
+    const { tipo, titulo, descripcion, archivo, orden } = req.body;
+
+    const course = await Course.findById(id);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+
+    // Inicializar el array de temas si no existe
+    if (!course.temas) {
+      course.temas = [];
+    }
+
+    const tema = course.temas.id(temaId);
+    if (!tema) {
+      return res.status(404).json({ error: 'Tema no encontrado' });
+    }
+
+    // Inicializar el array de actividades optativas si no existe
+    if (!tema.actividadesOptativas) {
+      tema.actividadesOptativas = [];
+    }
+
+    // Si se subió un archivo, usar la ruta del archivo
+    let archivoPath = archivo;
+    if (req.file) {
+      archivoPath = `/courses/materiales/${req.file.filename}`;
+    }
+
+    tema.actividadesOptativas.push({
+      tipo,
+      titulo,
+      descripcion,
+      archivo: archivoPath,
+      orden: orden || tema.actividadesOptativas.length
+    });
+
+    await course.save();
+    res.json(course);
+  } catch (err) {
+    console.error('Error al agregar actividad optativa:', err);
+    res.status(500).json({ error: 'Error al agregar actividad optativa', detalle: err.message });
+  }
+};
+
+// Eliminar una actividad optativa de un tema
+export const eliminarActividadOptativa = async (req, res) => {
+  try {
+    const { id, temaId, actividadId } = req.params;
+
+    const course = await Course.findById(id);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+
+    if (!course.temas) {
+      return res.status(404).json({ error: 'El curso no tiene temas' });
+    }
+
+    const tema = course.temas.id(temaId);
+    if (!tema) {
+      return res.status(404).json({ error: 'Tema no encontrado' });
+    }
+
+    if (!tema.actividadesOptativas) {
+      return res.status(404).json({ error: 'El tema no tiene actividades optativas' });
+    }
+
+    const actividad = tema.actividadesOptativas.id(actividadId);
+    if (!actividad) {
+      return res.status(404).json({ error: 'Actividad optativa no encontrada' });
+    }
+
+    // Si la actividad tiene un archivo físico, eliminarlo
+    if (actividad.archivo && actividad.archivo.startsWith('/courses/materiales/')) {
+      const filePath = path.join(__dirname, '../../public', actividad.archivo);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+
+    tema.actividadesOptativas.pull(actividadId);
+    await course.save();
+    res.json(course);
+  } catch (err) {
+    console.error('Error al eliminar actividad optativa:', err);
+    res.status(500).json({ error: 'Error al eliminar actividad optativa', detalle: err.message });
+  }
+};

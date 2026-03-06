@@ -75,4 +75,12 @@ router.post('/:id/temas/:temaId/materiales', upload.single('archivo'), courseCon
 // Eliminar un material de un tema
 router.delete('/:id/temas/:temaId/materiales/:materialId', courseController.eliminarMaterial);
 
+// ============= RUTAS PARA ACTIVIDADES OPTATIVAS =============
+
+// Agregar actividad optativa a un tema (con soporte para subir archivos)
+router.post('/:id/temas/:temaId/actividades-optativas', upload.single('archivo'), courseController.agregarActividadOptativa);
+
+// Eliminar una actividad optativa de un tema
+router.delete('/:id/temas/:temaId/actividades-optativas/:actividadId', courseController.eliminarActividadOptativa);
+
 export default router;
