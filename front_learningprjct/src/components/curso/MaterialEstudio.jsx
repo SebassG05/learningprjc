@@ -20,7 +20,8 @@ export default function MaterialEstudio({ temas, completedMaterials, setComplete
   };
 
   const handleOpenMaterial = (archivo, titulo) => {
-    const url = `http://localhost:3007${archivo}`;
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+    const url = `${apiUrl}${archivo}`;
     window.open(url, '_blank');
   };
 

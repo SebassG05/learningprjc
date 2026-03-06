@@ -13,7 +13,8 @@ export default function CursoDetalle() {
   const [completedMaterials, setCompletedMaterials] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:3007/api/courses/${id}`)
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+    fetch(`${apiUrl}/api/courses/${id}`)
       .then(res => res.json())
       .then(data => {
         setCurso(data);
