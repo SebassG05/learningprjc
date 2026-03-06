@@ -9,7 +9,7 @@ export default function ObjetivosCurso({ objetivosGenerales, objetivosEspecifico
   }
 
   return (
-    <div className="w-full mb-12 flex flex-col items-center gap-8">
+    <div className="w-full mb-16 flex flex-col items-center gap-8">
       {/* Objetivos generales */}
       {objetivosGenerales && objetivosGenerales.length > 0 && (
         <div className="bg-[#1f2937] border-2 border-[#a1db87] rounded-xl shadow-lg p-8 w-full opacity-100" style={{backgroundColor: 'rgb(31, 41, 55)'}}>

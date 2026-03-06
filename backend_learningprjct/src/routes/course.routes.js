@@ -1,5 +1,7 @@
 import express from 'express';
 import Course from '../models/Course.js';
+import upload from '../middleware/upload.js';
+import * as courseController from '../controller/courseController.js';
 
 const router = express.Router();
 
@@ -53,5 +55,24 @@ router.put('/:id', async (req, res) => {
     res.status(400).json({ error: 'Error al actualizar el curso' });
   }
 });
+
+// ============= RUTAS PARA TEMAS =============
+
+// Agregar un tema al curso
+router.post('/:id/temas', courseController.agregarTema);
+
+// Actualizar un tema
+router.put('/:id/temas/:temaId', courseController.actualizarTema);
+
+// Eliminar un tema
+router.delete('/:id/temas/:temaId', courseController.eliminarTema);
+
+// ============= RUTAS PARA MATERIALES =============
+
+// Agregar material a un tema (con soporte para subir archivos)
+router.post('/:id/temas/:temaId/materiales', upload.single('archivo'), courseController.agregarMaterial);
+
+// Eliminar un material de un tema
+router.delete('/:id/temas/:temaId/materiales/:materialId', courseController.eliminarMaterial);
 
 export default router;

@@ -14,6 +14,7 @@ const configureExpress = (app) => {
             const allowedOrigins = [
                 'http://localhost:5175',
                 'http://localhost:5173',
+                'http://localhost:3007', // Permitir peticiones desde el mismo servidor (para upload-material.html)
             ];
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);

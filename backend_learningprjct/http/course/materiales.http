@@ -1,0 +1,97 @@
+### ==========================================
+### GESTIÓN DE TEMAS Y MATERIALES DEL CURSO
+### ==========================================
+
+### Variables
+@baseUrl = http://localhost:3007/api
+@courseId = REEMPLAZA_CON_EL_ID_DEL_CURSO
+
+### ==========================================
+### 1. Obtener curso con sus temas
+### ==========================================
+GET {{baseUrl}}/courses/{{courseId}}
+
+### ==========================================
+### 2. Agregar un tema al curso
+### ==========================================
+POST {{baseUrl}}/courses/{{courseId}}/temas
+Content-Type: application/json
+
+{
+  "numeroTema": 1,
+  "titulo": "Introducción al Curso",
+  "descripcion": "Primer tema introductorio donde se presentan los conceptos básicos"
+}
+
+### ==========================================
+### 3. Agregar material a un tema (SIN archivo)
+### ==========================================
+POST {{baseUrl}}/courses/{{courseId}}/temas/TEMA_ID/materiales
+Content-Type: application/json
+
+{
+  "tipo": "enlace",
+  "titulo": "Video Introductorio",
+  "descripcion": "Video de bienvenida al curso",
+  "archivo": "https://www.youtube.com/watch?v=ejemplo",
+  "orden": 1
+}
+
+### ==========================================
+### 4. Agregar material con PDF (usando form-data)
+### NOTA: Para subir archivos, usa Postman, Thunder Client o curl
+### ==========================================
+# POST {{baseUrl}}/courses/{{courseId}}/temas/TEMA_ID/materiales
+# Content-Type: multipart/form-data
+#
+# Form Data:
+# - archivo: [seleccionar archivo PDF]
+# - tipo: pdf
+# - titulo: Material de Estudio - Tema 1
+# - descripcion: Documento PDF con el contenido del tema 1
+# - orden: 1
+
+### ==========================================
+### 5. Actualizar un tema
+### ==========================================
+PUT {{baseUrl}}/courses/{{courseId}}/temas/TEMA_ID
+Content-Type: application/json
+
+{
+  "titulo": "Introducción al Curso - Actualizado",
+  "descripcion": "Descripción actualizada del tema"
+}
+
+### ==========================================
+### 6. Eliminar un material
+### ==========================================
+DELETE {{baseUrl}}/courses/{{courseId}}/temas/TEMA_ID/materiales/MATERIAL_ID
+
+### ==========================================
+### 7. Eliminar un tema completo
+### ==========================================
+DELETE {{baseUrl}}/courses/{{courseId}}/temas/TEMA_ID
+
+### ==========================================
+### EJEMPLO COMPLETO: Crear tema con materiales
+### ==========================================
+
+### Paso 1: Crear el tema
+POST {{baseUrl}}/courses/{{courseId}}/temas
+Content-Type: application/json
+
+{
+  "numeroTema": 1,
+  "titulo": "Tema 1: Fundamentos",
+  "descripcion": "En este tema aprenderás los conceptos fundamentales del curso"
+}
+
+### Paso 2: Una vez creado el tema, obten su ID del response
+### y usa cURL o Postman para subir el PDF:
+###
+### curl -X POST http://localhost:3007/api/courses/COURSE_ID/temas/TEMA_ID/materiales \
+###   -F 'archivo=@/ruta/a/tu/archivo.pdf' \
+###   -F 'tipo=pdf' \
+###   -F 'titulo=Material de Estudio - Tema 1' \
+###   -F 'descripcion=Documento completo del Tema 1' \
+###   -F 'orden=1'
