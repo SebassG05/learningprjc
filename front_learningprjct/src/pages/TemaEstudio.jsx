@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { X, ChevronLeft, ChevronRight, BookOpen, ClipboardCheck, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import TestEvaluacion from '../components/curso/TestEvaluacion';
 
 export default function TemaEstudio() {
   const { cursoId } = useParams();
@@ -9,9 +10,9 @@ export default function TemaEstudio() {
   const location = useLocation();
   
   // Obtener datos del tema desde el estado de navegación
-  const { tema, material } = location.state || {};
+  const { tema, material, startPhase } = location.state || {};
   
-  const [currentPhase, setCurrentPhase] = useState(1); // 1: Material, 2: Test
+  const [currentPhase, setCurrentPhase] = useState(startPhase || 1); // 1: Material, 2: Test
   const [pdfUrl, setPdfUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   
@@ -21,6 +22,12 @@ export default function TemaEstudio() {
     if (!tema || !material) {
       // Si no hay datos, redirigir al curso
       navigate(`/curso/${cursoId}`);
+      return;
+    }
+
+    // Si empezamos directamente en el test, no necesitamos cargar el PDF
+    if (startPhase === 2) {
+      setIsLoading(false);
       return;
     }
 
@@ -46,7 +53,7 @@ export default function TemaEstudio() {
     
     // Simular carga suave
     setTimeout(() => setIsLoading(false), 400);
-  }, [tema, material, cursoId, navigate, apiUrl]);
+  }, [tema, material, cursoId, navigate, apiUrl, startPhase]);
 
   const handleClose = () => {
     navigate(`/curso/${cursoId}`);
@@ -210,57 +217,13 @@ export default function TemaEstudio() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="h-full flex flex-col"
+              className="h-full"
             >
-              {/* Test Content */}
-              <div className="flex-1 bg-[#23272f] p-8">
-                <div className="max-w-4xl mx-auto">
-                  <div className="bg-[#1a1a1a]/50 rounded-xl p-12 border border-[#a1db87]/20 text-center">
-                    <ClipboardCheck className="w-16 h-16 text-[#a1db87] mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-white mb-4">Test de Evaluación</h2>
-                    <p className="text-gray-400 mb-8">
-                      Esta funcionalidad estará disponible próximamente. Aquí podrás evaluar tus conocimientos sobre el tema estudiado.
-                    </p>
-                    <div className="space-y-4">
-                      <div className="bg-[#23272f] p-4 rounded-lg border border-[#a1db87]/10">
-                        <p className="text-sm text-gray-400">
-                          💡 El test incluirá preguntas de selección múltiple basadas en el material de estudio
-                        </p>
-                      </div>
-                      <div className="bg-[#23272f] p-4 rounded-lg border border-[#a1db87]/10">
-                        <p className="text-sm text-gray-400">
-                          📊 Recibirás retroalimentación inmediata sobre tus respuestas
-                        </p>
-                      </div>
-                      <div className="bg-[#23272f] p-4 rounded-lg border border-[#a1db87]/10">
-                        <p className="text-sm text-gray-400">
-                          ✅ Necesitarás aprobar para continuar con el siguiente tema
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Navigation Footer */}
-              <div className="bg-[#23272f] border-t border-[#a1db87]/20 px-6 py-4">
-                <div className="max-w-7xl mx-auto flex justify-between items-center">
-                  <button
-                    onClick={handlePrevPhase}
-                    className="px-6 py-2 border border-[#a1db87]/30 text-gray-400 hover:text-white hover:border-[#a1db87] rounded-lg transition-colors flex items-center gap-2"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                    Volver al Material
-                  </button>
-                  <button
-                    onClick={handleClose}
-                    className="px-6 py-2 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-medium rounded-lg hover:shadow-lg hover:shadow-[#a1db87]/30 transition-all flex items-center gap-2"
-                  >
-                    <Check className="w-4 h-4" />
-                    Finalizar y Volver
-                  </button>
-                </div>
-              </div>
+              <TestEvaluacion 
+                cursoId={cursoId} 
+                temaId={tema._id}
+                onComplete={handleClose}
+              />
             </motion.div>
           )}
         </AnimatePresence>

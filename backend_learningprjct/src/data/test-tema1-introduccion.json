@@ -1,0 +1,490 @@
+{
+  "cursoId": "69a6a0a4c8289d012745af63",
+  "temaId": "69ae9801ac30adf4a6b891c1",
+  "titulo": "Test de Evaluación - Tema 1: Introducción",
+  "descripcion": "Evaluación sobre modelización de la dinámica del carbono orgánico del suelo",
+  "duracionMinutos": 60,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Conceptos generales del SOC",
+      "pregunta": "¿Qué significa SOC?",
+      "opciones": [
+        { "id": "a", "texto": "Soil Organic Cycle" },
+        { "id": "b", "texto": "Soil Organic Carbon" },
+        { "id": "c", "texto": "System Organic Carbon" },
+        { "id": "d", "texto": "Soil Oxidation Carbon" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Conceptos generales del SOC",
+      "pregunta": "El carbono orgánico del suelo es importante porque:",
+      "opciones": [
+        { "id": "a", "texto": "Solo afecta a la fertilidad del suelo" },
+        { "id": "b", "texto": "Solo influye en la vegetación" },
+        { "id": "c", "texto": "Participa en la fertilidad, el ciclo del carbono y el cambio climático" },
+        { "id": "d", "texto": "Solo afecta a los microorganismos del suelo" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Conceptos generales del SOC",
+      "pregunta": "Los suelos contienen aproximadamente:",
+      "opciones": [
+        { "id": "a", "texto": "Menos carbono que la atmósfera" },
+        { "id": "b", "texto": "Más carbono que la vegetación pero menos que la atmósfera" },
+        { "id": "c", "texto": "Más carbono que la atmósfera y la vegetación juntas" },
+        { "id": "d", "texto": "Solo carbono inorgánico" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "Conceptos generales del SOC",
+      "pregunta": "Pequeños cambios en el SOC pueden:",
+      "opciones": [
+        { "id": "a", "texto": "No tener efectos significativos" },
+        { "id": "b", "texto": "Afectar a las emisiones de gases de efecto invernadero" },
+        { "id": "c", "texto": "Solo cambiar el color del suelo" },
+        { "id": "d", "texto": "Solo afectar al nitrógeno" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Conceptos generales del SOC",
+      "pregunta": "El SOC es un componente clave del:",
+      "opciones": [
+        { "id": "a", "texto": "Ciclo hidrológico" },
+        { "id": "b", "texto": "Ciclo biogeoquímico del carbono" },
+        { "id": "c", "texto": "Ciclo del nitrógeno exclusivamente" },
+        { "id": "d", "texto": "Ciclo del fósforo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Procesos que controlan la dinámica del carbono",
+      "pregunta": "¿Qué proceso introduce carbono en el suelo?",
+      "opciones": [
+        { "id": "a", "texto": "Erosión" },
+        { "id": "b", "texto": "Entrada de residuos orgánicos" },
+        { "id": "c", "texto": "Evaporación" },
+        { "id": "d", "texto": "Sedimentación" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Procesos que controlan la dinámica del carbono",
+      "pregunta": "¿Qué proceso transforma la materia orgánica mediante microorganismos?",
+      "opciones": [
+        { "id": "a", "texto": "Humificación" },
+        { "id": "b", "texto": "Descomposición microbiana" },
+        { "id": "c", "texto": "Oxidación química" },
+        { "id": "d", "texto": "Sedimentación" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Procesos que controlan la dinámica del carbono",
+      "pregunta": "La pérdida de carbono del suelo puede producirse por:",
+      "opciones": [
+        { "id": "a", "texto": "Fotosíntesis" },
+        { "id": "b", "texto": "Mineralización" },
+        { "id": "c", "texto": "Fijación biológica" },
+        { "id": "d", "texto": "Sedimentación" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Procesos que controlan la dinámica del carbono",
+      "pregunta": "¿Qué factor ambiental influye en la dinámica del carbono del suelo?",
+      "opciones": [
+        { "id": "a", "texto": "Temperatura" },
+        { "id": "b", "texto": "Humedad" },
+        { "id": "c", "texto": "Precipitación" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 10,
+      "bloque": "Procesos que controlan la dinámica del carbono",
+      "pregunta": "¿Qué propiedad del suelo afecta al SOC?",
+      "opciones": [
+        { "id": "a", "texto": "Textura" },
+        { "id": "b", "texto": "Densidad aparente" },
+        { "id": "c", "texto": "Contenido de arcilla" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 11,
+      "bloque": "Modelización del carbono del suelo",
+      "pregunta": "La modelización matemática del SOC se utiliza para:",
+      "opciones": [
+        { "id": "a", "texto": "Predecir la evolución del carbono del suelo" },
+        { "id": "b", "texto": "Analizar procesos biogeoquímicos" },
+        { "id": "c", "texto": "Evaluar escenarios climáticos" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 12,
+      "bloque": "Modelización del carbono del suelo",
+      "pregunta": "Los modelos basados en procesos también se denominan:",
+      "opciones": [
+        { "id": "a", "texto": "Modelos empíricos" },
+        { "id": "b", "texto": "Modelos compartimentales" },
+        { "id": "c", "texto": "Modelos estadísticos" },
+        { "id": "d", "texto": "Modelos deterministas simples" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Modelización del carbono del suelo",
+      "pregunta": "Los modelos compartimentales representan el carbono del suelo como:",
+      "opciones": [
+        { "id": "a", "texto": "Una única variable" },
+        { "id": "b", "texto": "Un conjunto de compartimentos o pools" },
+        { "id": "c", "texto": "Solo materia orgánica estable" },
+        { "id": "d", "texto": "Solo carbono mineral" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Modelización del carbono del suelo",
+      "pregunta": "Cada compartimento representa:",
+      "opciones": [
+        { "id": "a", "texto": "Diferentes fracciones de materia orgánica" },
+        { "id": "b", "texto": "Diferentes tipos de suelo" },
+        { "id": "c", "texto": "Diferentes tipos de clima" },
+        { "id": "d", "texto": "Diferentes minerales" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 15,
+      "bloque": "Modelización del carbono del suelo",
+      "pregunta": "Los intercambios entre pools se describen mediante:",
+      "opciones": [
+        { "id": "a", "texto": "Regresiones estadísticas" },
+        { "id": "b", "texto": "Sistemas de ecuaciones diferenciales" },
+        { "id": "c", "texto": "Tablas empíricas" },
+        { "id": "d", "texto": "Redes neuronales" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Tipos de fracciones de carbono",
+      "pregunta": "Un ejemplo de pool de carbono es:",
+      "opciones": [
+        { "id": "a", "texto": "Materia orgánica fresca" },
+        { "id": "b", "texto": "Biomasa microbiana" },
+        { "id": "c", "texto": "Humus estabilizado" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 17,
+      "bloque": "Tipos de fracciones de carbono",
+      "pregunta": "Las diferentes fracciones de carbono presentan:",
+      "opciones": [
+        { "id": "a", "texto": "La misma velocidad de descomposición" },
+        { "id": "b", "texto": "Diferentes velocidades de descomposición" },
+        { "id": "c", "texto": "Ninguna descomposición" },
+        { "id": "d", "texto": "Descomposición constante" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Modelos de carbono del suelo",
+      "pregunta": "¿Cuál de los siguientes es un modelo de carbono del suelo?",
+      "opciones": [
+        { "id": "a", "texto": "RothC" },
+        { "id": "b", "texto": "Century" },
+        { "id": "c", "texto": "Yasso07" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 19,
+      "bloque": "Modelos de carbono del suelo",
+      "pregunta": "El modelo ICBM pertenece a:",
+      "opciones": [
+        { "id": "a", "texto": "Modelos de carbono del suelo" },
+        { "id": "b", "texto": "Modelos climáticos globales" },
+        { "id": "c", "texto": "Modelos hidrológicos" },
+        { "id": "d", "texto": "Modelos geológicos" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 20,
+      "bloque": "Modelos de carbono del suelo",
+      "pregunta": "Los modelos de SOC pueden diferenciarse por:",
+      "opciones": [
+        { "id": "a", "texto": "Número de compartimentos" },
+        { "id": "b", "texto": "Complejidad estructural" },
+        { "id": "c", "texto": "Parametrización" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 21,
+      "bloque": "Incertidumbre en la modelización",
+      "pregunta": "La incertidumbre estructural se refiere a:",
+      "opciones": [
+        { "id": "a", "texto": "Diferencias entre modelos" },
+        { "id": "b", "texto": "Diferencias en sensores climáticos" },
+        { "id": "c", "texto": "Errores humanos" },
+        { "id": "d", "texto": "Errores de muestreo" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 22,
+      "bloque": "Incertidumbre en la modelización",
+      "pregunta": "Dos modelos pueden dar resultados distintos porque:",
+      "opciones": [
+        { "id": "a", "texto": "Tienen diferentes formulaciones matemáticas" },
+        { "id": "b", "texto": "Diferente número de pools" },
+        { "id": "c", "texto": "Diferentes parametrizaciones" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 23,
+      "bloque": "Multi-model ensemble",
+      "pregunta": "Un multi-model ensemble consiste en:",
+      "opciones": [
+        { "id": "a", "texto": "Ejecutar un único modelo muchas veces" },
+        { "id": "b", "texto": "Ejecutar varios modelos simultáneamente" },
+        { "id": "c", "texto": "Usar datos de varios suelos" },
+        { "id": "d", "texto": "Usar varias estaciones meteorológicas" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Multi-model ensemble",
+      "pregunta": "El objetivo del enfoque ensemble es:",
+      "opciones": [
+        { "id": "a", "texto": "Reducir la incertidumbre" },
+        { "id": "b", "texto": "Comparar modelos" },
+        { "id": "c", "texto": "Obtener estimaciones más robustas" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 25,
+      "bloque": "Herramientas computacionales",
+      "pregunta": "El ensemble utilizado en la práctica está implementado en:",
+      "opciones": [
+        { "id": "a", "texto": "Python" },
+        { "id": "b", "texto": "MATLAB" },
+        { "id": "c", "texto": "R" },
+        { "id": "d", "texto": "Java" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 26,
+      "bloque": "Herramientas computacionales",
+      "pregunta": "El paquete utilizado para modelización de carbono del suelo es:",
+      "opciones": [
+        { "id": "a", "texto": "SoilR" },
+        { "id": "b", "texto": "SoilCarbon" },
+        { "id": "c", "texto": "CarbonSim" },
+        { "id": "d", "texto": "SoilDynamics" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 27,
+      "bloque": "Herramientas computacionales",
+      "pregunta": "SoilR permite:",
+      "opciones": [
+        { "id": "a", "texto": "Simular modelos compartimentales" },
+        { "id": "b", "texto": "Analizar stocks de carbono" },
+        { "id": "c", "texto": "Comparar modelos" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 28,
+      "bloque": "Flujo de trabajo de modelización",
+      "pregunta": "El primer paso en la modelización es:",
+      "opciones": [
+        { "id": "a", "texto": "Simulación final" },
+        { "id": "b", "texto": "Preparación de datos de entrada" },
+        { "id": "c", "texto": "Validación" },
+        { "id": "d", "texto": "Visualización" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 29,
+      "bloque": "Flujo de trabajo de modelización",
+      "pregunta": "La fase de spin-up sirve para:",
+      "opciones": [
+        { "id": "a", "texto": "Acelerar el modelo" },
+        { "id": "b", "texto": "Estimar la distribución inicial del carbono" },
+        { "id": "c", "texto": "Reducir el tamaño de datos" },
+        { "id": "d", "texto": "Cambiar el clima del modelo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 30,
+      "bloque": "Flujo de trabajo de modelización",
+      "pregunta": "Durante el spin-up los modelos se ejecutan:",
+      "opciones": [
+        { "id": "a", "texto": "Un solo año" },
+        { "id": "b", "texto": "Durante largos periodos" },
+        { "id": "c", "texto": "Solo un mes" },
+        { "id": "d", "texto": "Durante una simulación corta" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 31,
+      "bloque": "Flujo de trabajo de modelización",
+      "pregunta": "El objetivo del spin-up es alcanzar:",
+      "opciones": [
+        { "id": "a", "texto": "Estado estacionario" },
+        { "id": "b", "texto": "Estado cuasi estacionario" },
+        { "id": "c", "texto": "Equilibrio climático" },
+        { "id": "d", "texto": "Estado hidrológico" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 32,
+      "bloque": "Datos utilizados",
+      "pregunta": "Los modelos utilizan series climáticas de:",
+      "opciones": [
+        { "id": "a", "texto": "Temperatura" },
+        { "id": "b", "texto": "Precipitación" },
+        { "id": "c", "texto": "Evapotranspiración potencial" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 33,
+      "bloque": "Datos utilizados",
+      "pregunta": "Un parámetro edáfico utilizado es:",
+      "opciones": [
+        { "id": "a", "texto": "SOC inicial" },
+        { "id": "b", "texto": "Textura del suelo" },
+        { "id": "c", "texto": "Densidad aparente" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 34,
+      "bloque": "Datos utilizados",
+      "pregunta": "Las entradas de carbono al suelo provienen de:",
+      "opciones": [
+        { "id": "a", "texto": "Residuos orgánicos" },
+        { "id": "b", "texto": "Vegetación" },
+        { "id": "c", "texto": "Biomasa" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 35,
+      "bloque": "Objetivos de la práctica",
+      "pregunta": "El objetivo principal de la práctica es:",
+      "opciones": [
+        { "id": "a", "texto": "Comprender los modelos de carbono del suelo" },
+        { "id": "b", "texto": "Interpretar la dinámica temporal del SOC" },
+        { "id": "c", "texto": "Analizar diferencias entre modelos" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 36,
+      "bloque": "Objetivos de la práctica",
+      "pregunta": "La práctica también busca desarrollar habilidades en:",
+      "opciones": [
+        { "id": "a", "texto": "Modelización ambiental" },
+        { "id": "b", "texto": "Manejo de datos climáticos" },
+        { "id": "c", "texto": "Análisis multimodelo" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 37,
+      "bloque": "Objetivos de la práctica",
+      "pregunta": "Estas habilidades son importantes en:",
+      "opciones": [
+        { "id": "a", "texto": "Ciencia del suelo" },
+        { "id": "b", "texto": "Agricultura sostenible" },
+        { "id": "c", "texto": "Monitorización de carbono" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 38,
+      "bloque": "Objetivos de la práctica",
+      "pregunta": "Los outputs del modelo pueden ser:",
+      "opciones": [
+        { "id": "a", "texto": "Gráficos" },
+        { "id": "b", "texto": "Resultados numéricos" },
+        { "id": "c", "texto": "Análisis de flujos de carbono" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 39,
+      "bloque": "Objetivos de la práctica",
+      "pregunta": "La modelización reproducible implica:",
+      "opciones": [
+        { "id": "a", "texto": "Uso estructurado del código" },
+        { "id": "b", "texto": "Gestión de datos" },
+        { "id": "c", "texto": "Scripts reutilizables" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 40,
+      "bloque": "Objetivos de la práctica",
+      "pregunta": "El estudio del SOC requiere enfoques:",
+      "opciones": [
+        { "id": "a", "texto": "Estáticos" },
+        { "id": "b", "texto": "Dinámicos" },
+        { "id": "c", "texto": "Simplificados" },
+        { "id": "d", "texto": "Exclusivamente estadísticos" }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}

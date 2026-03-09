@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check } from 'lucide-react';
+import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck } from 'lucide-react';
 
 export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials }) {
   const [expandedTemas, setExpandedTemas] = useState({});
@@ -22,10 +22,17 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
   };
 
   const handleOpenMaterial = (tema, material) => {
-    // Navegar a la página de estudio con fases
-    navigate(`/curso/${cursoId}/tema-estudio`, {
-      state: { tema, material }
-    });
+    // Si es el test, ir directamente a la fase 2 (test)
+    if (material._id && material._id.startsWith('test-')) {
+      navigate(`/curso/${cursoId}/tema-estudio`, {
+        state: { tema, material: { titulo: 'Test de Evaluación' }, startPhase: 2 }
+      });
+    } else {
+      // Para materiales normales, ir a la fase 1 (material de estudio)
+      navigate(`/curso/${cursoId}/tema-estudio`, {
+        state: { tema, material }
+      });
+    }
   };
 
   const toggleCompleted = (e, materialId) => {
@@ -165,6 +172,35 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                   })}
                 </div>
               )}
+
+              {/* Test de Evaluación */}
+              <div className="mt-6 space-y-2">
+                <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
+                  Test de Evaluación
+                </h4>
+                <div
+                  onClick={() => handleOpenMaterial(tema, { titulo: 'Test de Evaluación', _id: `test-${tema._id}` })}
+                  className="group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/30 cursor-pointer"
+                >
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="flex-shrink-0 transition-colors text-[#5ec6a6]">
+                      <ClipboardCheck className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium transition-colors truncate text-white">
+                        Test de Evaluación - Tema {tema.numeroTema}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        40 preguntas • 60 minutos • Nota mínima: 60%
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 transform hover:scale-105 opacity-0 group-hover:opacity-100">
+                    Iniciar Test
+                  </div>
+                </div>
+              </div>
 
               {tema.actividadesOptativas && tema.actividadesOptativas.length > 0 && (
                 <div className="mt-6 space-y-2">
