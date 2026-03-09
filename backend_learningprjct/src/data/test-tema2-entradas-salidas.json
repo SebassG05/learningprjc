@@ -1,0 +1,310 @@
+{
+  "cursoId": "69a6a0a4c8289d012745af63",
+  "temaId": "69aeaa6c7eae18944d9c89c6",
+  "titulo": "Test de Evaluación - Tema 2: Entradas y Salidas de Carbono",
+  "descripcion": "Evaluación sobre entradas y salidas de carbono en el suelo",
+  "duracionMinutos": 60,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "Las entradas de carbono al suelo representan:",
+      "opciones": [
+        { "id": "a", "texto": "La pérdida de carbono del suelo" },
+        { "id": "b", "texto": "El flujo de carbono desde la biosfera hacia el suelo" },
+        { "id": "c", "texto": "La erosión del suelo" },
+        { "id": "d", "texto": "La oxidación mineral" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "Las entradas de carbono al suelo están estrechamente relacionadas con:",
+      "opciones": [
+        { "id": "a", "texto": "La productividad primaria" },
+        { "id": "b", "texto": "La vegetación" },
+        { "id": "c", "texto": "El uso del suelo" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 3,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "Los residuos vegetales que aportan carbono al suelo incluyen:",
+      "opciones": [
+        { "id": "a", "texto": "Hojarasca" },
+        { "id": "b", "texto": "Raíces muertas" },
+        { "id": "c", "texto": "Restos de poda" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "La materia orgánica fresca que entra en el suelo procede principalmente de:",
+      "opciones": [
+        { "id": "a", "texto": "Procesos de senescencia vegetal" },
+        { "id": "b", "texto": "Renovación radicular" },
+        { "id": "c", "texto": "Ambos procesos" },
+        { "id": "d", "texto": "Ninguno" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "En sistemas agrícolas extensivos, una fuente importante de carbono es:",
+      "opciones": [
+        { "id": "a", "texto": "Minerales del suelo" },
+        { "id": "b", "texto": "Rastrojos y residuos de cosecha" },
+        { "id": "c", "texto": "Agua de riego" },
+        { "id": "d", "texto": "Fertilizantes minerales" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "En ecosistemas forestales mediterráneos, los aportes de carbono dependen de:",
+      "opciones": [
+        { "id": "a", "texto": "Productividad del ecosistema" },
+        { "id": "b", "texto": "Condiciones climáticas" },
+        { "id": "c", "texto": "Ambas" },
+        { "id": "d", "texto": "Ninguna" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "Entradas de carbono al suelo",
+      "pregunta": "El carbono procedente de raíces puede ser más persistente porque:",
+      "opciones": [
+        { "id": "a", "texto": "Se introduce en capas profundas del suelo" },
+        { "id": "b", "texto": "Tiene mayor interacción con minerales" },
+        { "id": "c", "texto": "Ambas son correctas" },
+        { "id": "d", "texto": "Ninguna es correcta" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Exudados radiculares",
+      "pregunta": "Los exudados radiculares incluyen:",
+      "opciones": [
+        { "id": "a", "texto": "Azúcares" },
+        { "id": "b", "texto": "Aminoácidos" },
+        { "id": "c", "texto": "Ácidos orgánicos" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 9,
+      "bloque": "Exudados radiculares",
+      "pregunta": "Los exudados radiculares constituyen una fuente de carbono:",
+      "opciones": [
+        { "id": "a", "texto": "Difícilmente degradable" },
+        { "id": "b", "texto": "Fácilmente disponible para microorganismos" },
+        { "id": "c", "texto": "Mineral" },
+        { "id": "d", "texto": "Inerte" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Exudados radiculares",
+      "pregunta": "Los exudados radiculares se liberan principalmente en:",
+      "opciones": [
+        { "id": "a", "texto": "La atmósfera" },
+        { "id": "b", "texto": "La rizosfera" },
+        { "id": "c", "texto": "El agua subterránea" },
+        { "id": "d", "texto": "La superficie del suelo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Aportaciones orgánicas externas",
+      "pregunta": "Las aportaciones orgánicas externas pueden:",
+      "opciones": [
+        { "id": "a", "texto": "Incrementar el contenido de SOC" },
+        { "id": "b", "texto": "Mejorar la estructura del suelo" },
+        { "id": "c", "texto": "Aumentar la actividad biológica" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 12,
+      "bloque": "Aportaciones orgánicas externas",
+      "pregunta": "Un factor clave que determina la descomposición de enmiendas orgánicas es:",
+      "opciones": [
+        { "id": "a", "texto": "La calidad del material orgánico" },
+        { "id": "b", "texto": "El color del suelo" },
+        { "id": "c", "texto": "La pendiente del terreno" },
+        { "id": "d", "texto": "La altitud" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 13,
+      "bloque": "Aportaciones orgánicas externas",
+      "pregunta": "Materiales orgánicos con bajo C:N suelen:",
+      "opciones": [
+        { "id": "a", "texto": "Descomponerse rápidamente" },
+        { "id": "b", "texto": "Descomponerse muy lentamente" },
+        { "id": "c", "texto": "No descomponerse" },
+        { "id": "d", "texto": "Convertirse en minerales" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 14,
+      "bloque": "Necromasa microbiana",
+      "pregunta": "La necromasa microbiana se forma cuando:",
+      "opciones": [
+        { "id": "a", "texto": "Mueren los microorganismos del suelo" },
+        { "id": "b", "texto": "Se mineraliza el nitrógeno" },
+        { "id": "c", "texto": "Se forman minerales" },
+        { "id": "d", "texto": "Se evapora el agua" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 15,
+      "bloque": "Necromasa microbiana",
+      "pregunta": "La necromasa microbiana contribuye principalmente a:",
+      "opciones": [
+        { "id": "a", "texto": "La formación de carbono estable en el suelo" },
+        { "id": "b", "texto": "La erosión" },
+        { "id": "c", "texto": "La evaporación" },
+        { "id": "d", "texto": "La pérdida de carbono" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 16,
+      "bloque": "Salidas de carbono: Descomposición",
+      "pregunta": "La descomposición de materia orgánica implica:",
+      "opciones": [
+        { "id": "a", "texto": "Fragmentación de compuestos orgánicos" },
+        { "id": "b", "texto": "Transformación química" },
+        { "id": "c", "texto": "Oxidación" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 17,
+      "bloque": "Salidas de carbono: Descomposición",
+      "pregunta": "La respiración heterotrófica representa:",
+      "opciones": [
+        { "id": "a", "texto": "Un flujo de carbono del suelo a la atmósfera" },
+        { "id": "b", "texto": "Un flujo de carbono del aire al suelo" },
+        { "id": "c", "texto": "La fijación de carbono" },
+        { "id": "d", "texto": "La formación de minerales" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 18,
+      "bloque": "Salidas de carbono: Descomposición",
+      "pregunta": "Los microorganismos utilizan el carbono orgánico para:",
+      "opciones": [
+        { "id": "a", "texto": "Energía" },
+        { "id": "b", "texto": "Estructura celular" },
+        { "id": "c", "texto": "Ambos" },
+        { "id": "d", "texto": "Ninguno" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "Factores que afectan la descomposición",
+      "pregunta": "La actividad enzimática en el suelo generalmente:",
+      "opciones": [
+        { "id": "a", "texto": "Disminuye con la temperatura" },
+        { "id": "b", "texto": "Aumenta con la temperatura" },
+        { "id": "c", "texto": "No depende de la temperatura" },
+        { "id": "d", "texto": "Solo depende del nitrógeno" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Factores que afectan la descomposición",
+      "pregunta": "La saturación hídrica del suelo puede:",
+      "opciones": [
+        { "id": "a", "texto": "Reducir la actividad microbiana" },
+        { "id": "b", "texto": "Aumentar la mineralización" },
+        { "id": "c", "texto": "No afectar al suelo" },
+        { "id": "d", "texto": "Eliminar el carbono" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 21,
+      "bloque": "Factores que afectan la descomposición",
+      "pregunta": "La lignina en los residuos orgánicos provoca:",
+      "opciones": [
+        { "id": "a", "texto": "Descomposición rápida" },
+        { "id": "b", "texto": "Descomposición lenta" },
+        { "id": "c", "texto": "Mineralización inmediata" },
+        { "id": "d", "texto": "Ninguna descomposición" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "Protección y estabilización del carbono",
+      "pregunta": "Los suelos con mayor contenido de arcilla tienden a:",
+      "opciones": [
+        { "id": "a", "texto": "Proteger el carbono de la descomposición" },
+        { "id": "b", "texto": "Aumentar la erosión" },
+        { "id": "c", "texto": "Reducir la humedad" },
+        { "id": "d", "texto": "Eliminar microorganismos" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 23,
+      "bloque": "Protección y estabilización del carbono",
+      "pregunta": "Las interacciones organo-minerales pueden ocurrir con:",
+      "opciones": [
+        { "id": "a", "texto": "Arcillas" },
+        { "id": "b", "texto": "Óxidos de hierro" },
+        { "id": "c", "texto": "Óxidos de aluminio" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 24,
+      "bloque": "Protección y estabilización del carbono",
+      "pregunta": "El tiempo de residencia del carbono en el suelo puede variar desde:",
+      "opciones": [
+        { "id": "a", "texto": "Horas a días" },
+        { "id": "b", "texto": "Meses a siglos" },
+        { "id": "c", "texto": "Minutos a horas" },
+        { "id": "d", "texto": "Años a milenios únicamente" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "Protección y estabilización del carbono",
+      "pregunta": "El pool inerte de carbono en modelos de SOC se caracteriza por:",
+      "opciones": [
+        { "id": "a", "texto": "Descomposición extremadamente lenta" },
+        { "id": "b", "texto": "Alta actividad microbiana" },
+        { "id": "c", "texto": "Alta mineralización" },
+        { "id": "d", "texto": "Descomposición rápida" }
+      ],
+      "respuestaCorrecta": "a"
+    }
+  ]
+}
