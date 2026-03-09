@@ -1,0 +1,310 @@
+{
+  "cursoId": "69a6a0a4c8289d012745af63",
+  "temaId": "69aeb0cd137ab6d9eac6bec3",
+  "titulo": "Test de Evaluación - Tema 3: Modelos basados en procesos incluidos en el ensemble",
+  "descripcion": "Evaluación sobre los modelos RothC, ICBM, Century, Yasso07, AMG, SG y el enfoque multi-modelo",
+  "duracionMinutos": 45,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Modelo RothC",
+      "pregunta": "El modelo RothC representa el carbono del suelo mediante:",
+      "opciones": [
+        { "id": "a", "texto": "Dos compartimentos" },
+        { "id": "b", "texto": "Tres compartimentos" },
+        { "id": "c", "texto": "Cinco compartimentos" },
+        { "id": "d", "texto": "Siete compartimentos" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Modelo RothC",
+      "pregunta": "Los compartimentos principales del modelo RothC incluyen:",
+      "opciones": [
+        { "id": "a", "texto": "DPM y RPM" },
+        { "id": "b", "texto": "BIO y HUM" },
+        { "id": "c", "texto": "IOM" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 3,
+      "bloque": "Modelo RothC",
+      "pregunta": "En el modelo RothC, las tasas de descomposición están moduladas principalmente por:",
+      "opciones": [
+        { "id": "a", "texto": "Temperatura y humedad" },
+        { "id": "b", "texto": "pH del suelo" },
+        { "id": "c", "texto": "Radiación solar" },
+        { "id": "d", "texto": "Altitud" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 4,
+      "bloque": "Modelo RothC",
+      "pregunta": "Además del clima, RothC considera como factor del suelo:",
+      "opciones": [
+        { "id": "a", "texto": "Densidad aparente" },
+        { "id": "b", "texto": "Contenido de arcilla" },
+        { "id": "c", "texto": "Salinidad" },
+        { "id": "d", "texto": "pH" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Modelo ICBM",
+      "pregunta": "El modelo ICBM se caracteriza por:",
+      "opciones": [
+        { "id": "a", "texto": "Alta complejidad estructural" },
+        { "id": "b", "texto": "Gran número de compartimentos" },
+        { "id": "c", "texto": "Estructura simple con dos pools" },
+        { "id": "d", "texto": "Simulación química detallada" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Modelo ICBM",
+      "pregunta": "En el modelo ICBM, el carbono del suelo se divide en:",
+      "opciones": [
+        { "id": "a", "texto": "Tres pools" },
+        { "id": "b", "texto": "Dos pools principales" },
+        { "id": "c", "texto": "Cinco pools" },
+        { "id": "d", "texto": "Un único pool" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Modelo ICBM",
+      "pregunta": "La función principal de la fracción de humificación en ICBM es:",
+      "opciones": [
+        { "id": "a", "texto": "Eliminar carbono del sistema" },
+        { "id": "b", "texto": "Transferir carbono entre compartimentos" },
+        { "id": "c", "texto": "Reducir la mineralización" },
+        { "id": "d", "texto": "Aumentar la temperatura del suelo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Modelo Century",
+      "pregunta": "El modelo Century describe el ciclo del carbono mediante:",
+      "opciones": [
+        { "id": "a", "texto": "Un único compartimento" },
+        { "id": "b", "texto": "Compartimentos estructurales y metabólicos" },
+        { "id": "c", "texto": "Solo residuos vegetales" },
+        { "id": "d", "texto": "Solo carbono atmosférico" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Modelo Century",
+      "pregunta": "Century incluye explícitamente la influencia de:",
+      "opciones": [
+        { "id": "a", "texto": "Textura del suelo" },
+        { "id": "b", "texto": "Calidad de los residuos orgánicos" },
+        { "id": "c", "texto": "Ambos" },
+        { "id": "d", "texto": "Ninguno" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Modelo Century",
+      "pregunta": "El modelo Century permite simular la dinámica del carbono a escala:",
+      "opciones": [
+        { "id": "a", "texto": "Diaria" },
+        { "id": "b", "texto": "Mensual" },
+        { "id": "c", "texto": "Anual" },
+        { "id": "d", "texto": "Decenal" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Modelo Yasso07",
+      "pregunta": "El modelo Yasso07 clasifica la materia orgánica según:",
+      "opciones": [
+        { "id": "a", "texto": "Tipo de ecosistema" },
+        { "id": "b", "texto": "Calidad química de los residuos" },
+        { "id": "c", "texto": "Edad del suelo" },
+        { "id": "d", "texto": "Tipo de cultivo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Modelo Yasso07",
+      "pregunta": "En Yasso07, los residuos orgánicos se clasifican en:",
+      "opciones": [
+        { "id": "a", "texto": "Fracciones solubles" },
+        { "id": "b", "texto": "Celulósicas" },
+        { "id": "c", "texto": "Ligninosas y recalcitrantes" },
+        { "id": "d", "texto": "Todas las anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 13,
+      "bloque": "Modelo Yasso07",
+      "pregunta": "En el modelo Yasso07, la descomposición depende principalmente de:",
+      "opciones": [
+        { "id": "a", "texto": "Temperatura y precipitación" },
+        { "id": "b", "texto": "Textura del suelo" },
+        { "id": "c", "texto": "pH" },
+        { "id": "d", "texto": "Densidad aparente" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 14,
+      "bloque": "Modelo AMG",
+      "pregunta": "El modelo AMG describe el SOC mediante:",
+      "opciones": [
+        { "id": "a", "texto": "Cinco pools" },
+        { "id": "b", "texto": "Tres pools" },
+        { "id": "c", "texto": "Un pool" },
+        { "id": "d", "texto": "Dos pools principales" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 15,
+      "bloque": "Modelo AMG",
+      "pregunta": "El modelo AMG está orientado principalmente a:",
+      "opciones": [
+        { "id": "a", "texto": "Ecosistemas marinos" },
+        { "id": "b", "texto": "Sistemas agrícolas" },
+        { "id": "c", "texto": "Ecosistemas polares" },
+        { "id": "d", "texto": "Bosques tropicales" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Modelo SG",
+      "pregunta": "El modelo SG (Simple Gas model) se utiliza para estimar:",
+      "opciones": [
+        { "id": "a", "texto": "Stocks de carbono en pools" },
+        { "id": "b", "texto": "Flujos gaseosos del suelo" },
+        { "id": "c", "texto": "Biomasa microbiana" },
+        { "id": "d", "texto": "Textura del suelo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Modelo SG",
+      "pregunta": "El modelo SG puede estimar emisiones de:",
+      "opciones": [
+        { "id": "a", "texto": "CO₂" },
+        { "id": "b", "texto": "CH₄" },
+        { "id": "c", "texto": "N₂O" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 18,
+      "bloque": "Modelo SG",
+      "pregunta": "A diferencia de otros modelos del ensemble, SG:",
+      "opciones": [
+        { "id": "a", "texto": "No simula el carbono almacenado en el suelo" },
+        { "id": "b", "texto": "No usa datos climáticos" },
+        { "id": "c", "texto": "Solo usa temperatura" },
+        { "id": "d", "texto": "No estima emisiones" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 19,
+      "bloque": "Modelo SG",
+      "pregunta": "Los flujos de carbono calculados por SG se expresan normalmente en:",
+      "opciones": [
+        { "id": "a", "texto": "kg C ha⁻¹ día⁻¹" },
+        { "id": "b", "texto": "Mg C ha⁻¹ año⁻¹" },
+        { "id": "c", "texto": "g C m⁻² hora⁻¹" },
+        { "id": "d", "texto": "toneladas por década" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Multi-model ensemble",
+      "pregunta": "El multi-model ensemble combina:",
+      "opciones": [
+        { "id": "a", "texto": "Datos de varios suelos" },
+        { "id": "b", "texto": "Resultados de varios modelos" },
+        { "id": "c", "texto": "Diferentes estaciones meteorológicas" },
+        { "id": "d", "texto": "Diferentes experimentos de laboratorio" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 21,
+      "bloque": "Multi-model ensemble",
+      "pregunta": "El objetivo principal del enfoque ensemble es:",
+      "opciones": [
+        { "id": "a", "texto": "Utilizar un único modelo" },
+        { "id": "b", "texto": "Reducir la incertidumbre estructural" },
+        { "id": "c", "texto": "Aumentar la complejidad del sistema" },
+        { "id": "d", "texto": "Reducir los datos climáticos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "Ecuaciones de modelos compartimentales",
+      "pregunta": "En los modelos compartimentales, el vector C(t) representa:",
+      "opciones": [
+        { "id": "a", "texto": "Temperatura del suelo" },
+        { "id": "b", "texto": "Masa de carbono en cada pool" },
+        { "id": "c", "texto": "Precipitación" },
+        { "id": "d", "texto": "Actividad microbiana" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "Ecuaciones de modelos compartimentales",
+      "pregunta": "El término I(t) en la ecuación del modelo representa:",
+      "opciones": [
+        { "id": "a", "texto": "Transferencias entre pools" },
+        { "id": "b", "texto": "Entradas de carbono al suelo" },
+        { "id": "c", "texto": "Tasas de descomposición" },
+        { "id": "d", "texto": "Condiciones climáticas" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Ecuaciones de modelos compartimentales",
+      "pregunta": "La matriz K en los modelos compartimentales contiene:",
+      "opciones": [
+        { "id": "a", "texto": "Tasas de descomposición" },
+        { "id": "b", "texto": "Variables climáticas" },
+        { "id": "c", "texto": "Entradas de carbono" },
+        { "id": "d", "texto": "Parámetros de textura" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 25,
+      "bloque": "Ecuaciones de modelos compartimentales",
+      "pregunta": "El término ξ(t) representa:",
+      "opciones": [
+        { "id": "a", "texto": "Masa total de carbono" },
+        { "id": "b", "texto": "Efectos del clima y del suelo sobre la descomposición" },
+        { "id": "c", "texto": "Número de pools" },
+        { "id": "d", "texto": "Tipo de cultivo" }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}
