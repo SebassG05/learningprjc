@@ -1,0 +1,310 @@
+{
+  "cursoId": "69a6a0a4c8289d012745af63",
+  "temaId": "69aeb55909e22067fbf0b1b1",
+  "titulo": "Test de Evaluación - Tema 4: Ejecución y práctica con el modelo",
+  "descripcion": "Evaluación sobre entorno de programación R, paquetes, configuración y ejecución del ensemble HoliSoils",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Entorno de programación",
+      "pregunta": "El entorno de programación principal requerido para ejecutar el modelo es:",
+      "opciones": [
+        { "id": "a", "texto": "Python" },
+        { "id": "b", "texto": "Matlab" },
+        { "id": "c", "texto": "R" },
+        { "id": "d", "texto": "Julia" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Entorno de programación",
+      "pregunta": "El entorno recomendado para trabajar con R y ejecutar el modelo es:",
+      "opciones": [
+        { "id": "a", "texto": "Spyder" },
+        { "id": "b", "texto": "RStudio" },
+        { "id": "c", "texto": "Eclipse" },
+        { "id": "d", "texto": "Visual Studio" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Paquetes y librerías",
+      "pregunta": "El paquete de R más importante para la simulación de modelos compartimentales de carbono es:",
+      "opciones": [
+        { "id": "a", "texto": "ggplot2" },
+        { "id": "b", "texto": "SoilR" },
+        { "id": "c", "texto": "readxl" },
+        { "id": "d", "texto": "dplyr" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "Paquetes y librerías",
+      "pregunta": "El paquete matrixStats se utiliza principalmente para:",
+      "opciones": [
+        { "id": "a", "texto": "Crear gráficos" },
+        { "id": "b", "texto": "Manipular archivos Excel" },
+        { "id": "c", "texto": "Realizar cálculos eficientes con matrices" },
+        { "id": "d", "texto": "Simular modelos climáticos" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Paquetes y librerías",
+      "pregunta": "Si el paquete SoilR no está instalado:",
+      "opciones": [
+        { "id": "a", "texto": "El modelo funciona más lento" },
+        { "id": "b", "texto": "El modelo no puede simular la dinámica del SOC" },
+        { "id": "c", "texto": "Solo fallan los gráficos" },
+        { "id": "d", "texto": "No ocurre ningún problema" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Paquetes y librerías",
+      "pregunta": "La librería dplyr se utiliza para:",
+      "opciones": [
+        { "id": "a", "texto": "Resolver ecuaciones diferenciales" },
+        { "id": "b", "texto": "Manipular y transformar datos" },
+        { "id": "c", "texto": "Generar gráficos" },
+        { "id": "d", "texto": "Ejecutar modelos climáticos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Paquetes y librerías",
+      "pregunta": "La librería ggplot2 se utiliza principalmente para:",
+      "opciones": [
+        { "id": "a", "texto": "Resolver ecuaciones" },
+        { "id": "b", "texto": "Manipular datos" },
+        { "id": "c", "texto": "Visualizar resultados mediante gráficos" },
+        { "id": "d", "texto": "Leer archivos Excel" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Paquetes y librerías",
+      "pregunta": "La función readxl permite:",
+      "opciones": [
+        { "id": "a", "texto": "Crear modelos matemáticos" },
+        { "id": "b", "texto": "Leer archivos Excel" },
+        { "id": "c", "texto": "Ejecutar scripts" },
+        { "id": "d", "texto": "Crear matrices" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Configuración inicial",
+      "pregunta": "La variable PATH_functions define:",
+      "opciones": [
+        { "id": "a", "texto": "La ubicación de los datos climáticos" },
+        { "id": "b", "texto": "La carpeta donde están los scripts de los modelos" },
+        { "id": "c", "texto": "La ruta de los resultados" },
+        { "id": "d", "texto": "El directorio de gráficos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Configuración inicial",
+      "pregunta": "Un error frecuente en prácticas ocurre cuando:",
+      "opciones": [
+        { "id": "a", "texto": "Falta temperatura" },
+        { "id": "b", "texto": "La ruta de los scripts es incorrecta" },
+        { "id": "c", "texto": "Falta precipitación" },
+        { "id": "d", "texto": "El modelo tiene demasiados pools" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Carga de modelos",
+      "pregunta": "La función source() en R se utiliza para:",
+      "opciones": [
+        { "id": "a", "texto": "Crear gráficos" },
+        { "id": "b", "texto": "Cargar scripts externos en la memoria" },
+        { "id": "c", "texto": "Ejecutar ecuaciones diferenciales" },
+        { "id": "d", "texto": "Generar datos climáticos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Carga de modelos",
+      "pregunta": "La carga de múltiples modelos mediante source() permite implementar:",
+      "opciones": [
+        { "id": "a", "texto": "Un modelo único" },
+        { "id": "b", "texto": "Un sistema multi-modelo (ensemble)" },
+        { "id": "c", "texto": "Un sistema climático" },
+        { "id": "d", "texto": "Un modelo hidrológico" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Ejecución del modelo",
+      "pregunta": "El spin-up del modelo tiene como objetivo principal:",
+      "opciones": [
+        { "id": "a", "texto": "Aumentar la velocidad del modelo" },
+        { "id": "b", "texto": "Estabilizar los pools de carbono del suelo" },
+        { "id": "c", "texto": "Reducir el número de variables" },
+        { "id": "d", "texto": "Generar gráficos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Ejecución del modelo",
+      "pregunta": "En el ejemplo presentado, el spin-up se ejecuta durante:",
+      "opciones": [
+        { "id": "a", "texto": "100 años" },
+        { "id": "b", "texto": "500 años" },
+        { "id": "c", "texto": "1000 años" },
+        { "id": "d", "texto": "2000 años" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Ejecución del modelo",
+      "pregunta": "La simulación prospectiva del escenario real se realiza durante:",
+      "opciones": [
+        { "id": "a", "texto": "5 años" },
+        { "id": "b", "texto": "10 años" },
+        { "id": "c", "texto": "50 años" },
+        { "id": "d", "texto": "100 años" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Ejecución del modelo",
+      "pregunta": "La variable plot_figures controla:",
+      "opciones": [
+        { "id": "a", "texto": "El número de modelos ejecutados" },
+        { "id": "b", "texto": "La generación de gráficos de resultados" },
+        { "id": "c", "texto": "El clima del modelo" },
+        { "id": "d", "texto": "El número de pools" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Ejecución del modelo",
+      "pregunta": "La función Call_MULTIMODEL() representa:",
+      "opciones": [
+        { "id": "a", "texto": "El cálculo de matrices" },
+        { "id": "b", "texto": "La ejecución del ensemble de modelos" },
+        { "id": "c", "texto": "La lectura de datos climáticos" },
+        { "id": "d", "texto": "La generación de gráficos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Ejecución del modelo",
+      "pregunta": "El ensemble del modelo HoliSoils incluye modelos como:",
+      "opciones": [
+        { "id": "a", "texto": "RothC" },
+        { "id": "b", "texto": "ICBM" },
+        { "id": "c", "texto": "Century" },
+        { "id": "d", "texto": "Todos los anteriores" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 19,
+      "bloque": "Datos de entrada",
+      "pregunta": "Las variables Temp_month, Precip_month y Potevap_month representan:",
+      "opciones": [
+        { "id": "a", "texto": "Propiedades del suelo" },
+        { "id": "b", "texto": "Forzamientos climáticos" },
+        { "id": "c", "texto": "Entradas de carbono" },
+        { "id": "d", "texto": "Parámetros internos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Datos de entrada",
+      "pregunta": "La variable SOC_0 (SOC_initial) representa:",
+      "opciones": [
+        { "id": "a", "texto": "La temperatura inicial" },
+        { "id": "b", "texto": "El carbono orgánico inicial del suelo" },
+        { "id": "c", "texto": "El carbono atmosférico" },
+        { "id": "d", "texto": "El nitrógeno del suelo" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 21,
+      "bloque": "Datos de entrada",
+      "pregunta": "Las variables C_input_spinup y C_input_fwd representan:",
+      "opciones": [
+        { "id": "a", "texto": "Emisiones de CO₂" },
+        { "id": "b", "texto": "Entradas de carbono al suelo" },
+        { "id": "c", "texto": "Variables climáticas" },
+        { "id": "d", "texto": "Parámetros hidrológicos" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "Datos de entrada",
+      "pregunta": "El porcentaje de arcilla (clay_p) influye principalmente en:",
+      "opciones": [
+        { "id": "a", "texto": "La precipitación" },
+        { "id": "b", "texto": "La estabilización del carbono orgánico" },
+        { "id": "c", "texto": "La temperatura" },
+        { "id": "d", "texto": "La evapotranspiración" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "Datos de entrada",
+      "pregunta": "El WFPS (Water Filled Pore Space) controla principalmente:",
+      "opciones": [
+        { "id": "a", "texto": "La estructura mineral" },
+        { "id": "b", "texto": "La actividad microbiana y mineralización" },
+        { "id": "c", "texto": "La textura del suelo" },
+        { "id": "d", "texto": "La altitud del terreno" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Análisis de resultados",
+      "pregunta": "El SOC total de cada modelo se obtiene generalmente mediante:",
+      "opciones": [
+        { "id": "a", "texto": "Multiplicación de pools" },
+        { "id": "b", "texto": "Suma de todos los compartimentos de carbono" },
+        { "id": "c", "texto": "División de pools" },
+        { "id": "d", "texto": "Media de variables climáticas" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "Análisis de resultados",
+      "pregunta": "El objetivo principal de calcular la media multimodelo es:",
+      "opciones": [
+        { "id": "a", "texto": "Aumentar el número de modelos" },
+        { "id": "b", "texto": "Reducir la incertidumbre estructural" },
+        { "id": "c", "texto": "Reducir el tiempo de ejecución" },
+        { "id": "d", "texto": "Eliminar variables climáticas" }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}
