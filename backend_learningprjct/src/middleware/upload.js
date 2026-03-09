@@ -1,31 +1,35 @@
 import multer from 'multer';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import cloudinary from '../config/cloudinary.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Configuración de almacenamiento
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../public/courses/materiales'));
-  },
-  filename: (req, file, cb) => {
-    // Generar nombre único: timestamp + nombre original
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    const name = path.basename(file.originalname, ext);
-    cb(null, `${name}-${uniqueSuffix}${ext}`);
+// Configuración de almacenamiento en Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    return {
+      folder: 'learning-platform/materiales',
+      resource_type: 'raw',
+      public_id: (() => {
+        const name = file.originalname
+          .split('.')[0]
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-zA-Z0-9_-]/g, '_');
+        
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        return `${name}-${uniqueSuffix}`;
+      })(),
+      allowed_formats: ['pdf', 'doc', 'docx', 'ppt', 'pptx']
+    };
   }
 });
 
 // Filtro para aceptar solo ciertos tipos de archivos
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /pdf|doc|docx|ppt|pptx/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedTypes.test(file.mimetype);
+  const extname = allowedTypes.test(file.originalname.split('.').pop().toLowerCase());
 
-  if (mimetype && extname) {
+  if (extname) {
     return cb(null, true);
   } else {
     cb(new Error('Solo se permiten archivos PDF, DOC, DOCX, PPT, PPTX'));

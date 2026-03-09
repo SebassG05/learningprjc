@@ -203,6 +203,7 @@ export default function CursoDetalle() {
       {/* Material de Estudio - Temas y PDFs */}
       <div className="max-w-7xl mx-auto px-4">
         <MaterialEstudio 
+          cursoId={id}
           temas={curso.temas} 
           completedMaterials={completedMaterials}
           setCompletedMaterials={setCompletedMaterials}

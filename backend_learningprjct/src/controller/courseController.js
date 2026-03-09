@@ -1,10 +1,5 @@
 import Course from '../models/Course.js';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import cloudinary from '../config/cloudinary.js';
 
 // Agregar un tema a un curso
 export const agregarTema = async (req, res) => {
@@ -78,10 +73,11 @@ export const agregarMaterial = async (req, res) => {
       tema.materiales = [];
     }
 
-    // Si se subió un archivo, usar la ruta del archivo
+    // Si se subió un archivo, usar la URL de Cloudinary
     let archivoPath = archivo;
     if (req.file) {
-      archivoPath = `/courses/materiales/${req.file.filename}`;
+      // Cloudinary almacena la URL en req.file.path
+      archivoPath = req.file.path;
     }
 
     tema.materiales.push({
@@ -128,11 +124,19 @@ export const eliminarMaterial = async (req, res) => {
       return res.status(404).json({ error: 'Material no encontrado' });
     }
 
-    // Si el material tiene un archivo físico, eliminarlo
-    if (material.archivo && material.archivo.startsWith('/courses/materiales/')) {
-      const filePath = path.join(__dirname, '../../public', material.archivo);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
+    // Si el material tiene un archivo en Cloudinary, eliminarlo
+    if (material.archivo && material.archivo.includes('cloudinary.com')) {
+      try {
+        // Extraer el public_id de la URL de Cloudinary
+        const urlParts = material.archivo.split('/');
+        const fileWithExt = urlParts[urlParts.length - 1];
+        const publicId = `learning-platform/materiales/${fileWithExt.split('.')[0]}`;
+        
+        // Eliminar de Cloudinary
+        await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+      } catch (cloudinaryError) {
+        console.error('Error al eliminar archivo de Cloudinary:', cloudinaryError);
+        // Continuar aunque falle la eliminación en Cloudinary
       }
     }
 
@@ -195,16 +199,36 @@ export const eliminarTema = async (req, res) => {
       return res.status(404).json({ error: 'Tema no encontrado' });
     }
 
-    // Eliminar todos los archivos del tema
+    // Eliminar todos los archivos del tema de Cloudinary
     if (tema.materiales) {
-      tema.materiales.forEach(material => {
-        if (material.archivo && material.archivo.startsWith('/courses/materiales/')) {
-          const filePath = path.join(__dirname, '../../public', material.archivo);
-          if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+      for (const material of tema.materiales) {
+        if (material.archivo && material.archivo.includes('cloudinary.com')) {
+          try {
+            const urlParts = material.archivo.split('/');
+            const fileWithExt = urlParts[urlParts.length - 1];
+            const publicId = `learning-platform/materiales/${fileWithExt.split('.')[0]}`;
+            await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+          } catch (cloudinaryError) {
+            console.error('Error al eliminar archivo de Cloudinary:', cloudinaryError);
           }
         }
-      });
+      }
+    }
+
+    // Eliminar actividades optativas de Cloudinary
+    if (tema.actividadesOptativas) {
+      for (const actividad of tema.actividadesOptativas) {
+        if (actividad.archivo && actividad.archivo.includes('cloudinary.com')) {
+          try {
+            const urlParts = actividad.archivo.split('/');
+            const fileWithExt = urlParts[urlParts.length - 1];
+            const publicId = `learning-platform/materiales/${fileWithExt.split('.')[0]}`;
+            await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+          } catch (cloudinaryError) {
+            console.error('Error al eliminar archivo de Cloudinary:', cloudinaryError);
+          }
+        }
+      }
     }
 
     course.temas.pull(temaId);
@@ -244,10 +268,10 @@ export const agregarActividadOptativa = async (req, res) => {
       tema.actividadesOptativas = [];
     }
 
-    // Si se subió un archivo, usar la ruta del archivo
+    // Si se subió un archivo, usar la URL de Cloudinary
     let archivoPath = archivo;
     if (req.file) {
-      archivoPath = `/courses/materiales/${req.file.filename}`;
+      archivoPath = req.file.path;
     }
 
     tema.actividadesOptativas.push({
@@ -294,11 +318,15 @@ export const eliminarActividadOptativa = async (req, res) => {
       return res.status(404).json({ error: 'Actividad optativa no encontrada' });
     }
 
-    // Si la actividad tiene un archivo físico, eliminarlo
-    if (actividad.archivo && actividad.archivo.startsWith('/courses/materiales/')) {
-      const filePath = path.join(__dirname, '../../public', actividad.archivo);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
+    // Si la actividad tiene un archivo en Cloudinary, eliminarlo
+    if (actividad.archivo && actividad.archivo.includes('cloudinary.com')) {
+      try {
+        const urlParts = actividad.archivo.split('/');
+        const fileWithExt = urlParts[urlParts.length - 1];
+        const publicId = `learning-platform/materiales/${fileWithExt.split('.')[0]}`;
+        await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+      } catch (cloudinaryError) {
+        console.error('Error al eliminar archivo de Cloudinary:', cloudinaryError);
       }
     }
 

@@ -19,5 +19,11 @@ export default {
         baseUrl: process.env.BASE_URL || 'http://localhost:3000'
     },
     // URL del frontend para enlaces en emails
-    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173'
+    frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
+    // Configuración de Cloudinary
+    cloudinary: {
+        cloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
+        apiKey: process.env.CLOUDINARY_API_KEY || '',
+        apiSecret: process.env.CLOUDINARY_API_SECRET || ''
+    }
 };

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check } from 'lucide-react';
 
-export default function MaterialEstudio({ temas, completedMaterials, setCompletedMaterials }) {
+export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials }) {
   const [expandedTemas, setExpandedTemas] = useState({});
+  const navigate = useNavigate();
 
   if (!temas || temas.length === 0) {
     return null;
@@ -19,10 +21,11 @@ export default function MaterialEstudio({ temas, completedMaterials, setComplete
     }
   };
 
-  const handleOpenMaterial = (archivo, titulo) => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
-    const url = `${apiUrl}${archivo}`;
-    window.open(url, '_blank');
+  const handleOpenMaterial = (tema, material) => {
+    // Navegar a la página de estudio con fases
+    navigate(`/curso/${cursoId}/tema-estudio`, {
+      state: { tema, material }
+    });
   };
 
   const toggleCompleted = (e, materialId) => {
@@ -117,7 +120,7 @@ export default function MaterialEstudio({ temas, completedMaterials, setComplete
                     return (
                       <div
                         key={material._id}
-                        onClick={() => material.archivo && handleOpenMaterial(material.archivo, material.titulo)}
+                        onClick={() => material.archivo && handleOpenMaterial(tema, material)}
                         className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                           isCompleted 
                             ? 'bg-[#a1db87]/10 border-[#a1db87]/40 hover:bg-[#a1db87]/15' 
@@ -174,7 +177,7 @@ export default function MaterialEstudio({ temas, completedMaterials, setComplete
                     return (
                       <div
                         key={actividad._id}
-                        onClick={() => actividad.archivo && handleOpenMaterial(actividad.archivo, actividad.titulo)}
+                        onClick={() => actividad.archivo && handleOpenMaterial(tema, actividad)}
                         className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                           isCompleted 
                             ? 'bg-[#5ec6a6]/10 border-[#5ec6a6]/40 hover:bg-[#5ec6a6]/15' 
