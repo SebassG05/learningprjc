@@ -1,6 +1,18 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { registerUser, loginUser, logoutUser, requestPasswordReset, resetPassword, googleLogin } from '../controller/userController.js';
+import { 
+  registerUser, 
+  loginUser, 
+  logoutUser, 
+  requestPasswordReset, 
+  resetPassword, 
+  googleLogin,
+  enrollInCourse,
+  getEnrollmentStatus,
+  updateCourseProgress,
+  completeCourse,
+  getUserEnrollments
+} from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -53,5 +65,22 @@ router.post(
 
 // Google Auth endpoint
 router.post('/auth/google', googleLogin);
+
+// ============= RUTAS DE INSCRIPCIÓN A CURSOS =============
+
+// Inscribirse a un curso
+router.post('/enroll/:courseId', authenticateJWT, enrollInCourse);
+
+// Verificar estado de inscripción
+router.get('/enrollment/:courseId', authenticateJWT, getEnrollmentStatus);
+
+// Actualizar progreso del curso
+router.put('/enrollment/:courseId/progress', authenticateJWT, updateCourseProgress);
+
+// Marcar curso como completado
+router.put('/enrollment/:courseId/complete', authenticateJWT, completeCourse);
+
+// Obtener todos los cursos inscritos del usuario
+router.get('/enrollments', authenticateJWT, getUserEnrollments);
 
 export default router;

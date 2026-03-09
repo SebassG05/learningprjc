@@ -36,7 +36,8 @@ export default function Cursos() {
       setPendingCourseId(courseId);
       setShowLogin(true);
     } else {
-      navigate(`/curso/${courseId}`);
+      // Redirigir a la página de inscripción
+      navigate(`/curso/${courseId}/inscripcion`);
     }
   };
 

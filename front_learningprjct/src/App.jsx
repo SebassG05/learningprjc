@@ -41,6 +41,11 @@ function AnimatedRoutes() {
               <PageTransition><CursoDetalle /></PageTransition>
             </Suspense>
           } />
+          <Route path="/curso/:id/inscripcion" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <PageTransition><CursoInscripcion /></PageTransition>
+            </Suspense>
+          } />
           <Route path="/curso/:id/estructura" element={
             <Suspense fallback={<div>Cargando...</div>}>
               <PageTransition><EstructuraCursoPage /></PageTransition>
@@ -84,6 +89,7 @@ function App() {
 const ResetPassword = lazy(() => import('./pages/ResetPassword.jsx'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword.jsx'));
 const CursoDetalle = lazy(() => import('./pages/CursoDetalle.jsx'));
+const CursoInscripcion = lazy(() => import('./pages/CursoInscripcion.jsx'));
 const EstructuraCursoPage = lazy(() => import('./pages/EstructuraCursoPage.jsx'));
 
 export default App;

@@ -1,26 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useUser } from '../context/UserContext';
 import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Lock, Loader, AlertCircle } from 'lucide-react';
 
 export default function CursoDetalle() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useUser();
   const [curso, setCurso] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completedMaterials, setCompletedMaterials] = useState({});
+  const [enrollmentStatus, setEnrollmentStatus] = useState(null);
+  const [checkingEnrollment, setCheckingEnrollment] = useState(true);
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+
+  // Verificar si el usuario está logueado y verificar inscripción
+  useEffect(() => {
+    if (!user) {
+      navigate('/cursos');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/cursos');
+      return;
+    }
+
+    // Verificar estado de inscripción
+    setCheckingEnrollment(true);
+    fetch(`${apiUrl}/api/users/enrollment/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        setEnrollmentStatus(data);
+        setCheckingEnrollment(false);
+        
+        // Si no está inscrito, redirigir a la página de inscripción
+        if (!data.enrolled) {
+          navigate(`/curso/${id}/inscripcion`);
+        }
+      })
+      .catch(err => {
+        console.error('Error al verificar inscripción:', err);
+        setCheckingEnrollment(false);
+        navigate(`/curso/${id}/inscripcion`);
+      });
+  }, [id, user, apiUrl, navigate]);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
     fetch(`${apiUrl}/api/courses/${id}`)
       .then(res => res.json())
       .then(data => {
         setCurso(data);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, apiUrl]);
 
   // Calcular el porcentaje de progreso
   const calculateProgress = () => {
@@ -45,13 +87,76 @@ export default function CursoDetalle() {
     return totalMaterials > 0 ? Math.round((completedCount / totalMaterials) * 100) : 0;
   };
 
+  // Actualizar progreso en el backend cuando cambie
+  useEffect(() => {
+    if (!user || !enrollmentStatus?.enrolled) return;
+
+    const progress = calculateProgress();
+    const token = localStorage.getItem('token');
+    
+    if (token && progress > 0) {
+      fetch(`${apiUrl}/api/users/enrollment/${id}/progress`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ progress })
+      })
+        .then(res => res.json())
+        .catch(err => console.error('Error al actualizar progreso:', err));
+    }
+  }, [completedMaterials, curso, user, enrollmentStatus, id, apiUrl]);
+
   const progress = calculateProgress();
 
-  if (loading) {
-    return <div className="text-center text-gray-400 py-20">Cargando curso...</div>;
+  if (loading || checkingEnrollment) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader className="w-12 h-12 text-[#a1db87] animate-spin" />
+          <p className="text-gray-400">Cargando curso...</p>
+        </div>
+      </div>
+    );
   }
+
   if (!curso) {
-    return <div className="text-center text-red-400 py-20">Curso no encontrado</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-red-400 mb-4">Curso no encontrado</h2>
+          <button
+            onClick={() => navigate('/cursos')}
+            className="text-[#a1db87] hover:underline"
+          >
+            Volver a cursos
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no está inscrito, no mostrar contenido
+  if (!enrollmentStatus?.enrolled) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center max-w-md px-4">
+          <Lock className="w-16 h-16 text-[#a1db87] mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-white mb-4">Acceso Restringido</h2>
+          <p className="text-gray-400 mb-6">
+            Debes inscribirte en este curso para acceder al contenido.
+          </p>
+          <button
+            onClick={() => navigate(`/curso/${id}/inscripcion`)}
+            className="bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-[#a1db87]/30 transition-all"
+          >
+            Ir a la página de inscripción
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

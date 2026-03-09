@@ -1,0 +1,78 @@
+### ==========================================
+### GESTIÓN DE INSCRIPCIÓN A CURSOS
+### ==========================================
+
+### Variables
+@baseUrl = http://localhost:3007/api
+@token = TU_TOKEN_JWT_AQUI
+@courseId = ID_DEL_CURSO
+
+### ==========================================
+### 1. Inscribirse a un curso
+### ==========================================
+POST {{baseUrl}}/users/enroll/{{courseId}}
+Authorization: Bearer {{token}}
+
+### ==========================================
+### 2. Verificar estado de inscripción
+### ==========================================
+GET {{baseUrl}}/users/enrollment/{{courseId}}
+Authorization: Bearer {{token}}
+
+### ==========================================
+### 3. Actualizar progreso del curso
+### ==========================================
+PUT {{baseUrl}}/users/enrollment/{{courseId}}/progress
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "progress": 50
+}
+
+### ==========================================
+### 4. Marcar curso como completado
+### ==========================================
+PUT {{baseUrl}}/users/enrollment/{{courseId}}/complete
+Authorization: Bearer {{token}}
+
+### ==========================================
+### 5. Obtener todos los cursos inscritos
+### ==========================================
+GET {{baseUrl}}/users/enrollments
+Authorization: Bearer {{token}}
+
+### ==========================================
+### EJEMPLOS DE RESPUESTAS
+### ==========================================
+
+### Respuesta de inscripción exitosa:
+# {
+#   "message": "Inscripción exitosa",
+#   "enrollment": {
+#     "courseId": "...",
+#     "status": "enrolled",
+#     "enrolledAt": "2026-03-06T...",
+#     "progress": 0
+#   }
+# }
+
+### Respuesta de estado de inscripción:
+# {
+#   "enrolled": true,
+#   "status": "enrolled",
+#   "enrolledAt": "2026-03-06T...",
+#   "progress": 50
+# }
+
+### Respuesta de curso completado:
+# {
+#   "message": "Curso completado exitosamente",
+#   "enrollment": {
+#     "courseId": "...",
+#     "status": "completed",
+#     "enrolledAt": "2026-03-06T...",
+#     "completedAt": "2026-03-06T...",
+#     "progress": 100
+#   }
+# }

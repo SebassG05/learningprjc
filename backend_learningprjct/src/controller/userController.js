@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import UserProgress from '../models/UserProgress.js';
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import crypto from 'crypto';
@@ -152,5 +153,190 @@ export const googleLogin = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+
+// ============= GESTIÓN DE INSCRIPCIÓN A CURSOS =============
+
+/**
+ * Inscribir usuario a un curso
+ * @route POST /api/users/enroll/:courseId
+ * @access Private
+ */
+export const enrollInCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const userId = req.user.id; // Del middleware authenticateJWT
+
+    // Verificar si ya está inscrito
+    const existingEnrollment = await UserProgress.findOne({ userId, courseId });
+
+    if (existingEnrollment) {
+      return res.status(400).json({ 
+        error: 'Ya estás inscrito en este curso',
+        enrollment: existingEnrollment
+      });
+    }
+
+    // Crear nueva inscripción
+    const enrollment = new UserProgress({
+      userId,
+      courseId,
+      status: 'enrolled',
+      progress: 0
+    });
+
+    await enrollment.save();
+
+    res.status(200).json({
+      message: 'Inscripción exitosa',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Error en enrollInCourse:', error);
+    
+    // Manejar error de índice único
+    if (error.code === 11000) {
+      return res.status(400).json({ error: 'Ya estás inscrito en este curso' });
+    }
+    
+    res.status(500).json({ error: 'Error al inscribirse al curso', details: error.message });
+  }
+};
+
+/**
+ * Verificar estado de inscripción del usuario en un curso
+ * @route GET /api/users/enrollment/:courseId
+ * @access Private
+ */
+export const getEnrollmentStatus = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const userId = req.user.id;
+
+    const enrollment = await UserProgress.findOne({ userId, courseId });
+
+    if (!enrollment) {
+      return res.status(200).json({ 
+        enrolled: false,
+        status: 'not_enrolled'
+      });
+    }
+
+    res.status(200).json({
+      enrolled: true,
+      status: enrollment.status,
+      enrolledAt: enrollment.enrolledAt,
+      completedAt: enrollment.completedAt,
+      progress: enrollment.progress
+    });
+  } catch (error) {
+    console.error('Error en getEnrollmentStatus:', error);
+    res.status(500).json({ error: 'Error al verificar inscripción', details: error.message });
+  }
+};
+
+/**
+ * Actualizar progreso del curso
+ * @route PUT /api/users/enrollment/:courseId/progress
+ * @access Private
+ */
+export const updateCourseProgress = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { progress, completedMaterials } = req.body;
+    const userId = req.user.id;
+
+    if (progress !== undefined && (progress < 0 || progress > 100)) {
+      return res.status(400).json({ error: 'El progreso debe estar entre 0 y 100' });
+    }
+
+    const enrollment = await UserProgress.findOne({ userId, courseId });
+
+    if (!enrollment) {
+      return res.status(404).json({ error: 'No estás inscrito en este curso' });
+    }
+
+    // Actualizar progreso si se proporciona
+    if (progress !== undefined) {
+      enrollment.progress = progress;
+    }
+
+    // Actualizar materiales completados si se proporcionan
+    if (completedMaterials) {
+      enrollment.completedMaterials = completedMaterials;
+    }
+
+    // Si el progreso llega a 100%, marcar como completado
+    if (enrollment.progress === 100 && enrollment.status !== 'completed') {
+      enrollment.status = 'completed';
+      enrollment.completedAt = new Date();
+    }
+
+    await enrollment.save();
+
+    res.status(200).json({
+      message: 'Progreso actualizado',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Error en updateCourseProgress:', error);
+    res.status(500).json({ error: 'Error al actualizar progreso', details: error.message });
+  }
+};
+
+/**
+ * Marcar curso como completado
+ * @route PUT /api/users/enrollment/:courseId/complete
+ * @access Private
+ */
+export const completeCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const userId = req.user.id;
+
+    const enrollment = await UserProgress.findOne({ userId, courseId });
+
+    if (!enrollment) {
+      return res.status(404).json({ error: 'No estás inscrito en este curso' });
+    }
+
+    if (enrollment.status === 'completed') {
+      return res.status(400).json({ error: 'El curso ya está completado' });
+    }
+
+    enrollment.status = 'completed';
+    enrollment.completedAt = new Date();
+    enrollment.progress = 100;
+
+    await enrollment.save();
+
+    res.status(200).json({
+      message: 'Curso completado exitosamente',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Error en completeCourse:', error);
+    res.status(500).json({ error: 'Error al completar curso', details: error.message });
+  }
+};
+
+/**
+ * Obtener todos los cursos inscritos del usuario
+ * @route GET /api/users/enrollments
+ * @access Private
+ */
+export const getUserEnrollments = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const enrollments = await UserProgress.find({ userId }).populate('courseId');
+
+    res.status(200).json({
+      enrollments
+    });
+  } catch (error) {
+    console.error('Error en getUserEnrollments:', error);
+    res.status(500).json({ error: 'Error al obtener cursos inscritos', details: error.message });
   }
 };
