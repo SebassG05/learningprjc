@@ -13,6 +13,16 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
 
+  // Función para barajar un array (algoritmo Fisher-Yates)
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   useEffect(() => {
     cargarTest();
   }, [cursoId, temaId]);
@@ -26,7 +36,33 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
       }
 
       const data = await response.json();
-      setTest(data);
+      
+      // Barajar las preguntas
+      const preguntasBarajadas = shuffleArray(data.preguntas).map((pregunta, index) => ({
+        ...pregunta,
+        numeroOriginal: pregunta.numero, // Guardamos el número original para la validación
+        numero: index + 1 // Renumeramos las preguntas
+      }));
+
+      // Barajar las opciones de cada pregunta y reasignar IDs visuales
+      const preguntasConOpcionesBarajadas = preguntasBarajadas.map(pregunta => {
+        const opcionesBarajadas = shuffleArray(pregunta.opciones);
+        const idsVisuales = ['a', 'b', 'c', 'd'];
+        
+        return {
+          ...pregunta,
+          opciones: opcionesBarajadas.map((opcion, idx) => ({
+            ...opcion,
+            idOriginal: opcion.id, // Guardamos el ID original para validación
+            id: idsVisuales[idx] // Asignamos el ID visual en orden a, b, c, d
+          }))
+        };
+      });
+
+      setTest({
+        ...data,
+        preguntas: preguntasConOpcionesBarajadas
+      });
       setLoading(false);
     } catch (error) {
       console.error('Error al cargar test:', error);
@@ -67,10 +103,15 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
     setEnviando(true);
 
     try {
-      const respuestasArray = Object.entries(respuestas).map(([numero, respuesta]) => ({
-        numero: parseInt(numero),
-        respuesta
-      }));
+      // Mapear las respuestas usando el número original de la pregunta y el ID original de la opción
+      const respuestasArray = Object.entries(respuestas).map(([numero, respuestaId]) => {
+        const pregunta = test.preguntas.find(p => p.numero === parseInt(numero));
+        const opcionSeleccionada = pregunta.opciones.find(op => op.id === respuestaId);
+        return {
+          numero: pregunta.numeroOriginal, // Usar el número original para la validación
+          respuesta: opcionSeleccionada.idOriginal // Usar el ID original de la opción
+        };
+      });
 
       const response = await fetch(
         `${apiUrl}/api/tests/${cursoId}/temas/${temaId}/test/validar`,
@@ -271,6 +312,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                   setResultado(null);
                   setRespuestas({});
                   setPreguntaActual(0);
+                  cargarTest(); // Recargar el test para barajar de nuevo
                 }}
                 className="flex-1 px-8 py-4 bg-[#23272f] text-white font-semibold rounded-xl hover:bg-[#2a2e36] border-2 border-gray-700 hover:border-[#a1db87]/30 transition-all shadow-lg hover:shadow-xl"
               >
