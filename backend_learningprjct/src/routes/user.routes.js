@@ -11,6 +11,7 @@ import {
   getEnrollmentStatus,
   updateCourseProgress,
   completeCourse,
+  completeTest,
   getUserEnrollments
 } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
@@ -79,6 +80,9 @@ router.put('/enrollment/:courseId/progress', authenticateJWT, updateCourseProgre
 
 // Marcar curso como completado
 router.put('/enrollment/:courseId/complete', authenticateJWT, completeCourse);
+
+// Marcar test como completado
+router.post('/enrollment/:courseId/test/:temaId/complete', authenticateJWT, completeTest);
 
 // Obtener todos los cursos inscritos del usuario
 router.get('/enrollments', authenticateJWT, getUserEnrollments);

@@ -31,6 +31,9 @@ const userProgressSchema = new mongoose.Schema({
   },
   completedMaterials: [{
     type: String // IDs de materiales completados
+  }],
+  completedTests: [{
+    type: String // IDs de tests aprobados
   }]
 }, { 
   timestamps: true 

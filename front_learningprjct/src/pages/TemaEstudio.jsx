@@ -10,7 +10,7 @@ export default function TemaEstudio() {
   const location = useLocation();
   
   // Obtener datos del tema desde el estado de navegación
-  const { tema, material, startPhase } = location.state || {};
+  const { tema, material, startPhase, temaId } = location.state || {};
   
   const [currentPhase, setCurrentPhase] = useState(startPhase || 1); // 1: Material, 2: Test
   const [pdfUrl, setPdfUrl] = useState('');
@@ -221,7 +221,7 @@ export default function TemaEstudio() {
             >
               <TestEvaluacion 
                 cursoId={cursoId} 
-                temaId={tema._id}
+                temaId={temaId || tema._id}
                 onComplete={handleClose}
               />
             </motion.div>

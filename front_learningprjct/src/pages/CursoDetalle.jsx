@@ -13,6 +13,7 @@ export default function CursoDetalle() {
   const [curso, setCurso] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completedMaterials, setCompletedMaterials] = useState({});
+  const [completedTests, setCompletedTests] = useState([]);
   const [enrollmentStatus, setEnrollmentStatus] = useState(null);
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
 
@@ -43,6 +44,20 @@ export default function CursoDetalle() {
         setEnrollmentStatus(data);
         setCheckingEnrollment(false);
         
+        // Cargar tests completados si existen
+        if (data.completedTests) {
+          setCompletedTests(data.completedTests);
+        }
+        
+        // Cargar materiales completados si existen
+        if (data.completedMaterials && data.completedMaterials.length > 0) {
+          const materialsObj = {};
+          data.completedMaterials.forEach(materialId => {
+            materialsObj[materialId] = true;
+          });
+          setCompletedMaterials(materialsObj);
+        }
+        
         // Si no está inscrito, redirigir a la página de inscripción
         if (!data.enrolled) {
           navigate(`/curso/${id}/inscripcion`);
@@ -68,45 +83,94 @@ export default function CursoDetalle() {
   const calculateProgress = () => {
     if (!curso || !curso.temas) return 0;
     
-    let totalMaterials = 0;
-    let completedCount = 0;
+    let totalItems = 0;
+    let completedItems = 0;
     
     curso.temas.forEach(tema => {
+      // Contar materiales
       if (tema.materiales && tema.materiales.length > 0) {
         tema.materiales.forEach(material => {
           if (material.archivo) {
-            totalMaterials++;
+            totalItems++;
             if (completedMaterials[material._id]) {
-              completedCount++;
+              completedItems++;
             }
           }
         });
       }
+      
+      // Contar tests (cada tema tiene 1 test)
+      totalItems++;
+      if (completedTests.includes(tema._id)) {
+        completedItems++;
+      }
     });
     
-    return totalMaterials > 0 ? Math.round((completedCount / totalMaterials) * 100) : 0;
+    return totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
   };
 
   // Actualizar progreso en el backend cuando cambie
   useEffect(() => {
-    if (!user || !enrollmentStatus?.enrolled) return;
+    if (!user || !enrollmentStatus?.enrolled || !curso) return;
 
     const progress = calculateProgress();
     const token = localStorage.getItem('token');
     
-    if (token && progress > 0) {
+    // Convertir completedMaterials object a array de IDs
+    const completedMaterialsArray = Object.keys(completedMaterials).filter(
+      key => completedMaterials[key]
+    );
+    
+    if (token) {
       fetch(`${apiUrl}/api/users/enrollment/${id}/progress`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ progress })
+        body: JSON.stringify({ 
+          progress,
+          completedMaterials: completedMaterialsArray
+        })
       })
         .then(res => res.json())
         .catch(err => console.error('Error al actualizar progreso:', err));
     }
-  }, [completedMaterials, curso, user, enrollmentStatus, id, apiUrl]);
+  }, [completedMaterials, completedTests, curso, user, enrollmentStatus, id, apiUrl]);
+
+  // Recargar enrollment cuando el documento vuelva a estar visible (usuario regresa del test)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && user) {
+        const token = localStorage.getItem('token');
+        if (token) {
+          fetch(`${apiUrl}/api/users/enrollment/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+            .then(res => res.json())
+            .then(data => {
+              setEnrollmentStatus(data);
+              if (data.completedTests) {
+                setCompletedTests(data.completedTests);
+              }
+              if (data.completedMaterials && data.completedMaterials.length > 0) {
+                const materialsObj = {};
+                data.completedMaterials.forEach(materialId => {
+                  materialsObj[materialId] = true;
+                });
+                setCompletedMaterials(materialsObj);
+              }
+            })
+            .catch(err => console.error('Error al actualizar enrollment:', err));
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [id, user, apiUrl]);
 
   const progress = calculateProgress();
 
@@ -207,6 +271,7 @@ export default function CursoDetalle() {
           temas={curso.temas} 
           completedMaterials={completedMaterials}
           setCompletedMaterials={setCompletedMaterials}
+          completedTests={completedTests}
         />
       </div>
 

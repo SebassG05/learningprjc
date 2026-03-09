@@ -228,7 +228,9 @@ export const getEnrollmentStatus = async (req, res) => {
       status: enrollment.status,
       enrolledAt: enrollment.enrolledAt,
       completedAt: enrollment.completedAt,
-      progress: enrollment.progress
+      progress: enrollment.progress,
+      completedMaterials: enrollment.completedMaterials || [],
+      completedTests: enrollment.completedTests || []
     });
   } catch (error) {
     console.error('Error en getEnrollmentStatus:', error);
@@ -318,6 +320,42 @@ export const completeCourse = async (req, res) => {
   } catch (error) {
     console.error('Error en completeCourse:', error);
     res.status(500).json({ error: 'Error al completar curso', details: error.message });
+  }
+};
+
+/**
+ * Marcar un test como completado
+ * @route POST /api/users/enrollment/:courseId/test/:temaId/complete
+ * @access Private
+ */
+export const completeTest = async (req, res) => {
+  try {
+    const { courseId, temaId } = req.params;
+    const userId = req.user.id;
+
+    const enrollment = await UserProgress.findOne({ userId, courseId });
+
+    if (!enrollment) {
+      return res.status(404).json({ error: 'No estás inscrito en este curso' });
+    }
+
+    // Verificar si el test ya está completado
+    if (!enrollment.completedTests) {
+      enrollment.completedTests = [];
+    }
+
+    if (!enrollment.completedTests.includes(temaId)) {
+      enrollment.completedTests.push(temaId);
+      await enrollment.save();
+    }
+
+    res.status(200).json({
+      message: 'Test completado exitosamente',
+      enrollment
+    });
+  } catch (error) {
+    console.error('Error en completeTest:', error);
+    res.status(500).json({ error: 'Error al marcar test como completado', details: error.message });
   }
 };
 

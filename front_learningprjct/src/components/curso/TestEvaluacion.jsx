@@ -84,6 +84,27 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
       const data = await response.json();
       setResultado(data);
       setMostrarResultado(true);
+
+      // Si se aprobó el test, marcarlo como completado
+      if (data.aprobado) {
+        const token = localStorage.getItem('token');
+        if (token) {
+          try {
+            await fetch(
+              `${apiUrl}/api/users/enrollment/${cursoId}/test/${temaId}/complete`,
+              {
+                method: 'POST',
+                headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                }
+              }
+            );
+          } catch (error) {
+            console.error('Error al marcar test como completado:', error);
+          }
+        }
+      }
     } catch (error) {
       console.error('Error al enviar test:', error);
       alert('Error al enviar el test');
