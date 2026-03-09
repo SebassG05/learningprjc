@@ -1,0 +1,490 @@
+{
+  "cursoId": "69a6a0a4c8289d012745af63",
+  "temaId": "69aebad5ab49d6efbf76e471",
+  "titulo": "Test Final de Certificación",
+  "descripcion": "Evaluación final integradora sobre todos los contenidos del curso de modelización de la dinámica del carbono orgánico del suelo",
+  "duracionMinutos": 90,
+  "notaMinima": 70,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Qué se entiende por \"dinámica del carbono orgánico del suelo\" (SOC)?",
+      "opciones": [
+        { "id": "a", "texto": "El estudio exclusivo de la erosión hídrica." },
+        { "id": "b", "texto": "El conjunto de procesos de entrada, transformación, estabilización y pérdida de carbono." },
+        { "id": "c", "texto": "La medición de la profundidad de las raíces de los cultivos." },
+        { "id": "d", "texto": "El cálculo del pH del suelo mediante sensores remotos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Cuál es la principal fuente de carbono orgánico en la mayoría de los ecosistemas terrestres?",
+      "opciones": [
+        { "id": "a", "texto": "La deposición atmosférica de CO2." },
+        { "id": "b", "texto": "Los residuos vegetales (hojarasca, raíces y rastrojos)." },
+        { "id": "c", "texto": "El uso de fertilizantes sintéticos inorgánicos." },
+        { "id": "d", "texto": "La meteorización de minerales primarios." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Qué fracción de los residuos vegetales se descompone más rápidamente?",
+      "opciones": [
+        { "id": "a", "texto": "Lignina." },
+        { "id": "b", "texto": "Fracción soluble y celulosa (DPM)." },
+        { "id": "c", "texto": "Carbono pirogénico (biochar)." },
+        { "id": "d", "texto": "Compuestos fenólicos complejos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Qué es la \"Mineralización\"?",
+      "opciones": [
+        { "id": "a", "texto": "La conversión de carbono orgánico en CO2 por la actividad microbiana." },
+        { "id": "b", "texto": "El proceso de formación de nuevos minerales en el suelo." },
+        { "id": "c", "texto": "La absorción de nutrientes por las raíces." },
+        { "id": "d", "texto": "La compactación del suelo por maquinaria." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 5,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "El concepto de \"Humificación\" se refiere a:",
+      "opciones": [
+        { "id": "a", "texto": "La pérdida de agua del suelo por evaporación." },
+        { "id": "b", "texto": "La transformación de materia orgánica fresca en compuestos más estables y complejos." },
+        { "id": "c", "texto": "La quema de residuos agrícolas." },
+        { "id": "d", "texto": "La lixiviación de nitratos hacia los acuíferos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Qué papel juega la fauna del suelo (macrofauna) en el ciclo del carbono?",
+      "opciones": [
+        { "id": "a", "texto": "No tiene ninguna influencia medible." },
+        { "id": "b", "texto": "Fragmenta mecánicamente los residuos, facilitando el ataque microbiano." },
+        { "id": "c", "texto": "Detiene la descomposición al consumir bacterias." },
+        { "id": "d", "texto": "Es la principal responsable de la fotosíntesis subterránea." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Cuál es el efecto de una alta temperatura en la descomposición del SOC (asumiendo humedad suficiente)?",
+      "opciones": [
+        { "id": "a", "texto": "Detiene la actividad microbiana por estrés térmico." },
+        { "id": "b", "texto": "Acelera las tasas de descomposición y la emisión de CO2." },
+        { "id": "c", "texto": "Aumenta el stock de carbono permanentemente." },
+        { "id": "d", "texto": "No tiene relación con los flujos gaseosos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "BLOQUE 1: Fundamentos de la dinámica del carbono",
+      "pregunta": "¿Qué propiedad edáfica ayuda a proteger físicamente al carbono del ataque enzimático?",
+      "opciones": [
+        { "id": "a", "texto": "El contenido de arena." },
+        { "id": "b", "texto": "La porosidad macroscópica." },
+        { "id": "c", "texto": "El contenido de arcilla y la formación de agregados." },
+        { "id": "d", "texto": "La presencia de piedras en el perfil." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "¿Qué define a un \"Modelo Compartimental\"?",
+      "opciones": [
+        { "id": "a", "texto": "Que solo tiene una ecuación para todo el ecosistema." },
+        { "id": "b", "texto": "La división del carbono en diferentes \"pools\" con distintas tasas de renovación." },
+        { "id": "c", "texto": "Que solo funciona en compartimentos de laboratorios cerrados." },
+        { "id": "d", "texto": "La ausencia de variables climáticas." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "El modelo RothC es famoso por dividir el carbono en 5 pools. ¿Cuál es el pool con la tasa de descomposición más rápida?",
+      "opciones": [
+        { "id": "a", "texto": "HUM (Humified Organic Matter)." },
+        { "id": "b", "texto": "BIO (Microbial Biomass)." },
+        { "id": "c", "texto": "DPM (Decomposable Plant Material)." },
+        { "id": "d", "texto": "RPM (Resistant Plant Material)." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "¿Qué significa el acrónimo IOM en el modelo RothC?",
+      "opciones": [
+        { "id": "a", "texto": "Input of Organic Matter." },
+        { "id": "b", "texto": "Inert Organic Matter." },
+        { "id": "c", "texto": "Integrated Organic Model." },
+        { "id": "d", "texto": "International Organic Movement." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "¿En qué se diferencia el modelo ICBM de otros modelos como Century?",
+      "opciones": [
+        { "id": "a", "texto": "Es mucho más complejo y difícil de programar." },
+        { "id": "b", "texto": "Es un modelo de complejidad reducida con solo dos pools principales." },
+        { "id": "c", "texto": "No permite simular sistemas agrícolas." },
+        { "id": "d", "texto": "Solo funciona para el carbono inorgánico." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "El modelo Century destaca por incluir explícitamente:",
+      "opciones": [
+        { "id": "a", "texto": "La influencia de la calidad de los residuos y la textura del suelo." },
+        { "id": "b", "texto": "El precio del mercado de bonos de carbono." },
+        { "id": "c", "texto": "La identificación genética de cada especie de bacteria." },
+        { "id": "d", "texto": "La velocidad del viento a 10 metros de altura." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 14,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "El modelo Yasso07 basa su estructura en:",
+      "opciones": [
+        { "id": "a", "texto": "La profundidad del suelo en centímetros." },
+        { "id": "b", "texto": "La calidad química de la materia orgánica (solubilidad en ácidos, agua, etc.)." },
+        { "id": "c", "texto": "El tipo de cultivo (C3 o C4)." },
+        { "id": "d", "texto": "La cantidad de nitrógeno aplicado en el abonado." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "¿Qué es el modelo SG incluido en el ensemble?",
+      "opciones": [
+        { "id": "a", "texto": "Un modelo de stock de carbono profundo." },
+        { "id": "b", "texto": "Un modelo complementario para la estimación de flujos gaseosos (CO2, CH4, N2O)." },
+        { "id": "c", "texto": "Un algoritmo de inteligencia artificial para predecir precios." },
+        { "id": "d", "texto": "El script principal de limpieza de datos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "BLOQUE 2: Estructura y tipos de modelos",
+      "pregunta": "¿Qué representa el factor \"h\" (humificación) en el modelo ICBM?",
+      "opciones": [
+        { "id": "a", "texto": "La altura de las plantas." },
+        { "id": "b", "texto": "La fracción de carbono que pasa del pool joven al pool viejo." },
+        { "id": "c", "texto": "La humedad relativa del aire." },
+        { "id": "d", "texto": "El horizonte del suelo donde se encuentra el carbono." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "En la ecuación dC/dt = I(t) + ξ(t)AKC(t), ¿qué representa el vector C(t)?",
+      "opciones": [
+        { "id": "a", "texto": "El clima en el tiempo t." },
+        { "id": "b", "texto": "El stock de carbono en cada pool en el tiempo t." },
+        { "id": "c", "texto": "La constante de Michaelis-Menten." },
+        { "id": "d", "texto": "La cantidad de arcilla." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "La matriz A en la formulación matricial de SoilR se conoce como:",
+      "opciones": [
+        { "id": "a", "texto": "Matriz de identidad." },
+        { "id": "b", "texto": "Matriz de transferencia (adyacencia)." },
+        { "id": "c", "texto": "Matriz climática." },
+        { "id": "d", "texto": "Matriz de errores." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "El término ξ(t) (factor ambiental) es crítico porque:",
+      "opciones": [
+        { "id": "a", "texto": "Multiplica las tasas de descomposición según la temperatura y humedad." },
+        { "id": "b", "texto": "Suma carbono al sistema de forma externa." },
+        { "id": "c", "texto": "Es la derivada del tiempo." },
+        { "id": "d", "texto": "Representa la profundidad del suelo." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 20,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "Si un pool tiene una constante de descomposición k = 0.5 año⁻¹, ¿cuál es su tiempo de residencia medio?",
+      "opciones": [
+        { "id": "a", "texto": "0.5 años." },
+        { "id": "b", "texto": "2 años (1/k)." },
+        { "id": "c", "texto": "5 años." },
+        { "id": "d", "texto": "10 años." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 21,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "¿Qué ocurre matemáticamente cuando un sistema alcanza el equilibrio (Steady State)?",
+      "opciones": [
+        { "id": "a", "texto": "dC/dt = 0." },
+        { "id": "b", "texto": "El stock de carbono se vuelve infinito." },
+        { "id": "c", "texto": "Las entradas de carbono cesan." },
+        { "id": "d", "texto": "El clima deja de afectar al modelo." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 22,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "Para calcular el stock total de SOC en una simulación multimodelo, se debe:",
+      "opciones": [
+        { "id": "a", "texto": "Multiplicar los resultados de todos los modelos entre sí." },
+        { "id": "b", "texto": "Sumar el contenido de todos los pools de un modelo en un tiempo dado." },
+        { "id": "c", "texto": "Restar el pool inerte del pool activo." },
+        { "id": "d", "texto": "Usar solo el valor del primer año." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "¿Qué función de R se utiliza en la práctica para ejecutar simultáneamente todos los modelos del ensemble?",
+      "opciones": [
+        { "id": "a", "texto": "run_all_models()." },
+        { "id": "b", "texto": "Call_MULTIMODEL()." },
+        { "id": "c", "texto": "simulate_carbon()." },
+        { "id": "d", "texto": "ggplot_soc()." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "BLOQUE 3: Formulación matemática y resolución numérica",
+      "pregunta": "El paquete \"SoilR\" es fundamental porque:",
+      "opciones": [
+        { "id": "a", "texto": "Permite leer archivos PDF." },
+        { "id": "b", "texto": "Resuelve las ecuaciones diferenciales de los modelos compartimentales." },
+        { "id": "c", "texto": "Sirve para editar fotografías del suelo." },
+        { "id": "d", "texto": "Es el sistema operativo de la computadora." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "¿Cuál es el primer requisito de software para ejecutar el modelo?",
+      "opciones": [
+        { "id": "a", "texto": "Photoshop." },
+        { "id": "b", "texto": "R y RStudio." },
+        { "id": "c", "texto": "Excel 97." },
+        { "id": "d", "texto": "Python 2.7." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 26,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "El script Forcing_data_test_run_v0.R sirve para:",
+      "opciones": [
+        { "id": "a", "texto": "Instalar los controladores de la impresora." },
+        { "id": "b", "texto": "Definir los datos de entrada (clima, suelo, entradas de C) para la simulación." },
+        { "id": "c", "texto": "Borrar los resultados anteriores." },
+        { "id": "d", "texto": "Enviar un correo al profesor." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 27,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "¿Qué librería de R se encarga de la manipulación de datos (Data Wrangling)?",
+      "opciones": [
+        { "id": "a", "texto": "ggplot2." },
+        { "id": "b", "texto": "dplyr." },
+        { "id": "c", "texto": "gridExtra." },
+        { "id": "d", "texto": "matrixStats." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 28,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "¿Qué significa \"incertidumbre estructural\" en el contexto de la modelización?",
+      "opciones": [
+        { "id": "a", "texto": "Que el edificio donde está el ordenador puede caerse." },
+        { "id": "b", "texto": "Las diferencias en los resultados debidas a las distintas formas en que cada modelo representa la realidad." },
+        { "id": "c", "texto": "Los errores al escribir el código en R." },
+        { "id": "d", "texto": "La falta de datos de lluvia." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 29,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "La \"Media Multimodelo\" (Multi-model Mean) es útil porque:",
+      "opciones": [
+        { "id": "a", "texto": "Siempre da el número más alto." },
+        { "id": "b", "texto": "Proporciona una estimación más robusta que cualquier modelo individual al promediar sesgos." },
+        { "id": "c", "texto": "Es la única que aceptan las revistas científicas." },
+        { "id": "d", "texto": "Reduce el tiempo de ejecución a la mitad." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 30,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "Si el código devuelve un error diciendo que no encuentra un archivo \".R\", lo más probable es que:",
+      "opciones": [
+        { "id": "a", "texto": "El ordenador se haya quedado sin batería." },
+        { "id": "b", "texto": "La ruta PATH_functions esté mal definida." },
+        { "id": "c", "texto": "El modelo haya detectado que va a llover." },
+        { "id": "d", "texto": "El archivo Excel esté abierto en otro programa." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 31,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "¿Qué representa el gráfico de \"SOC stocks\" generado por el modelo?",
+      "opciones": [
+        { "id": "a", "texto": "La evolución del carbono total acumulado en el suelo a lo largo del tiempo." },
+        { "id": "b", "texto": "La velocidad del viento." },
+        { "id": "c", "texto": "El precio de los fertilizantes." },
+        { "id": "d", "texto": "La profundidad de las raíces." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 32,
+      "bloque": "BLOQUE 4: Práctica en R y multi-model ensemble",
+      "pregunta": "¿Qué unidad se utiliza habitualmente para expresar el stock de carbono en estos modelos?",
+      "opciones": [
+        { "id": "a", "texto": "Gramos por litro." },
+        { "id": "b", "texto": "Mg C ha⁻¹ (Megagramos por hectárea)." },
+        { "id": "c", "texto": "Kilogramos por planta." },
+        { "id": "d", "texto": "Porcentaje de nitrógeno." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 33,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "Si el flujo de CO2 aumenta drásticamente en verano en la simulación, ¿cuál es la causa probable?",
+      "opciones": [
+        { "id": "a", "texto": "Las plantas dejan de respirar." },
+        { "id": "b", "texto": "El aumento de temperatura acelera la descomposición microbiana del SOC." },
+        { "id": "c", "texto": "El suelo se congela." },
+        { "id": "d", "texto": "Se ha alcanzado el pool inerte." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 34,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "Un sistema que pierde 2 toneladas de C al año pero solo recibe 1 tonelada de residuos es:",
+      "opciones": [
+        { "id": "a", "texto": "Un sumidero de carbono." },
+        { "id": "b", "texto": "Una fuente de carbono (emisor neto)." },
+        { "id": "c", "texto": "Un sistema en equilibrio." },
+        { "id": "d", "texto": "Un sistema inorgánico." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 35,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "¿Por qué el modelo Yasso07 suele mostrar líneas más suaves o \"planas\" en comparación con RothC?",
+      "opciones": [
+        { "id": "a", "texto": "Porque no tiene en cuenta la lluvia." },
+        { "id": "b", "texto": "Debido a su enfoque en la calidad química y fracciones más recalcitrantes." },
+        { "id": "c", "texto": "Porque es un modelo más antiguo y menos preciso." },
+        { "id": "d", "texto": "Porque solo simula suelos de Finlandia." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 36,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "La iniciativa internacional \"4 per 1000\" propone:",
+      "opciones": [
+        { "id": "a", "texto": "Reducir la población mundial." },
+        { "id": "b", "texto": "Aumentar el carbono del suelo un 0.4% anual para mitigar el cambio climático." },
+        { "id": "c", "texto": "Usar 1000 litros de agua por cada 4 plantas." },
+        { "id": "d", "texto": "Plantar 4 árboles por cada 1000 habitantes." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 37,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "¿Qué indica una divergencia muy grande entre las líneas de los diferentes modelos en el gráfico final?",
+      "opciones": [
+        { "id": "a", "texto": "Que todos los modelos están funcionando perfectamente." },
+        { "id": "b", "texto": "Una alta incertidumbre estructural en esa simulación específica." },
+        { "id": "c", "texto": "Que el usuario debe borrar RStudio." },
+        { "id": "d", "texto": "Que los datos de entrada son idénticos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 38,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "¿Para qué sirve el parámetro clay_p en el archivo de forcing?",
+      "opciones": [
+        { "id": "a", "texto": "Para indicar el color del suelo." },
+        { "id": "b", "texto": "Para definir el porcentaje de arcilla, que afecta a la protección del carbono." },
+        { "id": "c", "texto": "Para calcular la pendiente del terreno." },
+        { "id": "d", "texto": "Es un parámetro estético para los gráficos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 39,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "En un contexto de cambio climático con temperaturas al alza, ¿qué predicen generalmente los modelos si no se aumentan las entradas de C?",
+      "opciones": [
+        { "id": "a", "texto": "Un aumento masivo del SOC." },
+        { "id": "b", "texto": "Una pérdida neta de carbono del suelo hacia la atmósfera como CO2." },
+        { "id": "c", "texto": "Que el suelo se convertirá en roca." },
+        { "id": "d", "texto": "Que la actividad microbiana desaparecerá." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 40,
+      "bloque": "BLOQUE 5: Interpretación de resultados y casos de estudio",
+      "pregunta": "¿Cuál es el objetivo final de aprender a usar este multi-model ensemble?",
+      "opciones": [
+        { "id": "a", "texto": "Aprender a programar videojuegos." },
+        { "id": "b", "texto": "Ser capaz de evaluar científicamente el impacto de diferentes manejos en el secuestro de carbono." },
+        { "id": "c", "texto": "Sustituir a los agricultores por robots." },
+        { "id": "d", "texto": "Aprender a usar Excel de forma avanzada." }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}
