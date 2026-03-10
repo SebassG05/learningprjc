@@ -379,7 +379,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
       </div>
 
       {/* Pregunta */}
-      <div className="flex-1 overflow-y-auto p-8">
+      <div className="flex-1 overflow-y-auto p-8 scrollbar-hide">
         <div className="max-w-5xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
@@ -422,7 +422,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                       whileHover={{ scale: 1.01, x: 5 }}
                       whileTap={{ scale: 0.99 }}
                       onClick={() => seleccionarRespuesta(pregunta.numero, opcion.id)}
-                      className={`relative w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 group ${
+                      className={`relative w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 group overflow-hidden ${
                         isSelected
                           ? 'border-[#a1db87] bg-gradient-to-r from-[#a1db87]/15 to-[#5ec6a6]/15 shadow-lg shadow-[#a1db87]/20'
                           : 'border-[#a1db87]/10 bg-[#23272f]/50 hover:border-[#a1db87]/40 hover:bg-[#23272f]/80'
@@ -435,7 +435,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                         />
                       )}
-                      <div className="relative flex items-center gap-5">
+                      <div className="relative flex items-start gap-5">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                           isSelected 
                             ? 'border-[#a1db87] bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] shadow-lg shadow-[#a1db87]/50'
@@ -447,8 +447,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                             <span className="text-gray-500 group-hover:text-[#a1db87] font-semibold">{opcion.id}</span>
                           )}
                         </div>
-                        <div className="flex-1">
-                          <p className={`text-base leading-relaxed transition-colors ${
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-base leading-relaxed transition-colors break-words ${
                             isSelected ? 'text-white font-medium' : 'text-gray-300 group-hover:text-white'
                           }`}>
                             {opcion.texto}
