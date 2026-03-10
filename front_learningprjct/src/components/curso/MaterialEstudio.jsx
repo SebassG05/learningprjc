@@ -1,10 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck } from 'lucide-react';
 
 export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests }) {
   const [expandedTemas, setExpandedTemas] = useState({});
+  const [testInfo, setTestInfo] = useState({});
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+
+  useEffect(() => {
+    // Cargar información de los tests para cada tema
+    const cargarInfoTests = async () => {
+      const infoTests = {};
+      for (const tema of temas) {
+        try {
+          const response = await fetch(`${apiUrl}/api/tests/${cursoId}/temas/${tema._id}/test`);
+          if (response.ok) {
+            const testData = await response.json();
+            infoTests[tema._id] = {
+              totalPreguntas: testData.preguntas.length,
+              duracion: testData.duracionMinutos,
+              notaMinima: testData.notaMinima
+            };
+          }
+        } catch (error) {
+          console.error(`Error cargando info test tema ${tema._id}:`, error);
+        }
+      }
+      setTestInfo(infoTests);
+    };
+
+    if (temas && temas.length > 0) {
+      cargarInfoTests();
+    }
+  }, [temas, cursoId, apiUrl]);
 
   if (!temas || temas.length === 0) {
     return null;
@@ -213,7 +242,13 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                         )}
                       </p>
                       <p className="text-xs text-gray-400 mt-0.5">
-                        40 preguntas • 60 minutos • Nota mínima: 60%
+                        {testInfo[tema._id] ? (
+                          <>
+                            {testInfo[tema._id].totalPreguntas} preguntas • {testInfo[tema._id].duracion} minutos • Nota mínima: {testInfo[tema._id].notaMinima}%
+                          </>
+                        ) : (
+                          'Cargando información del test...'
+                        )}
                       </p>
                     </div>
                   </div>

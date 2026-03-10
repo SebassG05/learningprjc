@@ -12,6 +12,7 @@ export default function Cursos() {
   const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(false);
   const [pendingCourseId, setPendingCourseId] = useState(null);
+  const [courseProgress, setCourseProgress] = useState({});
 
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
@@ -22,6 +23,42 @@ export default function Cursos() {
         setLoading(false);
       });
   }, []);
+
+  // Obtener progreso de cada curso si el usuario está autenticado
+  useEffect(() => {
+    if (!user || courses.length === 0) return;
+    
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+    const token = localStorage.getItem('token');
+    
+    if (!token) return;
+
+    // Obtener progreso de todos los cursos en paralelo
+    const progressPromises = courses.map(course =>
+      fetch(`${apiUrl}/api/users/enrollment/${course._id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => ({
+          courseId: course._id,
+          progress: data.enrolled ? data.progress || 0 : 0
+        }))
+        .catch(() => ({
+          courseId: course._id,
+          progress: 0
+        }))
+    );
+
+    Promise.all(progressPromises).then(results => {
+      const progressMap = {};
+      results.forEach(({ courseId, progress }) => {
+        progressMap[courseId] = progress;
+      });
+      setCourseProgress(progressMap);
+    });
+  }, [user, courses]);
 
   // Cuando se cierra el modal, si no hay usuario, redirige al home
   const handleCloseLogin = () => {
@@ -143,8 +180,12 @@ export default function Cursos() {
                 {/* Barra de progreso */}
                 <div className="w-full mt-4">
                   <div className="w-full h-2 bg-[#23272f] rounded-full overflow-hidden border border-[#a1db87]/40">
+                    <div 
+                      className="h-full bg-[#a1db87] transition-all duration-500"
+                      style={{ width: `${courseProgress[course._id] || 0}%` }}
+                    />
                   </div>
-                  <div className="text-xs text-[#a1db87] mt-1 text-right">0%</div>
+                  <div className="text-xs text-[#a1db87] mt-1 text-right">{courseProgress[course._id] || 0}%</div>
                 </div>
               </div>
             </motion.div>
@@ -209,6 +250,16 @@ export default function Cursos() {
                         </span>
                       )
                   }
+                </div>
+                {/* Barra de progreso */}
+                <div className="w-full mt-4">
+                  <div className="w-full h-2 bg-[#23272f] rounded-full overflow-hidden border border-[#a1db87]/40">
+                    <div 
+                      className="h-full bg-[#a1db87] transition-all duration-500"
+                      style={{ width: `${courseProgress[course._id] || 0}%` }}
+                    />
+                  </div>
+                  <div className="text-xs text-[#a1db87] mt-1 text-right">{courseProgress[course._id] || 0}%</div>
                 </div>
               </div>
             </motion.div>
