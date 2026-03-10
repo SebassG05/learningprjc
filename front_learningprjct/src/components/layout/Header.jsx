@@ -100,7 +100,7 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -16, scale: 0.98 }}
                       transition={{ duration: 0.22, ease: 'easeInOut' }}
-                      className="absolute right-[-40px] mt-3 w-80 bg-[#181f1b] border border-green-700 rounded-2xl shadow-2xl py-3 z-50 flex flex-col gap-0"
+                      className="absolute left-1/2 -translate-x-1/2 mt-3 w-80 bg-[#181f1b] border border-green-700 rounded-2xl shadow-2xl py-3 z-50 flex flex-col gap-0"
                       style={{ minWidth: 320 }}
                     >
                       <div className="flex items-center gap-3 px-5 py-3 border-b border-green-900">
