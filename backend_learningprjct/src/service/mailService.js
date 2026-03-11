@@ -12,6 +12,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 export const sendPasswordResetEmail = async (to, resetLink) => {
@@ -54,6 +57,124 @@ export const sendContactEmail = async ({ name, email, phone, company, subject, m
           <p><b>Asunto:</b> ${subject}</p>
           <p><b>Mensaje:</b></p>
           <div style="background: #f0f9ea; border-radius: 6px; padding: 16px; margin-bottom: 16px; color: #222;">${message.replace(/\n/g, '<br>')}</div>
+        </div>
+      </div>
+    `
+  };
+  await transporter.sendMail(mailOptions);
+};
+
+export const sendCourseCompletionEmailToUser = async (userName, userEmail) => {
+  const mailOptions = {
+    from: `Campus Evenor <${process.env.EMAIL_USER}>`,
+    to: userEmail,
+    subject: '¡Felicidades! Has completado el curso',
+    html: `
+      <div style="font-family: 'Rondana', Arial, sans-serif; background: #f0f9ea; padding: 32px; color: #333333;">
+        <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="display: inline-block; background: linear-gradient(135deg, #a1db87 0%, #5ec6a6 100%); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+              <span style="font-size: 40px;">🎓</span>
+            </div>
+            <h2 style="color: #5aa833; margin-bottom: 8px; font-family: 'Rondana', Arial, sans-serif;">¡Enhorabuena, ${userName}!</h2>
+            <p style="color: #595959; font-size: 18px;">Has completado exitosamente el curso</p>
+          </div>
+          
+          <div style="background: linear-gradient(135deg, #f0f9ea 0%, #e8f5e0 100%); border-left: 4px solid #a1db87; padding: 20px; border-radius: 6px; margin: 24px 0;">
+            <p style="color: #5aa833; font-weight: bold; margin-bottom: 8px;">📜 Tu certificado está en camino</p>
+            <p style="color: #595959; margin: 0; line-height: 1.6;">
+              Nuestro equipo está preparando tu certificado de finalización del curso de 
+              <strong>"Modelización de la dinámica del carbono orgánico del suelo"</strong>. 
+              En los próximos días recibirás un correo con el certificado oficial que acredita tus conocimientos.
+            </p>
+          </div>
+
+          <p style="color: #595959; line-height: 1.6;">
+            Gracias por tu dedicación y esfuerzo durante todo el curso. Esperamos que los conocimientos 
+            adquiridos te sean de gran utilidad en tu carrera profesional.
+          </p>
+
+          <div style="text-align: center; margin: 32px 0;">
+            <a href="${process.env.FRONTEND_URL || 'https://campus.evenor-tech.com'}" 
+               style="display: inline-block; background: #a1db87; color: #333333; text-decoration: none; font-weight: 600; padding: 12px 32px; border-radius: 6px; font-size: 16px; border: 2px solid #5aa833;">
+              Ir al Campus
+            </a>
+          </div>
+
+          <p style="color: #595959; font-size: 14px; line-height: 1.6;">
+            Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.
+          </p>
+
+          <hr style="margin: 32px 0; border: none; border-top: 1px solid #a1db87;">
+          <p style="font-size: 13px; color: #a1db87; text-align: center; font-family: 'Rondana', Arial, sans-serif;">
+            Campus Evenor &copy; ${new Date().getFullYear()}
+          </p>
+        </div>
+      </div>
+    `
+  };
+  await transporter.sendMail(mailOptions);
+};
+
+export const sendCourseCompletionNotificationToAdmin = async (userName, userEmail) => {
+  const mailOptions = {
+    from: `Campus Evenor <${process.env.EMAIL_USER}>`,
+    to: ['info@evenor-tech.com', 'campusevenor@gmail.com'],
+    subject: '✅ Nuevo estudiante ha completado el curso',
+    html: `
+      <div style="font-family: Arial, sans-serif; background: #f8fafc; padding: 32px; color: #333;">
+        <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="display: inline-block; background: linear-gradient(135deg, #a1db87 0%, #5ec6a6 100%); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+              <span style="font-size: 30px;">🎉</span>
+            </div>
+            <h2 style="color: #5aa833; margin-bottom: 8px;">Curso completado exitosamente</h2>
+          </div>
+          
+          <div style="background: #f0f9ea; border-radius: 8px; padding: 20px; margin: 24px 0;">
+            <p style="color: #5aa833; font-weight: bold; margin-bottom: 16px; font-size: 16px;">📊 Detalles del estudiante</p>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px 0; color: #595959; font-weight: 600; width: 40%;">Nombre:</td>
+                <td style="padding: 8px 0; color: #333;">${userName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; color: #595959; font-weight: 600;">Email:</td>
+                <td style="padding: 8px 0; color: #333;">${userEmail}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; color: #595959; font-weight: 600;">Curso:</td>
+                <td style="padding: 8px 0; color: #333;">Modelización de la dinámica del carbono orgánico del suelo</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; color: #595959; font-weight: 600;">Fecha de finalización:</td>
+                <td style="padding: 8px 0; color: #333;">${new Date().toLocaleString('es-ES', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div style="background: linear-gradient(135deg, #fff9e6 0%, #fff4d4 100%); border-left: 4px solid #ffc107; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <p style="color: #856404; margin: 0; display: flex; align-items: center;">
+              <span style="font-size: 20px; margin-right: 8px;">⚠️</span>
+              <strong>Acción requerida:</strong> Preparar y enviar el certificado de finalización al estudiante.
+            </p>
+          </div>
+
+          <p style="color: #595959; font-size: 14px; line-height: 1.6; margin-top: 24px;">
+            Este estudiante ha completado todos los requisitos del curso, incluyendo el test final de certificación. 
+            Por favor, procede a generar y enviar el certificado oficial a la mayor brevedad posible.
+          </p>
+
+          <hr style="margin: 32px 0; border: none; border-top: 1px solid #e0e0e0;">
+          <p style="font-size: 12px; color: #999; text-align: center;">
+            Notificación automática generada por Campus Evenor
+          </p>
         </div>
       </div>
     `

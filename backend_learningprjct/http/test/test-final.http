@@ -1,0 +1,58 @@
+### Variables
+@baseUrl = http://localhost:3007/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YjEyMTA4ODU2NGQxMDgzNWU5ZmI5OSIsImVtYWlsIjoibGljaXRhbm9yQGdtYWlsLmNvbSIsImlhdCI6MTc3MzIxNjExOCwiZXhwIjoxNzczODIwOTE4fQ.fn1gOGIhFwnrDWvsV4-qWShQeAJJH15h2ZGlZqdpVKM
+@courseId = 69a6a0a4c8289d012745af63
+@testFinalId = 69aebad5ab49d6efbf76e471
+
+### 1. Login (obtener token primero)
+# @name login
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+  "email": "licitanor@gmail.com",
+  "password": "licitanor123@"
+}
+
+### 2. Inscribirse al curso (si no lo estás ya)
+POST {{baseUrl}}/users/enroll/{{courseId}}
+Authorization: Bearer {{token}}
+
+### 3. Obtener el test final
+GET {{baseUrl}}/tests/{{courseId}}/temas/{{testFinalId}}/test
+
+### 4. Validar respuestas del test final (simular aprobación)
+POST {{baseUrl}}/tests/{{courseId}}/temas/{{testFinalId}}/test/validar
+Content-Type: application/json
+
+{
+  "respuestas": [
+    {"numero": 1, "respuesta": "b"},
+    {"numero": 2, "respuesta": "b"},
+    {"numero": 3, "respuesta": "b"},
+    {"numero": 4, "respuesta": "a"},
+    {"numero": 5, "respuesta": "b"},
+    {"numero": 6, "respuesta": "b"},
+    {"numero": 7, "respuesta": "c"},
+    {"numero": 8, "respuesta": "b"},
+    {"numero": 9, "respuesta": "b"},
+    {"numero": 10, "respuesta": "b"}
+  ]
+}
+
+### 5. ⚡ PRUEBA RÁPIDA - Marcar test final como completado (AQUÍ SE ENVÍAN LOS CORREOS)
+# Ejecuta solo este paso después de tener el token - Los correos se envían automáticamente
+POST {{baseUrl}}/users/enrollment/{{courseId}}/test/{{testFinalId}}/complete
+Authorization: Bearer {{token}}
+
+### 6. Verificar estado de inscripción
+GET {{baseUrl}}/users/enrollment/{{courseId}}
+Authorization: Bearer {{token}}
+
+###
+### 🔄 RESETEAR TEST (para poder probar de nuevo los correos)
+### Ejecuta esto en MongoDB Compass o terminal para poder recibir correos otra vez:
+### db.userprogresses.updateOne(
+###   { userId: ObjectId("TU_USER_ID"), courseId: ObjectId("69a6a0a4c8289d012745af63") },
+###   { $pull: { completedTests: "69aebad5ab49d6efbf76e471" } }
+### )

@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import UserProgress from '../models/UserProgress.js';
+import Course from '../models/Course.js';
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import crypto from 'crypto';
 import PasswordResetToken from '../models/PasswordResetToken.js';
-import { sendPasswordResetEmail } from '../service/mailService.js';
+import { sendPasswordResetEmail, sendCourseCompletionEmailToUser, sendCourseCompletionNotificationToAdmin } from '../service/mailService.js';
 import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT } from '../service/googleAuthService.js';
 
 export const registerUser = async (req, res) => {
@@ -344,14 +345,57 @@ export const completeTest = async (req, res) => {
       enrollment.completedTests = [];
     }
 
-    if (!enrollment.completedTests.includes(temaId)) {
+    const isAlreadyCompleted = enrollment.completedTests.includes(temaId);
+
+    if (!isAlreadyCompleted) {
       enrollment.completedTests.push(temaId);
       await enrollment.save();
     }
 
+    // Verificar si es el test final del curso (último tema)
+    let isFinalTest = false;
+    
+    try {
+      const course = await Course.findById(courseId);
+      
+      if (course && course.temas && course.temas.length > 0) {
+        // Encontrar el último tema del curso (el de mayor número)
+        const maxNumeroTema = Math.max(...course.temas.map(t => t.numeroTema || 0));
+        const ultimoTema = course.temas.find(t => t.numeroTema === maxNumeroTema);
+        
+        // Verificar si el temaId actual corresponde al último tema
+        isFinalTest = ultimoTema && ultimoTema._id.toString() === temaId;
+      }
+    } catch (courseError) {
+      console.error('⚠️ Error al verificar si es test final:', courseError);
+    }
+
+    // Si es el test final y no había sido completado previamente, enviar correos
+    if (isFinalTest && !isAlreadyCompleted) {
+      try {
+        // Obtener datos del usuario
+        const user = await User.findById(userId);
+        
+        if (user && user.email && user.name) {
+          // Enviar correo al usuario
+          await sendCourseCompletionEmailToUser(user.name, user.email);
+          console.log(`✅ Correo de finalización enviado a ${user.email}`);
+
+          // Enviar notificación a administradores
+          await sendCourseCompletionNotificationToAdmin(user.name, user.email);
+          console.log(`✅ Notificación de finalización enviada a administradores`);
+        }
+      } catch (emailError) {
+        // Log del error pero no fallar la petición
+        console.error('⚠️ Error al enviar correos de finalización:', emailError);
+        // Continuamos con la respuesta exitosa ya que el test sí se marcó como completado
+      }
+    }
+
     res.status(200).json({
       message: 'Test completado exitosamente',
-      enrollment
+      enrollment,
+      isFinalTest
     });
   } catch (error) {
     console.error('Error en completeTest:', error);

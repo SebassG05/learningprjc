@@ -109,6 +109,18 @@ export default function CursoDetalle() {
     return totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
   };
 
+  // Verificar si el curso está completado (test final completado)
+  const isCursoCompletado = () => {
+    if (!curso || !curso.temas || curso.temas.length === 0) return false;
+    
+    // Encontrar el último tema (test final)
+    const maxNumeroTema = Math.max(...curso.temas.map(t => t.numeroTema || 0));
+    const ultimoTema = curso.temas.find(t => t.numeroTema === maxNumeroTema);
+    
+    // Verificar si el último tema está en tests completados
+    return ultimoTema && completedTests.includes(ultimoTema._id);
+  };
+
   // Actualizar progreso en el backend cuando cambie
   useEffect(() => {
     if (!user || !enrollmentStatus?.enrolled || !curso) return;
@@ -273,6 +285,42 @@ export default function CursoDetalle() {
           setCompletedMaterials={setCompletedMaterials}
           completedTests={completedTests}
         />
+        
+        {/* Mensaje de Curso Completado */}
+        {isCursoCompletado() && (
+          <div className="mt-16 mb-16">
+            <div className="bg-gradient-to-r from-[#a1db87]/10 to-[#5ec6a6]/10 border-2 border-[#a1db87] rounded-3xl p-10 shadow-2xl shadow-[#a1db87]/20">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-24 h-24 bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] rounded-full flex items-center justify-center mb-6 shadow-lg shadow-[#a1db87]/50 animate-pulse">
+                  <span className="text-5xl">🎓</span>
+                </div>
+                <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-4">
+                  ¡Curso Completado!
+                </h2>
+                <p className="text-gray-300 text-lg mb-6 max-w-2xl">
+                  Felicidades, has completado exitosamente todos los temas y tests del curso. 
+                  Tu certificado será enviado a tu correo electrónico en los próximos días.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <div className="bg-[#23272f] px-6 py-3 rounded-xl border border-[#a1db87]/30">
+                    <p className="text-gray-400 text-sm">Progreso</p>
+                    <p className="text-2xl font-bold text-[#a1db87]">{progress}%</p>
+                  </div>
+                  <div className="bg-[#23272f] px-6 py-3 rounded-xl border border-[#a1db87]/30">
+                    <p className="text-gray-400 text-sm">Tests completados</p>
+                    <p className="text-2xl font-bold text-[#a1db87]">{completedTests.length}/{curso.temas?.length || 0}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => navigate('/')}
+                  className="mt-8 px-8 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-2xl hover:shadow-[#a1db87]/50 transition-all transform hover:scale-105"
+                >
+                  Volver al Inicio
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="max-w-3xl mx-auto px-4">

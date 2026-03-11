@@ -10,6 +10,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
   const [resultado, setResultado] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enviando, setEnviando] = useState(false);
+  const [isTestFinal, setIsTestFinal] = useState(false);
+  const [countdown, setCountdown] = useState(5);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
 
@@ -26,6 +28,24 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
   useEffect(() => {
     cargarTest();
   }, [cursoId, temaId]);
+
+  // Countdown para redirección al home cuando se completa el test final
+  useEffect(() => {
+    if (isTestFinal && mostrarResultado && resultado?.aprobado) {
+      const timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            window.location.href = '/';
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [isTestFinal, mostrarResultado, resultado]);
 
   const cargarTest = async () => {
     try {
@@ -131,7 +151,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
         const token = localStorage.getItem('token');
         if (token) {
           try {
-            await fetch(
+            const completeResponse = await fetch(
               `${apiUrl}/api/users/enrollment/${cursoId}/test/${temaId}/complete`,
               {
                 method: 'POST',
@@ -141,6 +161,14 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                 }
               }
             );
+            
+            // Verificar si es el test final desde la respuesta del backend
+            if (completeResponse.ok) {
+              const completeData = await completeResponse.json();
+              if (completeData.isFinalTest) {
+                setIsTestFinal(true);
+              }
+            }
           } catch (error) {
             console.error('Error al marcar test como completado:', error);
           }
@@ -202,7 +230,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                   transition={{ delay: 0.4 }}
                   className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-3"
                 >
-                  ¡Felicidades!
+                  {isTestFinal ? '¡Has completado el curso!' : '¡Felicidades!'}
                 </motion.h2>
                 <motion.p 
                   initial={{ opacity: 0 }}
@@ -210,8 +238,35 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                   transition={{ delay: 0.5 }}
                   className="text-gray-300 text-lg"
                 >
-                  Has aprobado el test con éxito
+                  {isTestFinal 
+                    ? 'Has aprobado el test final de certificación' 
+                    : 'Has aprobado el test con éxito'}
                 </motion.p>
+                {isTestFinal && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="mt-6 p-4 bg-gradient-to-r from-[#a1db87]/10 to-[#5ec6a6]/10 border border-[#a1db87]/30 rounded-xl"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 text-2xl mt-1">📧</div>
+                      <div className="text-left">
+                        <p className="text-[#a1db87] font-semibold mb-1">Certificado en camino</p>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Hemos enviado un correo de confirmación a tu email. 
+                          En los próximos días recibirás tu certificado oficial del curso.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-[#a1db87]/20 text-center">
+                      <p className="text-gray-400 text-sm mb-2">Redirigiendo al inicio en</p>
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] rounded-full shadow-lg">
+                        <span className="text-3xl font-bold text-[#1a1a1a]">{countdown}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </>
             ) : (
               <>
@@ -320,10 +375,19 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
               </button>
             )}
             <button
-              onClick={onComplete}
+              onClick={() => {
+                if (resultado.aprobado && isTestFinal) {
+                  // Redirigir inmediatamente si hace clic
+                  window.location.href = '/';
+                } else {
+                  onComplete();
+                }
+              }}
               className="flex-1 px-8 py-4 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-2xl hover:shadow-[#a1db87]/50 transition-all transform hover:scale-105"
             >
-              {resultado.aprobado ? 'Continuar al Siguiente Tema' : 'Volver al Material de Estudio'}
+              {resultado.aprobado 
+                ? (isTestFinal ? `🎉 Ir al Inicio ahora` : 'Continuar al Siguiente Tema')
+                : 'Volver al Material de Estudio'}
             </button>
           </motion.div>
         </motion.div>
@@ -342,9 +406,17 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex-1">
-              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6]">
-                {test.titulo}
-              </h2>
+              <div className="flex items-center gap-3 mb-2">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6]">
+                  {test.titulo}
+                </h2>
+                {isTestFinal && (
+                  <span className="px-3 py-1 bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border border-yellow-500/50 text-yellow-400 text-xs font-bold rounded-full flex items-center gap-1">
+                    <span>🏆</span>
+                    <span>TEST FINAL</span>
+                  </span>
+                )}
+              </div>
               <p className="text-sm text-gray-400 mt-2">{test.descripcion}</p>
             </div>
             <div className="flex items-center gap-3 px-4 py-2 bg-[#1a1a1a]/50 rounded-lg border border-[#a1db87]/20">
