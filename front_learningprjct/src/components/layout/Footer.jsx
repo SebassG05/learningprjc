@@ -2,7 +2,7 @@ import { Linkedin, Instagram, Mail, Globe, X, MapPin, Phone, ArrowRight, Graduat
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  return (
+  return ( 
     <footer className="relative bg-gradient-to-b from-[#1a1a1a] via-[#23272f] to-[#1a1a1a] border-t border-[#a1db87]/20 mt-auto text-gray-300 overflow-hidden">
       {/* Efectos de fondo decorativos */}
       <div className="absolute inset-0 opacity-5">
@@ -28,7 +28,7 @@ const Footer = () => {
                 Plataforma de e-learning moderna y flexible. Formando profesionales con tecnología y pasión para el futuro digital.
               </p>
               
-            </div>
+            </div> 
             
             {/* Enlaces */}
             <div>
