@@ -507,7 +507,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                         />
                       )}
-                      <div className="relative flex items-start gap-5">
+                      <div className="relative flex items-center gap-5">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                           isSelected 
                             ? 'border-[#a1db87] bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] shadow-lg shadow-[#a1db87]/50'
