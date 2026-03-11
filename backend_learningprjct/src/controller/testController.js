@@ -1,4 +1,6 @@
 import Test from '../models/Test.js';
+import Course from '../models/Course.js';
+import UserProgress from '../models/UserProgress.js';
 
 // Obtener test de un tema específico
 export const obtenerTestPorTema = async (req, res) => {
@@ -12,6 +14,61 @@ export const obtenerTestPorTema = async (req, res) => {
         error: 'Test no encontrado',
         mensaje: 'No existe un test para este tema'
       });
+    }
+
+    // Verificar si el usuario está autenticado (si hay token)
+    const authHeader = req.headers.authorization;
+    if (authHeader) {
+      try {
+        // Obtener el curso para verificar si es el test final
+        const course = await Course.findById(cursoId);
+        
+        if (course && course.temas && course.temas.length > 0) {
+          // Encontrar el tema actual
+          const temaActual = course.temas.find(t => t._id.toString() === temaId);
+          
+          // Verificar si es el test final (tema 5 o superior, o contiene "Test Final" en el título)
+          const isTestFinal = temaActual && (
+            temaActual.numeroTema >= 5 ||
+            temaActual.titulo?.toLowerCase().includes('test final') ||
+            temaActual.titulo?.toLowerCase().includes('certificación')
+          );
+          
+          if (isTestFinal) {
+            // Extraer userId del token
+            const token = authHeader.split(' ')[1];
+            const jwt = await import('jsonwebtoken');
+            const decoded = jwt.default.verify(token, process.env.JWT_SECRET || 'clave-secreta-para-jwt-en-desarrollo');
+            const userId = decoded.id;
+            
+            // Verificar enrollment del usuario
+            const enrollment = await UserProgress.findOne({ 
+              userId, 
+              courseId: cursoId 
+            });
+            
+            if (enrollment) {
+              // Obtener los temas 1-4 del curso (los 4 temas principales)
+              const temasDelCurso = course.temas.filter(t => t.numeroTema >= 1 && t.numeroTema <= 4);
+              
+              // Verificar si todos los tests de los temas 1-4 están completados
+              const todosTestsCompletados = temasDelCurso.every(tema => 
+                enrollment.completedTests && enrollment.completedTests.includes(tema._id.toString())
+              );
+              
+              if (!todosTestsCompletados) {
+                return res.status(403).json({ 
+                  error: 'Test bloqueado',
+                  mensaje: 'Debes completar todos los tests de los temas 1-4 para acceder al test final de certificación'
+                });
+              }
+            }
+          }
+        }
+      } catch (authError) {
+        // Si hay error en la autenticación, continuar sin bloquear
+        console.log('Error al verificar autenticación para bloqueo de test:', authError.message);
+      }
     }
 
     // Enviar preguntas sin las respuestas correctas

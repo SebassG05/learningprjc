@@ -92,6 +92,29 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
     };
   };
 
+  // Verificar si es el test final y si está bloqueado
+  const isTestFinalBloqueado = (tema) => {
+    if (!temas || temas.length === 0) return false;
+    
+    // El test final es el que tiene "Test Final" en el título o es el tema 5 (último del curso)
+    const isTestFinal = tema.titulo?.toLowerCase().includes('test final') || 
+                       tema.titulo?.toLowerCase().includes('certificación');
+    
+    if (!isTestFinal) return false;
+    
+    // Solo bloquear si es realmente el último tema (tema 5 o superior)
+    // Los temas 1-4 son los temas normales del curso
+    if (tema.numeroTema <= 4) return false;
+    
+    // Verificar si todos los tests de los temas 1-4 están completados
+    const temasDelCurso = temas.filter(t => t.numeroTema >= 1 && t.numeroTema <= 4);
+    const todosTestsCompletados = temasDelCurso.every(t => 
+      completedTests && completedTests.includes(t._id)
+    );
+    
+    return !todosTestsCompletados;
+  };
+
   return (
     <div className="mb-16 space-y-8">
       <div className="border-t border-[#a1db87]/30">
@@ -104,6 +127,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
             const isExpanded = expandedTemas[tema._id];
             const { text: truncatedText, isTruncated } = truncateText(tema.descripcion);
             const displayText = isExpanded ? tema.descripcion : truncatedText;
+            const testBloqueado = isTestFinalBloqueado(tema);
 
             return (
               <div key={tema._id} className="bg-[#23272f]/50 rounded-xl p-10 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-colors">
@@ -213,16 +237,20 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                   Test de Evaluación
                 </h4>
                 <div
-                  onClick={() => handleOpenMaterial(tema, { titulo: 'Test de Evaluación', _id: `test-${tema._id}` })}
-                  className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border cursor-pointer ${
-                    completedTests && completedTests.includes(tema._id)
-                      ? 'bg-[#5ec6a6]/10 border-[#5ec6a6]/50'
-                      : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/30'
+                  onClick={() => !testBloqueado && handleOpenMaterial(tema, { titulo: 'Test de Evaluación', _id: `test-${tema._id}` })}
+                  className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
+                    testBloqueado 
+                      ? 'bg-[#1a1a1a]/30 border-gray-700/50 cursor-not-allowed opacity-60'
+                      : completedTests && completedTests.includes(tema._id)
+                      ? 'bg-[#5ec6a6]/10 border-[#5ec6a6]/50 cursor-pointer'
+                      : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/30 cursor-pointer'
                   }`}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <div className={`flex-shrink-0 transition-colors ${
-                      completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-[#5ec6a6]'
+                      testBloqueado 
+                        ? 'text-gray-600'
+                        : completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-[#5ec6a6]'
                     }`}>
                       {completedTests && completedTests.includes(tema._id) ? (
                         <Check className="w-5 h-5" />
@@ -232,7 +260,9 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className={`font-medium transition-colors truncate ${
-                        completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-white'
+                        testBloqueado 
+                          ? 'text-gray-500'
+                          : completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-white'
                       }`}>
                         Test de Evaluación - Tema {tema.numeroTema}
                         {completedTests && completedTests.includes(tema._id) && (
@@ -240,9 +270,16 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                             Aprobado
                           </span>
                         )}
+                        {testBloqueado && (
+                          <span className="ml-2 text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">
+                            🔒 Bloqueado
+                          </span>
+                        )}
                       </p>
                       <p className="text-xs text-gray-400 mt-0.5">
-                        {testInfo[tema._id] ? (
+                        {testBloqueado ? (
+                          'Completa y aprueba los tests de los Temas 1, 2, 3 y 4 para desbloquear'
+                        ) : testInfo[tema._id] ? (
                           <>
                             {testInfo[tema._id].totalPreguntas} preguntas • {testInfo[tema._id].duracion} minutos • Nota mínima: {testInfo[tema._id].notaMinima}%
                           </>
@@ -253,13 +290,15 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                     </div>
                   </div>
                   
-                  <div className={`flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
-                    completedTests && completedTests.includes(tema._id)
-                      ? 'bg-[#5ec6a6]/20 text-[#5ec6a6] border border-[#5ec6a6]/50'
-                      : 'bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 opacity-0 group-hover:opacity-100'
-                  }`}>
-                    {completedTests && completedTests.includes(tema._id) ? 'Ver resultados' : 'Iniciar Test'}
-                  </div>
+                  {!testBloqueado && (
+                    <div className={`flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
+                      completedTests && completedTests.includes(tema._id)
+                        ? 'bg-[#5ec6a6]/20 text-[#5ec6a6] border border-[#5ec6a6]/50'
+                        : 'bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 opacity-0 group-hover:opacity-100'
+                    }`}>
+                      {completedTests && completedTests.includes(tema._id) ? 'Ver resultados' : 'Iniciar Test'}
+                    </div>
+                  )}
                 </div>
               </div>
 

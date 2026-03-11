@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X, ChevronLeft, ChevronRight, Clock, Award, AlertCircle } from 'lucide-react';
+import { Check, X, ChevronLeft, ChevronRight, Clock, Award, AlertCircle, Lock } from 'lucide-react';
 
 export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
   const [test, setTest] = useState(null);
@@ -12,6 +12,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
   const [enviando, setEnviando] = useState(false);
   const [isTestFinal, setIsTestFinal] = useState(false);
   const [countdown, setCountdown] = useState(5);
+  const [errorBloqueado, setErrorBloqueado] = useState(null);
+  const navigationButtonsRef = useRef([]);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
 
@@ -28,6 +30,17 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
   useEffect(() => {
     cargarTest();
   }, [cursoId, temaId]);
+
+  // Auto-scroll al botón de navegación actual
+  useEffect(() => {
+    if (navigationButtonsRef.current[preguntaActual]) {
+      navigationButtonsRef.current[preguntaActual].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  }, [preguntaActual]);
 
   // Countdown para redirección al home cuando se completa el test final
   useEffect(() => {
@@ -49,9 +62,20 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
 
   const cargarTest = async () => {
     try {
-      const response = await fetch(`${apiUrl}/api/tests/${cursoId}/temas/${temaId}/test`);
+      const token = localStorage.getItem('token');
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+      
+      const response = await fetch(`${apiUrl}/api/tests/${cursoId}/temas/${temaId}/test`, {
+        headers
+      });
       
       if (!response.ok) {
+        if (response.status === 403) {
+          const errorData = await response.json();
+          setErrorBloqueado(errorData.mensaje || 'Este test está bloqueado');
+          setLoading(false);
+          return;
+        }
         throw new Error('No se pudo cargar el test');
       }
 
@@ -189,6 +213,38 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
           <div className="w-16 h-16 border-4 border-[#a1db87]/20 border-t-[#a1db87] rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-400">Cargando test...</p>
         </div>
+      </div>
+    );
+  }
+
+  if (errorBloqueado) {
+    return (
+      <div className="flex items-center justify-center h-full bg-gradient-to-br from-[#1a1a1a] via-[#23272f] to-[#1a1a1a]">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto p-10 bg-[#23272f]/80 backdrop-blur-sm rounded-3xl border-2 border-red-500/30 shadow-2xl"
+        >
+          <div className="w-24 h-24 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-500/50">
+            <Lock className="w-12 h-12 text-red-400" />
+          </div>
+          <h2 className="text-3xl font-bold text-red-400 mb-4">Test Final Bloqueado</h2>
+          <p className="text-gray-300 text-lg mb-6 leading-relaxed">
+            {errorBloqueado}
+          </p>
+          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6">
+            <p className="text-sm text-gray-300">
+              <span className="font-semibold text-red-400">Requisito:</span> Debes aprobar los tests de los Temas 1, 2, 3 y 4 para poder acceder al Test Final de Certificación.
+            </p>
+          </div>
+          <button
+            onClick={onComplete}
+            className="px-8 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#a1db87]/50 transition-all transform hover:scale-105"
+          >
+            Volver al Curso
+          </button>
+        </motion.div>
       </div>
     );
   }
@@ -544,7 +600,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
             <button
               onClick={preguntaAnterior}
               disabled={preguntaActual === 0}
-              className="flex-shrink-0 px-6 py-3 border-2 border-[#a1db87]/30 text-gray-400 hover:text-white hover:border-[#a1db87] rounded-xl transition-all flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg"
+              className="cursor-pointer flex-shrink-0 px-6 py-3 border-2 border-[#a1db87]/30 text-gray-400 hover:text-white hover:border-[#a1db87] rounded-xl transition-all flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg"
             >
               <ChevronLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Anterior</span>
@@ -558,6 +614,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                 {test.preguntas.map((_, index) => (
                   <button
                     key={index}
+                    ref={(el) => (navigationButtonsRef.current[index] = el)}
                     onClick={() => setPreguntaActual(index)}
                     className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-bold transition-all duration-300 ${
                       index === preguntaActual
@@ -587,7 +644,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
             ) : (
               <button
                 onClick={siguientePregunta}
-                className="flex-shrink-0 px-6 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#a1db87]/50 transition-all flex items-center gap-2"
+                className="cursor-pointer flex-shrink-0 px-6 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#a1db87]/50 transition-all flex items-center gap-2"
               >
                 <span className="hidden sm:inline">Siguiente</span>
                 <ChevronRight className="w-4 h-4" />

@@ -352,19 +352,22 @@ export const completeTest = async (req, res) => {
       await enrollment.save();
     }
 
-    // Verificar si es el test final del curso (último tema)
+    // Verificar si es el test final del curso (tema 5 o con "Test Final" en título)
     let isFinalTest = false;
     
     try {
       const course = await Course.findById(courseId);
       
       if (course && course.temas && course.temas.length > 0) {
-        // Encontrar el último tema del curso (el de mayor número)
-        const maxNumeroTema = Math.max(...course.temas.map(t => t.numeroTema || 0));
-        const ultimoTema = course.temas.find(t => t.numeroTema === maxNumeroTema);
+        // Encontrar el tema actual
+        const temaActual = course.temas.find(t => t._id.toString() === temaId);
         
-        // Verificar si el temaId actual corresponde al último tema
-        isFinalTest = ultimoTema && ultimoTema._id.toString() === temaId;
+        // Verificar si es el test final (tema 5 o superior, o contiene "Test Final" en el título)
+        isFinalTest = temaActual && (
+          temaActual.numeroTema >= 5 ||
+          temaActual.titulo?.toLowerCase().includes('test final') ||
+          temaActual.titulo?.toLowerCase().includes('certificación')
+        );
       }
     } catch (courseError) {
       console.error('⚠️ Error al verificar si es test final:', courseError);
