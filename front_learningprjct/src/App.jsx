@@ -58,6 +58,11 @@ function AnimatedRoutes() {
               <PageTransition><TemaEstudio /></PageTransition>
             </Suspense>
           } />
+          <Route path="/curso/:cursoId/ejercicio/:ejercicioId/entregar" element={
+            <Suspense fallback={<div>Cargando...</div>}>
+              <PageTransition><EntregaEjercicio /></PageTransition>
+            </Suspense>
+          } />
           <Route path="/cookies" element={<PageTransition><PoliticaCookies /></PageTransition>} />
           <Route path="/politica-cookies" element={<PageTransition><PoliticaCookies /></PageTransition>} />
           <Route path="/privacidad" element={<PageTransition><Privacidad /></PageTransition>} />
@@ -101,5 +106,6 @@ const CursoDetalle = lazy(() => import('./pages/CursoDetalle.jsx'));
 const CursoInscripcion = lazy(() => import('./pages/CursoInscripcion.jsx'));
 const EstructuraCursoPage = lazy(() => import('./pages/EstructuraCursoPage.jsx'));
 const TemaEstudio = lazy(() => import('./pages/TemaEstudio.jsx'));
+const EntregaEjercicio = lazy(() => import('./pages/EntregaEjercicio.jsx'));
 
 export default App;

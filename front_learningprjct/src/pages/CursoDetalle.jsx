@@ -4,6 +4,7 @@ import { useUser } from '../context/UserContext';
 import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
+import EjercicioOptativo from '../components/curso/EjercicioOptativo';
 import { BookOpen, Lock, Loader, AlertCircle } from 'lucide-react';
 
 export default function CursoDetalle() {
@@ -16,6 +17,7 @@ export default function CursoDetalle() {
   const [completedTests, setCompletedTests] = useState([]);
   const [enrollmentStatus, setEnrollmentStatus] = useState(null);
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
+  const [ejerciciosOptativos, setEjerciciosOptativos] = useState([]);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
 
@@ -77,6 +79,18 @@ export default function CursoDetalle() {
         setCurso(data);
         setLoading(false);
       });
+  }, [id, apiUrl]);
+
+  // Cargar ejercicios optativos
+  useEffect(() => {
+    fetch(`${apiUrl}/api/ejercicios/curso/${id}?temaId=final`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setEjerciciosOptativos(data);
+        }
+      })
+      .catch(err => console.error('Error al cargar ejercicios:', err));
   }, [id, apiUrl]);
 
   // Calcular el porcentaje de progreso
@@ -318,6 +332,25 @@ export default function CursoDetalle() {
                   Volver al Inicio
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Ejercicios Optativos */}
+        {ejerciciosOptativos.length > 0 && (
+          <div className="mt-16 mb-16">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#5ec6a6] to-[#4da992] mb-3">
+                🎯 Ejercicios Prácticos Optativos
+              </h2>
+              <p className="text-gray-400 text-lg">
+                Complementa tu aprendizaje con estos ejercicios prácticos diseñados para aplicar los conocimientos del curso en escenarios reales.
+              </p>
+            </div>
+            <div className="space-y-6">
+              {ejerciciosOptativos.map((ejercicio) => (
+                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} />
+              ))}
             </div>
           </div>
         )}
