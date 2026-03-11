@@ -6,7 +6,7 @@ import {
   obtenerEntregasUsuarioCurso,
   eliminarEntrega
 } from '../controller/entregaEjercicioController.js';
-import { verifyToken } from '../middleware/auth.js';
+import { authenticateJWT } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -25,9 +25,9 @@ const upload = multer({
 });
 
 // Rutas protegidas (requieren autenticación)
-router.get('/ejercicio/:ejercicioId/usuario', verifyToken, obtenerEntregaUsuario);
-router.post('/ejercicio/:ejercicioId', verifyToken, upload.single('archivoPdf'), entregarEjercicio);
-router.get('/curso/:cursoId/usuario', verifyToken, obtenerEntregasUsuarioCurso);
-router.delete('/:entregaId', verifyToken, eliminarEntrega);
+router.get('/ejercicio/:ejercicioId/usuario', authenticateJWT, obtenerEntregaUsuario);
+router.post('/ejercicio/:ejercicioId', authenticateJWT, upload.single('archivoPdf'), entregarEjercicio);
+router.get('/curso/:cursoId/usuario', authenticateJWT, obtenerEntregasUsuarioCurso);
+router.delete('/:entregaId', authenticateJWT, eliminarEntrega);
 
 export default router;

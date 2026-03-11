@@ -1,5 +1,5 @@
 import EntregaEjercicio from '../models/EntregaEjercicio.js';
-import { cloudinary } from '../config/cloudinary.js';
+import cloudinary from '../config/cloudinary.js';
 import { Readable } from 'stream';
 
 // Obtener las entregas de un usuario para un ejercicio
