@@ -226,7 +226,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                 {ejercicio.recursos && ejercicio.recursos.length > 0 && (
                   <button
                     onClick={() => window.open(ejercicio.recursos[0].url, '_blank')}
-                    className="flex-1 px-6 py-3 bg-[#1a1a1a]/80 border-2 border-[#5ec6a6]/30 text-[#5ec6a6] font-semibold rounded-xl hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/50 transition-all flex items-center justify-center gap-2"
+                    className="cursor-pointer flex-1 px-6 py-3 bg-[#1a1a1a]/80 border-2 border-[#5ec6a6]/30 text-[#5ec6a6] font-semibold rounded-xl hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/50 transition-all flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-5 h-5" />
                     <span>Abrir Herramienta</span>
@@ -236,7 +236,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                   onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
                     state: { ejercicio }
                   })}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#5ec6a6]/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+                  className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#5ec6a6]/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
                 >
                   <FileUp className="w-5 h-5" />
                   <span>Entregar Ejercicio</span>
