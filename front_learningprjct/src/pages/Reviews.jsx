@@ -9,7 +9,8 @@ const fetchReviews = async () => {
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
   const res = await fetch(`${apiUrl}/api/reviews`);
   if (!res.ok) throw new Error('Error al cargar reseñas');
-  return res.json();
+  const json = await res.json();
+  return json.data || json;
 };
 
 const postReview = async (review, token) => {
