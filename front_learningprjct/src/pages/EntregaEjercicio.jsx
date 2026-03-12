@@ -21,7 +21,7 @@ export default function EntregaEjercicio() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   useEffect(() => {
     cargarEntregaExistente();

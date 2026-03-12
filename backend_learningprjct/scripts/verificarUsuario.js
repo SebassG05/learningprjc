@@ -55,7 +55,7 @@ const verificarUsuario = async () => {
         console.log('✅ El login debería funcionar\n');
         console.log('🤔 Si aún te da error 401, verifica:');
         console.log('   - Que el servidor backend esté corriendo');
-        console.log('   - Que la URL sea: http://localhost:3007/api/users/login');
+        console.log('   - Que la URL sea: http://localhost:8547/api/users/login');
         console.log('   - Que estés enviando Content-Type: application/json\n');
       } else {
         console.log('❌ ERROR: La contraseña NO coincide');

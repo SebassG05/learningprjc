@@ -14,9 +14,10 @@ const configureExpress = (app) => {
             const allowedOrigins = [
                 'http://localhost:5175',
                 'http://localhost:5173',
-                'http://localhost:3007', // Permitir peticiones desde el mismo servidor (para upload-material.html)
+                'http://localhost:8547', // Permitir peticiones desde el mismo servidor (para upload-material.html)
                 'https://learningprjc.vercel.app', // Frontend en Vercel
                 'https://learningprjc-2.onrender.com', // Backend en Render (para HTML uploads)
+                'https://campus.evenor-tech.com', // Dominio de producción en Cloudflare
             ];
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);

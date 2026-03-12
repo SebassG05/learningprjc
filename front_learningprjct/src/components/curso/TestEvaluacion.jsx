@@ -15,7 +15,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
   const [errorBloqueado, setErrorBloqueado] = useState(null);
   const navigationButtonsRef = useRef([]);
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   // Función para barajar un array (algoritmo Fisher-Yates)
   const shuffleArray = (array) => {

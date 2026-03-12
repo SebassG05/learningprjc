@@ -19,7 +19,7 @@ export default function CursoDetalle() {
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
   const [ejerciciosOptativos, setEjerciciosOptativos] = useState([]);
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   // Verificar si el usuario está logueado y verificar inscripción
   useEffect(() => {

@@ -14,7 +14,7 @@ export default function CursoInscripcion() {
   const [enrolling, setEnrolling] = useState(false);
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   // Verificar si el usuario está logueado
   useEffect(() => {

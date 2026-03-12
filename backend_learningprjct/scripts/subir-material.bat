@@ -20,7 +20,7 @@ echo.
 
 REM Paso 1: Crear el tema
 echo 1. Creando tema...
-curl -X POST "http://localhost:3007/api/courses/%COURSE_ID%/temas" ^
+curl -X POST "http://localhost:8547/api/courses/%COURSE_ID%/temas" ^
   -H "Content-Type: application/json" ^
   -d "{\"numeroTema\": 1, \"titulo\": \"%TEMA_TITULO%\", \"descripcion\": \"Material de estudio\"}" ^
   -o response.json
@@ -41,7 +41,7 @@ echo Abre el archivo response.json y busca el ultimo '_id' dentro de 'temas'.
 echo.
 echo Luego ejecuta este comando (reemplazando TEMA_ID):
 echo.
-echo curl -X POST "http://localhost:3007/api/courses/%COURSE_ID%/temas/TEMA_ID/materiales" \
+echo curl -X POST "http://localhost:8547/api/courses/%COURSE_ID%/temas/TEMA_ID/materiales" \
 echo   -F "archivo=@%PDF_PATH%" \
 echo   -F "tipo=pdf" \
 echo   -F "titulo=Material de Estudio" \

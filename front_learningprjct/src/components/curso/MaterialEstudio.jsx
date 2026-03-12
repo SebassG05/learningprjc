@@ -6,7 +6,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
   const [expandedTemas, setExpandedTemas] = useState({});
   const [testInfo, setTestInfo] = useState({});
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   useEffect(() => {
     // Cargar información de los tests para cada tema

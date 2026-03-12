@@ -15,7 +15,7 @@ export default function Cursos() {
   const [courseProgress, setCourseProgress] = useState({});
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
     fetch(`${apiUrl}/api/courses`)
       .then(res => res.json())
       .then(data => {
@@ -28,7 +28,7 @@ export default function Cursos() {
   useEffect(() => {
     if (!user || courses.length === 0) return;
     
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
     const token = localStorage.getItem('token');
     
     if (!token) return;

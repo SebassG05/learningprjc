@@ -13,7 +13,7 @@ const GoogleAuthButton = ({ onSuccess }) => {
       return;
     }
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
       const res = await fetch(`${apiUrl}/api/users/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

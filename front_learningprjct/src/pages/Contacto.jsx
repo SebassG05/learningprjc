@@ -497,7 +497,7 @@ const Contact = () => {
 
 // Envía el mensaje de contacto al backend
 async function sendContactMessage(data) {
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3007';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
   const res = await fetch(`${apiUrl}/api/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

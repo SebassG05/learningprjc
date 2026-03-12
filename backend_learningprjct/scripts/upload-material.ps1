@@ -24,7 +24,7 @@ param(
     [string]$descripcionMaterial = "Documento PDF con el contenido del tema"
 )
 
-$baseUrl = "http://localhost:3007/api"
+$baseUrl = "http://localhost:8547/api"
 
 Write-Host "=====================================" -ForegroundColor Cyan
 Write-Host "  Subiendo Material al Curso" -ForegroundColor Cyan

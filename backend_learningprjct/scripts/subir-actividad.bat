@@ -21,7 +21,7 @@ echo.
 
 REM Subir la actividad optativa
 echo Subiendo actividad optativa...
-curl -X POST "http://localhost:3007/api/courses/%COURSE_ID%/temas/%TEMA_ID%/actividades-optativas" ^
+curl -X POST "http://localhost:8547/api/courses/%COURSE_ID%/temas/%TEMA_ID%/actividades-optativas" ^
   -F "archivo=@%PDF_PATH%" ^
   -F "tipo=pdf" ^
   -F "titulo=%TITULO%" ^
