@@ -258,8 +258,38 @@ export default function CursoDetalle() {
             {curso.title}
           </h1>
           {/* Círculo de progreso a la derecha */}
-          <div className="w-24 h-24 rounded-full border-4 border-[#a1db87] bg-[#23272f] shadow-lg flex items-center justify-center transition-all duration-500">
-            <span className="text-2xl font-extrabold text-[#a1db87] transition-all duration-500">{progress}%</span>
+          <div className="relative w-24 h-24 flex items-center justify-center">
+            <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+              {/* Círculo de fondo */}
+              <circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="#23272f"
+                strokeWidth="8"
+              />
+              {/* Círculo de progreso */}
+              <circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="#a1db87"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeDasharray={`${2 * Math.PI * 42}`}
+                strokeDashoffset={`${2 * Math.PI * 42 * (1 - progress / 100)}`}
+                className="transition-all duration-1000 ease-out"
+                style={{
+                  filter: 'drop-shadow(0 0 6px rgba(161, 219, 135, 0.4))'
+                }}
+              />
+            </svg>
+            {/* Porcentaje en el centro */}
+            <span className="absolute text-2xl font-extrabold text-[#a1db87]">
+              {progress}%
+            </span>
           </div>
         </div>
 
