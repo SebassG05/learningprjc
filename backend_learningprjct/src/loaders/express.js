@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import helmet from 'helmet';
 import routes from '../routes/index.js';
 import { errorHandler, notFound } from '../middleware/errorHandler.js';
 
@@ -8,7 +9,13 @@ import { errorHandler, notFound } from '../middleware/errorHandler.js';
  * Configuración de Express
  */
 const configureExpress = (app) => {
-    // Middlewares básicos
+    // Seguridad HTTP con Helmet
+    app.use(helmet({
+        contentSecurityPolicy: false, // Deshabilitado para permitir recursos externos
+        crossOriginEmbedderPolicy: false
+    }));
+
+    // CORS configurado
     app.use(cors({
         origin: (origin, callback) => {
             const allowedOrigins = [

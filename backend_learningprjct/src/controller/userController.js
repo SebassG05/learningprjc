@@ -95,20 +95,26 @@ export const requestPasswordReset = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   const { userId, token, newPassword } = req.body;
-  console.log('resetPassword body:', { userId, token, newPassword });
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('resetPassword body:', { userId, token, newPassword });
+  }
   if (!userId || !token || !newPassword) {
     console.error('Datos incompletos:', { userId, token, newPassword });
     return res.status(400).json({ error: 'Datos incompletos.' });
   }
   try {
     const resetToken = await PasswordResetToken.findOne({ userId, token });
-    console.log('resetToken encontrado:', resetToken);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('resetToken encontrado:', resetToken);
+    }
     if (!resetToken || resetToken.expiresAt < new Date()) {
       console.error('Token inválido o expirado:', resetToken);
       return res.status(400).json({ error: 'Token inválido o expirado.' });
     }
     const user = await User.findById(userId);
-    console.log('Usuario encontrado:', user);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Usuario encontrado:', user);
+    }
     if (!user) {
       console.error('Usuario no encontrado:', userId);
       return res.status(404).json({ error: 'Usuario no encontrado.' });
@@ -116,7 +122,9 @@ export const resetPassword = async (req, res) => {
     user.password = newPassword;
     await user.save();
     await PasswordResetToken.deleteMany({ userId });
-    console.log('Contraseña actualizada y tokens eliminados');
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Contraseña actualizada y tokens eliminados');
+    }
     return res.status(200).json({ message: 'Contraseña actualizada correctamente.' });
   } catch (err) {
     console.error('Error en resetPassword:', err);
