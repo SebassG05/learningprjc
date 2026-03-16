@@ -123,23 +123,23 @@ const HeroSection = () => {
               >
                 <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
                   <Clock className="w-8 h-8 text-[#a1db87] mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Acceso 24/7 durante 7 semanas</h3>
-                  <p className="text-gray-400 text-sm">(11 marzo - 29 abril 2026)</p>
+                  <h3 className="font-bold text-lg text-white mb-1">ACCESO ILIMITADO</h3>
+                  <p className="text-gray-400 text-sm">A todos los cursos, en los que podrás aprender multiples habilidades y conocimientos a tu propio ritmo.</p>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
                   <Video className="w-8 h-8 text-[#a1db87] mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Vídeos, lecturas y material técnico</h3>
-                  <p className="text-gray-400 text-sm">Todo descargable y disponible online</p>
+                  <h3 className="font-bold text-lg text-white mb-1">Material Técnico</h3>
+                  <p className="text-gray-400 text-sm">Todo descargable y disponible online. Para obtener el máximo provecho de los cursos.</p>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
                   <ListChecks className="w-8 h-8 text-[#a1db87] mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Ejercicios prácticos + tests</h3>
-                  <p className="text-gray-400 text-sm">Autoevaluación por módulo y guía paso a paso</p>
+                  <h3 className="font-bold text-lg text-white mb-1">Ejercicios Prácticos + Tests</h3>
+                  <p className="text-gray-400 text-sm">Autoevaluación por módulo y guía paso a paso.</p>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-[#23272f] rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-[#a1db87]/20 transition-all duration-300">
                   <Award className="w-8 h-8 text-[#a1db87] mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Certificado profesional autorizado</h3>
-                  <p className="text-gray-400 text-sm">Evaluación final y diploma Evenor-Tech</p>
+                  <h3 className="font-bold text-lg text-white mb-1">Certificado Profesional Autorizado</h3>
+                  <p className="text-gray-400 text-sm">Evaluación final y diploma Evenor-Tech.</p>
                 </motion.div>
               </motion.div>
             </motion.div>

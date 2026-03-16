@@ -6,12 +6,46 @@ import { useUser } from '../../context/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext.jsx';
 import MobileMenu from './MobileMenu';
+
 const navLinks = [
   { to: '/', label: 'Inicio' },
   { to: '/cursos', label: 'Cursos' },
   { to: '/sobre', label: 'Sobre Nosotros' },
   { to: '/reseñas', label: 'Reseñas' },
   { to: '/contacto', label: 'Contacto' },
+];
+
+/* Hover: letter-spacing se expande + destello verde suave */
+const GlowLink = ({ to, label }) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Link
+      to={to}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        transition: 'color 0.35s ease, letter-spacing 0.35s ease, text-shadow 0.35s ease',
+        color: hovered ? '#a1db87' : '#d1d5db',
+        letterSpacing: hovered ? '0.07em' : '0.01em',
+        textShadow: hovered
+          ? '0 0 12px rgba(161,219,135,0.55), 0 0 32px rgba(161,219,135,0.2)'
+          : 'none',
+        fontWeight: 500,
+        fontSize: '0.925rem',
+      }}
+    >
+      {label}
+    </Link>
+  );
+};
+
+const menuItems = [
+  { name: 'Inicio', path: '/' },
+  { name: 'Cursos', path: '/cursos' },
+  { name: 'Sobre Nosotros', path: '/sobre' },
+  { name: 'Contacto', path: '/contacto' },
+  { name: 'Iniciar sesión', path: '/login' },
+  { name: 'Regístrate', path: '/registro' },
 ];
 
 const Header = () => {
@@ -23,7 +57,6 @@ const Header = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
 
-  // Cerrar menú usuario al hacer click fuera
   useEffect(() => {
     if (!userMenuOpen) return;
     function handleClick(e) {
@@ -34,136 +67,133 @@ const Header = () => {
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [userMenuOpen]);
-  const menuItems = [
-    { name: 'Inicio', path: '/' },
-    { name: 'Cursos', path: '/cursos' },
-    { name: 'Sobre Nosotros', path: '/sobre' },
-    { name: 'Contacto', path: '/contacto' },
-    { name: 'Iniciar sesión', path: '/login' },
-    { name: 'Regístrate', path: '/registro' },
-  ];
+
   return (
     <>
-      <header className="bg-gradient-to-b from-[#16241d] via-[#1e2d23] to-[#1e2d23] shadow-lg sticky top-0 z-50 transition-colors backdrop-blur-md border-b border-[#1e2d23]/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-2xl font-extrabold text-green-300 tracking-tight group">
-            <span className="font-[Rondana] bg-gradient-to-r from-green-300 via-green-500 to-green-700 bg-clip-text text-transparent group-hover:from-green-400 group-hover:to-green-300 transition-all duration-500">Evenor Tech - Campus</span>
-          </Link>
+      <header className="sticky top-0 z-50 bg-[#0f1a12]/96 backdrop-blur-xl border-b border-green-900/30 shadow-[0_2px_40px_rgba(0,0,0,0.5)]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <nav className="flex items-center justify-between h-[5.5rem]">
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="relative px-2 py-1 font-medium text-gray-200 transition-colors duration-300 group"
+            {/* Logo */}
+            <Link to="/" className="group flex items-center gap-1.5 shrink-0">
+              <span className="font-[Rondana] text-[1.4rem] font-extrabold tracking-tight"
+                style={{ color: '#a1db87', transition: 'filter 0.3s ease' }}
+                onMouseEnter={e => (e.currentTarget.style.filter = 'brightness(1.2)')}
+                onMouseLeave={e => (e.currentTarget.style.filter = 'brightness(1)')}
               >
-                <span className="z-10 relative group-hover:text-green-300 group-hover:dark:text-green-400 transition-colors duration-300">
-                  {link.label}
-                </span>
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-green-700 rounded-full group-hover:w-full transition-all duration-500"></span>
-              </Link>
-            ))}
-          </div>
+                Evenor Tech
+              </span>
+              <span className="text-green-700 font-light text-xl select-none mx-1">|</span>
+              <span className="text-gray-400 font-medium text-sm tracking-[0.2em] uppercase">Campus</span>
+            </Link>
 
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            {!user ? (
-              <button
-                className="cursor-pointer relative px-5 py-2 rounded-md font-semibold bg-gradient-to-r from-green-400 to-green-700 text-white shadow-md overflow-hidden group transition-all duration-300 hover:from-green-700 hover:to-green-400 hover:shadow-xl"
-                onClick={() => setAuthOpen(true)}
-              >
-                <span className="relative z-10">Acceder</span>
-                <span className="absolute left-0 top-0 w-0 h-full bg-white/10 group-hover:w-full transition-all duration-500"></span>
-              </button>
-            ) : (
-              <div className="relative" ref={userMenuRef}>
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-10">
+              {navLinks.map((link) => (
+                <GlowLink key={link.to} to={link.to} label={link.label} />
+              ))}
+            </div>
+
+            {/* Actions */}
+            <div className="hidden md:flex items-center gap-4">
+              {!user ? (
                 <button
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-green-400 to-green-700 text-white font-semibold shadow-md hover:from-green-700 hover:to-green-400 transition-all duration-300 focus:outline-none border-2 border-green-400 cursor-pointer ${userMenuOpen ? 'ring-2 ring-green-300' : ''}`}
-                  onClick={() => setUserMenuOpen((v) => !v)}
-                  aria-haspopup="true"
-                  aria-expanded={userMenuOpen}
+                  className="cursor-pointer group relative overflow-hidden px-6 py-2.5 rounded-full font-semibold text-sm tracking-wide text-white bg-green-700/80 hover:bg-green-600/90 transition-colors duration-300 shadow-[0_0_18px_rgba(52,211,153,0.12)] hover:shadow-[0_0_26px_rgba(52,211,153,0.35)]"
+                  onClick={() => setAuthOpen(true)}
                 >
-                  <span className="w-9 h-9 rounded-full bg-green-200 flex items-center justify-center text-green-900 font-bold text-lg border-2 border-green-400">
-                    {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
-                  </span>
-                  <span className="hidden md:inline font-bold text-green-100 text-base">{user.name || user.email}</span>
-                  <svg className={`w-4 h-4 ml-1 text-green-100 transition-transform duration-200 ${userMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  {/* shimmer sweep on hover */}
+                  <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10 group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out pointer-events-none" />
+                  <span className="relative z-10">Acceder</span>
                 </button>
-                <AnimatePresence>
-                  {userMenuOpen && (
-                    <motion.div
-                      key="user-menu"
-                      initial={{ opacity: 0, y: -16, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -16, scale: 0.98 }}
-                      transition={{ duration: 0.22, ease: 'easeInOut' }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-3 w-80 bg-[#181f1b] border border-green-700 rounded-2xl shadow-2xl py-3 z-50 flex flex-col gap-0"
-                      style={{ minWidth: 320 }}
+              ) : (
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    className={`group flex items-center gap-2.5 pl-2 pr-4 py-2 rounded-full bg-[#1a2e1f]/80 border border-green-700/50 text-white font-semibold shadow-md hover:border-green-400/70 hover:shadow-[0_0_18px_rgba(74,222,128,0.22)] transition-all duration-300 focus:outline-none cursor-pointer ${userMenuOpen ? 'border-green-400/70 shadow-[0_0_18px_rgba(74,222,128,0.22)]' : ''}`}
+                    onClick={() => setUserMenuOpen((v) => !v)}
+                    aria-haspopup="true"
+                    aria-expanded={userMenuOpen}
+                  >
+                    <span className="w-8 h-8 rounded-full flex items-center justify-center text-[#1a1a1a] font-bold text-sm shadow-inner" style={{backgroundColor:'#a1db87'}}>
+                      {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                    </span>
+                    <span className="hidden md:inline font-medium text-green-100 text-sm max-w-[140px] truncate">
+                      {user.name || user.email}
+                    </span>
+                    <svg
+                      className={`w-3.5 h-3.5 text-green-500 transition-transform duration-300 ${userMenuOpen ? 'rotate-180' : ''}`}
+                      fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
                     >
-                      <div className="flex items-center gap-3 px-5 py-3 border-b border-green-900">
-                        <span className="w-11 h-11 rounded-full bg-green-200 flex items-center justify-center text-green-900 font-bold text-xl border-2 border-green-400">
-                          {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
-                        </span>
-                        <div className="flex flex-col">
-                          <span className="font-bold text-green-200 text-lg">{user.name || 'Usuario'}</span>
-                          <span className="text-green-300 text-xs">{user.email}</span>
-                        </div>
-                      </div>
-                      <button
-                        className="cursor-pointer w-full text-left px-5 py-3 text-green-300 hover:bg-green-900/30 font-semibold transition flex items-center gap-2 border-b border-green-900"
-                        onClick={() => { setUserMenuOpen(false); navigate('/ajustes'); }}
-                      >
-                        Ajustes
-                      </button>
-                      <button
-                        className="cursor-pointer w-full text-left px-5 py-3 text-red-400 hover:bg-green-900/30 font-bold transition rounded-b-2xl"
-                        onClick={async () => {
-                          setUserMenuOpen(false);
-                          await new Promise(res => setTimeout(res, 350));
-                          logout();
-                          navigate('/');
-                          showToast('Sesión cerrada correctamente', 'success');
-                        }}
-                      >
-                        Cerrar sesión
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
-          </div>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+                  <AnimatePresence>
+                    {userMenuOpen && (
+                      <motion.div
+                        key="user-menu"
+                        initial={{ opacity: 0, y: -10, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className="absolute left-1/2 -translate-x-1/2 mt-3 w-96 bg-[#101a12] border border-green-900/60 rounded-2xl shadow-[0_20px_56px_rgba(0,0,0,0.55)] py-2 z-50 overflow-hidden"
+                      >
+                        <div className="flex items-center gap-3 px-5 py-4 border-b border-green-900/40">
+                          <span className="w-10 h-10 rounded-full flex items-center justify-center text-[#1a1a1a] font-bold text-base shadow-inner" style={{backgroundColor:'#a1db87'}}>
+                            {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+                          </span>
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-semibold text-green-100 text-sm truncate">{user.name || 'Usuario'}</span>
+                            <span className="text-green-600 text-xs truncate">{user.email}</span>
+                          </div>
+                        </div>
+                        <button
+                          className="cursor-pointer w-full text-left px-5 py-3 text-sm text-gray-400 hover:text-green-300 hover:bg-green-900/15 font-medium transition-colors duration-200 flex items-center gap-2.5 border-b border-green-900/30"
+                          onClick={() => { setUserMenuOpen(false); navigate('/ajustes'); }}
+                        >
+                          <svg className="w-4 h-4 opacity-50" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                          Ajustes
+                        </button>
+                        <button
+                          className="cursor-pointer w-full text-left px-5 py-3 text-sm text-red-400/80 hover:text-red-300 hover:bg-red-950/20 font-medium transition-colors duration-200 flex items-center gap-2.5"
+                          onClick={async () => {
+                            setUserMenuOpen(false);
+                            await new Promise(res => setTimeout(res, 350));
+                            logout();
+                            navigate('/');
+                            showToast('Sesión cerrada correctamente', 'success');
+                          }}
+                        >
+                          <svg className="w-4 h-4 opacity-60" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                          Cerrar sesión
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile menu button */}
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-green-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-400 transition-colors duration-300 group"
-              aria-label="Open menu"
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl text-gray-400 hover:text-green-300 hover:bg-green-900/25 focus:outline-none transition-colors duration-200"
+              aria-label="Abrir menú"
               onClick={() => setMobileMenuOpen((open) => !open)}
             >
-              <span className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                <svg className="h-7 w-7" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </span>
+              <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
-          </div>
-        </nav>
+
+          </nav>
         </div>
       </header>
-      {/* Mobile Nav - fuera del header para evitar stacking context y clipping */}
+
       <MobileMenu
         isOpen={mobileMenuOpen}
         menuItems={menuItems}
         onClose={() => setMobileMenuOpen(false)}
-        onNavigation={(path) => {
-          setMobileMenuOpen(false);
-          // Puedes usar navigate(path) si usas useNavigate
-        }}
+        onNavigation={() => setMobileMenuOpen(false)}
       />
       <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
