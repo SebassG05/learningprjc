@@ -6,10 +6,19 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Crear directorio para PDFs si no existe
-const uploadsDir = path.join(__dirname, '../../public/ejercicios');
+// Crear directorio para PDFs si no existe - usar ruta absoluta desde la raíz del proyecto
+const projectRoot = path.join(__dirname, '../..');
+const uploadsDir = path.join(projectRoot, 'public/ejercicios');
+
+console.log('📁 Directorio de uploads:', uploadsDir);
+
+// Asegurarse de que el directorio existe
 if (!fs.existsSync(uploadsDir)) {
+  console.log('📁 Creando directorio:', uploadsDir);
   fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('✅ Directorio creado');
+} else {
+  console.log('✅ Directorio ya existe');
 }
 
 // Obtener las entregas de un usuario para un ejercicio
