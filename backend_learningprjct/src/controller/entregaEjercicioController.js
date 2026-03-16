@@ -45,6 +45,8 @@ export const entregarEjercicio = async (req, res) => {
           folder: 'ejercicios',
           resource_type: 'raw',
           format: 'pdf',
+          access_mode: 'public',
+          type: 'upload',
           public_id: `ejercicio_${ejercicioId}_user_${userId}_${Date.now()}`
         },
         (error, result) => {
