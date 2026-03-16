@@ -117,6 +117,13 @@ export default function EntregaEjercicio() {
       formData.append('cursoId', cursoId);
       formData.append('comentarios', comentarios);
 
+      console.log('📤 Enviando ejercicio...', {
+        ejercicioId,
+        cursoId,
+        fileSize: selectedFile?.size,
+        fileName: selectedFile?.name
+      });
+
       const token = localStorage.getItem('token');
       const response = await fetch(
         `${apiUrl}/api/entregas/ejercicio/${ejercicioId}`,
@@ -129,12 +136,17 @@ export default function EntregaEjercicio() {
         }
       );
 
+      console.log('📡 Respuesta del servidor:', response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('❌ Error del servidor:', errorData);
         throw new Error(errorData.error || 'Error al enviar el ejercicio');
       }
 
       const data = await response.json();
+      console.log('✅ Ejercicio enviado:', data);
+      
       setSuccess(entregaExistente ? 'Ejercicio actualizado exitosamente' : 'Ejercicio entregado exitosamente');
       setSelectedFile(null);
       
@@ -145,7 +157,7 @@ export default function EntregaEjercicio() {
       }, 2000);
 
     } catch (error) {
-      console.error('Error al enviar ejercicio:', error);
+      console.error('❌ Error al enviar ejercicio:', error);
       setError(error.message);
     } finally {
       setUploading(false);

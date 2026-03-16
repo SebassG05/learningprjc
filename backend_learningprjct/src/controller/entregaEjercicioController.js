@@ -34,11 +34,21 @@ export const entregarEjercicio = async (req, res) => {
     const userId = req.user.id;
     const { cursoId, comentarios } = req.body;
 
+    console.log('📥 Nueva entrega recibida:', { ejercicioId, userId, cursoId });
+
     if (!req.file) {
+      console.error('❌ No se recibió archivo');
       return res.status(400).json({ error: 'Debes adjuntar un archivo PDF' });
     }
 
+    console.log('📄 Archivo recibido:', {
+      originalname: req.file.originalname,
+      size: req.file.size,
+      mimetype: req.file.mimetype
+    });
+
     // Subir PDF a Cloudinary
+    console.log('☁️ Subiendo a Cloudinary...');
     const uploadPromise = new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
@@ -50,8 +60,13 @@ export const entregarEjercicio = async (req, res) => {
           public_id: `ejercicio_${ejercicioId}_user_${userId}_${Date.now()}`
         },
         (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
+          if (error) {
+            console.error('❌ Error en Cloudinary:', error);
+            reject(error);
+          } else {
+            console.log('✅ Subido a Cloudinary:', result.secure_url);
+            resolve(result);
+          }
         }
       );
 
