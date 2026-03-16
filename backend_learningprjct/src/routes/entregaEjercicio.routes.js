@@ -4,9 +4,12 @@ import {
   obtenerEntregaUsuario,
   entregarEjercicio,
   obtenerEntregasUsuarioCurso,
-  eliminarEntrega
+  eliminarEntrega,
+  obtenerTodasLasEntregas,
+  corregirEntrega
 } from '../controller/entregaEjercicioController.js';
 import { authenticateJWT } from '../middleware/auth.js';
+import { autenticar, soloAdmin } from '../middleware/authorization.js';
 
 const router = Router();
 
@@ -29,5 +32,9 @@ router.get('/ejercicio/:ejercicioId/usuario', authenticateJWT, obtenerEntregaUsu
 router.post('/ejercicio/:ejercicioId', authenticateJWT, upload.single('archivoPdf'), entregarEjercicio);
 router.get('/curso/:cursoId/usuario', authenticateJWT, obtenerEntregasUsuarioCurso);
 router.delete('/:entregaId', authenticateJWT, eliminarEntrega);
+
+// Rutas de administración (requieren rol admin o superadmin)
+router.get('/admin/todas', autenticar, soloAdmin, obtenerTodasLasEntregas);
+router.put('/:id/corregir', autenticar, soloAdmin, corregirEntrega);
 
 export default router;

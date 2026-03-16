@@ -170,3 +170,68 @@ export const eliminarEntrega = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar entrega' });
   }
 };
+
+// ADMIN: Obtener todas las entregas (para corrección)
+export const obtenerTodasLasEntregas = async (req, res) => {
+  try {
+    const entregas = await EntregaEjercicio.find()
+      .populate('ejercicioId', 'titulo tipo dificultad')
+      .populate('userId', 'name email')
+      .populate('cursoId', 'titulo')
+      .sort({ fechaEntrega: -1 });
+
+    res.json({ entregas });
+  } catch (error) {
+    console.error('Error al obtener entregas:', error);
+    res.status(500).json({ error: 'Error al obtener entregas' });
+  }
+};
+
+// ADMIN: Corregir una entrega
+export const corregirEntrega = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { calificacion, feedbackProfesor, estado } = req.body;
+
+    const entrega = await EntregaEjercicio.findById(id);
+
+    if (!entrega) {
+      return res.status(404).json({ error: 'Entrega no encontrada' });
+    }
+
+    // Actualizar campos
+    if (calificacion !== undefined) {
+      if (calificacion < 0 || calificacion > 10) {
+        return res.status(400).json({ error: 'La calificación debe estar entre 0 y 10' });
+      }
+      entrega.calificacion = calificacion;
+    }
+
+    if (feedbackProfesor !== undefined) {
+      entrega.feedbackProfesor = feedbackProfesor;
+    }
+
+    if (estado) {
+      const estadosValidos = ['enviado', 'revisado', 'aprobado', 'rechazado'];
+      if (!estadosValidos.includes(estado)) {
+        return res.status(400).json({ error: 'Estado no válido' });
+      }
+      entrega.estado = estado;
+    }
+
+    entrega.fechaRevision = new Date();
+
+    await entrega.save();
+
+    res.json({
+      message: 'Corrección guardada exitosamente',
+      entrega
+    });
+  } catch (error) {
+    console.error('Error al corregir entrega:', error);
+    res.status(500).json({ 
+      error: 'Error al corregir entrega',
+      detalle: error.message 
+    });
+  }
+};

@@ -1,19 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import AuthModal from '../auth/AuthModal';
 import { useUser } from '../../context/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext.jsx';
 import MobileMenu from './MobileMenu';
-
-const navLinks = [
-  { to: '/', label: 'Inicio' },
-  { to: '/cursos', label: 'Cursos' },
-  { to: '/sobre', label: 'Sobre Nosotros' },
-  { to: '/reseñas', label: 'Reseñas' },
-  { to: '/contacto', label: 'Contacto' },
-];
 
 /* Hover: letter-spacing se expande + destello verde suave */
 const GlowLink = ({ to, label }) => {
@@ -56,6 +48,30 @@ const Header = () => {
   const { showToast } = useToast();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
+
+  // Crear navLinks dinámicamente según el rol del usuario
+  const navLinks = useMemo(() => {
+    console.log('🔍 Usuario en Header:', user); // DEBUG
+    console.log('🔍 Role del usuario:', user?.role); // DEBUG
+    
+    const links = [
+      { to: '/', label: 'Inicio' },
+      { to: '/cursos', label: 'Cursos' },
+      { to: '/sobre', label: 'Sobre Nosotros' },
+      { to: '/reseñas', label: 'Reseñas' },
+      { to: '/contacto', label: 'Contacto' },
+    ];
+
+    // Agregar "Corrección" si el usuario es admin o superadmin
+    if (user && (user.role === 'admin' || user.role === 'superadmin')) {
+      console.log('✅ Agregando link de Corrección'); // DEBUG
+      links.push({ to: '/admin/correcciones', label: 'Corrección' });
+    } else {
+      console.log('❌ No se agrega link de Corrección. User:', user, 'Role:', user?.role); // DEBUG
+    }
+
+    return links;
+  }, [user]);
 
   useEffect(() => {
     if (!userMenuOpen) return;

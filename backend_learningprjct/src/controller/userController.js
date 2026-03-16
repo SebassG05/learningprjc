@@ -49,10 +49,20 @@ export const loginUser = async (req, res) => {
       process.env.JWT_SECRET || 'fallback-secret-key',
       { expiresIn: '7d' }
     );
+    
+    // Actualizar lastLogin
+    user.lastLogin = new Date();
+    await user.save();
+    
     res.json({
       message: 'Inicio de sesión exitoso',
       token,
-      user: { id: user._id, name: user.name, email: user.email }
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email,
+        role: user.role || 'usuario'
+      }
     });
   } catch (err) {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
@@ -154,11 +164,21 @@ export const googleLogin = async (req, res, next) => {
     const user = await findOrCreateGoogleUser(googlePayload);
     // 3. Generar JWT propio
     const token = generateJWT(user);
-    // 4. Responder con datos de usuario y token
+    // 4. Actualizar lastLogin
+    user.lastLogin = new Date();
+    await user.save();
+    
+    // 5. Responder con datos de usuario y token
     return res.status(200).json({
       message: 'Inicio de sesión con Google exitoso',
       token,
-      user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar }
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        avatar: user.avatar,
+        role: user.role || 'usuario'
+      }
     });
   } catch (error) {
     next(error);
@@ -431,5 +451,35 @@ export const getUserEnrollments = async (req, res) => {
   } catch (error) {
     console.error('Error en getUserEnrollments:', error);
     res.status(500).json({ error: 'Error al obtener cursos inscritos', details: error.message });
+  }
+};
+
+/**
+ * Obtener datos del usuario actual
+ * @route GET /api/users/me
+ * @access Private
+ */
+export const getCurrentUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.status(200).json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role || 'usuario',
+        avatar: user.avatar,
+        activo: user.activo
+      }
+    });
+  } catch (error) {
+    console.error('Error en getCurrentUser:', error);
+    res.status(500).json({ error: 'Error al obtener datos del usuario', details: error.message });
   }
 };

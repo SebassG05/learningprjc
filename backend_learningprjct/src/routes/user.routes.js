@@ -12,7 +12,8 @@ import {
   updateCourseProgress,
   completeCourse,
   completeTest,
-  getUserEnrollments
+  getUserEnrollments,
+  getCurrentUser
 } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 
@@ -66,6 +67,9 @@ router.post(
 
 // Google Auth endpoint
 router.post('/auth/google', googleLogin);
+
+// Obtener datos del usuario actual
+router.get('/me', authenticateJWT, getCurrentUser);
 
 // ============= RUTAS DE INSCRIPCIÓN A CURSOS =============
 
