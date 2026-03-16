@@ -1,6 +1,16 @@
 import EntregaEjercicio from '../models/EntregaEjercicio.js';
-import cloudinary from '../config/cloudinary.js';
-import { Readable } from 'stream';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Crear directorio para PDFs si no existe
+const uploadsDir = path.join(__dirname, '../../public/ejercicios');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Obtener las entregas de un usuario para un ejercicio
 export const obtenerEntregaUsuario = async (req, res) => {
@@ -47,34 +57,15 @@ export const entregarEjercicio = async (req, res) => {
       mimetype: req.file.mimetype
     });
 
-    // Subir PDF a Cloudinary
-    console.log('☁️ Subiendo a Cloudinary...');
-    const uploadPromise = new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder: 'ejercicios',
-          resource_type: 'raw',
-          format: 'pdf',
-          access_mode: 'public',
-          type: 'upload',
-          public_id: `ejercicio_${ejercicioId}_user_${userId}_${Date.now()}`
-        },
-        (error, result) => {
-          if (error) {
-            console.error('❌ Error en Cloudinary:', error);
-            reject(error);
-          } else {
-            console.log('✅ Subido a Cloudinary:', result.secure_url);
-            resolve(result);
-          }
-        }
-      );
+    // Generar nombre único para el archivo
+    const fileName = `ejercicio_${ejercicioId}_user_${userId}_${Date.now()}.pdf`;
+    const filePath = path.join(uploadsDir, fileName);
+    const fileUrl = `/ejercicios/${fileName}`;
 
-      const bufferStream = Readable.from(req.file.buffer);
-      bufferStream.pipe(uploadStream);
-    });
-
-    const uploadResult = await uploadPromise;
+    // Guardar archivo en el servidor
+    console.log('💾 Guardando archivo en:', filePath);
+    fs.writeFileSync(filePath, req.file.buffer);
+    console.log('✅ Archivo guardado exitosamente');
 
     // Buscar si ya existe una entrega
     const entregaExistente = await EntregaEjercicio.findOne({ 
@@ -82,18 +73,22 @@ export const entregarEjercicio = async (req, res) => {
       userId 
     });
 
+    console.log('🔍 Entrega existente:', entregaExistente ? 'Sí' : 'No');
+
     if (entregaExistente) {
-      // Eliminar el archivo anterior de Cloudinary
-      if (entregaExistente.archivoPdf?.publicId) {
-        await cloudinary.uploader.destroy(entregaExistente.archivoPdf.publicId, {
-          resource_type: 'raw'
-        });
+      // Eliminar el archivo anterior
+      if (entregaExistente.archivoPdf?.filePath) {
+        const oldFilePath = path.join(__dirname, '../../public', entregaExistente.archivoPdf.filePath);
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+          console.log('🗑️ Archivo anterior eliminado');
+        }
       }
 
       // Actualizar entrega existente
       entregaExistente.archivoPdf = {
-        url: uploadResult.secure_url,
-        publicId: uploadResult.public_id,
+        url: fileUrl,
+        filePath: fileUrl,
         nombreOriginal: req.file.originalname
       };
       entregaExistente.comentarios = comentarios;
@@ -102,6 +97,7 @@ export const entregarEjercicio = async (req, res) => {
 
       await entregaExistente.save();
 
+      console.log('✅ Entrega actualizada exitosamente');
       return res.json({
         message: 'Entrega actualizada exitosamente',
         entrega: entregaExistente
@@ -114,8 +110,8 @@ export const entregarEjercicio = async (req, res) => {
       userId,
       cursoId,
       archivoPdf: {
-        url: uploadResult.secure_url,
-        publicId: uploadResult.public_id,
+        url: fileUrl,
+        filePath: fileUrl,
         nombreOriginal: req.file.originalname
       },
       comentarios,
@@ -124,13 +120,14 @@ export const entregarEjercicio = async (req, res) => {
 
     await nuevaEntrega.save();
 
+    console.log('✅ Nueva entrega creada exitosamente');
     res.status(201).json({
       message: 'Ejercicio entregado exitosamente',
       entrega: nuevaEntrega
     });
 
   } catch (error) {
-    console.error('Error al entregar ejercicio:', error);
+    console.error('❌ Error completo:', error);
     res.status(500).json({ 
       error: 'Error al procesar la entrega',
       detalle: error.message 
@@ -172,11 +169,12 @@ export const eliminarEntrega = async (req, res) => {
       return res.status(404).json({ error: 'Entrega no encontrada' });
     }
 
-    // Eliminar archivo de Cloudinary
-    if (entrega.archivoPdf?.publicId) {
-      await cloudinary.uploader.destroy(entrega.archivoPdf.publicId, {
-        resource_type: 'raw'
-      });
+    // Eliminar archivo del servidor
+    if (entrega.archivoPdf?.filePath) {
+      const filePath = path.join(__dirname, '../../public', entrega.archivoPdf.filePath);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
     }
 
     await EntregaEjercicio.deleteOne({ _id: entregaId });

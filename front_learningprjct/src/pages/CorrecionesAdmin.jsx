@@ -22,6 +22,8 @@ export default function CorreccionesAdmin() {
   const [calificacion, setCalificacion] = useState('');
   const [feedback, setFeedback] = useState('');
   const [guardando, setGuardando] = useState(false);
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState('');
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
@@ -67,6 +69,16 @@ export default function CorreccionesAdmin() {
     setEntregaSeleccionada(null);
     setCalificacion('');
     setFeedback('');
+  };
+
+  const abrirPdfModal = (url) => {
+    setPdfUrl(url);
+    setPdfModalOpen(true);
+  };
+
+  const cerrarPdfModal = () => {
+    setPdfModalOpen(false);
+    setPdfUrl('');
   };
 
   const guardarCorreccion = async (nuevoEstado) => {
@@ -312,21 +324,19 @@ export default function CorreccionesAdmin() {
                   {/* Acciones */}
                   <div className="flex items-center gap-3">
                     {entrega.archivoPdf?.url && (
-                      <a
-                        href={entrega.archivoPdf.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => abrirPdfModal(`${apiUrl}${entrega.archivoPdf.url}`)}
                         className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg border border-blue-500/30 transition-colors"
                       >
-                        <Download className="w-4 h-4" />
-                        Descargar PDF
-                      </a>
+                        <Eye className="w-4 h-4" />
+                        Vista Previa
+                      </button>
                     )}
                     <button
                       onClick={() => abrirModal(entrega)}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 rounded-lg border border-green-500/30 transition-colors"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Save className="w-4 h-4" />
                       Corregir
                     </button>
                   </div>
@@ -443,6 +453,38 @@ export default function CorreccionesAdmin() {
                 >
                   Cancelar
                 </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {/* Modal de Vista Previa PDF */}
+        {pdfModalOpen && (
+          <div 
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            onClick={cerrarPdfModal}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-[#0f1a12] border border-green-900/30 rounded-2xl w-full max-w-6xl h-[90vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between p-6 border-b border-green-900/30">
+                <h2 className="text-2xl font-bold text-white">Vista Previa del PDF</h2>
+                <button
+                  onClick={cerrarPdfModal}
+                  className="p-2 hover:bg-green-900/20 rounded-lg transition-colors"
+                >
+                  <XCircle className="w-6 h-6 text-gray-400 hover:text-white" />
+                </button>
+              </div>
+              <div className="h-[calc(90vh-100px)]">
+                <iframe
+                  src={pdfUrl}
+                  className="w-full h-full"
+                  title="Vista Previa PDF"
+                />
               </div>
             </motion.div>
           </div>

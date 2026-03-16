@@ -125,6 +125,11 @@ export default function EntregaEjercicio() {
       });
 
       const token = localStorage.getItem('token');
+      
+      // Agregar timeout de 60 segundos para archivos grandes
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 60000);
+      
       const response = await fetch(
         `${apiUrl}/api/entregas/ejercicio/${ejercicioId}`,
         {
@@ -132,9 +137,12 @@ export default function EntregaEjercicio() {
           headers: {
             'Authorization': `Bearer ${token}`
           },
-          body: formData
+          body: formData,
+          signal: controller.signal
         }
       );
+      
+      clearTimeout(timeoutId);
 
       console.log('📡 Respuesta del servidor:', response.status);
 
@@ -158,7 +166,11 @@ export default function EntregaEjercicio() {
 
     } catch (error) {
       console.error('❌ Error al enviar ejercicio:', error);
-      setError(error.message);
+      if (error.name === 'AbortError') {
+        setError('La subida tardó demasiado. Por favor, intenta con un archivo más pequeño o verifica tu conexión.');
+      } else {
+        setError(error.message);
+      }
     } finally {
       setUploading(false);
     }
