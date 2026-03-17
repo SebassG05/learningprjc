@@ -15,7 +15,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
   useEffect(() => {
     if (!user || !ejercicio?._id) return;
     const token = localStorage.getItem('token');
-    fetch(`${apiUrl}/api/entregas/ejercicio/${ejercicio._id}`, {
+    fetch(`${apiUrl}/api/entregas/ejercicio/${ejercicio._id}/usuario`, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(r => r.ok ? r.json() : null)
@@ -91,7 +91,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
           </div>
 
           {/* Sello de calificación */}
-          {entrega && entrega.calificacion != null && (
+          {entrega && (entrega.calificacion != null || entrega.estado === 'aprobado' || entrega.estado === 'rechazado' || entrega.estado === 'revisado') && (
             <div className="flex-shrink-0 flex flex-col items-center justify-center relative mr-2">
               <div
                 className={`w-20 h-20 rounded-full border-4 flex flex-col items-center justify-center shadow-lg rotate-[-12deg]
