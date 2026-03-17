@@ -92,41 +92,38 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
 
           {/* Sello de calificación */}
           {entrega && (entrega.calificacion != null || entrega.estado === 'aprobado' || entrega.estado === 'rechazado' || entrega.estado === 'revisado') && (
-            <div className="flex-shrink-0 flex flex-col items-center justify-center relative mr-2">
+            <div className="flex-shrink-0 flex items-center justify-center mr-2">
               <div
-                className={`w-20 h-20 rounded-full border-4 flex flex-col items-center justify-center shadow-lg rotate-[-12deg]
-                  ${entrega.estado === 'aprobado'
-                    ? 'border-green-400 bg-green-900/40 shadow-green-500/30'
-                    : entrega.estado === 'rechazado'
-                    ? 'border-red-400 bg-red-900/40 shadow-red-500/30'
-                    : 'border-yellow-400 bg-yellow-900/40 shadow-yellow-500/30'
-                  }`}
-              >
-                <span
-                  className={`text-2xl font-extrabold leading-none
-                    ${entrega.estado === 'aprobado' ? 'text-green-400'
-                    : entrega.estado === 'rechazado' ? 'text-red-400'
-                    : 'text-yellow-400'}`}
-                >
-                  {entrega.calificacion % 1 === 0 ? entrega.calificacion : entrega.calificacion.toFixed(1)}
-                </span>
-                <span
-                  className={`text-[10px] font-bold uppercase tracking-widest
-                    ${entrega.estado === 'aprobado' ? 'text-green-400/80'
-                    : entrega.estado === 'rechazado' ? 'text-red-400/80'
-                    : 'text-yellow-400/80'}`}
-                >
-                  /10
-                </span>
-              </div>
-              <span
-                className={`mt-1 text-[10px] font-bold uppercase tracking-wider rotate-[-12deg]
+                className={`relative flex items-center justify-center rotate-[-8deg]
                   ${entrega.estado === 'aprobado' ? 'text-green-400'
                   : entrega.estado === 'rechazado' ? 'text-red-400'
                   : 'text-yellow-400'}`}
               >
-                {entrega.estado === 'aprobado' ? 'Aprobado' : entrega.estado === 'rechazado' ? 'Rechazado' : 'Revisado'}
-              </span>
+                {/* Hexágono SVG de fondo */}
+                <svg width="88" height="88" viewBox="0 0 88 88" className="absolute inset-0">
+                  <polygon
+                    points="44,4 82,24 82,64 44,84 6,64 6,24"
+                    fill="none"
+                    strokeWidth="3.5"
+                    stroke="currentColor"
+                    opacity="0.9"
+                  />
+                  <polygon
+                    points="44,10 77,27.5 77,60.5 44,78 11,60.5 11,27.5"
+                    fill="currentColor"
+                    opacity="0.12"
+                  />
+                </svg>
+                {/* Nota */}
+                <div className="relative z-10 flex items-baseline gap-[2px]">
+                  <span className="text-3xl font-black leading-none">
+                    {entrega.calificacion != null
+                      ? (entrega.calificacion % 1 === 0 ? entrega.calificacion : Number(entrega.calificacion).toFixed(1))
+                      : '—'}
+                  </span>
+                  <span className="text-xl font-black leading-none opacity-80">/10</span>
+                </div>
+              </div>
             </div>
           )}
 
