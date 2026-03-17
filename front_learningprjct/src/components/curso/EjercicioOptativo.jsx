@@ -62,66 +62,63 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
     >
       {/* Header */}
       <div className="bg-gradient-to-r from-[#5ec6a6]/20 to-[#4da992]/20 border-b border-[#5ec6a6]/30 p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-3xl">{getTipoIcon(ejercicio.tipo)}</span>
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-xl font-bold text-white">
-                    {ejercicio.titulo}
-                  </h3>
-                  {ejercicio.esOptativo && (
-                    <span className="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full border border-purple-500/30">
-                      Optativo
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <span className={`px-2 py-1 rounded-lg text-xs font-semibold border ${getDificultadColor(ejercicio.dificultad)}`}>
-                    {ejercicio.dificultad.charAt(0).toUpperCase() + ejercicio.dificultad.slice(1)}
+        <div className="flex items-center gap-4">
+          {/* Icono + título + badges */}
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <span className="text-3xl flex-shrink-0">{getTipoIcon(ejercicio.tipo)}</span>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <h3 className="text-xl font-bold text-white">
+                  {ejercicio.titulo}
+                </h3>
+                {ejercicio.esOptativo && (
+                  <span className="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full border border-purple-500/30">
+                    Optativo
                   </span>
-                  <span className="flex items-center gap-1 text-gray-400">
-                    <Clock className="w-4 h-4" />
-                    {ejercicio.duracionEstimada}
-                  </span>
-                </div>
+                )}
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <span className={`px-2 py-1 rounded-lg text-xs font-semibold border ${getDificultadColor(ejercicio.dificultad)}`}>
+                  {ejercicio.dificultad.charAt(0).toUpperCase() + ejercicio.dificultad.slice(1)}
+                </span>
+                <span className="flex items-center gap-1 text-gray-400">
+                  <Clock className="w-4 h-4" />
+                  {ejercicio.duracionEstimada}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Sello de calificación */}
           {entrega && (entrega.calificacion != null || entrega.estado === 'aprobado' || entrega.estado === 'rechazado' || entrega.estado === 'revisado') && (
-            <div className="flex-shrink-0 flex items-center justify-center mr-2">
+            <div className="flex-shrink-0 flex items-center justify-center">
               <div
-                className={`relative flex items-center justify-center rotate-[-8deg]
+                className={`relative w-[84px] h-[84px] flex items-center justify-center rotate-[-8deg]
                   ${entrega.estado === 'aprobado' ? 'text-green-400'
                   : entrega.estado === 'rechazado' ? 'text-red-400'
                   : 'text-yellow-400'}`}
               >
-                {/* Hexágono SVG de fondo */}
-                <svg width="88" height="88" viewBox="0 0 88 88" className="absolute inset-0">
+                <svg width="84" height="84" viewBox="0 0 88 88" className="absolute inset-0 w-full h-full">
+                  <polygon
+                    points="44,4 82,24 82,64 44,84 6,64 6,24"
+                    fill="currentColor"
+                    opacity="0.15"
+                  />
                   <polygon
                     points="44,4 82,24 82,64 44,84 6,64 6,24"
                     fill="none"
-                    strokeWidth="3.5"
+                    strokeWidth="3"
                     stroke="currentColor"
                     opacity="0.9"
                   />
-                  <polygon
-                    points="44,10 77,27.5 77,60.5 44,78 11,60.5 11,27.5"
-                    fill="currentColor"
-                    opacity="0.12"
-                  />
                 </svg>
-                {/* Nota */}
-                <div className="relative z-10 flex items-baseline gap-[2px]">
-                  <span className="text-3xl font-black leading-none">
+                <div className="relative z-10 flex items-baseline gap-[1px]">
+                  <span className="text-[26px] font-black leading-none">
                     {entrega.calificacion != null
                       ? (entrega.calificacion % 1 === 0 ? entrega.calificacion : Number(entrega.calificacion).toFixed(1))
                       : '—'}
                   </span>
-                  <span className="text-xl font-black leading-none opacity-80">/10</span>
+                  <span className="text-[18px] font-black leading-none opacity-75">/10</span>
                 </div>
               </div>
             </div>
