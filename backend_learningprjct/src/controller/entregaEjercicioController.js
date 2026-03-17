@@ -86,6 +86,10 @@ export const entregarEjercicio = async (req, res) => {
     console.log('🔍 Entrega existente:', entregaExistente ? 'Sí' : 'No');
 
     if (entregaExistente) {
+      // Verificar si está bloqueado
+      if (entregaExistente.bloqueado) {
+        return res.status(403).json({ error: 'Este ejercicio está bloqueado. Has agotado los intentos disponibles.' });
+      }
       // Eliminar el archivo anterior
       if (entregaExistente.archivoPdf?.filePath) {
         const oldFilePath = path.join(__dirname, '../../public', entregaExistente.archivoPdf.filePath);
@@ -240,6 +244,13 @@ export const corregirEntrega = async (req, res) => {
       const estadosValidos = ['enviado', 'revisado', 'aprobado', 'rechazado'];
       if (!estadosValidos.includes(estado)) {
         return res.status(400).json({ error: 'Estado no válido' });
+      }
+      // Si se rechaza, incrementar intentos y bloquear al 2º rechazo
+      if (estado === 'rechazado') {
+        entrega.intentos = (entrega.intentos || 0) + 1;
+        if (entrega.intentos >= 2) {
+          entrega.bloqueado = true;
+        }
       }
       entrega.estado = estado;
     }

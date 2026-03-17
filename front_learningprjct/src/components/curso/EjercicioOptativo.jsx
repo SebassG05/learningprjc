@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, ExternalLink, Clock, Target, CheckCircle, ChevronDown, ChevronUp, AlertCircle, FileUp } from 'lucide-react';
+import { BookOpen, ExternalLink, Clock, Target, CheckCircle, ChevronDown, ChevronUp, AlertCircle, FileUp, Lock, RefreshCw } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 
 export default function EjercicioOptativo({ ejercicio, cursoId }) {
@@ -94,9 +94,16 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
             <div className="flex-shrink-0 flex items-center justify-center">
               <div
                 className={`relative w-[84px] h-[84px] flex items-center justify-center rotate-[-8deg]
-                  ${entrega.estado === 'aprobado' ? 'text-green-400'
-                  : entrega.estado === 'rechazado' ? 'text-red-400'
-                  : 'text-yellow-400'}`}
+                  ${entrega.calificacion == null
+                    ? 'text-yellow-400'
+                    : entrega.calificacion >= 9
+                    ? 'text-green-400'
+                    : entrega.calificacion >= 7
+                    ? 'text-blue-400'
+                    : entrega.calificacion >= 5
+                    ? 'text-yellow-400'
+                    : 'text-red-400'
+                  }`}
               >
                 <svg width="84" height="84" viewBox="0 0 88 88" className="absolute inset-0 w-full h-full">
                   <polygon
@@ -283,15 +290,43 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                     <span>Abrir Herramienta</span>
                   </button>
                 )}
-                <button
-                  onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
-                    state: { ejercicio }
-                  })}
-                  className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#5ec6a6]/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
-                >
-                  <FileUp className="w-5 h-5" />
-                  <span>Entregar Ejercicio</span>
-                </button>
+
+                {/* Ejercicio bloqueado (2 rechazos) */}
+                {entrega?.bloqueado ? (
+                  <div className="flex-1 px-6 py-3 bg-red-900/20 border-2 border-red-500/40 text-red-400 font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
+                    <Lock className="w-5 h-5" />
+                    <span>Ejercicio bloqueado — intentos agotados</span>
+                  </div>
+                ) : entrega?.estado === 'rechazado' ? (
+                  /* 1er rechazo: permitir reintentar */
+                  <button
+                    onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
+                      state: { ejercicio }
+                    })}
+                    className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-orange-500/40 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+                  >
+                    <RefreshCw className="w-5 h-5" />
+                    <span>Intentar de nuevo</span>
+                  </button>
+                ) : !entrega || entrega.estado === 'enviado' || entrega.estado === 'revisado' || entrega.estado === 'aprobado' ? (
+                  /* Sin entrega, pendiente de corrección, o aprobado */
+                  !entrega || entrega.estado !== 'aprobado' ? (
+                    <button
+                      onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
+                        state: { ejercicio }
+                      })}
+                      className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#5ec6a6]/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+                    >
+                      <FileUp className="w-5 h-5" />
+                      <span>{entrega ? 'Entrega enviada — en revisión' : 'Entregar Ejercicio'}</span>
+                    </button>
+                  ) : (
+                    <div className="flex-1 px-6 py-3 bg-green-900/20 border-2 border-green-500/40 text-green-400 font-bold rounded-xl flex items-center justify-center gap-2">
+                      <CheckCircle className="w-5 h-5" />
+                      <span>¡Ejercicio aprobado!</span>
+                    </div>
+                  )
+                ) : null}
               </div>
             </div>
           </motion.div>

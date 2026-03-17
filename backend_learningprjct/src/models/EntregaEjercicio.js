@@ -45,6 +45,14 @@ const entregaEjercicioSchema = new mongoose.Schema({
   },
   fechaRevision: {
     type: Date
+  },
+  intentos: {
+    type: Number,
+    default: 0
+  },
+  bloqueado: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
