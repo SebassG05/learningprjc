@@ -184,3 +184,57 @@ export const sendCourseCompletionNotificationToAdmin = async (userName, userEmai
   };
   await transporter.sendMail(mailOptions);
 };
+
+export const sendExerciseCorrectionEmail = async ({ userName, userEmail, ejercicioTitulo, calificacion, feedbackProfesor, estado }) => {
+  const estadoLabel = estado === 'aprobado' ? 'Aprobado' : estado === 'rechazado' ? 'Rechazado' : 'Revisado';
+  const estadoColor = estado === 'aprobado' ? '#22c55e' : estado === 'rechazado' ? '#ef4444' : '#eab308';
+  const estadoEmoji = estado === 'aprobado' ? '✅' : estado === 'rechazado' ? '❌' : '🔍';
+
+  const mailOptions = {
+    from: `Campus Evenor <${process.env.EMAIL_USER}>`,
+    to: userEmail,
+    subject: `${estadoEmoji} Tu ejercicio "${ejercicioTitulo}" ha sido corregido`,
+    html: `
+      <div style="font-family: 'Rondana', Arial, sans-serif; background: #f0f9ea; padding: 32px; color: #333333;">
+        <div style="max-width: 560px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
+          
+          <div style="text-align: center; margin-bottom: 28px;">
+            <span style="font-size: 48px;">${estadoEmoji}</span>
+            <h2 style="color: #5aa833; margin: 12px 0 4px; font-family: 'Rondana', Arial, sans-serif;">Ejercicio Corregido</h2>
+            <p style="color: #595959; margin: 0;">Hola <strong>${userName}</strong>, tu entrega ha sido evaluada.</p>
+          </div>
+
+          <div style="background: #f8fdf5; border-radius: 10px; padding: 20px; margin-bottom: 24px; border: 1px solid #d4edda;">
+            <p style="color: #595959; margin: 0 0 8px;"><strong>Ejercicio:</strong> ${ejercicioTitulo}</p>
+            <p style="color: #595959; margin: 0 0 8px;"><strong>Estado:</strong> <span style="color: ${estadoColor}; font-weight: bold;">${estadoLabel}</span></p>
+            ${calificacion != null ? `
+            <div style="text-align: center; margin: 20px 0 12px;">
+              <div style="display: inline-block; width: 90px; height: 90px; border-radius: 50%; border: 4px solid ${estadoColor}; background: ${estadoColor}18; padding-top: 18px;">
+                <span style="font-size: 32px; font-weight: 900; color: ${estadoColor};">${Number.isInteger(calificacion) ? calificacion : Number(calificacion).toFixed(1)}</span><br>
+                <span style="font-size: 12px; color: ${estadoColor}; font-weight: bold;">/10</span>
+              </div>
+              <p style="color: #595959; margin: 8px 0 0; font-size: 13px;">Calificación obtenida</p>
+            </div>` : ''}
+          </div>
+
+          ${feedbackProfesor ? `
+          <div style="background: #f0f9ea; border-left: 4px solid #a1db87; padding: 16px 20px; border-radius: 6px; margin-bottom: 24px;">
+            <p style="color: #5aa833; font-weight: bold; margin: 0 0 8px;">💬 Retroalimentación del profesor</p>
+            <p style="color: #595959; margin: 0; line-height: 1.7; white-space: pre-line;">${feedbackProfesor}</p>
+          </div>` : ''}
+
+          <div style="text-align: center; margin: 28px 0 0;">
+            <a href="${process.env.FRONTEND_URL || 'https://campus.evenor-tech.com'}"
+               style="display: inline-block; background: #a1db87; color: #333333; text-decoration: none; font-weight: 600; padding: 12px 32px; border-radius: 6px; font-size: 16px; border: 2px solid #5aa833;">
+              Ir al Campus
+            </a>
+          </div>
+
+          <hr style="margin: 32px 0; border: none; border-top: 1px solid #a1db87;">
+          <p style="font-size: 13px; color: #a1db87; text-align: center; font-family: 'Rondana', Arial, sans-serif;">Campus Evenor &copy; ${new Date().getFullYear()}</p>
+        </div>
+      </div>
+    `
+  };
+  await transporter.sendMail(mailOptions);
+};

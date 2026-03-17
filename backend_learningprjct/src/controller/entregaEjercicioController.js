@@ -2,6 +2,7 @@ import EntregaEjercicio from '../models/EntregaEjercicio.js';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { sendExerciseCorrectionEmail } from '../service/mailService.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -246,6 +247,25 @@ export const corregirEntrega = async (req, res) => {
     entrega.fechaRevision = new Date();
 
     await entrega.save();
+
+    // Notificar al estudiante por correo
+    try {
+      const entregaPopulada = await EntregaEjercicio.findById(entrega._id)
+        .populate('userId', 'name email')
+        .populate('ejercicioId', 'titulo');
+      if (entregaPopulada?.userId?.email) {
+        await sendExerciseCorrectionEmail({
+          userName: entregaPopulada.userId.name,
+          userEmail: entregaPopulada.userId.email,
+          ejercicioTitulo: entregaPopulada.ejercicioId?.titulo || 'Ejercicio',
+          calificacion: entregaPopulada.calificacion,
+          feedbackProfesor: entregaPopulada.feedbackProfesor,
+          estado: entregaPopulada.estado
+        });
+      }
+    } catch (emailError) {
+      console.error('Error al enviar email de corrección:', emailError);
+    }
 
     res.json({
       message: 'Corrección guardada exitosamente',

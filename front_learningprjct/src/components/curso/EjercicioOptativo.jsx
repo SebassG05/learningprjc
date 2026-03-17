@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, ExternalLink, Clock, Target, CheckCircle, ChevronDown, ChevronUp, AlertCircle, FileUp } from 'lucide-react';
+import { useUser } from '../../context/UserContext';
 
 export default function EjercicioOptativo({ ejercicio, cursoId }) {
   const [expandido, setExpandido] = useState(false);
+  const [entrega, setEntrega] = useState(null);
   const navigate = useNavigate();
+  const { user } = useUser();
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
+
+  useEffect(() => {
+    if (!user || !ejercicio?._id) return;
+    const token = localStorage.getItem('token');
+    fetch(`${apiUrl}/api/entregas/ejercicio/${ejercicio._id}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data?.entregado) setEntrega(data.entrega); })
+      .catch(() => {});
+  }, [user, ejercicio?._id]);
 
   if (!ejercicio) return null;
 
@@ -73,6 +89,47 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
               </div>
             </div>
           </div>
+
+          {/* Sello de calificación */}
+          {entrega && entrega.calificacion != null && (
+            <div className="flex-shrink-0 flex flex-col items-center justify-center relative mr-2">
+              <div
+                className={`w-20 h-20 rounded-full border-4 flex flex-col items-center justify-center shadow-lg rotate-[-12deg]
+                  ${entrega.estado === 'aprobado'
+                    ? 'border-green-400 bg-green-900/40 shadow-green-500/30'
+                    : entrega.estado === 'rechazado'
+                    ? 'border-red-400 bg-red-900/40 shadow-red-500/30'
+                    : 'border-yellow-400 bg-yellow-900/40 shadow-yellow-500/30'
+                  }`}
+              >
+                <span
+                  className={`text-2xl font-extrabold leading-none
+                    ${entrega.estado === 'aprobado' ? 'text-green-400'
+                    : entrega.estado === 'rechazado' ? 'text-red-400'
+                    : 'text-yellow-400'}`}
+                >
+                  {entrega.calificacion % 1 === 0 ? entrega.calificacion : entrega.calificacion.toFixed(1)}
+                </span>
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-widest
+                    ${entrega.estado === 'aprobado' ? 'text-green-400/80'
+                    : entrega.estado === 'rechazado' ? 'text-red-400/80'
+                    : 'text-yellow-400/80'}`}
+                >
+                  /10
+                </span>
+              </div>
+              <span
+                className={`mt-1 text-[10px] font-bold uppercase tracking-wider rotate-[-12deg]
+                  ${entrega.estado === 'aprobado' ? 'text-green-400'
+                  : entrega.estado === 'rechazado' ? 'text-red-400'
+                  : 'text-yellow-400'}`}
+              >
+                {entrega.estado === 'aprobado' ? 'Aprobado' : entrega.estado === 'rechazado' ? 'Rechazado' : 'Revisado'}
+              </span>
+            </div>
+          )}
+
           <button
             onClick={() => setExpandido(!expandido)}
             className="flex-shrink-0 p-2 hover:bg-[#5ec6a6]/10 rounded-lg transition-colors"
