@@ -58,8 +58,8 @@ export default function EntregaEjercicio() {
         setError('Solo se permiten archivos PDF');
         return;
       }
-      if (file.size > 10 * 1024 * 1024) {
-        setError('El archivo no debe superar los 10MB');
+      if (file.size > 50 * 1024 * 1024) {
+        setError('El archivo no debe superar los 50MB');
         return;
       }
       setSelectedFile(file);
@@ -88,8 +88,8 @@ export default function EntregaEjercicio() {
         setError('Solo se permiten archivos PDF');
         return;
       }
-      if (file.size > 10 * 1024 * 1024) {
-        setError('El archivo no debe superar los 10MB');
+      if (file.size > 50 * 1024 * 1024) {
+        setError('El archivo no debe superar los 50MB');
         return;
       }
       setSelectedFile(file);
@@ -147,9 +147,16 @@ export default function EntregaEjercicio() {
       console.log('📡 Respuesta del servidor:', response.status);
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error('❌ Error del servidor:', errorData);
-        throw new Error(errorData.error || 'Error al enviar el ejercicio');
+        if (response.status === 413) {
+          throw new Error('El archivo supera el límite permitido por el servidor. Usa un PDF de menos de 10MB o comprime el archivo.');
+        }
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Error al enviar el ejercicio');
+        } else {
+          throw new Error(`Error del servidor (${response.status}). Por favor, intenta más tarde.`);
+        }
       }
 
       const data = await response.json();
