@@ -66,7 +66,7 @@ export default function CursoInscripcion() {
   useEffect(() => {
     if (checkingEnrollment || loading || !enrollmentStatus || !curso) return;
     if (enrollmentStatus.enrolled) {
-      const isComingSoonCourse = curso.title?.toLowerCase().includes('modelización');
+      const isComingSoonCourse = !curso.isOpen;
       if (isComingSoonCourse) {
         setReservaConfirmada(true);
       } else {
@@ -102,7 +102,7 @@ export default function CursoInscripcion() {
       const data = await response.json();
 
       if (response.ok) {
-        const isComingSoonCourse = curso?.title?.toLowerCase().includes('modelización');
+        const isComingSoonCourse = !curso.isOpen;
         if (isComingSoonCourse) {
           setReservaConfirmada(true);
           setEnrolling(false);
@@ -151,7 +151,7 @@ export default function CursoInscripcion() {
   }
 
   // Calcular número de temas y materiales
-  const isComingSoon = curso.title?.toLowerCase().includes('modelización');
+  const isComingSoon = !curso.isOpen;
   const totalTemas = curso.temas?.length || 0;
   const totalMateriales = curso.temas?.reduce((acc, tema) => {
     return acc + (tema.materiales?.length || 0) + (tema.actividadesOptativas?.length || 0);

@@ -9,7 +9,7 @@ const agregarTemaFinal = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✓ Conectado a MongoDB');
 
-    const cursoId = '69a6a0a4c8289d012745af63';
+    const cursoId = '69d500ea93355c0ba4b809a8';
     
     const temaFinal = {
       titulo: 'Test Final de Certificación',

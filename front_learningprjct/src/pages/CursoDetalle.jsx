@@ -300,13 +300,13 @@ export default function CursoDetalle() {
           </p>
         )}
 
-        {/* Banner apertura mayo 2026 */}
-        {curso.title?.toLowerCase().includes('modelización') && (
+        {/* Banner apertura próximamente */}
+        {!curso.isOpen && (
           <div className="flex items-center gap-3 bg-amber-500/10 border border-amber-500/30 rounded-2xl px-6 py-4 mb-10">
             <Clock className="w-6 h-6 text-amber-400 flex-shrink-0" />
             <div>
-              <p className="text-amber-300 font-bold text-lg">Apertura: mayo de 2026</p>
-              <p className="text-gray-400 text-sm">El contenido del curso estará disponible a partir de mayo de 2026. Tu plaza ya está reservada.</p>
+              <p className="text-amber-300 font-bold text-lg">Curso próximamente</p>
+              <p className="text-gray-400 text-sm">El contenido del curso estará disponible próximamente. Tu plaza ya está reservada.</p>
             </div>
           </div>
         )}

@@ -9,7 +9,7 @@ const listarTemas = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✓ Conectado a MongoDB');
 
-    const cursoId = '69a6a0a4c8289d012745af63';
+    const cursoId = '69d50335b1e80c0e37ab562a';
     const curso = await Course.findById(cursoId);
 
     if (!curso) {
