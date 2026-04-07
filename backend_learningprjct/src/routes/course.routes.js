@@ -2,6 +2,7 @@ import express from 'express';
 import Course from '../models/Course.js';
 import upload from '../middleware/upload.js';
 import * as courseController from '../controller/courseController.js';
+import { authenticateJWT } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -82,5 +83,8 @@ router.post('/:id/temas/:temaId/actividades-optativas', upload.single('archivo')
 
 // Eliminar una actividad optativa de un tema
 router.delete('/:id/temas/:temaId/actividades-optativas/:actividadId', courseController.eliminarActividadOptativa);
+
+// Abrir / cerrar curso (admin)
+router.put('/:id/toggle-open', authenticateJWT, courseController.toggleCourseOpen);
 
 export default router;

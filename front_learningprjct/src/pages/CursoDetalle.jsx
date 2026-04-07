@@ -5,7 +5,7 @@ import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
-import { BookOpen, Lock, Loader, AlertCircle } from 'lucide-react';
+import { BookOpen, Lock, Loader, AlertCircle, Clock } from 'lucide-react';
 
 export default function CursoDetalle() {
   const { id } = useParams();
@@ -300,7 +300,16 @@ export default function CursoDetalle() {
           </p>
         )}
 
-        {/* Objetivos genéricos del curso */}
+        {/* Banner apertura mayo 2026 */}
+        {curso.title?.toLowerCase().includes('modelización') && (
+          <div className="flex items-center gap-3 bg-amber-500/10 border border-amber-500/30 rounded-2xl px-6 py-4 mb-10">
+            <Clock className="w-6 h-6 text-amber-400 flex-shrink-0" />
+            <div>
+              <p className="text-amber-300 font-bold text-lg">Apertura: mayo de 2026</p>
+              <p className="text-gray-400 text-sm">El contenido del curso estará disponible a partir de mayo de 2026. Tu plaza ya está reservada.</p>
+            </div>
+          </div>
+        )}
         <ObjetivosCurso 
           objetivosGenerales={curso.objetivosGenerales}
           objetivosEspecificos={curso.objetivosEspecificos}

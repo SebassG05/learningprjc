@@ -13,7 +13,8 @@ import {
   completeCourse,
   completeTest,
   getUserEnrollments,
-  getCurrentUser
+  getCurrentUser,
+  getAdminCourseEnrollments
 } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 
@@ -90,5 +91,8 @@ router.post('/enrollment/:courseId/test/:temaId/complete', authenticateJWT, comp
 
 // Obtener todos los cursos inscritos del usuario
 router.get('/enrollments', authenticateJWT, getUserEnrollments);
+
+// [Admin] Obtener usuarios inscritos en un curso
+router.get('/admin/courses/:courseId/enrollments', authenticateJWT, getAdminCourseEnrollments);
 
 export default router;

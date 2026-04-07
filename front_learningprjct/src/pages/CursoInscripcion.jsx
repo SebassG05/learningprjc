@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from '../context/UserContext';
-import { BookOpen, CheckCircle, Clock, Users, Award, ArrowRight, Loader, Target, Sparkles, GraduationCap } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, Users, Award, ArrowRight, Loader, Target, Sparkles, GraduationCap, CalendarClock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function CursoInscripcion() {
@@ -13,6 +13,7 @@ export default function CursoInscripcion() {
   const [enrollmentStatus, setEnrollmentStatus] = useState(null);
   const [enrolling, setEnrolling] = useState(false);
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
+  const [reservaConfirmada, setReservaConfirmada] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
@@ -54,17 +55,25 @@ export default function CursoInscripcion() {
       .then(data => {
         setEnrollmentStatus(data);
         setCheckingEnrollment(false);
-        
-        // Si ya está inscrito, redirigir al curso
-        if (data.enrolled) {
-          navigate(`/curso/${id}`);
-        }
       })
       .catch(err => {
         console.error('Error al verificar inscripción:', err);
         setCheckingEnrollment(false);
       });
   }, [id, user, apiUrl, navigate]);
+
+  // Manejar redirección cuando estén disponibles tanto el curso como el estado de inscripción
+  useEffect(() => {
+    if (checkingEnrollment || loading || !enrollmentStatus || !curso) return;
+    if (enrollmentStatus.enrolled) {
+      const isComingSoonCourse = curso.title?.toLowerCase().includes('modelización');
+      if (isComingSoonCourse) {
+        setReservaConfirmada(true);
+      } else {
+        navigate(`/curso/${id}`);
+      }
+    }
+  }, [enrollmentStatus, curso, checkingEnrollment, loading, navigate, id]);
 
   // Función para inscribirse
   const handleEnroll = async () => {
@@ -93,10 +102,15 @@ export default function CursoInscripcion() {
       const data = await response.json();
 
       if (response.ok) {
-        // Inscripción exitosa, redirigir al curso
-        setTimeout(() => {
-          navigate(`/curso/${id}`);
-        }, 500);
+        const isComingSoonCourse = curso?.title?.toLowerCase().includes('modelización');
+        if (isComingSoonCourse) {
+          setReservaConfirmada(true);
+          setEnrolling(false);
+        } else {
+          setTimeout(() => {
+            navigate(`/curso/${id}`);
+          }, 500);
+        }
       } else {
         console.error('Error al inscribirse:', data.error);
         alert(data.error || 'Error al inscribirse en el curso');
@@ -137,6 +151,7 @@ export default function CursoInscripcion() {
   }
 
   // Calcular número de temas y materiales
+  const isComingSoon = curso.title?.toLowerCase().includes('modelización');
   const totalTemas = curso.temas?.length || 0;
   const totalMateriales = curso.temas?.reduce((acc, tema) => {
     return acc + (tema.materiales?.length || 0) + (tema.actividadesOptativas?.length || 0);
@@ -188,6 +203,17 @@ export default function CursoInscripcion() {
             <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
               {curso.title}
             </h1>
+
+            {/* Banner próximo inicio */}
+            {isComingSoon && (
+              <div className="flex items-center gap-3 bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-3 mb-4">
+                <CalendarClock className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                <p className="text-amber-300 font-semibold">
+                  Apertura: <span className="text-amber-400 font-bold">mayo de 2026</span>
+                </p>
+              </div>
+            )}
+
             <p className="text-gray-300 text-lg mb-6 leading-relaxed text-justify">
               {curso.description}
             </p>
@@ -217,29 +243,39 @@ export default function CursoInscripcion() {
               </div>
             </div>
 
-            {/* Botón de inscripción */}
-            <button
-              onClick={handleEnroll}
-              disabled={enrolling}
-              className={`cursor-pointer w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
-                enrolling
-                  ? 'bg-gray-600 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#a1db87]/30 hover:scale-105'
-              }`}
-            >
-              {enrolling ? (
-                <>
-                  <Loader className="w-6 h-6 animate-spin" />
-                  <span>Inscribiendo...</span>
-                </>
-              ) : (
-                <>
-                  <CheckCircle className="w-6 h-6" />
-                  <span>Inscribirse al Curso</span>
-                  <ArrowRight className="w-5 h-5" />
-                </>
-              )}
-            </button>
+            {/* Botón de inscripción / reserva */}
+            {reservaConfirmada ? (
+              <div className="flex items-center gap-3 bg-[#a1db87]/10 border border-[#a1db87]/30 rounded-xl px-6 py-4">
+                <CheckCircle className="w-6 h-6 text-[#a1db87] flex-shrink-0" />
+                <div>
+                  <p className="font-bold text-lg text-[#a1db87]">¡Plaza reservada!</p>
+                  <p className="text-sm text-gray-300">Te notificaremos cuando el curso abra en mayo de 2026.</p>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={handleEnroll}
+                disabled={enrolling}
+                className={`cursor-pointer w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                  enrolling
+                    ? 'bg-gray-600 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#a1db87]/30 hover:scale-105'
+                }`}
+              >
+                {enrolling ? (
+                  <>
+                    <Loader className="w-6 h-6 animate-spin" />
+                    <span>{isComingSoon ? 'Reservando...' : 'Inscribiendo...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="w-6 h-6" />
+                    <span>{isComingSoon ? 'Reservar mi Plaza' : 'Inscribirse al Curso'}</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
       </motion.div>

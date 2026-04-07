@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AuthModal from '../components/auth/AuthModal';
-import { BookOpen, Sparkles } from 'lucide-react';
+import { BookOpen, Sparkles, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -158,6 +158,12 @@ export default function Cursos() {
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {course.title}
                   </h3>
+                  {course.title?.toLowerCase().includes('modelizaci\u00f3n') && (
+                    <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-3">
+                      <Clock className="w-3 h-3" />
+                      Apertura: mayo 2026
+                    </div>
+                  )}
                   <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{course.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
@@ -232,6 +238,12 @@ export default function Cursos() {
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {course.title}
                   </h3>
+                  {course.title?.toLowerCase().includes('modelizaci\u00f3n') && (
+                    <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-3">
+                      <Clock className="w-3 h-3" />
+                      Apertura: mayo 2026
+                    </div>
+                  )}
                   <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{course.description}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">

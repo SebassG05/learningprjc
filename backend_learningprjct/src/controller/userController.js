@@ -455,6 +455,34 @@ export const getUserEnrollments = async (req, res) => {
 };
 
 /**
+ * [Admin] Obtener todos los usuarios inscritos en un curso
+ * @route GET /api/users/admin/courses/:courseId/enrollments
+ * @access Private (admin/superadmin)
+ */
+export const getAdminCourseEnrollments = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const enrollments = await UserProgress.find({ courseId })
+      .populate('userId', 'name email')
+      .sort({ enrolledAt: -1 });
+
+    const result = enrollments.map(e => ({
+      userId: e.userId?._id,
+      name: e.userId?.name || 'N/A',
+      email: e.userId?.email || 'N/A',
+      enrolledAt: e.enrolledAt,
+      progress: e.progress,
+      status: e.status
+    }));
+
+    res.status(200).json({ enrollments: result, total: result.length });
+  } catch (error) {
+    console.error('Error en getAdminCourseEnrollments:', error);
+    res.status(500).json({ error: 'Error al obtener inscripciones', details: error.message });
+  }
+};
+
+/**
  * Obtener datos del usuario actual
  * @route GET /api/users/me
  * @access Private

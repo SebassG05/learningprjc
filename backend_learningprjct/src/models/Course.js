@@ -30,6 +30,7 @@ const courseSchema = new mongoose.Schema({
   objetivosGenerales: [{ type: String }], // Array de objetivos generales
   objetivosEspecificos: [{ type: String }], // Array de objetivos específicos
   temas: [temaSchema], // Array de temas del curso
+  isOpen: { type: Boolean, default: false }, // Si el curso está abierto para acceder al contenido
 }, { timestamps: true });
 
 export default mongoose.model('Course', courseSchema);

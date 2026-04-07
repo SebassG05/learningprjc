@@ -338,3 +338,24 @@ export const eliminarActividadOptativa = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar actividad optativa', detalle: err.message });
   }
 };
+
+/**
+ * Abrir o cerrar un curso (toggle isOpen)
+ * @route PUT /api/courses/:id/toggle-open
+ * @access Private (admin/superadmin)
+ */
+export const toggleCourseOpen = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = await Course.findById(id);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+    course.isOpen = !course.isOpen;
+    await course.save();
+    res.json({ isOpen: course.isOpen, message: course.isOpen ? 'Curso abierto' : 'Curso cerrado' });
+  } catch (err) {
+    console.error('Error en toggleCourseOpen:', err);
+    res.status(500).json({ error: 'Error al cambiar estado del curso', detalle: err.message });
+  }
+};
