@@ -113,9 +113,15 @@ export default function CorreccionesAdmin() {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
+      if (!response.ok) {
+        showToast(`Error del servidor: ${data.error || response.status}`, 'error');
+        setCourseEnrollments([]);
+        return;
+      }
       setCourseEnrollments(data.enrollments || []);
     } catch (error) {
-      showToast('Error al cargar las reservas', 'error');
+      showToast('Error de conexión al cargar las reservas', 'error');
+      setCourseEnrollments([]);
     } finally {
       setLoadingEnrollments(false);
     }
@@ -339,6 +345,15 @@ export default function CorreccionesAdmin() {
                     >
                       <ChevronLeft className="w-4 h-4" />
                       Volver a cursos
+                    </button>
+                    <button
+                      onClick={() => verReservasCurso(selectedCourse)}
+                      disabled={loadingEnrollments}
+                      className="flex items-center gap-1.5 text-gray-400 hover:text-green-400 transition-colors text-sm disabled:opacity-40"
+                      title="Recargar reservas"
+                    >
+                      <Loader className={`w-4 h-4 ${loadingEnrollments ? 'animate-spin text-green-400' : ''}`} />
+                      Recargar
                     </button>
                   </div>
                   <button
