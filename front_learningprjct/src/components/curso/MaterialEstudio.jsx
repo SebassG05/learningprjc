@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck } from 'lucide-react';
+import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck, Lock, Trophy } from 'lucide-react';
 
 export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests }) {
   const [expandedTemas, setExpandedTemas] = useState({});
@@ -362,6 +362,89 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
           );
           })}
         </div>
+
+        {/* ── Test Final de Certificación ── */}
+        {(() => {
+          const todosAprobados = temas.length > 0 && temas.every(t => completedTests && completedTests.includes(t._id));
+          const aprobado = completedTests && completedTests.includes('test-final-certificacion');
+          return (
+            <div className="mt-8 bg-[#23272f]/50 rounded-xl p-10 border border-yellow-400/20 hover:border-yellow-400/40 transition-colors">
+              {/* Header igual que los temas */}
+              <div className="flex items-start gap-4 mb-6">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 flex items-center justify-center text-[#1a1a1a] font-bold text-sm">
+                  5
+                </span>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-white mb-2">Test Final de Certificación</h3>
+                  <p className="text-gray-400 text-sm text-justify leading-relaxed">
+                    Evaluación final integradora sobre todos los contenidos del curso. Cubre los 4 módulos: fundamentos de la dinámica del carbono, estructura y tipos de modelos, formulación matemática y práctica en R con el ensemble multimodelo.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fila del test */}
+              <div className="mt-4 space-y-2">
+                <h4 className="text-sm font-semibold text-yellow-400 uppercase tracking-wide mb-3">
+                  Test de Certificación
+                </h4>
+                <div
+                  onClick={() => {
+                    if (todosAprobados) {
+                      navigate(`/curso/${cursoId}/tema-estudio`, {
+                        state: {
+                          tema: { _id: 'test-final-certificacion', titulo: 'Test Final de Certificación', numeroTema: 5 },
+                          material: { titulo: 'Test Final de Certificación' },
+                          startPhase: 2,
+                          temaId: 'test-final-certificacion'
+                        }
+                      });
+                    }
+                  }}
+                  className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
+                    !todosAprobados
+                      ? 'bg-[#1a1a1a]/30 border-gray-700/50 cursor-not-allowed opacity-60'
+                      : aprobado
+                        ? 'bg-yellow-400/10 border-yellow-400/50 cursor-pointer'
+                        : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-yellow-400/40 cursor-pointer'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className={`flex-shrink-0 ${todosAprobados ? 'text-yellow-400' : 'text-gray-600'}`}>
+                      {!todosAprobados ? (
+                        <Lock className="w-5 h-5" />
+                      ) : aprobado ? (
+                        <Trophy className="w-5 h-5" />
+                      ) : (
+                        <ClipboardCheck className="w-5 h-5" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className={`font-medium truncate ${todosAprobados ? 'text-white' : 'text-gray-500'}`}>
+                        Test Final de Certificación
+                        {aprobado && (
+                          <span className="ml-2 text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">Aprobado ✓</span>
+                        )}
+                        {!todosAprobados && (
+                          <span className="ml-2 text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">🔒 Bloqueado</span>
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {todosAprobados
+                          ? '40 preguntas • 90 minutos • Nota mínima: 70%'
+                          : 'Aprueba los tests de los 4 módulos para desbloquear el test final'}
+                      </p>
+                    </div>
+                  </div>
+                  {todosAprobados && !aprobado && (
+                    <div className="flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#1a1a1a] opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-105">
+                      Iniciar Test
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

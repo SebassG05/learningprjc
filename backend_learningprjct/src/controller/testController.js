@@ -27,12 +27,12 @@ export const obtenerTestPorTema = async (req, res) => {
           // Encontrar el tema actual
           const temaActual = course.temas.find(t => t._id.toString() === temaId);
           
-          // Verificar si es el test final (tema 5 o superior, o contiene "Test Final" en el título)
-          const isTestFinal = temaActual && (
+          // Verificar si es el test final por temaId especial o por propiedades del tema
+          const isTestFinal = temaId === 'test-final-certificacion' || (temaActual && (
             temaActual.numeroTema >= 5 ||
             temaActual.titulo?.toLowerCase().includes('test final') ||
             temaActual.titulo?.toLowerCase().includes('certificación')
-          );
+          ));
           
           if (isTestFinal) {
             // Extraer userId del token

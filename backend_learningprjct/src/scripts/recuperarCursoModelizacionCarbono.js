@@ -11,24 +11,24 @@ const recuperarCursoModelizacionCarbono = async () => {
 
     // Datos completos del curso
     const cursoData = {
-      title: 'Modelización de la Dinámica del Carbono Orgánico del Suelo',
+      title: 'Modelización Dinámica de Carbono',
       image: 'https://res.cloudinary.com/dgbmy60sc/image/upload/v1772527759/8c2dd540-ce40-4375-86e0-8b1fbf1d3416_hthqfl.jpg',
-      description: 'Curso avanzado sobre modelización de la dinámica del carbono orgánico en suelos mediante modelos compartimentales y técnicas de multi-model ensemble. Aprenderás a utilizar modelos basados en procesos para simular y predecir la evolución del carbono en diferentes tipos de suelos y sistemas de manejo agrícola.',
-      duration: '40 horas',
+      description: 'Curso e-learning orientado a la modelización del carbono orgánico del suelo mediante modelos compartimentales y enfoque multi-model ensemble, aplicado a la evaluación de stocks de SOC y flujos de CO₂ bajo distintos escenarios climáticos y de manejo.',
+      duration: '18 horas',
       category: ['Ciencia del Suelo', 'Modelización', 'Cambio Climático', 'Agricultura Sostenible'],
       objetivosGenerales: [
-        'Comprender los fundamentos científicos de la dinámica del carbono orgánico en el suelo y los procesos biogeoquímicos que la regulan',
-        'Dominar el uso de modelos compartimentales para simular la evolución temporal del carbono en diferentes compartimentos del suelo',
-        'Aplicar técnicas de multi-model ensemble para mejorar la precisión y robustez de las predicciones',
-        'Evaluar el impacto de diferentes prácticas de manejo agrícola en el secuestro de carbono y la mitigación del cambio climático'
+        'Comprender el funcionamiento interno de los modelos de carbono del suelo.',
+        'Interpretar la dinámica temporal del carbono orgánico del suelo (SOC).',
+        'Analizar las diferencias entre modelos bajo un mismo escenario ambiental para obtener estimaciones más robustas.',
+        'Aprender los fundamentos teóricos de la dinámica del carbono y su aplicación práctica en modelización avanzada y sistemas socio-ecológicos.'
       ],
       objetivosEspecificos: [
-        'Identificar y caracterizar los principales compartimentos de carbono en el suelo y sus tasas de descomposición',
-        'Parametrizar modelos de carbono utilizando datos experimentales de campo y laboratorio',
-        'Ejecutar simulaciones de largo plazo para diferentes escenarios climáticos y de manejo',
-        'Interpretar resultados de modelos y comunicar hallazgos de forma clara y técnicamente rigurosa',
-        'Comparar predicciones de diferentes modelos y evaluar incertidumbres mediante análisis de sensibilidad',
-        'Aplicar modelos de carbono en contextos reales de consultoría ambiental y toma de decisiones'
+        'Desarrollar competencias en modelización ambiental reproducible y manejo de datos climáticos y edáficos.',
+        'Realizar un análisis crítico de resultados multimodelo.',
+        'Familiarizarse con herramientas computacionales de investigación real, específicamente la ejecución de scripts en el lenguaje de programación R.',
+        'Dominar la estructuración modular del código y la gestión de datos de entrada ("forcing data").',
+        'Interpretar outputs gráficos y numéricos, como las trayectorias de stocks de SOC y los flujos de mineralización de CO2.',
+        'Aprender el flujo estándar de modelización, incluyendo la preparación de datos, la fase de spin-up para estabilización y la simulación prospectiva.'
       ],
       isOpen: true,
       temas: [

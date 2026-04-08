@@ -10,7 +10,7 @@ const agregarEjercicioRothCCompleto = async () => {
     console.log('✓ Conectado a MongoDB');
 
     // ID del curso de Modelización Dinámica de Carbono
-    const cursoId = '69d50335b1e80c0e37ab562a';
+    const cursoId = '69d50406663e8648d7ee1f08';
 
     const ejercicio = {
       cursoId,

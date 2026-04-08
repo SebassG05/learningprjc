@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import UserProgress from '../models/UserProgress.js';
 import Course from '../models/Course.js';
+import Test from '../models/Test.js';
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import crypto from 'crypto';
@@ -380,22 +381,39 @@ export const completeTest = async (req, res) => {
       await enrollment.save();
     }
 
-    // Verificar si es el test final del curso (tema 5 o con "Test Final" en título)
+    // Verificar si es el test final del curso
     let isFinalTest = false;
     
     try {
-      const course = await Course.findById(courseId);
-      
-      if (course && course.temas && course.temas.length > 0) {
-        // Encontrar el tema actual
-        const temaActual = course.temas.find(t => t._id.toString() === temaId);
+      // Primero verificar si el temaId indica que es un test final (por convención)
+      if (temaId === 'test-final-certificacion' || 
+          temaId.toLowerCase().includes('final') || 
+          temaId.toLowerCase().includes('certificacion')) {
+        isFinalTest = true;
+      } else {
+        // Si no, buscar en el curso por numeroTema o título
+        const course = await Course.findById(courseId);
         
-        // Verificar si es el test final (tema 5 o superior, o contiene "Test Final" en el título)
-        isFinalTest = temaActual && (
-          temaActual.numeroTema >= 5 ||
-          temaActual.titulo?.toLowerCase().includes('test final') ||
-          temaActual.titulo?.toLowerCase().includes('certificación')
-        );
+        if (course && course.temas && course.temas.length > 0) {
+          // Encontrar el tema actual
+          const temaActual = course.temas.find(t => t._id.toString() === temaId);
+          
+          // Verificar si es el test final (tema 5 o superior, o contiene "Test Final" en el título)
+          if (temaActual) {
+            isFinalTest = temaActual.numeroTema >= 5 ||
+              temaActual.titulo?.toLowerCase().includes('test final') ||
+              temaActual.titulo?.toLowerCase().includes('certificación');
+          }
+        }
+      }
+      
+      // Si aún no se detectó, buscar el test en la base de datos
+      if (!isFinalTest) {
+        const test = await Test.findOne({ cursoId: courseId, temaId });
+        if (test && test.titulo) {
+          isFinalTest = test.titulo.toLowerCase().includes('final') ||
+            test.titulo.toLowerCase().includes('certificación');
+        }
       }
     } catch (courseError) {
       console.error('⚠️ Error al verificar si es test final:', courseError);
