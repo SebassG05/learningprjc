@@ -123,16 +123,9 @@ export default function CursoDetalle() {
     return totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
   };
 
-  // Verificar si el curso está completado (test final completado)
+  // Verificar si el curso está completado (test final de certificación aprobado)
   const isCursoCompletado = () => {
-    if (!curso || !curso.temas || curso.temas.length === 0) return false;
-    
-    // Encontrar el último tema (test final)
-    const maxNumeroTema = Math.max(...curso.temas.map(t => t.numeroTema || 0));
-    const ultimoTema = curso.temas.find(t => t.numeroTema === maxNumeroTema);
-    
-    // Verificar si el último tema está en tests completados
-    return ultimoTema && completedTests.includes(ultimoTema._id);
+    return completedTests.includes('test-final-certificacion');
   };
 
   // Actualizar progreso en el backend cuando cambie
