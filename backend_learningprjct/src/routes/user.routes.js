@@ -9,6 +9,7 @@ import {
   googleLogin,
   enrollInCourse,
   getEnrollmentStatus,
+  changePreferredLanguage,
   updateCourseProgress,
   completeCourse,
   completeTest,
@@ -79,6 +80,9 @@ router.post('/enroll/:courseId', authenticateJWT, enrollInCourse);
 
 // Verificar estado de inscripción
 router.get('/enrollment/:courseId', authenticateJWT, getEnrollmentStatus);
+
+// Cambiar idioma preferido para un curso
+router.put('/enrollment/:courseId/language', authenticateJWT, changePreferredLanguage);
 
 // Actualizar progreso del curso
 router.put('/enrollment/:courseId/progress', authenticateJWT, updateCourseProgress);

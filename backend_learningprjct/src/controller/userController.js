@@ -196,7 +196,25 @@ export const googleLogin = async (req, res, next) => {
 export const enrollInCourse = async (req, res) => {
   try {
     const { courseId } = req.params;
+    const { preferredLanguage } = req.body; // Idioma preferido del usuario
     const userId = req.user.id; // Del middleware authenticateJWT
+
+    // Verificar que el curso existe
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+
+    // Verificar que el idioma solicitado está disponible
+    const idiomaSeleccionado = preferredLanguage || 'es';
+    if (course.idiomasDisponibles && course.idiomasDisponibles.length > 0) {
+      if (!course.idiomasDisponibles.includes(idiomaSeleccionado)) {
+        return res.status(400).json({ 
+          error: 'Idioma no disponible para este curso',
+          idiomasDisponibles: course.idiomasDisponibles
+        });
+      }
+    }
 
     // Verificar si ya está inscrito
     const existingEnrollment = await UserProgress.findOne({ userId, courseId });
@@ -213,7 +231,8 @@ export const enrollInCourse = async (req, res) => {
       userId,
       courseId,
       status: 'enrolled',
-      progress: 0
+      progress: 0,
+      preferredLanguage: idiomaSeleccionado
     });
 
     await enrollment.save();
@@ -260,11 +279,64 @@ export const getEnrollmentStatus = async (req, res) => {
       completedAt: enrollment.completedAt,
       progress: enrollment.progress,
       completedMaterials: enrollment.completedMaterials || [],
-      completedTests: enrollment.completedTests || []
+      completedTests: enrollment.completedTests || [],
+      preferredLanguage: enrollment.preferredLanguage || 'es'
     });
   } catch (error) {
     console.error('Error en getEnrollmentStatus:', error);
     res.status(500).json({ error: 'Error al verificar inscripción', details: error.message });
+  }
+};
+
+/**
+ * Cambiar idioma preferido para un curso
+ * @route PUT /api/users/enrollment/:courseId/language
+ * @access Private
+ */
+export const changePreferredLanguage = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { preferredLanguage } = req.body;
+    const userId = req.user.id;
+
+    // Validar idioma
+    if (!['es', 'en'].includes(preferredLanguage)) {
+      return res.status(400).json({ error: 'Idioma no válido. Debe ser "es" o "en"' });
+    }
+
+    // Verificar que el curso existe y tiene el idioma disponible
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+
+    if (course.idiomasDisponibles && course.idiomasDisponibles.length > 0) {
+      if (!course.idiomasDisponibles.includes(preferredLanguage)) {
+        return res.status(400).json({ 
+          error: 'Idioma no disponible para este curso',
+          idiomasDisponibles: course.idiomasDisponibles
+        });
+      }
+    }
+
+    // Actualizar preferencia
+    const enrollment = await UserProgress.findOneAndUpdate(
+      { userId, courseId },
+      { preferredLanguage },
+      { new: true }
+    );
+
+    if (!enrollment) {
+      return res.status(404).json({ error: 'No estás inscrito en este curso' });
+    }
+
+    res.status(200).json({
+      message: 'Idioma actualizado correctamente',
+      preferredLanguage: enrollment.preferredLanguage
+    });
+  } catch (error) {
+    console.error('Error en changePreferredLanguage:', error);
+    res.status(500).json({ error: 'Error al cambiar idioma', details: error.message });
   }
 };
 

@@ -23,6 +23,11 @@ const userProgressSchema = new mongoose.Schema({
   completedAt: {
     type: Date
   },
+  preferredLanguage: {
+    type: String,
+    enum: ['es', 'en'],
+    default: 'es'
+  }, // Idioma preferido del usuario para este curso
   progress: {
     type: Number,
     default: 0,

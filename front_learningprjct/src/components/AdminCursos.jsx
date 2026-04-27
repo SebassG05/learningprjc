@@ -21,13 +21,18 @@ export default function AdminCursos() {
   // Estado del formulario
   const [formData, setFormData] = useState({
     title: '',
+    titleEn: '',
     description: '',
+    descriptionEn: '',
     duration: '',
     image: '',
     imageFile: null,
     category: [],
     objetivosGenerales: [],
+    objetivosGeneralesEn: [],
     objetivosEspecificos: [],
+    objetivosEspecificosEn: [],
+    idiomasDisponibles: ['es'],
     isOpen: false
   });
 
@@ -58,13 +63,18 @@ export default function AdminCursos() {
   const resetFormulario = () => {
     setFormData({
       title: '',
+      titleEn: '',
       description: '',
+      descriptionEn: '',
       duration: '',
       image: '',
       imageFile: null,
       category: [],
       objetivosGenerales: [],
+      objetivosGeneralesEn: [],
       objetivosEspecificos: [],
+      objetivosEspecificosEn: [],
+      idiomasDisponibles: ['es'],
       isOpen: false
     });
     setNuevaCategoria('');
@@ -83,13 +93,18 @@ export default function AdminCursos() {
     setCursoEditando(curso);
     setFormData({
       title: curso.title || '',
+      titleEn: curso.titleEn || '',
       description: curso.description || '',
+      descriptionEn: curso.descriptionEn || '',
       duration: curso.duration || '',
       image: curso.image || '',
       imageFile: null,
       category: curso.category || [],
       objetivosGenerales: curso.objetivosGenerales || [],
+      objetivosGeneralesEn: curso.objetivosGeneralesEn || [],
       objetivosEspecificos: curso.objetivosEspecificos || [],
+      objetivosEspecificosEn: curso.objetivosEspecificosEn || [],
+      idiomasDisponibles: curso.idiomasDisponibles || ['es'],
       isOpen: curso.isOpen || false
     });
     setMostrarFormulario(true);
@@ -172,12 +187,17 @@ export default function AdminCursos() {
       const formDataToSend = new FormData();
       
       formDataToSend.append('title', formData.title);
+      formDataToSend.append('titleEn', formData.titleEn || '');
       formDataToSend.append('description', formData.description);
+      formDataToSend.append('descriptionEn', formData.descriptionEn || '');
       formDataToSend.append('duration', formData.duration || '0 horas');
       formDataToSend.append('isOpen', formData.isOpen);
       formDataToSend.append('category', JSON.stringify(formData.category));
       formDataToSend.append('objetivosGenerales', JSON.stringify(formData.objetivosGenerales));
+      formDataToSend.append('objetivosGeneralesEn', JSON.stringify(formData.objetivosGeneralesEn));
       formDataToSend.append('objetivosEspecificos', JSON.stringify(formData.objetivosEspecificos));
+      formDataToSend.append('objetivosEspecificosEn', JSON.stringify(formData.objetivosEspecificosEn));
+      formDataToSend.append('idiomasDisponibles', JSON.stringify(formData.idiomasDisponibles));
 
       if (formData.imageFile) {
         formDataToSend.append('image', formData.imageFile);
@@ -317,10 +337,50 @@ export default function AdminCursos() {
             </div>
 
             <form onSubmit={guardarCurso} className="space-y-6">
-              {/* Título */}
+              {/* Idiomas Disponibles */}
+              <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                <label className="block text-sm font-medium text-blue-300 mb-3">
+                  🌍 Idiomas Disponibles para este Curso
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.idiomasDisponibles.includes('es')}
+                      onChange={(e) => {
+                        const idiomas = e.target.checked
+                          ? [...formData.idiomasDisponibles, 'es']
+                          : formData.idiomasDisponibles.filter(i => i !== 'es');
+                        setFormData({ ...formData, idiomasDisponibles: idiomas.length > 0 ? idiomas : ['es'] });
+                      }}
+                      className="w-5 h-5 text-blue-600 bg-[#1a2e1f] border-blue-900/30 rounded focus:ring-blue-500/50"
+                    />
+                    <span className="text-white">🇪🇸 Español</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.idiomasDisponibles.includes('en')}
+                      onChange={(e) => {
+                        const idiomas = e.target.checked
+                          ? [...formData.idiomasDisponibles, 'en']
+                          : formData.idiomasDisponibles.filter(i => i !== 'en');
+                        setFormData({ ...formData, idiomasDisponibles: idiomas });
+                      }}
+                      className="w-5 h-5 text-blue-600 bg-[#1a2e1f] border-blue-900/30 rounded focus:ring-blue-500/50"
+                    />
+                    <span className="text-white">🇬🇧 English</span>
+                  </label>
+                </div>
+                <p className="text-xs text-gray-400 mt-2">
+                  Los estudiantes podrán elegir en qué idioma ver el contenido del curso
+                </p>
+              </div>
+
+              {/* Título Español */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Título del Curso *
+                  Título del Curso (Español) *
                 </label>
                 <input
                   type="text"
@@ -332,10 +392,27 @@ export default function AdminCursos() {
                 />
               </div>
 
-              {/* Descripción */}
+              {/* Título Inglés */}
+              {formData.idiomasDisponibles.includes('en') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Título del Curso (English) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.titleEn}
+                    onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
+                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                    placeholder="Ex: Dynamic Carbon Modeling"
+                    required={formData.idiomasDisponibles.includes('en')}
+                  />
+                </div>
+              )}
+
+              {/* Descripción Español */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Descripción *
+                  Descripción (Español) *
                 </label>
                 <textarea
                   value={formData.description}
@@ -345,6 +422,22 @@ export default function AdminCursos() {
                   required
                 />
               </div>
+
+              {/* Descripción Inglés */}
+              {formData.idiomasDisponibles.includes('en') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Descripción (English) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <textarea
+                    value={formData.descriptionEn}
+                    onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
+                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors min-h-[100px]"
+                    placeholder="Detailed course description..."
+                    required={formData.idiomasDisponibles.includes('en')}
+                  />
+                </div>
+              )}
 
               {/* Duración */}
               <div>
