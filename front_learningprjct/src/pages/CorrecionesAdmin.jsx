@@ -4,11 +4,12 @@ import {
   FileText, Download, CheckCircle, XCircle, Clock, 
   Search, Filter, Eye, Save, Loader, AlertCircle, User,
   Calendar, BookOpen, Users, Lock, Unlock, ChevronLeft,
-  TrendingUp, Award, BarChart2
+  TrendingUp, Award, BarChart2, Settings
 } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
+import AdminCursos from '../components/AdminCursos';
 
 export default function CorreccionesAdmin() {
   const { user } = useUser();
@@ -26,8 +27,8 @@ export default function CorreccionesAdmin() {
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [pdfUrl, setPdfUrl] = useState('');
 
-  // ---- Estado para sección Reservas / Progreso ----
-  const [activeTab, setActiveTab] = useState('correcciones'); // 'correcciones' | 'reservas' | 'progreso'
+  // ---- Estado para sección Reservas / Progreso / Gestión de Cursos ----
+  const [activeTab, setActiveTab] = useState('correcciones'); // 'correcciones' | 'reservas' | 'progreso' | 'gestion-cursos'
   const [courses, setCourses] = useState([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -154,7 +155,7 @@ export default function CorreccionesAdmin() {
   };
 
   useEffect(() => {
-    if ((activeTab === 'reservas' || activeTab === 'progreso') && courses.length === 0) {
+    if ((activeTab === 'reservas' || activeTab === 'progreso' || activeTab === 'gestion-cursos') && courses.length === 0) {
       cargarCursos();
     }
   }, [activeTab]);
@@ -323,6 +324,17 @@ export default function CorreccionesAdmin() {
           >
             <TrendingUp className="w-4 h-4" />
             Progreso del Curso
+          </button>
+          <button
+            onClick={() => setActiveTab('gestion-cursos')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
+              activeTab === 'gestion-cursos'
+                ? 'bg-green-600 text-white shadow-lg shadow-green-900/30'
+                : 'bg-[#1a2e1f]/40 text-gray-400 border border-green-900/30 hover:border-green-700/50'
+            }`}
+          >
+            <Settings className="w-4 h-4" />
+            Gestión de Cursos
           </button>
         </div>
 
@@ -964,6 +976,17 @@ export default function CorreccionesAdmin() {
               </div>
             </motion.div>
           </div>
+        )}
+
+        {/* ======== TAB: GESTIÓN DE CURSOS ======== */}
+        {activeTab === 'gestion-cursos' && (
+          <motion.div 
+            key="gestion-cursos" 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <AdminCursos />
+          </motion.div>
         )}
       </div>
     </div>
