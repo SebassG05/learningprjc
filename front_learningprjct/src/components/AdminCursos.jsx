@@ -38,7 +38,9 @@ export default function AdminCursos() {
 
   const [nuevaCategoria, setNuevaCategoria] = useState('');
   const [nuevoObjetivoGeneral, setNuevoObjetivoGeneral] = useState('');
+  const [nuevoObjetivoGeneralEn, setNuevoObjetivoGeneralEn] = useState('');
   const [nuevoObjetivoEspecifico, setNuevoObjetivoEspecifico] = useState('');
+  const [nuevoObjetivoEspecificoEn, setNuevoObjetivoEspecificoEn] = useState('');
 
   // Cargar cursos
   useEffect(() => {
@@ -79,7 +81,9 @@ export default function AdminCursos() {
     });
     setNuevaCategoria('');
     setNuevoObjetivoGeneral('');
+    setNuevoObjetivoGeneralEn('');
     setNuevoObjetivoEspecifico('');
+    setNuevoObjetivoEspecificoEn('');
     setCursoEditando(null);
     setMostrarFormulario(false);
   };
@@ -172,11 +176,54 @@ export default function AdminCursos() {
     });
   };
 
+  const agregarObjetivoGeneralEn = () => {
+    if (nuevoObjetivoGeneralEn.trim()) {
+      setFormData({
+        ...formData,
+        objetivosGeneralesEn: [...formData.objetivosGeneralesEn, nuevoObjetivoGeneralEn.trim()]
+      });
+      setNuevoObjetivoGeneralEn('');
+    }
+  };
+
+  const eliminarObjetivoGeneralEn = (index) => {
+    setFormData({
+      ...formData,
+      objetivosGeneralesEn: formData.objetivosGeneralesEn.filter((_, i) => i !== index)
+    });
+  };
+
+  const agregarObjetivoEspecificoEn = () => {
+    if (nuevoObjetivoEspecificoEn.trim()) {
+      setFormData({
+        ...formData,
+        objetivosEspecificosEn: [...formData.objetivosEspecificosEn, nuevoObjetivoEspecificoEn.trim()]
+      });
+      setNuevoObjetivoEspecificoEn('');
+    }
+  };
+
+  const eliminarObjetivoEspecificoEn = (index) => {
+    setFormData({
+      ...formData,
+      objetivosEspecificosEn: formData.objetivosEspecificosEn.filter((_, i) => i !== index)
+    });
+  };
+
   const guardarCurso = async (e) => {
     e.preventDefault();
     
-    if (!formData.title.trim() || !formData.description.trim()) {
-      showToast('El título y la descripción son obligatorios', 'error');
+    // Validación dinámica según idiomas seleccionados
+    const hasSpanish = formData.idiomasDisponibles.includes('es');
+    const hasEnglish = formData.idiomasDisponibles.includes('en');
+    
+    if (hasSpanish && (!formData.title.trim() || !formData.description.trim())) {
+      showToast('El título y la descripción en español son obligatorios', 'error');
+      return;
+    }
+    
+    if (hasEnglish && (!formData.titleEn.trim() || !formData.descriptionEn.trim())) {
+      showToast('El título y la descripción en inglés son obligatorios', 'error');
       return;
     }
 
@@ -365,7 +412,7 @@ export default function AdminCursos() {
                         const idiomas = e.target.checked
                           ? [...formData.idiomasDisponibles, 'en']
                           : formData.idiomasDisponibles.filter(i => i !== 'en');
-                        setFormData({ ...formData, idiomasDisponibles: idiomas });
+                        setFormData({ ...formData, idiomasDisponibles: idiomas.length > 0 ? idiomas : ['en'] });
                       }}
                       className="w-5 h-5 text-blue-600 bg-[#1a2e1f] border-blue-900/30 rounded focus:ring-blue-500/50"
                     />
@@ -378,19 +425,21 @@ export default function AdminCursos() {
               </div>
 
               {/* Título Español */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Título del Curso (Español) *
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
-                  placeholder="Ej: Modelización Dinámica de Carbono"
-                  required
-                />
-              </div>
+              {formData.idiomasDisponibles.includes('es') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Título del Curso (Español) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                    placeholder="Ej: Modelización Dinámica de Carbono"
+                    required={formData.idiomasDisponibles.includes('es')}
+                  />
+                </div>
+              )}
 
               {/* Título Inglés */}
               {formData.idiomasDisponibles.includes('en') && (
@@ -410,18 +459,20 @@ export default function AdminCursos() {
               )}
 
               {/* Descripción Español */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Descripción (Español) *
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors min-h-[100px]"
-                  placeholder="Descripción detallada del curso..."
-                  required
-                />
-              </div>
+              {formData.idiomasDisponibles.includes('es') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Descripción (Español) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors min-h-[100px]"
+                    placeholder="Descripción detallada del curso..."
+                    required={formData.idiomasDisponibles.includes('es')}
+                  />
+                </div>
+              )}
 
               {/* Descripción Inglés */}
               {formData.idiomasDisponibles.includes('en') && (
@@ -522,87 +573,177 @@ export default function AdminCursos() {
                 </div>
               </div>
 
-              {/* Objetivos Generales */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Objetivos Generales
-                </label>
-                <div className="flex gap-2 mb-2">
-                  <input
-                    type="text"
-                    value={nuevoObjetivoGeneral}
-                    onChange={(e) => setNuevoObjetivoGeneral(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoGeneral())}
-                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
-                    placeholder="Añadir objetivo general..."
-                  />
-                  <button
-                    type="button"
-                    onClick={agregarObjetivoGeneral}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
-                  >
-                    <Plus className="w-5 h-5" />
-                  </button>
-                </div>
-                <ul className="space-y-2">
-                  {formData.objetivosGenerales.map((obj, index) => (
-                    <li
-                      key={index}
-                      className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
+              {/* Objetivos Generales - Español */}
+              {formData.idiomasDisponibles.includes('es') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Objetivos Generales (Español) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={nuevoObjetivoGeneral}
+                      onChange={(e) => setNuevoObjetivoGeneral(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoGeneral())}
+                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                      placeholder="Añadir objetivo general..."
+                    />
+                    <button
+                      type="button"
+                      onClick={agregarObjetivoGeneral}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
                     >
-                      <span className="flex-1 text-sm text-gray-300">{obj}</span>
-                      <button
-                        type="button"
-                        onClick={() => eliminarObjetivoGeneral(index)}
-                        className="text-red-400 hover:text-red-300"
+                      <Plus className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <ul className="space-y-2">
+                    {formData.objetivosGenerales.map((obj, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
                       >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                        <span className="flex-1 text-sm text-gray-300">{obj}</span>
+                        <button
+                          type="button"
+                          onClick={() => eliminarObjetivoGeneral(index)}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-              {/* Objetivos Específicos */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Objetivos Específicos
-                </label>
-                <div className="flex gap-2 mb-2">
-                  <input
-                    type="text"
-                    value={nuevoObjetivoEspecifico}
-                    onChange={(e) => setNuevoObjetivoEspecifico(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoEspecifico())}
-                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
-                    placeholder="Añadir objetivo específico..."
-                  />
-                  <button
-                    type="button"
-                    onClick={agregarObjetivoEspecifico}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
-                  >
-                    <Plus className="w-5 h-5" />
-                  </button>
-                </div>
-                <ul className="space-y-2">
-                  {formData.objetivosEspecificos.map((obj, index) => (
-                    <li
-                      key={index}
-                      className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
+              {/* Objetivos Generales - English */}
+              {formData.idiomasDisponibles.includes('en') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Objetivos Generales (English) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={nuevoObjetivoGeneralEn}
+                      onChange={(e) => setNuevoObjetivoGeneralEn(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoGeneralEn())}
+                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                      placeholder="Add general objective..."
+                    />
+                    <button
+                      type="button"
+                      onClick={agregarObjetivoGeneralEn}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
                     >
-                      <span className="flex-1 text-sm text-gray-300">{obj}</span>
-                      <button
-                        type="button"
-                        onClick={() => eliminarObjetivoEspecifico(index)}
-                        className="text-red-400 hover:text-red-300"
+                      <Plus className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <ul className="space-y-2">
+                    {formData.objetivosGeneralesEn.map((obj, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-blue-900/20 rounded-lg"
                       >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                        <span className="flex-1 text-sm text-gray-300">{obj}</span>
+                        <button
+                          type="button"
+                          onClick={() => eliminarObjetivoGeneralEn(index)}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Objetivos Específicos - Español */}
+              {formData.idiomasDisponibles.includes('es') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Objetivos Específicos (Español) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={nuevoObjetivoEspecifico}
+                      onChange={(e) => setNuevoObjetivoEspecifico(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoEspecifico())}
+                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                      placeholder="Añadir objetivo específico..."
+                    />
+                    <button
+                      type="button"
+                      onClick={agregarObjetivoEspecifico}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
+                    >
+                      <Plus className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <ul className="space-y-2">
+                    {formData.objetivosEspecificos.map((obj, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
+                      >
+                        <span className="flex-1 text-sm text-gray-300">{obj}</span>
+                        <button
+                          type="button"
+                          onClick={() => eliminarObjetivoEspecifico(index)}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Objetivos Específicos - English */}
+              {formData.idiomasDisponibles.includes('en') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Objetivos Específicos (English) {formData.idiomasDisponibles.length === 2 && '*'}
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={nuevoObjetivoEspecificoEn}
+                      onChange={(e) => setNuevoObjetivoEspecificoEn(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoEspecificoEn())}
+                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                      placeholder="Add specific objective..."
+                    />
+                    <button
+                      type="button"
+                      onClick={agregarObjetivoEspecificoEn}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
+                    >
+                      <Plus className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <ul className="space-y-2">
+                    {formData.objetivosEspecificosEn.map((obj, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-blue-900/20 rounded-lg"
+                      >
+                        <span className="flex-1 text-sm text-gray-300">{obj}</span>
+                        <button
+                          type="button"
+                          onClick={() => eliminarObjetivoEspecificoEn(index)}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               {/* Estado (Abierto/Cerrado) */}
               <div className="flex items-center gap-3">
