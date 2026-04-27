@@ -419,8 +419,8 @@ export const completeTest = async (req, res) => {
       console.error('⚠️ Error al verificar si es test final:', courseError);
     }
 
-    // Si es el test final y no había sido completado previamente, enviar correos
-    if (isFinalTest && !isAlreadyCompleted) {
+    // Si es el test final, enviar correos (siempre que se pase, no solo la primera vez)
+    if (isFinalTest) {
       try {
         // Obtener datos del usuario
         const user = await User.findById(userId);
@@ -490,7 +490,9 @@ export const getAdminCourseEnrollments = async (req, res) => {
       email: e.userId?.email || 'N/A',
       enrolledAt: e.enrolledAt,
       progress: e.progress,
-      status: e.status
+      status: e.status,
+      completedTests: e.completedTests || [],
+      completedMaterialsCount: (e.completedMaterials || []).length
     }));
 
     res.status(200).json({ enrollments: result, total: result.length });
