@@ -282,13 +282,13 @@ export default function AdminCursos() {
         <div className="flex items-center gap-3">
           <BookOpen className="w-8 h-8 text-green-500" />
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">Gestión de Cursos</h2>
-            <p className="text-gray-600">Crear y administrar cursos de la plataforma</p>
+            <h2 className="text-2xl font-bold text-white">Gestión de Cursos</h2>
+            <p className="text-gray-400">Crear y administrar cursos de la plataforma</p>
           </div>
         </div>
         <button
           onClick={abrirFormularioNuevo}
-          className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
         >
           <Plus className="w-5 h-5" />
           Nuevo Curso
@@ -302,31 +302,31 @@ export default function AdminCursos() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-white rounded-xl shadow-lg border border-gray-200 p-6"
+            className="bg-[#0f1a12] rounded-xl shadow-lg border border-green-900/30 p-6"
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-800">
+              <h3 className="text-xl font-bold text-white">
                 {cursoEditando ? 'Editar Curso' : 'Nuevo Curso'}
               </h3>
               <button
                 onClick={resetFormulario}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-green-900/20 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-5 h-5 text-gray-400 hover:text-white" />
               </button>
             </div>
 
             <form onSubmit={guardarCurso} className="space-y-6">
               {/* Título */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Título del Curso *
                 </label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                   placeholder="Ej: Modelización Dinámica de Carbono"
                   required
                 />
@@ -334,13 +334,13 @@ export default function AdminCursos() {
 
               {/* Descripción */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Descripción *
                 </label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent min-h-[100px]"
+                  className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors min-h-[100px]"
                   placeholder="Descripción detallada del curso..."
                   required
                 />
@@ -348,21 +348,21 @@ export default function AdminCursos() {
 
               {/* Duración */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Duración
                 </label>
                 <input
                   type="text"
                   value={formData.duration}
                   onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                   placeholder="Ej: 18 horas"
                 />
               </div>
 
               {/* Imagen */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Imagen del Curso
                 </label>
                 <div className="flex gap-4">
@@ -370,10 +370,10 @@ export default function AdminCursos() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                   />
                   {(formData.image || formData.imageFile) && (
-                    <div className="flex items-center gap-2 text-sm text-green-600">
+                    <div className="flex items-center gap-2 text-sm text-green-400">
                       <CheckCircle className="w-5 h-5" />
                       Imagen seleccionada
                     </div>
@@ -383,14 +383,14 @@ export default function AdminCursos() {
                   <img
                     src={formData.image}
                     alt="Imagen actual"
-                    className="mt-2 w-32 h-32 object-cover rounded-lg border border-gray-300"
+                    className="mt-2 w-32 h-32 object-cover rounded-lg border border-green-900/30"
                   />
                 )}
               </div>
 
               {/* Categorías */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Categorías
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -399,13 +399,13 @@ export default function AdminCursos() {
                     value={nuevaCategoria}
                     onChange={(e) => setNuevaCategoria(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarCategoria())}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                     placeholder="Ej: Ciencia del Suelo"
                   />
                   <button
                     type="button"
                     onClick={agregarCategoria}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
                   >
                     <Plus className="w-5 h-5" />
                   </button>
@@ -414,13 +414,13 @@ export default function AdminCursos() {
                   {formData.category.map((cat, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm"
+                      className="inline-flex items-center gap-2 px-3 py-1 bg-green-600/20 border border-green-500/30 text-green-300 rounded-full text-sm"
                     >
                       {cat}
                       <button
                         type="button"
                         onClick={() => eliminarCategoria(cat)}
-                        className="hover:text-green-900"
+                        className="hover:text-green-100"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -431,7 +431,7 @@ export default function AdminCursos() {
 
               {/* Objetivos Generales */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Objetivos Generales
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -440,13 +440,13 @@ export default function AdminCursos() {
                     value={nuevoObjetivoGeneral}
                     onChange={(e) => setNuevoObjetivoGeneral(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoGeneral())}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                     placeholder="Añadir objetivo general..."
                   />
                   <button
                     type="button"
                     onClick={agregarObjetivoGeneral}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
                   >
                     <Plus className="w-5 h-5" />
                   </button>
@@ -455,13 +455,13 @@ export default function AdminCursos() {
                   {formData.objetivosGenerales.map((obj, index) => (
                     <li
                       key={index}
-                      className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"
+                      className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
                     >
-                      <span className="flex-1 text-sm text-gray-700">{obj}</span>
+                      <span className="flex-1 text-sm text-gray-300">{obj}</span>
                       <button
                         type="button"
                         onClick={() => eliminarObjetivoGeneral(index)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-400 hover:text-red-300"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -472,7 +472,7 @@ export default function AdminCursos() {
 
               {/* Objetivos Específicos */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Objetivos Específicos
                 </label>
                 <div className="flex gap-2 mb-2">
@@ -481,13 +481,13 @@ export default function AdminCursos() {
                     value={nuevoObjetivoEspecifico}
                     onChange={(e) => setNuevoObjetivoEspecifico(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoEspecifico())}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                     placeholder="Añadir objetivo específico..."
                   />
                   <button
                     type="button"
                     onClick={agregarObjetivoEspecifico}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
                   >
                     <Plus className="w-5 h-5" />
                   </button>
@@ -496,13 +496,13 @@ export default function AdminCursos() {
                   {formData.objetivosEspecificos.map((obj, index) => (
                     <li
                       key={index}
-                      className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"
+                      className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
                     >
-                      <span className="flex-1 text-sm text-gray-700">{obj}</span>
+                      <span className="flex-1 text-sm text-gray-300">{obj}</span>
                       <button
                         type="button"
                         onClick={() => eliminarObjetivoEspecifico(index)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-400 hover:text-red-300"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -518,19 +518,19 @@ export default function AdminCursos() {
                   id="isOpen"
                   checked={formData.isOpen}
                   onChange={(e) => setFormData({ ...formData, isOpen: e.target.checked })}
-                  className="w-5 h-5 text-green-500 rounded focus:ring-green-500"
+                  className="w-5 h-5 text-green-600 bg-[#1a2e1f] border-green-900/30 rounded focus:ring-green-500/50"
                 />
-                <label htmlFor="isOpen" className="text-sm font-medium text-gray-700">
+                <label htmlFor="isOpen" className="text-sm font-medium text-gray-300">
                   Curso abierto (visible para estudiantes)
                 </label>
               </div>
 
               {/* Botones de acción */}
-              <div className="flex gap-4 pt-4 border-t border-gray-200">
+              <div className="flex gap-4 pt-4 border-t border-green-900/30">
                 <button
                   type="submit"
                   disabled={guardando}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-green-900/30"
                 >
                   {guardando ? (
                     <>
@@ -547,7 +547,7 @@ export default function AdminCursos() {
                 <button
                   type="button"
                   onClick={resetFormulario}
-                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 border border-green-900/30 text-gray-300 rounded-lg hover:bg-[#1a2e1f]/60 transition-colors"
                 >
                   Cancelar
                 </button>
@@ -560,9 +560,9 @@ export default function AdminCursos() {
       {/* Lista de cursos */}
       <div className="space-y-4">
         {cursos.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-            <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-700 mb-2">
+          <div className="text-center py-12 bg-[#0f1a12] rounded-xl border border-green-900/30">
+            <BookOpen className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-300 mb-2">
               No hay cursos creados
             </h3>
             <p className="text-gray-500 mb-4">
@@ -570,7 +570,7 @@ export default function AdminCursos() {
             </p>
             <button
               onClick={abrirFormularioNuevo}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-900/30"
             >
               <Plus className="w-5 h-5" />
               Crear Primer Curso
@@ -582,7 +582,7 @@ export default function AdminCursos() {
               key={curso._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
+              className="bg-[#0f1a12] rounded-xl shadow-lg border border-green-900/30 overflow-hidden"
             >
               <div className="p-6">
                 <div className="flex items-start gap-4">
@@ -590,25 +590,25 @@ export default function AdminCursos() {
                     <img
                       src={curso.image}
                       alt={curso.title}
-                      className="w-32 h-32 object-cover rounded-lg border border-gray-300"
+                      className="w-32 h-32 object-cover rounded-lg border border-green-900/30"
                     />
                   )}
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-1">
+                        <h3 className="text-xl font-bold text-white mb-1">
                           {curso.title}
                         </h3>
-                        <p className="text-gray-600 line-clamp-2">{curso.description}</p>
+                        <p className="text-gray-400 line-clamp-2">{curso.description}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         {curso.isOpen ? (
-                          <span className="flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                          <span className="flex items-center gap-1 px-3 py-1 bg-green-600/20 border border-green-500/30 text-green-300 rounded-full text-sm font-medium">
                             <Eye className="w-4 h-4" />
                             Abierto
                           </span>
                         ) : (
-                          <span className="flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                          <span className="flex items-center gap-1 px-3 py-1 bg-gray-800/40 border border-gray-700/50 text-gray-400 rounded-full text-sm font-medium">
                             <EyeOff className="w-4 h-4" />
                             Cerrado
                           </span>
@@ -616,13 +616,13 @@ export default function AdminCursos() {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-4">
                       <span>⏱️ {curso.duration || 'Sin duración'}</span>
                       <span>📚 {curso.temas?.length || 0} temas</span>
                       {curso.category && curso.category.length > 0 && (
                         <div className="flex flex-wrap gap-1">
                           {curso.category.map((cat, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">
+                            <span key={idx} className="px-2 py-1 bg-blue-600/20 border border-blue-500/30 text-blue-300 rounded text-xs">
                               {cat}
                             </span>
                           ))}
@@ -633,28 +633,28 @@ export default function AdminCursos() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => abrirFormularioEditar(curso)}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
                       >
                         <Edit2 className="w-4 h-4" />
                         Editar
                       </button>
                       <button
                         onClick={() => toggleCursoOpen(curso)}
-                        className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
                       >
                         {curso.isOpen ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         {curso.isOpen ? 'Cerrar' : 'Abrir'}
                       </button>
                       <button
                         onClick={() => eliminarCurso(curso._id)}
-                        className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-lg shadow-red-900/30"
                       >
                         <Trash2 className="w-4 h-4" />
                         Eliminar
                       </button>
                       <button
                         onClick={() => setCursoExpandido(cursoExpandido === curso._id ? null : curso._id)}
-                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 border border-green-900/30 text-gray-300 rounded-lg hover:bg-[#1a2e1f]/60 transition-colors"
                       >
                         {cursoExpandido === curso._id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                         Detalles
@@ -670,12 +670,12 @@ export default function AdminCursos() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="mt-4 pt-4 border-t border-gray-200"
+                      className="mt-4 pt-4 border-t border-green-900/30"
                     >
                       {curso.objetivosGenerales && curso.objetivosGenerales.length > 0 && (
                         <div className="mb-4">
-                          <h4 className="font-semibold text-gray-800 mb-2">Objetivos Generales:</h4>
-                          <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">
+                          <h4 className="font-semibold text-white mb-2">Objetivos Generales:</h4>
+                          <ul className="list-disc list-inside space-y-1 text-sm text-gray-400">
                             {curso.objetivosGenerales.map((obj, idx) => (
                               <li key={idx}>{obj}</li>
                             ))}
@@ -684,8 +684,8 @@ export default function AdminCursos() {
                       )}
                       {curso.objetivosEspecificos && curso.objetivosEspecificos.length > 0 && (
                         <div>
-                          <h4 className="font-semibold text-gray-800 mb-2">Objetivos Específicos:</h4>
-                          <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">
+                          <h4 className="font-semibold text-white mb-2">Objetivos Específicos:</h4>
+                          <ul className="list-disc list-inside space-y-1 text-sm text-gray-400">
                             {curso.objetivosEspecificos.map((obj, idx) => (
                               <li key={idx}>{obj}</li>
                             ))}
