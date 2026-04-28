@@ -43,6 +43,15 @@ export const obtenerCurso = async (req, res) => {
  */
 export const crearCurso = async (req, res) => {
   try {
+    console.log('📝 Creando curso - Datos recibidos:', {
+      title: req.body.title,
+      titleEn: req.body.titleEn,
+      description: req.body.description?.substring(0, 50),
+      descriptionEn: req.body.descriptionEn?.substring(0, 50),
+      idiomasDisponibles: req.body.idiomasDisponibles,
+      hasFile: !!req.file
+    });
+
     const {
       title,
       titleEn,
@@ -65,42 +74,71 @@ export const crearCurso = async (req, res) => {
       ? JSON.parse(idiomasDisponibles) 
       : (Array.isArray(idiomasDisponibles) ? idiomasDisponibles : ['es']);
     
+    console.log('🌍 Idiomas detectados:', idiomas);
+
     const hasSpanish = idiomas.includes('es');
     const hasEnglish = idiomas.includes('en');
     
-    if (hasSpanish && (!title || !description)) {
+    if (hasSpanish && (!title || !title.trim())) {
+      console.log('❌ Error: Falta título en español');
       return res.status(400).json({ 
         error: 'Datos incompletos',
-        mensaje: 'El título y la descripción en español son obligatorios' 
+        mensaje: 'El título en español es obligatorio' 
       });
     }
     
-    if (hasEnglish && (!titleEn || !descriptionEn)) {
+    if (hasSpanish && (!description || !description.trim())) {
+      console.log('❌ Error: Falta descripción en español');
       return res.status(400).json({ 
         error: 'Datos incompletos',
-        mensaje: 'El título y la descripción en inglés son obligatorios' 
+        mensaje: 'La descripción en español es obligatoria' 
+      });
+    }
+    
+    if (hasEnglish && (!titleEn || !titleEn.trim())) {
+      console.log('❌ Error: Falta título en inglés');
+      return res.status(400).json({ 
+        error: 'Datos incompletos',
+        mensaje: 'El título en inglés es obligatorio' 
+      });
+    }
+    
+    if (hasEnglish && (!descriptionEn || !descriptionEn.trim())) {
+      console.log('❌ Error: Falta descripción en inglés');
+      return res.status(400).json({ 
+        error: 'Datos incompletos',
+        mensaje: 'La descripción en inglés es obligatoria' 
       });
     }
 
-    // Verificar si ya existe un curso con el mismo título (en cualquier idioma)
-    const cursoExistente = await Course.findOne({ 
-      $or: [
-        { title: { $regex: new RegExp(`^${title || ''}$`, 'i') } },
-        { titleEn: { $regex: new RegExp(`^${titleEn || ''}$`, 'i') } }
-      ]
-    });
+    // Verificar si ya existe un curso con el mismo título (en cualquier idioma) - solo si hay título
+    const queryDuplicados = [];
     
-    if (cursoExistente) {
-      return res.status(400).json({ 
-        error: 'Curso duplicado',
-        mensaje: `Ya existe un curso con ese título` 
-      });
+    if (title && title.trim()) {
+      queryDuplicados.push({ title: { $regex: new RegExp(`^${title.trim()}$`, 'i') } });
+    }
+    
+    if (titleEn && titleEn.trim()) {
+      queryDuplicados.push({ titleEn: { $regex: new RegExp(`^${titleEn.trim()}$`, 'i') } });
+    }
+
+    if (queryDuplicados.length > 0) {
+      const cursoExistente = await Course.findOne({ $or: queryDuplicados });
+      
+      if (cursoExistente) {
+        console.log('❌ Error: Curso duplicado encontrado');
+        return res.status(400).json({ 
+          error: 'Curso duplicado',
+          mensaje: `Ya existe un curso con ese título` 
+        });
+      }
     }
 
     // Si se subió una imagen
     let imagenUrl = image;
     if (req.file) {
       imagenUrl = req.file.path; // URL de Cloudinary
+      console.log('📷 Imagen subida:', imagenUrl);
     }
 
     // Parsear arrays si vienen como strings JSON
@@ -134,12 +172,20 @@ export const crearCurso = async (req, res) => {
     if (descriptionEn && descriptionEn.trim()) datosNuevoCurso.descriptionEn = descriptionEn.trim();
     if (imagenUrl) datosNuevoCurso.image = imagenUrl;
 
+    console.log('💾 Intentando crear curso con datos:', {
+      ...datosNuevoCurso,
+      description: datosNuevoCurso.description?.substring(0, 50),
+      descriptionEn: datosNuevoCurso.descriptionEn?.substring(0, 50)
+    });
+
     // Crear el curso con todos los campos multiidioma
     const nuevoCurso = await Course.create(datosNuevoCurso);
 
+    console.log('✅ Curso creado exitosamente:', nuevoCurso._id);
     res.status(201).json(nuevoCurso);
   } catch (err) {
-    console.error('Error al crear curso:', err);
+    console.error('❌ ERROR AL CREAR CURSO:', err);
+    console.error('Stack:', err.stack);
     res.status(500).json({ 
       error: 'Error al crear curso', 
       mensaje: err.message 
