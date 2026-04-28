@@ -5,7 +5,8 @@ import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
-import { BookOpen, Lock, Loader, AlertCircle, Clock } from 'lucide-react';
+import { BookOpen, Lock, Loader, AlertCircle, Clock, Globe } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CursoDetalle() {
   const { id } = useParams();
@@ -18,8 +19,22 @@ export default function CursoDetalle() {
   const [enrollmentStatus, setEnrollmentStatus] = useState(null);
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
   const [ejerciciosOptativos, setEjerciciosOptativos] = useState([]);
+  const [idiomaSeleccionado, setIdiomaSeleccionado] = useState(() => localStorage.getItem(`lang_${id}`) || null);
+  const [showLangModal, setShowLangModal] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
+
+  // Devuelve el texto en el idioma seleccionado
+  const t = (es, en) => {
+    if (idiomaSeleccionado === 'en' && en) return en;
+    return es || en || '';
+  };
+
+  const seleccionarIdioma = (lang) => {
+    localStorage.setItem(`lang_${id}`, lang);
+    setIdiomaSeleccionado(lang);
+    setShowLangModal(false);
+  };
 
   // Verificar si el usuario está logueado y verificar inscripción
   useEffect(() => {
@@ -78,6 +93,11 @@ export default function CursoDetalle() {
       .then(data => {
         setCurso(data);
         setLoading(false);
+        // Si el curso es bilingüe y el usuario no ha elegido idioma aún, mostrar modal
+        const esBilingue = data.idiomasDisponibles?.includes('es') && data.idiomasDisponibles?.includes('en');
+        if (esBilingue && !localStorage.getItem(`lang_${id}`)) {
+          setShowLangModal(true);
+        }
       });
   }, [id, apiUrl]);
 
@@ -244,12 +264,96 @@ export default function CursoDetalle() {
 
   return (
     <>
+      {/* Modal de selección de idioma para cursos bilingües */}
+      <AnimatePresence>
+        {showLangModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+              className="bg-[#0f1a12] border border-[#a1db87]/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <div className="p-3 bg-[#a1db87]/10 rounded-full">
+                  <Globe className="w-8 h-8 text-[#a1db87]" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-extrabold text-white mb-2">
+                {curso.title && curso.titleEn ? 'Selecciona el idioma' : 'Select your language'}
+              </h2>
+              <p className="text-gray-400 mb-8 text-sm">
+                {curso.title && curso.titleEn
+                  ? 'Este curso está disponible en español e inglés. ¿En qué idioma quieres seguirlo?'
+                  : 'This course is available in Spanish and English. Which language would you like?'}
+              </p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => seleccionarIdioma('es')}
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                >
+                  <span className="text-4xl">🇪🇸</span>
+                  <div>
+                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">Español</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
+                  </div>
+                </button>
+                <button
+                  onClick={() => seleccionarIdioma('en')}
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                >
+                  <span className="text-4xl">🇬🇧</span>
+                  <div>
+                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">English</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
+                  </div>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-7xl mx-auto py-16 px-4">
         <div className="flex flex-row items-center justify-between w-full mb-6 gap-8">
           {/* Título a la izquierda */}
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white text-left flex-1">
-            {curso.title}
-          </h1>
+          <div className="flex-1">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-white text-left">
+              {t(curso.title, curso.titleEn)}
+            </h1>
+            {/* Selector de idioma para cursos bilingües */}
+            {curso.idiomasDisponibles?.includes('es') && curso.idiomasDisponibles?.includes('en') && (
+              <div className="flex items-center gap-2 mt-3">
+                <Globe className="w-4 h-4 text-gray-500" />
+                <button
+                  onClick={() => seleccionarIdioma('es')}
+                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+                    idiomaSeleccionado !== 'en'
+                      ? 'bg-[#a1db87] text-[#1a1a1a] border-[#a1db87]'
+                      : 'text-gray-400 border-gray-700 hover:border-[#a1db87]/50'
+                  }`}
+                >
+                  🇪🇸 ES
+                </button>
+                <button
+                  onClick={() => seleccionarIdioma('en')}
+                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+                    idiomaSeleccionado === 'en'
+                      ? 'bg-[#a1db87] text-[#1a1a1a] border-[#a1db87]'
+                      : 'text-gray-400 border-gray-700 hover:border-[#a1db87]/50'
+                  }`}
+                >
+                  🇬🇧 EN
+                </button>
+              </div>
+            )}
+          </div>
           {/* Círculo de progreso a la derecha */}
           <div className="relative w-24 h-24 flex items-center justify-center">
             <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
@@ -287,9 +391,9 @@ export default function CursoDetalle() {
         </div>
 
         {/* Descripción del curso */}
-        {curso.description && (
+        {(curso.description || curso.descriptionEn) && (
           <p className="text-gray-300 text-base leading-relaxed mb-10 text-justify">
-            {curso.description}
+            {t(curso.description, curso.descriptionEn)}
           </p>
         )}
 
@@ -304,8 +408,8 @@ export default function CursoDetalle() {
           </div>
         )}
         <ObjetivosCurso 
-          objetivosGenerales={curso.objetivosGenerales}
-          objetivosEspecificos={curso.objetivosEspecificos}
+          objetivosGenerales={idiomaSeleccionado === 'en' ? (curso.objetivosGeneralesEn?.length ? curso.objetivosGeneralesEn : curso.objetivosGenerales) : curso.objetivosGenerales}
+          objetivosEspecificos={idiomaSeleccionado === 'en' ? (curso.objetivosEspecificosEn?.length ? curso.objetivosEspecificosEn : curso.objetivosEspecificos) : curso.objetivosEspecificos}
         />
       </div>
 
@@ -330,6 +434,7 @@ export default function CursoDetalle() {
           completedMaterials={completedMaterials}
           setCompletedMaterials={setCompletedMaterials}
           completedTests={completedTests}
+          idioma={idiomaSeleccionado || 'es'}
         />
         
         {/* Mensaje de Curso Completado */}

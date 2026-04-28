@@ -2,11 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck, Lock, Trophy } from 'lucide-react';
 
-export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests }) {
+export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests, idioma = 'es' }) {
   const [expandedTemas, setExpandedTemas] = useState({});
   const [testInfo, setTestInfo] = useState({});
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
+
+  // Devuelve el texto en el idioma seleccionado
+  const t = (es, en) => {
+    if (idioma === 'en' && en) return en;
+    return es || en || '';
+  };
+
+  // Devuelve la URL del material en el idioma seleccionado
+  const getMaterialUrl = (material) => {
+    if (idioma === 'en' && material.archivoEn) return material.archivoEn;
+    return material.archivo || material.archivoEn || null;
+  };
 
   useEffect(() => {
     // Cargar información de los tests para cada tema
@@ -56,15 +68,19 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
       navigate(`/curso/${cursoId}/tema-estudio`, {
         state: { 
           tema, 
-          material: { titulo: 'Test de Evaluación' }, 
+          material: { titulo: idioma === 'en' ? 'Evaluation Test' : 'Test de Evaluación' }, 
           startPhase: 2,
           temaId: tema._id
         }
       });
     } else {
-      // Para materiales normales, ir a la fase 1 (material de estudio)
+      // Para materiales normales, pasar el archivo según el idioma seleccionado
+      const materialConIdioma = {
+        ...material,
+        archivo: getMaterialUrl(material)
+      };
       navigate(`/curso/${cursoId}/tema-estudio`, {
-        state: { tema, material, temaId: tema._id }
+        state: { tema, material: materialConIdioma, temaId: tema._id }
       });
     }
   };
@@ -125,8 +141,10 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
         <div className="space-y-8">
           {temas.map((tema) => {
             const isExpanded = expandedTemas[tema._id];
-            const { text: truncatedText, isTruncated } = truncateText(tema.descripcion);
-            const displayText = isExpanded ? tema.descripcion : truncatedText;
+            const tituloTema = t(tema.titulo, tema.tituloEn);
+            const descTema = t(tema.descripcion, tema.descripcionEn);
+            const { text: truncatedText, isTruncated } = truncateText(descTema);
+            const displayText = isExpanded ? descTema : truncatedText;
             const testBloqueado = isTestFinalBloqueado(tema);
 
             return (
@@ -136,8 +154,8 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                     {tema.numeroTema}
                   </span>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-2">{tema.titulo}</h3>
-                    {tema.descripcion && (
+                    <h3 className="text-xl font-bold text-white mb-2">{tituloTema}</h3>
+                    {descTema && (
                       <div>
                         <div 
                           className={`overflow-hidden transition-all duration-700 ease-in-out ${
@@ -177,20 +195,21 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
               {tema.materiales && tema.materiales.length > 0 && (
                 <div className="mt-4 space-y-2">
                   <h4 className="text-sm font-semibold text-[#a1db87] uppercase tracking-wide mb-3">
-                    Material de Estudio
+                    {idioma === 'en' ? 'Study Material' : 'Material de Estudio'}
                   </h4>
-                  {tema.materiales.map((material) => {
+                  {tema.materiales.filter(m => getMaterialUrl(m)).map((material) => {
                     const isCompleted = completedMaterials[material._id];
+                    const archivoFinal = getMaterialUrl(material);
                     
                     return (
                       <div
                         key={material._id}
-                        onClick={() => material.archivo && handleOpenMaterial(tema, material)}
+                        onClick={() => archivoFinal && handleOpenMaterial(tema, material)}
                         className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                           isCompleted 
                             ? 'bg-[#a1db87]/10 border-[#a1db87]/40 hover:bg-[#a1db87]/15' 
                             : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#a1db87]/30'
-                        } ${material.archivo ? 'cursor-pointer' : ''}`}
+                        } ${archivoFinal ? 'cursor-pointer' : ''}`}}
                       >
                         <div className="flex items-center gap-3 flex-1 min-w-0">
                           <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-[#a1db87]' : 'text-[#a1db87]'}`}>
@@ -203,7 +222,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                           </div>
                         </div>
                         
-                        {material.archivo && (
+                        {archivoFinal && (
                           <button
                             onClick={(e) => toggleCompleted(e, material._id)}
                             className={`cursor-pointer flex-shrink-0 ml-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 ${
