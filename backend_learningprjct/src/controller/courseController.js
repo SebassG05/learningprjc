@@ -45,33 +45,55 @@ export const crearCurso = async (req, res) => {
   try {
     const {
       title,
+      titleEn,
       image,
       description,
+      descriptionEn,
       duration,
       category,
       objetivosGenerales,
+      objetivosGeneralesEn,
       objetivosEspecificos,
+      objetivosEspecificosEn,
+      idiomasDisponibles,
       isOpen,
       temas
     } = req.body;
 
-    // Validaciones básicas
-    if (!title || !description) {
+    // Validaciones básicas - verificar que al menos un idioma tenga título y descripción
+    const idiomas = typeof idiomasDisponibles === 'string' 
+      ? JSON.parse(idiomasDisponibles) 
+      : (Array.isArray(idiomasDisponibles) ? idiomasDisponibles : ['es']);
+    
+    const hasSpanish = idiomas.includes('es');
+    const hasEnglish = idiomas.includes('en');
+    
+    if (hasSpanish && (!title || !description)) {
       return res.status(400).json({ 
         error: 'Datos incompletos',
-        mensaje: 'El título y la descripción son obligatorios' 
+        mensaje: 'El título y la descripción en español son obligatorios' 
+      });
+    }
+    
+    if (hasEnglish && (!titleEn || !descriptionEn)) {
+      return res.status(400).json({ 
+        error: 'Datos incompletos',
+        mensaje: 'El título y la descripción en inglés son obligatorios' 
       });
     }
 
-    // Verificar si ya existe un curso con el mismo título
+    // Verificar si ya existe un curso con el mismo título (en cualquier idioma)
     const cursoExistente = await Course.findOne({ 
-      title: { $regex: new RegExp(`^${title}$`, 'i') } 
+      $or: [
+        { title: { $regex: new RegExp(`^${title || ''}$`, 'i') } },
+        { titleEn: { $regex: new RegExp(`^${titleEn || ''}$`, 'i') } }
+      ]
     });
     
     if (cursoExistente) {
       return res.status(400).json({ 
         error: 'Curso duplicado',
-        mensaje: `Ya existe un curso con el título "${title}"` 
+        mensaje: `Ya existe un curso con ese título` 
       });
     }
 
@@ -81,23 +103,36 @@ export const crearCurso = async (req, res) => {
       imagenUrl = req.file.path; // URL de Cloudinary
     }
 
-    // Crear el curso
+    // Parsear arrays si vienen como strings JSON
+    const parseArray = (value) => {
+      if (!value) return [];
+      if (Array.isArray(value)) return value;
+      try {
+        return JSON.parse(value);
+      } catch {
+        return [];
+      }
+    };
+
+    // Crear el curso con todos los campos multiidioma
     const nuevoCurso = await Course.create({
-      title,
+      title: title || '',
+      titleEn: titleEn || '',
       image: imagenUrl,
-      description,
+      description: description || '',
+      descriptionEn: descriptionEn || '',
       duration: duration || '0 horas',
-      category: Array.isArray(category) ? category : [],
-      objetivosGenerales: Array.isArray(objetivosGenerales) ? objetivosGenerales : [],
-      objetivosEspecificos: Array.isArray(objetivosEspecificos) ? objetivosEspecificos : [],
+      category: parseArray(category),
+      objetivosGenerales: parseArray(objetivosGenerales),
+      objetivosGeneralesEn: parseArray(objetivosGeneralesEn),
+      objetivosEspecificos: parseArray(objetivosEspecificos),
+      objetivosEspecificosEn: parseArray(objetivosEspecificosEn),
+      idiomasDisponibles: idiomas,
       isOpen: isOpen === true || isOpen === 'true',
-      temas: Array.isArray(temas) ? temas : []
+      temas: parseArray(temas)
     });
 
-    res.status(201).json({
-      mensaje: 'Curso creado exitosamente',
-      curso: nuevoCurso
-    });
+    res.status(201).json(nuevoCurso);
   } catch (err) {
     console.error('Error al crear curso:', err);
     res.status(500).json({ 
@@ -115,11 +150,40 @@ export const crearCurso = async (req, res) => {
 export const actualizarCurso = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateData = { ...req.body };
+    
+    // Parsear arrays si vienen como strings JSON
+    const parseArray = (value) => {
+      if (!value) return undefined;
+      if (Array.isArray(value)) return value;
+      try {
+        return JSON.parse(value);
+      } catch {
+        return undefined;
+      }
+    };
+
+    const updateData = {
+      title: req.body.title,
+      titleEn: req.body.titleEn,
+      description: req.body.description,
+      descriptionEn: req.body.descriptionEn,
+      duration: req.body.duration,
+      isOpen: req.body.isOpen === true || req.body.isOpen === 'true',
+    };
+
+    // Solo agregar campos que existen
+    if (req.body.category) updateData.category = parseArray(req.body.category);
+    if (req.body.objetivosGenerales) updateData.objetivosGenerales = parseArray(req.body.objetivosGenerales);
+    if (req.body.objetivosGeneralesEn) updateData.objetivosGeneralesEn = parseArray(req.body.objetivosGeneralesEn);
+    if (req.body.objetivosEspecificos) updateData.objetivosEspecificos = parseArray(req.body.objetivosEspecificos);
+    if (req.body.objetivosEspecificosEn) updateData.objetivosEspecificosEn = parseArray(req.body.objetivosEspecificosEn);
+    if (req.body.idiomasDisponibles) updateData.idiomasDisponibles = parseArray(req.body.idiomasDisponibles);
 
     // Si se subió una nueva imagen
     if (req.file) {
       updateData.image = req.file.path;
+    } else if (req.body.image) {
+      updateData.image = req.body.image;
     }
 
     const course = await Course.findByIdAndUpdate(
@@ -132,10 +196,7 @@ export const actualizarCurso = async (req, res) => {
       return res.status(404).json({ error: 'Curso no encontrado' });
     }
 
-    res.json({
-      mensaje: 'Curso actualizado exitosamente',
-      curso: course
-    });
+    res.json(course);
   } catch (err) {
     console.error('Error al actualizar el curso:', err);
     res.status(400).json({ error: 'Error al actualizar el curso', mensaje: err.message });
@@ -222,7 +283,7 @@ export const eliminarCurso = async (req, res) => {
 export const agregarTema = async (req, res) => {
   try {
     const { id } = req.params;
-    const { numeroTema, titulo, descripcion } = req.body;
+    const { numeroTema, titulo, tituloEn, descripcion, descripcionEn, orden } = req.body;
 
     const course = await Course.findById(id);
     if (!course) {
@@ -237,20 +298,26 @@ export const agregarTema = async (req, res) => {
       course.temas = [];
     }
 
+    // Calcular el siguiente número de tema si no se proporciona
+    const siguienteNumero = numeroTema || (course.temas.length + 1);
+    
     // Verificar que no exista ya un tema con ese número
-    const temaExistente = course.temas.find(t => t.numeroTema === parseInt(numeroTema));
+    const temaExistente = course.temas.find(t => t.numeroTema === parseInt(siguienteNumero));
     if (temaExistente) {
       return res.status(400).json({ 
         error: 'Ya existe un tema con ese número',
-        mensaje: `El curso ya tiene un tema número ${numeroTema}. Usa otro número o actualiza el tema existente.`
+        mensaje: `El curso ya tiene un tema número ${siguienteNumero}. Usa otro número o actualiza el tema existente.`
       });
     }
 
     course.temas.push({
-      numeroTema: parseInt(numeroTema),
-      titulo,
-      descripcion,
-      materiales: []
+      numeroTema: parseInt(siguienteNumero),
+      titulo: titulo || '',
+      tituloEn: tituloEn || '',
+      descripcion: descripcion || '',
+      descripcionEn: descripcionEn || '',
+      materiales: [],
+      orden: orden || course.temas.length
     });
 
     await course.save();
@@ -268,7 +335,7 @@ export const agregarTema = async (req, res) => {
 export const agregarMaterial = async (req, res) => {
   try {
     const { id, temaId } = req.params;
-    const { tipo, titulo, descripcion, archivo, orden } = req.body;
+    const { tipo = 'pdf', titulo, descripcion, idioma = 'es', orden } = req.body;
 
     const course = await Course.findById(id);
     if (!course) {
@@ -290,18 +357,32 @@ export const agregarMaterial = async (req, res) => {
       tema.materiales = [];
     }
 
-    // Si se subió un archivo, usar la URL de Cloudinary
-    let archivoPath = archivo;
-    if (req.file) {
-      // Cloudinary almacena la URL en req.file.path
-      archivoPath = req.file.path;
+    // Manejar archivos en múltiples idiomas
+    let archivoPath = null;
+    let archivoEnPath = null;
+
+    if (req.files) {
+      // Multer con upload.fields() almacena los archivos en req.files
+      if (req.files.archivo && req.files.archivo[0]) {
+        archivoPath = req.files.archivo[0].path; // Cloudinary URL
+      }
+      if (req.files.archivoEn && req.files.archivoEn[0]) {
+        archivoEnPath = req.files.archivoEn[0].path; // Cloudinary URL
+      }
+    }
+
+    // Validar que al menos un archivo fue subido
+    if (!archivoPath && !archivoEnPath) {
+      return res.status(400).json({ error: 'Debes subir al menos un archivo' });
     }
 
     tema.materiales.push({
       tipo,
-      titulo,
-      descripcion,
+      titulo: titulo || `Material ${tema.materiales.length + 1}`,
+      descripcion: descripcion || '',
       archivo: archivoPath,
+      archivoEn: archivoEnPath,
+      idioma: idioma, // 'es', 'en', o 'both'
       orden: orden || tema.materiales.length
     });
 

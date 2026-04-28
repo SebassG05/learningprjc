@@ -21,7 +21,10 @@ const materialSchema = new mongoose.Schema({
 const temaSchema = new mongoose.Schema({
   numeroTema: { type: Number, required: true },
   titulo: { type: String, required: true },
+  tituloEn: { type: String }, // Título en inglés (opcional)
   descripcion: { type: String },
+  descripcionEn: { type: String }, // Descripción en inglés (opcional)
+  orden: { type: Number, default: 0 }, // Orden de visualización del tema
   materiales: [materialSchema],
   actividadesOptativas: [materialSchema], // Actividades optativas del tema
   completado: { type: Boolean, default: false }

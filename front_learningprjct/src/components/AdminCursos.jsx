@@ -17,6 +17,10 @@ export default function AdminCursos() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [guardando, setGuardando] = useState(false);
   const [cursoExpandido, setCursoExpandido] = useState(null);
+  
+  // Estados para el sistema de dos fases
+  const [fase, setFase] = useState(1); // 1: Info básica, 2: Temas y materiales
+  const [cursoCreado, setCursoCreado] = useState(null); // Curso recién creado para agregar temas
 
   // Estado del formulario
   const [formData, setFormData] = useState({
@@ -41,6 +45,16 @@ export default function AdminCursos() {
   const [nuevoObjetivoGeneralEn, setNuevoObjetivoGeneralEn] = useState('');
   const [nuevoObjetivoEspecifico, setNuevoObjetivoEspecifico] = useState('');
   const [nuevoObjetivoEspecificoEn, setNuevoObjetivoEspecificoEn] = useState('');
+  
+  // Estados para agregar temas (Fase 2)
+  const [formTema, setFormTema] = useState({
+    titulo: '',
+    tituloEn: '',
+    descripcion: '',
+    descripcionEn: '',
+    orden: 1
+  });
+  const [subiendoMaterial, setSubiendoMaterial] = useState(false);
 
   // Cargar cursos
   useEffect(() => {
@@ -86,6 +100,15 @@ export default function AdminCursos() {
     setNuevoObjetivoEspecificoEn('');
     setCursoEditando(null);
     setMostrarFormulario(false);
+    setFase(1);
+    setCursoCreado(null);
+    setFormTema({
+      titulo: '',
+      tituloEn: '',
+      descripcion: '',
+      descripcionEn: '',
+      orden: 1
+    });
   };
 
   const abrirFormularioNuevo = () => {
@@ -271,13 +294,19 @@ export default function AdminCursos() {
         throw new Error(error.mensaje || 'Error al guardar curso');
       }
 
-      showToast(
-        cursoEditando ? 'Curso actualizado exitosamente' : 'Curso creado exitosamente',
-        'success'
-      );
-      
-      resetFormulario();
-      cargarCursos();
+      const cursoGuardado = await response.json();
+
+      if (cursoEditando) {
+        // Si estamos editando, solo actualizamos y volvemos
+        showToast('Curso actualizado exitosamente', 'success');
+        resetFormulario();
+        cargarCursos();
+      } else {
+        // Si es nuevo, pasamos a la Fase 2 para agregar temas
+        showToast('Curso creado exitosamente. Ahora puedes agregar temas y materiales', 'success');
+        setCursoCreado(cursoGuardado);
+        setFase(2);
+      }
     } catch (error) {
       console.error('Error:', error);
       showToast(error.message || 'Error al guardar curso', 'error');
@@ -334,6 +363,257 @@ export default function AdminCursos() {
     }
   };
 
+  // Funciones para gestión de temas (Fase 2)
+  const agregarTema = async () => {
+    if (!cursoCreado) return;
+    
+    const hasSpanish = cursoCreado.idiomasDisponibles?.includes('es');
+    const hasEnglish = cursoCreado.idiomasDisponibles?.includes('en');
+    
+    if (hasSpanish && !formTema.titulo.trim()) {
+      showToast('El título del tema en español es obligatorio', 'error');
+      return;
+    }
+    
+    if (hasEnglish && !formTema.tituloEn.trim()) {
+      showToast('El título del tema en inglés es obligatorio', 'error');
+      return;
+    }
+
+    try {
+      setGuardando(true);
+      const token = localStorage.getItem('token');
+      
+      const temaData = {
+        numeroTema: cursoCreado.temas?.length + 1 || 1,
+        titulo: formTema.titulo,
+        tituloEn: formTema.tituloEn,
+        descripcion: formTema.descripcion,
+        descripcionEn: formTema.descripcionEn,
+        orden: formTema.orden
+      };
+
+      const response = await fetch(`${apiUrl}/api/courses/${cursoCreado._id}/temas`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(temaData)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.mensaje || 'Error al agregar tema');
+      }
+
+      const cursoActualizado = await response.json();
+      setCursoCreado(cursoActualizado);
+      
+      showToast('Tema agregado exitosamente', 'success');
+      
+      // Reset form tema
+      setFormTema({
+        titulo: '',
+        tituloEn: '',
+        descripcion: '',
+        descripcionEn: '',
+        orden: (cursoActualizado.temas?.length || 0) + 1
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      showToast(error.message || 'Error al agregar tema', 'error');
+    } finally {
+      setGuardando(false);
+    }
+  };
+
+  const eliminarTema = async (temaId) => {
+    if (!cursoCreado || !confirm('¿Eliminar este tema?')) return;
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${apiUrl}/api/courses/${cursoCreado._id}/temas/${temaId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) throw new Error('Error al eliminar tema');
+
+      const cursoActualizado = await response.json();
+      setCursoCreado(cursoActualizado);
+      showToast('Tema eliminado exitosamente', 'success');
+    } catch (error) {
+      console.error('Error:', error);
+      showToast('Error al eliminar tema', 'error');
+    }
+  };
+
+  const agregarMaterial = async (temaId, archivos) => {
+    if (!cursoCreado) return;
+
+    try {
+      setSubiendoMaterial(true);
+      const token = localStorage.getItem('token');
+      const formData = new FormData();
+
+      // archivos = { es: File | null, en: File | null }
+      if (archivos.es) {
+        formData.append('archivo', archivos.es);
+        formData.append('idioma', archivos.en ? 'both' : 'es');
+      }
+      if (archivos.en) {
+        formData.append('archivoEn', archivos.en);
+        if (!archivos.es) {
+          formData.append('idioma', 'en');
+        }
+      }
+
+      const response = await fetch(
+        `${apiUrl}/api/courses/${cursoCreado._id}/temas/${temaId}/materiales`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.mensaje || 'Error al subir material');
+      }
+
+      const cursoActualizado = await response.json();
+      setCursoCreado(cursoActualizado);
+      showToast('Material agregado exitosamente', 'success');
+    } catch (error) {
+      console.error('Error:', error);
+      showToast(error.message || 'Error al subir material', 'error');
+    } finally {
+      setSubiendoMaterial(false);
+    }
+  };
+
+  const finalizarCreacionCurso = () => {
+    showToast('¡Curso completado! Ya está disponible para los estudiantes', 'success');
+    resetFormulario();
+    cargarCursos();
+  };
+
+  // Componente TemaCard para mostrar temas en Fase 2
+  const TemaCard = ({ tema, index, cursoCreado, agregarMaterial, eliminarTema, subiendoMaterial }) => {
+    const [archivoEs, setArchivoEs] = useState(null);
+    const [archivoEn, setArchivoEn] = useState(null);
+
+    const handleSubirMateriales = async () => {
+      if (!archivoEs && !archivoEn) {
+        showToast('Selecciona al menos un archivo', 'error');
+        return;
+      }
+
+      await agregarMaterial(tema._id, { es: archivoEs, en: archivoEn });
+      setArchivoEs(null);
+      setArchivoEn(null);
+      // Reset file inputs
+      const fileInputs = document.querySelectorAll(`input[type="file"][data-tema="${tema._id}"]`);
+      fileInputs.forEach(input => input.value = '');
+    };
+
+    return (
+      <div className="bg-[#1a2e1f]/60 border border-green-900/30 rounded-lg p-4">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <h5 className="text-md font-semibold text-white mb-1">
+              {index + 1}. {tema.titulo || tema.tituloEn}
+            </h5>
+            {tema.descripcion && (
+              <p className="text-sm text-gray-400">{tema.descripcion}</p>
+            )}
+            {!tema.descripcion && tema.descripcionEn && (
+              <p className="text-sm text-gray-400">{tema.descripcionEn}</p>
+            )}
+          </div>
+          <button
+            onClick={() => eliminarTema(tema._id)}
+            className="text-red-400 hover:text-red-300 p-2"
+            title="Eliminar tema"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Materiales existentes */}
+        {tema.materiales && tema.materiales.length > 0 && (
+          <div className="mb-4 space-y-2">
+            <p className="text-xs font-medium text-gray-400">📄 Materiales:</p>
+            {tema.materiales.map((material, idx) => (
+              <div key={idx} className="flex items-center gap-2 text-sm text-gray-300 bg-[#0f1a12] p-2 rounded">
+                <FileText className="w-4 h-4 text-green-400" />
+                <span className="flex-1">Material {idx + 1}</span>
+                {material.idioma === 'both' && <span className="text-xs text-blue-400">🇪🇸 🇬🇧</span>}
+                {material.idioma === 'es' && <span className="text-xs text-green-400">🇪🇸</span>}
+                {material.idioma === 'en' && <span className="text-xs text-blue-400">🇬🇧</span>}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Subir nuevos materiales */}
+        <div className="space-y-3 pt-3 border-t border-green-900/20">
+          <p className="text-xs font-medium text-gray-400">➕ Agregar Material (PDF):</p>
+          
+          {cursoCreado.idiomasDisponibles?.includes('es') && (
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Archivo en Español (PDF)</label>
+              <input
+                type="file"
+                accept=".pdf"
+                data-tema={tema._id}
+                onChange={(e) => setArchivoEs(e.target.files[0])}
+                className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer"
+              />
+            </div>
+          )}
+
+          {cursoCreado.idiomasDisponibles?.includes('en') && (
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Archivo en Inglés (PDF)</label>
+              <input
+                type="file"
+                accept=".pdf"
+                data-tema={tema._id}
+                onChange={(e) => setArchivoEn(e.target.files[0])}
+                className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer"
+              />
+            </div>
+          )}
+
+          <button
+            onClick={handleSubirMateriales}
+            disabled={subiendoMaterial || (!archivoEs && !archivoEn)}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {subiendoMaterial ? (
+              <>
+                <Loader className="w-4 h-4 animate-spin" />
+                Subiendo...
+              </>
+            ) : (
+              <>
+                <Upload className="w-4 h-4" />
+                Subir Material
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -372,9 +652,16 @@ export default function AdminCursos() {
             className="bg-[#0f1a12] rounded-xl shadow-lg border border-green-900/30 p-6"
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-white">
-                {cursoEditando ? 'Editar Curso' : 'Nuevo Curso'}
-              </h3>
+              <div>
+                <h3 className="text-xl font-bold text-white">
+                  {cursoEditando ? 'Editar Curso' : fase === 1 ? 'Nuevo Curso - Fase 1: Información Básica' : 'Fase 2: Agregar Temas y Materiales'}
+                </h3>
+                {fase === 2 && cursoCreado && (
+                  <p className="text-sm text-gray-400 mt-1">
+                    Curso: <span className="text-green-400">{cursoCreado.title || cursoCreado.titleEn}</span>
+                  </p>
+                )}
+              </div>
               <button
                 onClick={resetFormulario}
                 className="p-2 hover:bg-green-900/20 rounded-lg transition-colors"
@@ -383,6 +670,8 @@ export default function AdminCursos() {
               </button>
             </div>
 
+            {/* FASE 1: Información Básica del Curso */}
+            {fase === 1 && (
             <form onSubmit={guardarCurso} className="space-y-6">
               {/* Idiomas Disponibles */}
               <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
@@ -787,8 +1076,157 @@ export default function AdminCursos() {
                 </button>
               </div>
             </form>
+            )}
+
+            {/* FASE 2: Agregar Temas y Materiales */}
+            {fase === 2 && cursoCreado && (
+              <div className="space-y-6">
+                {/* Indicador de progreso */}
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                  <div className="flex items-center gap-2 text-green-400 mb-2">
+                    <CheckCircle className="w-5 h-5" />
+                    <span className="font-medium">Paso 1 completado</span>
+                  </div>
+                  <p className="text-sm text-gray-400">
+                    Ahora agrega los temas y materiales del curso. Puedes subir PDFs en {cursoCreado.idiomasDisponibles?.includes('es') && cursoCreado.idiomasDisponibles?.includes('en') ? 'español e inglés' : cursoCreado.idiomasDisponibles?.includes('en') ? 'inglés' : 'español'}.
+                  </p>
+                </div>
+
+                {/* Formulario para agregar tema */}
+                <div className="bg-[#1a2e1f]/60 border border-green-900/30 rounded-lg p-4">
+                  <h4 className="text-lg font-semibold text-white mb-4">➕ Agregar Nuevo Tema</h4>
+                  
+                  <div className="space-y-4">
+                    {/* Título del tema - Español */}
+                    {cursoCreado.idiomasDisponibles?.includes('es') && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Título del Tema (Español) *
+                        </label>
+                        <input
+                          type="text"
+                          value={formTema.titulo}
+                          onChange={(e) => setFormTema({ ...formTema, titulo: e.target.value })}
+                          className="w-full px-4 py-2 bg-[#0f1a12] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                          placeholder="Ej: Introducción a la Modelización"
+                        />
+                      </div>
+                    )}
+
+                    {/* Título del tema - Inglés */}
+                    {cursoCreado.idiomasDisponibles?.includes('en') && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Título del Tema (English) *
+                        </label>
+                        <input
+                          type="text"
+                          value={formTema.tituloEn}
+                          onChange={(e) => setFormTema({ ...formTema, tituloEn: e.target.value })}
+                          className="w-full px-4 py-2 bg-[#0f1a12] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                          placeholder="Ex: Introduction to Modeling"
+                        />
+                      </div>
+                    )}
+
+                    {/* Descripción - Español */}
+                    {cursoCreado.idiomasDisponibles?.includes('es') && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Descripción (Español)
+                        </label>
+                        <textarea
+                          value={formTema.descripcion}
+                          onChange={(e) => setFormTema({ ...formTema, descripcion: e.target.value })}
+                          className="w-full px-4 py-2 bg-[#0f1a12] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors min-h-[80px]"
+                          placeholder="Descripción opcional del tema..."
+                        />
+                      </div>
+                    )}
+
+                    {/* Descripción - Inglés */}
+                    {cursoCreado.idiomasDisponibles?.includes('en') && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Descripción (English)
+                        </label>
+                        <textarea
+                          value={formTema.descripcionEn}
+                          onChange={(e) => setFormTema({ ...formTema, descripcionEn: e.target.value })}
+                          className="w-full px-4 py-2 bg-[#0f1a12] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors min-h-[80px]"
+                          placeholder="Optional theme description..."
+                        />
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={agregarTema}
+                      disabled={guardando}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 shadow-lg shadow-green-900/30"
+                    >
+                      {guardando ? (
+                        <>
+                          <Loader className="w-5 h-5 animate-spin" />
+                          Agregando...
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-5 h-5" />
+                          Agregar Tema
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Lista de temas agregados */}
+                {cursoCreado.temas && cursoCreado.temas.length > 0 && (
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-white">📚 Temas del Curso ({cursoCreado.temas.length})</h4>
+                    
+                    {cursoCreado.temas.map((tema, index) => (
+                      <TemaCard
+                        key={tema._id}
+                        tema={tema}
+                        index={index}
+                        cursoCreado={cursoCreado}
+                        agregarMaterial={agregarMaterial}
+                        eliminarTema={eliminarTema}
+                        subiendoMaterial={subiendoMaterial}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Botones de finalización */}
+                <div className="flex gap-4 pt-4 border-t border-green-900/30">
+                  <button
+                    type="button"
+                    onClick={finalizarCreacionCurso}
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
+                  >
+                    <CheckCircle className="w-5 h-5" />
+                    Finalizar y Publicar Curso
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetFormulario}
+                    className="px-6 py-3 border border-green-900/30 text-gray-300 rounded-lg hover:bg-[#1a2e1f]/60 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+
+                <p className="text-xs text-gray-500 text-center">
+                  Puedes agregar más temas y materiales después desde la lista de cursos
+                </p>
+              </div>
+            )}
           </motion.div>
         )}
+
+        {/* Lista de cursos existentes */}
       </AnimatePresence>
 
       {/* Lista de cursos */}

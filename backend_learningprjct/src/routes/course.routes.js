@@ -40,8 +40,8 @@ router.delete('/:id/temas/:temaId', autenticar, soloAdmin, courseController.elim
 
 // ============= RUTAS PARA MATERIALES =============
 
-// Agregar material a un tema (solo admin, con soporte para subir archivos)
-router.post('/:id/temas/:temaId/materiales', autenticar, soloAdmin, upload.single('archivo'), courseController.agregarMaterial);
+// Agregar material a un tema (solo admin, con soporte para subir archivos en múltiples idiomas)
+router.post('/:id/temas/:temaId/materiales', autenticar, soloAdmin, upload.fields([{ name: 'archivo', maxCount: 1 }, { name: 'archivoEn', maxCount: 1 }]), courseController.agregarMaterial);
 
 // Eliminar un material de un tema (solo admin)
 router.delete('/:id/temas/:temaId/materiales/:materialId', autenticar, soloAdmin, courseController.eliminarMaterial);
