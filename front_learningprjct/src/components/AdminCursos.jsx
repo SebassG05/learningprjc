@@ -256,10 +256,20 @@ export default function AdminCursos() {
       const token = localStorage.getItem('token');
       const formDataToSend = new FormData();
       
-      formDataToSend.append('title', formData.title);
-      formDataToSend.append('titleEn', formData.titleEn || '');
-      formDataToSend.append('description', formData.description);
-      formDataToSend.append('descriptionEn', formData.descriptionEn || '');
+      // Solo agregar campos que tienen valor
+      if (formData.title && formData.title.trim()) {
+        formDataToSend.append('title', formData.title.trim());
+      }
+      if (formData.titleEn && formData.titleEn.trim()) {
+        formDataToSend.append('titleEn', formData.titleEn.trim());
+      }
+      if (formData.description && formData.description.trim()) {
+        formDataToSend.append('description', formData.description.trim());
+      }
+      if (formData.descriptionEn && formData.descriptionEn.trim()) {
+        formDataToSend.append('descriptionEn', formData.descriptionEn.trim());
+      }
+      
       formDataToSend.append('duration', formData.duration || '0 horas');
       formDataToSend.append('isOpen', formData.isOpen);
       formDataToSend.append('category', JSON.stringify(formData.category));
@@ -269,11 +279,19 @@ export default function AdminCursos() {
       formDataToSend.append('objetivosEspecificosEn', JSON.stringify(formData.objetivosEspecificosEn));
       formDataToSend.append('idiomasDisponibles', JSON.stringify(formData.idiomasDisponibles));
 
+      // Agregar imagen SOLO si hay un archivo
       if (formData.imageFile) {
+        console.log('📸 Agregando imagen:', formData.imageFile.name, formData.imageFile.type);
         formDataToSend.append('image', formData.imageFile);
-      } else if (formData.image) {
-        formDataToSend.append('image', formData.image);
       }
+
+      console.log('📤 Enviando datos del curso:', {
+        hasTitle: !!formData.title,
+        hasTitleEn: !!formData.titleEn,
+        hasImage: !!formData.imageFile,
+        imageType: formData.imageFile?.type,
+        idiomas: formData.idiomasDisponibles
+      });
 
       const url = cursoEditando
         ? `${apiUrl}/api/courses/${cursoEditando._id}`

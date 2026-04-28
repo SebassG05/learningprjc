@@ -43,14 +43,25 @@ export const obtenerCurso = async (req, res) => {
  */
 export const crearCurso = async (req, res) => {
   try {
-    console.log('📝 Creando curso - Datos recibidos:', {
+    console.log('============================================');
+    console.log('📝 CREANDO NUEVO CURSO');
+    console.log('============================================');
+    console.log('📦 Body recibido:', {
       title: req.body.title,
       titleEn: req.body.titleEn,
-      description: req.body.description?.substring(0, 50),
+      description: req.body.description?.substring(0, 50) + '...',
       descriptionEn: req.body.descriptionEn?.substring(0, 50),
       idiomasDisponibles: req.body.idiomasDisponibles,
-      hasFile: !!req.file
+      duration: req.body.duration,
+      hasCategories: !!req.body.category
     });
+    console.log('📷 Archivo recibido:', req.file ? {
+      fieldname: req.file.fieldname,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      path: req.file.path
+    } : 'NO HAY ARCHIVO');
 
     const {
       title,
@@ -111,34 +122,42 @@ export const crearCurso = async (req, res) => {
       });
     }
 
-    // Verificar si ya existe un curso con el mismo título (en cualquier idioma) - solo si hay título
-    const queryDuplicados = [];
-    
+    // Verificar si ya existe un curso con el mismo título - SIMPLIFICADO
     if (title && title.trim()) {
-      queryDuplicados.push({ title: { $regex: new RegExp(`^${title.trim()}$`, 'i') } });
-    }
-    
-    if (titleEn && titleEn.trim()) {
-      queryDuplicados.push({ titleEn: { $regex: new RegExp(`^${titleEn.trim()}$`, 'i') } });
-    }
-
-    if (queryDuplicados.length > 0) {
-      const cursoExistente = await Course.findOne({ $or: queryDuplicados });
+      const cursoExistente = await Course.findOne({ 
+        title: { $regex: new RegExp(`^${title.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+      });
       
       if (cursoExistente) {
-        console.log('❌ Error: Curso duplicado encontrado');
+        console.log('❌ Error: Curso duplicado con título en español');
         return res.status(400).json({ 
           error: 'Curso duplicado',
-          mensaje: `Ya existe un curso con ese título` 
+          mensaje: `Ya existe un curso con ese título en español` 
+        });
+      }
+    }
+
+    if (titleEn && titleEn.trim()) {
+      const cursoExistente = await Course.findOne({ 
+        titleEn: { $regex: new RegExp(`^${titleEn.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+      });
+      
+      if (cursoExistente) {
+        console.log('❌ Error: Curso duplicado con título en inglés');
+        return res.status(400).json({ 
+          error: 'Curso duplicado',
+          mensaje: `Ya existe un curso con ese título en inglés` 
         });
       }
     }
 
     // Si se subió una imagen
-    let imagenUrl = image;
+    let imagenUrl = null;
     if (req.file) {
       imagenUrl = req.file.path; // URL de Cloudinary
-      console.log('📷 Imagen subida:', imagenUrl);
+      console.log('✅ Imagen subida a Cloudinary:', imagenUrl);
+    } else {
+      console.log('ℹ️ No se subió imagen de portada');
     }
 
     // Parsear arrays si vienen como strings JSON
@@ -174,21 +193,41 @@ export const crearCurso = async (req, res) => {
 
     console.log('💾 Intentando crear curso con datos:', {
       ...datosNuevoCurso,
-      description: datosNuevoCurso.description?.substring(0, 50),
-      descriptionEn: datosNuevoCurso.descriptionEn?.substring(0, 50)
+      title: datosNuevoCurso.title,
+      titleEn: datosNuevoCurso.titleEn || 'N/A',
+      description: datosNuevoCurso.description?.substring(0, 50) + '...',
+      descriptionEn: datosNuevoCurso.descriptionEn?.substring(0, 50) || 'N/A',
+      image: datosNuevoCurso.image ? 'SÍ' : 'NO',
+      idiomasDisponibles: datosNuevoCurso.idiomasDisponibles
     });
 
     // Crear el curso con todos los campos multiidioma
     const nuevoCurso = await Course.create(datosNuevoCurso);
 
-    console.log('✅ Curso creado exitosamente:', nuevoCurso._id);
+    console.log('✅ CURSO CREADO EXITOSAMENTE:', nuevoCurso._id);
+    console.log('============================================');
     res.status(201).json(nuevoCurso);
   } catch (err) {
-    console.error('❌ ERROR AL CREAR CURSO:', err);
-    console.error('Stack:', err.stack);
+    console.log('============================================');
+    console.error('❌❌❌ ERROR AL CREAR CURSO ❌❌❌');
+    console.error('Tipo de error:', err.name);
+    console.error('Mensaje:', err.message);
+    console.error('Stack completo:', err.stack);
+    
+    // Si es un error de validación de Mongoose
+    if (err.name === 'ValidationError') {
+      console.error('📋 Errores de validación:', Object.keys(err.errors));
+      Object.keys(err.errors).forEach(key => {
+        console.error(`  - ${key}: ${err.errors[key].message}`);
+      });
+    }
+    
+    console.log('============================================');
+    
     res.status(500).json({ 
       error: 'Error al crear curso', 
-      mensaje: err.message 
+      mensaje: err.message,
+      detalles: err.name === 'ValidationError' ? Object.keys(err.errors) : undefined
     });
   }
 };
