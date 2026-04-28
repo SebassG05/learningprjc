@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Plus, Edit2, Trash2, Eye, EyeOff, Save, X,
   Upload, FileText, Video, Link as LinkIcon, AlertCircle,
-  CheckCircle, Loader, ChevronDown, ChevronUp, Image as ImageIcon
+  CheckCircle, Loader, ChevronDown, ChevronUp, ChevronLeft, Image as ImageIcon
 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
