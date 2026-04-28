@@ -209,7 +209,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                           isCompleted 
                             ? 'bg-[#a1db87]/10 border-[#a1db87]/40 hover:bg-[#a1db87]/15' 
                             : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#a1db87]/30'
-                        } ${archivoFinal ? 'cursor-pointer' : ''}`}}
+                        } ${archivoFinal ? 'cursor-pointer' : ''}`}
                       >
                         <div className="flex items-center gap-3 flex-1 min-w-0">
                           <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-[#a1db87]' : 'text-[#a1db87]'}`}>
