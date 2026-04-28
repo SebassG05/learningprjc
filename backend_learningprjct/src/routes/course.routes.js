@@ -1,6 +1,6 @@
 import express from 'express';
 import Course from '../models/Course.js';
-import upload from '../middleware/upload.js';
+import upload, { handleMulterError } from '../middleware/upload.js';
 import * as courseController from '../controller/courseController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
@@ -16,10 +16,10 @@ router.get('/', courseController.obtenerCursos);
 router.get('/:id', courseController.obtenerCurso);
 
 // Crear curso (solo admin/superadmin) - con soporte para subir imagen
-router.post('/', autenticar, soloAdmin, upload.single('image'), courseController.crearCurso);
+router.post('/', autenticar, soloAdmin, upload.single('image'), handleMulterError, courseController.crearCurso);
 
 // Actualizar curso por id (solo admin/superadmin) - con soporte para actualizar imagen
-router.put('/:id', autenticar, soloAdmin, upload.single('image'), courseController.actualizarCurso);
+router.put('/:id', autenticar, soloAdmin, upload.single('image'), handleMulterError, courseController.actualizarCurso);
 
 // Eliminar curso (solo admin/superadmin)
 router.delete('/:id', autenticar, soloAdmin, courseController.eliminarCurso);
@@ -41,7 +41,7 @@ router.delete('/:id/temas/:temaId', autenticar, soloAdmin, courseController.elim
 // ============= RUTAS PARA MATERIALES =============
 
 // Agregar material a un tema (solo admin, con soporte para subir archivos en múltiples idiomas)
-router.post('/:id/temas/:temaId/materiales', autenticar, soloAdmin, upload.fields([{ name: 'archivo', maxCount: 1 }, { name: 'archivoEn', maxCount: 1 }]), courseController.agregarMaterial);
+router.post('/:id/temas/:temaId/materiales', autenticar, soloAdmin, upload.fields([{ name: 'archivo', maxCount: 1 }, { name: 'archivoEn', maxCount: 1 }]), handleMulterError, courseController.agregarMaterial);
 
 // Eliminar un material de un tema (solo admin)
 router.delete('/:id/temas/:temaId/materiales/:materialId', autenticar, soloAdmin, courseController.eliminarMaterial);
@@ -49,7 +49,7 @@ router.delete('/:id/temas/:temaId/materiales/:materialId', autenticar, soloAdmin
 // ============= RUTAS PARA ACTIVIDADES OPTATIVAS =============
 
 // Agregar actividad optativa a un tema (solo admin, con soporte para subir archivos)
-router.post('/:id/temas/:temaId/actividades-optativas', autenticar, soloAdmin, upload.single('archivo'), courseController.agregarActividadOptativa);
+router.post('/:id/temas/:temaId/actividades-optativas', autenticar, soloAdmin, upload.single('archivo'), handleMulterError, courseController.agregarActividadOptativa);
 
 // Eliminar una actividad optativa de un tema (solo admin)
 router.delete('/:id/temas/:temaId/actividades-optativas/:actividadId', autenticar, soloAdmin, courseController.eliminarActividadOptativa);
