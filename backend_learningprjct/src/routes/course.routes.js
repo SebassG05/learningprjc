@@ -9,21 +9,22 @@ const router = express.Router();
 
 // Wrapper para capturar errores de upload (single file)
 const uploadSingleWrapper = (fieldName) => {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     console.log(`\n🚀 [ROUTE] Iniciando upload SINGLE para campo: ${fieldName}`);
     console.log('📋 [ROUTE] Headers:', {
       'content-type': req.headers['content-type'],
       'content-length': req.headers['content-length']
     });
-    
-    const uploadMiddleware = upload.single(fieldName);
-    
-    uploadMiddleware(req, res, (err) => {
-      if (err) {
-        console.error(`\n💥 [ROUTE] Error capturado en uploadSingleWrapper:`, err);
-        return handleMulterError(err, req, res, next);
-      }
-      
+
+    try {
+      await new Promise((resolve, reject) => {
+        const uploadMiddleware = upload.single(fieldName);
+        uploadMiddleware(req, res, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
       console.log(`✅ [ROUTE] Upload SINGLE completado para ${fieldName}`);
       if (req.file) {
         console.log('📁 [ROUTE] Archivo procesado:', {
@@ -36,29 +37,33 @@ const uploadSingleWrapper = (fieldName) => {
       } else {
         console.log('ℹ️ [ROUTE] No se recibió archivo');
       }
-      
+
       next();
-    });
+    } catch (err) {
+      console.error(`\n💥 [ROUTE] Error capturado en uploadSingleWrapper:`, err);
+      handleMulterError(err, req, res, next);
+    }
   };
 };
 
 // Wrapper para capturar errores de upload (multiple fields)
 const uploadFieldsWrapper = (fields) => {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     console.log(`\n🚀 [ROUTE] Iniciando upload FIELDS para:`, fields.map(f => f.name).join(', '));
     console.log('📋 [ROUTE] Headers:', {
       'content-type': req.headers['content-type'],
       'content-length': req.headers['content-length']
     });
-    
-    const uploadMiddleware = upload.fields(fields);
-    
-    uploadMiddleware(req, res, (err) => {
-      if (err) {
-        console.error(`\n💥 [ROUTE] Error capturado en uploadFieldsWrapper:`, err);
-        return handleMulterError(err, req, res, next);
-      }
-      
+
+    try {
+      await new Promise((resolve, reject) => {
+        const uploadMiddleware = upload.fields(fields);
+        uploadMiddleware(req, res, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
       console.log(`✅ [ROUTE] Upload FIELDS completado`);
       if (req.files) {
         console.log('📁 [ROUTE] Archivos procesados:', Object.keys(req.files));
@@ -75,9 +80,12 @@ const uploadFieldsWrapper = (fields) => {
       } else {
         console.log('ℹ️ [ROUTE] No se recibieron archivos');
       }
-      
+
       next();
-    });
+    } catch (err) {
+      console.error(`\n💥 [ROUTE] Error capturado en uploadFieldsWrapper:`, err);
+      handleMulterError(err, req, res, next);
+    }
   };
 };
 

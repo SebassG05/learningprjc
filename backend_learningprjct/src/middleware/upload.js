@@ -128,17 +128,24 @@ export const handleMulterError = (err, req, res, next) => {
     console.error('Mensaje:', err.message);
     console.error('Stack:', err.stack);
     
-    // Error de Cloudinary
-    if (err.message && err.message.includes('cloudinary')) {
+    // Error de Cloudinary (credenciales, cuota, parámetros inválidos, etc.)
+    const isCloudinaryError =
+      (err.message && err.message.toLowerCase().includes('cloudinary')) ||
+      (err.message && err.message.toLowerCase().includes('api_key')) ||
+      (err.message && err.message.toLowerCase().includes('api key')) ||
+      (err.message && err.message.toLowerCase().includes('must supply')) ||
+      (err.message && err.message.toLowerCase().includes('unauthorized')) ||
+      err.http_code !== undefined; // cloudinary errors include http_code
+    if (isCloudinaryError) {
       return res.status(500).json({
         error: 'Error al subir a Cloudinary',
-        mensaje: err.message
+        mensaje: `Error de Cloudinary: ${err.message}`
       });
     }
-    
-    return res.status(400).json({
+
+    return res.status(500).json({
       error: 'Error al procesar archivo',
-      mensaje: err.message
+      mensaje: err.message || 'Error desconocido al procesar el archivo'
     });
   }
   
