@@ -78,6 +78,21 @@ export default function Cursos() {
     }
   };
 
+  // Devuelve título y descripción en el idioma guardado para ese curso
+  const getCourseText = (course) => {
+    const lang = localStorage.getItem(`lang_${course._id}`);
+    if (lang === 'en' && course.titleEn) {
+      return {
+        title: course.titleEn,
+        description: course.descriptionEn || course.description
+      };
+    }
+    return {
+      title: course.title || course.titleEn,
+      description: course.description || course.descriptionEn
+    };
+  };
+
   return (
     <div className="max-w-5xl mx-auto py-12 px-4">
       {/* Encabezado animado */}
@@ -126,7 +141,9 @@ export default function Cursos() {
         ) : courses.length === 0 ? (
           <div className="text-center text-gray-400 col-span-3">No hay cursos disponibles.</div>
         ) : (
-          courses.map(course => (
+          courses.map(course => {
+            const { title: courseTitle, description: courseDesc } = getCourseText(course);
+            return (
             <motion.div
               key={course._id}
               initial={{ opacity: 0, y: 30 }}
@@ -148,7 +165,7 @@ export default function Cursos() {
             >
               <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
                 {course.image ? (
-                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src={course.image} alt={courseTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 ) : (
                   <BookOpen className="w-16 h-16 text-[#a1db87]" />
                 )}
@@ -156,7 +173,7 @@ export default function Cursos() {
               <div className="flex-1 flex flex-col justify-between p-10">
                 <div>
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
-                    {course.title}
+                    {courseTitle}
                   </h3>
                   {!course.isOpen && (
                     <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-3">
@@ -164,7 +181,7 @@ export default function Cursos() {
                       Próximamente
                     </div>
                   )}
-                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{course.description}</p>
+                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{courseDesc}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
@@ -195,7 +212,8 @@ export default function Cursos() {
                 </div>
               </div>
             </motion.div>
-          ))
+          );
+          })
         )}
       </section>
 
@@ -206,7 +224,9 @@ export default function Cursos() {
         ) : courses.length === 0 ? (
           <div className="text-center text-gray-400 col-span-1">No hay cursos disponibles.</div>
         ) : (
-          courses.map(course => (
+          courses.map(course => {
+            const { title: courseTitle, description: courseDesc } = getCourseText(course);
+            return (
             <motion.div
               key={course._id}
               initial={{ opacity: 0, y: 30 }}
@@ -228,7 +248,7 @@ export default function Cursos() {
             >
               <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
                 {course.image ? (
-                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src={course.image} alt={courseTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 ) : (
                   <BookOpen className="w-16 h-16 text-[#a1db87]" />
                 )}
@@ -236,15 +256,15 @@ export default function Cursos() {
               <div className="flex-1 flex flex-col justify-between p-10">
                 <div>
                   <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
-                    {course.title}
+                    {courseTitle}
                   </h3>
-                  {course.title?.toLowerCase().includes('modelizaci\u00f3n') && (
+                  {!course.isOpen && (
                     <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-3">
                       <Clock className="w-3 h-3" />
-                      Apertura: mayo 2026
+                      Próximamente
                     </div>
                   )}
-                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{course.description}</p>
+                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{courseDesc}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
@@ -275,7 +295,8 @@ export default function Cursos() {
                 </div>
               </div>
             </motion.div>
-          ))
+          );
+          })
         )}
       </section>
     </div>
