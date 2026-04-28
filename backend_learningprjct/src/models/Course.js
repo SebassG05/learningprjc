@@ -31,14 +31,13 @@ const temaSchema = new mongoose.Schema({
 }, { _id: true });
 
 // Validación personalizada para temas: al menos un título debe existir
-temaSchema.pre('validate', function(next) {
+temaSchema.pre('validate', async function() {
   const tieneTituloEs = this.titulo && this.titulo.trim && this.titulo.trim().length > 0;
   const tieneTituloEn = this.tituloEn && this.tituloEn.trim && this.tituloEn.trim().length > 0;
   
   if (!tieneTituloEs && !tieneTituloEn) {
-    return next(new Error('El tema debe tener al menos un título (en español o inglés)'));
+    throw new Error('El tema debe tener al menos un título (en español o inglés)');
   }
-  next();
 });
 
 const courseSchema = new mongoose.Schema({
@@ -63,19 +62,18 @@ const courseSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Validación personalizada: al menos uno de los títulos debe existir
-courseSchema.pre('validate', function(next) {
+courseSchema.pre('validate', async function() {
   const tieneTitleEs = this.title && this.title.trim && this.title.trim().length > 0;
   const tieneTitleEn = this.titleEn && this.titleEn.trim && this.titleEn.trim().length > 0;
   const tieneDescEs = this.description && this.description.trim && this.description.trim().length > 0;
   const tieneDescEn = this.descriptionEn && this.descriptionEn.trim && this.descriptionEn.trim().length > 0;
   
   if (!tieneTitleEs && !tieneTitleEn) {
-    return next(new Error('El curso debe tener al menos un título (en español o inglés)'));
+    throw new Error('El curso debe tener al menos un título (en español o inglés)');
   }
   if (!tieneDescEs && !tieneDescEn) {
-    return next(new Error('El curso debe tener al menos una descripción (en español o inglés)'));
+    throw new Error('El curso debe tener al menos una descripción (en español o inglés)');
   }
-  next();
 });
 
 export default mongoose.model('Course', courseSchema);
