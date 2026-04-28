@@ -114,23 +114,28 @@ export const crearCurso = async (req, res) => {
       }
     };
 
-    // Crear el curso con todos los campos multiidioma
-    const nuevoCurso = await Course.create({
-      title: title || '',
-      titleEn: titleEn || '',
-      image: imagenUrl,
-      description: description || '',
-      descriptionEn: descriptionEn || '',
+    // Preparar datos del curso - solo incluir campos que tienen valor
+    const datosNuevoCurso = {
+      idiomasDisponibles: idiomas,
       duration: duration || '0 horas',
       category: parseArray(category),
       objetivosGenerales: parseArray(objetivosGenerales),
       objetivosGeneralesEn: parseArray(objetivosGeneralesEn),
       objetivosEspecificos: parseArray(objetivosEspecificos),
       objetivosEspecificosEn: parseArray(objetivosEspecificosEn),
-      idiomasDisponibles: idiomas,
       isOpen: isOpen === true || isOpen === 'true',
       temas: parseArray(temas)
-    });
+    };
+
+    // Solo agregar campos de texto si tienen valor
+    if (title && title.trim()) datosNuevoCurso.title = title.trim();
+    if (titleEn && titleEn.trim()) datosNuevoCurso.titleEn = titleEn.trim();
+    if (description && description.trim()) datosNuevoCurso.description = description.trim();
+    if (descriptionEn && descriptionEn.trim()) datosNuevoCurso.descriptionEn = descriptionEn.trim();
+    if (imagenUrl) datosNuevoCurso.image = imagenUrl;
+
+    // Crear el curso con todos los campos multiidioma
+    const nuevoCurso = await Course.create(datosNuevoCurso);
 
     res.status(201).json(nuevoCurso);
   } catch (err) {
@@ -162,14 +167,27 @@ export const actualizarCurso = async (req, res) => {
       }
     };
 
-    const updateData = {
-      title: req.body.title,
-      titleEn: req.body.titleEn,
-      description: req.body.description,
-      descriptionEn: req.body.descriptionEn,
-      duration: req.body.duration,
-      isOpen: req.body.isOpen === true || req.body.isOpen === 'true',
-    };
+    const updateData = {};
+
+    // Solo agregar campos de texto si tienen valor
+    if (req.body.title !== undefined && req.body.title !== null) {
+      updateData.title = req.body.title.trim ? req.body.title.trim() : req.body.title;
+    }
+    if (req.body.titleEn !== undefined && req.body.titleEn !== null) {
+      updateData.titleEn = req.body.titleEn.trim ? req.body.titleEn.trim() : req.body.titleEn;
+    }
+    if (req.body.description !== undefined && req.body.description !== null) {
+      updateData.description = req.body.description.trim ? req.body.description.trim() : req.body.description;
+    }
+    if (req.body.descriptionEn !== undefined && req.body.descriptionEn !== null) {
+      updateData.descriptionEn = req.body.descriptionEn.trim ? req.body.descriptionEn.trim() : req.body.descriptionEn;
+    }
+    if (req.body.duration !== undefined) {
+      updateData.duration = req.body.duration;
+    }
+    if (req.body.isOpen !== undefined) {
+      updateData.isOpen = req.body.isOpen === true || req.body.isOpen === 'true';
+    }
 
     // Solo agregar campos que existen
     if (req.body.category) updateData.category = parseArray(req.body.category);
@@ -310,15 +328,19 @@ export const agregarTema = async (req, res) => {
       });
     }
 
-    course.temas.push({
+    // Preparar datos del tema - solo incluir campos con valor
+    const nuevoTema = {
       numeroTema: parseInt(siguienteNumero),
-      titulo: titulo || '',
-      tituloEn: tituloEn || '',
-      descripcion: descripcion || '',
-      descripcionEn: descripcionEn || '',
       materiales: [],
       orden: orden || course.temas.length
-    });
+    };
+
+    if (titulo && titulo.trim()) nuevoTema.titulo = titulo.trim();
+    if (tituloEn && tituloEn.trim()) nuevoTema.tituloEn = tituloEn.trim();
+    if (descripcion && descripcion.trim()) nuevoTema.descripcion = descripcion.trim();
+    if (descripcionEn && descripcionEn.trim()) nuevoTema.descripcionEn = descripcionEn.trim();
+
+    course.temas.push(nuevoTema);
 
     await course.save();
     res.json(course);
