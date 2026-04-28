@@ -134,6 +134,8 @@ export default function AdminCursos() {
       idiomasDisponibles: curso.idiomasDisponibles || ['es'],
       isOpen: curso.isOpen || false
     });
+    setCursoCreado(curso);
+    setFase(1);
     setMostrarFormulario(true);
   };
 
@@ -315,9 +317,10 @@ export default function AdminCursos() {
       const cursoGuardado = await response.json();
 
       if (cursoEditando) {
-        // Si estamos editando, solo actualizamos y volvemos
+        // Si estamos editando, actualizamos y pasamos a Fase 2 para gestionar temas
         showToast('Curso actualizado exitosamente', 'success');
-        resetFormulario();
+        setCursoCreado(cursoGuardado);
+        setFase(2);
         cargarCursos();
       } else {
         // Si es nuevo, pasamos a la Fase 2 para agregar temas
@@ -747,7 +750,9 @@ export default function AdminCursos() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-xl font-bold text-white">
-                  {cursoEditando ? 'Editar Curso' : fase === 1 ? 'Nuevo Curso - Fase 1: Información Básica' : 'Fase 2: Agregar Temas y Materiales'}
+                  {fase === 2
+                    ? (cursoEditando ? 'Editar Curso - Temas y Materiales' : 'Fase 2: Agregar Temas y Materiales')
+                    : (cursoEditando ? 'Editar Curso' : 'Nuevo Curso - Fase 1: Información Básica')}
                 </h3>
                 {fase === 2 && cursoCreado && (
                   <p className="text-sm text-gray-400 mt-1">
@@ -1160,6 +1165,16 @@ export default function AdminCursos() {
                     </>
                   )}
                 </button>
+                {cursoEditando && (
+                  <button
+                    type="button"
+                    onClick={() => setFase(2)}
+                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
+                  >
+                    <BookOpen className="w-5 h-5" />
+                    Gestionar Temas
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={resetFormulario}
@@ -1176,13 +1191,27 @@ export default function AdminCursos() {
               <div className="space-y-6">
                 {/* Indicador de progreso */}
                 <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
-                  <div className="flex items-center gap-2 text-green-400 mb-2">
-                    <CheckCircle className="w-5 h-5" />
-                    <span className="font-medium">Paso 1 completado</span>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 text-green-400 mb-2">
+                        <CheckCircle className="w-5 h-5" />
+                        <span className="font-medium">{cursoEditando ? 'Editando temas' : 'Paso 1 completado'}</span>
+                      </div>
+                      <p className="text-sm text-gray-400">
+                        Ahora agrega los temas y materiales del curso. Puedes subir PDFs en {cursoCreado.idiomasDisponibles?.includes('es') && cursoCreado.idiomasDisponibles?.includes('en') ? 'español e inglés' : cursoCreado.idiomasDisponibles?.includes('en') ? 'inglés' : 'español'}.
+                      </p>
+                    </div>
+                    {cursoEditando && (
+                      <button
+                        type="button"
+                        onClick={() => setFase(1)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm bg-[#1a2e1f] border border-green-900/40 text-gray-300 rounded-lg hover:bg-green-900/20 transition-colors"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        Información básica
+                      </button>
+                    )}
                   </div>
-                  <p className="text-sm text-gray-400">
-                    Ahora agrega los temas y materiales del curso. Puedes subir PDFs en {cursoCreado.idiomasDisponibles?.includes('es') && cursoCreado.idiomasDisponibles?.includes('en') ? 'español e inglés' : cursoCreado.idiomasDisponibles?.includes('en') ? 'inglés' : 'español'}.
-                  </p>
                 </div>
 
                 {/* Formulario para agregar tema */}
