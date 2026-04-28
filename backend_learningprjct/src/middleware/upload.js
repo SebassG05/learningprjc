@@ -17,31 +17,41 @@ const generateUniqueFilename = (originalname) => {
 // Configuración dinámica que detecta el tipo de archivo según el fieldname
 const storageDinamico = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: (req, file) => {
-    console.log('📤 Subiendo archivo:', {
-      fieldname: file.fieldname,
-      originalname: file.originalname,
-      mimetype: file.mimetype
-    });
+  params: async (req, file) => {
+    try {
+      console.log('🚀 [UPLOAD MIDDLEWARE] Iniciando subida:', {
+        fieldname: file.fieldname,
+        originalname: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size
+      });
 
-    // Si el campo se llama 'image', es una imagen de portada
-    if (file.fieldname === 'image') {
-      return {
-        folder: 'learning-platform/portadas',
-        resource_type: 'image',
-        public_id: generateUniqueFilename(file.originalname),
-        allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
-        transformation: [{ width: 800, height: 450, crop: 'limit', quality: 'auto' }]
-      };
-    } 
-    // Si es 'archivo' o 'archivoEn', es un documento PDF
-    else {
-      return {
-        folder: 'learning-platform/materiales',
-        resource_type: 'raw',
-        public_id: generateUniqueFilename(file.originalname),
-        allowed_formats: ['pdf', 'doc', 'docx', 'ppt', 'pptx']
-      };
+      // Si el campo se llama 'image', es una imagen de portada
+      if (file.fieldname === 'image') {
+        const config = {
+          folder: 'learning-platform/portadas',
+          resource_type: 'image',
+          public_id: generateUniqueFilename(file.originalname),
+          allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
+          transformation: [{ width: 800, height: 450, crop: 'limit', quality: 'auto' }]
+        };
+        console.log('🖼️ [UPLOAD MIDDLEWARE] Configuración para imagen:', config);
+        return config;
+      } 
+      // Si es 'archivo' o 'archivoEn', es un documento PDF
+      else {
+        const config = {
+          folder: 'learning-platform/materiales',
+          resource_type: 'raw',
+          public_id: generateUniqueFilename(file.originalname),
+          allowed_formats: ['pdf', 'doc', 'docx', 'ppt', 'pptx']
+        };
+        console.log('📄 [UPLOAD MIDDLEWARE] Configuración para documento:', config);
+        return config;
+      }
+    } catch (error) {
+      console.error('💥 [UPLOAD MIDDLEWARE] ERROR en params:', error);
+      throw error;
     }
   }
 });
@@ -95,7 +105,10 @@ const upload = multer({
 // Middleware para manejar errores de Multer
 export const handleMulterError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
-    console.error('❌ Error de Multer:', err.message);
+    console.error('❌❌❌ [MULTER ERROR] ❌❌❌');
+    console.error('Código:', err.code);
+    console.error('Mensaje:', err.message);
+    console.error('Campo:', err.field);
     
     if (err.code === 'LIMIT_FILE_SIZE') {
       return res.status(400).json({
@@ -106,10 +119,23 @@ export const handleMulterError = (err, req, res, next) => {
     
     return res.status(400).json({
       error: 'Error al subir archivo',
-      mensaje: err.message
+      mensaje: err.message,
+      codigo: err.code
     });
   } else if (err) {
-    console.error('❌ Error al procesar archivo:', err.message);
+    console.error('❌❌❌ [UPLOAD ERROR] ❌❌❌');
+    console.error('Tipo:', err.name);
+    console.error('Mensaje:', err.message);
+    console.error('Stack:', err.stack);
+    
+    // Error de Cloudinary
+    if (err.message && err.message.includes('cloudinary')) {
+      return res.status(500).json({
+        error: 'Error al subir a Cloudinary',
+        mensaje: err.message
+      });
+    }
+    
     return res.status(400).json({
       error: 'Error al procesar archivo',
       mensaje: err.message

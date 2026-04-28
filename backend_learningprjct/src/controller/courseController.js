@@ -42,6 +42,8 @@ export const obtenerCurso = async (req, res) => {
  * @access Private (admin/superadmin)
  */
 export const crearCurso = async (req, res) => {
+  console.log('\n\n🔥🔥🔥 [INICIO] crearCurso función ejecutada 🔥🔥🔥\n');
+  
   try {
     console.log('============================================');
     console.log('📝 CREANDO NUEVO CURSO');
