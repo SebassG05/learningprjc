@@ -1,7 +1,7 @@
 import React from "react";
 import { Target, CheckCircle2 } from 'lucide-react';
 
-export default function ObjetivosCurso({ objetivosGenerales, objetivosEspecificos }) {
+export default function ObjetivosCurso({ objetivosGenerales, objetivosEspecificos, idioma = 'es' }) {
   // Si no hay objetivos, no mostrar nada
   if ((!objetivosGenerales || objetivosGenerales.length === 0) && 
       (!objetivosEspecificos || objetivosEspecificos.length === 0)) {
@@ -16,7 +16,7 @@ export default function ObjetivosCurso({ objetivosGenerales, objetivosEspecifico
           <div className="flex items-center gap-3 mb-6">
             <Target className="w-6 h-6 text-[#a1db87] flex-shrink-0" />
             <h2 className="text-xl font-bold text-[#a1db87] tracking-wide uppercase">
-              Objetivos Generales
+              {idioma === 'en' ? 'General Objectives' : 'Objetivos Generales'}
             </h2>
           </div>
           <ul className="space-y-3">
@@ -39,7 +39,7 @@ export default function ObjetivosCurso({ objetivosGenerales, objetivosEspecifico
               <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M8 12l2 2 4-4" />
             </svg>
             <h2 className="text-xl font-bold text-[#5ec6a6] tracking-wide uppercase">
-              Objetivos Específicos
+              {idioma === 'en' ? 'Specific Objectives' : 'Objetivos Específicos'}
             </h2>
           </div>
           <ul className="space-y-4">

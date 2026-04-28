@@ -410,6 +410,7 @@ export default function CursoDetalle() {
         <ObjetivosCurso 
           objetivosGenerales={idiomaSeleccionado === 'en' ? (curso.objetivosGeneralesEn?.length ? curso.objetivosGeneralesEn : curso.objetivosGenerales) : curso.objetivosGenerales}
           objetivosEspecificos={idiomaSeleccionado === 'en' ? (curso.objetivosEspecificosEn?.length ? curso.objetivosEspecificosEn : curso.objetivosEspecificos) : curso.objetivosEspecificos}
+          idioma={idiomaSeleccionado || 'es'}
         />
       </div>
 

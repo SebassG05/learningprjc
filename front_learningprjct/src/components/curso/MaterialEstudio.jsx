@@ -135,7 +135,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
     <div className="mb-16 space-y-8">
       <div className="border-t border-[#a1db87]/30">
         <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mt-8 mb-8">
-          📚 Aquí Comienza el Curso
+          {idioma === 'en' ? '📚 Course Content' : '📚 Aquí Comienza el Curso'}
         </h2>
         
         <div className="space-y-8">
@@ -253,7 +253,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
               {/* Test de Evaluación */}
               <div className="mt-6 space-y-2">
                 <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
-                  Test de Evaluación
+                  {idioma === 'en' ? 'Evaluation Test' : 'Test de Evaluación'}
                 </h4>
                 <div
                   onClick={() => !testBloqueado && handleOpenMaterial(tema, { titulo: 'Test de Evaluación', _id: `test-${tema._id}` })}
@@ -283,7 +283,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                           ? 'text-gray-500'
                           : completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-white'
                       }`}>
-                        Test de Evaluación - Tema {tema.numeroTema}
+                        {idioma === 'en' ? `Topic ${tema.numeroTema} - Evaluation Test` : `Test de Evaluación - Tema ${tema.numeroTema}`}
                         {completedTests && completedTests.includes(tema._id) && (
                           <span className="ml-2 text-xs bg-[#5ec6a6]/20 text-[#5ec6a6] px-2 py-0.5 rounded-full">
                             Aprobado
@@ -297,7 +297,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                       </p>
                       <p className="text-xs text-gray-400 mt-0.5">
                         {testBloqueado ? (
-                          'Completa y aprueba los tests de los Temas 1, 2, 3 y 4 para desbloquear'
+                          idioma === 'en' ? 'Complete and pass the tests for Topics 1, 2, 3 and 4 to unlock' : 'Completa y aprueba los tests de los Temas 1, 2, 3 y 4 para desbloquear'
                         ) : testInfo[tema._id] ? (
                           <>
                             {testInfo[tema._id].totalPreguntas} preguntas • {testInfo[tema._id].duracion} minutos • Nota mínima: {testInfo[tema._id].notaMinima}%
@@ -315,7 +315,9 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                         ? 'bg-[#5ec6a6]/20 text-[#5ec6a6] border border-[#5ec6a6]/50'
                         : 'bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 opacity-0 group-hover:opacity-100'
                     }`}>
-                      {completedTests && completedTests.includes(tema._id) ? 'Ver resultados' : 'Iniciar Test'}
+                      {completedTests && completedTests.includes(tema._id)
+                      ? (idioma === 'en' ? 'View results' : 'Ver resultados')
+                      : (idioma === 'en' ? 'Start Test' : 'Iniciar Test')}
                     </div>
                   )}
                 </div>
@@ -324,7 +326,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
               {tema.actividadesOptativas && tema.actividadesOptativas.length > 0 && (
                 <div className="mt-6 space-y-2">
                   <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
-                    Actividades Optativas
+                    {idioma === 'en' ? 'Optional Activities' : 'Actividades Optativas'}
                   </h4>
                   {tema.actividadesOptativas.map((actividad) => {
                     const isCompleted = completedMaterials[actividad._id];
