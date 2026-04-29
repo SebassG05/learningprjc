@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from '../context/UserContext';
-import { BookOpen, CheckCircle, Clock, Users, Award, ArrowRight, Loader, Target, Sparkles, GraduationCap, CalendarClock } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { BookOpen, CheckCircle, Clock, Users, Award, ArrowRight, Loader, Target, Sparkles, GraduationCap, CalendarClock, Globe } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CursoInscripcion() {
   const { id } = useParams();
@@ -14,6 +14,12 @@ export default function CursoInscripcion() {
   const [enrolling, setEnrolling] = useState(false);
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
   const [reservaConfirmada, setReservaConfirmada] = useState(false);
+  const [showLangModal, setShowLangModal] = useState(false);
+
+  const seleccionarIdioma = (lang) => {
+    localStorage.setItem(`lang_${id}`, lang);
+    setShowLangModal(false);
+  };
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
@@ -31,6 +37,12 @@ export default function CursoInscripcion() {
       .then(data => {
         setCurso(data);
         setLoading(false);
+        // Mostrar modal de idioma si el curso es bilingüe y no hay preferencia guardada
+        const isBilingual = data.idiomasDisponibles?.includes('es') && data.idiomasDisponibles?.includes('en');
+        const langSaved = localStorage.getItem(`lang_${id}`);
+        if (isBilingual && !langSaved) {
+          setShowLangModal(true);
+        }
       })
       .catch(err => {
         console.error('Error al cargar curso:', err);
@@ -158,6 +170,58 @@ export default function CursoInscripcion() {
   }, 0) || 0;
 
   return (
+    <>
+    {/* Modal de selección de idioma para cursos bilingües */}
+    <AnimatePresence>
+      {showLangModal && curso && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.85, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            className="bg-[#0f1a12] border border-[#a1db87]/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+          >
+            <div className="flex items-center justify-center mb-4">
+              <div className="p-3 bg-[#a1db87]/10 rounded-full">
+                <Globe className="w-8 h-8 text-[#a1db87]" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-extrabold text-white mb-2">Selecciona el idioma</h2>
+            <p className="text-gray-400 mb-8 text-sm">
+              Este curso está disponible en español e inglés. ¿En qué idioma quieres seguirlo?
+            </p>
+            <div className="flex gap-4">
+              <button
+                onClick={() => seleccionarIdioma('es')}
+                className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+              >
+                <span className="text-4xl">🇪🇸</span>
+                <div>
+                  <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">Español</p>
+                  <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
+                </div>
+              </button>
+              <button
+                onClick={() => seleccionarIdioma('en')}
+                className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+              >
+                <span className="text-4xl">🇬🇧</span>
+                <div>
+                  <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">English</p>
+                  <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
+                </div>
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
     <div className="max-w-7xl mx-auto py-16 px-4">
       {/* Header del curso */}
       <motion.div
@@ -444,5 +508,6 @@ export default function CursoInscripcion() {
         </motion.div>
       )}
     </div>
+    </>
   );
 }
