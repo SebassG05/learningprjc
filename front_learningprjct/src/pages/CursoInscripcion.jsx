@@ -38,7 +38,7 @@ export default function CursoInscripcion() {
         setCurso(data);
         setLoading(false);
         // Mostrar modal de idioma si el curso es bilingüe y no hay preferencia guardada
-        const isBilingual = data.idiomasDisponibles?.includes('es') && data.idiomasDisponibles?.includes('en');
+        const isBilingual = (data.idiomasDisponibles?.includes('es') && data.idiomasDisponibles?.includes('en')) || !!(data.title && data.titleEn);
         const langSaved = localStorage.getItem(`lang_${id}`);
         if (isBilingual && !langSaved) {
           setShowLangModal(true);

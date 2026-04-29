@@ -76,7 +76,7 @@ export default function Cursos() {
       setShowLogin(true);
     } else {
       const course = courses.find(c => c._id === courseId);
-      const isBilingual = course?.idiomasDisponibles?.includes('es') && course?.idiomasDisponibles?.includes('en');
+      const isBilingual = (course?.idiomasDisponibles?.includes('es') && course?.idiomasDisponibles?.includes('en')) || !!(course?.title && course?.titleEn);
       const langSaved = localStorage.getItem(`lang_${courseId}`);
       if (isBilingual && !langSaved) {
         setPendingLangCourse(course);

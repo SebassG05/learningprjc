@@ -94,7 +94,7 @@ export default function CursoDetalle() {
         setCurso(data);
         setLoading(false);
         // Si el curso es bilingüe y el usuario no ha elegido idioma aún, mostrar modal
-        const esBilingue = data.idiomasDisponibles?.includes('es') && data.idiomasDisponibles?.includes('en');
+        const esBilingue = (data.idiomasDisponibles?.includes('es') && data.idiomasDisponibles?.includes('en')) || !!(data.title && data.titleEn);
         if (esBilingue && !localStorage.getItem(`lang_${id}`)) {
           setShowLangModal(true);
         }
