@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthModal from '../components/auth/AuthModal';
-import { BookOpen, Sparkles, Clock } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { BookOpen, Sparkles, Clock, Globe } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +13,8 @@ export default function Cursos() {
   const [showLogin, setShowLogin] = useState(false);
   const [pendingCourseId, setPendingCourseId] = useState(null);
   const [courseProgress, setCourseProgress] = useState({});
+  const [showLangModal, setShowLangModal] = useState(false);
+  const [pendingLangCourse, setPendingLangCourse] = useState(null);
 
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
@@ -73,9 +75,23 @@ export default function Cursos() {
       setPendingCourseId(courseId);
       setShowLogin(true);
     } else {
-      // Redirigir a la página de inscripción
-      navigate(`/curso/${courseId}/inscripcion`);
+      const course = courses.find(c => c._id === courseId);
+      const isBilingual = course?.idiomasDisponibles?.includes('es') && course?.idiomasDisponibles?.includes('en');
+      const langSaved = localStorage.getItem(`lang_${courseId}`);
+      if (isBilingual && !langSaved) {
+        setPendingLangCourse(course);
+        setShowLangModal(true);
+      } else {
+        navigate(`/curso/${courseId}/inscripcion`);
+      }
     }
+  };
+
+  const seleccionarIdioma = (lang) => {
+    if (!pendingLangCourse) return;
+    localStorage.setItem(`lang_${pendingLangCourse._id}`, lang);
+    setShowLangModal(false);
+    navigate(`/curso/${pendingLangCourse._id}/inscripcion`);
   };
 
   // Devuelve título y descripción en el idioma guardado para ese curso
@@ -133,6 +149,64 @@ export default function Cursos() {
 
       {/* Modal de login si es necesario */}
       <AuthModal open={showLogin} onClose={handleCloseLogin} />
+
+      {/* Modal de selección de idioma para cursos bilingües */}
+      <AnimatePresence>
+        {showLangModal && pendingLangCourse && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+              className="bg-[#0f1a12] border border-[#a1db87]/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+            >
+              <div className="flex items-center justify-center mb-4">
+                <div className="p-3 bg-[#a1db87]/10 rounded-full">
+                  <Globe className="w-8 h-8 text-[#a1db87]" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-extrabold text-white mb-2">Selecciona el idioma</h2>
+              <p className="text-gray-400 mb-8 text-sm">
+                Este curso está disponible en español e inglés. ¿En qué idioma quieres seguirlo?
+              </p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => seleccionarIdioma('es')}
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                >
+                  <span className="text-4xl">🇪🇸</span>
+                  <div>
+                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">Español</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
+                  </div>
+                </button>
+                <button
+                  onClick={() => seleccionarIdioma('en')}
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                >
+                  <span className="text-4xl">🇬🇧</span>
+                  <div>
+                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">English</p>
+                    <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
+                  </div>
+                </button>
+              </div>
+              <button
+                onClick={() => setShowLangModal(false)}
+                className="mt-6 text-gray-500 hover:text-gray-300 text-sm transition-colors"
+              >
+                Cancelar
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Tarjetas de cursos */}
       {/* Grid original: visible en móvil y escritorio, oculto en md (tablet) */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-120 place-items-center block md:hidden lg:grid">
