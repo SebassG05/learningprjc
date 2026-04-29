@@ -15,11 +15,17 @@ export default function CursoInscripcion() {
   const [checkingEnrollment, setCheckingEnrollment] = useState(true);
   const [reservaConfirmada, setReservaConfirmada] = useState(false);
   const [showLangModal, setShowLangModal] = useState(false);
+  const [idioma, setIdioma] = useState(() => localStorage.getItem(`lang_${id}`) || 'es');
+
+  const t = (es, en) => {
+    if (idioma === 'en' && en) return en;
+    return es || en || '';
+  };
 
   const seleccionarIdioma = (lang) => {
     localStorage.setItem(`lang_${id}`, lang);
+    setIdioma(lang);
     setShowLangModal(false);
-    // Si ya está inscrito y el curso está abierto, navegar directamente
     if (enrollmentStatus?.enrolled && curso?.isOpen) {
       navigate(`/curso/${id}`);
     }
@@ -240,7 +246,7 @@ export default function CursoInscripcion() {
           <div className="md:col-span-1 flex flex-col">
             <div className="w-full h-64 rounded-xl overflow-hidden bg-[#a1db87]/10 flex items-center justify-center border-2 border-[#a1db87]/30">
               {curso.image ? (
-                <img src={curso.image} alt={curso.title} className="w-full h-full object-cover" />
+                <img src={curso.image} alt={t(curso.title, curso.titleEn)} className="w-full h-full object-cover" />
               ) : (
                 <BookOpen className="w-24 h-24 text-[#a1db87]" />
               )}
@@ -270,7 +276,7 @@ export default function CursoInscripcion() {
           {/* Información del curso */}
           <div className="md:col-span-2">
             <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
-              {curso.title}
+              {t(curso.title, curso.titleEn)}
             </h1>
 
             {/* Banner próximo inicio */}
@@ -284,7 +290,7 @@ export default function CursoInscripcion() {
             )}
 
             <p className="text-gray-300 text-lg mb-6 leading-relaxed text-justify">
-              {curso.description}
+              {t(curso.description, curso.descriptionEn)}
             </p>
 
             {/* Stats del curso */}
@@ -292,22 +298,22 @@ export default function CursoInscripcion() {
               <div className="flex items-center gap-3 bg-[#1a1a1a]/50 rounded-lg p-3 border border-[#a1db87]/20">
                 <Clock className="w-5 h-5 text-[#a1db87]" />
                 <div>
-                  <p className="text-xs text-gray-400">Duración</p>
+                  <p className="text-xs text-gray-400">{idioma === 'en' ? 'Duration' : 'Duración'}</p>
                   <p className="text-white font-semibold">{curso.duration}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-[#1a1a1a]/50 rounded-lg p-3 border border-[#a1db87]/20">
                 <BookOpen className="w-5 h-5 text-[#a1db87]" />
                 <div>
-                  <p className="text-xs text-gray-400">Temas</p>
-                  <p className="text-white font-semibold">{totalTemas} temas</p>
+                  <p className="text-xs text-gray-400">{idioma === 'en' ? 'Topics' : 'Temas'}</p>
+                  <p className="text-white font-semibold">{totalTemas} {idioma === 'en' ? 'topics' : 'temas'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-[#1a1a1a]/50 rounded-lg p-3 border border-[#a1db87]/20">
                 <Award className="w-5 h-5 text-[#a1db87]" />
                 <div>
-                  <p className="text-xs text-gray-400">Materiales</p>
-                  <p className="text-white font-semibold">{totalMateriales} recursos</p>
+                  <p className="text-xs text-gray-400">{idioma === 'en' ? 'Materials' : 'Materiales'}</p>
+                  <p className="text-white font-semibold">{totalMateriales} {idioma === 'en' ? 'resources' : 'recursos'}</p>
                 </div>
               </div>
             </div>
@@ -317,8 +323,8 @@ export default function CursoInscripcion() {
               <div className="flex items-center gap-3 bg-[#a1db87]/10 border border-[#a1db87]/30 rounded-xl px-6 py-4">
                 <CheckCircle className="w-6 h-6 text-[#a1db87] flex-shrink-0" />
                 <div>
-                  <p className="font-bold text-lg text-[#a1db87]">¡Plaza reservada!</p>
-                  <p className="text-sm text-gray-300">Te notificaremos cuando el curso abra en mayo de 2026.</p>
+                  <p className="font-bold text-lg text-[#a1db87]">{idioma === 'en' ? '\uD83C\uDF89 Spot reserved!' : '\u00A1Plaza reservada!'}</p>
+                  <p className="text-sm text-gray-300">{idioma === 'en' ? "We'll notify you when the course opens in May 2026." : 'Te notificaremos cuando el curso abra en mayo de 2026.'}</p>
                 </div>
               </div>
             ) : (
@@ -334,12 +340,12 @@ export default function CursoInscripcion() {
                 {enrolling ? (
                   <>
                     <Loader className="w-6 h-6 animate-spin" />
-                    <span>{isComingSoon ? 'Reservando...' : 'Inscribiendo...'}</span>
+                    <span>{isComingSoon ? (idioma === 'en' ? 'Reserving...' : 'Reservando...') : (idioma === 'en' ? 'Enrolling...' : 'Inscribiendo...')}</span>
                   </>
                 ) : (
                   <>
                     <CheckCircle className="w-6 h-6" />
-                    <span>{isComingSoon ? 'Reservar mi Plaza' : 'Inscribirse al Curso'}</span>
+                    <span>{isComingSoon ? (idioma === 'en' ? 'Reserve my Spot' : 'Reservar mi Plaza') : (idioma === 'en' ? 'Enroll in Course' : 'Inscribirse al Curso')}</span>
                     <ArrowRight className="w-5 h-5" />
                   </>
                 )}
@@ -373,7 +379,7 @@ export default function CursoInscripcion() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-3"
             >
-              Objetivos de Aprendizaje
+              {idioma === 'en' ? 'Learning Objectives' : 'Objetivos de Aprendizaje'}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
@@ -381,7 +387,7 @@ export default function CursoInscripcion() {
               transition={{ duration: 0.5, delay: 0.5 }}
               className="text-gray-400 max-w-2xl mx-auto"
             >
-              Domina las habilidades y competencias esenciales de este curso
+              {idioma === 'en' ? 'Master the essential skills and competencies of this course' : 'Domina las habilidades y competencias esenciales de este curso'}
             </motion.p>
           </div>
 
@@ -400,11 +406,11 @@ export default function CursoInscripcion() {
                     <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#a1db87]/20 to-[#a1db87]/5 border border-[#a1db87]/30">
                       <Target className="w-6 h-6 text-[#a1db87]" />
                     </div>
-                    <h3 className="text-xl font-bold text-white">Objetivos Generales</h3>
+                    <h3 className="text-xl font-bold text-white">{idioma === 'en' ? 'General Objectives' : 'Objetivos Generales'}</h3>
                   </div>
                   
                   <div className="space-y-4">
-                    {curso.objetivosGenerales.map((objetivo, idx) => (
+                    {(idioma === 'en' && curso.objetivosGeneralesEn?.length ? curso.objetivosGeneralesEn : curso.objetivosGenerales).map((objetivo, idx) => (
                       <motion.div
                         key={idx}
                         initial={{ opacity: 0, x: -20 }}
@@ -441,11 +447,11 @@ export default function CursoInscripcion() {
                     <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#5ec6a6]/20 to-[#5ec6a6]/5 border border-[#5ec6a6]/30">
                       <Sparkles className="w-6 h-6 text-[#5ec6a6]" />
                     </div>
-                    <h3 className="text-xl font-bold text-white">Objetivos Específicos</h3>
+                    <h3 className="text-xl font-bold text-white">{idioma === 'en' ? 'Specific Objectives' : 'Objetivos Específicos'}</h3>
                   </div>
                   
                   <div className="space-y-4">
-                    {curso.objetivosEspecificos.map((objetivo, idx) => (
+                    {(idioma === 'en' && curso.objetivosEspecificosEn?.length ? curso.objetivosEspecificosEn : curso.objetivosEspecificos).map((objetivo, idx) => (
                       <motion.div
                         key={idx}
                         initial={{ opacity: 0, x: 20 }}
@@ -481,7 +487,7 @@ export default function CursoInscripcion() {
         >
           <h2 className="text-2xl font-bold text-[#a1db87] mb-6 flex items-center gap-3">
             <BookOpen className="w-7 h-7" />
-            Contenido del Curso
+            {idioma === 'en' ? 'Course Content' : 'Contenido del Curso'}
           </h2>
           
           <div className="space-y-4">
@@ -495,14 +501,14 @@ export default function CursoInscripcion() {
                     {tema.numeroTema}
                   </span>
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-white mb-2">{tema.titulo}</h3>
+                    <h3 className="text-lg font-bold text-white mb-2">{t(tema.titulo, tema.tituloEn)}</h3>
                     {tema.descripcion && (
-                      <p className="text-gray-400 text-sm mb-3 text-justify">{tema.descripcion}</p>
+                      <p className="text-gray-400 text-sm mb-3 text-justify">{t(tema.descripcion, tema.descripcionEn)}</p>
                     )}
                     <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <span>{tema.materiales?.length || 0} materiales</span>
+                      <span>{tema.materiales?.length || 0} {idioma === 'en' ? 'materials' : 'materiales'}</span>
                       {tema.actividadesOptativas?.length > 0 && (
-                        <span>{tema.actividadesOptativas.length} actividades optativas</span>
+                        <span>{tema.actividadesOptativas.length} {idioma === 'en' ? 'optional activities' : 'actividades optativas'}</span>
                       )}
                     </div>
                   </div>
