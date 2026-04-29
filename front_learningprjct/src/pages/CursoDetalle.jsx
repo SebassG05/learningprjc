@@ -36,6 +36,12 @@ export default function CursoDetalle() {
     setShowLangModal(false);
   };
 
+  // Releer el idioma desde localStorage al montar (por si se guardó justo antes de navegar aquí)
+  useEffect(() => {
+    const saved = localStorage.getItem(`lang_${id}`);
+    if (saved) setIdiomaSeleccionado(saved);
+  }, [id]);
+
   // Verificar si el usuario está logueado y verificar inscripción
   useEffect(() => {
     if (!user) {

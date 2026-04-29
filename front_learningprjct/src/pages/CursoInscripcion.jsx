@@ -19,6 +19,10 @@ export default function CursoInscripcion() {
   const seleccionarIdioma = (lang) => {
     localStorage.setItem(`lang_${id}`, lang);
     setShowLangModal(false);
+    // Si ya está inscrito y el curso está abierto, navegar directamente
+    if (enrollmentStatus?.enrolled && curso?.isOpen) {
+      navigate(`/curso/${id}`);
+    }
   };
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
@@ -77,6 +81,7 @@ export default function CursoInscripcion() {
   // Manejar redirección cuando estén disponibles tanto el curso como el estado de inscripción
   useEffect(() => {
     if (checkingEnrollment || loading || !enrollmentStatus || !curso) return;
+    if (showLangModal) return; // Esperar a que el usuario elija idioma
     if (enrollmentStatus.enrolled) {
       const isComingSoonCourse = !curso.isOpen;
       if (isComingSoonCourse) {
@@ -85,7 +90,7 @@ export default function CursoInscripcion() {
         navigate(`/curso/${id}`);
       }
     }
-  }, [enrollmentStatus, curso, checkingEnrollment, loading, navigate, id]);
+  }, [enrollmentStatus, curso, checkingEnrollment, loading, navigate, id, showLangModal]);
 
   // Función para inscribirse
   const handleEnroll = async () => {
