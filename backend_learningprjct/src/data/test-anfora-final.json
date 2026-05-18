@@ -1,0 +1,810 @@
+{
+  "titulo": "Test Final de Certificación - ANFORA: Gestión de la Huella Hídrica",
+  "tituloEn": "Final Certification Test - ANFORA: Water Footprint Management",
+  "descripcion": "Evaluación final integradora de alta dificultad sobre todos los contenidos del curso ANFORA. Abarca fundamentos de huella hídrica, seguridad, calculadora, explorador de productos, menús semanales, estrategias de reducción y la encuesta del proyecto.",
+  "descripcionEn": "High-difficulty comprehensive final assessment covering all ANFORA course content. Covers water footprint fundamentals, security, calculator, product explorer, weekly menus, reduction strategies, and the project survey.",
+  "duracionMinutos": 60,
+  "notaMinima": 70,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Bloque 1: Fundamentos e Introducción",
+      "bloqueEn": "Block 1: Fundamentals and Introduction",
+      "pregunta": "Según los datos globales (WFN) presentados en la introducción, un tomate tiene una huella hídrica total de 214 L/kg. ¿Qué porcentaje exacto y cantidad en litros representa su \"agua verde\"?",
+      "preguntaEn": "According to the global data (WFN) presented in the introduction, a tomato has a total water footprint of 214 L/kg. What exact percentage and amount in litres does its \"green water\" represent?",
+      "opciones": [
+        { "id": "a", "texto": "20% (43 L/kg)" },
+        { "id": "b", "texto": "29% (63 L/kg)" },
+        { "id": "c", "texto": "51% (108 L/kg)" },
+        { "id": "d", "texto": "69% (147 L/kg)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "20% (43 L/kg)" },
+        { "id": "b", "texto": "29% (63 L/kg)" },
+        { "id": "c", "texto": "51% (108 L/kg)" },
+        { "id": "d", "texto": "69% (147 L/kg)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Bloque 1: Fundamentos e Introducción",
+      "bloqueEn": "Block 1: Fundamentals and Introduction",
+      "pregunta": "¿Cuál es el orden automático de prioridad que la plataforma utiliza para seleccionar la fuente de datos científica de un ingrediente si el usuario no interviene?",
+      "preguntaEn": "What is the automatic priority order the platform uses to select the scientific data source for an ingredient if the user doesn't intervene?",
+      "opciones": [
+        { "id": "a", "texto": "Personalizada > Regional (Andalucía) > Global (WFN)" },
+        { "id": "b", "texto": "IA (Modelos de estimación) > Global (WFN) > Regional" },
+        { "id": "c", "texto": "Global (WFN) > Regional (Andalucía) > IA (Modelos de estimación)" },
+        { "id": "d", "texto": "Regional (Andalucía) > Global (WFN) > IA (Modelos de estimación)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Custom > Regional (Andalusia) > Global (WFN)" },
+        { "id": "b", "texto": "AI (Estimation models) > Global (WFN) > Regional" },
+        { "id": "c", "texto": "Global (WFN) > Regional (Andalusia) > AI (Estimation models)" },
+        { "id": "d", "texto": "Regional (Andalusia) > Global (WFN) > AI (Estimation models)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Bloque 1: Fundamentos e Introducción",
+      "bloqueEn": "Block 1: Fundamentals and Introduction",
+      "pregunta": "La huella hídrica \"gris\" se define como:",
+      "preguntaEn": "\"Grey\" water footprint is defined as:",
+      "opciones": [
+        { "id": "a", "texto": "El agua de lluvia almacenada en el suelo y evapotranspirada." },
+        { "id": "b", "texto": "El volumen de agua dulce de ríos y acuíferos utilizado para el riego directo." },
+        { "id": "c", "texto": "El volumen de agua residual reciclada en plantas de tratamiento para uso agrícola." },
+        { "id": "d", "texto": "El volumen de agua necesario para diluir contaminantes (fertilizantes, pesticidas) a niveles aceptables." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Rainwater stored in the soil and evapotranspired." },
+        { "id": "b", "texto": "The volume of freshwater from rivers and aquifers used for direct irrigation." },
+        { "id": "c", "texto": "The volume of wastewater recycled in treatment plants for agricultural use." },
+        { "id": "d", "texto": "The volume of water needed to dilute pollutants (fertilizers, pesticides) to acceptable levels." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Bloque 1: Fundamentos e Introducción",
+      "bloqueEn": "Block 1: Fundamentals and Introduction",
+      "pregunta": "Según la clasificación por colores de la plataforma, ¿qué rango de consumo en L/kg determina que un alimento pertenezca al nivel \"Alto\" (color naranja) y no al \"Muy Alto\" (color rojo)?",
+      "preguntaEn": "According to the platform's color classification, what consumption range in L/kg determines that a food belongs to the \"High\" level (orange color) and not to the \"Very High\" (red color)?",
+      "opciones": [
+        { "id": "a", "texto": "Menos de 500 L/kg" },
+        { "id": "b", "texto": "Entre 500 y 2.000 L/kg" },
+        { "id": "c", "texto": "Entre 2.000 y 5.000 L/kg" },
+        { "id": "d", "texto": "Más de 5.000 L/kg" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Less than 500 L/kg" },
+        { "id": "b", "texto": "Between 500 and 2,000 L/kg" },
+        { "id": "c", "texto": "Between 2,000 and 5,000 L/kg" },
+        { "id": "d", "texto": "Over 5,000 L/kg" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Bloque 1: Fundamentos e Introducción",
+      "bloqueEn": "Block 1: Fundamentals and Introduction",
+      "pregunta": "El proyecto ANFORA busca un ahorro potencial de agua en los usuarios. ¿De qué porcentaje exacto es este ahorro esperado (KPI del proyecto) logrado mediante cambios en la dieta?",
+      "preguntaEn": "The ANFORA project seeks a potential water saving from users. What is the exact expected percentage of this saving (project KPI) achieved through diet changes?",
+      "opciones": [
+        { "id": "a", "texto": "5-10%" },
+        { "id": "b", "texto": "10-15%" },
+        { "id": "c", "texto": "20-25%" },
+        { "id": "d", "texto": "30-40%" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5-10%" },
+        { "id": "b", "texto": "10-15%" },
+        { "id": "c", "texto": "20-25%" },
+        { "id": "d", "texto": "30-40%" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Bloque 1: Fundamentos e Introducción",
+      "bloqueEn": "Block 1: Fundamentals and Introduction",
+      "pregunta": "¿Qué Directiva Marco de la Unión Europea es citada en el documento como la que obliga a una gestión sostenible del agua?",
+      "preguntaEn": "Which European Union Framework Directive is cited in the document as mandating sustainable water management?",
+      "opciones": [
+        { "id": "a", "texto": "91/676/CEE" },
+        { "id": "b", "texto": "2010/75/UE" },
+        { "id": "c", "texto": "2000/60/CE" },
+        { "id": "d", "texto": "2016/679/UE" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "91/676/EEC" },
+        { "id": "b", "texto": "2010/75/EU" },
+        { "id": "c", "texto": "2000/60/EC" },
+        { "id": "d", "texto": "2016/679/EU" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "Bloque 2: Seguridad Técnica y Acceso",
+      "bloqueEn": "Block 2: Technical Security and Access",
+      "pregunta": "Si un usuario instala ANFORA en su dispositivo como PWA (Aplicación Web Progresiva), ¿qué mejora específica de rendimiento indica el manual que se obtiene?",
+      "preguntaEn": "If a user installs ANFORA on their device as a PWA (Progressive Web App), what specific performance improvement does the manual indicate is obtained?",
+      "opciones": [
+        { "id": "a", "texto": "Ahorra un 30% de batería del dispositivo." },
+        { "id": "b", "texto": "Carga hasta un 60% más rápido." },
+        { "id": "c", "texto": "Reduce el consumo de datos móviles en un 80%." },
+        { "id": "d", "texto": "Duplica la precisión del cálculo de la Inteligencia Artificial." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "It saves 30% of device battery." },
+        { "id": "b", "texto": "It loads up to 60% faster." },
+        { "id": "c", "texto": "It reduces mobile data consumption by 80%." },
+        { "id": "d", "texto": "It doubles the Artificial Intelligence calculation accuracy." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Bloque 2: Seguridad Técnica y Acceso",
+      "bloqueEn": "Block 2: Technical Security and Access",
+      "pregunta": "Por razones de seguridad en la arquitectura técnica de ANFORA, ¿cómo se protegen las contraseñas en la base de datos?",
+      "preguntaEn": "For security reasons in ANFORA's technical architecture, how are passwords protected in the database?",
+      "opciones": [
+        { "id": "a", "texto": "Encriptación MD5 con \"sal\" (salt)" },
+        { "id": "b", "texto": "Texto plano en un servidor seguro" },
+        { "id": "c", "texto": "Hashing mediante algoritmo SHA-256" },
+        { "id": "d", "texto": "Hashing con bcrypt (factor 12)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "MD5 encryption with salt" },
+        { "id": "b", "texto": "Plain text on a secure server" },
+        { "id": "c", "texto": "Hashing using SHA-256 algorithm" },
+        { "id": "d", "texto": "Hashing with bcrypt (factor 12)" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 9,
+      "bloque": "Bloque 2: Seguridad Técnica y Acceso",
+      "bloqueEn": "Block 2: Technical Security and Access",
+      "pregunta": "Al registrar una nueva cuenta, la plataforma establece un límite de longitud para el campo \"Nombre completo\". ¿Cuál es ese límite?",
+      "preguntaEn": "When registering a new account, the platform sets a length limit for the \"Full name\" field. What is that limit?",
+      "opciones": [
+        { "id": "a", "texto": "Máximo 30 caracteres" },
+        { "id": "b", "texto": "Máximo 50 caracteres" },
+        { "id": "c", "texto": "Máximo 100 caracteres" },
+        { "id": "d", "texto": "Máximo 255 caracteres" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Maximum 30 characters" },
+        { "id": "b", "texto": "Maximum 50 characters" },
+        { "id": "c", "texto": "Maximum 100 characters" },
+        { "id": "d", "texto": "Maximum 255 characters" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Bloque 2: Seguridad Técnica y Acceso",
+      "bloqueEn": "Block 2: Technical Security and Access",
+      "pregunta": "¿Qué tecnología web específica utiliza ANFORA para mantener la sesión del usuario iniciada de forma segura tras el login?",
+      "preguntaEn": "What specific web technology does ANFORA use to keep the user's session securely logged in?",
+      "opciones": [
+        { "id": "a", "texto": "Tokens JWT almacenados en LocalStorage" },
+        { "id": "b", "texto": "Cookies seguras (HTTPOnly + SameSite)" },
+        { "id": "c", "texto": "Historial de caché del navegador" },
+        { "id": "d", "texto": "Identificación por dirección IP estática" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "JWT Tokens stored in LocalStorage" },
+        { "id": "b", "texto": "Secure cookies (HTTPOnly + SameSite)" },
+        { "id": "c", "texto": "Browser cache history" },
+        { "id": "d", "texto": "Static IP address identification" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Bloque 2: Seguridad Técnica y Acceso",
+      "bloqueEn": "Block 2: Technical Security and Access",
+      "pregunta": "¿Cuál es la limitación temporal de seguridad del enlace de recuperación de contraseña que se envía por correo?",
+      "preguntaEn": "What is the security time limit for the password recovery link sent via email?",
+      "opciones": [
+        { "id": "a", "texto": "Expira en 5 minutos" },
+        { "id": "b", "texto": "Expira en 10 minutos" },
+        { "id": "c", "texto": "Expira en 1 hora" },
+        { "id": "d", "texto": "Expira en 24 horas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Expires in 5 minutes" },
+        { "id": "b", "texto": "Expires in 10 minutes" },
+        { "id": "c", "texto": "Expires in 1 hour" },
+        { "id": "d", "texto": "Expires in 24 hours" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "En la estructura del menú principal de navegación de la interfaz, ¿qué icono representa la \"Base de datos de productos (Explorador)\"?",
+      "preguntaEn": "In the interface's main navigation menu structure, which icon represents the \"Product Database (Explorer)\"?",
+      "opciones": [
+        { "id": "a", "texto": "Una calculadora" },
+        { "id": "b", "texto": "Un calendario" },
+        { "id": "c", "texto": "Una estrella" },
+        { "id": "d", "texto": "Una hoja (Leaf)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A calculator" },
+        { "id": "b", "texto": "A calendar" },
+        { "id": "c", "texto": "A star" },
+        { "id": "d", "texto": "A leaf" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 13,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "En el Paso 1 de la calculadora de huella hídrica, ¿cuántas categorías distintas (por ejemplo, Sopa, Postre, etc.) se pueden asignar a una receta?",
+      "preguntaEn": "In Step 1 of the water footprint calculator, how many different categories (e.g., Soup, Dessert, etc.) can be assigned to a recipe?",
+      "opciones": [
+        { "id": "a", "texto": "5 opciones" },
+        { "id": "b", "texto": "7 opciones" },
+        { "id": "c", "texto": "9 opciones" },
+        { "id": "d", "texto": "12 opciones" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5 options" },
+        { "id": "b", "texto": "7 options" },
+        { "id": "c", "texto": "9 options" },
+        { "id": "d", "texto": "12 options" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 14,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "Al introducir un ingrediente líquido (ml, L) en la calculadora, ¿qué asume el sistema automáticamente para la conversión si el producto no tiene una densidad científicamente registrada?",
+      "preguntaEn": "When entering a liquid ingredient (ml, L) into the calculator, what does the system automatically assume for the conversion if the product has no scientifically registered density?",
+      "opciones": [
+        { "id": "a", "texto": "Se asume una densidad de 0,8 kg/L" },
+        { "id": "b", "texto": "Se asume una densidad de 1 kg/L" },
+        { "id": "c", "texto": "El sistema solicita al usuario que ingrese la densidad manualmente" },
+        { "id": "d", "texto": "Se bloquea el cálculo hasta utilizar gramos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Assumes a density of 0.8 kg/L" },
+        { "id": "b", "texto": "Assumes a density of 1 kg/L" },
+        { "id": "c", "texto": "The system prompts the user to manually enter the density" },
+        { "id": "d", "texto": "Blocks the calculation until grams are used" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "En el análisis del caso práctico del \"Gazpacho Andaluz\" (4 raciones, 985 L totales), ¿cuál es la huella hídrica por ración exacta calculada por la plataforma?",
+      "preguntaEn": "In the analysis of the \"Andalusian Gazpacho\" practical case (4 servings, 985 L total), what is the exact water footprint per serving calculated by the platform?",
+      "opciones": [
+        { "id": "a", "texto": "107 L/ración" },
+        { "id": "b", "texto": "185 L/ración" },
+        { "id": "c", "texto": "246 L/ración" },
+        { "id": "d", "texto": "679 L/ración" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "107 L/serving" },
+        { "id": "b", "texto": "185 L/serving" },
+        { "id": "c", "texto": "246 L/serving" },
+        { "id": "d", "texto": "679 L/serving" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "En ese mismo ejemplo del Gazpacho, al cambiar 50 ml de aceite de oliva por aceite de girasol y añadir más tomate, ¿cuál es el porcentaje exacto de reducción en la huella hídrica total?",
+      "preguntaEn": "In that same Gazpacho example, when swapping 50 ml of olive oil for sunflower oil and adding more tomato, what is the exact percentage of reduction in the total water footprint?",
+      "opciones": [
+        { "id": "a", "texto": "Un 15% de reducción" },
+        { "id": "b", "texto": "Un 29% de reducción" },
+        { "id": "c", "texto": "Un 45% de reducción" },
+        { "id": "d", "texto": "Un 69% de reducción" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A 15% reduction" },
+        { "id": "b", "texto": "A 29% reduction" },
+        { "id": "c", "texto": "A 45% reduction" },
+        { "id": "d", "texto": "A 69% reduction" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "Cuando visualizas el resumen de una receta calculada, ¿qué significa exactamente la métrica de \"Eficiencia\"?",
+      "preguntaEn": "When viewing the summary of a calculated recipe, what exactly does the \"Efficiency\" metric mean?",
+      "opciones": [
+        { "id": "a", "texto": "Es el porcentaje de agua verde en comparación con el agua total." },
+        { "id": "b", "texto": "Es una puntuación que compara la huella por ración de la receta frente a la media de la base de datos." },
+        { "id": "c", "texto": "Es la relación entre las calorías del plato y el agua azul utilizada." },
+        { "id": "d", "texto": "Mide el porcentaje de ingredientes cultivados en Andalucía." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "It's the percentage of green water compared to total water." },
+        { "id": "b", "texto": "It is a score that compares the recipe's footprint per serving against the database average." },
+        { "id": "c", "texto": "It's the ratio between the dish's calories and the blue water used." },
+        { "id": "d", "texto": "It measures the percentage of ingredients grown in Andalusia." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Bloque 3: Calculadora de Huella Hídrica",
+      "bloqueEn": "Block 3: Water Footprint Calculator",
+      "pregunta": "La exportación de datos en formato CSV de ANFORA está diseñada para su análisis en Excel. ¿Qué codificación exacta utiliza para evitar problemas con los caracteres especiales en español?",
+      "preguntaEn": "ANFORA's CSV data export is designed for Excel analysis. What exact encoding does it use to avoid issues with special characters in Spanish?",
+      "opciones": [
+        { "id": "a", "texto": "ISO-8859-1" },
+        { "id": "b", "texto": "Windows-1252" },
+        { "id": "c", "texto": "ASCII" },
+        { "id": "d", "texto": "UTF-8 + BOM" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "ISO-8859-1" },
+        { "id": "b", "texto": "Windows-1252" },
+        { "id": "c", "texto": "ASCII" },
+        { "id": "d", "texto": "UTF-8 + BOM" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 19,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "Según la tabla de categorías del Explorador de Productos, ¿qué grupo de alimentos (que contiene 5 productos) ostenta los valores de huella hídrica más altos de toda la base, oscilando entre 10.800 y 13.000 L/kg?",
+      "preguntaEn": "According to the Product Explorer categories table, which food group (containing 5 products) holds the highest water footprint values in the entire database, ranging between 10,800 and 13,000 L/kg?",
+      "opciones": [
+        { "id": "a", "texto": "Carnes (Meat)" },
+        { "id": "b", "texto": "Aceites (Oils)" },
+        { "id": "c", "texto": "Frutos secos (Nuts)" },
+        { "id": "d", "texto": "Procesados (Processed)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Meat" },
+        { "id": "b", "texto": "Oils" },
+        { "id": "c", "texto": "Nuts" },
+        { "id": "d", "texto": "Processed" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "Según los datos del documento, ¿cuántas veces más agua necesita producir un kilogramo de carne de ternera (15.415 L/kg) en comparación con un kilogramo de vegetales promedio (~250 L/kg)?",
+      "preguntaEn": "According to the document data, how many times more water does it take to produce one kilogram of beef (15,415 L/kg) compared to an average kilogram of vegetables (~250 L/kg)?",
+      "opciones": [
+        { "id": "a", "texto": "Aproximadamente 10 veces más" },
+        { "id": "b", "texto": "Aproximadamente 30 veces más" },
+        { "id": "c", "texto": "Aproximadamente 60 veces más" },
+        { "id": "d", "texto": "Aproximadamente 100 veces más" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Approximately 10 times more" },
+        { "id": "b", "texto": "Approximately 30 times more" },
+        { "id": "c", "texto": "Approximately 60 times more" },
+        { "id": "d", "texto": "Approximately 100 times more" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 21,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "La plataforma cuenta con datos regionales específicos de Andalucía extraídos de la CHG y la Junta. ¿Cuál de los siguientes productos SÍ dispone de estos datos regionales en ANFORA?",
+      "preguntaEn": "The platform has specific regional data for Andalusia extracted from the CHG and the Regional Government. Which of the following products DOES have these regional data in ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "Lentejas" },
+        { "id": "b", "texto": "Pollo" },
+        { "id": "c", "texto": "Trigo" },
+        { "id": "d", "texto": "Almendras" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Lentils" },
+        { "id": "b", "texto": "Chicken" },
+        { "id": "c", "texto": "Wheat" },
+        { "id": "d", "texto": "Almonds" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 22,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "En el Explorador de Productos, la ventana modal de detalles ofrece un botón llamado \"Usar en Calculadora\". ¿Cuál es su función exacta?",
+      "preguntaEn": "In the Product Explorer, the details modal offers a button called \"Use in Calculator\". What is its exact function?",
+      "opciones": [
+        { "id": "a", "texto": "Realiza un cálculo rápido multiplicando por 100 gramos en pantalla." },
+        { "id": "b", "texto": "Abre el primer paso de la calculadora con ese ingrediente ya preseleccionado para ahorrar tiempo." },
+        { "id": "c", "texto": "Exporta los datos del producto a PDF inmediatamente." },
+        { "id": "d", "texto": "Muestra recetas sugeridas que usan ese ingrediente." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Performs a quick calculation by multiplying by 100 grams on screen." },
+        { "id": "b", "texto": "Opens the calculator's first step with that ingredient already preselected to save time." },
+        { "id": "c", "texto": "Exports the product data to PDF immediately." },
+        { "id": "d", "texto": "Shows suggested recipes that use that ingredient." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "Cuando accedes a \"Mis Recetas\", la lista se pagina automáticamente. ¿Cuál es el límite técnico máximo de recetas que la plataforma devuelve por cada consulta (query)?",
+      "preguntaEn": "When you access \"My Recipes\", the list is paginated automatically. What is the maximum technical limit of recipes the platform returns per query?",
+      "opciones": [
+        { "id": "a", "texto": "10 recetas" },
+        { "id": "b", "texto": "50 recetas" },
+        { "id": "c", "texto": "100 recetas" },
+        { "id": "d", "texto": "255 recetas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "10 recipes" },
+        { "id": "b", "texto": "50 recipes" },
+        { "id": "c", "texto": "100 recipes" },
+        { "id": "d", "texto": "255 recipes" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 24,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "¿Qué sucede, a nivel de base de datos e interfaz, si eliminas permanentemente una receta que ya habías asignado a varios días en un menú semanal?",
+      "preguntaEn": "What happens, at database and interface level, if you permanently delete a recipe that you had already assigned to several days in a weekly menu?",
+      "opciones": [
+        { "id": "a", "texto": "El menú semanal se corrompe y se elimina automáticamente." },
+        { "id": "b", "texto": "La plataforma bloquea la acción y te impide borrarla hasta sacarla del menú." },
+        { "id": "c", "texto": "La receta se elimina de 'Mis Recetas', pero el menú conserva los datos históricos marcando el hueco como \"eliminado\"." },
+        { "id": "d", "texto": "El menú sustituye la receta eliminada por una receta genérica de la misma categoría." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The weekly menu gets corrupted and is deleted automatically." },
+        { "id": "b", "texto": "The platform blocks the action and prevents you from deleting it until removed from the menu." },
+        { "id": "c", "texto": "The recipe is removed from 'My Recipes', but the menu keeps the historical data, marking the slot as \"deleted\"." },
+        { "id": "d", "texto": "The menu replaces the deleted recipe with a generic one from the same category." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 25,
+      "bloque": "Bloque 4: Explorador de Productos y Recetas",
+      "bloqueEn": "Block 4: Product Explorer and Recipes",
+      "pregunta": "En el caso práctico de sustitución de ingredientes en una ensalada (Unidad 4), ¿cuántos litros de agua exactos se ahorran al sustituir 100g de queso fresco por 100g de garbanzos?",
+      "preguntaEn": "In the practical ingredient substitution case of a salad (Unit 4), exactly how many litres of water are saved when swapping 100g of fresh cheese for 100g of chickpeas?",
+      "opciones": [
+        { "id": "a", "texto": "160 Litros" },
+        { "id": "b", "texto": "418 Litros" },
+        { "id": "c", "texto": "580 Litros" },
+        { "id": "d", "texto": "836 Litros" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "160 Litres" },
+        { "id": "b", "texto": "418 Litres" },
+        { "id": "c", "texto": "580 Litres" },
+        { "id": "d", "texto": "836 Litres" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 26,
+      "bloque": "Bloque 5: Menús Semanales y Estrategias",
+      "bloqueEn": "Block 5: Weekly Menus and Strategies",
+      "pregunta": "Un menú semanal en ANFORA abarca 7 días y 3 comidas diarias (Desayuno, Almuerzo, Cena). Esto genera una cuadrícula de 21 huecos (slots). ¿Qué pasa con el cálculo si dejas 4 huecos vacíos?",
+      "preguntaEn": "A weekly menu in ANFORA covers 7 days and 3 daily meals (Breakfast, Lunch, Dinner). This generates a grid of 21 slots. What happens to the calculation if you leave 4 slots empty?",
+      "opciones": [
+        { "id": "a", "texto": "El sistema suma una huella \"promedio de castigo\" por día incompleto." },
+        { "id": "b", "texto": "Los huecos vacíos simplemente no suman nada a la huella hídrica total." },
+        { "id": "c", "texto": "No puedes guardar el menú hasta que llenes los 21 huecos obligatoriamente." },
+        { "id": "d", "texto": "El menú se marca como \"Inválido\" al exportarlo." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The system adds an \"average penalty\" footprint per incomplete day." },
+        { "id": "b", "texto": "The empty slots simply do not add anything to the total water footprint." },
+        { "id": "c", "texto": "You cannot save the menu until you compulsorily fill all 21 slots." },
+        { "id": "d", "texto": "The menu is marked as \"Invalid\" when exported." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 27,
+      "bloque": "Bloque 5: Menús Semanales y Estrategias",
+      "bloqueEn": "Block 5: Weekly Menus and Strategies",
+      "pregunta": "Dentro de las estadísticas personales de tu Perfil, el panel diferencia entre \"Datos de Actividad\" y \"Métricas de Impacto\". ¿Cuál de las siguientes pertenece exclusivamente a las Métricas de Impacto?",
+      "preguntaEn": "Within the personal statistics in your Profile, the dashboard differentiates between \"Activity Data\" and \"Impact Metrics\". Which of the following belongs exclusively to Impact Metrics?",
+      "opciones": [
+        { "id": "a", "texto": "Total de recetas guardadas" },
+        { "id": "b", "texto": "Categorías más frecuentes utilizadas" },
+        { "id": "c", "texto": "Menús semanales creados" },
+        { "id": "d", "texto": "Huella hídrica total acumulada calculada" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Total saved recipes" },
+        { "id": "b", "texto": "Most frequent categories used" },
+        { "id": "c", "texto": "Weekly menus created" },
+        { "id": "d", "texto": "Total cumulative WF calculated" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 28,
+      "bloque": "Bloque 5: Menús Semanales y Estrategias",
+      "bloqueEn": "Block 5: Weekly Menus and Strategies",
+      "pregunta": "En el panel de análisis automático de un Menú Semanal, existe una métrica llamada \"Recetas Únicas\" (Unique Recipes). ¿Qué propósito analítico tiene esta métrica?",
+      "preguntaEn": "In the automatic analysis dashboard of a Weekly Menu, there is a metric called \"Unique Recipes\". What analytical purpose does this metric serve?",
+      "opciones": [
+        { "id": "a", "texto": "Medir la presión sobre acuíferos locales." },
+        { "id": "b", "texto": "Contar cuántas recetas sin carne hay en el menú." },
+        { "id": "c", "texto": "Evaluar la variedad de la dieta planificada por el usuario." },
+        { "id": "d", "texto": "Indicar el ahorro total de la semana." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "To measure pressure on local aquifers." },
+        { "id": "b", "texto": "To count how many meat-free recipes are in the menu." },
+        { "id": "c", "texto": "To evaluate the variety of the user's planned diet." },
+        { "id": "d", "texto": "To indicate the total savings of the week." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 29,
+      "bloque": "Bloque 5: Menús Semanales y Estrategias",
+      "bloqueEn": "Block 5: Weekly Menus and Strategies",
+      "pregunta": "En el ejemplo práctico de reducción de huella hídrica (Unidad 5), ¿cuántos litros de agua se ahorran por comida al sustituir un filete de ternera de 200 g por un plato de garbanzos de 200 g?",
+      "preguntaEn": "In the practical water footprint reduction example (Unit 5), how many litres of water are saved per meal by swapping a 200g beef steak for a 200g plate of chickpeas?",
+      "opciones": [
+        { "id": "a", "texto": "836 L" },
+        { "id": "b", "texto": "2.250 L" },
+        { "id": "c", "texto": "3.083 L" },
+        { "id": "d", "texto": "4.179 L" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "836 L" },
+        { "id": "b", "texto": "2,250 L" },
+        { "id": "c", "texto": "3,083 L" },
+        { "id": "d", "texto": "4,179 L" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 30,
+      "bloque": "Bloque 5: Menús Semanales y Estrategias",
+      "bloqueEn": "Block 5: Weekly Menus and Strategies",
+      "pregunta": "ANFORA sugiere la estrategia de \"equilibrar el menú semanal\" alternando días de huella alta y baja. Según el manual, ¿qué límite marca un día calificado como \"verde\" (bajo impacto)?",
+      "preguntaEn": "ANFORA suggests the strategy of \"balancing the weekly menu\" by alternating high and low footprint days. According to the manual, what limit marks a day classified as \"green\" (low impact)?",
+      "opciones": [
+        { "id": "a", "texto": "Menos de 100 L/ración" },
+        { "id": "b", "texto": "Menos de 200 L/ración" },
+        { "id": "c", "texto": "Menos de 400 L/ración" },
+        { "id": "d", "texto": "Menos de 500 L/ración" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Less than 100 L/serving" },
+        { "id": "b", "texto": "Less than 200 L/serving" },
+        { "id": "c", "texto": "Less than 400 L/serving" },
+        { "id": "d", "texto": "Less than 500 L/serving" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 31,
+      "bloque": "Bloque 6: Objetivos del Proyecto ANFORA",
+      "bloqueEn": "Block 6: ANFORA Project Objectives",
+      "pregunta": "El proyecto de innovación rural ANFORA tiene establecidos objetivos muy concretos para la Fase 2 (Ensayos Piloto). ¿Cuál es la meta exacta de adopción de la plataforma dentro de los 2 meses posteriores a su lanzamiento?",
+      "preguntaEn": "The ANFORA rural innovation project has very specific targets set for Phase 2 (Pilot Trials). What is the exact adoption target within 2 months after its launch?",
+      "opciones": [
+        { "id": "a", "texto": "50 usuarios registrados" },
+        { "id": "b", "texto": "100 usuarios registrados" },
+        { "id": "c", "texto": "200 usuarios registrados" },
+        { "id": "d", "texto": "500 usuarios registrados" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "50 registered users" },
+        { "id": "b", "texto": "100 registered users" },
+        { "id": "c", "texto": "200 registered users" },
+        { "id": "d", "texto": "500 registered users" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 32,
+      "bloque": "Bloque 6: Objetivos del Proyecto ANFORA",
+      "bloqueEn": "Block 6: ANFORA Project Objectives",
+      "pregunta": "¿Qué nivel de satisfacción buscan obtener en la encuesta anónima post-uso para considerar el diseño exitoso durante los ensayos piloto?",
+      "preguntaEn": "What level of satisfaction is targeted in the anonymous post-use survey to consider the design successful during the pilot trials?",
+      "opciones": [
+        { "id": "a", "texto": "Promedio mayor o igual a 3/5" },
+        { "id": "b", "texto": "Promedio mayor o igual a 4/5" },
+        { "id": "c", "texto": "Un 100% de reseñas positivas" },
+        { "id": "d", "texto": "Un Net Promoter Score (NPS) superior a 80" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Average greater than or equal to 3/5" },
+        { "id": "b", "texto": "Average greater than or equal to 4/5" },
+        { "id": "c", "texto": "100% positive reviews" },
+        { "id": "d", "texto": "A Net Promoter Score (NPS) above 80" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 33,
+      "bloque": "Bloque 6: Objetivos del Proyecto ANFORA",
+      "bloqueEn": "Block 6: ANFORA Project Objectives",
+      "pregunta": "En la Unidad 6 (Ejercicio práctico), se te pide crear una \"Opción B\" de tu menú. ¿Qué estrategia técnica exige el ejercicio para esta opción?",
+      "preguntaEn": "In Unit 6 (Practical exercise), you are asked to create an \"Option B\" for your menu. What technical strategy does the exercise require for this option?",
+      "opciones": [
+        { "id": "a", "texto": "Sustituir ingredientes importados por locales de Andalucía exclusivamente usando la calculadora." },
+        { "id": "b", "texto": "Eliminar las cenas y reemplazar el desayuno por fruta fresca." },
+        { "id": "c", "texto": "Sustituir los ingredientes con mayor huella hídrica de la Opción A por alternativas más sostenibles de la base de datos." },
+        { "id": "d", "texto": "Utilizar únicamente ingredientes con datos estimados por Inteligencia Artificial." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Exclusively substitute imported ingredients for local Andalusian ones using the calculator." },
+        { "id": "b", "texto": "Eliminate dinners and replace breakfast with fresh fruit." },
+        { "id": "c", "texto": "Replace the highest-water-footprint ingredients from Option A with more sustainable alternatives from the database." },
+        { "id": "d", "texto": "Use only ingredients with data estimated by Artificial Intelligence." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 34,
+      "bloque": "Bloque 6: Objetivos del Proyecto ANFORA",
+      "bloqueEn": "Block 6: ANFORA Project Objectives",
+      "pregunta": "El documento de Consentimiento Informado de la encuesta indica que el proyecto ANFORA está financiado por la Unión Europea. ¿Bajo qué número de Acuerdo de Subvención (GA No) opera?",
+      "preguntaEn": "The survey's Informed Consent document indicates that the ANFORA project is funded by the European Union. Under what Grant Agreement number (GA No) does it operate?",
+      "opciones": [
+        { "id": "a", "texto": "200060" },
+        { "id": "b", "texto": "2016679" },
+        { "id": "c", "texto": "101084377" },
+        { "id": "d", "texto": "100050202" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "200060" },
+        { "id": "b", "texto": "2016679" },
+        { "id": "c", "texto": "101084377" },
+        { "id": "d", "texto": "100050202" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 35,
+      "bloque": "Bloque 7: Encuesta del Proyecto",
+      "bloqueEn": "Block 7: Project Survey",
+      "pregunta": "En la encuesta (Sección 3: Percepción y Necesidades), se incluye una lista de prácticas de vida diaria del usuario. ¿Qué técnica específica de gestión de agua o cultivos se menciona como una opción a marcar?",
+      "preguntaEn": "In the survey (Section 3: Perception and Needs), a list of the user's daily life practices is included. What specific crop or water management technique is mentioned as an option to check?",
+      "opciones": [
+        { "id": "a", "texto": "Uso de riego hidropónico en interiores" },
+        { "id": "b", "texto": "Uso de riego por goteo" },
+        { "id": "c", "texto": "Riego por inundación para arrozales" },
+        { "id": "d", "texto": "Construcción de presas privadas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Use of indoor hydroponic irrigation" },
+        { "id": "b", "texto": "Drip irrigation use" },
+        { "id": "c", "texto": "Flood irrigation for rice paddies" },
+        { "id": "d", "texto": "Construction of private dams" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 36,
+      "bloque": "Bloque 7: Encuesta del Proyecto",
+      "bloqueEn": "Block 7: Project Survey",
+      "pregunta": "La encuesta interroga sobre el nivel de dificultad aceptable para usar la herramienta usando una escala de 1 a 5. ¿Qué descripción corresponde textualmente al valor \"5\" en el manual?",
+      "preguntaEn": "The survey asks about the acceptable level of difficulty to use the tool using a scale of 1 to 5. What text description corresponds to the value \"5\" in the manual?",
+      "opciones": [
+        { "id": "a", "texto": "Imposible de entender sin formación" },
+        { "id": "b", "texto": "Extremadamente complejo incluso si la app falla" },
+        { "id": "c", "texto": "Muy complejo si da buenos resultados" },
+        { "id": "d", "texto": "Muy sencillo, estilo redes sociales" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Impossible to understand without training" },
+        { "id": "b", "texto": "Extremely complex even if the app fails" },
+        { "id": "c", "texto": "Very complex if it gives good results" },
+        { "id": "d", "texto": "Very simple, social media style" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 37,
+      "bloque": "Bloque 7: Encuesta del Proyecto",
+      "bloqueEn": "Block 7: Project Survey",
+      "pregunta": "¿Cuál es la dirección de correo electrónico específica proporcionada en el Consentimiento Informado para que un usuario ejerza sus derechos de acceso, rectificación o eliminación (RGPD)?",
+      "preguntaEn": "What is the specific email address provided in the Informed Consent for a user to exercise their rights of access, rectification, or deletion (GDPR)?",
+      "opciones": [
+        { "id": "a", "texto": "privacy@eitcommunity.eu" },
+        { "id": "b", "texto": "support@anfora.es" },
+        { "id": "c", "texto": "info@evenor-tech.com" },
+        { "id": "d", "texto": "admin@lucena.es" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "privacy@eitcommunity.eu" },
+        { "id": "b", "texto": "support@anfora.es" },
+        { "id": "c", "texto": "info@evenor-tech.com" },
+        { "id": "d", "texto": "admin@lucena.es" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 38,
+      "bloque": "Bloque 7: Encuesta del Proyecto",
+      "bloqueEn": "Block 7: Project Survey",
+      "pregunta": "La encuesta del proyecto lista varias funcionalidades para que el usuario vote por las más útiles. ¿Qué idiomas concretos se sugieren en la opción de \"Interfaz disponible en varios idiomas\"?",
+      "preguntaEn": "The project survey lists several features for the user to vote on the most useful ones. Which specific languages are suggested in the option \"Interface available in several languages\"?",
+      "opciones": [
+        { "id": "a", "texto": "Español, Inglés, Portugués" },
+        { "id": "b", "texto": "Español, Inglés, Francés" },
+        { "id": "c", "texto": "Español, Inglés, Alemán" },
+        { "id": "d", "texto": "Solo Español e Inglés" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Spanish, English, Portuguese" },
+        { "id": "b", "texto": "Spanish, English, French" },
+        { "id": "c", "texto": "Spanish, English, German" },
+        { "id": "d", "texto": "Spanish and English only" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 39,
+      "bloque": "Bloque 7: Encuesta del Proyecto",
+      "bloqueEn": "Block 7: Project Survey",
+      "pregunta": "En la gestión de un Menú Semanal en ANFORA, ¿qué acción específica te permite la herramienta \"Editar días\" (Edit days)?",
+      "preguntaEn": "When managing a Weekly Menu in ANFORA, what specific action does the \"Edit days\" tool allow you to do?",
+      "opciones": [
+        { "id": "a", "texto": "Añadir un octavo día a la planificación semanal." },
+        { "id": "b", "texto": "Modificar las fechas de inicio y fin del menú." },
+        { "id": "c", "texto": "Cambiar las recetas de días específicos sin modificar el resto de la estructura del plan." },
+        { "id": "d", "texto": "Bloquear ciertos días para que no puedan ser modificados accidentalmente." }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Add an eighth day to the weekly planning." },
+        { "id": "b", "texto": "Modify the menu's start and end dates." },
+        { "id": "c", "texto": "Change recipes of specific days without touching the rest of the plan's structure." },
+        { "id": "d", "texto": "Lock certain days so they cannot be accidentally modified." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 40,
+      "bloque": "Bloque 7: Encuesta del Proyecto",
+      "bloqueEn": "Block 7: Project Survey",
+      "pregunta": "De acuerdo con el manual técnico y el explorador, ¿cuál es la huella hídrica exacta asignada a la carne de pollo (Chicken), lo que la sitúa en un nivel \"Alto\"?",
+      "preguntaEn": "According to the technical manual and the explorer, what is the exact water footprint assigned to Chicken meat, placing it at a \"High\" level?",
+      "opciones": [
+        { "id": "a", "texto": "2.500 L/kg" },
+        { "id": "b", "texto": "4.179 L/kg" },
+        { "id": "c", "texto": "4.805 L/kg" },
+        { "id": "d", "texto": "15.415 L/kg" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "2,500 L/kg" },
+        { "id": "b", "texto": "4,179 L/kg" },
+        { "id": "c", "texto": "4,805 L/kg" },
+        { "id": "d", "texto": "15,415 L/kg" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

@@ -1,0 +1,510 @@
+{
+  "titulo": "Test de Evaluación - Tema 6: Ejercicio Práctico y Encuesta del Proyecto",
+  "tituloEn": "Evaluation Test - Topic 6: Practical Exercise and Project Survey",
+  "descripcion": "Evaluación sobre el ejercicio práctico de comparación de menús, el consentimiento informado y las secciones de la encuesta de validación del proyecto ANFORA",
+  "descripcionEn": "Assessment on the practical menu comparison exercise, informed consent, and sections of the ANFORA project validation survey",
+  "duracionMinutos": 30,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Ejercicio Práctico",
+      "bloqueEn": "Practical Exercise",
+      "pregunta": "¿Cuáles son los dos componentes principales que conforman la Unidad 06 del curso?",
+      "preguntaEn": "What are the two main components that make up Unit 06 of the course?",
+      "opciones": [
+        { "id": "a", "texto": "Registro y Calculadora" },
+        { "id": "b", "texto": "Ejercicio práctico y Encuesta" },
+        { "id": "c", "texto": "Menús semanales y Estadísticas" },
+        { "id": "d", "texto": "Explorador de productos y Recetas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Registration and Calculator" },
+        { "id": "b", "texto": "Practical Exercise and Survey" },
+        { "id": "c", "texto": "Weekly Menus and Statistics" },
+        { "id": "d", "texto": "Product Explorer and Recipes" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Ejercicio Práctico",
+      "bloqueEn": "Practical Exercise",
+      "pregunta": "En el ejercicio práctico, ¿qué comidas se deben incluir para planificar el menú diario?",
+      "preguntaEn": "In the practical exercise, which meals must be included to plan the daily menu?",
+      "opciones": [
+        { "id": "a", "texto": "Solo almuerzo y cena" },
+        { "id": "b", "texto": "Desayuno, almuerzo, merienda y cena" },
+        { "id": "c", "texto": "Desayuno, almuerzo y cena" },
+        { "id": "d", "texto": "Almuerzo, cena y un snack" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Lunch and dinner only" },
+        { "id": "b", "texto": "Breakfast, lunch, snack, and dinner" },
+        { "id": "c", "texto": "Breakfast, lunch, and dinner" },
+        { "id": "d", "texto": "Lunch, dinner, and one snack" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Ejercicio Práctico",
+      "bloqueEn": "Practical Exercise",
+      "pregunta": "En la \"Opción B\" del ejercicio práctico, ¿qué estrategia se debe utilizar para crear un menú más sostenible?",
+      "preguntaEn": "In \"Option B\" of the practical exercise, what strategy should be used to create a more sustainable menu?",
+      "opciones": [
+        { "id": "a", "texto": "Reducir las porciones a la mitad" },
+        { "id": "b", "texto": "Eliminar todas las bebidas" },
+        { "id": "c", "texto": "Usar únicamente ingredientes crudos" },
+        { "id": "d", "texto": "Sustituir los ingredientes con mayor huella hídrica por alternativas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Reduce portion sizes by half" },
+        { "id": "b", "texto": "Eliminate all beverages" },
+        { "id": "c", "texto": "Use only raw ingredients" },
+        { "id": "d", "texto": "Replace the highest-water-footprint ingredients with alternatives" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Ejercicio Práctico",
+      "bloqueEn": "Practical Exercise",
+      "pregunta": "¿Qué formato recomienda el documento para exportar y entregar los resultados del ejercicio práctico?",
+      "preguntaEn": "What format does the document recommend to export and submit the results of the practical exercise?",
+      "opciones": [
+        { "id": "a", "texto": "Archivo Excel (.csv)" },
+        { "id": "b", "texto": "Archivo de texto (.txt)" },
+        { "id": "c", "texto": "Documento PDF" },
+        { "id": "d", "texto": "Archivo JSON" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Excel file (.csv)" },
+        { "id": "b", "texto": "Text file (.txt)" },
+        { "id": "c", "texto": "PDF document" },
+        { "id": "d", "texto": "JSON file" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Consentimiento Informado",
+      "bloqueEn": "Informed Consent",
+      "pregunta": "¿Cuál es el título de la \"Sección 1\" de la encuesta del proyecto ANFORA?",
+      "preguntaEn": "What is the title of \"Section 1\" of the ANFORA project survey?",
+      "opciones": [
+        { "id": "a", "texto": "Percepción y Necesidades" },
+        { "id": "b", "texto": "Datos Generales" },
+        { "id": "c", "texto": "Consentimiento Informado" },
+        { "id": "d", "texto": "Datos y Privacidad" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Perception and Needs" },
+        { "id": "b", "texto": "General Data" },
+        { "id": "c", "texto": "Informed Consent" },
+        { "id": "d", "texto": "Data and Privacy" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Consentimiento Informado",
+      "bloqueEn": "Informed Consent",
+      "pregunta": "Según la encuesta, ¿qué entidad es la responsable del proyecto ANFORA?",
+      "preguntaEn": "According to the survey, which entity is responsible for the ANFORA project?",
+      "opciones": [
+        { "id": "a", "texto": "Junta de Andalucía" },
+        { "id": "b", "texto": "EIT Community" },
+        { "id": "c", "texto": "Evenor-Tech" },
+        { "id": "d", "texto": "Ministerio de Agricultura" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Government of Andalusia" },
+        { "id": "b", "texto": "EIT Community" },
+        { "id": "c", "texto": "Evenor-Tech" },
+        { "id": "d", "texto": "Ministry of Agriculture" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "Consentimiento Informado",
+      "bloqueEn": "Informed Consent",
+      "pregunta": "¿Bajo qué normativa europea se procesan los datos de la encuesta de forma anónima y confidencial?",
+      "preguntaEn": "Under which European regulation is the survey data processed anonymously and confidentially?",
+      "opciones": [
+        { "id": "a", "texto": "Directiva Marco del Agua (2000/60/CE)" },
+        { "id": "b", "texto": "Reglamento General de Protección de Datos (RGPD - UE 2016/679)" },
+        { "id": "c", "texto": "Ley de Servicios de la Sociedad de la Información" },
+        { "id": "d", "texto": "Directiva de Privacidad y Comunicaciones Electrónicas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Water Framework Directive (2000/60/EC)" },
+        { "id": "b", "texto": "General Data Protection Regulation (GDPR - EU 2016/679)" },
+        { "id": "c", "texto": "Information Society Services Act" },
+        { "id": "d", "texto": "ePrivacy Directive" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Consentimiento Informado",
+      "bloqueEn": "Informed Consent",
+      "pregunta": "Si un usuario desea acceder, rectificar o eliminar sus datos, ¿a qué correo electrónico debe dirigirse?",
+      "preguntaEn": "If a user wishes to access, rectify, or delete their data, which email address should they contact?",
+      "opciones": [
+        { "id": "a", "texto": "admin@anfora.com" },
+        { "id": "b", "texto": "privacy@eitcommunity.eu" },
+        { "id": "c", "texto": "info@evenor-tech.com" },
+        { "id": "d", "texto": "support@andalusia.es" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "admin@anfora.com" },
+        { "id": "b", "texto": "privacy@eitcommunity.eu" },
+        { "id": "c", "texto": "info@evenor-tech.com" },
+        { "id": "d", "texto": "support@andalusia.es" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "Consentimiento Informado",
+      "bloqueEn": "Informed Consent",
+      "pregunta": "Según el Consentimiento Informado, ¿qué consecuencias tiene negarse a responder alguna pregunta o retirarse de la entrevista?",
+      "preguntaEn": "According to the Informed Consent, what are the consequences of declining to answer any question or withdrawing from the interview?",
+      "opciones": [
+        { "id": "a", "texto": "La cuenta del usuario será eliminada" },
+        { "id": "b", "texto": "Se aplicará una penalización en la plataforma" },
+        { "id": "c", "texto": "Ninguna consecuencia, la participación es completamente voluntaria" },
+        { "id": "d", "texto": "No se podrá usar la calculadora de huella hídrica" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The user's account will be deleted" },
+        { "id": "b", "texto": "A penalty will be applied on the platform" },
+        { "id": "c", "texto": "No consequences, participation is entirely voluntary" },
+        { "id": "d", "texto": "The water footprint calculator cannot be used" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Sección 2 - Datos Generales",
+      "bloqueEn": "Section 2 - General Data",
+      "pregunta": "En la \"Sección 2\" de la encuesta (Datos Generales), ¿sobre qué región específica de España se pregunta si el usuario vive en una zona rural?",
+      "preguntaEn": "In \"Section 2\" of the survey (General Data), about which specific region of Spain is the user asked if they live in a rural area?",
+      "opciones": [
+        { "id": "a", "texto": "Cataluña" },
+        { "id": "b", "texto": "Extremadura" },
+        { "id": "c", "texto": "Andalucía" },
+        { "id": "d", "texto": "Galicia" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Catalonia" },
+        { "id": "b", "texto": "Extremadura" },
+        { "id": "c", "texto": "Andalusia" },
+        { "id": "d", "texto": "Galicia" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "Sección 2 - Datos Generales",
+      "bloqueEn": "Section 2 - General Data",
+      "pregunta": "De las siguientes opciones, ¿cuál aparece explícitamente en la encuesta como una \"Ocupación principal\"?",
+      "preguntaEn": "Which of the following options explicitly appears in the survey as a \"Main occupation\"?",
+      "opciones": [
+        { "id": "a", "texto": "Conductor de maquinaria pesada" },
+        { "id": "b", "texto": "Cocinero o gestor de cocina (hogar, restaurante, comedor)" },
+        { "id": "c", "texto": "Abogado especializado en medio ambiente" },
+        { "id": "d", "texto": "Guía de turismo rural" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Heavy machinery driver" },
+        { "id": "b", "texto": "Cook or kitchen manager (home, restaurant, canteen)" },
+        { "id": "c", "texto": "Environmental lawyer" },
+        { "id": "d", "texto": "Rural tourism guide" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Sección 3 - Percepción y Necesidades",
+      "bloqueEn": "Section 3 - Perception and Needs",
+      "pregunta": "¿Cuál es el título de la \"Sección 3\" de la encuesta?",
+      "preguntaEn": "What is the title of \"Section 3\" of the survey?",
+      "opciones": [
+        { "id": "a", "texto": "Percepción y Necesidades" },
+        { "id": "b", "texto": "Conocimientos Técnicos" },
+        { "id": "c", "texto": "Datos Generales" },
+        { "id": "d", "texto": "Evaluación de la Interfaz" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Perception and Needs" },
+        { "id": "b", "texto": "Technical Knowledge" },
+        { "id": "c", "texto": "General Data" },
+        { "id": "d", "texto": "Interface Evaluation" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 13,
+      "bloque": "Sección 3 - Percepción y Necesidades",
+      "bloqueEn": "Section 3 - Perception and Needs",
+      "pregunta": "¿Cuál es el indicador o concepto central sobre el que la encuesta pregunta si el usuario está familiarizado?",
+      "preguntaEn": "What is the core indicator or concept that the survey asks if the user is familiar with?",
+      "opciones": [
+        { "id": "a", "texto": "Huella de carbono" },
+        { "id": "b", "texto": "Huella ecológica" },
+        { "id": "c", "texto": "Huella hídrica" },
+        { "id": "d", "texto": "Estrés hídrico" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Carbon footprint" },
+        { "id": "b", "texto": "Ecological footprint" },
+        { "id": "c", "texto": "Water footprint" },
+        { "id": "d", "texto": "Water stress" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 14,
+      "bloque": "Sección 3 - Percepción y Necesidades",
+      "bloqueEn": "Section 3 - Perception and Needs",
+      "pregunta": "En la lista de prácticas o productos de la vida diaria, ¿qué método de irrigación se menciona específicamente?",
+      "preguntaEn": "In the checklist of daily life products or practices, which irrigation method is specifically mentioned?",
+      "opciones": [
+        { "id": "a", "texto": "Riego por aspersión" },
+        { "id": "b", "texto": "Riego por goteo" },
+        { "id": "c", "texto": "Riego por inundación" },
+        { "id": "d", "texto": "Riego hidropónico" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Sprinkler irrigation" },
+        { "id": "b", "texto": "Drip irrigation" },
+        { "id": "c", "texto": "Flood irrigation" },
+        { "id": "d", "texto": "Hydroponic irrigation" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Sección 3 - Percepción y Necesidades",
+      "bloqueEn": "Section 3 - Perception and Needs",
+      "pregunta": "En la lista de funcionalidades útiles, ¿qué idiomas se sugieren para la interfaz de la plataforma?",
+      "preguntaEn": "In the list of useful features, which languages are suggested for the platform's interface?",
+      "opciones": [
+        { "id": "a", "texto": "Español, Inglés, Alemán" },
+        { "id": "b", "texto": "Español, Portugués, Italiano" },
+        { "id": "c", "texto": "Español, Inglés, Francés" },
+        { "id": "d", "texto": "Solo Español" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Spanish, English, German" },
+        { "id": "b", "texto": "Spanish, Portuguese, Italian" },
+        { "id": "c", "texto": "Spanish, English, French" },
+        { "id": "d", "texto": "Spanish only" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "Sección 3 - Percepción y Necesidades",
+      "bloqueEn": "Section 3 - Perception and Needs",
+      "pregunta": "Si un usuario desea exportar reportes descargables desde la plataforma, ¿qué dos formatos menciona la encuesta en sus opciones?",
+      "preguntaEn": "If a user wants downloadable reports from the platform, which two formats does the survey mention in its options?",
+      "opciones": [
+        { "id": "a", "texto": "PDF o Excel" },
+        { "id": "b", "texto": "Word o PowerPoint" },
+        { "id": "c", "texto": "JSON o XML" },
+        { "id": "d", "texto": "CSV o TXT" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "PDF or Excel" },
+        { "id": "b", "texto": "Word or PowerPoint" },
+        { "id": "c", "texto": "JSON or XML" },
+        { "id": "d", "texto": "CSV or TXT" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 17,
+      "bloque": "Funcionalidades y Barreras de Uso",
+      "bloqueEn": "Features and Usage Barriers",
+      "pregunta": "¿Cómo se denomina en la encuesta la funcionalidad que permite acceder a la plataforma sin conexión a internet?",
+      "preguntaEn": "What does the survey call the feature that allows accessing the platform without an internet connection?",
+      "opciones": [
+        { "id": "a", "texto": "Cloud mode" },
+        { "id": "b", "texto": "Offline mode (Modo sin conexión)" },
+        { "id": "c", "texto": "Sync mode" },
+        { "id": "d", "texto": "Local backup" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Cloud mode" },
+        { "id": "b", "texto": "Offline mode" },
+        { "id": "c", "texto": "Sync mode" },
+        { "id": "d", "texto": "Local backup" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Funcionalidades y Barreras de Uso",
+      "bloqueEn": "Features and Usage Barriers",
+      "pregunta": "En la pregunta sobre el nivel de dificultad aceptable para usar la herramienta (escala del 1 al 5), ¿qué representa el número 5?",
+      "preguntaEn": "In the question regarding the acceptable level of difficulty to use the tool (scale of 1 to 5), what does the number 5 represent?",
+      "opciones": [
+        { "id": "a", "texto": "Muy complejo incluso si no funciona" },
+        { "id": "b", "texto": "Muy complejo si da buenos resultados" },
+        { "id": "c", "texto": "Imposible de usar" },
+        { "id": "d", "texto": "Extremadamente sencillo" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Very complex even if it doesn't work" },
+        { "id": "b", "texto": "Very complex if it gives good results" },
+        { "id": "c", "texto": "Impossible to use" },
+        { "id": "d", "texto": "Extremely simple" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Funcionalidades y Barreras de Uso",
+      "bloqueEn": "Features and Usage Barriers",
+      "pregunta": "¿Cuál de las siguientes opciones se menciona en la encuesta como una posible \"barrera\" que impediría el uso de esta herramienta?",
+      "preguntaEn": "Which of the following options is mentioned in the survey as a potential \"barrier\" that might prevent the use of this tool?",
+      "opciones": [
+        { "id": "a", "texto": "Falta de habilidades digitales" },
+        { "id": "b", "texto": "Exceso de publicidad en la app" },
+        { "id": "c", "texto": "El costo de la suscripción mensual" },
+        { "id": "d", "texto": "Que el diseño no sea atractivo" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Lack of digital skills" },
+        { "id": "b", "texto": "Too many ads in the app" },
+        { "id": "c", "texto": "The cost of the monthly subscription" },
+        { "id": "d", "texto": "Unattractive design" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 20,
+      "bloque": "Funcionalidades y Barreras de Uso",
+      "bloqueEn": "Features and Usage Barriers",
+      "pregunta": "¿Cuál de los siguientes dispositivos NO está entre las opciones listadas en la encuesta para acceder a la plataforma?",
+      "preguntaEn": "Which of the following devices is NOT among the options listed in the survey for accessing the platform?",
+      "opciones": [
+        { "id": "a", "texto": "Teléfono móvil" },
+        { "id": "b", "texto": "Ordenador de escritorio o portátil" },
+        { "id": "c", "texto": "Reloj inteligente" },
+        { "id": "d", "texto": "Tableta" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Mobile phone" },
+        { "id": "b", "texto": "Desktop or laptop computer" },
+        { "id": "c", "texto": "Smartwatch" },
+        { "id": "d", "texto": "Tablet" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 21,
+      "bloque": "Sección 4 - Datos y Privacidad",
+      "bloqueEn": "Section 4 - Data and Privacy",
+      "pregunta": "¿Qué título recibe la \"Sección 4\", última parte de la encuesta?",
+      "preguntaEn": "What title is given to \"Section 4\", the final part of the survey?",
+      "opciones": [
+        { "id": "a", "texto": "Resultados y Estadísticas" },
+        { "id": "b", "texto": "Datos y Privacidad" },
+        { "id": "c", "texto": "Conclusiones" },
+        { "id": "d", "texto": "Próximos Pasos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Results and Statistics" },
+        { "id": "b", "texto": "Data and Privacy" },
+        { "id": "c", "texto": "Conclusions" },
+        { "id": "d", "texto": "Next Steps" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "Sección 4 - Datos y Privacidad",
+      "bloqueEn": "Section 4 - Data and Privacy",
+      "pregunta": "La encuesta pregunta si el usuario permitiría usar sus datos para mejorar la herramienta siempre y cuando se cumpla ¿qué condición?",
+      "preguntaEn": "The survey asks if the user would allow their data to be used to improve the tool provided what condition is met?",
+      "opciones": [
+        { "id": "a", "texto": "Que reciba un pago a cambio" },
+        { "id": "b", "texto": "Que los datos estén anonimizados y protegidos" },
+        { "id": "c", "texto": "Que se comparta solo con empresas locales" },
+        { "id": "d", "texto": "Que su nombre aparezca en los créditos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "They receive payment in return" },
+        { "id": "b", "texto": "The data are anonymized and protected" },
+        { "id": "c", "texto": "It is shared only with local businesses" },
+        { "id": "d", "texto": "Their name appears in the credits" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "Sección 4 - Datos y Privacidad",
+      "bloqueEn": "Section 4 - Data and Privacy",
+      "pregunta": "¿En qué tipo de pruebas de la herramienta invita la encuesta a participar?",
+      "preguntaEn": "In what type of tests of the tool does the survey invite the user to participate?",
+      "opciones": [
+        { "id": "a", "texto": "Únicamente pruebas por videollamada" },
+        { "id": "b", "texto": "Pruebas beta cerradas de pago" },
+        { "id": "c", "texto": "Pruebas en línea o en persona" },
+        { "id": "d", "texto": "Pruebas de estrés de servidores" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Video call tests only" },
+        { "id": "b", "texto": "Paid closed beta tests" },
+        { "id": "c", "texto": "Online or in-person tests" },
+        { "id": "d", "texto": "Server stress tests" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 24,
+      "bloque": "Sección 4 - Datos y Privacidad",
+      "bloqueEn": "Section 4 - Data and Privacy",
+      "pregunta": "Al finalizar la encuesta, ¿qué tipo de servicio adicional se le ofrece al usuario?",
+      "preguntaEn": "At the end of the survey, what type of additional service is offered to the user?",
+      "opciones": [
+        { "id": "a", "texto": "Formación gratuita sobre cómo usar la plataforma" },
+        { "id": "b", "texto": "Un descuento en la compra de alimentos locales" },
+        { "id": "c", "texto": "Un mes de suscripción premium" },
+        { "id": "d", "texto": "Equipamiento agrícola subsidiado" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Free training on how to use the platform" },
+        { "id": "b", "texto": "A discount on buying local food" },
+        { "id": "c", "texto": "One month of premium subscription" },
+        { "id": "d", "texto": "Subsidized agricultural equipment" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 25,
+      "bloque": "Sección 4 - Datos y Privacidad",
+      "bloqueEn": "Section 4 - Data and Privacy",
+      "pregunta": "Según el documento de Consentimiento Informado, ¿cuál es el número de Acuerdo de Subvención (GA No) del proyecto financiado por la UE?",
+      "preguntaEn": "According to the Informed Consent document, what is the Grant Agreement number (GA No) of the EU-funded project?",
+      "opciones": [
+        { "id": "a", "texto": "200060" },
+        { "id": "b", "texto": "101084377" },
+        { "id": "c", "texto": "2016679" },
+        { "id": "d", "texto": "50000" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "200060" },
+        { "id": "b", "texto": "101084377" },
+        { "id": "c", "texto": "2016679" },
+        { "id": "d", "texto": "50000" }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}
