@@ -454,7 +454,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                       <p className="text-xs text-gray-400 mt-0.5">
                         {todosAprobados
                           ? '40 preguntas • 90 minutos • Nota mínima: 70%'
-                          : `Aprueba los tests de los ${temasDelCurso.length} módulos para desbloquear el test final`}
+                          : `Aprueba los tests de los ${temas.length} módulos para desbloquear el test final`}
                       </p>
                     </div>
                   </div>
