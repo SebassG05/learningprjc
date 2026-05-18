@@ -67,7 +67,7 @@ export const sendContactEmail = async ({ name, email, phone, company, subject, m
   await transporter.sendMail(mailOptions);
 };
 
-export const sendCourseCompletionEmailToUser = async (userName, userEmail) => {
+export const sendCourseCompletionEmailToUser = async (userName, userEmail, courseName = 'el curso') => {
   const mailOptions = {
     from: `Campus Evenor <${process.env.EMAIL_USER}>`,
     to: userEmail,
@@ -86,8 +86,8 @@ export const sendCourseCompletionEmailToUser = async (userName, userEmail) => {
           <div style="background: linear-gradient(135deg, #f0f9ea 0%, #e8f5e0 100%); border-left: 4px solid #a1db87; padding: 20px; border-radius: 6px; margin: 24px 0;">
             <p style="color: #5aa833; font-weight: bold; margin-bottom: 8px;">📜 Tu certificado está en camino</p>
             <p style="color: #595959; margin: 0; line-height: 1.6;">
-              Nuestro equipo está preparando tu certificado de finalización del curso de 
-              <strong>"Modelización de la dinámica del carbono orgánico del suelo"</strong>. 
+              Nuestro equipo está preparando tu certificado de finalización del curso 
+              <strong>"${courseName}"</strong>. 
               En los próximos días recibirás un correo con el certificado oficial que acredita tus conocimientos.
             </p>
           </div>
@@ -119,10 +119,10 @@ export const sendCourseCompletionEmailToUser = async (userName, userEmail) => {
   await transporter.sendMail(mailOptions);
 };
 
-export const sendCourseCompletionNotificationToAdmin = async (userName, userEmail) => {
+export const sendCourseCompletionNotificationToAdmin = async (userName, userEmail, courseName = 'el curso') => {
   const mailOptions = {
     from: `Campus Evenor <${process.env.EMAIL_USER}>`,
-    to: ['info@evenor-tech.com', 'campusevenor@gmail.com'],
+    to: ['info@evenor-tech.com', 's.gandia@evenor-tech.com', 'campusevenor@gmail.com'],
     subject: '✅ Nuevo estudiante ha completado el curso',
     html: `
       <div style="font-family: Arial, sans-serif; background: #f8fafc; padding: 32px; color: #333;">
@@ -147,7 +147,7 @@ export const sendCourseCompletionNotificationToAdmin = async (userName, userEmai
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #595959; font-weight: 600;">Curso:</td>
-                <td style="padding: 8px 0; color: #333;">Modelización de la dinámica del carbono orgánico del suelo</td>
+                <td style="padding: 8px 0; color: #333;">${courseName}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #595959; font-weight: 600;">Fecha de finalización:</td>

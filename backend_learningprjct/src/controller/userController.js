@@ -493,16 +493,20 @@ export const completeTest = async (req, res) => {
     // Si es el test final, enviar correos (siempre que se pase, no solo la primera vez)
     if (isFinalTest) {
       try {
-        // Obtener datos del usuario
-        const user = await User.findById(userId);
+        // Obtener datos del usuario y del curso
+        const [user, course] = await Promise.all([
+          User.findById(userId),
+          Course.findById(courseId).select('title')
+        ]);
+        const courseName = course?.title || 'Curso';
         
         if (user && user.email && user.name) {
           // Enviar correo al usuario
-          await sendCourseCompletionEmailToUser(user.name, user.email);
+          await sendCourseCompletionEmailToUser(user.name, user.email, courseName);
           console.log(`✅ Correo de finalización enviado a ${user.email}`);
 
           // Enviar notificación a administradores
-          await sendCourseCompletionNotificationToAdmin(user.name, user.email);
+          await sendCourseCompletionNotificationToAdmin(user.name, user.email, courseName);
           console.log(`✅ Notificación de finalización enviada a administradores`);
         }
       } catch (emailError) {
