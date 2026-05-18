@@ -79,7 +79,7 @@ export const sendCourseCompletionEmailToUser = async (userName, userEmail, cours
           <!-- Header -->
           <div style="background: linear-gradient(135deg, #1a2e1a 0%, #1e3a1e 100%); border-radius: 14px 14px 0 0; padding: 36px; text-align: center;">
             <div style="display: inline-block; background: rgba(161,219,135,0.15); border: 2px solid #a1db87; border-radius: 50%; width: 70px; height: 70px; line-height: 70px; font-size: 36px; margin-bottom: 20px;">🎓</div>
-            <h1 style="color: #a1db87; margin: 0 0 8px; font-size: 24px; letter-spacing: -0.3px;">¡Enhorabuena, ${userName}!</h1>
+            <h1 style="color: #ffffff; margin: 0 0 8px; font-size: 24px; letter-spacing: -0.3px;">¡Enhorabuena, ${userName}!</h1>
             <p style="color: #7ec87e; margin: 0; font-size: 15px;">Has completado exitosamente el curso</p>
           </div>
 
@@ -145,7 +145,7 @@ export const sendCourseCompletionNotificationToAdmin = async (userName, userEmai
           <!-- Header -->
           <div style="background: linear-gradient(135deg, #1a2e1a 0%, #1e3a1e 100%); border-radius: 14px 14px 0 0; padding: 32px 36px; text-align: center;">
             <div style="display: inline-block; background: rgba(161,219,135,0.15); border: 2px solid #a1db87; border-radius: 50%; width: 70px; height: 70px; line-height: 70px; font-size: 36px; margin-bottom: 16px;">🎓</div>
-            <h1 style="color: #a1db87; margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px;">Certificado pendiente de emisión</h1>
+            <h1 style="color: #ffffff; margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px;">Certificado pendiente de emisión</h1>
             <p style="color: #7ec87e; margin: 0; font-size: 14px;">Un estudiante ha superado el test final de certificación</p>
           </div>
 
