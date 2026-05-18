@@ -428,7 +428,7 @@ export default function CursoDetalle() {
             className="cursor-pointer group flex items-center gap-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-[#a1db87]/30 transform hover:scale-105 transition-all duration-300"
           >
             <BookOpen className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-            <span className="text-lg">Ver Estructura del Curso</span>
+            <span className="text-lg">{idiomaSeleccionado === 'en' ? 'View Course Structure' : 'Ver Estructura del Curso'}</span>
           </button>
         </div>
       </div>
