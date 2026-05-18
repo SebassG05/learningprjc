@@ -13,6 +13,7 @@ export default function TemaEstudio() {
   const { tema, material, startPhase, temaId } = location.state || {};
   
   const [currentPhase, setCurrentPhase] = useState(startPhase || 1); // 1: Material, 2: Test
+  const idioma = localStorage.getItem(`lang_${cursoId}`) || 'es';
   const [pdfUrl, setPdfUrl] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   
@@ -223,6 +224,7 @@ export default function TemaEstudio() {
                 cursoId={cursoId} 
                 temaId={temaId || tema._id}
                 onComplete={handleClose}
+                idioma={idioma}
               />
             </motion.div>
           )}

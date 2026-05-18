@@ -1,0 +1,510 @@
+{
+  "titulo": "Test de Evaluación - Tema 1: Introducción a ANFORA y la Huella Hídrica",
+  "tituloEn": "Evaluation Test - Topic 1: Introduction to ANFORA and the Water Footprint",
+  "descripcion": "Evaluación sobre los conceptos fundamentales de la huella hídrica y la plataforma ANFORA",
+  "descripcionEn": "Assessment on the fundamental concepts of the water footprint and the ANFORA platform",
+  "duracionMinutos": 30,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Introducción a ANFORA",
+      "bloqueEn": "Introduction to ANFORA",
+      "pregunta": "¿Qué significan las siglas ANFORA?",
+      "preguntaEn": "What does the acronym ANFORA stand for?",
+      "opciones": [
+        { "id": "a", "texto": "Asociación Nacional para el Fomento de la Agricultura" },
+        { "id": "b", "texto": "Red Andaluza para la Optimización de Recursos en Agricultura" },
+        { "id": "c", "texto": "Aplicación Nueva para la Formación Rural y Agrícola" },
+        { "id": "d", "texto": "Alianza Nacional de Formación y Optimización de Recursos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Agricultural Network for Food Optimization and Rural Advancement" },
+        { "id": "b", "texto": "Andalusian Network for Optimizing Resources in Agriculture" },
+        { "id": "c", "texto": "Application for Nutrient and Footprint Optimization in Rural Areas" },
+        { "id": "d", "texto": "Andalusian National Foundation for Optimizing Rural Agriculture" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Introducción a ANFORA",
+      "bloqueEn": "Introduction to ANFORA",
+      "pregunta": "¿Qué tipo de aplicación es ANFORA?",
+      "preguntaEn": "What type of application is ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "Una aplicación nativa para iOS y Android" },
+        { "id": "b", "texto": "Una aplicación de escritorio (Desktop App)" },
+        { "id": "c", "texto": "Una Aplicación Web Progresiva (PWA)" },
+        { "id": "d", "texto": "Una extensión de navegador" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A native app for iOS and Android" },
+        { "id": "b", "texto": "A Desktop App" },
+        { "id": "c", "texto": "A Progressive Web Application (PWA)" },
+        { "id": "d", "texto": "A browser extension" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Introducción a ANFORA",
+      "bloqueEn": "Introduction to ANFORA",
+      "pregunta": "¿En qué municipio se desarrolla este proyecto de innovación rural?",
+      "preguntaEn": "In which municipality does this rural innovation project take place?",
+      "opciones": [
+        { "id": "a", "texto": "Sevilla" },
+        { "id": "b", "texto": "Granada" },
+        { "id": "c", "texto": "Málaga" },
+        { "id": "d", "texto": "Lucena (Córdoba)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Seville" },
+        { "id": "b", "texto": "Granada" },
+        { "id": "c", "texto": "Malaga" },
+        { "id": "d", "texto": "Lucena (Cordoba)" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Introducción a ANFORA",
+      "bloqueEn": "Introduction to ANFORA",
+      "pregunta": "¿Qué organización ha financiado el proyecto ANFORA?",
+      "preguntaEn": "Which organization funded the ANFORA project?",
+      "opciones": [
+        { "id": "a", "texto": "Junta de Andalucía" },
+        { "id": "b", "texto": "EIT Community" },
+        { "id": "c", "texto": "Ministerio de Agricultura" },
+        { "id": "d", "texto": "Fondo Europeo Agrícola" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Government of Andalusia" },
+        { "id": "b", "texto": "EIT Community" },
+        { "id": "c", "texto": "Ministry of Agriculture" },
+        { "id": "d", "texto": "European Agricultural Fund" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Introducción a ANFORA",
+      "bloqueEn": "Introduction to ANFORA",
+      "pregunta": "¿Cuál de los siguientes NO es uno de los tres perfiles de usuario principales para los que está diseñada la plataforma?",
+      "preguntaEn": "Which of the following is NOT one of the three main user profiles the platform is designed for?",
+      "opciones": [
+        { "id": "a", "texto": "Agricultores y cooperativas" },
+        { "id": "b", "texto": "Consumidores" },
+        { "id": "c", "texto": "Investigadores y empresas alimentarias" },
+        { "id": "d", "texto": "Agentes inmobiliarios rurales" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Farmers and cooperatives" },
+        { "id": "b", "texto": "Consumers" },
+        { "id": "c", "texto": "Researchers and food companies" },
+        { "id": "d", "texto": "Rural real estate agents" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 6,
+      "bloque": "Datos y funcionalidades",
+      "bloqueEn": "Data and Features",
+      "pregunta": "¿Cuántos productos con datos científicos se pueden explorar en la plataforma?",
+      "preguntaEn": "How many products with scientific data can be explored on the platform?",
+      "opciones": [
+        { "id": "a", "texto": "Más de 50" },
+        { "id": "b", "texto": "Más de 74" },
+        { "id": "c", "texto": "Más de 100" },
+        { "id": "d", "texto": "Más de 200" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Over 50" },
+        { "id": "b", "texto": "Over 74" },
+        { "id": "c", "texto": "Over 100" },
+        { "id": "d", "texto": "Over 200" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Datos y funcionalidades",
+      "bloqueEn": "Data and Features",
+      "pregunta": "¿En qué formatos se pueden exportar los datos desde ANFORA?",
+      "preguntaEn": "In what formats can ANFORA data be exported?",
+      "opciones": [
+        { "id": "a", "texto": "DOCX, PDF y TXT" },
+        { "id": "b", "texto": "PDF, CSV y JSON" },
+        { "id": "c", "texto": "JPG, PNG y PDF" },
+        { "id": "d", "texto": "XML, SQL y CSV" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "DOCX, PDF, and TXT" },
+        { "id": "b", "texto": "PDF, CSV, and JSON" },
+        { "id": "c", "texto": "JPG, PNG, and PDF" },
+        { "id": "d", "texto": "XML, SQL, and CSV" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Contexto y sostenibilidad",
+      "bloqueEn": "Context and Sustainability",
+      "pregunta": "¿Qué porcentaje del agua dulce a nivel mundial se destina a la agricultura?",
+      "preguntaEn": "What percentage of the world's fresh water is allocated to agriculture?",
+      "opciones": [
+        { "id": "a", "texto": "30%" },
+        { "id": "b", "texto": "50%" },
+        { "id": "c", "texto": "70%" },
+        { "id": "d", "texto": "90%" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "30%" },
+        { "id": "b", "texto": "50%" },
+        { "id": "c", "texto": "70%" },
+        { "id": "d", "texto": "90%" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "Contexto y sostenibilidad",
+      "bloqueEn": "Context and Sustainability",
+      "pregunta": "¿Cuál es el ahorro potencial de agua que se puede lograr mediante cambios en la dieta, según el proyecto?",
+      "preguntaEn": "What is the potential water saving that can be achieved with diet changes, according to the project?",
+      "opciones": [
+        { "id": "a", "texto": "5-10%" },
+        { "id": "b", "texto": "10-15%" },
+        { "id": "c", "texto": "20-25%" },
+        { "id": "d", "texto": "30-40%" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5-10%" },
+        { "id": "b", "texto": "10-15%" },
+        { "id": "c", "texto": "20-25%" },
+        { "id": "d", "texto": "30-40%" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Tipos de huella hídrica",
+      "bloqueEn": "Types of Water Footprint",
+      "pregunta": "¿Cómo se define la \"Huella de agua azul\"?",
+      "preguntaEn": "How is \"Blue water\" defined in the water footprint context?",
+      "opciones": [
+        { "id": "a", "texto": "El agua de lluvia almacenada en el suelo" },
+        { "id": "b", "texto": "El volumen de agua necesario para diluir contaminantes" },
+        { "id": "c", "texto": "El agua de ríos, lagos y acuíferos utilizada para riego" },
+        { "id": "d", "texto": "El agua potable utilizada en el procesamiento de alimentos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Rainwater stored in the soil" },
+        { "id": "b", "texto": "The volume of water needed to dilute pollutants" },
+        { "id": "c", "texto": "Water from rivers, lakes, and aquifers used for irrigation" },
+        { "id": "d", "texto": "Drinking water used in food processing" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "Tipos de huella hídrica",
+      "bloqueEn": "Types of Water Footprint",
+      "pregunta": "¿Qué representa la \"Huella de agua verde\"?",
+      "preguntaEn": "What does the \"Green water\" footprint represent?",
+      "opciones": [
+        { "id": "a", "texto": "El agua reciclada en plantas de tratamiento" },
+        { "id": "b", "texto": "El agua de lluvia almacenada en el suelo y evapotranspirada por las plantas" },
+        { "id": "c", "texto": "El agua utilizada exclusivamente en cultivos ecológicos" },
+        { "id": "d", "texto": "El exceso de riego que vuelve a los ríos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Recycled water in treatment plants" },
+        { "id": "b", "texto": "Rainwater stored in the soil and evapotranspired by plants" },
+        { "id": "c", "texto": "Water used exclusively in organic farming" },
+        { "id": "d", "texto": "Excess irrigation water that returns to rivers" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Tipos de huella hídrica",
+      "bloqueEn": "Types of Water Footprint",
+      "pregunta": "¿Qué mide la \"Huella de agua gris\"?",
+      "preguntaEn": "What does the \"Grey water\" footprint measure?",
+      "opciones": [
+        { "id": "a", "texto": "El agua residual de las zonas urbanas" },
+        { "id": "b", "texto": "El agua que se evapora durante el riego" },
+        { "id": "c", "texto": "El volumen de agua necesario para diluir contaminantes a niveles aceptables" },
+        { "id": "d", "texto": "El agua que se pierde por fugas en las tuberías" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Wastewater from urban areas" },
+        { "id": "b", "texto": "Water that evaporates during irrigation" },
+        { "id": "c", "texto": "The volume of water needed to dilute pollutants to acceptable levels" },
+        { "id": "d", "texto": "Water lost through pipeline leaks" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Fuentes de datos",
+      "bloqueEn": "Data Sources",
+      "pregunta": "¿Cuántas fuentes de datos utiliza ANFORA para sus cálculos?",
+      "preguntaEn": "How many data sources does ANFORA use for calculations?",
+      "opciones": [
+        { "id": "a", "texto": "2" },
+        { "id": "b", "texto": "3" },
+        { "id": "c", "texto": "4" },
+        { "id": "d", "texto": "5" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "2" },
+        { "id": "b", "texto": "3" },
+        { "id": "c", "texto": "4" },
+        { "id": "d", "texto": "5" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 14,
+      "bloque": "Fuentes de datos",
+      "bloqueEn": "Data Sources",
+      "pregunta": "¿Cuál es el orden de prioridad automático de las fuentes de datos en la plataforma?",
+      "preguntaEn": "What is the automatic priority order of the data sources in the platform?",
+      "opciones": [
+        { "id": "a", "texto": "Regional > Global > IA" },
+        { "id": "b", "texto": "IA > Global > Regional" },
+        { "id": "c", "texto": "Global > Regional > IA" },
+        { "id": "d", "texto": "Personalizado > IA > Global" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Regional > Global > AI" },
+        { "id": "b", "texto": "AI > Global > Regional" },
+        { "id": "c", "texto": "Global > Regional > AI" },
+        { "id": "d", "texto": "Custom > AI > Global" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Fuentes de datos",
+      "bloqueEn": "Data Sources",
+      "pregunta": "¿Qué fuente de datos se utiliza cuando no hay información científica disponible?",
+      "preguntaEn": "Which data source is used when no scientific data are available?",
+      "opciones": [
+        { "id": "a", "texto": "Global (WFN)" },
+        { "id": "b", "texto": "Andalucía" },
+        { "id": "c", "texto": "Personalizada" },
+        { "id": "d", "texto": "IA (Modelos de estimación)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Global (WFN)" },
+        { "id": "b", "texto": "Andalusia" },
+        { "id": "c", "texto": "Custom" },
+        { "id": "d", "texto": "AI (Estimation models)" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 16,
+      "bloque": "Fuentes de datos",
+      "bloqueEn": "Data Sources",
+      "pregunta": "Según los datos Globales, ¿cuál es la huella hídrica total del tomate?",
+      "preguntaEn": "According to Global (WFN) data, what is the total water footprint of a tomato?",
+      "opciones": [
+        { "id": "a", "texto": "63 L/kg" },
+        { "id": "b", "texto": "108 L/kg" },
+        { "id": "c", "texto": "214 L/kg" },
+        { "id": "d", "texto": "428 L/kg" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "63 L/kg" },
+        { "id": "b", "texto": "108 L/kg" },
+        { "id": "c", "texto": "214 L/kg" },
+        { "id": "d", "texto": "428 L/kg" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "Niveles de huella hídrica",
+      "bloqueEn": "Water Footprint Levels",
+      "pregunta": "En el caso del tomate, ¿qué componente representa el mayor porcentaje (51%) de su huella hídrica?",
+      "preguntaEn": "In the case of tomatoes, which component represents the highest percentage (51%) of its water footprint?",
+      "opciones": [
+        { "id": "a", "texto": "Agua azul" },
+        { "id": "b", "texto": "Agua verde" },
+        { "id": "c", "texto": "Agua gris" },
+        { "id": "d", "texto": "Agua negra" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Blue water" },
+        { "id": "b", "texto": "Green water" },
+        { "id": "c", "texto": "Grey water" },
+        { "id": "d", "texto": "Black water" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Niveles de huella hídrica",
+      "bloqueEn": "Water Footprint Levels",
+      "pregunta": "¿Cuál es el rango de la huella hídrica para que un producto sea considerado de nivel \"Bajo\" (color verde)?",
+      "preguntaEn": "What is the water footprint range for a product to be considered at a \"Low\" level (green color)?",
+      "opciones": [
+        { "id": "a", "texto": "Menos de 500 L/kg" },
+        { "id": "b", "texto": "Entre 500 y 1.000 L/kg" },
+        { "id": "c", "texto": "Entre 1.000 y 2.000 L/kg" },
+        { "id": "d", "texto": "Menos de 100 L/kg" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "< 500 L/kg" },
+        { "id": "b", "texto": "500 - 1,000 L/kg" },
+        { "id": "c", "texto": "1,000 - 2,000 L/kg" },
+        { "id": "d", "texto": "< 100 L/kg" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 19,
+      "bloque": "Niveles de huella hídrica",
+      "bloqueEn": "Water Footprint Levels",
+      "pregunta": "¿Qué color en ANFORA indica un nivel de huella hídrica \"Muy Alto\" (> 5.000 L/kg)?",
+      "preguntaEn": "What color in ANFORA indicates a \"Very High\" water footprint level (> 5,000 L/kg)?",
+      "opciones": [
+        { "id": "a", "texto": "Amarillo" },
+        { "id": "b", "texto": "Naranja" },
+        { "id": "c", "texto": "Rojo" },
+        { "id": "d", "texto": "Morado" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Yellow" },
+        { "id": "b", "texto": "Orange" },
+        { "id": "c", "texto": "Red" },
+        { "id": "d", "texto": "Purple" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "Niveles de huella hídrica",
+      "bloqueEn": "Water Footprint Levels",
+      "pregunta": "¿Cuál de los siguientes alimentos tiene una huella hídrica considerada \"Muy Alta\" según los ejemplos del documento?",
+      "preguntaEn": "Which of the following foods has a water footprint considered \"Very High\" according to the document's examples?",
+      "opciones": [
+        { "id": "a", "texto": "Lechuga" },
+        { "id": "b", "texto": "Manzana" },
+        { "id": "c", "texto": "Pollo" },
+        { "id": "d", "texto": "Carne de ternera" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Lettuce" },
+        { "id": "b", "texto": "Apple" },
+        { "id": "c", "texto": "Chicken" },
+        { "id": "d", "texto": "Beef" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 21,
+      "bloque": "Plataforma y contexto",
+      "bloqueEn": "Platform and Context",
+      "pregunta": "¿Qué funcionalidad de la plataforma NO requiere que el usuario esté registrado?",
+      "preguntaEn": "Which platform feature does NOT require the user to be registered?",
+      "opciones": [
+        { "id": "a", "texto": "Mis Recetas" },
+        { "id": "b", "texto": "Menús Semanales" },
+        { "id": "c", "texto": "Perfil (Estadísticas personales)" },
+        { "id": "d", "texto": "Explorador (Explorer)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "My Recipes" },
+        { "id": "b", "texto": "Weekly Menus" },
+        { "id": "c", "texto": "Profile (Personal statistics)" },
+        { "id": "d", "texto": "Explorer" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 22,
+      "bloque": "Plataforma y contexto",
+      "bloqueEn": "Platform and Context",
+      "pregunta": "¿En qué idiomas está disponible la plataforma ANFORA?",
+      "preguntaEn": "In what languages is the ANFORA platform available?",
+      "opciones": [
+        { "id": "a", "texto": "Solo español" },
+        { "id": "b", "texto": "Español e Inglés" },
+        { "id": "c", "texto": "Español, Inglés y Francés" },
+        { "id": "d", "texto": "Español y Alemán" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Spanish only" },
+        { "id": "b", "texto": "Spanish and English" },
+        { "id": "c", "texto": "Spanish, English, and French" },
+        { "id": "d", "texto": "Spanish and German" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "Plataforma y contexto",
+      "bloqueEn": "Platform and Context",
+      "pregunta": "¿Cuál es la principal fuente de datos científica a nivel mundial usada por ANFORA?",
+      "preguntaEn": "What is the main global scientific data source used by ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "FAO" },
+        { "id": "b", "texto": "Water Footprint Network (WFN)" },
+        { "id": "c", "texto": "CHG (Junta de Andalucía)" },
+        { "id": "d", "texto": "Ministerio de Transición Ecológica" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "FAO" },
+        { "id": "b", "texto": "Water Footprint Network (WFN)" },
+        { "id": "c", "texto": "CHG (Government of Andalusia)" },
+        { "id": "d", "texto": "Ministry for Ecological Transition" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Plataforma y contexto",
+      "bloqueEn": "Platform and Context",
+      "pregunta": "¿Qué Directiva Marco de la UE manda una gestión sostenible del agua y es mencionada en el documento?",
+      "preguntaEn": "Which EU Framework Directive mandates sustainable water management as mentioned in the document?",
+      "opciones": [
+        { "id": "a", "texto": "2010/75/UE" },
+        { "id": "b", "texto": "2000/60/CE" },
+        { "id": "c", "texto": "91/676/CEE" },
+        { "id": "d", "texto": "2020/2184/UE" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "2010/75/EU" },
+        { "id": "b", "texto": "2000/60/EC" },
+        { "id": "c", "texto": "91/676/EEC" },
+        { "id": "d", "texto": "2020/2184/EU" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "Plataforma y contexto",
+      "bloqueEn": "Platform and Context",
+      "pregunta": "¿Cuál es la URL de la API de referencia en ANFORA?",
+      "preguntaEn": "What is the API URL for ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "anfora.evenor-tech.com" },
+        { "id": "b", "texto": "data.anfora.evenor-tech.com" },
+        { "id": "c", "texto": "api.anfora.evenor-tech.com" },
+        { "id": "d", "texto": "app.anfora.evenor-tech.com" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "anfora.evenor-tech.com" },
+        { "id": "b", "texto": "data.anfora.evenor-tech.com" },
+        { "id": "c", "texto": "api.anfora.evenor-tech.com" },
+        { "id": "d", "texto": "app.anfora.evenor-tech.com" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

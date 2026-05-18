@@ -8,8 +8,11 @@ const opcionSchema = new mongoose.Schema({
 const preguntaSchema = new mongoose.Schema({
   numero: Number,
   bloque: String,
+  bloqueEn: String,
   pregunta: String,
+  preguntaEn: String,
   opciones: [opcionSchema],
+  opcionesEn: [opcionSchema],
   respuestaCorrecta: String
 }, { _id: false });
 
@@ -28,7 +31,9 @@ const testSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  tituloEn: String,
   descripcion: String,
+  descripcionEn: String,
   preguntas: [preguntaSchema],
   duracionMinutos: Number,
   notaMinima: {

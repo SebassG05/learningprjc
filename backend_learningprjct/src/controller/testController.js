@@ -75,14 +75,19 @@ export const obtenerTestPorTema = async (req, res) => {
     const testSinRespuestas = {
       _id: test._id,
       titulo: test.titulo,
+      tituloEn: test.tituloEn,
       descripcion: test.descripcion,
+      descripcionEn: test.descripcionEn,
       duracionMinutos: test.duracionMinutos,
       notaMinima: test.notaMinima,
       preguntas: test.preguntas.map(p => ({
         numero: p.numero,
         bloque: p.bloque,
+        bloqueEn: p.bloqueEn,
         pregunta: p.pregunta,
-        opciones: p.opciones
+        preguntaEn: p.preguntaEn,
+        opciones: p.opciones,
+        opcionesEn: p.opcionesEn
       }))
     };
 

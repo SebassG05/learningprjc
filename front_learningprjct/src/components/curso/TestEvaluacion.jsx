@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, ChevronLeft, ChevronRight, Clock, Award, AlertCircle, Lock } from 'lucide-react';
 
-export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
+export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = 'es' }) {
   const [test, setTest] = useState(null);
   const [respuestas, setRespuestas] = useState({});
   const [preguntaActual, setPreguntaActual] = useState(0);
@@ -98,7 +98,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
           opciones: opcionesBarajadas.map((opcion, idx) => ({
             ...opcion,
             idOriginal: opcion.id, // Guardamos el ID original para validación
-            id: idsVisuales[idx] // Asignamos el ID visual en orden a, b, c, d
+            id: idsVisuales[idx], // Asignamos el ID visual en orden a, b, c, d
+            textoEn: pregunta.opcionesEn?.find(o => o.id === opcion.id)?.texto || opcion.texto
           }))
         };
       });
@@ -464,7 +465,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6]">
-                  {test.titulo}
+                  {idioma === 'en' ? (test.tituloEn || test.titulo) : test.titulo}
                 </h2>
                 {isTestFinal && (
                   <span className="px-3 py-1 bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border border-yellow-500/50 text-yellow-400 text-xs font-bold rounded-full flex items-center gap-1">
@@ -473,7 +474,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                   </span>
                 )}
               </div>
-              <p className="text-sm text-gray-400 mt-2">{test.descripcion}</p>
+              <p className="text-sm text-gray-400 mt-2">{idioma === 'en' ? (test.descripcionEn || test.descripcion) : test.descripcion}</p>
             </div>
             <div className="flex items-center gap-3 px-4 py-2 bg-[#1a1a1a]/50 rounded-lg border border-[#a1db87]/20">
               <Clock className="w-5 h-5 text-[#a1db87]" />
@@ -524,7 +525,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                   transition={{ delay: 0.1 }}
                   className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#a1db87]/20 to-[#5ec6a6]/20 text-[#a1db87] rounded-full text-sm font-semibold border border-[#a1db87]/30 mb-6"
                 >
-                  {pregunta.bloque}
+                  {idioma === 'en' ? (pregunta.bloqueEn || pregunta.bloque) : pregunta.bloque}
                 </motion.span>
                 <motion.h3 
                   initial={{ y: 20, opacity: 0 }}
@@ -532,7 +533,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                   transition={{ delay: 0.2 }}
                   className="text-3xl font-bold text-white mb-2 leading-tight"
                 >
-                  {pregunta.pregunta}
+                  {idioma === 'en' ? (pregunta.preguntaEn || pregunta.pregunta) : pregunta.pregunta}
                 </motion.h3>
                 <p className="text-gray-500 text-sm">Selecciona la respuesta correcta</p>
               </div>
@@ -579,7 +580,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete }) {
                           <p className={`text-base leading-relaxed transition-colors break-words ${
                             isSelected ? 'text-white font-medium' : 'text-gray-300 group-hover:text-white'
                           }`}>
-                            {opcion.texto}
+                            {idioma === 'en' ? (opcion.textoEn || opcion.texto) : opcion.texto}
                           </p>
                         </div>
                       </div>
