@@ -400,7 +400,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-white mb-2">Test Final de Certificación</h3>
                   <p className="text-gray-400 text-sm text-justify leading-relaxed">
-                    Evaluación final integradora sobre todos los contenidos del curso. Cubre los 4 módulos: fundamentos de la dinámica del carbono, estructura y tipos de modelos, formulación matemática y práctica en R con el ensemble multimodelo.
+                    Evaluación final integradora sobre todos los contenidos del curso. Cubre los {temas.length} módulos del curso para obtener la certificación.
                   </p>
                 </div>
               </div>
