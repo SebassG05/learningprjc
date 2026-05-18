@@ -71,47 +71,56 @@ export const sendCourseCompletionEmailToUser = async (userName, userEmail, cours
   const mailOptions = {
     from: `Campus Evenor <${process.env.EMAIL_USER}>`,
     to: userEmail,
-    subject: '¡Felicidades! Has completado el curso',
+    subject: `🎓 ¡Enhorabuena, ${userName}! Has completado el curso`,
     html: `
-      <div style="font-family: 'Rondana', Arial, sans-serif; background: #f0f9ea; padding: 32px; color: #333333;">
-        <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <div style="display: inline-block; background: linear-gradient(135deg, #a1db87 0%, #5ec6a6 100%); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-              <span style="font-size: 40px;">🎓</span>
+      <div style="font-family: Arial, sans-serif; background: #f4f6f8; padding: 40px 16px;">
+        <div style="max-width: 580px; margin: auto;">
+
+          <!-- Header -->
+          <div style="background: linear-gradient(135deg, #1a2e1a 0%, #1e3a1e 100%); border-radius: 14px 14px 0 0; padding: 36px; text-align: center;">
+            <div style="display: inline-block; background: rgba(161,219,135,0.15); border: 2px solid #a1db87; border-radius: 50%; width: 70px; height: 70px; line-height: 70px; font-size: 36px; margin-bottom: 20px;">🎓</div>
+            <h1 style="color: #a1db87; margin: 0 0 8px; font-size: 24px; letter-spacing: -0.3px;">¡Enhorabuena, ${userName}!</h1>
+            <p style="color: #7ec87e; margin: 0; font-size: 15px;">Has completado exitosamente el curso</p>
+          </div>
+
+          <!-- Body -->
+          <div style="background: #ffffff; border-radius: 0 0 14px 14px; padding: 36px; border: 1px solid #e2e8f0; border-top: none;">
+
+            <!-- Curso -->
+            <div style="background: #f6faf2; border: 1px solid #c6e8ac; border-left: 4px solid #5aa833; border-radius: 8px; padding: 18px 20px; margin-bottom: 28px;">
+              <p style="margin: 0 0 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #5aa833;">Curso completado</p>
+              <p style="margin: 0; color: #1a2e1a; font-size: 16px; font-weight: 700;">${courseName}</p>
             </div>
-            <h2 style="color: #5aa833; margin-bottom: 8px; font-family: 'Rondana', Arial, sans-serif;">¡Enhorabuena, ${userName}!</h2>
-            <p style="color: #595959; font-size: 18px;">Has completado exitosamente el curso</p>
-          </div>
-          
-          <div style="background: linear-gradient(135deg, #f0f9ea 0%, #e8f5e0 100%); border-left: 4px solid #a1db87; padding: 20px; border-radius: 6px; margin: 24px 0;">
-            <p style="color: #5aa833; font-weight: bold; margin-bottom: 8px;">📜 Tu certificado está en camino</p>
-            <p style="color: #595959; margin: 0; line-height: 1.6;">
-              Nuestro equipo está preparando tu certificado de finalización del curso 
-              <strong>"${courseName}"</strong>. 
-              En los próximos días recibirás un correo con el certificado oficial que acredita tus conocimientos.
+
+            <!-- Mensaje -->
+            <p style="color: #374151; font-size: 15px; line-height: 1.7; margin: 0 0 24px;">
+              Tu esfuerzo y dedicación a lo largo de todo el programa han dado sus frutos.
+              Has superado todos los módulos y el test final de certificación.
             </p>
+
+            <!-- Certificado -->
+            <div style="background: #fffbeb; border: 1px solid #fcd34d; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 18px 20px; margin-bottom: 28px;">
+              <p style="margin: 0 0 6px; font-weight: 700; color: #92400e; font-size: 14px;">📜 Tu certificado está en camino</p>
+              <p style="margin: 0; color: #78350f; font-size: 13px; line-height: 1.6;">
+                Nuestro equipo está preparando el certificado oficial que acredita tu formación en
+                <strong>"${courseName}"</strong>. Lo recibirás en los próximos días en este mismo correo.
+              </p>
+            </div>
+
+            <!-- CTA -->
+            <div style="text-align: center; margin-bottom: 28px;">
+              <a href="${process.env.FRONTEND_URL || 'https://campus.evenor-tech.com'}"
+                 style="display: inline-block; background: #5aa833; color: #ffffff; text-decoration: none; font-weight: 700; padding: 14px 36px; border-radius: 8px; font-size: 15px; letter-spacing: 0.2px;">
+                Ir al Campus →
+              </a>
+            </div>
+
+            <!-- Footer -->
+            <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; text-align: center;">
+              <p style="margin: 0; font-size: 12px; color: #9ca3af;">Campus Evenor &copy; ${new Date().getFullYear()} · Si tienes alguna duda, contáctanos en <a href="mailto:campusevenor@gmail.com" style="color: #5aa833; text-decoration: none;">campusevenor@gmail.com</a></p>
+            </div>
           </div>
 
-          <p style="color: #595959; line-height: 1.6;">
-            Gracias por tu dedicación y esfuerzo durante todo el curso. Esperamos que los conocimientos 
-            adquiridos te sean de gran utilidad en tu carrera profesional.
-          </p>
-
-          <div style="text-align: center; margin: 32px 0;">
-            <a href="${process.env.FRONTEND_URL || 'https://campus.evenor-tech.com'}" 
-               style="display: inline-block; background: #a1db87; color: #333333; text-decoration: none; font-weight: 600; padding: 12px 32px; border-radius: 6px; font-size: 16px; border: 2px solid #5aa833;">
-              Ir al Campus
-            </a>
-          </div>
-
-          <p style="color: #595959; font-size: 14px; line-height: 1.6;">
-            Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.
-          </p>
-
-          <hr style="margin: 32px 0; border: none; border-top: 1px solid #a1db87;">
-          <p style="font-size: 13px; color: #a1db87; text-align: center; font-family: 'Rondana', Arial, sans-serif;">
-            Campus Evenor &copy; ${new Date().getFullYear()}
-          </p>
         </div>
       </div>
     `
