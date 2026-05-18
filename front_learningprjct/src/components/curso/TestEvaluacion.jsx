@@ -212,7 +212,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-[#a1db87]/20 border-t-[#a1db87] rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400">Cargando test...</p>
+          <p className="text-gray-400">{idioma === 'en' ? 'Loading test...' : 'Cargando test...'}</p>
         </div>
       </div>
     );
@@ -230,20 +230,23 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           <div className="w-24 h-24 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-500/50">
             <Lock className="w-12 h-12 text-red-400" />
           </div>
-          <h2 className="text-3xl font-bold text-red-400 mb-4">Test Final Bloqueado</h2>
+          <h2 className="text-3xl font-bold text-red-400 mb-4">{idioma === 'en' ? 'Final Test Locked' : 'Test Final Bloqueado'}</h2>
           <p className="text-gray-300 text-lg mb-6 leading-relaxed">
             {errorBloqueado}
           </p>
           <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6">
             <p className="text-sm text-gray-300">
-              <span className="font-semibold text-red-400">Requisito:</span> Debes aprobar los tests de los Temas 1, 2, 3 y 4 para poder acceder al Test Final de Certificación.
+              <span className="font-semibold text-red-400">{idioma === 'en' ? 'Requirement:' : 'Requisito:'}</span>{' '}
+              {idioma === 'en'
+                ? 'You must pass the tests for Topics 1, 2, 3 and 4 to access the Final Certification Test.'
+                : 'Debes aprobar los tests de los Temas 1, 2, 3 y 4 para poder acceder al Test Final de Certificación.'}
             </p>
           </div>
           <button
             onClick={onComplete}
             className="px-8 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#a1db87]/50 transition-all transform hover:scale-105"
           >
-            Volver al Curso
+            {idioma === 'en' ? 'Back to Course' : 'Volver al Curso'}
           </button>
         </motion.div>
       </div>
@@ -255,7 +258,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <p className="text-gray-400">No se pudo cargar el test</p>
+          <p className="text-gray-400">{idioma === 'en' ? 'Could not load the test' : 'No se pudo cargar el test'}</p>
         </div>
       </div>
     );
@@ -287,7 +290,9 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   transition={{ delay: 0.4 }}
                   className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-3"
                 >
-                  {isTestFinal ? '¡Has completado el curso!' : '¡Felicidades!'}
+                  {isTestFinal
+                    ? (idioma === 'en' ? 'Course Complete!' : '¡Has completado el curso!')
+                    : (idioma === 'en' ? 'Congratulations!' : '¡Felicidades!')}
                 </motion.h2>
                 <motion.p 
                   initial={{ opacity: 0 }}
@@ -295,9 +300,9 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   transition={{ delay: 0.5 }}
                   className="text-gray-300 text-lg"
                 >
-                  {isTestFinal 
-                    ? 'Has aprobado el test final de certificación' 
-                    : 'Has aprobado el test con éxito'}
+                  {isTestFinal
+                    ? (idioma === 'en' ? 'You passed the final certification test' : 'Has aprobado el test final de certificación')
+                    : (idioma === 'en' ? 'You passed the test successfully' : 'Has aprobado el test con éxito')}
                 </motion.p>
                 {isTestFinal && (
                   <motion.div
@@ -309,15 +314,16 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 text-2xl mt-1">📧</div>
                       <div className="text-left">
-                        <p className="text-[#a1db87] font-semibold mb-1">Certificado en camino</p>
+                        <p className="text-[#a1db87] font-semibold mb-1">{idioma === 'en' ? 'Certificate on its way' : 'Certificado en camino'}</p>
                         <p className="text-gray-300 text-sm leading-relaxed">
-                          Hemos enviado un correo de confirmación a tu email. 
-                          En los próximos días recibirás tu certificado oficial del curso.
+                          {idioma === 'en'
+                            ? 'We have sent a confirmation email. You will receive your official course certificate in the coming days.'
+                            : 'Hemos enviado un correo de confirmación a tu email. En los próximos días recibirás tu certificado oficial del curso.'}
                         </p>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-[#a1db87]/20 text-center">
-                      <p className="text-gray-400 text-sm mb-2">Redirigiendo al inicio en</p>
+                      <p className="text-gray-400 text-sm mb-2">{idioma === 'en' ? 'Redirecting to home in' : 'Redirigiendo al inicio en'}</p>
                       <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] rounded-full shadow-lg">
                         <span className="text-3xl font-bold text-[#1a1a1a]">{countdown}</span>
                       </div>
@@ -341,7 +347,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   transition={{ delay: 0.4 }}
                   className="text-5xl font-bold text-red-500 mb-3"
                 >
-                  No aprobado
+                  {idioma === 'en' ? 'Not passed' : 'No aprobado'}
                 </motion.h2>
                 <motion.p 
                   initial={{ opacity: 0 }}
@@ -349,7 +355,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   transition={{ delay: 0.5 }}
                   className="text-gray-300 text-lg"
                 >
-                  Necesitas estudiar un poco más el material
+                  {idioma === 'en' ? 'You need to review the study material a bit more' : 'Necesitas estudiar un poco más el material'}
                 </motion.p>
               </>
             )}
@@ -362,7 +368,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
             className="grid grid-cols-2 gap-6 mb-8"
           >
             <div className="bg-gradient-to-br from-[#1a1a1a]/80 to-[#23272f]/50 p-8 rounded-2xl text-center border border-[#a1db87]/10 shadow-lg">
-              <p className="text-gray-400 text-sm font-medium mb-3 uppercase tracking-wider">Tu nota</p>
+              <p className="text-gray-400 text-sm font-medium mb-3 uppercase tracking-wider">{idioma === 'en' ? 'Your score' : 'Tu nota'}</p>
               <p className={`text-6xl font-bold mb-2 ${
                 resultado.aprobado 
                   ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6]' 
@@ -373,12 +379,12 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               {resultado.aprobado && (
                 <div className="flex items-center justify-center gap-2 text-[#a1db87] text-sm">
                   <Check className="w-4 h-4" />
-                  <span>Aprobado</span>
+                  <span>{idioma === 'en' ? 'Passed' : 'Aprobado'}</span>
                 </div>
               )}
             </div>
             <div className="bg-gradient-to-br from-[#1a1a1a]/80 to-[#23272f]/50 p-8 rounded-2xl text-center border border-[#a1db87]/10 shadow-lg">
-              <p className="text-gray-400 text-sm font-medium mb-3 uppercase tracking-wider">Aciertos</p>
+              <p className="text-gray-400 text-sm font-medium mb-3 uppercase tracking-wider">{idioma === 'en' ? 'Correct answers' : 'Aciertos'}</p>
               <p className="text-6xl font-bold text-white mb-2">
                 {resultado.correctas}<span className="text-3xl text-gray-500">/{resultado.totalPreguntas}</span>
               </p>
@@ -428,7 +434,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 }}
                 className="flex-1 px-8 py-4 bg-[#23272f] text-white font-semibold rounded-xl hover:bg-[#2a2e36] border-2 border-gray-700 hover:border-[#a1db87]/30 transition-all shadow-lg hover:shadow-xl"
               >
-                Reintentar Test
+                {idioma === 'en' ? 'Retry Test' : 'Reintentar Test'}
               </button>
             )}
             <button
@@ -442,9 +448,11 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               }}
               className="flex-1 px-8 py-4 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-2xl hover:shadow-[#a1db87]/50 transition-all transform hover:scale-105"
             >
-              {resultado.aprobado 
-                ? (isTestFinal ? `🎉 Ir al Inicio ahora` : 'Continuar al Siguiente Tema')
-                : 'Volver al Material de Estudio'}
+              {resultado.aprobado
+                ? (isTestFinal
+                    ? (idioma === 'en' ? '🎉 Go to Home now' : '🎉 Ir al Inicio ahora')
+                    : (idioma === 'en' ? 'Continue to Next Topic' : 'Continuar al Siguiente Tema'))
+                : (idioma === 'en' ? 'Back to Study Material' : 'Volver al Material de Estudio')}
             </button>
           </motion.div>
         </motion.div>
@@ -486,10 +494,10 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-gray-300 font-medium">
-                Pregunta <span className="text-[#a1db87]">{preguntaActual + 1}</span> de {test.preguntas.length}
+                {idioma === 'en' ? 'Question' : 'Pregunta'} <span className="text-[#a1db87]">{preguntaActual + 1}</span> {idioma === 'en' ? 'of' : 'de'} {test.preguntas.length}
               </span>
               <span className="text-gray-300 font-medium">
-                <span className="text-[#a1db87]">{preguntasRespondidas}</span>/{test.preguntas.length} respondidas
+                <span className="text-[#a1db87]">{preguntasRespondidas}</span>/{test.preguntas.length} {idioma === 'en' ? 'answered' : 'respondidas'}
               </span>
             </div>
             <div className="relative h-3 bg-[#1a1a1a]/80 rounded-full overflow-hidden shadow-inner">
@@ -535,7 +543,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 >
                   {idioma === 'en' ? (pregunta.preguntaEn || pregunta.pregunta) : pregunta.pregunta}
                 </motion.h3>
-                <p className="text-gray-500 text-sm">Selecciona la respuesta correcta</p>
+                <p className="text-gray-500 text-sm">{idioma === 'en' ? 'Select the correct answer' : 'Selecciona la respuesta correcta'}</p>
               </div>
 
               <div className="grid gap-4">
@@ -604,7 +612,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               className="cursor-pointer flex-shrink-0 px-6 py-3 border-2 border-[#a1db87]/30 text-gray-400 hover:text-white hover:border-[#a1db87] rounded-xl transition-all flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Anterior</span>
+              <span className="hidden sm:inline">{idioma === 'en' ? 'Previous' : 'Anterior'}</span>
             </button>
 
             {/* Mini-mapa de navegación scrollable */}
@@ -638,8 +646,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 disabled={enviando || preguntasRespondidas < test.preguntas.length}
                 className="flex-shrink-0 px-8 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#a1db87]/50 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
               >
-                <span className="hidden sm:inline">{enviando ? 'Enviando...' : 'Finalizar Test'}</span>
-                <span className="sm:hidden">{enviando ? '...' : 'Finalizar'}</span>
+                <span className="hidden sm:inline">{enviando ? (idioma === 'en' ? 'Submitting...' : 'Enviando...') : (idioma === 'en' ? 'Finish Test' : 'Finalizar Test')}</span>
+                <span className="sm:hidden">{enviando ? '...' : (idioma === 'en' ? 'Finish' : 'Finalizar')}</span>
                 <Check className="w-4 h-4" />
               </button>
             ) : (
@@ -647,7 +655,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 onClick={siguientePregunta}
                 className="cursor-pointer flex-shrink-0 px-6 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#a1db87]/50 transition-all flex items-center gap-2"
               >
-                <span className="hidden sm:inline">Siguiente</span>
+                <span className="hidden sm:inline">{idioma === 'en' ? 'Next' : 'Siguiente'}</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             )}

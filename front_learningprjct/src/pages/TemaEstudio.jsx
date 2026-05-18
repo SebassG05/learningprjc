@@ -73,8 +73,8 @@ export default function TemaEstudio() {
   };
 
   const phases = [
-    { id: 1, name: 'Material de Estudio', icon: BookOpen },
-    { id: 2, name: 'Test de Evaluación', icon: ClipboardCheck }
+    { id: 1, name: idioma === 'en' ? 'Study Material' : 'Material de Estudio', icon: BookOpen },
+    { id: 2, name: idioma === 'en' ? 'Evaluation Test' : 'Test de Evaluación', icon: ClipboardCheck }
   ];
 
   if (!tema || !material) {
@@ -100,7 +100,7 @@ export default function TemaEstudio() {
           >
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-[#a1db87]/20 border-t-[#a1db87] rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-400">Cargando material...</p>
+              <p className="text-gray-400">{idioma === 'en' ? 'Loading material...' : 'Cargando material...'}</p>
             </div>
           </motion.div>
         )}
@@ -122,7 +122,11 @@ export default function TemaEstudio() {
               <X className="w-6 h-6 text-gray-400 hover:text-white" />
             </button>
             <div>
-              <h1 className="text-xl font-bold text-white">Tema {tema.numeroTema}: {tema.titulo}</h1>
+              <h1 className="text-xl font-bold text-white">
+                {idioma === 'en'
+                  ? `Topic ${tema.numeroTema}: ${tema.tituloEn || tema.titulo}`
+                  : `Tema ${tema.numeroTema}: ${tema.titulo}`}
+              </h1>
               <p className="text-sm text-gray-400">{material.titulo}</p>
             </div>
           </div>
@@ -185,7 +189,7 @@ export default function TemaEstudio() {
                   />
                 ) : (
                   <div className="flex items-center justify-center h-full">
-                    <p className="text-gray-400">No hay material disponible</p>
+                    <p className="text-gray-400">{idioma === 'en' ? 'No material available' : 'No hay material disponible'}</p>
                   </div>
                 )}
               </div>
@@ -197,13 +201,13 @@ export default function TemaEstudio() {
                     onClick={handleClose}
                     className="cursor-pointer px-6 py-2 border border-[#a1db87]/30 text-gray-400 hover:text-white hover:border-[#a1db87] rounded-lg transition-colors"
                   >
-                    Volver al Curso
+                    {idioma === 'en' ? 'Back to Course' : 'Volver al Curso'}
                   </button>
                   <button
                     onClick={handleNextPhase}
                     className="cursor-pointer px-6 py-2 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-medium rounded-lg hover:shadow-lg hover:shadow-[#a1db87]/30 transition-all flex items-center gap-2"
                   >
-                    Continuar al Test
+                    {idioma === 'en' ? 'Continue to Test' : 'Continuar al Test'}
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
