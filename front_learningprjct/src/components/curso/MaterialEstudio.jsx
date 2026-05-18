@@ -219,7 +219,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className={`font-medium transition-colors truncate ${isCompleted ? 'text-[#a1db87]' : 'text-white'}`}>
-                              {material.titulo}
+                              {idioma === 'en' ? `Unit ${tema.numeroTema}` : `Tema ${tema.numeroTema}`}
                             </p>
                           </div>
                         </div>
