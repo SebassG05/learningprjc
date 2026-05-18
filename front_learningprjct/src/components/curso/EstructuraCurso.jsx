@@ -212,7 +212,6 @@ export default function EstructuraCurso({ idioma = 'es' }) {
       )
     }
   ];
-  ];
 
   return (
     <div className="w-full mb-12">
