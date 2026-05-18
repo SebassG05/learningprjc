@@ -236,12 +236,12 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                             {isCompleted ? (
                               <>
                                 <Check className="w-4 h-4" />
-                                <span className="text-sm">Completado</span>
+                                <span className="text-sm">{idioma === 'en' ? 'Done' : 'Completado'}</span>
                               </>
                             ) : (
                               <>
                                 <Check className="w-4 h-4" />
-                                <span className="text-sm">Marcar</span>
+                                <span className="text-sm">{idioma === 'en' ? 'Mark' : 'Marcar'}</span>
                               </>
                             )}
                           </button>
