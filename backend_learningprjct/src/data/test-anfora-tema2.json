@@ -1,0 +1,510 @@
+{
+  "titulo": "Test de Evaluación - Tema 2: Acceso, Registro y Seguridad en ANFORA",
+  "tituloEn": "Evaluation Test - Topic 2: Access, Registration and Security in ANFORA",
+  "descripcion": "Evaluación sobre el acceso, registro, navegación y seguridad de la plataforma ANFORA",
+  "descripcionEn": "Assessment on accessing, registering, navigating and securing the ANFORA platform",
+  "duracionMinutos": 30,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Acceso e instalación",
+      "bloqueEn": "Access and Installation",
+      "pregunta": "¿Qué se necesita instalar obligatoriamente en tu ordenador para empezar a usar la plataforma desde el navegador web?",
+      "preguntaEn": "What do you need to install on your computer to start using the platform from your web browser?",
+      "opciones": [
+        { "id": "a", "texto": "Un complemento de Java" },
+        { "id": "b", "texto": "Una extensión de seguridad" },
+        { "id": "c", "texto": "Nada, la plataforma carga automáticamente" },
+        { "id": "d", "texto": "Un software de escritorio" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A Java plugin" },
+        { "id": "b", "texto": "A security extension" },
+        { "id": "c", "texto": "Nothing, the platform loads automatically" },
+        { "id": "d", "texto": "Desktop software" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Acceso e instalación",
+      "bloqueEn": "Access and Installation",
+      "pregunta": "Al ser una Aplicación Web Progresiva (PWA), ¿cuál de estas es una ventaja de instalar ANFORA en tu dispositivo?",
+      "preguntaEn": "Being a Progressive Web App (PWA), which of these is an advantage of installing ANFORA on your device?",
+      "opciones": [
+        { "id": "a", "texto": "Carga hasta un 60% más rápido" },
+        { "id": "b", "texto": "Permite minar criptomonedas" },
+        { "id": "c", "texto": "Se sincroniza con tus redes sociales" },
+        { "id": "d", "texto": "Aumenta la resolución de la pantalla" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "It loads up to 60% faster" },
+        { "id": "b", "texto": "It allows cryptocurrency mining" },
+        { "id": "c", "texto": "It syncs with your social networks" },
+        { "id": "d", "texto": "It increases screen resolution" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 3,
+      "bloque": "Acceso e instalación",
+      "bloqueEn": "Access and Installation",
+      "pregunta": "Para instalar ANFORA en un iPhone o iPad (iOS), ¿qué navegador es obligatorio utilizar?",
+      "preguntaEn": "To install ANFORA on an iPhone or iPad (iOS), which browser is required to be used?",
+      "opciones": [
+        { "id": "a", "texto": "Google Chrome" },
+        { "id": "b", "texto": "Mozilla Firefox" },
+        { "id": "c", "texto": "Microsoft Edge" },
+        { "id": "d", "texto": "Safari" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Google Chrome" },
+        { "id": "b", "texto": "Mozilla Firefox" },
+        { "id": "c", "texto": "Microsoft Edge" },
+        { "id": "d", "texto": "Safari" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Registro y cuenta",
+      "bloqueEn": "Registration and Account",
+      "pregunta": "¿Qué funcionalidad avanzada se desbloquea al crear una cuenta gratuita en la plataforma?",
+      "preguntaEn": "What advanced feature is unlocked by creating a free account on the platform?",
+      "opciones": [
+        { "id": "a", "texto": "El explorador de productos" },
+        { "id": "b", "texto": "Guardar recetas y menús semanales" },
+        { "id": "c", "texto": "La guía educativa de huella hídrica" },
+        { "id": "d", "texto": "El mapa de negocios locales" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The product explorer" },
+        { "id": "b", "texto": "Saving recipes and weekly menus" },
+        { "id": "c", "texto": "The educational water footprint guide" },
+        { "id": "d", "texto": "The local businesses map" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Registro y cuenta",
+      "bloqueEn": "Registration and Account",
+      "pregunta": "Durante el registro, ¿cuál es el límite máximo de caracteres permitidos para el nombre completo?",
+      "preguntaEn": "During registration, what is the maximum character limit allowed for the full name?",
+      "opciones": [
+        { "id": "a", "texto": "20 caracteres" },
+        { "id": "b", "texto": "30 caracteres" },
+        { "id": "c", "texto": "50 caracteres" },
+        { "id": "d", "texto": "100 caracteres" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "20 characters" },
+        { "id": "b", "texto": "30 characters" },
+        { "id": "c", "texto": "50 characters" },
+        { "id": "d", "texto": "100 characters" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Registro y cuenta",
+      "bloqueEn": "Registration and Account",
+      "pregunta": "¿Qué dato se utiliza como identificador único para cada usuario en la plataforma ANFORA?",
+      "preguntaEn": "What data is used as a unique identifier for each user on the ANFORA platform?",
+      "opciones": [
+        { "id": "a", "texto": "El número de teléfono" },
+        { "id": "b", "texto": "El DNI o pasaporte" },
+        { "id": "c", "texto": "Un nombre de usuario (nickname)" },
+        { "id": "d", "texto": "Una dirección de correo electrónico válida" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Phone number" },
+        { "id": "b", "texto": "ID or passport number" },
+        { "id": "c", "texto": "A username (nickname)" },
+        { "id": "d", "texto": "A valid email address" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 7,
+      "bloque": "Registro y cuenta",
+      "bloqueEn": "Registration and Account",
+      "pregunta": "¿Cuál es la longitud mínima requerida para la contraseña al registrarse?",
+      "preguntaEn": "What is the minimum password length required when registering?",
+      "opciones": [
+        { "id": "a", "texto": "6 caracteres" },
+        { "id": "b", "texto": "8 caracteres" },
+        { "id": "c", "texto": "10 caracteres" },
+        { "id": "d", "texto": "12 caracteres" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "6 characters" },
+        { "id": "b", "texto": "8 characters" },
+        { "id": "c", "texto": "10 characters" },
+        { "id": "d", "texto": "12 characters" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Registro y cuenta",
+      "bloqueEn": "Registration and Account",
+      "pregunta": "Después de rellenar el formulario y hacer clic en \"Crear cuenta\", ¿qué paso adicional de verificación se requiere?",
+      "preguntaEn": "After filling out the form and clicking 'Create account', what additional verification step is required?",
+      "opciones": [
+        { "id": "a", "texto": "Confirmar el número de teléfono por SMS" },
+        { "id": "b", "texto": "Enviar una foto del documento de identidad" },
+        { "id": "c", "texto": "Ninguno, no se requiere verificación adicional" },
+        { "id": "d", "texto": "Esperar la aprobación manual de un administrador" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Confirming phone number via SMS" },
+        { "id": "b", "texto": "Sending a photo of an ID document" },
+        { "id": "c", "texto": "None, no verification is required" },
+        { "id": "d", "texto": "Waiting for manual approval by an administrator" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "Seguridad de la sesión",
+      "bloqueEn": "Session Security",
+      "pregunta": "Tras iniciar sesión, ¿qué tecnología mantiene activa tu sesión de forma segura?",
+      "preguntaEn": "After logging in, what technology keeps your session securely active?",
+      "opciones": [
+        { "id": "a", "texto": "Cookies seguras (HTTPOnly)" },
+        { "id": "b", "texto": "Un archivo de texto en el escritorio" },
+        { "id": "c", "texto": "El historial del navegador" },
+        { "id": "d", "texto": "Una conexión Bluetooth" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Secure cookies (HTTPOnly)" },
+        { "id": "b", "texto": "A text file on the desktop" },
+        { "id": "c", "texto": "Browser history" },
+        { "id": "d", "texto": "A Bluetooth connection" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 10,
+      "bloque": "Recuperación de contraseña",
+      "bloqueEn": "Password Recovery",
+      "pregunta": "Si olvidas tu contraseña y solicitas un enlace de recuperación, ¿cuánto tiempo de validez tiene dicho enlace por razones de seguridad?",
+      "preguntaEn": "If you forget your password and request a recovery link, how long is this link valid for security reasons?",
+      "opciones": [
+        { "id": "a", "texto": "5 minutos" },
+        { "id": "b", "texto": "10 minutos" },
+        { "id": "c", "texto": "1 hora" },
+        { "id": "d", "texto": "24 horas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5 minutes" },
+        { "id": "b", "texto": "10 minutes" },
+        { "id": "c", "texto": "1 hour" },
+        { "id": "d", "texto": "24 hours" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Recuperación de contraseña",
+      "bloqueEn": "Password Recovery",
+      "pregunta": "¿Qué ocurre si el enlace de recuperación de contraseña expira antes de que lo uses?",
+      "preguntaEn": "What happens if the password reset link expires before you use it?",
+      "opciones": [
+        { "id": "a", "texto": "Tu cuenta se bloquea permanentemente" },
+        { "id": "b", "texto": "Debes enviar un correo al soporte técnico" },
+        { "id": "c", "texto": "Debes solicitar uno nuevo desde la pantalla de inicio de sesión" },
+        { "id": "d", "texto": "Tienes que registrarte de nuevo con otro correo" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Your account is permanently locked" },
+        { "id": "b", "texto": "You must email technical support" },
+        { "id": "c", "texto": "You must request a new one from the login screen" },
+        { "id": "d", "texto": "You have to register again with another email" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 12,
+      "bloque": "Recuperación de contraseña",
+      "bloqueEn": "Password Recovery",
+      "pregunta": "¿Desde qué sección de la plataforma puedes cambiar tu contraseña si ya has iniciado sesión?",
+      "preguntaEn": "From which section of the platform can you change your password if you are already logged in?",
+      "opciones": [
+        { "id": "a", "texto": "Desde la Calculadora" },
+        { "id": "b", "texto": "Desde el Mapa de negocios" },
+        { "id": "c", "texto": "Desde la pantalla de Inicio (Home)" },
+        { "id": "d", "texto": "Desde tu Perfil" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "From the Calculator" },
+        { "id": "b", "texto": "From the Businesses Map" },
+        { "id": "c", "texto": "From the Home screen" },
+        { "id": "d", "texto": "From your Profile" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 13,
+      "bloque": "Seguridad de la sesión",
+      "bloqueEn": "Session Security",
+      "pregunta": "¿Qué sucede inmediatamente cuando haces clic en \"Cerrar sesión\" (Log out)?",
+      "preguntaEn": "What happens immediately when you click 'Log out'?",
+      "opciones": [
+        { "id": "a", "texto": "Se borran todas tus recetas guardadas" },
+        { "id": "b", "texto": "La cookie de sesión se invalida inmediatamente" },
+        { "id": "c", "texto": "Se desinstala la aplicación de tu dispositivo" },
+        { "id": "d", "texto": "Tu cuenta se pausa por 30 días" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "All your saved recipes are deleted" },
+        { "id": "b", "texto": "The session cookie is invalidated immediately" },
+        { "id": "c", "texto": "The application is uninstalled from your device" },
+        { "id": "d", "texto": "Your account is paused for 30 days" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Seguridad de la sesión",
+      "bloqueEn": "Session Security",
+      "pregunta": "¿Cómo se protege tu contraseña antes de ser almacenada en la base de datos de ANFORA?",
+      "preguntaEn": "How is your password protected before being stored in the ANFORA database?",
+      "opciones": [
+        { "id": "a", "texto": "Se guarda en texto plano para facilitar su recuperación" },
+        { "id": "b", "texto": "Se envía en un archivo PDF cifrado" },
+        { "id": "c", "texto": "Se aplica un hash con bcrypt (factor 12)" },
+        { "id": "d", "texto": "Se traduce a código binario simple" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "It is stored in plain text for easy recovery" },
+        { "id": "b", "texto": "It is sent in an encrypted PDF file" },
+        { "id": "c", "texto": "It is hashed with bcrypt (factor 12)" },
+        { "id": "d", "texto": "It is translated into simple binary code" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Seguridad de la sesión",
+      "bloqueEn": "Session Security",
+      "pregunta": "¿Qué protocolo garantiza que todos los datos viajen encriptados entre tu dispositivo y la plataforma?",
+      "preguntaEn": "What protocol ensures that all data travels encrypted between your device and the platform?",
+      "opciones": [
+        { "id": "a", "texto": "FTP" },
+        { "id": "b", "texto": "HTTP" },
+        { "id": "c", "texto": "HTTPS (SSL/TLS)" },
+        { "id": "d", "texto": "TCP/IP básico" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "FTP" },
+        { "id": "b", "texto": "HTTP" },
+        { "id": "c", "texto": "HTTPS (SSL/TLS)" },
+        { "id": "d", "texto": "Basic TCP/IP" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "Navegación e interfaz",
+      "bloqueEn": "Navigation and Interface",
+      "pregunta": "En la versión de escritorio (ordenador), ¿dónde se ubica la navegación principal de la interfaz?",
+      "preguntaEn": "On the desktop version, where is the main interface navigation located?",
+      "opciones": [
+        { "id": "a", "texto": "En un menú desplegable oculto" },
+        { "id": "b", "texto": "En una barra lateral fija (sidebar)" },
+        { "id": "c", "texto": "En el pie de página exclusivamente" },
+        { "id": "d", "texto": "Flotando en el centro de la pantalla" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "In a hidden dropdown menu" },
+        { "id": "b", "texto": "In a fixed side bar (sidebar)" },
+        { "id": "c", "texto": "Exclusively in the footer" },
+        { "id": "d", "texto": "Floating in the center of the screen" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Navegación e interfaz",
+      "bloqueEn": "Navigation and Interface",
+      "pregunta": "¿Cómo se adapta la navegación de la plataforma en dispositivos móviles?",
+      "preguntaEn": "How does the platform's navigation adapt on mobile devices?",
+      "opciones": [
+        { "id": "a", "texto": "Desaparece por completo y se usan gestos" },
+        { "id": "b", "texto": "Se convierte en un menú de iconos inferior" },
+        { "id": "c", "texto": "Solo se puede navegar usando el buscador" },
+        { "id": "d", "texto": "Se mantiene exactamente igual que en el escritorio" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "It disappears completely and gestures are used" },
+        { "id": "b", "texto": "It turns into a bottom icon menu" },
+        { "id": "c", "texto": "You can only navigate using the search bar" },
+        { "id": "d", "texto": "It stays exactly the same as on the desktop" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Navegación e interfaz",
+      "bloqueEn": "Navigation and Interface",
+      "pregunta": "En el menú de navegación, ¿qué sección está representada por el icono de una \"Hoja\" (Leaf)?",
+      "preguntaEn": "In the navigation menu, which section is represented by a 'Leaf' icon?",
+      "opciones": [
+        { "id": "a", "texto": "Calculadora" },
+        { "id": "b", "texto": "Menús Semanales" },
+        { "id": "c", "texto": "Base de datos de productos (Explorador)" },
+        { "id": "d", "texto": "Contacto" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Calculator" },
+        { "id": "b", "texto": "Weekly Menus" },
+        { "id": "c", "texto": "Product Database (Explorer)" },
+        { "id": "d", "texto": "Contact" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "Navegación e interfaz",
+      "bloqueEn": "Navigation and Interface",
+      "pregunta": "¿Qué función tiene el botón con el icono de un \"globo terráqueo\"?",
+      "preguntaEn": "What is the function of the button with the 'globe' icon?",
+      "opciones": [
+        { "id": "a", "texto": "Muestra el mapa de Lucena" },
+        { "id": "b", "texto": "Alterna instantáneamente el idioma entre Español e Inglés (ES/EN)" },
+        { "id": "c", "texto": "Calcula la huella hídrica global" },
+        { "id": "d", "texto": "Te redirige a la página web de la ONU" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Shows the map of Lucena" },
+        { "id": "b", "texto": "Toggles the language instantly between ES/EN" },
+        { "id": "c", "texto": "Calculates the global water footprint" },
+        { "id": "d", "texto": "Redirects you to the UN website" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Perfil y estadísticas",
+      "bloqueEn": "Profile and Statistics",
+      "pregunta": "¿Qué información estadística de tus recetas se muestra en la sección de \"Huella promedio\" de tu perfil?",
+      "preguntaEn": "What statistical information about your recipes is shown in the 'Average footprint' section of your profile?",
+      "opciones": [
+        { "id": "a", "texto": "La huella de carbono de tus viajes al supermercado" },
+        { "id": "b", "texto": "El promedio de huella hídrica de todas tus recetas en litros por ración" },
+        { "id": "c", "texto": "La cantidad de agua que bebes al día" },
+        { "id": "d", "texto": "El ahorro económico en tu factura del agua" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The carbon footprint of your trips to the supermarket" },
+        { "id": "b", "texto": "The average WF across all your recipes in L/serving" },
+        { "id": "c", "texto": "The amount of water you drink per day" },
+        { "id": "d", "texto": "The economic savings on your water bill" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 21,
+      "bloque": "Perfil y estadísticas",
+      "bloqueEn": "Profile and Statistics",
+      "pregunta": "¿Qué otras estadísticas puedes ver en tu perfil además de la huella promedio y los menús creados?",
+      "preguntaEn": "What other statistics can you see in your profile besides the average footprint and menus created?",
+      "opciones": [
+        { "id": "a", "texto": "Total de recetas guardadas, ingredientes únicos y categorías" },
+        { "id": "b", "texto": "Historial de compras en supermercados locales" },
+        { "id": "c", "texto": "Tiempo exacto pasado navegando por la app" },
+        { "id": "d", "texto": "Ranking competitivo con otros usuarios" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Total saved recipes, unique ingredients, and categories" },
+        { "id": "b", "texto": "Shopping history at local supermarkets" },
+        { "id": "c", "texto": "Exact time spent browsing the app" },
+        { "id": "d", "texto": "Competitive ranking with other users" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 22,
+      "bloque": "Preguntas frecuentes (FAQ)",
+      "bloqueEn": "Frequently Asked Questions (FAQ)",
+      "pregunta": "Según las preguntas frecuentes (FAQ), ¿puedes utilizar la calculadora de ANFORA sin estar registrado?",
+      "preguntaEn": "According to the FAQ, can you use the ANFORA calculator without being registered?",
+      "opciones": [
+        { "id": "a", "texto": "No, es obligatorio registrarse para cualquier función" },
+        { "id": "b", "texto": "Sí, pero con un límite de 3 cálculos por día" },
+        { "id": "c", "texto": "Sí, calcular es gratis y no requiere cuenta (solo hace falta para guardar)" },
+        { "id": "d", "texto": "Solo si descargas la aplicación móvil" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "No, registration is mandatory for any feature" },
+        { "id": "b", "texto": "Yes, but with a limit of 3 calculations per day" },
+        { "id": "c", "texto": "Yes, calculating is free and does not require an account (only needed to save)" },
+        { "id": "d", "texto": "Only if you download the mobile application" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 23,
+      "bloque": "Preguntas frecuentes (FAQ)",
+      "bloqueEn": "Frequently Asked Questions (FAQ)",
+      "pregunta": "Según las preguntas frecuentes (FAQ), ¿se puede utilizar la aplicación sin conexión a Internet (offline)?",
+      "preguntaEn": "According to the FAQ, can the application be used without an Internet connection (offline)?",
+      "opciones": [
+        { "id": "a", "texto": "No, nunca funciona sin conexión" },
+        { "id": "b", "texto": "Parcialmente, las páginas visitadas y los datos guardados en caché funcionan offline" },
+        { "id": "c", "texto": "Sí, se descarga toda la base de datos mundial en el primer uso" },
+        { "id": "d", "texto": "Solo en dispositivos iOS, no en Android" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "No, it never works offline" },
+        { "id": "b", "texto": "Partially, visited pages and cached saved data work offline" },
+        { "id": "c", "texto": "Yes, the entire global database is downloaded on first use" },
+        { "id": "d", "texto": "Only on iOS devices, not on Android" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Seguridad avanzada",
+      "bloqueEn": "Advanced Security",
+      "pregunta": "Además de protección contra inyecciones NoSQL y cookies seguras, ¿qué más garantiza la seguridad de tus datos?",
+      "preguntaEn": "Besides NoSQL injection protection and secure cookies, what else ensures the security of your data?",
+      "opciones": [
+        { "id": "a", "texto": "Auditorías presenciales semanales" },
+        { "id": "b", "texto": "Hashing con bcrypt y protocolo HTTPS" },
+        { "id": "c", "texto": "Que la base de datos se borra cada 24 horas" },
+        { "id": "d", "texto": "Reconocimiento facial obligatorio" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Weekly on-site audits" },
+        { "id": "b", "texto": "bcrypt hashing and HTTPS protocol" },
+        { "id": "c", "texto": "The database is wiped every 24 hours" },
+        { "id": "d", "texto": "Mandatory facial recognition" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "Seguridad avanzada",
+      "bloqueEn": "Advanced Security",
+      "pregunta": "Según la guía de \"Referencia Rápida\" al final del documento, ¿cuál es el tema de la próxima unidad (Unidad 03)?",
+      "preguntaEn": "According to the 'Quick Reference' guide at the end of the document, what is the topic of the next unit (Unit 03)?",
+      "opciones": [
+        { "id": "a", "texto": "El Mapa de Lucena" },
+        { "id": "b", "texto": "Las Estadísticas Avanzadas" },
+        { "id": "c", "texto": "La Calculadora" },
+        { "id": "d", "texto": "Exportación de Datos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The Lucena Map" },
+        { "id": "b", "texto": "Advanced Statistics" },
+        { "id": "c", "texto": "The Calculator" },
+        { "id": "d", "texto": "Data Export" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}
