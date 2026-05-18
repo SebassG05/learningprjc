@@ -27,9 +27,8 @@ export const obtenerTestPorTema = async (req, res) => {
           // Encontrar el tema actual
           const temaActual = course.temas.find(t => t._id.toString() === temaId);
           
-          // Verificar si es el test final por temaId especial o por propiedades del tema
+          // Verificar si es el test final por temaId especial o por título del tema
           const isTestFinal = temaId === 'test-final-certificacion' || (temaActual && (
-            temaActual.numeroTema >= 5 ||
             temaActual.titulo?.toLowerCase().includes('test final') ||
             temaActual.titulo?.toLowerCase().includes('certificación')
           ));
@@ -48,10 +47,13 @@ export const obtenerTestPorTema = async (req, res) => {
             });
             
             if (enrollment) {
-              // Obtener los temas 1-4 del curso (los 4 temas principales)
-              const temasDelCurso = course.temas.filter(t => t.numeroTema >= 1 && t.numeroTema <= 4);
+              // Obtener todos los temas regulares del curso (excluir el propio test final)
+              const temasDelCurso = course.temas.filter(t =>
+                !t.titulo?.toLowerCase().includes('test final') &&
+                !t.titulo?.toLowerCase().includes('certificación')
+              );
               
-              // Verificar si todos los tests de los temas 1-4 están completados
+              // Verificar si todos los tests de los temas regulares están completados
               const todosTestsCompletados = temasDelCurso.every(tema => 
                 enrollment.completedTests && enrollment.completedTests.includes(tema._id.toString())
               );

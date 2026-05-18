@@ -1,0 +1,510 @@
+{
+  "titulo": "Test de Evaluación - Tema 3: La Calculadora de Huella Hídrica",
+  "tituloEn": "Evaluation Test - Topic 3: The Water Footprint Calculator",
+  "descripcion": "Evaluación sobre el uso de la calculadora, gestión de ingredientes, resultados y exportación de datos en ANFORA",
+  "descripcionEn": "Assessment on using the calculator, ingredient management, results, and data export in ANFORA",
+  "duracionMinutos": 30,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Introducción a la calculadora",
+      "bloqueEn": "Introduction to the Calculator",
+      "pregunta": "¿Cuál es la función principal de la Calculadora de Huella Hídrica de ANFORA?",
+      "preguntaEn": "What is the main function of the ANFORA Water Footprint Calculator?",
+      "opciones": [
+        { "id": "a", "texto": "Crear planes de riego para los agricultores locales" },
+        { "id": "b", "texto": "Crear recetas virtuales y calcular su huella hídrica total" },
+        { "id": "c", "texto": "Comprar ingredientes sostenibles a productores andaluces" },
+        { "id": "d", "texto": "Medir el consumo de agua diario de un usuario" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "To create irrigation plans for local farmers" },
+        { "id": "b", "texto": "To create virtual recipes and calculate their total water footprint" },
+        { "id": "c", "texto": "To buy sustainable ingredients from Andalusian producers" },
+        { "id": "d", "texto": "To measure a user's daily water consumption" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Introducción a la calculadora",
+      "bloqueEn": "Introduction to the Calculator",
+      "pregunta": "¿En cuántos pasos guiados está estructurado el proceso de la calculadora?",
+      "preguntaEn": "How many guided steps is the calculator process structured into?",
+      "opciones": [
+        { "id": "a", "texto": "3 pasos" },
+        { "id": "b", "texto": "4 pasos" },
+        { "id": "c", "texto": "5 pasos" },
+        { "id": "d", "texto": "6 pasos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "3 steps" },
+        { "id": "b", "texto": "4 steps" },
+        { "id": "c", "texto": "5 steps" },
+        { "id": "d", "texto": "6 steps" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Paso 1 - Información de la receta",
+      "bloqueEn": "Step 1 - Recipe Information",
+      "pregunta": "En el Paso 1 (Información), ¿cuáles son los tres campos obligatorios que deben completarse?",
+      "preguntaEn": "In Step 1 (Information), what are the three required fields that must be completed?",
+      "opciones": [
+        { "id": "a", "texto": "Nombre, Categoría y Raciones" },
+        { "id": "b", "texto": "Nombre, Origen e Ingredientes" },
+        { "id": "c", "texto": "Autor, Categoría y Tiempo de preparación" },
+        { "id": "d", "texto": "Nombre, Raciones y Nivel de dificultad" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Name, Category, and Servings" },
+        { "id": "b", "texto": "Name, Origin, and Ingredients" },
+        { "id": "c", "texto": "Author, Category, and Prep time" },
+        { "id": "d", "texto": "Name, Servings, and Difficulty level" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 4,
+      "bloque": "Paso 1 - Información de la receta",
+      "bloqueEn": "Step 1 - Recipe Information",
+      "pregunta": "¿Cuál es el límite máximo de caracteres permitido para el nombre de una receta?",
+      "preguntaEn": "What is the maximum character limit allowed for a recipe's name?",
+      "opciones": [
+        { "id": "a", "texto": "50 caracteres" },
+        { "id": "b", "texto": "100 caracteres" },
+        { "id": "c", "texto": "150 caracteres" },
+        { "id": "d", "texto": "255 caracteres" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "50 characters" },
+        { "id": "b", "texto": "100 characters" },
+        { "id": "c", "texto": "150 characters" },
+        { "id": "d", "texto": "255 characters" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Paso 1 - Información de la receta",
+      "bloqueEn": "Step 1 - Recipe Information",
+      "pregunta": "¿Cuál es el rango permitido de raciones (servings) que se puede introducir por receta?",
+      "preguntaEn": "What is the allowed range of servings that can be entered for a recipe?",
+      "opciones": [
+        { "id": "a", "texto": "Entre 1 y 10" },
+        { "id": "b", "texto": "Entre 1 y 20" },
+        { "id": "c", "texto": "Entre 1 y 50" },
+        { "id": "d", "texto": "Entre 2 y 100" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Between 1 and 10" },
+        { "id": "b", "texto": "Between 1 and 20" },
+        { "id": "c", "texto": "Between 1 and 50" },
+        { "id": "d", "texto": "Between 2 and 100" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Paso 2 - Ingredientes",
+      "bloqueEn": "Step 2 - Ingredients",
+      "pregunta": "¿Qué unidad utiliza ANFORA para realizar automáticamente el cálculo de las cantidades de ingredientes sólidos?",
+      "preguntaEn": "What unit does ANFORA use to automatically convert solid ingredient quantities for calculation?",
+      "opciones": [
+        { "id": "a", "texto": "Gramos (g)" },
+        { "id": "b", "texto": "Libras (lb)" },
+        { "id": "c", "texto": "Miligramos (mg)" },
+        { "id": "d", "texto": "Kilogramos (kg)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Grams (g)" },
+        { "id": "b", "texto": "Pounds (lb)" },
+        { "id": "c", "texto": "Milligrams (mg)" },
+        { "id": "d", "texto": "Kilograms (kg)" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 7,
+      "bloque": "Paso 2 - Ingredientes",
+      "bloqueEn": "Step 2 - Ingredients",
+      "pregunta": "Si se introduce un ingrediente líquido (ml, L) y este no tiene una densidad registrada en el sistema, ¿qué conversión asume la plataforma?",
+      "preguntaEn": "If a liquid ingredient (ml, L) is entered and it has no registered density in the system, what conversion does the platform assume?",
+      "opciones": [
+        { "id": "a", "texto": "0,5 kg/L" },
+        { "id": "b", "texto": "0,8 kg/L" },
+        { "id": "c", "texto": "1 kg/L" },
+        { "id": "d", "texto": "1,2 kg/L" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "0.5 kg/L" },
+        { "id": "b", "texto": "0.8 kg/L" },
+        { "id": "c", "texto": "1 kg/L" },
+        { "id": "d", "texto": "1.2 kg/L" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Paso 2 - Ingredientes",
+      "bloqueEn": "Step 2 - Ingredients",
+      "pregunta": "¿Qué fuente de datos se considera la referencia científica por defecto en ANFORA?",
+      "preguntaEn": "Which data source is considered the default scientific reference in ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "Andalucía" },
+        { "id": "b", "texto": "Global (WFN)" },
+        { "id": "c", "texto": "IA (Modelos de estimación)" },
+        { "id": "d", "texto": "Personalizada (Custom)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Andalusia" },
+        { "id": "b", "texto": "Global (WFN)" },
+        { "id": "c", "texto": "AI (Estimation models)" },
+        { "id": "d", "texto": "Custom" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Paso 2 - Ingredientes",
+      "bloqueEn": "Step 2 - Ingredients",
+      "pregunta": "En la selección de fuente de datos, ¿qué icono representa la fuente \"Global\"?",
+      "preguntaEn": "In the data source selection, what icon represents the \"Global\" source?",
+      "opciones": [
+        { "id": "a", "texto": "Un mapa de Andalucía" },
+        { "id": "b", "texto": "Un robot" },
+        { "id": "c", "texto": "Un lápiz de edición" },
+        { "id": "d", "texto": "Un mundo (globo terráqueo)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A map of Andalusia" },
+        { "id": "b", "texto": "A robot" },
+        { "id": "c", "texto": "An edit pencil" },
+        { "id": "d", "texto": "A world (globe)" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 10,
+      "bloque": "Paso 2 - Ingredientes",
+      "bloqueEn": "Step 2 - Ingredients",
+      "pregunta": "¿Cuál es el número mínimo de ingredientes que debes añadir en el Paso 2 para poder realizar un cálculo?",
+      "preguntaEn": "What is the minimum number of ingredients you must add in Step 2 to be able to run a calculation?",
+      "opciones": [
+        { "id": "a", "texto": "1 ingrediente" },
+        { "id": "b", "texto": "2 ingredientes" },
+        { "id": "c", "texto": "3 ingredientes" },
+        { "id": "d", "texto": "No hay mínimo, se puede calcular una receta vacía" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "1 ingredient" },
+        { "id": "b", "texto": "2 ingredients" },
+        { "id": "c", "texto": "3 ingredients" },
+        { "id": "d", "texto": "There is no minimum, you can calculate an empty recipe" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 11,
+      "bloque": "Paso 2 - Ingredientes",
+      "bloqueEn": "Step 2 - Ingredients",
+      "pregunta": "¿Para qué sirve la opción \"Duplicar\" en la gestión de ingredientes?",
+      "preguntaEn": "What is the purpose of the \"Duplicate\" option in ingredient management?",
+      "opciones": [
+        { "id": "a", "texto": "Para copiar la receta entera en otro perfil" },
+        { "id": "b", "texto": "Para añadir el mismo producto pero con diferentes cantidades o fuentes" },
+        { "id": "c", "texto": "Para multiplicar por dos la huella hídrica final" },
+        { "id": "d", "texto": "Para traducir el ingrediente al inglés" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "To copy the entire recipe to another profile" },
+        { "id": "b", "texto": "To add the same crop with different amounts or sources" },
+        { "id": "c", "texto": "To multiply the final water footprint by two" },
+        { "id": "d", "texto": "To translate the ingredient into English" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Paso 3 - Revisión",
+      "bloqueEn": "Step 3 - Review",
+      "pregunta": "En el Paso 3 (Revisión), si detectas un error en las cantidades, ¿qué debes hacer?",
+      "preguntaEn": "In Step 3 (Review), if you spot an error in the quantities, what should you do?",
+      "opciones": [
+        { "id": "a", "texto": "Cancelar y empezar una receta nueva desde cero" },
+        { "id": "b", "texto": "Usar el botón \"Atrás\" (Back) para volver al paso anterior" },
+        { "id": "c", "texto": "Modificar el código fuente de la página" },
+        { "id": "d", "texto": "Calcular primero y luego editar el PDF exportado" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Cancel and start a new recipe from scratch" },
+        { "id": "b", "texto": "Use the \"Back\" button to return to the previous step" },
+        { "id": "c", "texto": "Modify the source code of the page" },
+        { "id": "d", "texto": "Calculate first and then edit the exported PDF" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Paso 3 - Revisión",
+      "bloqueEn": "Step 3 - Review",
+      "pregunta": "Una vez que haces clic en \"Calcular Huella Hídrica\", ¿cuánto tiempo tarda aproximadamente el cálculo en el servidor?",
+      "preguntaEn": "Once you click \"Calculate Water Footprint\", approximately how long does the calculation take on the server?",
+      "opciones": [
+        { "id": "a", "texto": "Es instantáneo (menos de 1 segundo)" },
+        { "id": "b", "texto": "De 1 a 5 segundos" },
+        { "id": "c", "texto": "De 10 a 15 segundos" },
+        { "id": "d", "texto": "Hasta 1 minuto" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "It is instantaneous (less than 1 second)" },
+        { "id": "b", "texto": "1 to 5 seconds" },
+        { "id": "c", "texto": "10 to 15 seconds" },
+        { "id": "d", "texto": "Up to 1 minute" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Paso 4 - Resultados",
+      "bloqueEn": "Step 4 - Results",
+      "pregunta": "En la pantalla de resultados (Paso 4), ¿qué indica la métrica de \"Eficiencia\"?",
+      "preguntaEn": "On the results screen (Step 4), what does the \"Efficiency\" metric indicate?",
+      "opciones": [
+        { "id": "a", "texto": "La rapidez con la que se preparó la receta" },
+        { "id": "b", "texto": "El ahorro económico en agua" },
+        { "id": "c", "texto": "Una puntuación basada en la huella por ración comparada con la media" },
+        { "id": "d", "texto": "El porcentaje de ingredientes andaluces utilizados" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "How quickly the recipe was prepared" },
+        { "id": "b", "texto": "The economic savings on water" },
+        { "id": "c", "texto": "A score based on WF/serving compared to the average" },
+        { "id": "d", "texto": "The percentage of Andalusian ingredients used" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Paso 4 - Resultados",
+      "bloqueEn": "Step 4 - Results",
+      "pregunta": "En el ejemplo del \"Gazpacho Andaluz\", ¿cuál es la huella hídrica por ración?",
+      "preguntaEn": "In the \"Andalusian Gazpacho\" example, what is the water footprint per serving?",
+      "opciones": [
+        { "id": "a", "texto": "107 L/ración" },
+        { "id": "b", "texto": "174 L/ración" },
+        { "id": "c", "texto": "246 L/ración" },
+        { "id": "d", "texto": "985 L/ración" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "107 L/serving" },
+        { "id": "b", "texto": "174 L/serving" },
+        { "id": "c", "texto": "246 L/serving" },
+        { "id": "d", "texto": "985 L/serving" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "Paso 4 - Resultados",
+      "bloqueEn": "Step 4 - Results",
+      "pregunta": "En ese mismo ejemplo del gazpacho, ¿qué ingrediente es responsable del 69% de la huella hídrica total?",
+      "preguntaEn": "In that same gazpacho example, which ingredient accounts for 69% of the total water footprint?",
+      "opciones": [
+        { "id": "a", "texto": "El tomate" },
+        { "id": "b", "texto": "El pepino" },
+        { "id": "c", "texto": "El pan" },
+        { "id": "d", "texto": "El aceite de oliva" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Tomato" },
+        { "id": "b", "texto": "Cucumber" },
+        { "id": "c", "texto": "Bread" },
+        { "id": "d", "texto": "Olive oil" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 17,
+      "bloque": "Paso 4 - Resultados",
+      "bloqueEn": "Step 4 - Results",
+      "pregunta": "Según el ejemplo práctico, si se cambia el aceite de oliva por aceite de girasol y se añade más tomate, ¿qué reducción se logra en la huella hídrica total?",
+      "preguntaEn": "According to the practical example, if olive oil is swapped for sunflower oil and more tomato is added, what reduction is achieved in the total water footprint?",
+      "opciones": [
+        { "id": "a", "texto": "Un 15%" },
+        { "id": "b", "texto": "Un 29%" },
+        { "id": "c", "texto": "Un 45%" },
+        { "id": "d", "texto": "Un 69%" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "15%" },
+        { "id": "b", "texto": "29%" },
+        { "id": "c", "texto": "45%" },
+        { "id": "d", "texto": "69%" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Exportación de datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "De las cuatro opciones disponibles para guardar y exportar resultados, ¿cuál es la ÚNICA que requiere que el usuario esté registrado?",
+      "preguntaEn": "Of the four available options to save and export results, which is the ONLY one that requires the user to be registered?",
+      "opciones": [
+        { "id": "a", "texto": "Descargar PDF" },
+        { "id": "b", "texto": "Guardar en ANFORA (Base de datos)" },
+        { "id": "c", "texto": "Descargar CSV" },
+        { "id": "d", "texto": "Descargar JSON" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Download PDF" },
+        { "id": "b", "texto": "Save in ANFORA (Database)" },
+        { "id": "c", "texto": "Download CSV" },
+        { "id": "d", "texto": "Download JSON" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Exportación de datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "¿Qué formato de exportación incluye el logo de ANFORA, tablas de ingredientes y recomendaciones de sostenibilidad?",
+      "preguntaEn": "Which export format includes the ANFORA logo, ingredient tables, and sustainability recommendations?",
+      "opciones": [
+        { "id": "a", "texto": "CSV" },
+        { "id": "b", "texto": "JSON" },
+        { "id": "c", "texto": "XML" },
+        { "id": "d", "texto": "PDF" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "CSV" },
+        { "id": "b", "texto": "JSON" },
+        { "id": "c", "texto": "XML" },
+        { "id": "d", "texto": "PDF" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 20,
+      "bloque": "Exportación de datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "Si deseas analizar los datos de la receta en Excel o Google Sheets, ¿qué formato es el más recomendado?",
+      "preguntaEn": "If you want to analyze the recipe data in Excel or Google Sheets, which format is most recommended?",
+      "opciones": [
+        { "id": "a", "texto": "PDF" },
+        { "id": "b", "texto": "CSV" },
+        { "id": "c", "texto": "JSON" },
+        { "id": "d", "texto": "Word" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "PDF" },
+        { "id": "b", "texto": "CSV" },
+        { "id": "c", "texto": "JSON" },
+        { "id": "d", "texto": "Word" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 21,
+      "bloque": "Exportación de datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "¿Qué codificación utiliza el archivo CSV exportado para asegurar que los caracteres especiales se vean correctamente en Excel?",
+      "preguntaEn": "What encoding does the exported CSV file use to ensure special characters display correctly in Excel?",
+      "opciones": [
+        { "id": "a", "texto": "ASCII" },
+        { "id": "b", "texto": "ISO-8859-1" },
+        { "id": "c", "texto": "UTF-8 + BOM" },
+        { "id": "d", "texto": "Windows-1252" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "ASCII" },
+        { "id": "b", "texto": "ISO-8859-1" },
+        { "id": "c", "texto": "UTF-8 + BOM" },
+        { "id": "d", "texto": "Windows-1252" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 22,
+      "bloque": "Exportación de datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "¿Cuál es el principal uso recomendado para la exportación en formato JSON?",
+      "preguntaEn": "What is the main recommended use for the JSON export format?",
+      "opciones": [
+        { "id": "a", "texto": "Entregar reportes formales impresos" },
+        { "id": "b", "texto": "Hacer gráficos de barras en Excel" },
+        { "id": "c", "texto": "Reimportar los datos en ANFORA o usarlos en integraciones de software" },
+        { "id": "d", "texto": "Enviar la receta por WhatsApp a un amigo" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Delivering printed formal reports" },
+        { "id": "b", "texto": "Making bar charts in Excel" },
+        { "id": "c", "texto": "Re-importing data into ANFORA or using it in software integrations" },
+        { "id": "d", "texto": "Sending the recipe to a friend via WhatsApp" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 23,
+      "bloque": "Exportación de datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "Al exportar un archivo CSV, ¿cuál de las siguientes opciones representa el orden exacto de las columnas mencionadas en el manual?",
+      "preguntaEn": "When exporting a CSV file, which of the following options represents the exact order of columns mentioned in the manual?",
+      "opciones": [
+        { "id": "a", "texto": "Ingrediente, Cantidad, Unidad, Región, Azul, Verde, Gris, Total" },
+        { "id": "b", "texto": "Total, Azul, Verde, Gris, Ingrediente, Región" },
+        { "id": "c", "texto": "Nombre, Calorías, Agua, Categoría, Precio" },
+        { "id": "d", "texto": "Región, Ingrediente, Azul, Total" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Ingredient, Quantity, Unit, Region, Blue, Green, Grey, Total" },
+        { "id": "b", "texto": "Total, Blue, Green, Grey, Ingredient, Region" },
+        { "id": "c", "texto": "Name, Calories, Water, Category, Price" },
+        { "id": "d", "texto": "Region, Ingredient, Blue, Total" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 24,
+      "bloque": "Categorías y referencia",
+      "bloqueEn": "Categories and Reference",
+      "pregunta": "¿Cuántas categorías distintas de recetas (ej. Sopa, Postre, Bebida...) ofrece ANFORA en total?",
+      "preguntaEn": "How many distinct recipe categories (e.g., Soup, Dessert, Drink...) does ANFORA offer in total?",
+      "opciones": [
+        { "id": "a", "texto": "5" },
+        { "id": "b", "texto": "7" },
+        { "id": "c", "texto": "9" },
+        { "id": "d", "texto": "12" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5" },
+        { "id": "b", "texto": "7" },
+        { "id": "c", "texto": "9" },
+        { "id": "d", "texto": "12" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 25,
+      "bloque": "Categorías y referencia",
+      "bloqueEn": "Categories and Reference",
+      "pregunta": "Según la sección de \"Referencia Rápida\", ¿cuál es el tema de la siguiente unidad (Unidad 04)?",
+      "preguntaEn": "According to the \"Quick Reference\" section, what is the topic of the next unit (Unit 04)?",
+      "opciones": [
+        { "id": "a", "texto": "Estadísticas Globales" },
+        { "id": "b", "texto": "El Mapa de Lucena" },
+        { "id": "c", "texto": "Registro y Acceso" },
+        { "id": "d", "texto": "Productos y Recetas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Global Statistics" },
+        { "id": "b", "texto": "The Lucena Map" },
+        { "id": "c", "texto": "Registration and Access" },
+        { "id": "d", "texto": "Products and Recipes" }
+      ],
+      "respuestaCorrecta": "d"
+    }
+  ]
+}

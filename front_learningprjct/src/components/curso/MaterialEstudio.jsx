@@ -118,12 +118,14 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
     
     if (!isTestFinal) return false;
     
-    // Solo bloquear si es realmente el último tema (tema 5 o superior)
-    // Los temas 1-4 son los temas normales del curso
-    if (tema.numeroTema <= 4) return false;
+    // Obtener temas regulares (excluir el propio test final) para verificar requisitos
+    const temasDelCurso = temas.filter(t =>
+      !t.titulo?.toLowerCase().includes('test final') &&
+      !t.titulo?.toLowerCase().includes('certificación')
+    );
+    if (temasDelCurso.includes(tema)) return false; // Es un tema regular, no bloquear
     
-    // Verificar si todos los tests de los temas 1-4 están completados
-    const temasDelCurso = temas.filter(t => t.numeroTema >= 1 && t.numeroTema <= 4);
+    // Verificar si todos los tests de los temas regulares están completados
     const todosTestsCompletados = temasDelCurso.every(t => 
       completedTests && completedTests.includes(t._id)
     );
@@ -393,7 +395,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
               {/* Header igual que los temas */}
               <div className="flex items-start gap-4 mb-6">
                 <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 flex items-center justify-center text-[#1a1a1a] font-bold text-sm">
-                  5
+                  {temas.length + 1}
                 </span>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-white mb-2">Test Final de Certificación</h3>

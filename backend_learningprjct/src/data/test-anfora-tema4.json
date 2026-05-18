@@ -1,0 +1,510 @@
+{
+  "titulo": "Test de Evaluación - Tema 4: Explorador de Productos y Gestión de Recetas",
+  "tituloEn": "Evaluation Test - Topic 4: Product Explorer and Recipe Management",
+  "descripcion": "Evaluación sobre el Explorador de Productos, categorías de huella hídrica, datos regionales, gestión de recetas, exportación y estrategias de comparación en ANFORA",
+  "descripcionEn": "Assessment on the Product Explorer, water footprint categories, regional data, recipe management, export formats, and comparison strategies in ANFORA",
+  "duracionMinutos": 30,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Explorador de Productos",
+      "bloqueEn": "Product Explorer",
+      "pregunta": "¿Qué requisito es necesario para acceder al Explorador de Productos en ANFORA?",
+      "preguntaEn": "What is required to access the Product Explorer in ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "Tener una suscripción de pago" },
+        { "id": "b", "texto": "Estar registrado en la plataforma" },
+        { "id": "c", "texto": "Ninguno, es una base de datos pública y no requiere registro" },
+        { "id": "d", "texto": "Descargar la aplicación móvil obligatoriamente" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A paid subscription" },
+        { "id": "b", "texto": "Being registered on the platform" },
+        { "id": "c", "texto": "Nothing, it is a public database and requires no registration" },
+        { "id": "d", "texto": "Downloading the mobile app mandatorily" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Explorador de Productos",
+      "bloqueEn": "Product Explorer",
+      "pregunta": "¿Cuántos productos alimenticios incluye aproximadamente la base de datos pública de ANFORA?",
+      "preguntaEn": "Approximately how many food products are included in ANFORA's public database?",
+      "opciones": [
+        { "id": "a", "texto": "Más de 20 productos" },
+        { "id": "b", "texto": "Más de 50 productos" },
+        { "id": "c", "texto": "Más de 74 productos" },
+        { "id": "d", "texto": "Más de 150 productos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Over 20 products" },
+        { "id": "b", "texto": "Over 50 products" },
+        { "id": "c", "texto": "Over 74 products" },
+        { "id": "d", "texto": "Over 150 products" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Explorador de Productos",
+      "bloqueEn": "Product Explorer",
+      "pregunta": "¿Cuál es la vista que se muestra por defecto al entrar al Explorador de Productos?",
+      "preguntaEn": "What is the default view shown when entering the Product Explorer?",
+      "opciones": [
+        { "id": "a", "texto": "Vista de lista compacta" },
+        { "id": "b", "texto": "Vista de cuadrícula con tarjetas visuales (Grid)" },
+        { "id": "c", "texto": "Vista de tabla de Excel" },
+        { "id": "d", "texto": "Vista de mapa interactivo" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Compact list view" },
+        { "id": "b", "texto": "Grid view with visual cards" },
+        { "id": "c", "texto": "Excel table view" },
+        { "id": "d", "texto": "Interactive map view" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "Explorador de Productos",
+      "bloqueEn": "Product Explorer",
+      "pregunta": "¿Qué acción rápida te permite realizar el botón \"Usar en Calculadora\" dentro de la ventana de detalles de un producto?",
+      "preguntaEn": "What quick action does the \"Use in Calculator\" button allow within a product's detail modal?",
+      "opciones": [
+        { "id": "a", "texto": "Comprar el producto en un supermercado local" },
+        { "id": "b", "texto": "Exportar los datos del producto a PDF" },
+        { "id": "c", "texto": "Abrir la calculadora con ese producto preseleccionado para ahorrar tiempo" },
+        { "id": "d", "texto": "Ver la densidad calórica del producto" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Buying the product in a local supermarket" },
+        { "id": "b", "texto": "Exporting the product data to PDF" },
+        { "id": "c", "texto": "Opening the calculator with this product preselected to save time" },
+        { "id": "d", "texto": "Viewing the product's caloric density" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Categorías y Huella Hídrica",
+      "bloqueEn": "Categories and Water Footprint",
+      "pregunta": "Según la tabla de categorías, ¿cuál de los siguientes grupos de alimentos tiene el rango de huella hídrica más bajo (100-400 L/kg)?",
+      "preguntaEn": "According to the category table, which of the following food groups has the lowest typical water footprint range (100-400 L/kg)?",
+      "opciones": [
+        { "id": "a", "texto": "Cereales" },
+        { "id": "b", "texto": "Legumbres" },
+        { "id": "c", "texto": "Lácteos" },
+        { "id": "d", "texto": "Vegetales (Verduras)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Cereals" },
+        { "id": "b", "texto": "Legumes" },
+        { "id": "c", "texto": "Dairy" },
+        { "id": "d", "texto": "Vegetables" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 6,
+      "bloque": "Categorías y Huella Hídrica",
+      "bloqueEn": "Categories and Water Footprint",
+      "pregunta": "¿Qué categoría de productos presenta un rango de huella hídrica considerado \"Muy Alto\", alcanzando valores entre 10,800 y 13,000 L/kg?",
+      "preguntaEn": "Which product category has a water footprint range considered \"Very High\", reaching values between 10,800 and 13,000 L/kg?",
+      "opciones": [
+        { "id": "a", "texto": "Frutos secos (Nuts)" },
+        { "id": "b", "texto": "Frutas (Fruits)" },
+        { "id": "c", "texto": "Hierbas (Herbs)" },
+        { "id": "d", "texto": "Procesados (Processed)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Nuts" },
+        { "id": "b", "texto": "Fruits" },
+        { "id": "c", "texto": "Herbs" },
+        { "id": "d", "texto": "Processed" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 7,
+      "bloque": "Categorías y Huella Hídrica",
+      "bloqueEn": "Categories and Water Footprint",
+      "pregunta": "Según el documento, ¿cuánta más agua necesita la carne de ternera (Beef) en comparación con los vegetales para producir un kilogramo?",
+      "preguntaEn": "According to the document, how much more water does Beef need compared to vegetables to produce one kilogram?",
+      "opciones": [
+        { "id": "a", "texto": "Aproximadamente 10 veces más" },
+        { "id": "b", "texto": "Aproximadamente 30 veces más" },
+        { "id": "c", "texto": "Aproximadamente 60 veces más" },
+        { "id": "d", "texto": "Aproximadamente 100 veces más" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Approximately 10x more" },
+        { "id": "b", "texto": "Approximately 30x more" },
+        { "id": "c", "texto": "Approximately 60x more" },
+        { "id": "d", "texto": "Approximately 100x more" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Datos Regionales de Andalucía",
+      "bloqueEn": "Regional Data - Andalusia",
+      "pregunta": "¿De dónde provienen principalmente los datos regionales específicos de Andalucía en la plataforma?",
+      "preguntaEn": "Where do the specific regional data for Andalusia mainly come from?",
+      "opciones": [
+        { "id": "a", "texto": "De encuestas realizadas a los usuarios" },
+        { "id": "b", "texto": "De la Confederación Hidrográfica del Guadalquivir y la Junta de Andalucía" },
+        { "id": "c", "texto": "De la Organización Mundial de la Salud" },
+        { "id": "d", "texto": "De modelos de Inteligencia Artificial exclusivamente" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "From user surveys" },
+        { "id": "b", "texto": "From the Guadalquivir Hydrographic Confederation and the Andalusian Regional Government" },
+        { "id": "c", "texto": "From the World Health Organization" },
+        { "id": "d", "texto": "Exclusively from Artificial Intelligence models" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Datos Regionales de Andalucía",
+      "bloqueEn": "Regional Data - Andalusia",
+      "pregunta": "¿Qué icono utiliza ANFORA para indicar claramente que un producto dispone de datos regionales de Andalucía?",
+      "preguntaEn": "What icon does ANFORA use to clearly indicate that a product has regional data for Andalusia available?",
+      "opciones": [
+        { "id": "a", "texto": "Un sol" },
+        { "id": "b", "texto": "Una gota de agua" },
+        { "id": "c", "texto": "Un robot" },
+        { "id": "d", "texto": "Un mapa" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A sun" },
+        { "id": "b", "texto": "A water drop" },
+        { "id": "c", "texto": "A robot" },
+        { "id": "d", "texto": "A map" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 10,
+      "bloque": "Datos Regionales de Andalucía",
+      "bloqueEn": "Regional Data - Andalusia",
+      "pregunta": "¿Cuál de los siguientes productos NO se menciona como uno de los que cuentan con datos regionales de Andalucía?",
+      "preguntaEn": "Which of the following products is NOT mentioned as having regional data for Andalusia?",
+      "opciones": [
+        { "id": "a", "texto": "Aceituna" },
+        { "id": "b", "texto": "Trigo" },
+        { "id": "c", "texto": "Uva/Vino" },
+        { "id": "d", "texto": "Salmón" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Olive" },
+        { "id": "b", "texto": "Wheat" },
+        { "id": "c", "texto": "Grape/Wine" },
+        { "id": "d", "texto": "Salmon" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 11,
+      "bloque": "Gestión de Recetas",
+      "bloqueEn": "Recipe Management",
+      "pregunta": "En la sección \"Mis Recetas\", ¿cuántas recetas se muestran por página por defecto?",
+      "preguntaEn": "In the \"My Recipes\" section, how many recipes are shown per page by default?",
+      "opciones": [
+        { "id": "a", "texto": "5 recetas" },
+        { "id": "b", "texto": "10 recetas" },
+        { "id": "c", "texto": "20 recetas" },
+        { "id": "d", "texto": "50 recetas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5 recipes" },
+        { "id": "b", "texto": "10 recipes" },
+        { "id": "c", "texto": "20 recipes" },
+        { "id": "d", "texto": "50 recipes" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Gestión de Recetas",
+      "bloqueEn": "Recipe Management",
+      "pregunta": "¿En qué orden se muestran las recetas guardadas en la lista de \"Mis Recetas\"?",
+      "preguntaEn": "In what order are the saved recipes displayed in the \"My Recipes\" list?",
+      "opciones": [
+        { "id": "a", "texto": "Por orden alfabético" },
+        { "id": "b", "texto": "Por orden de huella hídrica (de menor a mayor)" },
+        { "id": "c", "texto": "En orden cronológico (las más recientes primero)" },
+        { "id": "d", "texto": "Aleatoriamente" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Alphabetical order" },
+        { "id": "b", "texto": "By water footprint order (lowest to highest)" },
+        { "id": "c", "texto": "Chronological order (the most recent first)" },
+        { "id": "d", "texto": "Randomly" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Gestión de Recetas",
+      "bloqueEn": "Recipe Management",
+      "pregunta": "En el detalle de una receta guardada, ¿qué evalúa la puntuación de \"Eficiencia\"?",
+      "preguntaEn": "In the saved recipe details, what does the \"Efficiency\" score evaluate?",
+      "opciones": [
+        { "id": "a", "texto": "El tiempo de preparación de la receta" },
+        { "id": "b", "texto": "La huella hídrica por ración en comparación con la media de la base de datos" },
+        { "id": "c", "texto": "El costo económico de los ingredientes" },
+        { "id": "d", "texto": "El porcentaje de ingredientes de origen local" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The preparation time of the recipe" },
+        { "id": "b", "texto": "The water footprint per serving vs the database average" },
+        { "id": "c", "texto": "The economic cost of the ingredients" },
+        { "id": "d", "texto": "The percentage of locally sourced ingredients" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Gestión de Recetas",
+      "bloqueEn": "Recipe Management",
+      "pregunta": "¿Qué ocurre si eliminas una receta en \"Mis Recetas\" que previamente habías incluido en un menú semanal?",
+      "preguntaEn": "What happens if you delete a recipe in \"My Recipes\" that was previously included in a weekly menu?",
+      "opciones": [
+        { "id": "a", "texto": "El menú semanal se borra por completo" },
+        { "id": "b", "texto": "La receta se borra permanentemente, pero el menú mantiene los datos históricos marcándola como eliminada" },
+        { "id": "c", "texto": "La receta no se puede borrar si está en un menú" },
+        { "id": "d", "texto": "La receta se mueve a una \"Papelera de reciclaje\" por 30 días" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The weekly menu is completely erased" },
+        { "id": "b", "texto": "The recipe is permanently deleted, but the menu keeps historical data marking it as deleted" },
+        { "id": "c", "texto": "The recipe cannot be deleted if it is in a menu" },
+        { "id": "d", "texto": "The recipe moves to a \"Recycle bin\" for 30 days" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Gestión de Recetas",
+      "bloqueEn": "Recipe Management",
+      "pregunta": "¿Qué acción recomienda el manual hacer antes de eliminar una receta permanentemente?",
+      "preguntaEn": "What action does the manual recommend before deleting a recipe permanently?",
+      "opciones": [
+        { "id": "a", "texto": "Imprimirla en papel" },
+        { "id": "b", "texto": "Exportarla a formato JSON para poder recuperar los datos" },
+        { "id": "c", "texto": "Compartirla en redes sociales" },
+        { "id": "d", "texto": "Duplicarla en otro perfil de usuario" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Printing it on paper" },
+        { "id": "b", "texto": "Exporting it to JSON format to recover the data" },
+        { "id": "c", "texto": "Sharing it on social media" },
+        { "id": "d", "texto": "Duplicating it on another user profile" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Exportación de Datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "¿Qué formato de exportación es el ideal si necesitas tabular datos para hacer análisis o estadísticas en Excel?",
+      "preguntaEn": "Which export format is ideal if you need tabulated data for analysis or statistics in Excel?",
+      "opciones": [
+        { "id": "a", "texto": "PDF" },
+        { "id": "b", "texto": "JSON" },
+        { "id": "c", "texto": "CSV" },
+        { "id": "d", "texto": "XML" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "PDF" },
+        { "id": "b", "texto": "JSON" },
+        { "id": "c", "texto": "CSV" },
+        { "id": "d", "texto": "XML" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "Exportación de Datos",
+      "bloqueEn": "Data Export",
+      "pregunta": "Si estás preparando un taller o una presentación profesional, ¿qué formato de exportación es el más adecuado según el manual?",
+      "preguntaEn": "If you are preparing a workshop or a professional presentation, which export format is the best suited according to the manual?",
+      "opciones": [
+        { "id": "a", "texto": "PDF" },
+        { "id": "b", "texto": "CSV" },
+        { "id": "c", "texto": "JSON" },
+        { "id": "d", "texto": "TXT" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "PDF" },
+        { "id": "b", "texto": "CSV" },
+        { "id": "c", "texto": "JSON" },
+        { "id": "d", "texto": "TXT" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 18,
+      "bloque": "Estrategias de Comparación",
+      "bloqueEn": "Comparison Strategies",
+      "pregunta": "En las estrategias para comparar recetas, ¿qué logras al usar la \"Sustitución de ingredientes\"?",
+      "preguntaEn": "In the strategies for comparing recipes, what is achieved by \"Ingredient substitution\"?",
+      "opciones": [
+        { "id": "a", "texto": "Ver cómo cambia la huella al usar datos globales frente a regionales" },
+        { "id": "b", "texto": "Cambiar un ingrediente clave (ej. carne por lentejas) para comparar cuál versión es más sostenible" },
+        { "id": "c", "texto": "Reducir las cantidades de todos los ingredientes a la mitad" },
+        { "id": "d", "texto": "Cambiar la receta de categoría (de plato principal a postre)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Seeing how the footprint changes when using global vs regional data" },
+        { "id": "b", "texto": "Changing one key ingredient (e.g., meat for lentils) to compare which version is more sustainable" },
+        { "id": "c", "texto": "Halving the quantities of all ingredients" },
+        { "id": "d", "texto": "Changing the recipe category (from main course to dessert)" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Estrategias de Comparación",
+      "bloqueEn": "Comparison Strategies",
+      "pregunta": "¿Cuál es el objetivo de la estrategia de \"Optimizar proporciones\"?",
+      "preguntaEn": "What is the goal of the \"Optimize proportions\" strategy?",
+      "opciones": [
+        { "id": "a", "texto": "Aumentar el tamaño de las raciones" },
+        { "id": "b", "texto": "Reducir ingredientes de alta huella hídrica y compensar con los de baja huella (ej. menos aceite, más vegetales)" },
+        { "id": "c", "texto": "Sustituir ingredientes sólidos por líquidos" },
+        { "id": "d", "texto": "Usar únicamente ingredientes con datos de Inteligencia Artificial" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Increasing the portion sizes" },
+        { "id": "b", "texto": "Reducing high-WF ingredients and compensating with low-WF ones (e.g., less oil, more vegetables)" },
+        { "id": "c", "texto": "Replacing solid ingredients with liquids" },
+        { "id": "d", "texto": "Using only ingredients with Artificial Intelligence data" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Estrategias de Comparación",
+      "bloqueEn": "Comparison Strategies",
+      "pregunta": "En el caso práctico de la ensalada, ¿cuánto ahorro de agua se consigue al cambiar 100g de queso fresco por 100g de garbanzos?",
+      "preguntaEn": "In the practical salad case, how much water saving is achieved by swapping 100g of fresh cheese for 100g of chickpeas?",
+      "opciones": [
+        { "id": "a", "texto": "50 Litros" },
+        { "id": "b", "texto": "160 Litros" },
+        { "id": "c", "texto": "418 Litros" },
+        { "id": "d", "texto": "580 Litros" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "50 Litres" },
+        { "id": "b", "texto": "160 Litres" },
+        { "id": "c", "texto": "418 Litres" },
+        { "id": "d", "texto": "580 Litres" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 21,
+      "bloque": "Datos de Referencia de Productos",
+      "bloqueEn": "Product Reference Data",
+      "pregunta": "Según los datos del documento, ¿cuál es la huella hídrica de los garbanzos (chickpeas) utilizada en el ejemplo de la ensalada?",
+      "preguntaEn": "According to the document data, what is the water footprint of the chickpeas used in the salad example?",
+      "opciones": [
+        { "id": "a", "texto": "5,800 L/kg" },
+        { "id": "b", "texto": "4,179 L/kg" },
+        { "id": "c", "texto": "1,500 L/kg" },
+        { "id": "d", "texto": "250 L/kg" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5,800 L/kg" },
+        { "id": "b", "texto": "4,179 L/kg" },
+        { "id": "c", "texto": "1,500 L/kg" },
+        { "id": "d", "texto": "250 L/kg" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "Datos de Referencia de Productos",
+      "bloqueEn": "Product Reference Data",
+      "pregunta": "Según las preguntas de repaso al final del documento, ¿cuál es la huella hídrica del Aceite de Oliva?",
+      "preguntaEn": "According to the review questions at the end of the document, what is the water footprint of Olive Oil?",
+      "opciones": [
+        { "id": "a", "texto": "2,500 L/kg" },
+        { "id": "b", "texto": "4,805 L/kg" },
+        { "id": "c", "texto": "14,766 L/kg" },
+        { "id": "d", "texto": "21,000 L/kg" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "2,500 L/kg" },
+        { "id": "b", "texto": "4,805 L/kg" },
+        { "id": "c", "texto": "14,766 L/kg" },
+        { "id": "d", "texto": "21,000 L/kg" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 23,
+      "bloque": "Clasificación y Búsqueda",
+      "bloqueEn": "Classification and Search",
+      "pregunta": "Un producto con una huella hídrica de 3,500 L/kg se clasifica en ANFORA en el nivel:",
+      "preguntaEn": "A product with a water footprint of 3,500 L/kg is classified in ANFORA at the level:",
+      "opciones": [
+        { "id": "a", "texto": "Bajo (Low)" },
+        { "id": "b", "texto": "Medio (Medium)" },
+        { "id": "c", "texto": "Alto (High)" },
+        { "id": "d", "texto": "Muy Alto (Very High)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Low" },
+        { "id": "b", "texto": "Medium" },
+        { "id": "c", "texto": "High" },
+        { "id": "d", "texto": "Very High" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 24,
+      "bloque": "Clasificación y Búsqueda",
+      "bloqueEn": "Classification and Search",
+      "pregunta": "En el Explorador, si deseas buscar un producto pero solo te sabes su nombre en inglés (ej. \"tomato\"), ¿funcionará la barra de búsqueda?",
+      "preguntaEn": "In the Explorer, if you want to search for a product but only know its name in English (e.g., \"tomato\"), will the search bar work?",
+      "opciones": [
+        { "id": "a", "texto": "No, solo busca en español" },
+        { "id": "b", "texto": "Sí, el buscador funciona por nombre tanto en español como en inglés" },
+        { "id": "c", "texto": "Solo si cambias toda la interfaz al inglés primero" },
+        { "id": "d", "texto": "No, debes buscarlo por su nombre científico" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "No, it only searches in Spanish" },
+        { "id": "b", "texto": "Yes, the search bar works by name in both ES and EN" },
+        { "id": "c", "texto": "Only if you change the whole interface to English first" },
+        { "id": "d", "texto": "No, you must search by its scientific name" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "Clasificación y Búsqueda",
+      "bloqueEn": "Classification and Search",
+      "pregunta": "¿Cuál es el límite máximo de recetas que se pueden obtener por consulta (query) en la vista general de \"Mis Recetas\"?",
+      "preguntaEn": "What is the maximum limit of recipes that can be retrieved per query in the \"My Recipes\" general view?",
+      "opciones": [
+        { "id": "a", "texto": "10 recetas" },
+        { "id": "b", "texto": "50 recetas" },
+        { "id": "c", "texto": "100 recetas" },
+        { "id": "d", "texto": "No hay límite" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "10 recipes" },
+        { "id": "b", "texto": "50 recipes" },
+        { "id": "c", "texto": "100 recipes" },
+        { "id": "d", "texto": "There is no limit" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

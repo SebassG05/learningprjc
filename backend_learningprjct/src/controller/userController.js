@@ -470,10 +470,9 @@ export const completeTest = async (req, res) => {
           // Encontrar el tema actual
           const temaActual = course.temas.find(t => t._id.toString() === temaId);
           
-          // Verificar si es el test final (tema 5 o superior, o contiene "Test Final" en el título)
+          // Verificar si es el test final por título del tema
           if (temaActual) {
-            isFinalTest = temaActual.numeroTema >= 5 ||
-              temaActual.titulo?.toLowerCase().includes('test final') ||
+            isFinalTest = temaActual.titulo?.toLowerCase().includes('test final') ||
               temaActual.titulo?.toLowerCase().includes('certificación');
           }
         }

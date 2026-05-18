@@ -1,0 +1,510 @@
+{
+  "titulo": "Test de Evaluación - Tema 5: Menús Semanales, Estadísticas y Objetivos del Proyecto",
+  "tituloEn": "Evaluation Test - Topic 5: Weekly Menus, Statistics and Project Objectives",
+  "descripcion": "Evaluación sobre la creación y gestión de menús semanales, métricas de análisis, estadísticas del perfil, estrategias de reducción y objetivos del proyecto ANFORA",
+  "descripcionEn": "Assessment on creating and managing weekly menus, analysis metrics, profile statistics, reduction strategies, and ANFORA project objectives",
+  "duracionMinutos": 30,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Creación de Menús Semanales",
+      "bloqueEn": "Weekly Menu Creation",
+      "pregunta": "¿Cuáles son los dos requisitos previos necesarios para poder crear un menú semanal en ANFORA?",
+      "preguntaEn": "What are the two prerequisites needed to create a weekly menu in ANFORA?",
+      "opciones": [
+        { "id": "a", "texto": "Una suscripción de pago y conexión a internet" },
+        { "id": "b", "texto": "Haber completado la encuesta de satisfacción y leer la guía" },
+        { "id": "c", "texto": "Una cuenta activa en ANFORA y al menos una receta guardada en 'Mis Recetas'" },
+        { "id": "d", "texto": "Tener datos regionales de Andalucía y 5 ingredientes guardados" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "A paid subscription and internet connection" },
+        { "id": "b", "texto": "Having completed the satisfaction survey and read the guide" },
+        { "id": "c", "texto": "An active ANFORA account and at least one recipe saved in 'My Recipes'" },
+        { "id": "d", "texto": "Having Andalusia regional data and 5 saved ingredients" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Creación de Menús Semanales",
+      "bloqueEn": "Weekly Menu Creation",
+      "pregunta": "¿Qué comidas del día se incluyen en la planificación de los menús semanales de la plataforma?",
+      "preguntaEn": "Which meals of the day are included in the platform's weekly menu planning?",
+      "opciones": [
+        { "id": "a", "texto": "Desayuno, almuerzo, merienda y cena" },
+        { "id": "b", "texto": "Almuerzo y cena exclusivamente" },
+        { "id": "c", "texto": "Desayuno, almuerzo y cena" },
+        { "id": "d", "texto": "Cinco comidas diarias (incluyendo snacks)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Breakfast, lunch, snack, and dinner" },
+        { "id": "b", "texto": "Lunch and dinner exclusively" },
+        { "id": "c", "texto": "Breakfast, lunch, and dinner" },
+        { "id": "d", "texto": "Five daily meals (including snacks)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Creación de Menús Semanales",
+      "bloqueEn": "Weekly Menu Creation",
+      "pregunta": "Al crear un menú semanal, se genera una cuadrícula. ¿Cuántos huecos (slots) en total tiene esta cuadrícula?",
+      "preguntaEn": "When creating a weekly menu, a grid is generated. How many total slots does this grid have?",
+      "opciones": [
+        { "id": "a", "texto": "14 huecos" },
+        { "id": "b", "texto": "21 huecos" },
+        { "id": "c", "texto": "28 huecos" },
+        { "id": "d", "texto": "35 huecos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "14 slots" },
+        { "id": "b", "texto": "21 slots" },
+        { "id": "c", "texto": "28 slots" },
+        { "id": "d", "texto": "35 slots" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "Creación de Menús Semanales",
+      "bloqueEn": "Weekly Menu Creation",
+      "pregunta": "Durante la creación de un menú, ¿cuál es el límite máximo de caracteres permitido para el campo opcional de \"Descripción\"?",
+      "preguntaEn": "During menu creation, what is the maximum character limit allowed for the optional \"Description\" field?",
+      "opciones": [
+        { "id": "a", "texto": "100 caracteres" },
+        { "id": "b", "texto": "200 caracteres" },
+        { "id": "c", "texto": "500 caracteres" },
+        { "id": "d", "texto": "1000 caracteres" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "100 characters" },
+        { "id": "b", "texto": "200 characters" },
+        { "id": "c", "texto": "500 characters" },
+        { "id": "d", "texto": "1000 characters" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Creación de Menús Semanales",
+      "bloqueEn": "Weekly Menu Creation",
+      "pregunta": "¿Qué sucede con la huella hídrica total si decides dejar algunos huecos del menú vacíos sin asignar recetas?",
+      "preguntaEn": "What happens to the total water footprint if you decide to leave some menu slots empty without assigning recipes?",
+      "opciones": [
+        { "id": "a", "texto": "La plataforma asume una huella promedio y la suma al total" },
+        { "id": "b", "texto": "Los huecos vacíos no suman a la huella total" },
+        { "id": "c", "texto": "No se puede guardar el menú hasta que se llenen todos los huecos" },
+        { "id": "d", "texto": "El menú se marca como \"Incompleto\" y se borra a las 24 horas" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The platform assumes an average footprint and adds it to the total" },
+        { "id": "b", "texto": "Empty slots do not add to the total WF" },
+        { "id": "c", "texto": "The menu cannot be saved until all slots are filled" },
+        { "id": "d", "texto": "The menu is marked as \"Incomplete\" and deleted after 24 hours" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Creación de Menús Semanales",
+      "bloqueEn": "Weekly Menu Creation",
+      "pregunta": "Si deseas añadir una nota personal a un hueco específico de comida (por ejemplo, como recordatorio), ¿cuál es el límite de caracteres?",
+      "preguntaEn": "If you want to add a personal note to a specific meal slot (e.g., as a reminder), what is the character limit?",
+      "opciones": [
+        { "id": "a", "texto": "50 caracteres" },
+        { "id": "b", "texto": "100 caracteres" },
+        { "id": "c", "texto": "200 caracteres" },
+        { "id": "d", "texto": "500 caracteres" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "50 characters" },
+        { "id": "b", "texto": "100 characters" },
+        { "id": "c", "texto": "200 characters" },
+        { "id": "d", "texto": "500 characters" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "Gestión de Recetas en el Menú",
+      "bloqueEn": "Recipe Management in the Menu",
+      "pregunta": "¿Qué ocurre con tu menú semanal si eliminas permanentemente una receta desde tu sección de 'Mis Recetas'?",
+      "preguntaEn": "What happens to your weekly menu if you permanently delete a recipe from your 'My Recipes' section?",
+      "opciones": [
+        { "id": "a", "texto": "El menú semanal se borra por completo" },
+        { "id": "b", "texto": "El menú mantiene los datos históricos pero marca la receta como eliminada" },
+        { "id": "c", "texto": "La plataforma te impide borrar la receta si está en uso" },
+        { "id": "d", "texto": "El hueco del menú se llena automáticamente con otra receta similar" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The weekly menu is completely erased" },
+        { "id": "b", "texto": "The menu keeps historical data but will mark the recipe as deleted" },
+        { "id": "c", "texto": "The platform prevents you from deleting the recipe if it's in use" },
+        { "id": "d", "texto": "The menu slot is automatically filled with another similar recipe" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Análisis y Métricas del Menú",
+      "bloqueEn": "Menu Analysis and Metrics",
+      "pregunta": "En el panel de análisis automático del menú, ¿qué métrica te indica el promedio diario de agua virtual consumida?",
+      "preguntaEn": "In the automatic menu analysis dashboard, which metric indicates the daily average virtual water consumed?",
+      "opciones": [
+        { "id": "a", "texto": "Huella Hídrica Total Semanal (Total Weekly WF)" },
+        { "id": "b", "texto": "Huella Hídrica por Día (WF per Day)" },
+        { "id": "c", "texto": "Total de Comidas (Total Meals)" },
+        { "id": "d", "texto": "Puntuación de eficiencia (Efficiency Score)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Total Weekly WF" },
+        { "id": "b", "texto": "WF per Day" },
+        { "id": "c", "texto": "Total Meals" },
+        { "id": "d", "texto": "Efficiency Score" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Análisis y Métricas del Menú",
+      "bloqueEn": "Menu Analysis and Metrics",
+      "pregunta": "¿Qué métrica del panel de análisis se utiliza para medir la \"variedad de la dieta\" del usuario?",
+      "preguntaEn": "Which metric from the analysis dashboard is used to measure the user's \"diet variety\"?",
+      "opciones": [
+        { "id": "a", "texto": "Huecos Vacíos (Empty Slots)" },
+        { "id": "b", "texto": "Recetas Únicas (Unique Recipes)" },
+        { "id": "c", "texto": "Agua Verde Total (Total Green Water)" },
+        { "id": "d", "texto": "Total de Comidas (Total Meals)" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Empty Slots" },
+        { "id": "b", "texto": "Unique Recipes" },
+        { "id": "c", "texto": "Total Green Water" },
+        { "id": "d", "texto": "Total Meals" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Análisis y Métricas del Menú",
+      "bloqueEn": "Menu Analysis and Metrics",
+      "pregunta": "En el contexto de un menú semanal, ¿qué propósito principal tiene medir el \"Agua Azul Total\" de todas tus comidas?",
+      "preguntaEn": "In the context of a weekly menu, what is the main purpose of measuring the \"Total Blue Water\" across all your meals?",
+      "opciones": [
+        { "id": "a", "texto": "Conocer el uso de agua de lluvia" },
+        { "id": "b", "texto": "Evaluar el impacto en la calidad del agua por contaminantes" },
+        { "id": "c", "texto": "Evaluar la presión ejercida sobre ríos y acuíferos" },
+        { "id": "d", "texto": "Medir la cantidad de agua que bebes directamente" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "To know the usage of rainwater" },
+        { "id": "b", "texto": "To evaluate the impact on water quality from pollutants" },
+        { "id": "c", "texto": "To evaluate the pressure on rivers and aquifers" },
+        { "id": "d", "texto": "To measure the amount of water you drink directly" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "Análisis y Métricas del Menú",
+      "bloqueEn": "Menu Analysis and Metrics",
+      "pregunta": "¿Qué representa la suma del \"Agua Gris Total\" en el panel de métricas de tu menú?",
+      "preguntaEn": "What does the sum of \"Total Grey Water\" represent in your menu's metrics dashboard?",
+      "opciones": [
+        { "id": "a", "texto": "El impacto en la calidad del agua" },
+        { "id": "b", "texto": "El uso de agua reciclada" },
+        { "id": "c", "texto": "La presión sobre acuíferos locales" },
+        { "id": "d", "texto": "El agua de lluvia evaporada" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "The impact on water quality" },
+        { "id": "b", "texto": "The use of recycled water" },
+        { "id": "c", "texto": "The pressure on local aquifers" },
+        { "id": "d", "texto": "Evaporated rainwater" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 12,
+      "bloque": "Gestión y Estadísticas del Perfil",
+      "bloqueEn": "Management and Profile Statistics",
+      "pregunta": "En la gestión de tus menús, ¿qué te permite hacer la acción \"Editar días\" (Edit days)?",
+      "preguntaEn": "When managing your menus, what does the \"Edit days\" action allow you to do?",
+      "opciones": [
+        { "id": "a", "texto": "Cambiar el nombre y la descripción del menú" },
+        { "id": "b", "texto": "Borrar permanentemente el menú sin confirmación" },
+        { "id": "c", "texto": "Cambiar las recetas de días específicos sin modificar el resto del plan" },
+        { "id": "d", "texto": "Añadir un octavo día a la semana de planificación" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Change the menu's name and description" },
+        { "id": "b", "texto": "Permanently delete the menu without confirmation" },
+        { "id": "c", "texto": "Change recipes of specific days without touching the rest of the plan" },
+        { "id": "d", "texto": "Add an eighth day to the planning week" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Gestión y Estadísticas del Perfil",
+      "bloqueEn": "Management and Profile Statistics",
+      "pregunta": "Dentro de las estadísticas personales de tu perfil, ¿cuál de los siguientes es considerado un \"Dato de Actividad\" (Activity Data)?",
+      "preguntaEn": "Within your profile's personal statistics, which of the following is considered \"Activity Data\"?",
+      "opciones": [
+        { "id": "a", "texto": "Huella hídrica promedio de tus recetas" },
+        { "id": "b", "texto": "Menús semanales creados" },
+        { "id": "c", "texto": "Puntuación de eficiencia hídrica" },
+        { "id": "d", "texto": "Desglose promedio azul/verde/gris" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Average WF of your recipes" },
+        { "id": "b", "texto": "Weekly menus created" },
+        { "id": "c", "texto": "Water efficiency score" },
+        { "id": "d", "texto": "Average blue/green/grey breakdown" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Gestión y Estadísticas del Perfil",
+      "bloqueEn": "Management and Profile Statistics",
+      "pregunta": "Dentro de las estadísticas personales de tu perfil, ¿cuál de los siguientes es considerado una \"Métrica de Impacto\" (Impact Metric)?",
+      "preguntaEn": "Within your profile's personal statistics, which of the following is considered an \"Impact Metric\"?",
+      "opciones": [
+        { "id": "a", "texto": "Total de recetas guardadas" },
+        { "id": "b", "texto": "Categorías más frecuentes" },
+        { "id": "c", "texto": "Fecha de registro y último acceso" },
+        { "id": "d", "texto": "Huella hídrica total acumulada calculada" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Total saved recipes" },
+        { "id": "b", "texto": "Most frequent categories" },
+        { "id": "c", "texto": "Registration date and last access" },
+        { "id": "d", "texto": "Total cumulative WF calculated" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 15,
+      "bloque": "Estrategias de Reducción",
+      "bloqueEn": "Reduction Strategies",
+      "pregunta": "Según el manual, ¿cuál es la acción en la dieta que supone el mayor ahorro de agua?",
+      "preguntaEn": "According to the manual, which dietary action provides the greatest water saving?",
+      "opciones": [
+        { "id": "a", "texto": "Reducir el tiempo de cocción" },
+        { "id": "b", "texto": "Sustituir las proteínas animales por legumbres y vegetales" },
+        { "id": "c", "texto": "Beber agua del grifo en lugar de embotellada" },
+        { "id": "d", "texto": "Eliminar completamente el aceite de oliva" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Reducing cooking time" },
+        { "id": "b", "texto": "Replacing animal proteins with legumes and vegetables" },
+        { "id": "c", "texto": "Drinking tap water instead of bottled water" },
+        { "id": "d", "texto": "Completely eliminating olive oil" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Estrategias de Reducción",
+      "bloqueEn": "Reduction Strategies",
+      "pregunta": "En el ejemplo práctico de reducción, ¿cuántos litros de agua se ahorran por comida al sustituir un filete de ternera de 200 g por un plato de garbanzos de 200 g?",
+      "preguntaEn": "In the practical reduction example, how many litres of water are saved per meal by swapping a 200g beef steak for a 200g plate of chickpeas?",
+      "opciones": [
+        { "id": "a", "texto": "500 L/comida" },
+        { "id": "b", "texto": "836 L/comida" },
+        { "id": "c", "texto": "2,250 L/comida" },
+        { "id": "d", "texto": "3,083 L/comida" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "500 L/meal" },
+        { "id": "b", "texto": "836 L/meal" },
+        { "id": "c", "texto": "2,250 L/meal" },
+        { "id": "d", "texto": "3,083 L/meal" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "Estrategias de Reducción",
+      "bloqueEn": "Reduction Strategies",
+      "pregunta": "Al aplicar la estrategia de \"equilibrar tu menú semanal\", ¿qué límite define un día calificado como \"verde\"?",
+      "preguntaEn": "When applying the \"balance your weekly menu\" strategy, what limit defines a day classified as \"green\"?",
+      "opciones": [
+        { "id": "a", "texto": "Menos de 100 L/ración" },
+        { "id": "b", "texto": "Menos de 200 L/ración" },
+        { "id": "c", "texto": "Entre 400 y 600 L/ración" },
+        { "id": "d", "texto": "Cero litros de agua azul" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Less than 100 L/serving" },
+        { "id": "b", "texto": "Less than 200 L/serving" },
+        { "id": "c", "texto": "Between 400 and 600 L/serving" },
+        { "id": "d", "texto": "Zero litres of blue water" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Estrategias de Reducción",
+      "bloqueEn": "Reduction Strategies",
+      "pregunta": "En esa misma estrategia de equilibrio, un día con huella \"alta\" se define por superar los:",
+      "preguntaEn": "In that same balancing strategy, a \"high\" footprint day is defined by exceeding:",
+      "opciones": [
+        { "id": "a", "texto": "500 L/ración" },
+        { "id": "b", "texto": "800 L/ración" },
+        { "id": "c", "texto": "1,000 L/ración" },
+        { "id": "d", "texto": "2,000 L/ración" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "500 L/serving" },
+        { "id": "b", "texto": "800 L/serving" },
+        { "id": "c", "texto": "1,000 L/serving" },
+        { "id": "d", "texto": "2,000 L/serving" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Estrategias de Reducción",
+      "bloqueEn": "Reduction Strategies",
+      "pregunta": "¿Por qué el manual sugiere priorizar productos locales andaluces como estrategia de reducción?",
+      "preguntaEn": "Why does the manual suggest prioritizing local Andalusian products as a reduction strategy?",
+      "opciones": [
+        { "id": "a", "texto": "Porque son más económicos" },
+        { "id": "b", "texto": "Porque los datos regionales suelen mostrar una menor huella al estar adaptados al clima local" },
+        { "id": "c", "texto": "Porque no requieren agua verde" },
+        { "id": "d", "texto": "Porque el transporte suma miles de litros de agua azul" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Because they are cheaper" },
+        { "id": "b", "texto": "Because regional data usually show lower WF for crops adapted to the local climate" },
+        { "id": "c", "texto": "Because they do not require green water" },
+        { "id": "d", "texto": "Because transportation adds thousands of litres of blue water" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Seguimiento de Progreso",
+      "bloqueEn": "Progress Tracking",
+      "pregunta": "Para analizar tu progreso a largo plazo, ¿con qué frecuencia recomienda el manual exportar tus datos a CSV y hacer seguimiento en Excel?",
+      "preguntaEn": "To analyze your long-term progress, how often does the manual recommend exporting your data to CSV and tracking it in Excel?",
+      "opciones": [
+        { "id": "a", "texto": "Diariamente" },
+        { "id": "b", "texto": "Semanalmente" },
+        { "id": "c", "texto": "Mensualmente" },
+        { "id": "d", "texto": "Anualmente" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Daily" },
+        { "id": "b", "texto": "Weekly" },
+        { "id": "c", "texto": "Monthly" },
+        { "id": "d", "texto": "Annually" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 21,
+      "bloque": "Objetivos del Proyecto ANFORA",
+      "bloqueEn": "ANFORA Project Objectives",
+      "pregunta": "Dentro de los objetivos del proyecto de innovación rural ANFORA, ¿cuántos usuarios rurales se buscan para los \"Ensayos piloto\" (Pilot trials)?",
+      "preguntaEn": "Within the objectives of the ANFORA rural innovation project, how many rural users are targeted for the \"Pilot trials\"?",
+      "opciones": [
+        { "id": "a", "texto": "10-15 usuarios" },
+        { "id": "b", "texto": "25-30 usuarios" },
+        { "id": "c", "texto": "50-100 usuarios" },
+        { "id": "d", "texto": "Más de 200 usuarios" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "10-15 users" },
+        { "id": "b", "texto": "25-30 users" },
+        { "id": "c", "texto": "50-100 users" },
+        { "id": "d", "texto": "Over 200 users" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "Objetivos del Proyecto ANFORA",
+      "bloqueEn": "ANFORA Project Objectives",
+      "pregunta": "¿Cuál es la meta de adopción (Adoption) del proyecto dentro de los 2 meses posteriores al lanzamiento?",
+      "preguntaEn": "What is the project's \"Adoption\" target within 2 months after launch?",
+      "opciones": [
+        { "id": "a", "texto": "50 usuarios registrados" },
+        { "id": "b", "texto": "100 usuarios registrados" },
+        { "id": "c", "texto": "500 usuarios registrados" },
+        { "id": "d", "texto": "1000 usuarios registrados" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "50 registered users" },
+        { "id": "b", "texto": "100 registered users" },
+        { "id": "c", "texto": "500 registered users" },
+        { "id": "d", "texto": "1000 registered users" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "Objetivos del Proyecto ANFORA",
+      "bloqueEn": "ANFORA Project Objectives",
+      "pregunta": "¿Cuál es el objetivo final de reducción de impacto (Impact) en la huella hídrica de los participantes medido con la plataforma?",
+      "preguntaEn": "What is the ultimate \"Impact\" target for reducing participants' water footprint, measured with platform data?",
+      "opciones": [
+        { "id": "a", "texto": "Un 5-10% de reducción" },
+        { "id": "b", "texto": "Un 10-15% de reducción" },
+        { "id": "c", "texto": "Un 20-30% de reducción" },
+        { "id": "d", "texto": "Un 50% de reducción" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "5-10% reduction" },
+        { "id": "b", "texto": "10-15% reduction" },
+        { "id": "c", "texto": "20-30% reduction" },
+        { "id": "d", "texto": "50% reduction" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Objetivos del Proyecto ANFORA",
+      "bloqueEn": "ANFORA Project Objectives",
+      "pregunta": "En la encuesta anónima post-uso, ¿qué promedio de satisfacción (Satisfaction) tiene como objetivo el proyecto?",
+      "preguntaEn": "In the anonymous post-use survey, what average \"Satisfaction\" score does the project aim for?",
+      "opciones": [
+        { "id": "a", "texto": "Mayor o igual a 3/5" },
+        { "id": "b", "texto": "Mayor o igual a 4/5" },
+        { "id": "c", "texto": "Exactamente 5/5" },
+        { "id": "d", "texto": "100% de usuarios satisfechos" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Greater than or equal to 3/5" },
+        { "id": "b", "texto": "Greater than or equal to 4/5" },
+        { "id": "c", "texto": "Exactly 5/5" },
+        { "id": "d", "texto": "100% of users satisfied" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 25,
+      "bloque": "Objetivos del Proyecto ANFORA",
+      "bloqueEn": "ANFORA Project Objectives",
+      "pregunta": "Según el resumen del curso completo, ¿cuál es el contenido temático de la próxima Unidad 06?",
+      "preguntaEn": "According to the full-course summary, what is the topic of the upcoming Unit 06?",
+      "opciones": [
+        { "id": "a", "texto": "Gestión de recetas" },
+        { "id": "b", "texto": "El mapa de negocios locales" },
+        { "id": "c", "texto": "Ejercicio práctico y encuesta" },
+        { "id": "d", "texto": "Calculadora avanzada" }
+      ],
+      "opcionesEn": [
+        { "id": "a", "texto": "Recipe management" },
+        { "id": "b", "texto": "The local businesses map" },
+        { "id": "c", "texto": "Practical exercise and survey" },
+        { "id": "d", "texto": "Advanced calculator" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}
