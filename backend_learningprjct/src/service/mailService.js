@@ -120,64 +120,72 @@ export const sendCourseCompletionEmailToUser = async (userName, userEmail, cours
 };
 
 export const sendCourseCompletionNotificationToAdmin = async (userName, userEmail, courseName = 'el curso') => {
+  const fechaFormateada = new Date().toLocaleString('es-ES', {
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
   const mailOptions = {
     from: `Campus Evenor <${process.env.EMAIL_USER}>`,
-    to: ['info@evenor-tech.com', 's.gandia@evenor-tech.com', 'campusevenor@gmail.com'],
-    subject: '✅ Nuevo estudiante ha completado el curso',
+    to: ['s.gandia@evenor-tech.com', 'campusevenor@gmail.com'],
+    subject: `🎓 Nuevo certificado pendiente — ${userName}`,
     html: `
-      <div style="font-family: Arial, sans-serif; background: #f8fafc; padding: 32px; color: #333;">
-        <div style="max-width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <div style="display: inline-block; background: linear-gradient(135deg, #a1db87 0%, #5ec6a6 100%); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-              <span style="font-size: 30px;">🎉</span>
-            </div>
-            <h2 style="color: #5aa833; margin-bottom: 8px;">Curso completado exitosamente</h2>
+      <div style="font-family: Arial, sans-serif; background: #f4f6f8; padding: 40px 16px;">
+        <div style="max-width: 580px; margin: auto;">
+
+          <!-- Header -->
+          <div style="background: linear-gradient(135deg, #1a2e1a 0%, #1e3a1e 100%); border-radius: 14px 14px 0 0; padding: 32px 36px; text-align: center;">
+            <div style="display: inline-block; background: rgba(161,219,135,0.15); border: 2px solid #a1db87; border-radius: 50%; width: 70px; height: 70px; line-height: 70px; font-size: 36px; margin-bottom: 16px;">🎓</div>
+            <h1 style="color: #a1db87; margin: 0 0 6px; font-size: 22px; letter-spacing: -0.3px;">Certificado pendiente de emisión</h1>
+            <p style="color: #7ec87e; margin: 0; font-size: 14px;">Un estudiante ha superado el test final de certificación</p>
           </div>
-          
-          <div style="background: #f0f9ea; border-radius: 8px; padding: 20px; margin: 24px 0;">
-            <p style="color: #5aa833; font-weight: bold; margin-bottom: 16px; font-size: 16px;">📊 Detalles del estudiante</p>
-            <table style="width: 100%; border-collapse: collapse;">
+
+          <!-- Body -->
+          <div style="background: #ffffff; border-radius: 0 0 14px 14px; padding: 36px; border: 1px solid #e2e8f0; border-top: none;">
+
+            <!-- Datos del estudiante -->
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 28px;">
               <tr>
-                <td style="padding: 8px 0; color: #595959; font-weight: 600; width: 40%;">Nombre:</td>
-                <td style="padding: 8px 0; color: #333;">${userName}</td>
+                <td colspan="2" style="padding-bottom: 14px;">
+                  <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #5aa833;">Datos del estudiante</span>
+                </td>
               </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #595959; font-weight: 600;">Email:</td>
-                <td style="padding: 8px 0; color: #333;">${userEmail}</td>
+              <tr style="border-top: 1px solid #f0f0f0;">
+                <td style="padding: 12px 0; color: #6b7280; font-size: 14px; width: 38%; font-weight: 600;">Nombre</td>
+                <td style="padding: 12px 0; color: #111827; font-size: 14px; font-weight: 700;">${userName}</td>
               </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #595959; font-weight: 600;">Curso:</td>
-                <td style="padding: 8px 0; color: #333;">${courseName}</td>
+              <tr style="border-top: 1px solid #f0f0f0;">
+                <td style="padding: 12px 0; color: #6b7280; font-size: 14px; font-weight: 600;">Email</td>
+                <td style="padding: 12px 0; font-size: 14px;">
+                  <a href="mailto:${userEmail}" style="color: #5aa833; text-decoration: none; font-weight: 600;">${userEmail}</a>
+                </td>
               </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #595959; font-weight: 600;">Fecha de finalización:</td>
-                <td style="padding: 8px 0; color: #333;">${new Date().toLocaleString('es-ES', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}</td>
+              <tr style="border-top: 1px solid #f0f0f0;">
+                <td style="padding: 12px 0; color: #6b7280; font-size: 14px; font-weight: 600;">Curso</td>
+                <td style="padding: 12px 0; color: #111827; font-size: 14px;">${courseName}</td>
+              </tr>
+              <tr style="border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 12px 0; color: #6b7280; font-size: 14px; font-weight: 600;">Fecha y hora</td>
+                <td style="padding: 12px 0; color: #111827; font-size: 14px;">${fechaFormateada}</td>
               </tr>
             </table>
+
+            <!-- Acción requerida -->
+            <div style="background: #fffbeb; border: 1px solid #fcd34d; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 18px 20px; margin-bottom: 28px;">
+              <p style="margin: 0 0 6px; font-weight: 700; color: #92400e; font-size: 14px;">⚠️ Acción requerida</p>
+              <p style="margin: 0; color: #78350f; font-size: 13px; line-height: 1.6;">
+                Prepara y envía el <strong>certificado oficial de finalización</strong> al estudiante a la mayor brevedad posible.
+                Responde a este correo o escribe directamente a
+                <a href="mailto:${userEmail}" style="color: #92400e; font-weight: 600;">${userEmail}</a>.
+              </p>
+            </div>
+
+            <!-- Footer -->
+            <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; text-align: center;">
+              <p style="margin: 0; font-size: 12px; color: #9ca3af;">Notificación automática · Campus Evenor &copy; ${new Date().getFullYear()}</p>
+            </div>
           </div>
 
-          <div style="background: linear-gradient(135deg, #fff9e6 0%, #fff4d4 100%); border-left: 4px solid #ffc107; padding: 16px; border-radius: 6px; margin: 24px 0;">
-            <p style="color: #856404; margin: 0; display: flex; align-items: center;">
-              <span style="font-size: 20px; margin-right: 8px;">⚠️</span>
-              <strong>Acción requerida:</strong> Preparar y enviar el certificado de finalización al estudiante.
-            </p>
-          </div>
-
-          <p style="color: #595959; font-size: 14px; line-height: 1.6; margin-top: 24px;">
-            Este estudiante ha completado todos los requisitos del curso, incluyendo el test final de certificación. 
-            Por favor, procede a generar y enviar el certificado oficial a la mayor brevedad posible.
-          </p>
-
-          <hr style="margin: 32px 0; border: none; border-top: 1px solid #e0e0e0;">
-          <p style="font-size: 12px; color: #999; text-align: center;">
-            Notificación automática generada por Campus Evenor
-          </p>
         </div>
       </div>
     `
