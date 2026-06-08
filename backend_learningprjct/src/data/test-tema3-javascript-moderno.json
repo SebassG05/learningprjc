@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a1966dcd733b54cd47d70e6",
+  "titulo": "Test de Evaluación - Tema 3: JavaScript Moderno, Asincronía y DOM",
+  "descripcion": "Evaluación sobre fundamentos de JavaScript ES6+: scope, funciones flecha, template literals, desestructuración, spread/rest, módulos, promesas, async/await, manipulación del DOM, fetch API, localStorage y Event Loop.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Scope y Variables",
+      "pregunta": "Si declaras una variable utilizando la palabra clave var dentro de un bloque condicional if, ¿qué ocurre con el alcance (scope) de esa variable?",
+      "opciones": [
+        { "id": "a", "texto": "Queda limitada exclusivamente al bloque if y no puede usarse fuera de él." },
+        { "id": "b", "texto": "Se propaga por \"hoisting\" al ámbito de la función contenedora o al ámbito global, estando disponible fuera del bloque if." },
+        { "id": "c", "texto": "El navegador arroja un error de sintaxis inmediato al detectar var dentro de un condicional." },
+        { "id": "d", "texto": "Se convierte automáticamente en una variable de solo lectura (inmutable)." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Scope y Variables",
+      "pregunta": "Imagina que declaras un objeto corporativo con const de la siguiente manera: const proyecto = { nombre: \"EU-Data\" };. ¿Cuál de las siguientes operaciones es válida?",
+      "opciones": [
+        { "id": "a", "texto": "proyecto = { nombre: \"EU-Análisis\" }; (Reasignar el objeto completo)." },
+        { "id": "b", "texto": "proyecto.nombre = \"EU-Análisis\"; (Modificar una propiedad interna del objeto)." },
+        { "id": "c", "texto": "delete proyecto; (Eliminar la declaración de la constante del script)." },
+        { "id": "d", "texto": "Ninguna, las variables declaradas con const bloquean tanto la reasignación como la modificación de sus propiedades internas." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Funciones Flecha y ES6+",
+      "pregunta": "¿Cuál es una de las principales diferencias conceptuales de las funciones flecha (() => {}) respecto a las funciones tradicionales (function() {}) en JavaScript?",
+      "opciones": [
+        { "id": "a", "texto": "Las funciones flecha no pueden recibir parámetros de entrada." },
+        { "id": "b", "texto": "Las funciones flecha se ejecutan siempre de forma asíncrona por defecto." },
+        { "id": "c", "texto": "Las funciones flecha no tienen su propio contexto de this, sino que lo heredan léxicamente del entorno donde fueron creadas." },
+        { "id": "d", "texto": "Consumen el doble de memoria en el motor V8 del navegador." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "Funciones Flecha y ES6+",
+      "pregunta": "¿Qué ventaja principal aportan las plantillas de cadena (Template Literals) utilizando las comillas invertidas (backticks) en ES6+?",
+      "opciones": [
+        { "id": "a", "texto": "Permiten encriptar cadenas de texto automáticamente para cumplir con la protección de datos." },
+        { "id": "b", "texto": "Permiten realizar interpolación de variables y expresiones directamente con la sintaxis ${expresión} y escribir textos multilínea de forma limpia." },
+        { "id": "c", "texto": "Traducen el texto del código de forma nativa al inglés técnico." },
+        { "id": "d", "texto": "Ejecutan funciones matemáticas en segundo plano sin ralentizar el DOM." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Funciones Flecha y ES6+",
+      "pregunta": "Si tienes el objeto const usuario = { nombre: \"Ana\", rol: \"Gestor\" };, ¿cuál es la sintaxis correcta de ES6+ para desestructurar y extraer la propiedad rol en una variable independiente?",
+      "opciones": [
+        { "id": "a", "texto": "const rol = usuario.extract(\"rol\");" },
+        { "id": "b", "texto": "const [ rol ] = usuario;" },
+        { "id": "c", "texto": "const { rol } = usuario;" },
+        { "id": "d", "texto": "const usuario.rol = rol;" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Spread, Rest y Módulos",
+      "pregunta": "¿Qué función cumple el operador de propagación (Spread Operator ...) cuando se aplica sobre un array existente?",
+      "opciones": [
+        { "id": "a", "texto": "Divide el array en partes iguales basándose en el número de elementos." },
+        { "id": "b", "texto": "Permite realizar una copia superficial de los elementos del array o combinarlos fácilmente dentro de un nuevo array u objeto." },
+        { "id": "c", "texto": "Elimina de forma permanente los elementos duplicados del array original." },
+        { "id": "d", "texto": "Transforma el array en una base de datos JSON almacenable de forma local." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Spread, Rest y Módulos",
+      "pregunta": "En la declaración de una función, ¿para qué se utiliza el parámetro Rest (también representado con ...)?",
+      "opciones": [
+        { "id": "a", "texto": "Para obligar a la función a descansar (pausar su ejecución) durante un número determinado de milisegundos." },
+        { "id": "b", "texto": "Para representar que la función ha quedado obsoleta y debe sustituirse por código de Node.js." },
+        { "id": "c", "texto": "Para agrupar un número indefinido de argumentos pasados a la función en un único array estructurado." },
+        { "id": "d", "texto": "Para forzar el retorno de un valor de tipo booleano de manera obligatoria." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Spread, Rest y Módulos",
+      "pregunta": "Al trabajar con módulos nativos de JavaScript (ES6 Modules), ¿cuál es la diferencia entre un export default y un export nombrado?",
+      "opciones": [
+        { "id": "a", "texto": "export default solo sirve para exportar variables de tipo string, mientras que los nombrados exportan funciones." },
+        { "id": "b", "texto": "Un archivo solo puede tener un único export default, el cual se puede importar sin usar llaves {} y con cualquier nombre; los nombrados requieren usar llaves y mantener el nombre exacto." },
+        { "id": "c", "texto": "export default se ejecuta de forma síncrona en el servidor y los nombrados de forma asíncrona en el cliente." },
+        { "id": "d", "texto": "Los módulos nombrados están prohibidos por los estándares de la W3C en entornos de producción." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Promesas y Asincronía",
+      "pregunta": "En el ecosistema de JavaScript, ¿qué es exactamente una Promesa (Promise)?",
+      "opciones": [
+        { "id": "a", "texto": "Un script de Python oculto que asegura que el servidor backend no fallará." },
+        { "id": "b", "texto": "Un objeto que representa la terminación o el fracaso eventual de una operación asíncrona, permitiendo encadenar acciones futuras." },
+        { "id": "c", "texto": "Un método de seguridad nativo que encripta los formularios antes de subirlos a GitHub." },
+        { "id": "d", "texto": "Una directiva de diseño exclusiva del framework React 18." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Promesas y Asincronía",
+      "pregunta": "Respecto a la sintaxis async/await, ¿cuál de las siguientes afirmaciones describe mejor su naturaleza técnica?",
+      "opciones": [
+        { "id": "a", "texto": "Es un motor de renderizado independiente que sustituye por completo a las promesas tradicionales." },
+        { "id": "b", "texto": "Es \"azúcar sintáctico\" (syntactic sugar) construido sobre las Promesas, permitiendo escribir código asíncrono con una estructura que se lee y se comporta de manera similar al código síncrono." },
+        { "id": "c", "texto": "Es un comando exclusivo de la terminal de Node.js que no funciona dentro del navegador web." },
+        { "id": "d", "texto": "Una extensión de VSCode diseñada para autocompletar bucles for complejos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Promesas y Asincronía",
+      "pregunta": "Cuando utilizamos la palabra clave await dentro de una función declarada como async, ¿cómo debemos gestionar de manera correcta y profesional los posibles errores o fallos de la operación asíncrona?",
+      "opciones": [
+        { "id": "a", "texto": "Encapsulando el código interactivo dentro de un bloque estructurado try / catch." },
+        { "id": "b", "texto": "Añadiendo un condicional if (error == true) al final de todo el archivo del script." },
+        { "id": "c", "texto": "Dejando que el navegador recargue la página por defecto de forma infinita." },
+        { "id": "d", "texto": "Usando la instrucción de terminal npx kill-port." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 12,
+      "bloque": "Fetch API",
+      "pregunta": "Al realizar una petición HTTP utilizando fetch('https://api.ejemplo.com/datos'), ¿qué devuelve inmediatamente esta función en primera instancia?",
+      "opciones": [
+        { "id": "a", "texto": "Un objeto de tipo JSON directamente mapeado y listo para ser recorrido." },
+        { "id": "b", "texto": "Un array de texto plano con el código de error del servidor." },
+        { "id": "c", "texto": "Una Promesa que se resolverá con un objeto de tipo Respuesta (Response) que representa la contestación del servidor." },
+        { "id": "d", "texto": "Una variable booleana que indica si la conexión a internet está activa." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Fetch API",
+      "pregunta": "Una vez obtenida la respuesta de un fetch, ¿por qué es necesario llamar al método response.json() y qué devuelve este método?",
+      "opciones": [
+        { "id": "a", "texto": "Se usa para borrar las cookies del navegador y devuelve un texto plano." },
+        { "id": "b", "texto": "Analiza el cuerpo de la respuesta HTTP como formato JSON; como este proceso también es asíncrono, devuelve una nueva Promesa." },
+        { "id": "c", "texto": "Convierte el código JavaScript automáticamente a un reporte descargable en PDF." },
+        { "id": "d", "texto": "Es un método síncrono que detiene toda la ejecución de la landing page web." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Manipulación del DOM",
+      "pregunta": "Al manipular el DOM, ¿cuál es la diferencia operativa fundamental entre utilizar el método querySelector() y el método querySelectorAll()?",
+      "opciones": [
+        { "id": "a", "texto": "querySelector() busca por etiquetas HTML y querySelectorAll() solo busca por identificadores id." },
+        { "id": "b", "texto": "querySelector() devuelve únicamente el primer elemento que coincida con el selector CSS proporcionado; querySelectorAll() devuelve una colección estática (NodeList) con todos los elementos coincidentes." },
+        { "id": "c", "texto": "querySelectorAll() requiere una conexión activa a internet para rastrear los nodos." },
+        { "id": "d", "texto": "querySelector() altera los estilos visuales de forma automática y el segundo método no." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Manipulación del DOM",
+      "pregunta": "Si necesitas añadir una clase de CSS de forma dinámica a un nodo de la interfaz tras el clic de un usuario, ¿cuál es la propiedad recomendada para gestionar las clases sin sobrescribir las ya existentes?",
+      "opciones": [
+        { "id": "a", "texto": "elemento.className = \"nueva-clase\";" },
+        { "id": "b", "texto": "elemento.classList.add(\"nueva-clase\");" },
+        { "id": "c", "texto": "elemento.setAttribute(\"css\", \"nueva-clase\");" },
+        { "id": "d", "texto": "elemento.style = \"nueva-clase\";" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Seguridad Web",
+      "pregunta": "En términos de seguridad informática y buenas prácticas de desarrollo web, ¿por qué representa un riesgo potencial utilizar sistemáticamente la propiedad innerHTML para insertar textos introducidos directamente por un usuario?",
+      "opciones": [
+        { "id": "a", "texto": "Porque reduce de forma drástica la resolución de las imágenes responsive de la aplicación." },
+        { "id": "b", "texto": "Porque no es compatible con la maquetación semántica de HTML5." },
+        { "id": "c", "texto": "Porque expone la aplicación web a vulnerabilidades de inyección de código malicioso de terceros, conocidas como ataques XSS (Cross-Site Scripting)." },
+        { "id": "d", "texto": "Porque invalida el historial de commits guardados en los repositorios remotos de GitHub." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "Seguridad Web",
+      "pregunta": "Si deseas inyectar de forma completamente segura un fragmento de texto puro dentro de un contenedor web (por ejemplo, el nombre de un proyecto europeo), garantizando que el navegador no lo interprete nunca como código ejecutable, ¿qué propiedad debes priorizar?",
+      "opciones": [
+        { "id": "a", "texto": "innerHTML" },
+        { "id": "b", "texto": "textContent" },
+        { "id": "c", "texto": "src" },
+        { "id": "d", "texto": "value" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Eventos y Formularios",
+      "pregunta": "Al programar el comportamiento del envío de un formulario de contacto mediante el evento submit, ¿para qué se invoca la instrucción event.preventDefault()?",
+      "opciones": [
+        { "id": "a", "texto": "Para eliminar los datos almacenados temporalmente en el hardware del ordenador." },
+        { "id": "b", "texto": "Para evitar que el navegador ejecute su comportamiento nativo por defecto (que recargaría la página por completo), permitiendo procesar los datos de forma asíncrona con JavaScript." },
+        { "id": "c", "texto": "Para saltarse las validaciones obligatorias impuestas por los atributos de HTML5." },
+        { "id": "d", "texto": "Para mandar un aviso por correo electrónico a los administradores de la empresa." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "localStorage y Persistencia",
+      "pregunta": "Almacenar datos en el cliente con localStorage es muy útil para dar persistencia local a una lista de tareas. Sin embargo, ¿cuál es una limitación técnica clave de esta herramienta?",
+      "opciones": [
+        { "id": "a", "texto": "Los datos se borran de forma automática e inmediata en cuanto el usuario cierra la pestaña del navegador." },
+        { "id": "b", "texto": "Solo permite almacenar información formateada estrictamente como cadenas de texto (strings), obligándonos a serializar objetos complejos con JSON.stringify()." },
+        { "id": "c", "texto": "Requiere instalar previamente paquetes de terceros mediante comandos npm install." },
+        { "id": "d", "texto": "El almacenamiento máximo permitido por página está limitado a 50 bytes de información." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Event Loop y Asincronía",
+      "pregunta": "Examina el siguiente código: console.log(\"Inicio\"); setTimeout(() => { console.log(\"Temporizador\"); }, 0); console.log(\"Fin\"); Basándote en el funcionamiento asíncrono y el Event Loop de JavaScript, ¿cuál será el orden exacto de los mensajes en la consola?",
+      "opciones": [
+        { "id": "a", "texto": "Inicio -> Temporizador -> Fin" },
+        { "id": "b", "texto": "Temporizador -> Inicio -> Fin" },
+        { "id": "c", "texto": "Inicio -> Fin -> Temporizador" },
+        { "id": "d", "texto": "Los tres mensajes aparecerán simultáneamente en una sola línea." }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

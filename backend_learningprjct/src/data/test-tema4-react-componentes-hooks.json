@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a19673ed733b54cd47d7110",
+  "titulo": "Test de Evaluación - Tema 4: React 18, Componentes, Hooks y Estado",
+  "descripcion": "Evaluación sobre React 18: componentes funcionales, JSX, props, desestructuración, eventos, hooks useState/useEffect/useCallback, renderizado condicional, listas, entradas controladas y filtrado de datos.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Componentes y JSX",
+      "pregunta": "En la arquitectura de React 18, ¿qué es exactamente un componente funcional como los desarrollados en el curso?",
+      "opciones": [
+        { "id": "a", "texto": "Una clase de programación orientada a objetos que se conecta obligatoriamente a un script de Python." },
+        { "id": "b", "texto": "Una función de JavaScript pura o flecha que puede recibir parámetros (props) y retorna una estructura de interfaz escrita en JSX." },
+        { "id": "c", "texto": "Un comando exclusivo de la terminal de Node.js que no tiene representación gráfica en la web." },
+        { "id": "d", "texto": "Un archivo de configuración que reemplaza las variables de entorno de producción." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Componentes y JSX",
+      "pregunta": "¿Cuál es la técnica moderna utilizada en los argumentos de un componente para recibir las propiedades enviadas por el componente padre?",
+      "opciones": [
+        { "id": "a", "texto": "const TarjetaProyecto = (props) => { ... } accediendo mediante props.proyecto." },
+        { "id": "b", "texto": "Desestructuración directa de objetos dentro del parámetro de la función: const TarjetaProyecto = ({ proyecto, onEliminar, onEditar }) => { ... }." },
+        { "id": "c", "texto": "Importación global de las variables mediante directivas process.env." },
+        { "id": "d", "texto": "Extracción automática utilizando métodos del sistema de archivos fs." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Componentes y JSX",
+      "pregunta": "Dentro de la sintaxis JSX empleada en React, ¿qué atributo se debe utilizar de forma obligatoria para asignar clases de estilos CSS a un contenedor, diferenciándose del HTML nativo?",
+      "opciones": [
+        { "id": "a", "texto": "class" },
+        { "id": "b", "texto": "styleClass" },
+        { "id": "c", "texto": "className" },
+        { "id": "d", "texto": "id-css" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "Componentes y JSX",
+      "pregunta": "Para renderizar de manera dinámica variables de JavaScript dentro de la estructura visual de un componente, ¿qué delimitadores sintácticos exige JSX?",
+      "opciones": [
+        { "id": "a", "texto": "Entre dobles comillas modulares: \"nombre\"" },
+        { "id": "b", "texto": "Entre llaves simples de JavaScript: {nombre}" },
+        { "id": "c", "texto": "Mediante etiquetas de comentarios de Git" },
+        { "id": "d", "texto": "Utilizando la expresión ${nombre} de los template literals de forma aislada." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Listas y Renderizado",
+      "pregunta": "Al realizar el renderizado de listas iterando un array con .map(), ¿qué regla exige React sobre el elemento raíz devuelto?",
+      "opciones": [
+        { "id": "a", "texto": "Debe incluir un atributo id numérico correlativo generado con Python." },
+        { "id": "b", "texto": "Debe contener una propiedad única llamada key para que React identifique de forma eficiente qué ítems han cambiado, se han añadido o eliminado." },
+        { "id": "c", "texto": "Debe ser obligatoriamente una etiqueta genérica <div>." },
+        { "id": "d", "texto": "Debe encriptarse empleando el middleware de Express." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Eventos en React",
+      "pregunta": "¿Cuál es la convención y el formato correcto para registrar un escuchador de eventos de clic sobre un botón en una aplicación desarrollada con React?",
+      "opciones": [
+        { "id": "a", "texto": "onclick=\"funcion()\"" },
+        { "id": "b", "texto": "onClick={funcion}" },
+        { "id": "c", "texto": "on-click={funcion()}" },
+        { "id": "d", "texto": "listen:click(funcion)" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Eventos en React",
+      "pregunta": "Si necesitas asociar un evento de clic a un botón que debe transmitir un argumento específico (como el identificador del registro al pulsar \"Eliminar\"), ¿cómo debe estructurarse la asignación?",
+      "opciones": [
+        { "id": "a", "texto": "onClick={onEliminar(id)} (Llamada directa)." },
+        { "id": "b", "texto": "onClick={() => onEliminar(id)} (Función flecha anónima que encapsula la llamada)." },
+        { "id": "c", "texto": "onClick={onEliminar.bind.params(id)}" },
+        { "id": "d", "texto": "onClick=Math.max(id)" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "Accesibilidad y Buenas Prácticas",
+      "pregunta": "¿Qué propiedad de accesibilidad web se configura dinámicamente en un botón de borrado para dar contexto claro a tecnologías asistivas?",
+      "opciones": [
+        { "id": "a", "texto": "aria-hidden=\"true\"" },
+        { "id": "b", "texto": "aria-describedby=\"error\"" },
+        { "id": "c", "texto": "aria-label={`Eliminar proyecto ${nombre}`} para dar contexto claro a tecnologías asistivas." },
+        { "id": "d", "texto": "role=\"alert-dialog\"" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "Componentes y JSX",
+      "pregunta": "Una vez maquetado y programado un componente funcional, ¿cuál es la instrucción para exportarlo y posibilitar su reutilización en otros módulos de la app?",
+      "opciones": [
+        { "id": "a", "texto": "export default TarjetaProyecto;" },
+        { "id": "b", "texto": "module.exports = TarjetaProyecto;" },
+        { "id": "c", "texto": "export nominado TarjetaProyecto;" },
+        { "id": "d", "texto": "require('./TarjetaProyecto');" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 10,
+      "bloque": "Hooks: useState",
+      "pregunta": "¿Cuál es la finalidad primordial de invocar el hook fundamental useState en componentes de control como ListaProyectos?",
+      "opciones": [
+        { "id": "a", "texto": "Conectarse en tiempo real a los logs informáticos de la terminal de Morgan." },
+        { "id": "b", "texto": "Declarar variables de estado local en el componente que, al ser modificadas mediante su función actualizadora, fuerzan de forma automática el re-renderizado de la vista." },
+        { "id": "c", "texto": "Descargar e instalar librerías externas de GitHub de manera asíncrona." },
+        { "id": "d", "texto": "Almacenar de forma permanente e inmutable el token de seguridad del servidor." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Hooks: useState",
+      "pregunta": "Al inicializar el estado para almacenar el listado de registros mediante const [proyectos, setProyectos] = useState([]);, ¿qué estructura de datos se define como valor inicial?",
+      "opciones": [
+        { "id": "a", "texto": "Un objeto de tipo JSON vacío." },
+        { "id": "b", "texto": "Una cadena de texto plana." },
+        { "id": "c", "texto": "Un array vacío [] listo para almacenar los futuros objetos de la API." },
+        { "id": "d", "texto": "Una variable de tipo booleano fijada en true." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 12,
+      "bloque": "Hooks: useEffect",
+      "pregunta": "En la lógica de carga de la aplicación ListaProyectos, ¿para qué se implementa el hook useEffect?",
+      "opciones": [
+        { "id": "a", "texto": "Para compilar el CSS responsive y procesar las variables globales del :root." },
+        { "id": "b", "texto": "Para encapsular y ejecutar efectos secundarios, como realizar la petición HTTP (fetch) orientada a consumir la API de proyectos del servidor." },
+        { "id": "c", "texto": "Para calcular operaciones matemáticas complejas en hilos paralelos de Python." },
+        { "id": "d", "texto": "Para monitorizar el hardware local y la memoria RAM del equipo de desarrollo." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Hooks: useEffect",
+      "pregunta": "Si al declarar un hook useEffect se le proporciona un array de dependencias completamente vacío ([]) en su cierre, ¿cuál será su ciclo de vida y comportamiento?",
+      "opciones": [
+        { "id": "a", "texto": "Se ejecutará de forma infinita en cada milisegundo de la sesión web." },
+        { "id": "b", "texto": "Se ejecutará únicamente una vez, justo después de que el componente se haya montado e insertado en el DOM por primera vez." },
+        { "id": "c", "texto": "Bloqueará el renderizado de la aplicación hasta que se complete un commit en Git." },
+        { "id": "d", "texto": "Se ejecutará exclusivamente cuando el usuario borre los filtros del input de búsqueda." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Fetch API y Manejo de Errores",
+      "pregunta": "Cuando se realiza la llamada a la API local con fetch() dentro del efecto, ¿qué técnica se utiliza para capturar posibles fallos en la red o respuestas con códigos erróneos?",
+      "opciones": [
+        { "id": "a", "texto": "Una bifurcación simple con if (error == true)." },
+        { "id": "b", "texto": "Una estructura de control de excepciones basada en un bloque try { ... } catch (err) { ... }." },
+        { "id": "c", "texto": "La invocación del comando global npx kill-port." },
+        { "id": "d", "texto": "Un bucle secuencial while." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Hooks: useCallback",
+      "pregunta": "La función encargada de gestionar el borrado de registros se optimiza mediante useCallback. ¿Qué beneficio técnico aporta este hook avanzado?",
+      "opciones": [
+        { "id": "a", "texto": "Modifica de forma directa los archivos del servidor local guardados con el módulo fs." },
+        { "id": "b", "texto": "Memoriza la instancia de la función entre renders, evitando que se vuelva a recrear en memoria innecesariamente a menos que cambien sus dependencias." },
+        { "id": "c", "texto": "Genera alertas automáticas nativas en el navegador mediante ventanas de confirmación." },
+        { "id": "d", "texto": "Transforma de forma automática los arrays a formato de cadenas de texto." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Hooks: useState",
+      "pregunta": "Al actualizar la lista tras un borrado mediante setProyectos(prev => prev.filter(p => p.id !== id)), ¿qué representa conceptualmente el argumento prev?",
+      "opciones": [
+        { "id": "a", "texto": "Un array provisional vacío procedente de los recursos pre-curso." },
+        { "id": "b", "texto": "El valor del estado inmediatamente anterior (el listado de proyectos previo al borrado) garantizando actualizaciones de estado seguras." },
+        { "id": "c", "texto": "La respuesta formateada en texto devuelta por el servidor de Express." },
+        { "id": "d", "texto": "El índice secuencial del bucle de eventos (Event Loop)." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Renderizado Condicional",
+      "pregunta": "¿Cómo gestiona un componente el \"Renderizado Condicional\" para evitar mostrar una tabla vacía mientras se descargan los datos del servidor?",
+      "opciones": [
+        { "id": "a", "texto": "Utilizando variables de CSS personalizadas configuradas con display:none." },
+        { "id": "b", "texto": "Evaluando estados booleanos tempranos mediante instrucciones if (cargando) return ... que interceptan el flujo y retornan un JSX temporal con un mensaje de carga." },
+        { "id": "c", "texto": "Delegando el control a la paleta de comandos de Visual Studio Code." },
+        { "id": "d", "texto": "Deteniendo la ejecución del hilo principal de JavaScript mediante una promesa bloqueante." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Entradas Controladas",
+      "pregunta": "En el desarrollo con React, ¿a qué nos referimos exactamente cuando implementamos un elemento de interfaz como una \"Entrada Controlada\" (Controlled Input)?",
+      "opciones": [
+        { "id": "a", "texto": "A un campo de texto protegido por contraseña que impide la escritura de caracteres especiales." },
+        { "id": "b", "texto": "A un elemento de formulario cuyo valor de visualización (value) está sincronizado con un estado de React, y cuyo evento de modificación (onChange) actualiza directamente dicho estado." },
+        { "id": "c", "texto": "A un formulario que valida los datos mediante expresiones regulares del atributo pattern de HTML5 de forma exclusiva." },
+        { "id": "d", "texto": "A un campo conectado directamente a una base de datos SQLite remota." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Entradas Controladas",
+      "pregunta": "Para capturar el texto que un usuario introduce en un cuadro de búsqueda y actualizar el estado dinámico de la aplicación, ¿cuál es la sintaxis correcta de la función de escucha?",
+      "opciones": [
+        { "id": "a", "texto": "onChange={e => setBusqueda(e.value)}" },
+        { "id": "b", "texto": "onChange={e => setBusqueda(e.target.value)}" },
+        { "id": "c", "texto": "onChange={setBusqueda(this.text)}" },
+        { "id": "d", "texto": "onChange={e => setBusqueda(req.body)}" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Datos Derivados y Optimización",
+      "pregunta": "¿Por qué la variable proyectosFiltrados se calcula como un dato derivado en lugar de almacenarse en un estado (useState) propio?",
+      "opciones": [
+        { "id": "a", "texto": "Porque React prohíbe tener más de tres estados activos dentro de un mismo componente funcional." },
+        { "id": "b", "texto": "Porque al calcularse en tiempo de ejecución basándose en los estados ya existentes (proyectos, filtro, busqueda), se evitan estados redundantes y desincronizaciones en los re-renders." },
+        { "id": "c", "texto": "Porque de este modo se reduce el tamaño de la tipografía al proyectarse en pantallas grandes." },
+        { "id": "d", "texto": "Porque los datos derivados permiten la persistencia de datos de forma automática en el localStorage." }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}

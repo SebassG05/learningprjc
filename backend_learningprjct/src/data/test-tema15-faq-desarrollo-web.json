@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196aaad733b54cd47d733c",
+  "titulo": "Test de Evaluación - Tema 15: FAQ — VSCode, npm, HTML/CSS, JS, Node.js/Express, React, Git y Copilot",
+  "descripcion": "Evaluación de preguntas frecuentes del curso: VSCode y atajos, npm y semver, HTML semántico, CSS Grid/Flexbox, JavaScript (asincronía, this, ==), Node.js/Express (middleware, CORS), React (estado, listas, key), Git (commit, revert) y GitHub Copilot.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "VSCode y Entorno de Desarrollo",
+      "pregunta": "Según la encuesta de Stack Overflow 2023 citada en el documento, ¿qué porcentaje de uso tiene VSCode en el mundo del desarrollo web?",
+      "opciones": [
+        { "id": "a", "texto": "Más del 50%" },
+        { "id": "b", "texto": "Más del 65%" },
+        { "id": "c", "texto": "Más del 74%" },
+        { "id": "d", "texto": "Más del 88%" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "VSCode y Entorno de Desarrollo",
+      "pregunta": "¿Cuál es el atajo de teclado en un teclado español dentro de VSCode para abrir el terminal integrado de forma directa?",
+      "opciones": [
+        { "id": "a", "texto": "Ctrl + T" },
+        { "id": "b", "texto": "Ctrl + ` (o la tecla de la ñ / debajo de Esc)" },
+        { "id": "c", "texto": "Shift + Enter" },
+        { "id": "d", "texto": "Alt + X" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "npm y Gestión de Dependencias",
+      "pregunta": "¿Para qué se utiliza específicamente el comando \"npm install --save-dev\" (o npm install -D)?",
+      "opciones": [
+        { "id": "a", "texto": "Para instalar una dependencia que el código necesita obligatoriamente en producción." },
+        { "id": "b", "texto": "Para actualizar la versión global de Node.js instalada en el sistema operativo." },
+        { "id": "c", "texto": "Para instalar una dependencia que solo se requiere durante la fase de desarrollo (testing, formateo, etc.)." },
+        { "id": "d", "texto": "Para configurar los permisos de red del cortafuegos local." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "npm y Gestión de Dependencias",
+      "pregunta": "En el archivo \"package.json\", ¿qué significa el símbolo de intercalación (^) delante del número de una versión, por ejemplo en \"^4.18.2\"?",
+      "opciones": [
+        { "id": "a", "texto": "Significa que el paquete se descargará directamente desde GitHub de forma cifrada." },
+        { "id": "b", "texto": "Significa que es compatible con actualizaciones que no alteren el número mayor (MAJOR)." },
+        { "id": "c", "texto": "Significa que la librería se ejecutará exclusivamente en el lado del cliente." },
+        { "id": "d", "texto": "Significa que el paquete ha sido marcado como obsoleto o deprecado por los desarrolladores." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "npm y Gestión de Dependencias",
+      "pregunta": "Siguiendo el estándar de versionado semántico (semver) detallado en el texto (MAJOR.MINOR.PATCH), ¿qué tipo de modificaciones introduce el número correspondiente a \"MINOR\"?",
+      "opciones": [
+        { "id": "a", "texto": "Cambios críticos que rompen por completo la compatibilidad hacia atrás." },
+        { "id": "b", "texto": "Exclusivamente la corrección de errores y bugs menores." },
+        { "id": "c", "texto": "Nuevas funciones manteniendo la compatibilidad hacia atrás." },
+        { "id": "d", "texto": "Modificaciones estéticas aplicadas únicamente en las hojas de estilo CSS." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "HTML Semántico",
+      "pregunta": "¿Qué etiqueta semántica de HTML se debe utilizar para envolver un contenido independiente y autónomo, como un post de un blog, una noticia o un producto?",
+      "opciones": [
+        { "id": "a", "texto": "<section>" },
+        { "id": "b", "texto": "<div>" },
+        { "id": "c", "texto": "<aside>" },
+        { "id": "d", "texto": "<article>" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 7,
+      "bloque": "CSS Grid y Flexbox",
+      "pregunta": "¿Cuál es la regla simple que expone el documento para decidir de forma rápida si se debe emplear CSS Grid o Flexbox en un diseño?",
+      "opciones": [
+        { "id": "a", "texto": "Si se requiere un diseño animado se usa Grid; si es un diseño estático se usa Flexbox." },
+        { "id": "b", "texto": "Si necesitas controlar filas y columnas al mismo tiempo se usa Grid; si solo necesitas una dirección se usa Flexbox." },
+        { "id": "c", "texto": "Grid se utiliza exclusivamente para dispositivos móviles y Flexbox únicamente para pantallas de ordenadores." },
+        { "id": "d", "texto": "Grid se aplica en etiquetas semánticas y Flexbox se reserva únicamente para bloques <div>." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "CSS Grid y Flexbox",
+      "pregunta": "En caso de que dos estilos CSS tengan exactamente el mismo nivel de especificidad y entren en conflicto sobre un mismo elemento, ¿cuál de ellos se aplica?",
+      "opciones": [
+        { "id": "a", "texto": "El que contenga un selector de identificador (#id)." },
+        { "id": "b", "texto": "El primer estilo que haya sido declarado en la parte superior del documento." },
+        { "id": "c", "texto": "El último estilo declarado en el orden del archivo." },
+        { "id": "d", "texto": "Ninguno, el navegador anula ambos estilos por seguridad." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "CSS Grid y Flexbox",
+      "pregunta": "¿Cuál es el atajo moderno en CSS Grid que permite centrar un elemento tanto vertical como horizontalmente en su contenedor padre?",
+      "opciones": [
+        { "id": "a", "texto": "margin: 0 auto;" },
+        { "id": "b", "texto": "justify-content: space-between;" },
+        { "id": "c", "texto": "place-items: center;" },
+        { "id": "d", "texto": "display: block-center;" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "JavaScript",
+      "pregunta": "Dentro de JavaScript, ¿cuál es la única excepción útil mencionada para emplear el operador de igualdad débil (==) en lugar del estricto (===)?",
+      "opciones": [
+        { "id": "a", "texto": "Comprobar si un número entero es igual a un número de punto flotante." },
+        { "id": "b", "texto": "Comprobar de forma simultánea si un valor es null o undefined." },
+        { "id": "c", "texto": "Comparar un valor booleano con una cadena de texto vacía." },
+        { "id": "d", "texto": "Realizar validaciones de contraseñas dentro de un formulario." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "JavaScript",
+      "pregunta": "Si ejecutas una operación asíncrona como fetch() y asignas su resultado directo a una variable sin anteponer la palabra clave await, ¿qué devuelve la consola al imprimir dicha variable?",
+      "opciones": [
+        { "id": "a", "texto": "Los datos en formato JSON limpios y listos para usar." },
+        { "id": "b", "texto": "Un error crítico de tipo TypeError." },
+        { "id": "c", "texto": "Una promesa en estado pendiente (Promise { <pending> })." },
+        { "id": "d", "texto": "Un valor de tipo undefined." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 12,
+      "bloque": "JavaScript",
+      "pregunta": "¿Cómo se soluciona el problema de que la palabra clave \"this\" pierda su contexto original al utilizarse dentro de una función regular de callback (como en un setTimeout)?",
+      "opciones": [
+        { "id": "a", "texto": "Utilizando una estructura de control async/await." },
+        { "id": "b", "texto": "Empleando una función flecha (arrow function), ya que hereda \"this\" del contexto exterior." },
+        { "id": "c", "texto": "Cambiando el entorno de ejecución local a Node.js en el servidor." },
+        { "id": "d", "texto": "Encapsulando todo el bloque de código dentro de un middleware de Express." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Node.js y Express",
+      "pregunta": "¿Cuál de las siguientes afirmaciones describe correctamente una diferencia de Node.js respecto al JavaScript clásico del navegador?",
+      "opciones": [
+        { "id": "a", "texto": "Node.js tiene acceso directo al DOM de la página (document y window)." },
+        { "id": "b", "texto": "Node.js corre en el servidor y puede acceder al sistema de archivos mediante módulos como 'fs'." },
+        { "id": "c", "texto": "Node.js no utiliza la misma sintaxis básica de JavaScript." },
+        { "id": "d", "texto": "Node.js no puede escuchar bajo ninguna circunstancia en un puerto de red." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Node.js y Express",
+      "pregunta": "¿Qué sucede con una petición HTTP en un servidor Express si te olvidas de invocar la función next() dentro de un middleware básico?",
+      "opciones": [
+        { "id": "a", "texto": "La petición se redirige de forma automática al puerto frontend predeterminado." },
+        { "id": "b", "texto": "El servidor se apaga de inmediato y genera un archivo de log de errores." },
+        { "id": "c", "texto": "La petición se queda bloqueada en ese punto y la respuesta nunca llegará al cliente." },
+        { "id": "d", "texto": "Express ignora el middleware y pasa directamente a la declaración de rutas de la API." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Node.js y Express",
+      "pregunta": "Con respecto a la seguridad en entornos de producción, ¿qué advertencia explícita se hace sobre el uso del middleware cors() en Express?",
+      "opciones": [
+        { "id": "a", "texto": "Que reduce de forma severa la velocidad de procesamiento de datos en un 50%." },
+        { "id": "b", "texto": "Que nunca se debe utilizar cors() sin una configuración específica si se manejan datos sensibles." },
+        { "id": "c", "texto": "Que es incompatible con las llamadas asíncronas de tipo fetch del frontend." },
+        { "id": "d", "texto": "Que requiere obligatoriamente una licencia de pago de GitHub Enterprise." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "React",
+      "pregunta": "¿Por qué no se debe modificar el estado de React de manera directa utilizando métodos mutables como lista.push(4)?",
+      "opciones": [
+        { "id": "a", "texto": "Porque provoca que los componentes secundarios queden congelados permanentemente." },
+        { "id": "b", "texto": "Porque React no detecta el cambio directo en la referencia y el componente no se volverá a renderizar." },
+        { "id": "c", "texto": "Porque este método borra de manera automática el historial de commits de Git." },
+        { "id": "d", "texto": "Porque está estrictamente prohibido por el motor de plantillas de Node.js." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "React",
+      "pregunta": "¿Qué consecuencia tiene el omitir la propiedad única \"key\" al renderizar una lista de elementos dinámicos mediante el método .map() en React?",
+      "opciones": [
+        { "id": "a", "texto": "El navegador web arroja un error de tipo CORS error inmediato." },
+        { "id": "b", "texto": "React se ve obligado a re-renderizar la lista entera en lugar de actualizar solo los elementos específicos que cambiaron." },
+        { "id": "c", "texto": "La aplicación se conecta de manera forzada a una base de datos externa de prueba." },
+        { "id": "d", "texto": "Se desactiva la extensión de sugerencia automática de GitHub Copilot." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "Dentro de la analogía del correo postal descrita para entender el funcionamiento de Git, ¿a qué paso equivale ejecutar el comando git commit?",
+      "opciones": [
+        { "id": "a", "texto": "A poner todos los archivos desordenados dentro de la caja." },
+        { "id": "b", "texto": "A llevar físicamente la caja con el paquete a la oficina de correos." },
+        { "id": "c", "texto": "A cerrar y sellar la caja, guardando el snapshot de forma local." },
+        { "id": "d", "texto": "A solicitar un reembolso del envío por correo certificado." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "Si has realizado un commit por error y este ya ha sido subido a un repositorio público en GitHub, ¿cuál es el procedimiento recomendado y seguro para deshacerlo?",
+      "opciones": [
+        { "id": "a", "texto": "Utilizar el comando irreversible git reset --hard HEAD~1." },
+        { "id": "b", "texto": "Borrar la carpeta .git localmente y volver a inicializar el proyecto." },
+        { "id": "c", "texto": "Utilizar git revert HEAD, lo cual crea un nuevo commit que deshace los cambios del anterior de forma segura para repositorios públicos." },
+        { "id": "d", "texto": "Modificar directamente el archivo de configuración global del sistema operativo." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "GitHub Copilot",
+      "pregunta": "¿Qué comando se debe escribir dentro de la herramienta Copilot Chat (Ctrl+Shift+I) si nos encontramos ante un fragmento de código complejo que no logramos comprender?",
+      "opciones": [
+        { "id": "a", "texto": "/explain" },
+        { "id": "b", "texto": "/debug" },
+        { "id": "c", "texto": "/fix-styles" },
+        { "id": "d", "texto": "/clear-all" }
+      ],
+      "respuestaCorrecta": "a"
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196bc8d733b54cd47d7485",
+  "titulo": "Test de Evaluación - Tema 18: Introducción a las APIs REST — HTTP, JSON, REST y Seguridad",
+  "descripcion": "Evaluación sobre APIs REST: historia de AJAX, protocolo HTTP (métodos, códigos de estado, headers), JSON, arquitectura REST, diseño de URLs, fetch(), CORS, JWT, middleware de errores en Express y seguridad de payloads.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Introducción y Contexto",
+      "pregunta": "Según los datos de volumen técnico expuestos en el módulo, ¿cuántas peticiones diarias procesa el portal de Copernicus Atmosphere Monitoring Service a través de su API REST?",
+      "opciones": [
+        { "id": "a", "texto": "Cerca de 500.000 peticiones." },
+        { "id": "b", "texto": "Aproximadamente 1 millón de peticiones." },
+        { "id": "c", "texto": "Más de 2 millones de peticiones." },
+        { "id": "d", "texto": "Exactamente 10 millones de peticiones." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Fundamentos de APIs",
+      "pregunta": "En la analogía del restaurante utilizada para explicar los fundamentos de una API web, ¿qué elemento representa específicamente a la API encargada de actuar como intermediaria?",
+      "opciones": [
+        { "id": "a", "texto": "El cliente sentado en la mesa." },
+        { "id": "b", "texto": "La carta del menú impreso." },
+        { "id": "c", "texto": "El camarero del establecimiento." },
+        { "id": "d", "texto": "El equipo de cocineros en la cocina." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "Historia de la Web",
+      "pregunta": "¿Qué hito tecnológico del año 2005, impulsado originalmente por Google Maps, transformó la web al permitir que los navegadores realizaran peticiones en segundo plano sin recargar la página completa?",
+      "opciones": [
+        { "id": "a", "texto": "El lanzamiento del formato de datos XML nativo." },
+        { "id": "b", "texto": "La popularización de AJAX (Asynchronous JavaScript and XML)." },
+        { "id": "c", "texto": "La creación del middleware Express de Node.js." },
+        { "id": "d", "texto": "La publicación de la tesis doctoral sobre el protocolo HTTP/1.1." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "Protocolo HTTP",
+      "pregunta": "Al analizar los fundamentos de comunicación de la web, ¿qué implicación profunda tiene el hecho de que el protocolo HTTP sea catalogado como \"sin estado\" (stateless)?",
+      "opciones": [
+        { "id": "a", "texto": "Que el servidor almacena de forma nativa todo el historial de las acciones del cliente." },
+        { "id": "b", "texto": "Que las conexiones TCP permanecen abiertas permanentemente sin consumir memoria." },
+        { "id": "c", "texto": "Que el servidor no recuerda nada de peticiones anteriores, por lo que cada petición es independiente y debe contener toda la información necesaria para procesarse." },
+        { "id": "d", "texto": "Que las llamadas se ejecutan exclusivamente de manera síncrona en el lado del cliente." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Protocolo HTTP",
+      "pregunta": "Dentro de la estructura técnica de una petición HTTP (Request), ¿qué elemento es sintácticamente obligatorio colocar inmediatamente después de las cabeceras (headers) y antes del cuerpo (body)?",
+      "opciones": [
+        { "id": "a", "texto": "Un token de autenticación Bearer de tipo dinámico." },
+        { "id": "b", "texto": "El método o verbo HTTP correspondiente en mayúsculas." },
+        { "id": "c", "texto": "Una línea en blanco obligatoria." },
+        { "id": "d", "texto": "El identificador del tipo de cliente o User-Agent." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Métodos HTTP",
+      "pregunta": "De acuerdo con la tabla de semántica de los métodos HTTP, ¿cuál de los siguientes verbos cumple con la doble condición de ser \"seguro\" (no produce efectos secundarios) e \"idempotente\" (darle un uso repetido produce el mismo resultado)?",
+      "opciones": [
+        { "id": "a", "texto": "POST." },
+        { "id": "b", "texto": "GET." },
+        { "id": "c", "texto": "PUT." },
+        { "id": "d", "texto": "PATCH." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Métodos HTTP",
+      "pregunta": "¿Cuál es la diferencia operativa fundamental entre los métodos PUT y PATCH al realizar una actualización sobre un recurso en una API RESTful?",
+      "opciones": [
+        { "id": "a", "texto": "PUT se ejecuta directamente en el navegador y PATCH opera exclusivamente en servidores de producción masivos." },
+        { "id": "b", "texto": "PUT requiere obligatoriamente parámetros de tipo query en la URL y PATCH transporta la información en el cuerpo." },
+        { "id": "c", "texto": "PUT actualiza de forma parcial ciertos atributos y PATCH borra la totalidad de los datos para sustituirlos de inmediato." },
+        { "id": "d", "texto": "PUT reemplaza el recurso completo sobreescribiendo a null los campos que no se envíen, mientras que PATCH actualiza únicamente los campos específicos que se desean cambiar dejando el resto intacto." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 8,
+      "bloque": "Códigos de Estado HTTP",
+      "pregunta": "Dentro de las categorías numéricas de los códigos de estado HTTP, ¿a qué tipo de eventos responde el rango de códigos que inicia con el dígito 4xx?",
+      "opciones": [
+        { "id": "a", "texto": "Respuestas de carácter informativo general." },
+        { "id": "b", "texto": "Operaciones de éxito completadas de forma correcta." },
+        { "id": "c", "texto": "Redirecciones debido a que el recurso se mudó de URL." },
+        { "id": "d", "texto": "Errores del cliente provocados por problemas en la construcción de la petición." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 9,
+      "bloque": "Códigos de Estado HTTP",
+      "pregunta": "Al diseñar las respuestas del servidor, ¿en qué circunstancia se debe implementar específicamente el código de estado 422 Unprocessable Entity?",
+      "opciones": [
+        { "id": "a", "texto": "Cuando la petición está malformada debido a un fallo sintáctico en el JSON enviado." },
+        { "id": "b", "texto": "Cuando el cliente no ha adjuntado ningún token de autenticación válido." },
+        { "id": "c", "texto": "Cuando la sintaxis es correcta pero los datos fallan en la validación semántica, por ejemplo, si la fecha de fin es anterior a la fecha de inicio." },
+        { "id": "d", "texto": "Cuando el recurso consultado no se encuentra en la base de datos del backend." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Códigos de Estado HTTP",
+      "pregunta": "Cuando un servidor responde con éxito a la creación de un nuevo recurso mediante un código 201 Created, ¿qué cabecera técnica debe incluir obligatoriamente para indicarle al cliente la URL del recurso generado?",
+      "opciones": [
+        { "id": "a", "texto": "Content-Type." },
+        { "id": "b", "texto": "Location." },
+        { "id": "c", "texto": "X-Request-Id." },
+        { "id": "d", "texto": "Authorization." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "JSON",
+      "pregunta": "¿Quién propuso originalmente el formato JSON a principios de los años 2000 como una alternativa ligera y legible frente a la verborrea de las estructuras XML?",
+      "opciones": [
+        { "id": "a", "texto": "Roy Fielding." },
+        { "id": "b", "texto": "Douglas Crockford." },
+        { "id": "c", "texto": "Linus Torvalds." },
+        { "id": "d", "texto": "Phil Karlton." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "JSON",
+      "pregunta": "A pesar de su enorme flexibilidad en el intercambio de datos modernos, ¿cuál de las siguientes opciones representa un tipo de dato que JSON NO soporta de manera nativa?",
+      "opciones": [
+        { "id": "a", "texto": "Cadenas de texto (strings)." },
+        { "id": "b", "texto": "Valores numéricos decimales." },
+        { "id": "c", "texto": "Objetos anidados complejos." },
+        { "id": "d", "texto": "Objetos de tipo fecha (Date) y el valor primitivo \"undefined\"." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 13,
+      "bloque": "Arquitectura REST",
+      "pregunta": "¿En qué documento académico y por parte de qué autor se definió por primera vez el estilo arquitectónico REST (Representational State Transfer) en el año 2000?",
+      "opciones": [
+        { "id": "a", "texto": "En las guías oficiales de validación de la Comisión Europea." },
+        { "id": "b", "texto": "En la tesis doctoral de Roy Fielding." },
+        { "id": "c", "texto": "En las especificaciones de diseño del framework Express." },
+        { "id": "d", "texto": "En el manifiesto de desarrollo web abierto de Douglas Crockford." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Diseño de URLs RESTful",
+      "pregunta": "Siguiendo las directrices estrictas de diseño de URLs en una arquitectura RESTful, ¿cuál de los siguientes ejemplos sigue un patrón de nombrado correcto y predecible?",
+      "opciones": [
+        { "id": "a", "texto": "GET /api/obtenerProyectos." },
+        { "id": "b", "texto": "POST /api/crearProyecto." },
+        { "id": "c", "texto": "GET /api/proyectos/47/hitos." },
+        { "id": "d", "texto": "POST /api/proyecto/eliminar/47." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "fetch() y Asincronía",
+      "pregunta": "Al realizar el consumo de servicios web mediante la función nativa fetch() en JavaScript, ¿cómo se comportan las promesas ante códigos de error HTTP de categorías 4xx o 5xx?",
+      "opciones": [
+        { "id": "a", "texto": "Lanzan de forma automática una excepción que interrumpe el bloque try operativo." },
+        { "id": "b", "texto": "No lanzan una excepción de forma automática; la petición se completa y se debe validar el estado evaluando la propiedad response.ok." },
+        { "id": "c", "texto": "Redirigen inmediatamente la consulta al endpoint de salud predeterminado." },
+        { "id": "d", "texto": "Detienen la ejecución de la red bloqueando el puerto de escucha local." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "CORS y Seguridad",
+      "pregunta": "Bajo las reglas del mecanismo de seguridad CORS, ¿cuándo dictamina el navegador web que dos aplicaciones poseen el mismo origen (Same-Origin Policy)?",
+      "opciones": [
+        { "id": "a", "texto": "Cuando comparten el mismo tipo de formato de datos JSON." },
+        { "id": "b", "texto": "Cuando coinciden exactamente en protocolo, dominio y puerto." },
+        { "id": "c", "texto": "Cuando ambas se autentican bajo la misma firma secreta del servidor." },
+        { "id": "d", "texto": "Cuando están desplegadas dentro del mismo subdominio de red." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "JWT y Autenticación",
+      "pregunta": "Un token JWT (JSON Web Token) consta de una cadena de caracteres estructurada en tres bloques diferenciados, ¿cuáles son estos componentes y cómo están separados físicamente?",
+      "opciones": [
+        { "id": "a", "texto": "Clave, Valor y Expiración; separados por barras inclinadas (/)." },
+        { "id": "b", "texto": "Protocolo, Host y Ruta; separados por dos puntos (:)." },
+        { "id": "c", "texto": "Método, Código y Mensaje; separados por guiones medios (-)." },
+        { "id": "d", "texto": "Header, Payload y Signature; separados de forma exacta por puntos (.)." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 18,
+      "bloque": "JWT y Autenticación",
+      "pregunta": "Desde la perspectiva de la seguridad informática (OWASP), ¿cuál es la consideración fundamental que se debe tener respecto al contenido del bloque \"Payload\" de un JWT?",
+      "opciones": [
+        { "id": "a", "texto": "Que se encuentra encriptado de forma binaria avanzada y nadie puede inspeccionarlo." },
+        { "id": "b", "texto": "Que está codificado en base64 pero NO cifrado, lo que significa que cualquiera puede leer su contenido y nunca deben incluirse datos sensibles." },
+        { "id": "c", "texto": "Que se destruye automáticamente si el script se ejecuta en un navegador sin soporte CORS." },
+        { "id": "d", "texto": "Que almacena obligatoriamente la contraseña y las llaves maestras de la base de datos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Express y Middleware",
+      "pregunta": "Para que el framework Express reconozca de forma inequívoca a una función middleware como un manejador o controlador de errores global, ¿qué restricción estricta debe cumplir su firma?",
+      "opciones": [
+        { "id": "a", "texto": "Debe ser declarada como una función flecha de tipo asíncrona." },
+        { "id": "b", "texto": "Debe incluir de forma obligatoria el uso de variables procedentes de .env." },
+        { "id": "c", "texto": "Debe contar con exactamente 4 parámetros en su definición: (err, req, res, next)." },
+        { "id": "d", "texto": "Debe invocarse antes de la inicialización de las cabeceras de seguridad de Helmet." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "Express y Seguridad",
+      "pregunta": "En la implementación de servidores con Express, ¿qué medida de prevención técnica implementa la instrucción app.use(express.json({ limit: '10kb' }))?",
+      "opciones": [
+        { "id": "a", "texto": "Acelera la velocidad de lectura de los archivos estáticos en disco." },
+        { "id": "b", "texto": "Restringe el origen de las peticiones HTTP externas bloqueando los subdominios." },
+        { "id": "c", "texto": "Parsea el cuerpo de los mensajes entrantes limitando su tamaño a 10kb para prevenir ataques maliciosos basados en payloads gigantes." },
+        { "id": "d", "texto": "Fuerza a que las cadenas de texto se transformen automáticamente al estándar ISO 8601." }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196b82d733b54cd47d7435",
+  "titulo": "Test de Evaluación - Tema 17: Tutorial Git y GitHub — Control de Versiones Avanzado",
+  "descripcion": "Evaluación sobre Git y GitHub: DVCS vs CVCS, historia de Git, snapshots, SHA-1, flujo local (staging, HEAD), anatomía .git/, configuración, estados, seguridad, git add -p, amend, Conventional Commits, comandos peligrosos, reset vs revert, ramas, merge fast-forward y Git Flow.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Historia y Adopción de Git",
+      "pregunta": "De acuerdo con la encuesta de StackOverflow 2023 citada en el módulo, ¿qué porcentaje de desarrolladores a nivel mundial utiliza Git como su sistema de control de versiones?",
+      "opciones": [
+        { "id": "a", "texto": "74,0%" },
+        { "id": "b", "texto": "88,5%" },
+        { "id": "c", "texto": "93,9%" },
+        { "id": "d", "texto": "99,1%" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "DVCS vs CVCS",
+      "pregunta": "¿Cuál es la principal ventaja operativa de un Sistema de Control de Versiones Distribuido (DVCS) frente a uno centralizado (CVCS) si el servidor principal llega a caer?",
+      "opciones": [
+        { "id": "a", "texto": "El servidor principal se reinicia automáticamente sin perder datos." },
+        { "id": "b", "texto": "Cada clon local actúa como una copia completa de todo el historial, permitiendo seguir operando y reconstruir el servidor si es necesario." },
+        { "id": "c", "texto": "Los archivos del área de trabajo se bloquean en modo de solo lectura para evitar conflictos." },
+        { "id": "d", "texto": "El sistema migra la base de datos de manera inmediata a una arquitectura SVN." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Historia y Adopción de Git",
+      "pregunta": "¿Quién creó Git en el año 2005 y bajo qué motivación principal se desarrolló la herramienta?",
+      "opciones": [
+        { "id": "a", "texto": "Microsoft, tras la adquisición integral de la plataforma comercial GitHub." },
+        { "id": "b", "texto": "Linus Torvalds, motivado por la retirada de la licencia gratuita de Bitkeeper que usaba el equipo de desarrollo de Linux." },
+        { "id": "c", "texto": "El consorcio de proyectos europeos Copernicus, para unificar sus portales Open Data." },
+        { "id": "d", "texto": "Phil Karlton, debido a las dificultades recurrentes de la invalidación de caché." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "Modelo de Almacenamiento",
+      "pregunta": "A diferencia de la mayoría de los sistemas antiguos de control de versiones que almacenan los cambios como diferencias (\"deltas\"), ¿cómo gestiona Git el almacenamiento de la información de un proyecto?",
+      "opciones": [
+        { "id": "a", "texto": "Almacena únicamente las líneas modificadas dentro de un archivo de texto plano comprimido." },
+        { "id": "b", "texto": "Registra copias completas de los archivos denominadas \"deltas inversas\"." },
+        { "id": "c", "texto": "Almacena instantáneas o fotografías completas (\"snapshots\") del estado del proyecto en cada momento dado." },
+        { "id": "d", "texto": "Sube cada cambio directamente a una base de datos remota en la nube en formato hexadecimal." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "Integridad y SHA-1",
+      "pregunta": "¿Qué tipo de identificador y cuántos caracteres hexadecimales componen la cadena única generada por Git para asegurar la integridad de cada uno de sus objetos?",
+      "opciones": [
+        { "id": "a", "texto": "Un hash SHA-1 constituido por una cadena hexadecimal de 40 caracteres." },
+        { "id": "b", "texto": "Un código correlativo de tipo MAJOR.MINOR.PATCH de 7 dígitos." },
+        { "id": "c", "texto": "Un token JWT dinámico cifrado con un algoritmo simétrico de 32 bytes." },
+        { "id": "d", "texto": "Un identificador aleatorio UUID adjunto al nombre del autor del commit." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 6,
+      "bloque": "Flujo de Trabajo Local",
+      "pregunta": "Dentro del flujo de trabajo local de Git, ¿cuál es la analogía práctica que describe al estado \"Preparado\" (staged) dentro del Staging Area?",
+      "opciones": [
+        { "id": "a", "texto": "El momento en que editas directamente un archivo dentro del editor VSCode." },
+        { "id": "b", "texto": "El proceso de meter documentos específicos dentro de un sobre antes de sellarlo y enviarlo en un commit." },
+        { "id": "c", "texto": "La subida exitosa de las ramas hacia los repositorios remotos de GitHub." },
+        { "id": "d", "texto": "La eliminación total de la subcarpeta oculta de configuración local." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "Flujo de Trabajo Local",
+      "pregunta": "¿Qué representa específicamente el puntero especial denominado \"HEAD\" en el modelo mental de Git?",
+      "opciones": [
+        { "id": "a", "texto": "El primer commit con el que se inicializó el repositorio en el disco." },
+        { "id": "b", "texto": "La URL absoluta del servidor remoto configurado por defecto." },
+        { "id": "c", "texto": "Un puntero que indica el commit exacto en el que te encuentras posicionado ahora mismo." },
+        { "id": "d", "texto": "El script encargado de validar que no existan credenciales expuestas en el código." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Anatomía Interna de Git",
+      "pregunta": "Dentro de la anatomía interna de la carpeta oculta \".git/\", ¿cuáles son los cuatro tipos de objetos específicos que Git almacena en su base de datos bajo el directorio \"objects/\"?",
+      "opciones": [
+        { "id": "a", "texto": "Config, HEAD, description e info." },
+        { "id": "b", "texto": "Local, Remote, Origin y Main." },
+        { "id": "c", "texto": "Fetch, Pull, Push y Sync." },
+        { "id": "d", "texto": "Blob, Tree, Commit y Tag." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 9,
+      "bloque": "Configuración de Git",
+      "pregunta": "Al configurar Git de manera global en Windows, ¿por qué es crítico establecer el comando \"git config --global core.autocrlf true\"?",
+      "opciones": [
+        { "id": "a", "texto": "Porque acelera la velocidad de descarga de las ramas en un 93%." },
+        { "id": "b", "texto": "Porque convierte CRLF en LF al hacer commit, y LF en CRLF al hacer checkout, evitando que Git marque erróneamente todos los archivos como modificados al colaborar entre distintos sistemas operativos." },
+        { "id": "c", "texto": "Porque fuerza a que el editor de texto predeterminado por el sistema operativo sea siempre VSCode." },
+        { "id": "d", "texto": "Porque cifra los commits con un hash SHA-1 de forma obligatoria en la consola." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "Configuración de Git",
+      "pregunta": "¿Qué comando se debe ejecutar en la consola para inspeccionar de forma completa toda la lista de configuraciones actuales detallando el archivo exacto de procedencia (global, local o sistema)?",
+      "opciones": [
+        { "id": "a", "texto": "git status -s" },
+        { "id": "b", "texto": "git remote -v" },
+        { "id": "c", "texto": "git config --list --show-origin" },
+        { "id": "d", "texto": "git log --oneline --graph" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "Estados y Seguimiento",
+      "pregunta": "Al ejecutar el comando resumido \"git status -s\", ¿qué significan los caracteres \"??\" colocados en la primera columna antes del nombre de un archivo?",
+      "opciones": [
+        { "id": "a", "texto": "Que el archivo ha sido modificado en el Staging Area." },
+        { "id": "b", "texto": "Que el archivo está duplicado y generará un conflicto inminente de mezcla." },
+        { "id": "c", "texto": "Que se trata de un archivo no rastreado (\"untracked\") que Git aún no conoce." },
+        { "id": "d", "texto": "Que el archivo ha sido restaurado exitosamente a su versión de hace diez días." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 12,
+      "bloque": "Seguridad y Credenciales",
+      "pregunta": "De acuerdo con las advertencias de seguridad expuestas, ¿cuál es el peligro real de subir accidentalmente credenciales o contraseñas a GitHub, incluso si se eliminan en el siguiente commit?",
+      "opciones": [
+        { "id": "a", "texto": "La cuenta de GitHub se bloquea permanentemente por parte de Microsoft de forma irreversible." },
+        { "id": "b", "texto": "Ninguno, ya que Git elimina el historial viejo al hacer un nuevo commit local." },
+        { "id": "c", "texto": "El archivo .gitignore se corrompe e invalida todas las reglas de exclusión previas." },
+        { "id": "d", "texto": "La clave expuesta debe considerarse comprometida inmediatamente porque existen bots automatizados que escanean GitHub en tiempo real buscando credenciales." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 13,
+      "bloque": "Comandos Avanzados",
+      "pregunta": "¿Qué comando avanzado de Git permite examinar de manera interactiva fragmento por fragmento (\"hunks\") los cambios de un archivo modificado para decidir con total precisión cuáles añadir al Staging Area?",
+      "opciones": [
+        { "id": "a", "texto": "git add -p" },
+        { "id": "b", "texto": "git commit --amend" },
+        { "id": "c", "texto": "git diff --staged" },
+        { "id": "d", "texto": "git restore --staged" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 14,
+      "bloque": "Comandos Avanzados",
+      "pregunta": "¿Bajo qué condiciones específicas está estrictamente prohibido utilizar el comando \"git commit --amend\" para modificar el contenido o mensaje de un cambio?",
+      "opciones": [
+        { "id": "a", "texto": "Si el cambio contiene modificaciones aplicadas en múltiples archivos de forma paralela." },
+        { "id": "b", "texto": "Si el commit en cuestión ya ha sido publicado en el repositorio remoto mediante un push." },
+        { "id": "c", "texto": "Si el usuario no ha configurado previamente su correo corporativo de manera global." },
+        { "id": "d", "texto": "Si la rama activa posee una nomenclatura de tipo convencional o semántica." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Conventional Commits",
+      "pregunta": "Siguiendo el estándar de mensajes estructurados \"Conventional Commits\", ¿cuál de los siguientes es un ejemplo correcto para documentar una corrección visual en la interfaz móvil del frontend?",
+      "opciones": [
+        { "id": "a", "texto": "git commit -m \"arreglado el grid en mobile\"" },
+        { "id": "b", "texto": "git commit -m \"fix(frontend): corregir desbordamiento del grid en móvil\"" },
+        { "id": "c", "texto": "git commit -m \"feat: cambios visuales en el layout\"" },
+        { "id": "d", "texto": "git commit -m \"WIP: correcciones varias\"" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Comandos Peligrosos",
+      "pregunta": "¿Cuáles son los tres comandos catalogados en el documento como los más peligrosos de Git debido a que pueden provocar una pérdida irreversible de trabajo o romper repositorios compartidos?",
+      "opciones": [
+        { "id": "a", "texto": "git init, git status, git diff" },
+        { "id": "b", "texto": "git config, git branch, git log" },
+        { "id": "c", "texto": "git reset --hard HEAD~N (en commits publicados), git push --force (en ramas compartidas) y git clean -fd" },
+        { "id": "d", "texto": "git switch, git fetch, git restore --staged" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "reset vs revert",
+      "pregunta": "¿Cuál es la diferencia fundamental entre los comandos \"git reset\" y \"git revert\" cuando se trabaja sobre el historial de un proyecto?",
+      "opciones": [
+        { "id": "a", "texto": "reset requiere conexión a internet obligatoria, mientras que revert opera exclusivamente sin conexión." },
+        { "id": "b", "texto": "reset borra el commit del historial (reescribe la historia), mientras que revert crea un nuevo commit que invierte los cambios sin alterar la historia compartida." },
+        { "id": "c", "texto": "reset mantiene los archivos en el Staging Area, mientras que revert elimina definitivamente los ficheros en disco de forma física." },
+        { "id": "d", "texto": "No existe diferencia sustancial; ambos comandos borran los commits de forma idéntica en el servidor remoto." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Ramas y Branching",
+      "pregunta": "¿Por qué se afirma en el tutorial que la creación y gestión de ramas en Git constituye una operación de costo computacional O(1) extremadamente barata?",
+      "opciones": [
+        { "id": "a", "texto": "Porque Git clona el proyecto entero en una partición de disco oculta del sistema." },
+        { "id": "b", "texto": "Porque las ramas se almacenan en la memoria caché RAM del editor de código VSCode." },
+        { "id": "c", "texto": "Porque una rama es un puntero ligero; crearla simplemente implica escribir un pequeño archivo de 41 bytes con el hash correspondiente en el directorio local." },
+        { "id": "d", "texto": "En realidad no es barata; requiere procesar linealmente la totalidad de diferencias acumuladas desde el commit inicial." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "Merge y Fusión",
+      "pregunta": "¿En qué consiste un tipo de fusión \"Fast-forward\" al ejecutar un \"git merge\" en la rama principal?",
+      "opciones": [
+        { "id": "a", "texto": "Git detecta conflictos incompatibles y solicita ayuda manual obligatoria al programador." },
+        { "id": "b", "texto": "Si la rama de destino no ha recibido commits nuevos, Git simplemente hace \"avanzar\" su puntero al último commit de la rama feature sin generar un commit de fusión extra." },
+        { "id": "c", "texto": "Git fusiona los cambios aplicando técnicas de rebase interactivo de forma forzada y obligatoria." },
+        { "id": "d", "texto": "El historial completo se comprime en un único commit con la etiqueta automática de la versión." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Git Flow",
+      "pregunta": "Dentro del flujo de trabajo avanzado \"Git Flow\", ¿de qué rama específica deben nacer siempre las ramas destinadas al desarrollo de nuevas funcionalidades (feature/*)?",
+      "opciones": [
+        { "id": "a", "texto": "main" },
+        { "id": "b", "texto": "hotfix/*" },
+        { "id": "c", "texto": "release/*" },
+        { "id": "d", "texto": "develop" }
+      ],
+      "respuestaCorrecta": "d"
+    }
+  ]
+}

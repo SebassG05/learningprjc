@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a19698ed733b54cd47d721f",
+  "titulo": "Test de Evaluación - Tema 10: Automatización con Python — pathlib, pandas, requests, Jinja2 y weasyprint",
+  "descripcion": "Evaluación sobre automatización de proyectos europeos con Python: entornos virtuales, pathlib, pandas (carga, exploración, pitfalls), requests (Session, raise_for_status), Jinja2, weasyprint, logging y ejercicio integrador.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Introducción a la Automatización",
+      "pregunta": "¿Qué porcentaje de tareas manuales y repetitivas en la gestión de proyectos europeos se estima que puede automatizar Python según el módulo?",
+      "opciones": [
+        { "id": "a", "texto": "50%" },
+        { "id": "b", "texto": "70%" },
+        { "id": "c", "texto": "80%" },
+        { "id": "d", "texto": "95%" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Introducción a la Automatización",
+      "pregunta": "De acuerdo con la tabla de tiempos del documento, ¿cuánto tiempo toma consolidar informes de socios en Excel/CSV de forma manual frente a hacerlo con Python?",
+      "opciones": [
+        { "id": "a", "texto": "3-4 horas manualmente / 2 minutos con Python" },
+        { "id": "b", "texto": "1-2 horas manualmente / 30 segundos con Python" },
+        { "id": "c", "texto": "2 horas manualmente / Automático con Python" },
+        { "id": "d", "texto": "4 horas manualmente / 30 segundos con Python" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 3,
+      "bloque": "Entorno Virtual y Dependencias",
+      "pregunta": "¿Cuál es el comando correcto mencionado para crear un entorno virtual denominado \"venv_proyectos\" según las buenas prácticas obligatorias?",
+      "opciones": [
+        { "id": "a", "texto": "pip install venv venv_proyectos" },
+        { "id": "b", "texto": "python create venv_proyectos" },
+        { "id": "c", "texto": "virtualenv venv_proyectos --activate" },
+        { "id": "d", "texto": "python -m venv venv_proyectos" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Entorno Virtual y Dependencias",
+      "pregunta": "¿Qué comando se utiliza en el entorno para guardar las dependencias instaladas en un archivo de texto para su posterior reproducción?",
+      "opciones": [
+        { "id": "a", "texto": "pip save dependencies.txt" },
+        { "id": "b", "texto": "pip freeze > requirements.txt" },
+        { "id": "c", "texto": "pip list > requirements.txt" },
+        { "id": "d", "texto": "pip export requirements.txt" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "pathlib",
+      "pregunta": "Al usar la librería pathlib, ¿cuál es la forma moderna y legible de concatenar rutas de archivos utilizando un operador?",
+      "opciones": [
+        { "id": "a", "texto": "Path('output').join('informes')" },
+        { "id": "b", "texto": "Path('output') + 'informes'" },
+        { "id": "c", "texto": "Path('output') / 'informes'" },
+        { "id": "d", "texto": "Path('output').add('informes')" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "pathlib",
+      "pregunta": "Para crear una estructura de directorios recursiva sin que lance un error en caso de que las carpetas ya existan, ¿qué argumentos deben pasarse a mkdir() en pathlib?",
+      "opciones": [
+        { "id": "a", "texto": "parents=True, exist_ok=True" },
+        { "id": "b", "texto": "recursive=True, force=True" },
+        { "id": "c", "texto": "create_all=True, error=False" },
+        { "id": "d", "texto": "parents=False, exist_ok=False" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 7,
+      "bloque": "pathlib",
+      "pregunta": "Si se requiere buscar de forma recursiva todos los archivos Excel (*.xlsx) en cualquier nivel de subcarpeta, ¿qué método de pathlib se debe aplicar?",
+      "opciones": [
+        { "id": "a", "texto": "INPUT.glob('*.xlsx')" },
+        { "id": "b", "texto": "INPUT.rglob('*.xlsx')" },
+        { "id": "c", "texto": "INPUT.find('*.xlsx')" },
+        { "id": "d", "texto": "INPUT.scan('*.xlsx')" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "pathlib",
+      "pregunta": "Según las operaciones esenciales expuestas, ¿qué propiedad se consulta tras llamar a archivo.stat() para obtener el tamaño de un archivo?",
+      "opciones": [
+        { "id": "a", "texto": "st_length" },
+        { "id": "b", "texto": "st_bytes" },
+        { "id": "c", "texto": "st_size" },
+        { "id": "d", "texto": "st_mtime" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "pandas — Carga y Exploración",
+      "pregunta": "Al cargar un archivo CSV con pandas, ¿qué parámetro de codificación (encoding) se recomienda especificar siempre para manejar el BOM de Excel y evitar fallos con acentos en Windows?",
+      "opciones": [
+        { "id": "a", "texto": "encoding='utf-8'" },
+        { "id": "b", "texto": "encoding='latin1'" },
+        { "id": "c", "texto": "encoding='ascii'" },
+        { "id": "d", "texto": "encoding='utf-8-sig'" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 10,
+      "bloque": "pandas — Carga y Exploración",
+      "pregunta": "¿Qué información devuelve la propiedad df.shape al explorar un dataset en pandas?",
+      "opciones": [
+        { "id": "a", "texto": "Los nombres de todas las columnas del DataFrame." },
+        { "id": "b", "texto": "Los tipos de datos correspondientes a cada columna." },
+        { "id": "c", "texto": "Una tupla con las dimensiones del DataFrame expresadas como (filas, columnas)." },
+        { "id": "d", "texto": "La cantidad total de valores nulos presentes por columna." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "pandas — Pitfalls y Errores",
+      "pregunta": "¿Cuál de los siguientes métodos para añadir filas a un DataFrame fue deprecado en la versión 1.4 de pandas y eliminado por completo en la versión 2.0?",
+      "opciones": [
+        { "id": "a", "texto": "df.concat()" },
+        { "id": "b", "texto": "df.insert()" },
+        { "id": "c", "texto": "df.append()" },
+        { "id": "d", "texto": "df.join()" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 12,
+      "bloque": "pandas — Pitfalls y Errores",
+      "pregunta": "De acuerdo con la sección de errores más costosos (Pitfalls), ¿por qué se debe evitar el uso de iterrows() para iterar en DataFrames grandes?",
+      "opciones": [
+        { "id": "a", "texto": "Porque arroja de forma inevitable un error de tipo AttributeError." },
+        { "id": "b", "texto": "Porque borra automáticamente los registros que contienen valores nulos." },
+        { "id": "c", "texto": "Porque duplica el consumo de memoria del archivo original en el disco." },
+        { "id": "d", "texto": "Porque es entre 10 y 100 veces más lento que realizar una operación vectorizada." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 13,
+      "bloque": "pandas — Pitfalls y Errores",
+      "pregunta": "¿Qué advertencia o comportamiento inesperado puede producirse al modificar un DataFrame filtrado si no se utiliza el método .copy() explícito?",
+      "opciones": [
+        { "id": "a", "texto": "UnicodeDecodeError" },
+        { "id": "b", "texto": "SettingWithCopyWarning" },
+        { "id": "c", "texto": "AttributeError" },
+        { "id": "d", "texto": "FileNotFoundError" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "requests y APIs REST",
+      "pregunta": "Para realizar llamadas eficientes a una misma API REST consumiendo menos recursos mediante la reutilización de conexiones, ¿qué elemento de la librería requests se aconseja implementar?",
+      "opciones": [
+        { "id": "a", "texto": "requests.connect()" },
+        { "id": "b", "texto": "requests.Adapter()" },
+        { "id": "c", "texto": "requests.Session()" },
+        { "id": "d", "texto": "requests.Retry()" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "requests y APIs REST",
+      "pregunta": "¿Qué método del objeto de respuesta en requests se utiliza para lanzar automáticamente una excepción si la petición HTTP devuelve un código de error?",
+      "opciones": [
+        { "id": "a", "texto": "response.raise_for_status()" },
+        { "id": "b", "texto": "response.check_status()" },
+        { "id": "c", "texto": "response.assert_error()" },
+        { "id": "d", "texto": "response.ensure_json()" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 16,
+      "bloque": "Jinja2 y Generación de Informes",
+      "pregunta": "¿Cuál es la función principal de la librería Jinja2 en este ecosistema de automatización?",
+      "opciones": [
+        { "id": "a", "texto": "Conectarse a servidores y descargar datasets de portales Open Data." },
+        { "id": "b", "texto": "Generar contenido HTML dinámico separando los datos de la presentación." },
+        { "id": "c", "texto": "Convertir directamente código Python en un archivo binario ejecutable." },
+        { "id": "d", "texto": "Realizar cálculos estadísticos avanzados sobre los presupuestos de los socios." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Jinja2 y Generación de Informes",
+      "pregunta": "¿Por qué motivo se debe configurar el motor de plantillas de Jinja2 habilitando la opción de autoescape?",
+      "opciones": [
+        { "id": "a", "texto": "Para comprimir el código HTML final y mejorar los tiempos de descarga." },
+        { "id": "b", "texto": "Para formatear automáticamente las cifras numéricas a formato de moneda euro (€)." },
+        { "id": "c", "texto": "Para prevenir vulnerabilidades de seguridad como Cross-Site Scripting (XSS) en el HTML generado." },
+        { "id": "d", "texto": "Para forzar que las tablas respeten los saltos de página en la impresión." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 18,
+      "bloque": "Jinja2 y Generación de Informes",
+      "pregunta": "¿Qué librería externa de Python se utiliza específicamente en el curso para realizar la conversión de un documento HTML a un archivo PDF profesional?",
+      "opciones": [
+        { "id": "a", "texto": "pdfkit" },
+        { "id": "b", "texto": "weasyprint" },
+        { "id": "c", "texto": "reportlab" },
+        { "id": "d", "texto": "fpdf2" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Buenas Prácticas y Producción",
+      "pregunta": "¿Por qué motivo se debe sustituir de manera sistemática la función print() por la librería logging en los scripts destinados a producción?",
+      "opciones": [
+        { "id": "a", "texto": "Porque print() ralentiza la ejecución al no ser compatible con entornos virtuales." },
+        { "id": "b", "texto": "Porque logging permite definir niveles de gravedad (DEBUG, INFO, ERROR), añadir marcas de tiempo y redirigir mensajes a archivos sin alterar el código." },
+        { "id": "c", "texto": "Porque print() no permite la visualización de caracteres especiales ni acentos en la consola de Windows." },
+        { "id": "d", "texto": "Porque logging compila el código y repara de forma automática los errores de tipo de datos de Pandas." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Ejercicio Práctico Integrador",
+      "pregunta": "Dentro del \"Ejercicio Práctico Integrador\", ¿qué criterio define que un proyecto en estado activo sea clasificado y resaltado como un proyecto \"en riesgo\"?",
+      "opciones": [
+        { "id": "a", "texto": "Que su presupuesto aprobado sea superior a los 2 millones de euros." },
+        { "id": "b", "texto": "Que no cuente con un responsable asignado dentro de la fila del archivo CSV." },
+        { "id": "c", "texto": "Que su fecha de finalización sea inferior a la fecha de generación del reporte." },
+        { "id": "d", "texto": "Que su campo derivado porcentaje_ejecucion sea inferior al 25%." }
+      ],
+      "respuestaCorrecta": "d"
+    }
+  ]
+}

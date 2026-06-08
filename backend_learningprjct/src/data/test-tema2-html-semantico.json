@@ -1,0 +1,310 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196677d733b54cd47d709a",
+  "titulo": "Test de Evaluación - Tema 2: HTML Semántico, Accesibilidad y SEO",
+  "descripcion": "Evaluación sobre HTML semántico, formularios, accesibilidad web (ARIA), SEO técnico y buenas prácticas de maquetación en desarrollo de aplicaciones web.",
+  "duracionMinutos": 45,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "HTML Semántico",
+      "pregunta": "¿Cuál es el propósito principal de utilizar HTML semántico en el desarrollo de aplicaciones web modernas?",
+      "opciones": [
+        { "id": "a", "texto": "Permitir que las páginas web se carguen más rápido en conexiones lentas." },
+        { "id": "b", "texto": "Aportar significado y estructura tanto al navegador como a los motores de búsqueda y tecnologías asistivas, independientemente de su apariencia visual." },
+        { "id": "c", "texto": "Eliminar por completo la necesidad de utilizar hojas de estilo CSS." },
+        { "id": "d", "texto": "Facilitar la ejecución automática de scripts de Python en el servidor." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "HTML Semántico",
+      "pregunta": "Si estás diseñando la sección de una página web que contiene una noticia independiente, un artículo de blog o un comentario de un usuario que podría distribuirse de forma autónoma, ¿qué etiqueta HTML5 es la más adecuada?",
+      "opciones": [
+        { "id": "a", "texto": "<section>" },
+        { "id": "b", "texto": "<aside>" },
+        { "id": "c", "texto": "<article>" },
+        { "id": "d", "texto": "<div>" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 3,
+      "bloque": "HTML Semántico",
+      "pregunta": "Respecto a la etiqueta <main>, ¿cuál de las siguientes afirmaciones es correcta según los estándares de la W3C?",
+      "opciones": [
+        { "id": "a", "texto": "Se puede incluir un número ilimitado de etiquetas <main> visibles por página para separar diferentes bloques informativos." },
+        { "id": "b", "texto": "Debe contener el contenido principal y único del documento, y no debe haber más de un elemento <main> activo o visible en una página." },
+        { "id": "c", "texto": "Su único propósito es agrupar los enlaces de navegación del sitio web." },
+        { "id": "d", "texto": "Debe utilizarse exclusivamente como contenedor para banners publicitarios y enlaces externos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "HTML Semántico",
+      "pregunta": "Imagina que necesitas maquetar una barra lateral que contiene enlaces a publicaciones populares, publicidad o información biográfica del autor que no afecta al contenido central de la página. ¿Qué etiqueta deberías emplear?",
+      "opciones": [
+        { "id": "a", "texto": "<sidebar>" },
+        { "id": "b", "texto": "<aside>" },
+        { "id": "c", "texto": "<section>" },
+        { "id": "d", "texto": "<div>" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "HTML Semántico",
+      "pregunta": "¿Cuál es el uso correcto y recomendado de la etiqueta <nav>?",
+      "opciones": [
+        { "id": "a", "texto": "Debe envolver absolutamente todos los enlaces que existan en la página web, incluidos los términos de uso del pie de página." },
+        { "id": "b", "texto": "Se utiliza únicamente para enlaces que apunten a descargar archivos PDF o documentos externos." },
+        { "id": "c", "texto": "Está destinada a bloques que contienen enlaces de navegación principal o estructural del sitio web." },
+        { "id": "d", "texto": "Reemplaza por completo el uso de listas estructuradas (<ul> o <ol>)." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "HTML Semántico",
+      "pregunta": "La etiqueta <header> en HTML5 se define como:",
+      "opciones": [
+        { "id": "a", "texto": "Una etiqueta exclusiva que solo puede aparecer una vez en todo el documento, justo debajo de la etiqueta <body>." },
+        { "id": "b", "texto": "Un contenedor para contenido introductorio o un conjunto de enlaces de navegación, que puede utilizarse tanto para el sitio global como dentro de componentes como <article>." },
+        { "id": "c", "texto": "El elemento técnico encargado de almacenar los metadatos y enlaces a las hojas de estilo CSS." },
+        { "id": "d", "texto": "La sección dedicada únicamente a mostrar los derechos de autor y las políticas de privacidad." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "HTML Semántico",
+      "pregunta": "¿Qué etiqueta semántica debe utilizarse para definir el pie de página de un documento o de una sección, incluyendo comúnmente información de autoría, derechos reservados o datos de contacto?",
+      "opciones": [
+        { "id": "a", "texto": "<bottom>" },
+        { "id": "b", "texto": "<end>" },
+        { "id": "c", "texto": "<footer>" },
+        { "id": "d", "texto": "<section>" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "Formularios y Validación",
+      "pregunta": "En la validación nativa de formularios HTML5, ¿qué atributo se debe añadir a un elemento <input> para impedir que el usuario envíe el formulario si dicho campo está vacío?",
+      "opciones": [
+        { "id": "a", "texto": "validate=\"true\"" },
+        { "id": "b", "texto": "required" },
+        { "id": "c", "texto": "block=\"empty\"" },
+        { "id": "d", "texto": "disabled=\"false\"" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Formularios y Validación",
+      "pregunta": "Si deseas validar un campo de texto en un formulario de forma nativa para que cumpla estrictamente con un formato específico (por ejemplo, un código de proyecto europeo que empiece por tres letras y termine en cuatro números), ¿qué atributo permite definir esta regla mediante una expresión regular?",
+      "opciones": [
+        { "id": "a", "texto": "type=\"regex\"" },
+        { "id": "b", "texto": "placeholder" },
+        { "id": "c", "texto": "pattern" },
+        { "id": "d", "texto": "maxlength" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Accesibilidad Web (ARIA)",
+      "pregunta": "¿Cuál es la función principal del atributo de accesibilidad aria-label?",
+      "opciones": [
+        { "id": "a", "texto": "Cambiar el color del texto y la tipografía para que sea más legible visualmente." },
+        { "id": "b", "texto": "Proporcionar una cadena de texto invisible en pantalla que describe el elemento explícitamente para los usuarios de lectores de pantalla." },
+        { "id": "c", "texto": "Indexar la página web de forma prioritaria en Google mediante SEO técnico." },
+        { "id": "d", "texto": "Vincular de forma interactiva una imagen con su pie de foto correspondiente." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Accesibilidad Web (ARIA)",
+      "pregunta": "¿Qué efecto produce asignar el atributo tabindex=\"0\" a un elemento que nativamente no es interactivo (como un <div> o un <span>)?",
+      "opciones": [
+        { "id": "a", "texto": "Oculta por completo el elemento de la vista de cualquier usuario." },
+        { "id": "b", "texto": "Permite que el elemento sea enfocado mediante la navegación por teclado (usando la tecla Tabulador) siguiendo el orden lógico del documento." },
+        { "id": "c", "texto": "Obliga al navegador a colocar el elemento en la primera posición absoluta de la página." },
+        { "id": "d", "texto": "Deshabilita la interacción con el ratón sobre ese elemento concreto." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "SEO Técnico",
+      "pregunta": "En el ámbito del SEO técnico, ¿para qué sirven los metadatos que utilizan el protocolo Open Graph (property=\"og:...\")?",
+      "opciones": [
+        { "id": "a", "texto": "Para mejorar la velocidad de procesamiento del árbol DOM en navegadores de dispositivos móviles." },
+        { "id": "b", "texto": "Para estructurar la base de datos interna del servidor Node.js." },
+        { "id": "c", "texto": "Para controlar cómo se previsualiza el contenido (título, imagen descriptiva y resumen) de la web corporativa al ser compartido en redes sociales o aplicaciones de mensajería." },
+        { "id": "d", "texto": "Para forzar la traducción automática de la página web al inglés." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Formularios y Validación",
+      "pregunta": "¿Cuál es la forma semánticamente correcta de asociar de forma unívoca un texto descriptivo a un campo de introducción de datos (<input>) en un formulario?",
+      "opciones": [
+        { "id": "a", "texto": "Colocar un <p> encima del <input> con el mismo tamaño de fuente." },
+        { "id": "b", "texto": "Utilizar una etiqueta <label> cuyo atributo for coincida exactamente con el valor del atributo id del <input>." },
+        { "id": "c", "texto": "Emplear el atributo placeholder como única fuente de descripción del campo." },
+        { "id": "d", "texto": "Utilizar el atributo title dentro de un contenedor <div>." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "Al organizar los encabezados de una página web (<h1> a <h6>) para mantener una estructura accesible y optimizada para SEO, ¿cuál es la mejor práctica?",
+      "opciones": [
+        { "id": "a", "texto": "Utilizar el nivel del encabezado basándose únicamente en el tamaño de letra que se desea mostrar visualmente." },
+        { "id": "b", "texto": "Usar múltiples etiquetas <h1> para cada párrafo con el fin de llamar la atención de los motores de búsqueda." },
+        { "id": "c", "texto": "Mantener un orden jerárquico estricto (por ejemplo, pasar de <h1> a <h2> y luego a <h3>), evitando saltarse niveles de forma injustificada." },
+        { "id": "d", "texto": "Omitir por completo el uso de <h1> y comenzar directamente la estructura con <h2>." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "¿Qué combinación de etiquetas es la recomendada para incluir una imagen o una ilustración junto con un título o leyenda explicativa integrada?",
+      "opciones": [
+        { "id": "a", "texto": "<img> y <caption>" },
+        { "id": "b", "texto": "<figure> y <figcaption>" },
+        { "id": "c", "texto": "<picture> y <legend>" },
+        { "id": "d", "texto": "<section> y <p>" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "¿Qué ocurre si se omite por completo el atributo alt en una etiqueta <img> instalada en una landing page empresarial?",
+      "opciones": [
+        { "id": "a", "texto": "La página web arrojará un error crítico de ejecución y detendrá su renderizado." },
+        { "id": "b", "texto": "Los lectores de pantalla leerán el nombre de archivo del recurso (ej. \"banner_final_v2_res_3.png\"), empeorando gravemente la experiencia de usuarios con discapacidad visual." },
+        { "id": "c", "texto": "El navegador web descargará automáticamente una descripción generada por inteligencia artificial." },
+        { "id": "d", "texto": "La imagen se escalará automáticamente a pantalla completa para compensar el error." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "¿Para qué se utiliza principalmente el atributo lang dentro de la etiqueta de apertura estructural <html> (por ejemplo, <html lang=\"es\">)?",
+      "opciones": [
+        { "id": "a", "texto": "Para indicar al servidor el tipo de base de datos que debe conectarse." },
+        { "id": "b", "texto": "Para que los navegadores y los lectores de pantalla conozcan el idioma principal del contenido de la página, permitiendo una correcta pronunciación sintética y traducción automática." },
+        { "id": "c", "texto": "Para bloquear el acceso a usuarios que naveguen desde países diferentes al seleccionado." },
+        { "id": "d", "texto": "Para activar automáticamente variables de entorno en sistemas operativos Windows." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Formularios y Validación",
+      "pregunta": "Si deseas incorporar un formulario de contacto y requieres que el usuario introduzca obligatoriamente una dirección de correo electrónico válida, ¿cuál es el valor adecuado para el atributo type del <input>?",
+      "opciones": [
+        { "id": "a", "texto": "type=\"text\"" },
+        { "id": "b", "texto": "type=\"mail\"" },
+        { "id": "c", "texto": "type=\"email\"" },
+        { "id": "d", "texto": "type=\"address\"" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "¿Cuál de las siguientes opciones define mejor lo que se conoce popularmente como \"divitis\" en el desarrollo web?",
+      "opciones": [
+        { "id": "a", "texto": "Una vulnerabilidad crítica de seguridad que afecta a servidores construidos con Express.js." },
+        { "id": "b", "texto": "El abuso sistemático de la etiqueta genérica <div> para estructurar maquetaciones enteras, ignorando las etiquetas semánticas de HTML5 y perjudicando la accesibilidad y el SEO." },
+        { "id": "c", "texto": "Un error sintáctico de HTML que impide que las hojas de estilo CSS se apliquen de forma responsive." },
+        { "id": "d", "texto": "La duplicidad excesiva de atributos id dentro de un mismo documento de texto." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "En la estructura técnica de un documento HTML5, ¿en qué sección deben ubicarse obligatoriamente las metaetiquetas de configuración técnica, los enlaces de fuentes externas y el título que se visualiza en la pestaña del navegador?",
+      "opciones": [
+        { "id": "a", "texto": "<head>" },
+        { "id": "b", "texto": "<body>" },
+        { "id": "c", "texto": "<header>" },
+        { "id": "d", "texto": "<meta>" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 21,
+      "bloque": "Accesibilidad Web (ARIA)",
+      "pregunta": "¿Qué función cumple el atributo aria-hidden=\"true\" aplicado a un elemento de la interfaz gráfica?",
+      "opciones": [
+        { "id": "a", "texto": "Vuelve el elemento completamente invisible para el usuario visual pero legible para los lectores de pantalla." },
+        { "id": "b", "texto": "Oculta el elemento exclusivamente ante los motores de búsqueda de SEO." },
+        { "id": "c", "texto": "Indica a las tecnologías asistivas (como lectores de pantalla) que ignoren por completo ese elemento, útil para componentes puramente decorativos o iconos repetitivos." },
+        { "id": "d", "texto": "Minimiza el uso de memoria RAM al procesar animaciones CSS complejas." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 22,
+      "bloque": "Formularios y Validación",
+      "pregunta": "Al diseñar un formulario moderno, ¿qué atributo nativo te permite sugerir al navegador móvil qué tipo de teclado virtual debe mostrar (por ejemplo, un teclado numérico directo para introducir un código pin o un teléfono)?",
+      "opciones": [
+        { "id": "a", "texto": "keyboard" },
+        { "id": "b", "texto": "inputmode" },
+        { "id": "c", "texto": "pattern-layout" },
+        { "id": "d", "texto": "type=\"phone-only\"" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 23,
+      "bloque": "SEO Técnico",
+      "pregunta": "Si necesitas insertar datos estructurados para que los motores de búsqueda entiendan de forma precisa la información de tu empresa (dirección, valoraciones, horarios), ¿cuál es el estándar técnico y semántico recomendado hoy en día?",
+      "opciones": [
+        { "id": "a", "texto": "Escribir las propiedades detalladas dentro de etiquetas <meta>." },
+        { "id": "b", "texto": "Formatear los datos utilizando JSON-LD e inyectarlos dentro de una etiqueta <script type=\"application/ld+json\">." },
+        { "id": "c", "texto": "Crear tablas de datos invisibles utilizando variables CSS personalizadas." },
+        { "id": "d", "texto": "Forzar la validación de los datos mediante prompts de inteligencia artificial en el cliente." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "¿Qué etiqueta de HTML5 proporciona una forma semántica de representar fechas y horas legibles tanto para seres humanos como para máquinas (útil para organizar cronogramas de proyectos)?",
+      "opciones": [
+        { "id": "a", "texto": "<date>" },
+        { "id": "b", "texto": "<datetime>" },
+        { "id": "c", "texto": "<time>" },
+        { "id": "d", "texto": "<span>" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 25,
+      "bloque": "Estructura y Buenas Prácticas",
+      "pregunta": "¿Cuál es el formato correcto de la declaración obligatoria que debe situarse en la primera línea de todo archivo HTML moderno para indicar al navegador que el documento sigue el estándar HTML5?",
+      "opciones": [
+        { "id": "a", "texto": "<html5>" },
+        { "id": "b", "texto": "<!HTML5>" },
+        { "id": "c", "texto": "<!DOCTYPE html>" },
+        { "id": "d", "texto": "<DOCTYPE>" }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

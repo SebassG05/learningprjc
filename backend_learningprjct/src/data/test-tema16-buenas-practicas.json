@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196b58d733b54cd47d73ec",
+  "titulo": "Test de Evaluación - Tema 16: Buenas Prácticas de Desarrollo — Nomenclatura, Seguridad, Accesibilidad y Performance",
+  "descripcion": "Evaluación sobre buenas prácticas: nomenclatura y código limpio, metodología BEM, estructura de proyectos React, inmutabilidad, Promise.all, seguridad OWASP (inyección, mass assignment, XSS), .gitignore, commits semánticos/atómicos, accesibilidad WCAG 2.1, useMemo y helmet.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Introducción y Contexto",
+      "pregunta": "En el contexto de proyectos europeos como LIFE o Copernicus analizados en el módulo, ¿qué rango de vida útil suele tener el software desarrollado, haciendo indispensable un estándar estricto de calidad?",
+      "opciones": [
+        { "id": "a", "texto": "De 1 a 2 años como máximo." },
+        { "id": "b", "texto": "De 3 a 4 años únicamente." },
+        { "id": "c", "texto": "De 5 a 10 años en promedio." },
+        { "id": "d", "texto": "Más de 25 años ininterrumpidos." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Nomenclatura y Código Limpio",
+      "pregunta": "Según la célebre cita de Phil Karlton recogida en el texto, ¿cuáles son las únicas dos cosas verdaderamente difíciles en la Ciencias de la Computación?",
+      "opciones": [
+        { "id": "a", "texto": "Configurar entornos virtuales y desplegar servidores remotos." },
+        { "id": "b", "texto": "La invalidación de caché y el nombramiento de las cosas." },
+        { "id": "c", "texto": "Manejar bases de datos y enrutar llamadas de APIs externas." },
+        { "id": "d", "texto": "Evitar inyecciones SQL y formatear hojas de estilo CSS." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Nomenclatura y Código Limpio",
+      "pregunta": "Dentro de las convenciones de nomenclatura para JavaScript y Node.js, ¿qué formato se debe aplicar de forma estricta al definir constantes globales o de configuración?",
+      "opciones": [
+        { "id": "a", "texto": "camelCase." },
+        { "id": "b", "texto": "PascalCase." },
+        { "id": "c", "texto": "kebab-case." },
+        { "id": "d", "texto": "SCREAMING_SNAKE_CASE." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 4,
+      "bloque": "Nomenclatura y Código Limpio",
+      "pregunta": "De acuerdo con los patrones de código limpio, ¿cuál es la nomenclatura recomendada al asignar nombres a variables booleanas?",
+      "opciones": [
+        { "id": "a", "texto": "Usar nombres cortos y abstractos como \"x\" o \"temp\"." },
+        { "id": "b", "texto": "Anteponer prefijos descriptivos de condición como is, es, has o tiene." },
+        { "id": "c", "texto": "Utilizar únicamente verbos de acción en infinitivo." },
+        { "id": "d", "texto": "Escribir el identificador completamente en letras mayúsculas separadas por guiones." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "CSS y Metodología BEM",
+      "pregunta": "Al estructurar hojas de estilo con CSS, ¿a qué componentes responde la conocida metodología semántica recomendada \"BEM\"?",
+      "opciones": [
+        { "id": "a", "texto": "Backend, Element, Model." },
+        { "id": "b", "texto": "Block, Element, Modifier." },
+        { "id": "c", "texto": "Binary, Entity, Middleware." },
+        { "id": "d", "texto": "Build, Environment, Module." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "Estructura de Proyectos React",
+      "pregunta": "Según los estándares del módulo, ¿cuál es la convención obligatoria para nombrar los archivos de componentes dentro de un desarrollo de React?",
+      "opciones": [
+        { "id": "a", "texto": "Utilizar exclusivamente minúsculas bajo la estructura camelCase.js." },
+        { "id": "b", "texto": "Emplear nombres separados por guiones medios bajo el formato kebab-case.js." },
+        { "id": "c", "texto": "Aplicar la estructura PascalCase acompañada de la extensión .jsx." },
+        { "id": "d", "texto": "Nombrarlos siempre utilizando letras mayúsculas fijas bajo la extensión .spec.js." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "Estructura de Proyectos React",
+      "pregunta": "Dentro de la estructura organizada de un proyecto React (Vite), ¿qué elementos específicos deben alojarse en la ruta \"src/components/ui/\"?",
+      "opciones": [
+        { "id": "a", "texto": "Los componentes específicos de las funcionalidades de la aplicación." },
+        { "id": "b", "texto": "Las carpetas independientes correspondientes a cada página o ruta." },
+        { "id": "c", "texto": "Las funciones personalizadas destinadas a llamadas de API." },
+        { "id": "d", "texto": "Componentes reutilizables genéricos del sistema como Button y Modal." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 8,
+      "bloque": "JavaScript — Inmutabilidad y Funciones Puras",
+      "pregunta": "Al escribir JavaScript moderno bajo directrices de funciones puras e inmutabilidad, ¿cómo se debe añadir un elemento a un array sin mutar la lista de origen?",
+      "opciones": [
+        { "id": "a", "texto": "Modificando directamente el objeto original por medio de la función implícita .push()." },
+        { "id": "b", "texto": "Retornando un nuevo array que combine los elementos mediante el operador spread ([...lista, proyecto])." },
+        { "id": "c", "texto": "Declarando la variable contenedora bajo la palabra reservada antigua var." },
+        { "id": "d", "texto": "Vaciando el bloque de memoria anterior mediante una reasignación nula." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "JavaScript — Asincronía",
+      "pregunta": "¿Qué recurso técnico nativo se aconseja implementar cuando se requiere ejecutar peticiones asíncronas en paralelo que no muestran dependencia entre sí?",
+      "opciones": [
+        { "id": "a", "texto": "El encadenamiento sucesivo por medio de callbacks tradicionales." },
+        { "id": "b", "texto": "La ejecución lineal pausada mediante llamadas consecutivas con await." },
+        { "id": "c", "texto": "La instrucción estructurada Promise.all()." },
+        { "id": "d", "texto": "La detención controlada del proceso mediante process.exit(1)." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Seguridad OWASP",
+      "pregunta": "En el contexto del listado OWASP, ¿cuál es la medida de protección técnica obligatoria para impedir ataques de Inyección (A03) al interactuar con bases de datos?",
+      "opciones": [
+        { "id": "a", "texto": "Construir las consultas mediante la interpolación directa de strings con el input del usuario." },
+        { "id": "b", "texto": "Utilizar de forma sistemática parámetros preparados en las consultas ($1) y nunca interpolar la entrada directa." },
+        { "id": "c", "texto": "Almacenar las sentencias de consulta directamente en los repositorios de Git públicos." },
+        { "id": "d", "texto": "Delegar la protección de forma exclusiva en las validaciones de tipo visual del frontend." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Seguridad OWASP",
+      "pregunta": "¿Qué pauta metodológica se debe aplicar en el backend de Node.js para neutralizar la vulnerabilidad de seguridad denominada \"Mass Assignment\" (A04)?",
+      "opciones": [
+        { "id": "a", "texto": "Asignar de manera íntegra y directa el objeto req.body al modelo de datos del sistema." },
+        { "id": "b", "texto": "Almacenar las credenciales de acceso de los administradores en el código fuente de las rutas." },
+        { "id": "c", "texto": "Definir una lista blanca explícita de los campos permitidos y controlados mediante desestructuración." },
+        { "id": "d", "texto": "Desactivar el parseo de datos de tipo JSON en la inicialización del servidor de Express." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 12,
+      "bloque": "Seguridad OWASP",
+      "pregunta": "Si se requiere renderizar de forma excepcional código HTML dinámico aportado por un usuario en React usando dangerouslySetInnerHTML, ¿qué acción preventiva se debe tomar?",
+      "opciones": [
+        { "id": "a", "texto": "Confiar en la protección nativa por defecto que ofrece JSX sin añadir librerías." },
+        { "id": "b", "texto": "Registrar detalladamente la contraseña y el usuario en la consola mediante un log tradicional." },
+        { "id": "c", "texto": "Sanear rigurosamente el contenido HTML empleando la librería DOMPurify antes de renderizar." },
+        { "id": "d", "texto": "Almacenar el código del usuario directamente en el entorno global del archivo .env." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "¿Cuál de los siguientes grupos de archivos o directorios se categoriza como \"esencial\" dentro del archivo .gitignore para evitar filtraciones de dependencias y secretos?",
+      "opciones": [
+        { "id": "a", "texto": "frontend/, index.html, main.js." },
+        { "id": "b", "texto": "node_modules/, .env, *.log, dist/." },
+        { "id": "c", "texto": "package.json, README.md, server.js." },
+        { "id": "d", "texto": "routes/, middleware/, src/." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Seguridad en el Frontend",
+      "pregunta": "Al renderizar texto en el frontend que proviene de una consulta de usuario, ¿qué propiedad nativa del DOM debe preferirse sobre innerHTML para prevenir inyecciones XSS?",
+      "opciones": [
+        { "id": "a", "texto": "textContent." },
+        { "id": "b", "texto": "dangerouslySetInnerHTML." },
+        { "id": "c", "texto": "process.env." },
+        { "id": "d", "texto": "req.query.q." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 15,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "En la metodología de \"commits semánticos\" de Git, ¿qué prefijo convencional se debe incorporar en el mensaje al resolver un fallo o bug en la aplicación?",
+      "opciones": [
+        { "id": "a", "texto": "feat:" },
+        { "id": "b", "texto": "docs:" },
+        { "id": "c", "texto": "fix:" },
+        { "id": "d", "texto": "chore:" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "¿Qué pauta define la correcta ejecución de los denominados \"commits atómicos\" en el control de versiones?",
+      "opciones": [
+        { "id": "a", "texto": "Agrupar múltiples tareas inconexas como arreglar estilos, añadir filtros y corregir bugs en un único commit masivo." },
+        { "id": "b", "texto": "Generar commits separados e independientes, donde cada uno posea un único propósito o cambio específico." },
+        { "id": "c", "texto": "Subir credenciales de producción cifradas de forma directa a la rama principal de Git." },
+        { "id": "d", "texto": "Evitar la realización de comentarios informativos en los mensajes utilizando cadenas genéricas como \"asdf\" o \"WIP\"." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Accesibilidad WCAG 2.1",
+      "pregunta": "En los proyectos web de carácter público europeo, ¿qué especificación de la norma WCAG 2.1 representa un requisito legal ineludible según la Directiva UE 2016/2102?",
+      "opciones": [
+        { "id": "a", "texto": "WCAG 2.1 nivel AAA de máxima restricción." },
+        { "id": "b", "texto": "WCAG 2.1 nivel AA." },
+        { "id": "c", "texto": "Únicamente validaciones semánticas en etiquetas de tipo división (<div>)." },
+        { "id": "d", "texto": "Compatibilidad absoluta con navegadores web obsoletos anteriores al año 2010." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Accesibilidad WCAG 2.1",
+      "pregunta": "Al diseñar una interfaz accesible (a11y) bajo directrices WCAG 2.1, ¿cuál es la relación de contraste de color mínima requerida para el texto de tamaño normal?",
+      "opciones": [
+        { "id": "a", "texto": "1:1." },
+        { "id": "b", "texto": "3.5:1." },
+        { "id": "c", "texto": "4.5:1." },
+        { "id": "d", "texto": "16:1." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "Performance en React",
+      "pregunta": "¿Qué recurso de optimización provee React para mitigar la degradación de performance y evitar el re-cálculo redundante de operaciones costosas en cada renderizado?",
+      "opciones": [
+        { "id": "a", "texto": "El método mutador directo .sort() aplicado sobre el array original." },
+        { "id": "b", "texto": "El hook especializado useMemo junto con su correspondiente array de dependencias." },
+        { "id": "c", "texto": "El uso generalizado del método destructivo de strings innerHTML." },
+        { "id": "d", "texto": "La sustitución total de promesas lineales por funciones callback de tipo anidado." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Seguridad en Node.js/Express",
+      "pregunta": "Con el fin de robustecer el rendimiento y añadir cabeceras HTTP de seguridad de forma automatizada en entornos de producción de Node.js, ¿qué librería externa se aconseja integrar?",
+      "opciones": [
+        { "id": "a", "texto": "DOMPurify." },
+        { "id": "b", "texto": "JSDoc." },
+        { "id": "c", "texto": "dotenv." },
+        { "id": "d", "texto": "helmet." }
+      ],
+      "respuestaCorrecta": "d"
+    }
+  ]
+}

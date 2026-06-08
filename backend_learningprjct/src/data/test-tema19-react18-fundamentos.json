@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196bffd733b54cd47d74d6",
+  "titulo": "Test de Evaluación - Tema 19: Introducción a React 18 — Fundamentos, JSX, Componentes, Props y Estado",
+  "descripcion": "Evaluación sobre React 18: historia (Facebook/Virtual DOM), UI=f(estado), programación declarativa vs imperativa, JSX (Babel, Fragment, self-closing, className, estilos inline), componentes funcionales, props (inmutabilidad, children), useState (batching, stale closures, objetos/arrays), useEffect y formularios controlados.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Historia y Contexto de React",
+      "pregunta": "Según los datos de W3Techs 2025 citados en el módulo, ¿qué porcentaje de los sitios web del mundo está alimentado por la librería React?",
+      "opciones": [
+        { "id": "a", "texto": "El 15%" },
+        { "id": "b", "texto": "El 24%" },
+        { "id": "c", "texto": "El 38%" },
+        { "id": "d", "texto": "El 54%" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 2,
+      "bloque": "Historia y Contexto de React",
+      "pregunta": "¿A qué problema específico de escala se enfrentó el equipo de ingeniería de Facebook en el año 2011 que motivó la creación de React?",
+      "opciones": [
+        { "id": "a", "texto": "Un fallo en el backend que corrompía la base de datos de usuarios." },
+        { "id": "b", "texto": "Un bug de sincronización en la interfaz de notificaciones donde la insignia indicaba mensajes nuevos pero el buzón aparecía vacío." },
+        { "id": "c", "texto": "La imposibilidad de renderizar imágenes en formato WebP en navegadores antiguos." },
+        { "id": "d", "texto": "Un ataque de denegación de servicio (DDoS) que colapsaba los servidores." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Historia y Contexto de React",
+      "pregunta": "¿Qué solución radical propuso el ingeniero Jordan Walke para solucionar los problemas de consistencia provocados por la manipulación directa del DOM con jQuery?",
+      "opciones": [
+        { "id": "a", "texto": "Migrar toda la lógica del cliente hacia un servidor centralizado con arquitectura SVN." },
+        { "id": "b", "texto": "Bloquear la interfaz de usuario en modo de solo lectura mientras se procesaban los eventos." },
+        { "id": "c", "texto": "Redibujar toda la interfaz desde cero cada vez que el estado cambia, usando una capa intermedia llamada Virtual DOM." },
+        { "id": "d", "texto": "Eliminar por completo el uso de JavaScript y sustituirlo por hojas de estilo CSS puras." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "Modelo Mental de React",
+      "pregunta": "Dentro del modelo mental de React, ¿qué significa la expresión matemática de su núcleo filosófico \"UI = f(estado)\"?",
+      "opciones": [
+        { "id": "a", "texto": "Que la interfaz de usuario se calcula multiplicando las propiedades por las variables globales." },
+        { "id": "b", "texto": "Que la interfaz es una función pura del estado de la aplicación (mismo estado produce mismo JSX)." },
+        { "id": "c", "texto": "Que el estado de un componente se hereda de forma obligatoria desde el sistema operativo del servidor." },
+        { "id": "d", "texto": "Que la velocidad de renderizado depende de la cantidad de eventos asíncronos en paralelo." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Modelo Mental de React",
+      "pregunta": "¿Cuál es la diferencia conceptual entre la programación imperativa (como jQuery) y la programación declarativa (como React)?",
+      "opciones": [
+        { "id": "a", "texto": "La imperativa describe el \"qué\" (el resultado deseado) y la declarativa describe el \"cómo\" (los pasos exactos)." },
+        { "id": "b", "texto": "La imperativa solo se ejecuta en servidores Node.js y la declarativa corre únicamente en el navegador." },
+        { "id": "c", "texto": "La imperativa describe el \"cómo\" (los pasos exactos para llegar al resultado) y la declarativa describe el \"qué\" (el resultado deseado)." },
+        { "id": "d", "texto": "No existe diferencia; ambos términos se refieren a la mutación directa de atributos HTML." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "JSX",
+      "pregunta": "¿Qué es verdaderamente JSX (JavaScript XML) y en qué lo transforman compiladores como Babel?",
+      "opciones": [
+        { "id": "a", "texto": "Es un subconjunto de HTML nativo que el navegador interpreta directamente de forma asíncrona." },
+        { "id": "b", "texto": "Es una extensión de sintaxis para JavaScript que se transforma en llamadas a funciones React.createElement()." },
+        { "id": "c", "texto": "Una base de datos en memoria que guarda las referencias del árbol lógico." },
+        { "id": "d", "texto": "Un middleware de seguridad diseñado para añadir cabeceras HTTP de tipo Helmet." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 7,
+      "bloque": "JSX",
+      "pregunta": "De acuerdo con las reglas de JSX, ¿qué sucede si intentas retornar dos elementos de HTML al mismo nivel sin un elemento raíz común?",
+      "opciones": [
+        { "id": "a", "texto": "El navegador web ignora el segundo elemento y renderiza solo el primero." },
+        { "id": "b", "texto": "Es una sintaxis totalmente incorrecta; se debe envolver en un único elemento raíz o usar un Fragment (<></>)." },
+        { "id": "c", "texto": "React duplica el nodo en el DOM real para asegurar la compatibilidad." },
+        { "id": "d", "texto": "Se dispara automáticamente una alerta visual de tipo StrictMode en producción." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "JSX",
+      "pregunta": "¿Cómo deben escribirse las etiquetas que no tienen contenido o elementos hijos (como input, br o img) dentro de la sintaxis JSX?",
+      "opciones": [
+        { "id": "a", "texto": "Pueden dejarse abiertas de forma idéntica a como se hace en el HTML convencional." },
+        { "id": "b", "texto": "Requieren obligatoriamente la adición de un atributo className vacío." },
+        { "id": "c", "texto": "Deben cerrarse siempre de forma explícita (por ejemplo, <input /> o <br />)." },
+        { "id": "d", "texto": "Se deben encapsular de forma exclusiva dentro de una función de tipo render prop." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "JSX",
+      "pregunta": "¿Por qué motivo se debe utilizar el atributo \"className\" en lugar de \"class\" al definir clases de CSS dentro de un elemento JSX?",
+      "opciones": [
+        { "id": "a", "texto": "Porque class es una palabra reservada dentro del lenguaje JavaScript." },
+        { "id": "b", "texto": "Porque className permite aplicar estilos directos en formato hexadecimal." },
+        { "id": "c", "texto": "Porque class ralentiza el cálculo de diferencias en el Virtual DOM." },
+        { "id": "d", "texto": "Porque es un requisito legal ineludible dictado por las normas europeas WCAG 2.1." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 10,
+      "bloque": "JSX",
+      "pregunta": "Al definir estilos en línea dentro de JSX, ¿qué tipo de estructura debe recibir el atributo \"style\"?",
+      "opciones": [
+        { "id": "a", "texto": "Una cadena de texto plana idéntica a CSS (ej: \"color: red; font-size: 16px\")." },
+        { "id": "b", "texto": "Un array de strings con los nombres de las propiedades corporativas." },
+        { "id": "c", "texto": "Un objeto JavaScript con las propiedades escritas en formato camelCase (ej: {{ color: 'red', fontSize: '16px' }})." },
+        { "id": "d", "texto": "Una referencia directa a una variable global de tipo SCREAMING_SNAKE_CASE." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 11,
+      "bloque": "Componentes y Props",
+      "pregunta": "¿Qué es, en su esencia técnica más simple, un componente de React?",
+      "opciones": [
+        { "id": "a", "texto": "Una etiqueta HTML modificada que se conecta a una base de datos externa." },
+        { "id": "b", "texto": "Una función JavaScript que acepta props y devuelve estructuras JSX." },
+        { "id": "c", "texto": "Un archivo de configuración JSON que documenta los endpoints de la API." },
+        { "id": "d", "texto": "Un hook personalizado encargado de almacenar las preferencias en el localStorage." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Componentes y Props",
+      "pregunta": "Dentro del flujo de datos unidireccional de React, ¿qué regla fundamental se aplica sobre las \"props\" recibidas por un componente hijo?",
+      "opciones": [
+        { "id": "a", "texto": "Los hijos pueden mutar libremente las props para enviar datos de vuelta al padre." },
+        { "id": "b", "texto": "Las props son inmutables para el hijo; nunca debe mutar o reasignar las props que recibe." },
+        { "id": "c", "texto": "Las props mueren y se vuelven a inicializar de forma aleatoria en cada ciclo visual." },
+        { "id": "d", "texto": "Deben transformarse obligatoriamente en strings mediante JSON.stringify()." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Componentes y Props",
+      "pregunta": "¿Qué representa y dónde se aloja la propiedad especial denominada \"children\" en un componente React?",
+      "opciones": [
+        { "id": "a", "texto": "Almacena el número de renders acumulados por el componente raíz." },
+        { "id": "b", "texto": "Contiene el listado de errores semánticos detectados por PropTypes." },
+        { "id": "c", "texto": "Aloja de forma automática todo el contenido que el padre coloque entre las etiquetas de apertura y cierre del componente." },
+        { "id": "d", "texto": "Es el ID único e inmutable asignado de forma automática por el servidor de base de datos." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 14,
+      "bloque": "Estado con useState",
+      "pregunta": "¿Por qué las variables locales convencionales de JavaScript (declaradas con let o const) no sirven para mantener el estado de un componente?",
+      "opciones": [
+        { "id": "a", "texto": "Porque se guardan de forma persistente en el disco duro e impiden liberar memoria RAM." },
+        { "id": "b", "texto": "Porque no persisten entre renders (se reinicializan en cada llamado) y su modificación no le avisa a React que debe disparar un re-render." },
+        { "id": "c", "texto": "Porque lanzan de manera inevitable excepciones críticas de tipo Stale Closure." },
+        { "id": "d", "texto": "Porque son incompatibles con el renderizado de condicionales basados en el operador ternario." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "Estado con useState",
+      "pregunta": "Si ejecutas de forma consecutiva e inmediata dos llamadas a setCuenta(cuenta + 1) partiendo de un valor inicial de 0, ¿cuál es el resultado final en pantalla y por qué ocurre?",
+      "opciones": [
+        { "id": "a", "texto": "El valor final es 2, porque React procesa cada llamada de manera síncrona e instantánea." },
+        { "id": "b", "texto": "El valor final es 0, porque las actualizaciones se cancelan entre sí por seguridad." },
+        { "id": "c", "texto": "El valor final es 1, porque ambas llamadas leen el mismo valor inicial de cuenta (0) debido al procesamiento en lote (batching) antes del re-render." },
+        { "id": "d", "texto": "Lanza un bucle infinito que paraliza por completo la interfaz del navegador." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "Estado con useState",
+      "pregunta": "¿Cuál es la regla fundamental al actualizar un estado que contiene un objeto o un array en React para asegurar que la interfaz se redibuje?",
+      "opciones": [
+        { "id": "a", "texto": "Se debe mutar directamente la propiedad interna y luego llamar al setter con el mismo objeto." },
+        { "id": "b", "texto": "Se debe crear obligatoriamente una copia profunda utilizando una estructura de tipo callback regular." },
+        { "id": "c", "texto": "Se debe suministrar una referencia de un NUEVO objeto o array (por ejemplo, usando el operador spread ...), ya que React compara por referencia." },
+        { "id": "d", "texto": "Los objetos y arrays no se pueden almacenar de forma directa dentro del estado de un componente." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "Estado con useState",
+      "pregunta": "¿Cómo se soluciona el problema de los \"closures obsoletos\" (stale closures) en efectos o temporizadores donde el nuevo valor del estado depende estrictamente del anterior?",
+      "opciones": [
+        { "id": "a", "texto": "Eliminando por completo el array de dependencias del hook useEffect." },
+        { "id": "b", "texto": "Utilizando la forma funcional del actualizador de estado (ej: setCuenta(c => c + 1))." },
+        { "id": "c", "texto": "Almacenando de forma paralela la variable en una constante global." },
+        { "id": "d", "texto": "Forzando un reinicio de la aplicación por medio del comando process.exit(1)." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "useEffect",
+      "pregunta": "Dentro del hook useEffect, ¿cuándo se ejecuta el código del efecto si se proporciona un array de dependencias vacío []?",
+      "opciones": [
+        { "id": "a", "texto": "Después de cada renderizado que sufra el componente de forma continua." },
+        { "id": "b", "texto": "Únicamente una vez, justo cuando el componente se monta por primera vez en la interfaz." },
+        { "id": "c", "texto": "Exclusivamente un segundo antes de que el servidor de producción cierre la conexión de red." },
+        { "id": "d", "texto": "Cuando cambie cualquiera de las propiedades del objeto global window." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Formularios Controlados",
+      "pregunta": "¿En qué consiste el patrón de \"componentes controlados\" al trabajar con formularios en React?",
+      "opciones": [
+        { "id": "a", "texto": "En delegar de forma exclusiva la validación de los datos en las herramientas de inspección de la pestaña Network." },
+        { "id": "b", "texto": "En permitir que el navegador web gestione de forma nativa el valor de los inputs sin intervención de JavaScript." },
+        { "id": "c", "texto": "En hacer que React controle el valor del input a través del estado (value={estado}), actualizándolo en cada pulsación mediante el evento onChange." },
+        { "id": "d", "texto": "En bloquear el botón de envío del formulario utilizando una clave de API secreta procedente de .env." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "Listas y Keys",
+      "pregunta": "Al renderizar listas de elementos mediante .map(), ¿por qué es incorrecto y peligroso utilizar el índice (index) del array como propiedad key si la lista puede sufrir reordenamientos?",
+      "opciones": [
+        { "id": "a", "texto": "Porque provoca un error sintáctico que impide la compilación del código en Babel." },
+        { "id": "b", "texto": "Porque las claves seguirán a la posición en el array y no al elemento real, provocando fallos visuales y de estado difíciles de diagnosticar." },
+        { "id": "c", "texto": "Porque anula de forma automática las capacidades de persistencia del custom hook useLocalStorage." },
+        { "id": "d", "texto": "Porque dobla de manera innecesaria el tamaño de los hashes SHA-1 guardados en el repositorio de Git." }
+      ],
+      "respuestaCorrecta": "b"
+    }
+  ]
+}

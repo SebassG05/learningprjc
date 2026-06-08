@@ -1,0 +1,490 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "test-final-certificacion",
+  "titulo": "Test Final de Certificación — Desarrollo de Aplicaciones Web y Análisis de Datos con IA Aplicada",
+  "descripcion": "Evaluación final integradora sobre los 21 módulos del curso. Cubre HTML semántico, JavaScript ES6+, React 18, Git, Python, CSS, Buenas Prácticas, APIs REST, Node.js/Express, IA Aplicada y Prompting.",
+  "duracionMinutos": 60,
+  "notaMinima": 70,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "BLOQUE 1: HTML Semántico, Accesibilidad y SEO",
+      "pregunta": "¿Qué elemento HTML5 semántico debe envolver el contenido principal y único de una página web (el que no se repite en cabecera ni pie)?",
+      "opciones": [
+        { "id": "a", "texto": "<div id=\"main\">" },
+        { "id": "b", "texto": "<main>" },
+        { "id": "c", "texto": "<section id=\"content\">" },
+        { "id": "d", "texto": "<article>" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "BLOQUE 1: HTML Semántico, Accesibilidad y SEO",
+      "pregunta": "En accesibilidad web, ¿qué atributo ARIA debe añadirse a un icono puramente decorativo (sin texto visible) para que los lectores de pantalla lo omitan por completo?",
+      "opciones": [
+        { "id": "a", "texto": "aria-label=\"decorativo\"" },
+        { "id": "b", "texto": "aria-hidden=\"true\"" },
+        { "id": "c", "texto": "role=\"presentation\"" },
+        { "id": "d", "texto": "tabindex=\"-1\"" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "BLOQUE 1: HTML Semántico, Accesibilidad y SEO",
+      "pregunta": "Para optimizar el posicionamiento SEO, ¿cuántas etiquetas <h1> debe contener idealmente cada página?",
+      "opciones": [
+        { "id": "a", "texto": "Tantas como sean necesarias para organizar la jerarquía del contenido." },
+        { "id": "b", "texto": "Ninguna; el título SEO se gestiona exclusivamente desde la etiqueta <title>." },
+        { "id": "c", "texto": "Una sola, representando el tema principal de la página." },
+        { "id": "d", "texto": "Dos: una para el título principal y otra para el subtítulo." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "BLOQUE 2: JavaScript ES6+ y Asincronía",
+      "pregunta": "¿Cuál es la diferencia fundamental entre declarar una variable con `let` y con `const` en JavaScript ES6+?",
+      "opciones": [
+        { "id": "a", "texto": "`let` es de ámbito global y `const` es de ámbito de función." },
+        { "id": "b", "texto": "`const` no puede ser reasignado tras su declaración, mientras que `let` sí permite la reasignación." },
+        { "id": "c", "texto": "`let` solo funciona dentro de funciones flecha (arrow functions)." },
+        { "id": "d", "texto": "`const` convierte automáticamente el valor en inmutable de forma profunda (deep freeze)." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "BLOQUE 2: JavaScript ES6+ y Asincronía",
+      "pregunta": "¿Qué retorna siempre una función declarada con la palabra clave `async` en JavaScript, independientemente del valor de retorno explícito?",
+      "opciones": [
+        { "id": "a", "texto": "Un objeto Observable de RxJS." },
+        { "id": "b", "texto": "Una Promesa (Promise)." },
+        { "id": "c", "texto": "Un generador (generator) que debe iterarse con next()." },
+        { "id": "d", "texto": "Un valor síncrono envuelto en un WeakRef." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "BLOQUE 2: JavaScript ES6+ y Asincronía",
+      "pregunta": "¿Cuál de los siguientes métodos de array crea y retorna un nuevo array con los elementos que superan una condición, sin modificar el array original?",
+      "opciones": [
+        { "id": "a", "texto": "forEach()" },
+        { "id": "b", "texto": "map()" },
+        { "id": "c", "texto": "filter()" },
+        { "id": "d", "texto": "reduce()" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "BLOQUE 3: React 18 — Componentes, Hooks y Estado",
+      "pregunta": "¿Qué característica fundamental define al Virtual DOM de React y qué beneficio aporta?",
+      "opciones": [
+        { "id": "a", "texto": "Es una base de datos en memoria que almacena el estado global de la aplicación." },
+        { "id": "b", "texto": "Es una copia ligera del DOM real que permite calcular los cambios mínimos necesarios antes de actualizar el DOM del navegador." },
+        { "id": "c", "texto": "Es un servidor de renderizado que procesa el HTML en el backend antes de enviarlo al cliente." },
+        { "id": "d", "texto": "Es un sistema de caché de componentes que evita todos los rerenderizados." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "BLOQUE 3: React 18 — Componentes, Hooks y Estado",
+      "pregunta": "Al actualizar un objeto con `useState`, ¿cuál es la forma correcta de modificar solo una propiedad sin perder el resto del estado?",
+      "opciones": [
+        { "id": "a", "texto": "Asignar directamente la propiedad: estado.propiedad = nuevoValor." },
+        { "id": "b", "texto": "Llamar a forceUpdate() tras modificar la propiedad directamente." },
+        { "id": "c", "texto": "Usar el spread operator: setEstado(prev => ({ ...prev, propiedad: nuevoValor }))." },
+        { "id": "d", "texto": "Llamar a setState() con solo el campo modificado sin el operador spread." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 9,
+      "bloque": "BLOQUE 3: React 18 — Componentes, Hooks y Estado",
+      "pregunta": "En `useEffect`, ¿qué comportamiento produce pasar un array de dependencias vacío `[]` como segundo argumento?",
+      "opciones": [
+        { "id": "a", "texto": "El efecto se ejecuta en cada rerenderizado del componente." },
+        { "id": "b", "texto": "El efecto se ejecuta solo una vez, tras el primer renderizado (montaje)." },
+        { "id": "c", "texto": "El efecto nunca se ejecuta; solo registra la función de limpieza." },
+        { "id": "d", "texto": "El efecto se ejecuta cada vez que las props del componente cambian." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 10,
+      "bloque": "BLOQUE 3: React 18 — Componentes, Hooks y Estado",
+      "pregunta": "¿Cuál es la restricción fundamental que define a las `props` en React?",
+      "opciones": [
+        { "id": "a", "texto": "Solo pueden ser de tipo string o número, nunca funciones u objetos." },
+        { "id": "b", "texto": "Son inmutables dentro del componente hijo que las recibe." },
+        { "id": "c", "texto": "Deben declararse obligatoriamente con TypeScript." },
+        { "id": "d", "texto": "Solo pueden fluir de componentes hijos hacia componentes padres." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "BLOQUE 4: Git y Control de Versiones",
+      "pregunta": "¿Cuál es la diferencia clave entre `git merge` y `git rebase` al integrar cambios de una rama en otra?",
+      "opciones": [
+        { "id": "a", "texto": "`git merge` elimina la rama de origen y `git rebase` la conserva." },
+        { "id": "b", "texto": "`git merge` preserva el historial completo con un commit de fusión; `git rebase` reescribe el historial aplicando los commits de forma lineal sobre la rama destino." },
+        { "id": "c", "texto": "`git rebase` solo funciona en repositorios remotos y `git merge` en locales." },
+        { "id": "d", "texto": "No existe diferencia práctica; ambos producen exactamente el mismo historial." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "BLOQUE 4: Git y Control de Versiones",
+      "pregunta": "¿Qué comando de Git permite guardar temporalmente cambios no confirmados (sin hacer commit) para poder cambiar de rama de forma limpia?",
+      "opciones": [
+        { "id": "a", "texto": "git commit --amend" },
+        { "id": "b", "texto": "git stash" },
+        { "id": "c", "texto": "git cherry-pick" },
+        { "id": "d", "texto": "git reset --soft HEAD~1" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "BLOQUE 4: Git y Control de Versiones",
+      "pregunta": "¿Qué ventaja aporta usar `git pull --rebase` frente a un `git pull` estándar en un flujo de trabajo con ramas de características?",
+      "opciones": [
+        { "id": "a", "texto": "Descarga solo los archivos modificados, acelerando la sincronización." },
+        { "id": "b", "texto": "Evita crear commits de merge innecesarios, manteniendo un historial lineal y más limpio." },
+        { "id": "c", "texto": "Protege automáticamente la rama main de cambios directos no revisados." },
+        { "id": "d", "texto": "Fuerza una firma criptográfica en todos los commits descargados." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "BLOQUE 5: Python y Automatización",
+      "pregunta": "¿Qué ventaja principal ofrece el módulo `pathlib` de Python frente al uso tradicional de `os.path` para manipular rutas de archivos?",
+      "opciones": [
+        { "id": "a", "texto": "Es más rápido en sistemas Windows porque evita las llamadas al sistema operativo." },
+        { "id": "b", "texto": "Proporciona una API orientada a objetos con métodos encadenables, haciendo el código más legible y portátil entre sistemas operativos." },
+        { "id": "c", "texto": "Permite comprimir archivos ZIP automáticamente al acceder a ellos." },
+        { "id": "d", "texto": "Reemplaza al módulo sys para acceder a los argumentos de la línea de comandos." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 15,
+      "bloque": "BLOQUE 5: Python y Automatización",
+      "pregunta": "Al generar documentos HTML dinámicos con Jinja2 en Python, ¿qué sintaxis se utiliza para renderizar el valor de una variable?",
+      "opciones": [
+        { "id": "a", "texto": "<?= $variable ?>" },
+        { "id": "b", "texto": "<% variable %>" },
+        { "id": "c", "texto": "{{ variable }}" },
+        { "id": "d", "texto": "#{variable}" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 16,
+      "bloque": "BLOQUE 5: Python y Automatización",
+      "pregunta": "Al procesar datos tabulares con `pandas`, ¿qué sintaxis permite filtrar las filas de un DataFrame donde una columna cumple una condición específica?",
+      "opciones": [
+        { "id": "a", "texto": "df.select(condición)" },
+        { "id": "b", "texto": "df.filter(condición)" },
+        { "id": "c", "texto": "df[df['columna'] == valor] o df.query('columna == valor')" },
+        { "id": "d", "texto": "df.find(condición)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 17,
+      "bloque": "BLOQUE 6: CSS y Diseño Web",
+      "pregunta": "En CSS Flexbox, ¿qué propiedad controla la distribución del espacio libre entre los elementos hijos a lo largo del eje principal?",
+      "opciones": [
+        { "id": "a", "texto": "align-items" },
+        { "id": "b", "texto": "justify-content" },
+        { "id": "c", "texto": "flex-wrap" },
+        { "id": "d", "texto": "align-content" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "BLOQUE 6: CSS y Diseño Web",
+      "pregunta": "Cuando múltiples reglas CSS apuntan al mismo elemento, ¿cuál tiene mayor especificidad?",
+      "opciones": [
+        { "id": "a", "texto": "Un selector de clase: .mi-clase { color: red; }" },
+        { "id": "b", "texto": "Un selector de etiqueta: p { color: red; }" },
+        { "id": "c", "texto": "Un selector de ID: #mi-id { color: red; }" },
+        { "id": "d", "texto": "Un selector universal: * { color: red; }" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 19,
+      "bloque": "BLOQUE 7: Buenas Prácticas de Desarrollo",
+      "pregunta": "Según las convenciones de nomenclatura profesional, ¿qué formato de nombre se debe utilizar para variables y funciones en JavaScript?",
+      "opciones": [
+        { "id": "a", "texto": "PascalCase (ej: MiVariable)" },
+        { "id": "b", "texto": "snake_case (ej: mi_variable)" },
+        { "id": "c", "texto": "camelCase (ej: miVariable)" },
+        { "id": "d", "texto": "SCREAMING_SNAKE_CASE (ej: MI_VARIABLE)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "BLOQUE 7: Buenas Prácticas de Desarrollo",
+      "pregunta": "En el contexto del OWASP Top 10, ¿qué tipo de vulnerabilidad ocurre cuando un atacante inserta código malicioso que es ejecutado en el navegador de otro usuario?",
+      "opciones": [
+        { "id": "a", "texto": "Inyección SQL" },
+        { "id": "b", "texto": "Broken Access Control" },
+        { "id": "c", "texto": "Cross-Site Scripting (XSS)" },
+        { "id": "d", "texto": "Security Misconfiguration" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 21,
+      "bloque": "BLOQUE 7: Buenas Prácticas de Desarrollo",
+      "pregunta": "¿Qué nivel de conformidad WCAG exige un contraste mínimo de 4.5:1 entre el color del texto y su fondo para texto de tamaño normal?",
+      "opciones": [
+        { "id": "a", "texto": "Nivel A" },
+        { "id": "b", "texto": "Nivel AA" },
+        { "id": "c", "texto": "Nivel AAA" },
+        { "id": "d", "texto": "Nivel ARIA-1" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 22,
+      "bloque": "BLOQUE 8: APIs REST y HTTP",
+      "pregunta": "¿Cuál es el método HTTP semánticamente correcto para actualizar parcialmente un recurso existente en una API REST?",
+      "opciones": [
+        { "id": "a", "texto": "PUT" },
+        { "id": "b", "texto": "POST" },
+        { "id": "c", "texto": "PATCH" },
+        { "id": "d", "texto": "UPDATE" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 23,
+      "bloque": "BLOQUE 8: APIs REST y HTTP",
+      "pregunta": "¿Qué código de estado HTTP indica que una solicitud se procesó correctamente y se creó un nuevo recurso como resultado?",
+      "opciones": [
+        { "id": "a", "texto": "200 OK" },
+        { "id": "b", "texto": "201 Created" },
+        { "id": "c", "texto": "204 No Content" },
+        { "id": "d", "texto": "202 Accepted" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 24,
+      "bloque": "BLOQUE 8: APIs REST y HTTP",
+      "pregunta": "En la autenticación con JWT (JSON Web Tokens), ¿dónde se recomienda almacenar el token en el cliente para protegerlo de ataques XSS?",
+      "opciones": [
+        { "id": "a", "texto": "En localStorage para persistencia entre sesiones." },
+        { "id": "b", "texto": "En sessionStorage para mayor accesibilidad desde JavaScript." },
+        { "id": "c", "texto": "En una cookie con el atributo HttpOnly para que JavaScript no pueda acceder a ella." },
+        { "id": "d", "texto": "En el estado global de Redux para facilitar el acceso desde todos los componentes." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 25,
+      "bloque": "BLOQUE 9: Node.js — Arquitectura y Event Loop",
+      "pregunta": "En la arquitectura interna de Node.js, ¿qué componente escrito en C/C++ es responsable de proveer el Event Loop y el pool de hilos para operaciones de I/O?",
+      "opciones": [
+        { "id": "a", "texto": "El motor V8 de Google." },
+        { "id": "b", "texto": "La librería libuv." },
+        { "id": "c", "texto": "El módulo cluster nativo de Node.js." },
+        { "id": "d", "texto": "El framework Express." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 26,
+      "bloque": "BLOQUE 9: Node.js — Arquitectura y Event Loop",
+      "pregunta": "En el Event Loop de Node.js, ¿qué se procesa entre cada fase del bucle para garantizar que las promesas y `process.nextTick()` tengan prioridad sobre las macrotareas?",
+      "opciones": [
+        { "id": "a", "texto": "Las macrotareas pendientes del timer." },
+        { "id": "b", "texto": "La cola de microtareas." },
+        { "id": "c", "texto": "Los callbacks de setImmediate()." },
+        { "id": "d", "texto": "El pool de hilos de libuv." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 27,
+      "bloque": "BLOQUE 9: Node.js — Arquitectura y Event Loop",
+      "pregunta": "¿Cuál es la firma obligatoria de un middleware de manejo global de errores en Express para que el framework lo identifique como tal?",
+      "opciones": [
+        { "id": "a", "texto": "(req, res, next)" },
+        { "id": "b", "texto": "(err, req, res)" },
+        { "id": "c", "texto": "(err, req, res, next) con exactamente 4 parámetros" },
+        { "id": "d", "texto": "(error, response, request, done)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 28,
+      "bloque": "BLOQUE 9: Node.js — Arquitectura y Event Loop",
+      "pregunta": "Para habilitar el sistema de módulos ES Modules (import/export) de forma global en un proyecto Node.js, ¿qué propiedad debe añadirse al archivo `package.json`?",
+      "opciones": [
+        { "id": "a", "texto": "\"main\": \"index.mjs\"" },
+        { "id": "b", "texto": "\"type\": \"module\"" },
+        { "id": "c", "texto": "\"module\": \"es2022\"" },
+        { "id": "d", "texto": "\"imports\": true" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 29,
+      "bloque": "BLOQUE 10: IA Aplicada, LLMs y Prompting",
+      "pregunta": "¿Qué técnica de prompting consiste en proporcionar al modelo ejemplos concretos del formato de salida esperado (un \"antes\" y un \"después\") antes de introducir el caso real?",
+      "opciones": [
+        { "id": "a", "texto": "Chain of Thought." },
+        { "id": "b", "texto": "Role Prompting." },
+        { "id": "c", "texto": "Few-Shot Prompting." },
+        { "id": "d", "texto": "Zero-Shot Prompting." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 30,
+      "bloque": "BLOQUE 10: IA Aplicada, LLMs y Prompting",
+      "pregunta": "En el framework CISAR para la redacción de prompts profesionales, ¿a qué concepto corresponde la letra \"R\"?",
+      "opciones": [
+        { "id": "a", "texto": "Resultado esperado." },
+        { "id": "b", "texto": "Restricciones de formato o de salida." },
+        { "id": "c", "texto": "Repositorio de código de referencia." },
+        { "id": "d", "texto": "Revisión iterativa del prompt." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 31,
+      "bloque": "BLOQUE 10: IA Aplicada, LLMs y Prompting",
+      "pregunta": "¿Cómo se denomina el fenómeno en que un LLM genera código con llamadas a funciones, métodos o parámetros de librerías que no existen realmente?",
+      "opciones": [
+        { "id": "a", "texto": "Alucinaciones de API." },
+        { "id": "b", "texto": "Overfitting de contexto." },
+        { "id": "c", "texto": "Typosquatting de código." },
+        { "id": "d", "texto": "Stale closure de tokens." }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 32,
+      "bloque": "BLOQUE 11: Herramientas y Entorno de Desarrollo",
+      "pregunta": "Al instalar dependencias en un entorno de CI/CD, ¿qué comando de npm garantiza una instalación determinista basada exclusivamente en el `package-lock.json`?",
+      "opciones": [
+        { "id": "a", "texto": "npm install --frozen-lockfile" },
+        { "id": "b", "texto": "npm ci" },
+        { "id": "c", "texto": "npm install --exact" },
+        { "id": "d", "texto": "npm rebuild" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 33,
+      "bloque": "BLOQUE 11: Herramientas y Entorno de Desarrollo",
+      "pregunta": "¿Qué prefijo de versión en `package.json` permite que npm instale actualizaciones MINOR y PATCH automáticamente, pero bloquea los cambios de versión MAJOR?",
+      "opciones": [
+        { "id": "a", "texto": "~ (tilde)" },
+        { "id": "b", "texto": "= (igual)" },
+        { "id": "c", "texto": "^ (circunflejo o caret)" },
+        { "id": "d", "texto": "* (asterisco)" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 34,
+      "bloque": "BLOQUE 11: Herramientas y Entorno de Desarrollo",
+      "pregunta": "En ES Modules, dado que `__dirname` no está disponible, ¿qué combinación de herramientas nativas se usa para recrearlo?",
+      "opciones": [
+        { "id": "a", "texto": "process.env.PWD junto con path.resolve()" },
+        { "id": "b", "texto": "import.meta.url junto con fileURLToPath() y dirname() de los módulos url y path" },
+        { "id": "c", "texto": "Un Worker Thread que lee la ruta del proceso principal" },
+        { "id": "d", "texto": "global.__dirname inyectado automáticamente por dotenv" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 35,
+      "bloque": "BLOQUE 12: Testing y Calidad de Código",
+      "pregunta": "En Testing Library para React, ¿por qué se prefiere `userEvent` sobre `fireEvent` para simular la interacción del usuario?",
+      "opciones": [
+        { "id": "a", "texto": "Porque userEvent es 10 veces más rápido al ejecutar los tests." },
+        { "id": "b", "texto": "Porque userEvent simula el comportamiento real del usuario con mayor fidelidad, incluyendo todos los eventos intermedios (focus, keydown, input, keyup...)." },
+        { "id": "c", "texto": "Porque fireEvent no es compatible con React 18." },
+        { "id": "d", "texto": "Porque userEvent permite ejecutar pruebas en Node.js sin necesidad de un navegador." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 36,
+      "bloque": "BLOQUE 12: Testing y Calidad de Código",
+      "pregunta": "En el enfoque BDD (Behavior-Driven Development), ¿cómo se redactan habitualmente los casos de prueba?",
+      "opciones": [
+        { "id": "a", "texto": "Usando funciones matemáticas para definir las precondiciones del sistema." },
+        { "id": "b", "texto": "En lenguaje natural con estructuras como \"Dado que... Cuando... Entonces...\"." },
+        { "id": "c", "texto": "Definiendo primero los fallos esperados antes de escribir el código." },
+        { "id": "d", "texto": "Mediante diagramas UML de secuencia automatizados." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 37,
+      "bloque": "BLOQUE 12: Testing y Calidad de Código",
+      "pregunta": "En una revisión de código (Code Review), ¿qué significa catalogar un problema con la etiqueta \"Crítico\"?",
+      "opciones": [
+        { "id": "a", "texto": "Que el problema tiene baja prioridad y puede resolverse en el siguiente sprint." },
+        { "id": "b", "texto": "Que es una sugerencia de mejora estilística sin impacto funcional." },
+        { "id": "c", "texto": "Que el problema debe resolverse obligatoriamente antes de aprobar el PR, pues puede causar fallos graves o vulnerabilidades." },
+        { "id": "d", "texto": "Que fue introducido por un desarrollador sénior y requiere aprobación del equipo." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 38,
+      "bloque": "BLOQUE 13: Seguridad Web",
+      "pregunta": "Según OWASP, ¿qué vulnerabilidad ocurre cuando una aplicación incluye datos del usuario directamente en una consulta SQL sin sanitización ni parametrización?",
+      "opciones": [
+        { "id": "a", "texto": "Broken Authentication." },
+        { "id": "b", "texto": "SQL Injection." },
+        { "id": "c", "texto": "SSRF (Server-Side Request Forgery)." },
+        { "id": "d", "texto": "Insecure Deserialization." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 39,
+      "bloque": "BLOQUE 13: Seguridad Web",
+      "pregunta": "Al implementar autenticación segura con `bcrypt` en Node.js, ¿qué factor de coste se recomienda como mínimo para un balance adecuado entre seguridad y rendimiento en producción?",
+      "opciones": [
+        { "id": "a", "texto": "4" },
+        { "id": "b", "texto": "8" },
+        { "id": "c", "texto": "12" },
+        { "id": "d", "texto": "32" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 40,
+      "bloque": "BLOQUE 13: Seguridad Web",
+      "pregunta": "¿Qué configuración de CORS en una API de producción representa una vulnerabilidad de seguridad crítica?",
+      "opciones": [
+        { "id": "a", "texto": "origin: 'https://miapp.com' — restringir a un único dominio de confianza." },
+        { "id": "b", "texto": "origin: process.env.ALLOWED_ORIGIN — leer el dominio permitido desde variables de entorno." },
+        { "id": "c", "texto": "origin: '*' — permitir peticiones desde cualquier dominio sin restricción." },
+        { "id": "d", "texto": "credentials: true con origin: 'https://miapp.com'." }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

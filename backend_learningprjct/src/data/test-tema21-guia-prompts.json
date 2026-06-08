@@ -1,0 +1,270 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196caed733b54cd47d7584",
+  "titulo": "Test de Evaluación - Tema 21: Guía de Prompts — IA Aplicada, LLMs, Técnicas Avanzadas y Seguridad",
+  "descripcion": "Evalúa los conocimientos sobre el uso profesional de IA en desarrollo de software, arquitectura de LLMs, frameworks de prompting (CISAR), técnicas avanzadas (Few-Shot, Chain of Thought, Role Prompting) y trampas de seguridad del código generado por IA.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "id": 1,
+      "bloque": "IA en el desarrollo profesional",
+      "enunciado": "Según los datos del informe \"GitHub State of Octoverse 2024\" citados en el texto, ¿qué rango de ganancia en la productividad han documentado las empresas tecnológicas líderes gracias al uso correcto de la IA?",
+      "opciones": [
+        { "letra": "A", "texto": "De un 10% a un 30%." },
+        { "letra": "B", "texto": "De un 20% a un 50%." },
+        { "letra": "C", "texto": "De un 40% a un 80%." },
+        { "letra": "D", "texto": "De un 75% a un 95%." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "El informe 'GitHub State of Octoverse 2024' determina que la aceleración productiva lograda por equipos que adoptan flujos de desarrollo asistidos por IA oscila entre el 40% y el 80%."
+    },
+    {
+      "id": 2,
+      "bloque": "IA en el desarrollo profesional",
+      "enunciado": "Dentro de la operativa técnica de evenor tech, ¿para qué tareas de ingeniería específicas se utiliza formalmente la asistencia de Inteligencia Artificial?",
+      "opciones": [
+        { "letra": "A", "texto": "Para el despliegue físico de hardware en la nube y la monitorización de bases de datos relacionales." },
+        { "letra": "B", "texto": "Generar boilerplate de nuevos módulos, revisar PRs buscando vulnerabilidades OWASP, documentar APIs en formato OpenAPI y traducir scripts entre Python y JavaScript." },
+        { "letra": "C", "texto": "Compilar de forma automática código máquina nativo eliminando el uso de frameworks." },
+        { "letra": "D", "texto": "Controlar en tiempo real los contadores visuales mediante manipulación imperativa del DOM con jQuery." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "La IA se integra en evenor tech para automatizar maquetas de código, auditar seguridad OWASP en PRs, escribir especificaciones técnicas en OpenAPI y migrar scripts funcionales entre lenguajes."
+    },
+    {
+      "id": 3,
+      "bloque": "Arquitectura de LLMs",
+      "enunciado": "¿Cuál es el mecanismo probabilístico fundamental que rige el funcionamiento interno de un Modelo de Lenguaje Grande (LLM)?",
+      "opciones": [
+        { "letra": "A", "texto": "La encriptación simétrica basada en claves dinámicas privadas." },
+        { "letra": "B", "texto": "La indexación de bases de datos mediante hashes criptográficos fijos." },
+        { "letra": "C", "texto": "La predicción del siguiente token dado un contexto determinado." },
+        { "letra": "D", "texto": "El mapeo lineal de errores sintácticos dentro de un árbol estructurado de tipo AST." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "La lógica operacional subyacente en cualquier LLM se fundamenta en un cálculo matemático de probabilidades destinado a predecir la secuencia del siguiente token dado un contexto."
+    },
+    {
+      "id": 4,
+      "bloque": "Arquitectura de LLMs",
+      "enunciado": "Al analizar el coste de procesamiento en la arquitectura de un LLM, ¿cuál es la equivalencia aproximada de un token en el idioma inglés?",
+      "opciones": [
+        { "letra": "A", "texto": "1 token equivale a exactamente 5 palabras completas." },
+        { "letra": "B", "texto": "1 token equivale a aproximadamente 0,75 palabras." },
+        { "letra": "C", "texto": "1 token equivale a un carácter hexadecimal de 40 dígitos." },
+        { "letra": "D", "texto": "1 token equivale a una línea completa de código fuente." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Bajo la estructura gramatical del idioma inglés, la partición de un token representa matemáticamente cerca de 0,75 vocablos ordinarios."
+    },
+    {
+      "id": 5,
+      "bloque": "Herramientas de IA — comparativa",
+      "enunciado": "De acuerdo con la tabla comparativa de herramientas, ¿cuál representa la principal limitación operativa de GitHub Copilot frente a ChatGPT o Claude?",
+      "opciones": [
+        { "letra": "A", "texto": "No soporta la generación de código modular en formato camelCase." },
+        { "letra": "B", "texto": "Exige la conexión obligatoria a una base de datos PostgreSQL en producción." },
+        { "letra": "C", "texto": "No tiene conversación y trabaja principalmente con el contexto del archivo actual." },
+        { "letra": "D", "texto": "Requiere que el usuario ingrese comandos únicamente mediante sintaxis de terminal curl." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "A diferencia de los asistentes de chat generales, GitHub Copilot opera directamente en el flujo de escritura del archivo activo sin diálogo conversacional."
+    },
+    {
+      "id": 6,
+      "bloque": "Framework CISAR",
+      "enunciado": "¿A qué componentes técnicos y metodológicos responden las siglas del framework estructurado \"CISAR\" recomendado para la redacción de prompts de calidad?",
+      "opciones": [
+        { "letra": "A", "texto": "Código, Interfaz, Servidor, Arquitectura, Rendimiento." },
+        { "letra": "B", "texto": "Contexto, Instrucción, Stack, Acción, Restricciones." },
+        { "letra": "C", "texto": "Cliente, Integración, Sintaxis, Almacenamiento, Repositorio." },
+        { "letra": "D", "texto": "Comentario, Instancia, Script, Asignación, Redirección." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "El framework CISAR impone parcelar la redacción de instrucciones en cinco bloques: Contexto, Instrucción, Stack tecnológico, Acción esperada y Restricciones de formato."
+    },
+    {
+      "id": 7,
+      "bloque": "Técnicas avanzadas de prompting",
+      "enunciado": "¿Qué nombre recibe la técnica avanzada de prompting que consiste en proporcionar ejemplos explícitos del output que se espera recibir antes de introducir el código definitivo?",
+      "opciones": [
+        { "letra": "A", "texto": "Role Prompting." },
+        { "letra": "B", "texto": "Chain of Thought." },
+        { "letra": "C", "texto": "Few-Shot Prompting." },
+        { "letra": "D", "texto": "Prompting Iterativo." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Proporcionar ejemplos concretos de la transformación deseada (un bloque de código con estado 'antes' y 'después') se define técnicamente como Few-Shot Prompting."
+    },
+    {
+      "id": 8,
+      "bloque": "Técnicas avanzadas de prompting",
+      "enunciado": "Si necesitamos que el modelo de IA analice un código complejo de manera lógica desglosando y razonando su flujo paso a paso, ¿qué técnica avanzada debemos aplicar?",
+      "opciones": [
+        { "letra": "A", "texto": "Few-Shot Prompting." },
+        { "letra": "B", "texto": "Chain of Thought." },
+        { "letra": "C", "texto": "Role Prompting." },
+        { "letra": "D", "texto": "Typosquatting defensivo." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Requerir al modelo que exponga sus deducciones analíticas de forma secuencial antes de emitir un veredicto responde a la técnica Chain of Thought (Cadena de Pensamiento)."
+    },
+    {
+      "id": 9,
+      "bloque": "Plantillas de prompts — Code Review",
+      "enunciado": "En la plantilla de prompt número 11 destinada a revisiones de código (Code Review), ¿en qué tres niveles de severidad se aconseja organizar los problemas identificados?",
+      "opciones": [
+        { "letra": "A", "texto": "Inicial, Intermedio y Avanzado." },
+        { "letra": "B", "texto": "Sintáctico, Semántico y Estructural." },
+        { "letra": "C", "texto": "Crítico, Importante y Sugerencia." },
+        { "letra": "D", "texto": "Bloqueante, Operacional y Bug." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "El Prompt 11 determina que las inconsistencias detectadas en una auditoría de código deben catalogarse bajo las etiquetas de Crítico, Importante y Sugerencia."
+    },
+    {
+      "id": 10,
+      "bloque": "Plantillas de prompts — Testing React",
+      "enunciado": "Dentro de las especificaciones para escribir pruebas de componentes de React con Testing Library (Prompt 17), ¿qué utilidad específica se debe exigir para simular de forma realista la interacción del usuario?",
+      "opciones": [
+        { "letra": "A", "texto": "fireEvent." },
+        { "letra": "B", "texto": "userEvent." },
+        { "letra": "C", "texto": "AbortController." },
+        { "letra": "D", "texto": "StrictMode." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Las instrucciones del Prompt 17 determinan la utilización prioritaria del módulo especializado userEvent para simular interacciones, penalizando el uso del clásico fireEvent."
+    },
+    {
+      "id": 11,
+      "bloque": "Plantillas de prompts — Bases de datos espaciales",
+      "enunciado": "Al diseñar una migración de base de datos relacional para coordenadas geográficas usando el tipo POINT en PostgreSQL (Prompt 26), ¿qué tipo de índice espacial se debe crear?",
+      "opciones": [
+        { "letra": "A", "texto": "GIN." },
+        { "letra": "B", "texto": "GIST." },
+        { "letra": "C", "texto": "B-TREE." },
+        { "letra": "D", "texto": "HASH." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Las propiedades de geometría espacial o coordenadas cartográficas en PostgreSQL exigen la asignación de índices de tipo GIST para búsquedas eficientes."
+    },
+    {
+      "id": 12,
+      "bloque": "Plantillas de prompts — Bases de datos espaciales",
+      "enunciado": "Siguiendo las directrices del Prompt 26, ¿qué variante de índice se debe aplicar sobre un campo de tipo array de strings (TEXT[]) para garantizar búsquedas eficientes?",
+      "opciones": [
+        { "letra": "A", "texto": "GIST." },
+        { "letra": "B", "texto": "JSONB." },
+        { "letra": "C", "texto": "GIN." },
+        { "letra": "D", "texto": "POINT." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Para agilizar búsquedas indexadas sobre colecciones o matrices de múltiples strings (TEXT[]) se debe implementar un índice de tipo GIN."
+    },
+    {
+      "id": 13,
+      "bloque": "Plantillas de prompts — GeoJSON y WFS",
+      "enunciado": "Dentro del Prompt 34, destinado a procesar capas GeoJSON de REDIAM, ¿a partir de qué volumen o umbral de elementos se exige paginar de forma obligatoria las peticiones WFS?",
+      "opciones": [
+        { "letra": "A", "texto": "Más de 500 features." },
+        { "letra": "B", "texto": "Más de 1.000 features." },
+        { "letra": "C", "texto": "Más de 5.000 features." },
+        { "letra": "D", "texto": "Más de 10.000 features." }
+      ],
+      "respuestaCorrecta": "D",
+      "justificacion": "El Prompt 34 impone paginación WFS obligatoria cuando el volumen de la capa cartográfica de REDIAM supera los 10.000 elementos, para resguardar la estabilidad de la red."
+    },
+    {
+      "id": 14,
+      "bloque": "Plantillas de prompts — Autenticación segura",
+      "enunciado": "Al redactar un prompt para implementar un sistema seguro de autenticación en Express (Prompt 41), ¿cuál es la longitud mínima requerida por la política de seguridad para las contraseñas?",
+      "opciones": [
+        { "letra": "A", "texto": "Mínimo 6 caracteres." },
+        { "letra": "B", "texto": "Mínimo 8 caracteres." },
+        { "letra": "C", "texto": "Mínimo 12 caracteres." },
+        { "letra": "D", "texto": "Mínimo 16 caracteres." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "La política de seguridad corporativa del Prompt 41 fija como directriz ineludible que las contraseñas demuestren una extensión mínima de 12 caracteres."
+    },
+    {
+      "id": 15,
+      "bloque": "Plantillas de prompts — Autenticación segura",
+      "enunciado": "Conforme a los estándares de almacenamiento seguro del Prompt 41, ¿qué factor de coste específico se debe definir al hashear las contraseñas con la librería bcrypt?",
+      "opciones": [
+        { "letra": "A", "texto": "Factor de coste de 4." },
+        { "letra": "B", "texto": "Factor de coste de 8." },
+        { "letra": "C", "texto": "Factor de coste de 12." },
+        { "letra": "D", "texto": "Factor de coste de 32." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "El prompt de securización backend prescribe aplicar un factor de coste paramétrico fijado estrictamente en 12 al ejecutar bcrypt, para robustecer el retardo criptográfico contra timing attacks."
+    },
+    {
+      "id": 16,
+      "bloque": "Plantillas de prompts — Autenticación segura",
+      "enunciado": "¿Qué paquete o dependencia concreta de npm se menciona textualmente en el Prompt 41 para llevar a cabo el hasheo y almacenamiento seguro de claves?",
+      "opciones": [
+        { "letra": "A", "texto": "joi." },
+        { "letra": "B", "texto": "zod." },
+        { "letra": "C", "texto": "bcryptjs." },
+        { "letra": "D", "texto": "multer." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "El documento delimita de forma unívoca que la biblioteca encargada del cifrado de contraseñas en el flujo de autenticación Express es bcryptjs."
+    },
+    {
+      "id": 17,
+      "bloque": "Plantillas de prompts — Refactorización y testing",
+      "enunciado": "En la guía de refactorización orientada a la limpieza de código (Plantilla 4), ¿qué siglas definen al principio de desarrollo enfocado en mitigar la duplicación de código redundante?",
+      "opciones": [
+        { "letra": "A", "texto": "BDD (Behavior-Driven Development)." },
+        { "letra": "B", "texto": "DRY (Don't Repeat Yourself)." },
+        { "letra": "C", "texto": "OWASP (Open Web Application Security Project)." },
+        { "letra": "D", "texto": "CISAR (Contexto, Instrucción, Stack, Acción, Restricciones)." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "La Plantilla 4 define formalmente a las siglas DRY como el acrónimo representativo del estándar 'Don't Repeat Yourself', orientado a suprimir la duplicación de código."
+    },
+    {
+      "id": 18,
+      "bloque": "Plantillas de prompts — Refactorización y testing",
+      "enunciado": "Al automatizar la escritura de pruebas utilizando criterios funcionales en la Plantilla 5, ¿qué enfoque de desarrollo basado en el comportamiento del software se debe seguir?",
+      "opciones": [
+        { "letra": "A", "texto": "DRY (Don't Repeat Yourself)." },
+        { "letra": "B", "texto": "BDD (Behavior-Driven Development)." },
+        { "letra": "C", "texto": "TDD (Test-Driven Development)." },
+        { "letra": "D", "texto": "OpenAPI Spec." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "La Plantilla 5 instruye al desarrollador para estructurar la validación automática siguiendo las convenciones de BDD (Behavior-Driven Development), usando cadenas de texto en español."
+    },
+    {
+      "id": 19,
+      "bloque": "Trampas y riesgos del código generado por IA",
+      "enunciado": "¿Cómo se denomina técnicamente a la trampa o fallo de la IA en la que genera de forma artificial fragmentos de código que incluyen llamadas a métodos o parámetros inexistentes?",
+      "opciones": [
+        { "letra": "A", "texto": "Alucinaciones de API." },
+        { "letra": "B", "texto": "Inyección SQL Reflejada." },
+        { "letra": "C", "texto": "Typosquatting de librerías." },
+        { "letra": "D", "texto": "Stale Closures estructurales." }
+      ],
+      "respuestaCorrecta": "A",
+      "justificacion": "Las 'Alucinaciones de API' es el término que clasifica la conducta errática donde la IA inventa librerías, parámetros o funciones que carecen de existencia real."
+    },
+    {
+      "id": 20,
+      "bloque": "Trampas y riesgos del código generado por IA",
+      "enunciado": "En la sección de trampas de seguridad del código generado por IA, ¿cuál de los siguientes ejemplos ilustra un comportamiento de código funcional pero altamente vulnerable que Copilot podría sugerir?",
+      "opciones": [
+        { "letra": "A", "texto": "La inyección restrictiva de variables de entorno mediante un archivo de tipo .env.example." },
+        { "letra": "B", "texto": "El uso del parámetro origin apuntando a variables del sistema validadas al arrancar." },
+        { "letra": "C", "texto": "Configurar app.use(cors()) abierto a todos los orígenes o interpolar variables directamente en strings de consulta SQL." },
+        { "letra": "D", "texto": "Forzar la desactivación de scripts de inicialización mediante comandos npm audit." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "La IA tiende a priorizar soluciones de conectividad rápida sugiriendo políticas CORS globales desprotegidas (*) o interpolaciones directas expuestas a inyecciones SQL, código funcional pero altamente vulnerable."
+    }
+  ]
+}

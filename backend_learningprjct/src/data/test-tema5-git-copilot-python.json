@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196792d733b54cd47d7129",
+  "titulo": "Test de Evaluación - Tema 5: Git, GitHub Copilot, Prompt Engineering y Python",
+  "descripcion": "Evaluación sobre control de versiones con Git, uso profesional de GitHub Copilot, Prompt Engineering, automatización con Python (requests, pandas) y proyecto final integrador.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Control de Versiones con Git",
+      "pregunta": "Basándonos en la presentación del curso, ¿cuál es la analogía utilizada para definir conceptualmente a Git dentro del flujo de trabajo de un desarrollador?",
+      "opciones": [
+        { "id": "a", "texto": "Una base de datos SQLite para almacenar contraseñas en texto plano." },
+        { "id": "b", "texto": "Una máquina del tiempo del código que permite registrar el historial y volver a puntos anteriores." },
+        { "id": "c", "texto": "Un formateador automático que limpia las etiquetas obsoletas de HTML5." },
+        { "id": "d", "texto": "Un servidor en la nube que sustituye por completo a Node.js y Express." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Control de Versiones con Git",
+      "pregunta": "Si un profesional técnico trabaja sin un sistema de control de versiones como Git, ¿qué mala práctica suele ocurrir al organizar los archivos del proyecto?",
+      "opciones": [
+        { "id": "a", "texto": "El navegador web bloquea la ejecución de las funciones flecha por motivos de seguridad." },
+        { "id": "b", "texto": "Se duplican y renombran carpetas de forma caótica (ej. \"proyecto_final_v2_ESTE_BUENO_definitivo.zip\")." },
+        { "id": "c", "texto": "El sistema operativo Windows borra automáticamente el archivo package.json." },
+        { "id": "d", "texto": "GitHub Copilot se desactiva al no detectar un entorno responsive." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Control de Versiones con Git",
+      "pregunta": "Al gestionar un repositorio desde la terminal, ¿qué comando de Git se debe ejecutar con el objetivo específico de comprobar qué archivos han cambiado o están pendientes de procesar?",
+      "opciones": [
+        { "id": "a", "texto": "git add ." },
+        { "id": "b", "texto": "git push origin main" },
+        { "id": "c", "texto": "git status" },
+        { "id": "d", "texto": "git commit" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 4,
+      "bloque": "Control de Versiones con Git",
+      "pregunta": "Dentro del flujo de trabajo estándar de Git, ¿cuál es la función exacta del comando git add .?",
+      "opciones": [
+        { "id": "a", "texto": "Subir de forma automática todo el código a los servidores remotos de GitHub." },
+        { "id": "b", "texto": "Preparar absolutamente todos los cambios del directorio para ser incluidos en la próxima confirmación." },
+        { "id": "c", "texto": "Inicializar una nueva rama de desarrollo llamada \"nueva-funcion\"." },
+        { "id": "d", "texto": "Borrar el historial de commits anteriores para liberar espacio en memoria RAM." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 5,
+      "bloque": "Control de Versiones con Git",
+      "pregunta": "Cuando deseas guardar formalmente el estado actual de tu código en el historial local de Git con una descripción asociada, ¿qué comando debes emplear?",
+      "opciones": [
+        { "id": "a", "texto": "git status -m \"descripción\"" },
+        { "id": "b", "texto": "git add \"descripción\"" },
+        { "id": "c", "texto": "git commit -m \"descripción\"" },
+        { "id": "d", "texto": "git push origin main" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 6,
+      "bloque": "Control de Versiones con Git",
+      "pregunta": "¿Qué comando de Git tiene la responsabilidad de transferir los puntos de control guardados en tu ordenador local hacia el repositorio remoto alojado en GitHub?",
+      "opciones": [
+        { "id": "a", "texto": "git push origin main" },
+        { "id": "b", "texto": "git add ." },
+        { "id": "c", "texto": "git status" },
+        { "id": "d", "texto": "git commit -m" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 7,
+      "bloque": "GitHub Copilot",
+      "pregunta": "De acuerdo con las instrucciones de la sesión, ¿cuál es la filosofía de uso real respecto a la herramienta de inteligencia artificial GitHub Copilot en el día a día del desarrollo?",
+      "opciones": [
+        { "id": "a", "texto": "Te proporciona el código definitivo y perfecto para que no tengas que modificar nada." },
+        { "id": "b", "texto": "No te da el código final; te proporciona un borrador técnico que tú debes comprender y terminar." },
+        { "id": "c", "texto": "Sustituye por completo la necesidad de instalar Node.js o Python en el equipo corporativo." },
+        { "id": "d", "texto": "Se encarga de validar los modelos de datos directamente en las bases de datos de producción de la empresa." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 8,
+      "bloque": "GitHub Copilot",
+      "pregunta": "Dentro de las funcionalidades de GitHub Copilot integradas en Visual Studio Code, ¿cuál de las siguientes opciones NO se menciona como una tarea que puede automatizar el asistente de IA?",
+      "opciones": [
+        { "id": "a", "texto": "Explicar líneas de código complejas que no entiendes y documentar funciones." },
+        { "id": "b", "texto": "Completar código de forma inteligente y detectar o corregir bugs." },
+        { "id": "c", "texto": "Generar pruebas unitarias (tests) de forma automatizada." },
+        { "id": "d", "texto": "Tramitar de forma automática las bonificaciones y el registro horario ante FUNDAE." }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 9,
+      "bloque": "Prompt Engineering",
+      "pregunta": "En la disciplina del Prompt Engineering para desarrolladores, ¿de qué factor fundamental depende directamente la calidad, precisión y utilidad del código generado por la IA?",
+      "opciones": [
+        { "id": "a", "texto": "Del tamaño de fuente configurado en el archivo settings.json de VSCode." },
+        { "id": "b", "texto": "De la velocidad de la conexión a internet de la empresa de proyectos europeos." },
+        { "id": "c", "texto": "De la calidad, claridad y nivel de detalle estructurado del prompt proporcionado por el profesional." },
+        { "id": "d", "texto": "Del número de ramas o branches activas en el repositorio de GitHub." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Prompt Engineering",
+      "pregunta": "¿Por qué el prompt \"Crea una función JavaScript pura llamada filtrarProyectos que reciba un array de objetos...\" se considera un enfoque profesional frente a un prompt básico?",
+      "opciones": [
+        { "id": "a", "texto": "Porque utiliza más palabras en inglés para acelerar el procesamiento de la IA." },
+        { "id": "b", "texto": "En lugar de una petición abstracta, especifica el lenguaje, el nombre exacto, la estructura de los campos de entrada, el comportamiento esperado e incluye validación y casos borde." },
+        { "id": "c", "texto": "Porque permite saltarse los entornos de pruebas y desplegar el código directamente en producción." },
+        { "id": "d", "texto": "Porque obliga a la herramienta a escribir el código exclusivamente en formato de script de Python." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "Automatización con Python",
+      "pregunta": "Si necesitas desarrollar un script de automatización en Python que realice llamadas HTTP de consulta para extraer datos de una API REST, ¿qué librería externa debes importar?",
+      "opciones": [
+        { "id": "a", "texto": "pandas" },
+        { "id": "b", "texto": "requests" },
+        { "id": "c", "texto": "jinja2" },
+        { "id": "d", "texto": "json" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "Automatización con Python",
+      "pregunta": "En el ámbito de la automatización de tareas y análisis de datos con Python, ¿qué librería especializada se utiliza para leer, procesar y estructurar archivos CSV o matrices de datos?",
+      "opciones": [
+        { "id": "a", "texto": "requests" },
+        { "id": "b", "texto": "Express" },
+        { "id": "c", "texto": "pandas" },
+        { "id": "d", "texto": "React Router" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 13,
+      "bloque": "Automatización con Python",
+      "pregunta": "Observando el código: proyectos = respuesta.json()['data'], ¿qué acción se está realizando en esta línea?",
+      "opciones": [
+        { "id": "a", "texto": "Guardando el reporte técnico directamente en un repositorio público de GitHub." },
+        { "id": "b", "texto": "Convirtiendo la respuesta binaria de la petición HTTP en una estructura de datos nativa y extrayendo la colección situada bajo la clave 'data'." },
+        { "id": "c", "texto": "Ejecutando un validador de interfaces visuales responsive para teléfonos móviles." },
+        { "id": "d", "texto": "Forzando un error interno de tipo 404 en el servidor local de Express." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 14,
+      "bloque": "Automatización con Python",
+      "pregunta": "Cuando en el script de Python ejecutas la instrucción df = pd.DataFrame(proyectos), ¿qué estructura de datos estás instanciando a través de la librería Pandas?",
+      "opciones": [
+        { "id": "a", "texto": "Un archivo de texto plano inmutable." },
+        { "id": "b", "texto": "Una variable booleana de control de errores de red." },
+        { "id": "c", "texto": "Un DataFrame, que organiza los datos de los proyectos en una estructura bidimensional de filas y columnas." },
+        { "id": "d", "texto": "Un middleware global para parsear peticiones POST." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Automatización con Python",
+      "pregunta": "Si deseas imprimir en la terminal el número total de filas almacenadas dentro de tu DataFrame (df) en Python, ¿qué función nativa del lenguaje debes invocar?",
+      "opciones": [
+        { "id": "a", "texto": "df.sum()" },
+        { "id": "b", "texto": "len(df)" },
+        { "id": "c", "texto": "df.groupby()" },
+        { "id": "d", "texto": "df.count_all()" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Automatización con Python",
+      "pregunta": "Utilizando la manipulación de datos con Pandas en Python, ¿cuál es el método adecuado para calcular la suma económica agregada de todos los elementos pertenecientes a la columna 'presupuesto'?",
+      "opciones": [
+        { "id": "a", "texto": "df['presupuesto'].sum()" },
+        { "id": "b", "texto": "df.groupby('presupuesto')" },
+        { "id": "c", "texto": "df['presupuesto'].length()" },
+        { "id": "d", "texto": "df.add_all('presupuesto')" }
+      ],
+      "respuestaCorrecta": "a"
+    },
+    {
+      "numero": 17,
+      "bloque": "Automatización con Python",
+      "pregunta": "Analiza la siguiente instrucción: df.groupby('estado')['presupuesto'].mean(). ¿Qué resultado devuelve esta operación?",
+      "opciones": [
+        { "id": "a", "texto": "Elimina de forma permanente los proyectos que se encuentran en estado de borrador." },
+        { "id": "b", "texto": "Agrupa los registros del DataFrame en función de su 'estado' y calcula el presupuesto medio de cada uno de esos grupos." },
+        { "id": "c", "texto": "Multiplica los presupuestos de los proyectos europeos por el número de países participantes." },
+        { "id": "d", "texto": "Exporta de manera automática los datos tabulados a una presentación de diapositivas." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 18,
+      "bloque": "Automatización con Python",
+      "pregunta": "¿Cuál es el argumento principal de productividad que justifica la introducción de scripts de automatización con Python en el entorno empresarial técnico?",
+      "opciones": [
+        { "id": "a", "texto": "Elimina por completo el uso de hojas de estilo CSS en las landing pages." },
+        { "id": "b", "texto": "Permite que unas pocas líneas de código (ej. 30 líneas) sustituyan horas de procesamiento y análisis de datos de forma manual." },
+        { "id": "c", "texto": "Reduce el uso de memoria RAM del editor Visual Studio Code al programar en React." },
+        { "id": "d", "texto": "Automatiza la creación de repositorios remotos sin necesidad de tener una cuenta en GitHub." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Proyecto Final Integrador",
+      "pregunta": "De acuerdo con las especificaciones del bloque del \"Proyecto Final Integrador\", ¿cuál de los siguientes requisitos técnicos NO forma parte de los entregables mínimos obligatorios para superar el curso?",
+      "opciones": [
+        { "id": "a", "texto": "Un repositorio en GitHub con su respectivo documento de documentación README." },
+        { "id": "b", "texto": "Una interfaz de frontend con diseño responsive y un backend básico en Node.js/Express." },
+        { "id": "c", "texto": "Un servidor de base de datos relacional complejo desplegado en sistemas empresariales Docker." },
+        { "id": "d", "texto": "Datos dinámicos conectados a una API que implemente al menos 3 endpoints funcionales." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 20,
+      "bloque": "Recursos y Aprendizaje Continuo",
+      "pregunta": "En las diapositivas de cierre del curso, ¿qué recurso didáctico interactivo gratuito se aconseja seguir durante las semanas posteriores para consolidar la ruta de aprendizaje visual del desarrollo web?",
+      "opciones": [
+        { "id": "a", "texto": "Khan Academy exclusivamente." },
+        { "id": "b", "texto": "El index de empleo digital de la Unión Europea." },
+        { "id": "c", "texto": "El portal de documentación técnica roadmap.sh." },
+        { "id": "d", "texto": "Reinstalar el paquete global de PowerShell." }
+      ],
+      "respuestaCorrecta": "c"
+    }
+  ]
+}

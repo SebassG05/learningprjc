@@ -1,0 +1,270 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196c3dd733b54cd47d752b",
+  "titulo": "Test de Evaluación - Tema 20: Introducción a Node.js — Arquitectura, Event Loop, Módulos y Express",
+  "descripcion": "Evalúa los conocimientos sobre el problema C10K, la arquitectura interna de Node.js (V8, libuv, Event Loop), el sistema de módulos ES Modules, gestión de dependencias con npm y fundamentos de Express.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "id": 1,
+      "bloque": "Origen y contexto histórico",
+      "enunciado": "¿A qué desafío técnico de infraestructura de servidores responde específicamente el término conocido como \"El problema C10K\" publicado en 1999?",
+      "opciones": [
+        { "letra": "A", "texto": "A la imposibilidad de compilar código fuente JavaScript en sistemas operativos Unix." },
+        { "letra": "B", "texto": "Al desafío de gestionar 10.000 conexiones simultáneas en un único servidor web sin que este colapse." },
+        { "letra": "C", "texto": "A la falta de un cifrado simétrico robusto dentro de las cookies de sesión del navegador." },
+        { "letra": "D", "texto": "Al desbordamiento de memoria RAM al importar múltiples dependencias desde repositorios públicos." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "En 1999, Dan Kegel acuñó el término 'The C10K Problem' para definir el reto técnico de infraestructura que superaba las arquitecturas de la época: atender a 10.000 clientes concurrentes en una misma máquina."
+    },
+    {
+      "id": 2,
+      "bloque": "Origen y contexto histórico",
+      "enunciado": "¿Cuál era la causa principal del colapso por CPU y memoria en los servidores web de la era clásica (como Apache) bajo alta concurrencia?",
+      "opciones": [
+        { "letra": "A", "texto": "El uso de un modelo basado en hilos que asignaba un proceso o hilo dedicado a cada conexión, provocando un consumo masivo de RAM y excesivo intercambio de contexto (context switching)." },
+        { "letra": "B", "texto": "La falta de herramientas CLI para monitorizar el rendimiento del procesador en tiempo real." },
+        { "letra": "C", "texto": "El bloqueo físico del motor V8 debido a la ausencia de código compilado Just-In-Time (JIT)." },
+        { "letra": "D", "texto": "El uso exclusivo de flujos de datos basados en Transform Streams de manera síncrona." }
+      ],
+      "respuestaCorrecta": "A",
+      "justificacion": "Servidores como Apache instanciaban un hilo por cliente; al escalar a miles de conexiones, la RAM se agotaba y la CPU colapsaba por el context switching del sistema operativo."
+    },
+    {
+      "id": 3,
+      "bloque": "Origen y contexto histórico",
+      "enunciado": "Al crearse Node.js en 2009, ¿por qué Ryan Dahl consideró que la elección de JavaScript como lenguaje de programación no era arbitraria?",
+      "opciones": [
+        { "letra": "A", "texto": "Porque JavaScript ya incluía soporte nativo avanzado para pools de hilos concurrentes en el servidor." },
+        { "letra": "B", "texto": "Porque JavaScript era el único lenguaje que carecía de APIs de entrada/salida bloqueantes nativas, dado que en el navegador no se podía congelar la interfaz." },
+        { "letra": "C", "texto": "Porque Microsoft exigía el uso de sintaxis ECMAScript en la infraestructura de proyectos europeos." },
+        { "letra": "D", "texto": "Porque facilitaba la validación sintáctica de esquemas de bases de datos relacionales directamente en el cliente." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Ryan Dahl seleccionó JavaScript porque, por su naturaleza de diseño para navegadores (donde bloquear congelaría la UI), carecía de instrucciones bloqueantes nativas, adaptándose al modelo asíncrono deseado."
+    },
+    {
+      "id": 4,
+      "bloque": "Motor V8 y compilación",
+      "enunciado": "Dentro de las etapas operativas ejecutadas por un motor de JavaScript como V8, ¿qué es y qué función cumple el 'AST' (Abstract Syntax Tree)?",
+      "opciones": [
+        { "letra": "A", "texto": "Una cola de microtareas que se encarga de ejecutar de manera prioritaria las funciones asíncronas." },
+        { "letra": "B", "texto": "Un algoritmo de compilación Just-In-Time que detecta las porciones de código más usadas." },
+        { "letra": "C", "texto": "Una representación en árbol de la estructura del programa en la que se convierte el código fuente tras el análisis (parsing)." },
+        { "letra": "D", "texto": "Un módulo nativo del sistema operativo encargado de leer archivos binarios de forma no bloqueante." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Durante la primera fase de análisis (parsing), el código fuente se descompone y transforma en un AST (Abstract Syntax Tree), una representación en árbol de la estructura del programa."
+    },
+    {
+      "id": 5,
+      "bloque": "Arquitectura interna de Node.js",
+      "enunciado": "Dentro de la arquitectura interna de Node.js, ¿qué componente técnico proporciona el bucle de eventos (event loop), el pool de hilos para operaciones de entrada/salida y las abstracciones sobre el sistema operativo?",
+      "opciones": [
+        { "letra": "A", "texto": "El motor V8 de Google Chrome." },
+        { "letra": "B", "texto": "La librería de bajo nivel en C/C++ denominada libuv." },
+        { "letra": "C", "texto": "El manejador global de errores operacionales Express." },
+        { "letra": "D", "texto": "El sistema de variables de configuración inyectadas mediante dotenv." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "libuv es el motor complementario escrito en C/C++ encargado de proveer el bucle de eventos, la administración del pool de hilos para I/O y los enlaces con el núcleo del sistema operativo."
+    },
+    {
+      "id": 6,
+      "bloque": "Event Loop — fases",
+      "enunciado": "De acuerdo con el diagrama del Event Loop de Node.js, ¿cuál es considerada la fase principal encargada de recuperar nuevos eventos de entrada/salida y donde el bucle esperará si la cola está vacía?",
+      "opciones": [
+        { "letra": "A", "texto": "timers." },
+        { "letra": "B", "texto": "pending callbacks." },
+        { "letra": "C", "texto": "poll." },
+        { "letra": "D", "texto": "check." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "La fase 'poll' constituye el núcleo principal del Event Loop donde se recuperan nuevos eventos de I/O y donde el bucle se detiene a esperar callbacks si la cola se vacía."
+    },
+    {
+      "id": 7,
+      "bloque": "Event Loop — microtareas y macrotareas",
+      "enunciado": "En el orden de ejecución de tareas de Node.js, ¿qué característica prioritaria distingue a las microtareas (como las promesas o process.nextTick) frente a las macrotareas del Event Loop?",
+      "opciones": [
+        { "letra": "A", "texto": "Las microtareas se ejecutan exclusivamente en servidores de staging y nunca en producción." },
+        { "letra": "B", "texto": "La cola de microtareas se procesa entre cada fase del Event Loop y tiene prioridad absoluta sobre las macrotareas." },
+        { "letra": "C", "texto": "Las microtareas se delegan por completo al hilo principal de los Workers en segundo plano." },
+        { "letra": "D", "texto": "Requieren que el desarrollador invoque la función next() para pasar al siguiente Tick." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "La cola de microtareas (promesas, process.nextTick) se interpone e interrumpe de forma prioritaria el flujo de las macrotareas entre cada fase del bucle de eventos."
+    },
+    {
+      "id": 8,
+      "bloque": "Event Loop — microtareas y macrotareas",
+      "enunciado": "¿Qué instrucción se ejecuta de manera prioritaria dentro de la cola de microtareas, posicionándose incluso antes que los callbacks de promesas resueltas?",
+      "opciones": [
+        { "letra": "A", "texto": "setTimeout()." },
+        { "letra": "B", "texto": "setImmediate()." },
+        { "letra": "C", "texto": "process.nextTick()." },
+        { "letra": "D", "texto": "fs.readFile()." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Los callbacks inyectados por process.nextTick() se ejecutan de manera inmediata, situándose siempre antes que el resto de las microtareas como las promesas .then."
+    },
+    {
+      "id": 9,
+      "bloque": "Buenas prácticas — bloqueo del hilo principal",
+      "enunciado": "De acuerdo con las buenas prácticas del módulo, ¿cuál es la regla de oro respecto al tiempo que puede tomar una operación antes de considerarse un bloqueo dañino para el hilo principal?",
+      "opciones": [
+        { "letra": "A", "texto": "Si una operación tarda más de ~50ms, no debe ejecutarse en el hilo principal y debe evaluarse el uso de Worker Threads si es intensiva en CPU." },
+        { "letra": "B", "texto": "Toda operación síncrona debe ser cancelada inmediatamente si supera los 5ms de duración." },
+        { "letra": "C", "texto": "Solo se consideran bloqueos peligrosos si la transacción excede los 10 segundos continuos." },
+        { "letra": "D", "texto": "Node.js gestiona el bloqueo de forma automática sin afectar a las llamadas concurrentes de Express." }
+      ],
+      "respuestaCorrecta": "A",
+      "justificacion": "El límite tolerable para el hilo principal es ~50ms; operaciones más pesadas basadas en CPU deben delegarse a hilos secundarios independientes mediante worker_threads."
+    },
+    {
+      "id": 10,
+      "bloque": "Buenas prácticas — bloqueo del hilo principal",
+      "enunciado": "Para monitorizar y detectar bloqueos en el Event Loop midiendo el retardo ('lag') en milisegundos, ¿qué utilidad nativa provista por el módulo perf_hooks se aconseja implementar?",
+      "opciones": [
+        { "letra": "A", "texto": "monitorEventLoopDelay." },
+        { "letra": "B", "texto": "createReadStream." },
+        { "letra": "C", "texto": "monitorEventLoopDelay.mean." },
+        { "letra": "D", "texto": "MonitorThreadsPool." }
+      ],
+      "respuestaCorrecta": "A",
+      "justificacion": "La función monitorEventLoopDelay, importada de la librería de diagnóstico perf_hooks, permite auditar la presencia de retardos perjudiciales en el Event Loop."
+    },
+    {
+      "id": 11,
+      "bloque": "Buenas prácticas — operaciones síncronas",
+      "enunciado": "¿En qué escenario técnico es aceptable recurrir al uso de operaciones síncronas bloqueantes (como fs.readFileSync) dentro de Node.js?",
+      "opciones": [
+        { "letra": "A", "texto": "Al descargar datasets masivos en tiempo real desde portales Open Data de la Unión Europea." },
+        { "letra": "B", "texto": "Únicamente en scripts de arranque, herramientas CLI o código de inicialización del servidor." },
+        { "letra": "C", "texto": "En el controlador de rutas encargado de procesar peticiones masivas JSON." },
+        { "letra": "D", "texto": "Dentro del middleware global de seguridad responsable del Rate Limiting." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Las operaciones Sync congelan el hilo único de Node.js, por lo que su uso queda restringido exclusivamente a fases de inicialización o scripts CLI locales, nunca en rutas de producción."
+    },
+    {
+      "id": 12,
+      "bloque": "Sistema de módulos — ES Modules",
+      "enunciado": "Al configurar el sistema de módulos en un proyecto, ¿qué acción se debe realizar para habilitar de manera global el estándar moderno de ES Modules (import/export) en Node.js?",
+      "opciones": [
+        { "letra": "A", "texto": "Modificar la variable de entorno inyectando NODE_ENV=production." },
+        { "letra": "B", "texto": "Invocar la librería externa helmet al inicio de las rutas de Express." },
+        { "letra": "C", "texto": "Añadir la propiedad {\"type\": \"module\"} dentro del archivo package.json." },
+        { "letra": "D", "texto": "Configurar el separador de rutas portátil de forma explícita mediante path.join()." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Para que Node.js procese los ficheros bajo ES Modules (import/export), se debe añadir el parámetro type configurado como module en el archivo raíz package.json."
+    },
+    {
+      "id": 13,
+      "bloque": "Sistema de módulos — ES Modules",
+      "enunciado": "En el sistema tradicional CommonJS (require), las variables globales __dirname y __filename están disponibles por defecto, pero en ES Modules no existen. ¿Cómo se deben recrear bajo el estándar moderno?",
+      "opciones": [
+        { "letra": "A", "texto": "Extrayendo los valores directamente mediante desestructuración del objeto global process.env." },
+        { "letra": "B", "texto": "Utilizando la propiedad import.meta.url en combinación con utilidades de los módulos nativos url y path." },
+        { "letra": "C", "texto": "Invocando un script CLI secundario por medio de un Worker Thread dedicado." },
+        { "letra": "D", "texto": "Configurando una lista blanca explícita de variables dentro del package-lock.json." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "En ESM, se captura el identificador dinámico con import.meta.url y se procesa con fileURLToPath y dirname de los módulos nativos url y path para recrear __dirname y __filename."
+    },
+    {
+      "id": 14,
+      "bloque": "Módulo path",
+      "enunciado": "Al realizar la construcción de rutas de archivos con el módulo nativo path, ¿por qué se considera una práctica mandatoria utilizar la instrucción path.join()?",
+      "opciones": [
+        { "letra": "A", "texto": "Porque comprime el contenido de los archivos de texto JSON de forma automática." },
+        { "letra": "B", "texto": "Porque asegura la portabilidad del código al aplicar el separador de directorios correcto según el sistema operativo (\\ en Windows, / en Unix)." },
+        { "letra": "C", "texto": "Porque sanitiza las cadenas eliminando caracteres HTML peligrosos que causan XSS." },
+        { "letra": "D", "texto": "Porque valida de forma estricta que el archivo referenciado exista en el disco local." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "path.join() inyecta automáticamente el separador de directorios correcto según el sistema operativo (\\ en Windows, / en Unix), garantizando la portabilidad del código."
+    },
+    {
+      "id": 15,
+      "bloque": "Gestión de dependencias con npm",
+      "enunciado": "Dentro de la gestión de dependencias con npm, ¿cuál es el comportamiento específico del prefijo de versión de intercalación o circunflejo (^) configurado en el package.json (por ejemplo, ^4.19.2)?",
+      "opciones": [
+        { "letra": "A", "texto": "Instala única y exclusivamente la versión exacta especificada (4.19.2)." },
+        { "letra": "B", "texto": "Permite actualizaciones de tipo PATCH únicamente, congelando la versión menor de la librería." },
+        { "letra": "C", "texto": "Indica compatibilidad con actualizaciones de tipo MINOR, permitiendo instalar cualquier versión 4.x.x que no rompa la compatibilidad hacia atrás." },
+        { "letra": "D", "texto": "Descarga la versión de mantenimiento LTS más reciente del servidor web remoto de manera aleatoria." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Bajo semver de npm, el prefijo ^ autoriza actualizaciones MINOR y PATCH, instalando cualquier versión 4.x.x sin cambios incompatibles de rango mayor."
+    },
+    {
+      "id": 16,
+      "bloque": "Gestión de dependencias con npm",
+      "enunciado": "Para garantizar entornos de despliegue predecibles y veloces en flujos de CI/CD, ¿qué comando se debe ejecutar para realizar una instalación limpia basada estrictamente en el lockfile?",
+      "opciones": [
+        { "letra": "A", "texto": "npm install --ignore-scripts" },
+        { "letra": "B", "texto": "npm ci" },
+        { "letra": "C", "texto": "npm audit fix --force" },
+        { "letra": "D", "texto": "npm update" }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "npm ci (clean install) bloquea el proceso forzando una instalación estricta y rápida basada exclusivamente en el package-lock.json, a diferencia de npm install que puede alterar el árbol."
+    },
+    {
+      "id": 17,
+      "bloque": "Express — middlewares",
+      "enunciado": "Al estructurar la firma o definición de una función middleware convencional dentro del framework Express, ¿cuáles son los tres parámetros requeridos y en qué orden deben declararse?",
+      "opciones": [
+        { "letra": "A", "texto": "(err, req, res)" },
+        { "letra": "B", "texto": "(req, res, next)" },
+        { "letra": "C", "texto": "(res, req, err)" },
+        { "letra": "D", "texto": "(req, res, errorHandler)" }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "La anatomía fundamental de cualquier eslabón de la cadena de middlewares en Express exige los parámetros en el orden: objeto de solicitud (req), respuesta (res) y gatillo de avance (next)."
+    },
+    {
+      "id": 18,
+      "bloque": "Express — middlewares",
+      "enunciado": "¿Qué restricción sintáctica indispensable exige Express para poder identificar y procesar una función middleware específicamente como un manejador global de errores centralizado?",
+      "opciones": [
+        { "letra": "A", "texto": "Debe ser registrada inmediatamente antes de los middlewares de seguridad de Helmet." },
+        { "letra": "B", "texto": "Debe ser declarada utilizando de forma obligatoria exactamente 4 parámetros en su firma: (err, req, res, next)." },
+        { "letra": "C", "texto": "Debe retornar un objeto JSON cifrado mediante algoritmos de tipo HS256." },
+        { "letra": "D", "texto": "Debe integrarse directamente en el cuerpo de inicialización del archivo .env." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Express identifica los middlewares de captura de excepciones por la presencia de exactamente 4 argumentos en su firma (err, req, res, next); omitir cualquiera rompe la derivación de fallos."
+    },
+    {
+      "id": 19,
+      "bloque": "Express — manejo de errores",
+      "enunciado": "De acuerdo con las directrices de arquitectura backend expuestas, ¿cuál es la diferencia de manejo entre un 'error operacional' y un 'bug de programación'?",
+      "opciones": [
+        { "letra": "A", "texto": "El error operacional requiere un rebalanceo del pool de hilos y el bug se soluciona borrando el package-lock.json." },
+        { "letra": "B", "texto": "El error operacional responde a situaciones predecibles (token expirado, 404) y el servidor sigue corriendo; el bug es un fallo imprevisto (TypeError) que deja al proceso en estado desconocido y exige reiniciar con process.exit(1)." },
+        { "letra": "C", "texto": "El error operacional apaga el servidor web de forma controlada y el bug se ignora por completo en entornos de producción." },
+        { "letra": "D", "texto": "No existe diferencia técnica; ambos eventos se gestionan exponiendo el stack trace de forma pública en la respuesta HTTP." }
+      ],
+      "respuestaCorrecta": "B",
+      "justificacion": "Los errores operacionales son predecibles (token expirado, 404) y el servidor sigue corriendo; los bugs dejan el proceso en estado desconocido y obligan a process.exit(1) para que un gestor externo relance el contenedor limpio."
+    },
+    {
+      "id": 20,
+      "bloque": "Streams y backpressure",
+      "enunciado": "Al realizar la transmisión o procesamiento de archivos masivos que superan los 10MB en un servidor de producción, ¿qué recurso de Node.js debe implementarse obligatoriamente para resguardar la memoria RAM y mitigar problemas de presión de flujo (backpressure)?",
+      "opciones": [
+        { "letra": "A", "texto": "La lectura completa de datos mediante la función tradicional fs.promises.readFile." },
+        { "letra": "B", "texto": "El almacenamiento masivo de registros dentro del entorno global del array en memoria." },
+        { "letra": "C", "texto": "El uso de Streams combinando mecanismos como createReadStream y la función controlada pipeline()." },
+        { "letra": "D", "texto": "La inyección restrictiva de encabezados CORS cruzados a nivel de subdominio." }
+      ],
+      "respuestaCorrecta": "C",
+      "justificacion": "Cargar ficheros masivos con readFile arriesga la saturación de la RAM. Los Streams parcelan la transferencia en chunks y pipeline() administra el backpressure de forma automática."
+    }
+  ]
+}

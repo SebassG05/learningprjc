@@ -1,0 +1,250 @@
+{
+  "cursoId": "6a196249d733b54cd47d6e0a",
+  "temaId": "6a196813d733b54cd47d7183",
+  "titulo": "Test de Evaluación - Tema 6: Manual del Alumno — VS Code, CSS, JS, Node.js, React, Git y Python",
+  "descripcion": "Evaluación integral sobre atajos de VS Code, Emmet, CSS3 avanzado, JavaScript ES6+, Node.js/Express, React hooks, Git convenciones, GitHub Copilot, Python (requests/pandas) y glosario técnico.",
+  "duracionMinutos": 40,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Visual Studio Code",
+      "pregunta": "Según la tabla de atajos de teclado esenciales de Visual Studio Code proporcionada en el manual, ¿cuál es la combinación de teclas para formatear automáticamente un archivo completo en los sistemas operativos Windows y Mac respectivamente?",
+      "opciones": [
+        { "id": "a", "texto": "Ctrl + S / Cmd + S" },
+        { "id": "b", "texto": "Shift + Alt + F / Shift + Option + F" },
+        { "id": "c", "texto": "Ctrl + Shift + P / Cmd + Shift + P" },
+        { "id": "d", "texto": "Alt + Click / Option + Click" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 2,
+      "bloque": "Visual Studio Code",
+      "pregunta": "Si estás utilizando la terminal integrada en un sistema operativo Windows a través de PowerShell, ¿cuál es el comando nativo recomendado para listar el contenido de la carpeta actual?",
+      "opciones": [
+        { "id": "a", "texto": "pwd" },
+        { "id": "b", "texto": "Get-ChildItem" },
+        { "id": "c", "texto": "cd .." },
+        { "id": "d", "texto": "touch" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 3,
+      "bloque": "Visual Studio Code",
+      "pregunta": "El manual describe el uso de \"Emmet\" en Visual Studio Code para acelerar la escritura de código. ¿Qué resultado visual se genera al escribir el atajo nav>ul>li*3>a seguido de la tecla Tabulador?",
+      "opciones": [
+        { "id": "a", "texto": "Un formulario con tres campos de entrada de tipo texto y un botón." },
+        { "id": "b", "texto": "Una barra de navegación (nav) que contiene una lista estructurada (ul) con 3 ítems de lista (li) y sus respectivos enlaces (a)." },
+        { "id": "c", "texto": "Una tabla responsive compuesta por tres columnas principales de tipo CSS Grid." },
+        { "id": "d", "texto": "Un contenedor de bloque genérico con tres clases de tipo flex-container." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 4,
+      "bloque": "HTML5 y Formularios",
+      "pregunta": "Dentro de las configuraciones de formularios avanzados de HTML5, ¿qué atributo nativo te permite controlar el rango o el salto de incremento de los valores (por ejemplo, avanzar de 5 en 5) en un campo de entrada numérico?",
+      "opciones": [
+        { "id": "a", "texto": "min" },
+        { "id": "b", "texto": "max" },
+        { "id": "c", "texto": "step" },
+        { "id": "d", "texto": "pattern" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 5,
+      "bloque": "CSS3 Avanzado",
+      "pregunta": "En las hojas de estilo CSS3, si deseas aplicar un diseño tipográfico específico o cambiar a negrita únicamente la primera línea de un párrafo de texto, ¿qué selector de tipo pseudo-elemento debes emplear?",
+      "opciones": [
+        { "id": "a", "texto": "p:hover" },
+        { "id": "b", "texto": "p::first-line" },
+        { "id": "c", "texto": "p:focus" },
+        { "id": "d", "texto": "p.root" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 6,
+      "bloque": "CSS3 Avanzado",
+      "pregunta": "Al organizar la estructura de diseño (Layout) de una aplicación web, ¿cuál es la directriz práctica fundamental que destaca el Manual del Alumno respecto al uso combinado de Flexbox y CSS Grid?",
+      "opciones": [
+        { "id": "a", "texto": "Usar CSS Grid exclusivamente para dar estilos a botones y Flexbox para toda la maquetación web." },
+        { "id": "b", "texto": "Evitar mezclar ambas tecnologías dentro de un mismo archivo de estilos estilos.css." },
+        { "id": "c", "texto": "Utilizar Flexbox para componentes de la interfaz (menús, tarjetas, botones) y CSS Grid para la maquetación general de la página completa." },
+        { "id": "d", "texto": "Sustituir ambos sistemas por scripts automatizados de maquetación en Python." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 7,
+      "bloque": "JavaScript ES6+",
+      "pregunta": "En el bloque de JavaScript ES6+, el manual expone diferentes métodos integrados para la manipulación avanzada de arrays. ¿Qué método se encarga de buscar y devolver única y exclusivamente el primer elemento de la colección que cumpla con una condición lógica dada?",
+      "opciones": [
+        { "id": "a", "texto": "filter" },
+        { "id": "b", "texto": "map" },
+        { "id": "c", "texto": "find" },
+        { "id": "d", "texto": "reduce" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 8,
+      "bloque": "JavaScript ES6+",
+      "pregunta": "Examina la siguiente línea: const mostrarProyecto = ({ nombre, estado, presupuesto }) => { ... };. ¿Qué característica de la sintaxis moderna se está aplicando directamente en los argumentos de la función?",
+      "opciones": [
+        { "id": "a", "texto": "Un Template Literal con interpolación de cadenas de texto." },
+        { "id": "b", "texto": "La desestructuración de objetos aplicada directamente en la recepción de parámetros." },
+        { "id": "c", "texto": "Un clonado de arrays sin mantener la referencia en memoria RAM." },
+        { "id": "d", "texto": "Una función de callback asíncrona vinculada al Event Loop." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 9,
+      "bloque": "Node.js y Express",
+      "pregunta": "Cuando trabajas en el entorno backend con Node.js y Express, ¿cuál es el comando de la terminal que debes ejecutar para instalar un paquete externo especificando que se trata de una dependencia de desarrollo (por ejemplo, nodemon)?",
+      "opciones": [
+        { "id": "a", "texto": "npm init -y" },
+        { "id": "b", "texto": "npm install express" },
+        { "id": "c", "texto": "npm install --save-dev nodemon  o  npm install -D paquete" },
+        { "id": "d", "texto": "node mi-script.js" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 10,
+      "bloque": "Node.js y Express",
+      "pregunta": "En la sección de configuración del servidor y variables de entorno, el manual incluye una advertencia de seguridad crítica. ¿Cuál es esta regla obligatoria?",
+      "opciones": [
+        { "id": "a", "texto": "Nunca debes modificar el puerto de escucha predeterminado 3000." },
+        { "id": "b", "texto": "Nunca debes subir el archivo .env a los repositorios públicos de GitHub, debiendo añadirlo obligatoriamente al archivo .gitignore." },
+        { "id": "c", "texto": "Está prohibido testear las respuestas de las rutas empleando la extensión Thunder Client." },
+        { "id": "d", "texto": "Las variables de entorno de Node.js deben programarse obligatoriamente utilizando la sintaxis de React." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 11,
+      "bloque": "React y Hooks",
+      "pregunta": "React establece normas estrictas para garantizar la estabilidad del árbol de componentes. De acuerdo con el manual, ¿cuáles son las dos \"Reglas de los Hooks\" indispensables?",
+      "opciones": [
+        { "id": "a", "texto": "1. Solo usar hooks dentro de bucles for. 2. Solo usarlos en archivos de estilo CSS." },
+        { "id": "b", "texto": "1. Solo usar hooks al nivel superior del componente (nunca dentro de condicionales if o bucles for). 2. Solo usar hooks en componentes funcionales de React." },
+        { "id": "c", "texto": "1. Inicializarlos siempre con el método fetch. 2. Almacenarlos de forma obligatoria en la memoria de persistencia de LocalStorage." },
+        { "id": "d", "texto": "1. Duplicar sus referencias con el operador spread. 2. Exportarlos empleando la palabra reservada require." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 12,
+      "bloque": "React y Hooks",
+      "pregunta": "Al realizar el renderizado de listas dinámicas en React mediante el mapeo de arrays (proyectos.map(...)), ¿qué propiedad especial exige el framework que se asigne de forma obligatoria y única al elemento raíz devuelto?",
+      "opciones": [
+        { "id": "a", "texto": "id" },
+        { "id": "b", "texto": "key" },
+        { "id": "c", "texto": "value" },
+        { "id": "d", "texto": "className" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 13,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "Git implementa convenciones internacionales para la redacción de mensajes de control de versiones. Si realizas una tarea puramente de mantenimiento o actualización de dependencias sin alterar la lógica de negocio, ¿cuál es el prefijo recomendado?",
+      "opciones": [
+        { "id": "a", "texto": "feat:" },
+        { "id": "b", "texto": "fix:" },
+        { "id": "c", "texto": "docs:" },
+        { "id": "d", "texto": "chore:" }
+      ],
+      "respuestaCorrecta": "d"
+    },
+    {
+      "numero": 14,
+      "bloque": "GitHub Copilot",
+      "pregunta": "Trabajando con la extensión GitHub Copilot Chat, ¿cuál es el comando rápido que debes teclear si seleccionas un bloque de código confuso y deseas que la IA te redacte una explicación detallada de su comportamiento?",
+      "opciones": [
+        { "id": "a", "texto": "/fix" },
+        { "id": "b", "texto": "/doc" },
+        { "id": "c", "texto": "/explain" },
+        { "id": "d", "texto": "/tests" }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 15,
+      "bloque": "Python y Automatización",
+      "pregunta": "En el script de automatización desarrollado en Python, se invoca la instrucción respuesta.raise_for_status(). ¿Qué función crítica cumple este método perteneciente a la librería requests?",
+      "opciones": [
+        { "id": "a", "texto": "Convierte los datos tabulares JSON automáticamente en un DataFrame de Pandas." },
+        { "id": "b", "texto": "Detiene la ejecución del script y lanza una excepción si el código de estado HTTP devuelto por el servidor es igual o superior a 400." },
+        { "id": "c", "texto": "Exporta la información recopilada directamente en un archivo separado por comas (.csv)." },
+        { "id": "d", "texto": "Encripta las credenciales de la API Key para subirlas a GitHub." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 16,
+      "bloque": "Glosario Técnico",
+      "pregunta": "Basándote en las definiciones del Glosario Técnico del manual, ¿cómo se define de forma exacta el término \"Middleware\" dentro del framework Express?",
+      "opciones": [
+        { "id": "a", "texto": "El proceso de poner una aplicación web disponible en la red de internet." },
+        { "id": "b", "texto": "Una función intermediaria en Express que procesa las peticiones de los usuarios." },
+        { "id": "c", "texto": "El formato de texto ligero y legible encargado de estructurar el árbol de objetos del HTML." },
+        { "id": "d", "texto": "Una URL específica de una API que realiza una acción de persistencia de datos local." }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 17,
+      "bloque": "Glosario Técnico",
+      "pregunta": "Consultando el Glosario Técnico, ¿cuál es la definición proporcionada para el concepto arquitectónico de \"DOM\" (Document Object Model)?",
+      "opciones": [
+        { "id": "a", "texto": "Una pieza o fragmento de código de interfaz de usuario totalmente reutilizable en React." },
+        { "id": "b", "texto": "El estilo de arquitectura estándar utilizado para construir APIs web a través del protocolo HTTP." },
+        { "id": "c", "texto": "La representación del documento HTML estructurado en forma de un árbol de objetos manipulables." },
+        { "id": "d", "texto": "Un gestor de paquetes encargado de descargar librerías externas de JavaScript." }
+      ],
+      "respuestaCorrecta": "c"
+    },
+    {
+      "numero": 18,
+      "bloque": "JavaScript ES6+",
+      "pregunta": "Si necesitas clonar un array en JavaScript ES6+ para poder ordenarlo de forma segura con .sort() sin alterar la colección original, ¿cuál es la sintaxis de copia recomendada en el manual?",
+      "opciones": [
+        { "id": "a", "texto": "const ordenados = proyectos.sort();" },
+        { "id": "b", "texto": "const ordenados = [...proyectos].sort(...);" },
+        { "id": "c", "texto": "const ordenados = proyectos.filter(proyectos);" },
+        { "id": "d", "texto": "const ordenados = Object.assign(sort.proyectos);" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 19,
+      "bloque": "Git y Control de Versiones",
+      "pregunta": "¿Cuál es el comando de la terminal que combina las directivas de Git con el fin de conectar por primera vez tu repositorio local con el servidor en la nube de GitHub, asignándole el nombre remoto de 'origin'?",
+      "opciones": [
+        { "id": "a", "texto": "git init" },
+        { "id": "b", "texto": "git remote add origin https://github.com/..." },
+        { "id": "c", "texto": "git push -u origin main" },
+        { "id": "d", "texto": "git config --global init.defaultBranch main" }
+      ],
+      "respuestaCorrecta": "b"
+    },
+    {
+      "numero": 20,
+      "bloque": "Python y Automatización",
+      "pregunta": "En la fase de procesamiento de datos con Python, ¿cuál es la instrucción empleada en el script de análisis para guardar el objeto DataFrame (df) en un archivo físico CSV exterior, omitiendo la columna de índices secuenciales automáticos?",
+      "opciones": [
+        { "id": "a", "texto": "df.to_csv('reporte_proyectos.csv', index=False)" },
+        { "id": "b", "texto": "df.pd.DataFrame(proyectos)" },
+        { "id": "c", "texto": "requests.get('reporte_proyectos.csv')" },
+        { "id": "d", "texto": "print(df.len(resumen))" }
+      ],
+      "respuestaCorrecta": "a"
+    }
+  ]
+}
