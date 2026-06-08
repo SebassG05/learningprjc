@@ -252,8 +252,8 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                 </div>
               )}
 
-              {/* Test de Evaluación */}
-              <div className="mt-6 space-y-2">
+              {/* Test de Evaluación — solo si existe test para este tema */}
+              {testInfo[tema._id] && <div className="mt-6 space-y-2">
                 <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
                   {idioma === 'en' ? 'Evaluation Test' : 'Test de Evaluación'}
                 </h4>
@@ -323,7 +323,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                     </div>
                   )}
                 </div>
-              </div>
+              </div>}
 
               {tema.actividadesOptativas && tema.actividadesOptativas.length > 0 && (
                 <div className="mt-6 space-y-2">
