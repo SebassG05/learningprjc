@@ -12,7 +12,7 @@ function validateContactForm(data) {
   };
 }
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { 
   MapPin, 
@@ -482,10 +482,46 @@ const Contact = () => {
                   </span>
                 </button>
 
-                {/* Nota de privacidad */}
-                <p className="text-xs text-gray-400 text-center">
-                  Al enviar este formulario, aceptas nuestra política de privacidad
-                </p>
+                {/* Información básica RGPD */}
+                <div className="bg-[#1a1a1a] border border-[#a1db87]/15 rounded-xl p-4 text-xs">
+                  <table className="w-full">
+                    <tbody>
+                      {[
+                        ['Responsable', 'EVENOR TECH, S.L.U.'],
+                        ['Finalidad', 'Atender sus consultas y/o solicitudes.'],
+                        ['Derechos', 'Acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.'],
+                        ['Información adicional', null],
+                      ].map(([k, v]) => (
+                        <tr key={k} className="border-b border-[#a1db87]/10 last:border-0">
+                          <td className="py-1.5 pr-3 font-semibold text-[#a1db87] w-2/5 align-top">{k}</td>
+                          <td className="py-1.5 text-gray-400">
+                            {k === 'Información adicional' ? (
+                              <Link to="/privacidad" className="text-[#a1db87] hover:underline">
+                                Consulte la política de privacidad
+                              </Link>
+                            ) : v}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Checkbox RGPD */}
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    name="privacy"
+                    required
+                    className="mt-0.5 w-4 h-4 flex-shrink-0 accent-[#a1db87] cursor-pointer"
+                  />
+                  <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                    He leído y acepto la{' '}
+                    <Link to="/privacidad" className="text-[#a1db87] hover:underline">
+                      información básica de protección de datos
+                    </Link>.
+                  </span>
+                </label>
               </form>
             </motion.div>
           </div>

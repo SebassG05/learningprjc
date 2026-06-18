@@ -142,12 +142,15 @@ const Footer = () => {
         <div className="border-t border-[#a1db87]/10 bg-[#1a1a1a]/50 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-              <span className="text-center md:text-left">
-                © 2026 <span className="text-[#a1db87] font-semibold">CAMPUS</span>. Todos los derechos reservados.
-              </span>
+              <div className="flex flex-col items-center md:items-start gap-0.5">
+                <span className="text-center md:text-left">
+                  © 2026 <span className="text-[#a1db87] font-semibold">CAMPUS</span>. Todos los derechos reservados.
+                </span>
+                <span className="text-xs text-gray-600">Desarrollado por <span className="text-[#a1db87]">Evenor-Tech</span></span>
+              </div>
               <div className="flex flex-wrap gap-6 justify-center">
-                <Link to="/politica-cookies" className="hover:text-[#a1db87] transition-colors">
-                  Cookies
+                <Link to="/aviso-legal" className="hover:text-[#a1db87] transition-colors">
+                  Aviso Legal
                 </Link>
                 <Link to="/politica-cookies" className="hover:text-[#a1db87] transition-colors">
                   Política de Cookies

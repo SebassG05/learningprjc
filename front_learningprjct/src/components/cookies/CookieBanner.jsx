@@ -90,18 +90,16 @@ const CookieBanner = () => {
                     {/* Texto */}
                     <div className="flex-1 min-w-0">
                       <h2 className="text-xl font-bold text-white mb-2 font-[Rondana]">
-                        🍪 Utilizamos cookies
+                        Utilizamos Cookies
                       </h2>
                       <p className="text-gray-300 text-sm leading-relaxed">
-                        Utilizamos cookies propias y de terceros para mejorar tu experiencia, 
-                        analizar el tráfico y personalizar el contenido. Las cookies esenciales 
-                        son necesarias para el funcionamiento de la web. 
+                        Este sitio web utiliza Cookies propias y de terceros, para recopilar información con la finalidad de mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias, en base a un perfil elaborado a partir de sus hábitos de navegación. Puede obtener más información en la{' '}
                         <Link 
                           to="/politica-cookies" 
-                          className="text-[#a1db87] hover:text-[#8bc970] underline ml-1 transition-colors"
+                          className="text-[#a1db87] hover:text-[#8bc970] underline transition-colors"
                         >
-                          Más información
-                        </Link>
+                          Política de Cookies
+                        </Link>.
                       </p>
                     </div>
                   </div>

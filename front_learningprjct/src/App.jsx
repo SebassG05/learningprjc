@@ -14,6 +14,7 @@ import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import GuiaUsuario from './pages/GuiaUsuario.jsx';
 import Privacidad from './pages/Privacidad.jsx';
 import TerminosUso from './pages/TerminosUso.jsx';
+import AvisoLegal from './pages/AvisoLegal.jsx';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -72,6 +73,7 @@ function AnimatedRoutes() {
           <Route path="/politica-cookies" element={<PageTransition><PoliticaCookies /></PageTransition>} />
           <Route path="/privacidad" element={<PageTransition><Privacidad /></PageTransition>} />
           <Route path="/terminos" element={<PageTransition><TerminosUso /></PageTransition>} />
+          <Route path="/aviso-legal" element={<PageTransition><AvisoLegal /></PageTransition>} />
           <Route path="/guia-usuario" element={<PageTransition><GuiaUsuario /></PageTransition>} />
         </Routes>
       </AnimatePresence>
