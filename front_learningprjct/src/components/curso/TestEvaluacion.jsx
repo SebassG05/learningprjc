@@ -277,8 +277,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
             {resultado.aprobado ? (
               <>
                 <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, type: "spring", bounce: 0.5, duration: 0.8 }}
                   className="mb-6"
                 >

@@ -95,7 +95,7 @@ export default function ReviewsPage() {
     <div className="max-w-3xl mx-auto py-12 px-2">
       <div className="flex flex-col items-center justify-center text-center mb-8">
         <motion.div
-          initial={{ scale: 0, rotate: -180 }}
+          initial={{ scale: 0.9, opacity: 0 }}
           animate={isInView ? { scale: 1, rotate: 0 } : {}}
           transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
           className="inline-flex items-center px-4 py-2 bg-surface-2 border border-line rounded-full mb-4"

@@ -1,6 +1,7 @@
 import React from "react";
 import { Briefcase, Users, Award, HeartHandshake, Star, Globe, MessageCircle, Target, Eye, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ParallaxImage from '../components/ui/ParallaxImage';
 
 const team = [
   { name: 'Maria Anaya Romero', role: 'CEO & Fundador', img: '', linkedin: 'https://www.linkedin.com/in/mar%C3%ADa-anaya-romero-95005727/' },
@@ -77,8 +78,8 @@ export default function SobreNosotros() {
           className="text-center mb-12 relative z-10"
         >
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ 
               type: "spring",
               stiffness: 200,
@@ -94,7 +95,7 @@ export default function SobreNosotros() {
           </motion.div>
         </motion.div>
 
-        <h1 className="text-4xl md:text-5xl font-bold text-ink mb-16 text-center">
+        <h1 className="text-display font-bold text-ink mb-14 text-center">
           Sobre <span className="text-brand">Evenor-Tech</span>
         </h1>
         <motion.div
@@ -113,15 +114,15 @@ export default function SobreNosotros() {
           {values.map((v, i) => (
             <motion.div
               key={i}
-              className="bg-surface rounded-xl p-6 w-64 flex flex-col items-center shadow-md border border-line"
+              className="bg-surface rounded-3xl p-6 w-full sm:w-64 flex flex-col items-center shadow-card border border-line"
               variants={{
                 hidden: { opacity: 0, y: 40 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
               }}
             >
               {v.icon}
-              <h3 className="text-lg font-bold text-brand mt-2 mb-1">{v.title}</h3>
-              <p className="text-gray-400 text-sm text-center">{v.desc}</p>
+              <h3 className="mt-3 mb-1 font-sans text-lg font-semibold text-ink">{v.title}</h3>
+              <p className="text-ink-2 text-sm text-center">{v.desc}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -131,38 +132,40 @@ export default function SobreNosotros() {
       {/* Nuestra Esencia */}
       <section className="mb-20">
         <div className="flex flex-col items-center mb-8">
-          <span className="inline-block bg-brand/80 text-on-brand font-semibold px-6 py-1 rounded-full mb-16 text-sm tracking-wide shadow">NUESTRA ESENCIA</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-ink text-center mb-2" style={{fontFamily: 'inherit'}}>Misión, Visión y Valores</h2>
-          <div className="w-24 h-1 bg-brand rounded mx-auto mt-2 mb-2"></div>
+          <span className="eyebrow mb-4">Nuestra esencia</span>
+          <h2 className="text-title-1 font-bold text-ink text-center">Misión, Visión y Valores</h2>
         </div>
         <div className="w-full max-w-6xl mx-auto mb-10">
-          <div className="rounded-2xl overflow-hidden shadow-card relative">
-            <img src="https://res.cloudinary.com/dgbmy60sc/image/upload/v1768909817/free-photo-of-naturaleza-animal-insecto-libelula_l4rvk6.jpg" alt="Biodiversidad y sostenibilidad" className="w-full h-64 object-cover object-center opacity-90" />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-              <h3 className="text-ink text-2xl font-bold mb-1">Biodiversidad y sostenibilidad</h3>
-              <p className="text-ink text-base font-medium">Nuestro compromiso con el medio ambiente y la protección de recursos naturales</p>
+          <ParallaxImage
+            src="https://res.cloudinary.com/dgbmy60sc/image/upload/v1768909817/free-photo-of-naturaleza-animal-insecto-libelula_l4rvk6.jpg"
+            alt="Biodiversidad y sostenibilidad"
+            className="aspect-[4/3] rounded-3xl border border-line shadow-raised sm:aspect-[21/9]"
+          >
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-6 sm:p-10">
+              <h3 className="text-title-2 font-bold text-ink mb-2">Biodiversidad y sostenibilidad</h3>
+              <p className="max-w-xl text-ink/90 text-base">Nuestro compromiso con el medio ambiente y la protección de recursos naturales</p>
             </div>
-          </div>
+          </ParallaxImage>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-stretch justify-center mb-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-12">
           {/* Misión */}
-          <div className="bg-surface rounded-2xl shadow-card border border-line p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center transition-transform duration-300 h-full">
-            <div className="flex items-center gap-2 mb-3">
-              <Target className="w-8 h-8 text-brand" />
-              <span className="text-2xl font-bold text-brand">Misión</span>
+          <div className="bg-surface rounded-3xl shadow-card border border-line p-7 sm:p-10 flex flex-col">
+            <div className="flex items-center gap-3 mb-4">
+              <Target className="w-6 h-6 text-brand" />
+              <span className="font-display text-title-3 font-bold text-ink">Misión</span>
             </div>
-            <p className="text-gray-300 text-base font-medium leading-relaxed ">
+            <p className="text-ink-2 text-base leading-relaxed">
               Nuestra misión es ayudar a gestionar todo el uso del territorio de una manera sostenible y bajo herramientas sensibilizadas con la innovación, la calidad y el medio ambiente.<br /><br />
               En Evenor-Tech aplicamos tecnologías avanzadas y metodologías innovadoras para promover una gestión territorial que respete los ecosistemas naturales, maximice la eficiencia de los recursos y contribuya a la mitigación del cambio climático a través de soluciones tecnológicas accesibles para todos.
             </p>
           </div>
           {/* Visión */}
-          <div style={{backgroundColor: '#141416', borderColor: 'rgba(59, 130, 246, 0.5)', paddingBottom: '3.5rem'}} className="rounded-2xl shadow-card border p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center transition-transform duration-300 h-full">
-            <div className="flex items-center gap-2 mb-3">
-              <Eye className="w-8 h-8 text-blue-400" />
-              <span className="text-2xl font-bold text-blue-400">Visión</span>
+          <div className="bg-surface rounded-3xl shadow-card border border-line p-7 sm:p-10 flex flex-col">
+            <div className="flex items-center gap-3 mb-4">
+              <Eye className="w-6 h-6 text-brand" />
+              <span className="font-display text-title-3 font-bold text-ink">Visión</span>
             </div>
-            <p className="text-gray-300 text-base font-medium leading-relaxed ">
+            <p className="text-ink-2 text-base leading-relaxed">
               Nuestro objetivo es ser reconocido como una organización capaz de poner remedio a la deficiente gestión de los recursos naturales.<br /><br />
               Evenor-Tech cree firmemente que se puede lograr una gestión del territorio en la que todas las personas tengan acceso a las últimas técnicas de gestión sostenible, adaptando para ello la información necesaria para el desarrollo de su actividad, mediante el uso de las TIC. Esto lograría realmente una gestión eficiente del territorio.
             </p>
@@ -172,10 +175,10 @@ export default function SobreNosotros() {
 
       {/* Equipo */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-ink mb-6 flex items-center gap-2 justify-center text-center"><Users className="w-6 h-6 text-brand" />Nuestro Equipo</h2>
+        <h2 className="text-title-2 font-bold text-ink mb-8 flex items-center gap-3 justify-center text-center"><Users className="w-6 h-6 text-brand" />Nuestro Equipo</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
           {team.slice(0, 3).map((m, i) => (
-            <div key={i} className="bg-surface rounded-xl p-5 flex flex-col items-center shadow border border-line">
+            <div key={i} className="bg-surface rounded-3xl p-6 flex flex-col items-center shadow-card border border-line">
               <div className="w-16 h-16 rounded-full bg-brand/20 flex items-center justify-center text-2xl font-bold text-brand mb-2">
                 {m.img ? <img src={m.img} alt={m.name} className="w-full h-full rounded-full object-cover" /> : m.name.charAt(0)}
               </div>
@@ -187,7 +190,7 @@ export default function SobreNosotros() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
           {team.slice(3).map((m, i) => (
-            <div key={i} className="bg-surface rounded-xl p-5 flex flex-col items-center shadow border border-line">
+            <div key={i} className="bg-surface rounded-3xl p-6 flex flex-col items-center shadow-card border border-line">
               <div className="w-16 h-16 rounded-full bg-brand/20 flex items-center justify-center text-2xl font-bold text-brand mb-2">
                 {m.img ? <img src={m.img} alt={m.name} className="w-full h-full rounded-full object-cover" /> : m.name.charAt(0)}
               </div>

@@ -196,7 +196,7 @@ const Contact = () => {
           className="text-center mb-12 relative z-10"
         >
           <motion.div
-            initial={{ scale: 0, rotate: -180 }}
+            initial={{ scale: 0.9, opacity: 0 }}
             animate={isInView ? { scale: 1, rotate: 0 } : {}}
             transition={{ 
               type: "spring",
