@@ -72,18 +72,17 @@ const MobileMenu = ({
           className="fixed inset-0 z-40 lg:hidden"
           onClick={onClose}
         >
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/50" />
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
+            transition={{ type: 'spring', stiffness: 380, damping: 34 }}
             style={{ top: `${headerHeight}px`, bottom: 0 }}
-            className="absolute right-0 w-full max-w-[90%] sm:max-w-[360px] bg-gradient-to-br from-surface-2 to-surface-2 border-l border-green-400/30 flex flex-col overflow-hidden"
+            className="absolute inset-x-0 material-thick border-b border-line shadow-overlay flex flex-col overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
-            <div className="h-1 bg-gradient-to-r from-green-400/60 via-green-400 to-green-400/60" />
-            <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 space-y-2">
+            <div className="overflow-y-auto overflow-x-hidden px-4 py-3 space-y-1">
               {menuItems.map((item) => (
                 <div key={`mobile-${item.name}`} className="rounded-xl overflow-hidden">
                   {item.dropdown ? (
@@ -147,11 +146,10 @@ const MobileMenu = ({
                   ) : (
                     <motion.button
                       onClick={() => handleNavigation(item.path)}
-                      className={`w-full flex items-center px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 ${location.pathname === item.path
-                        ? 'bg-green-400 text-on-brand shadow-xl'
-                        : 'text-white bg-surface-2 hover:bg-surface-3'
+                      className={`w-full flex items-center px-4 py-3.5 rounded-2xl text-lg font-semibold transition-colors duration-150 ${location.pathname === item.path
+                        ? 'bg-white/[0.08] text-brand'
+                        : 'text-ink hover:bg-white/[0.06]'
                         }`}
-                      whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       {getMenuIcon(item.name)}

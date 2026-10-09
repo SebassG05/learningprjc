@@ -33,7 +33,7 @@ const GoogleAuthButton = ({ onSuccess }) => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-6">
+    <div className="flex w-full flex-col items-center">
       <GoogleLogin
         onSuccess={handleGoogleSuccess}
         onError={() => showToast('Error al autenticar con Google', 'error')}
