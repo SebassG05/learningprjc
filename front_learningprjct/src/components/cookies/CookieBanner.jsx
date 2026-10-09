@@ -61,7 +61,7 @@ const CookieBanner = () => {
         aria-label="Consentimiento de cookies"
       >
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-surface to-surface border-2 border-brand/40 rounded-2xl shadow-2xl p-6 sm:p-8">
+          <div className="bg-gradient-to-br from-surface to-surface border-2 border-line rounded-2xl shadow-card p-6 sm:p-8">
             {!showSettings ? (
               <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
                 {/* Icono y contenido principal */}
@@ -89,7 +89,7 @@ const CookieBanner = () => {
 
                     {/* Texto */}
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-xl font-bold text-white mb-2 font-[Rondana]">
+                      <h2 className="text-xl font-bold text-ink mb-2 font-[Rondana]">
                         Utilizamos Cookies
                       </h2>
                       <p className="text-gray-300 text-sm leading-relaxed">
@@ -115,13 +115,13 @@ const CookieBanner = () => {
                   </button>
                   <button
                     onClick={handleRejectNonEssential}
-                    className="px-6 py-3 bg-gray-700 text-white rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200 whitespace-nowrap text-sm"
+                    className="px-6 py-3 bg-gray-700 text-ink rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200 whitespace-nowrap text-sm"
                   >
                     Solo esenciales
                   </button>
                   <button
                     onClick={handleAcceptAll}
-                    className="px-6 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-lg hover:shadow-brand/50 whitespace-nowrap text-sm"
+                    className="px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-card hover:shadow-brand/50 whitespace-nowrap text-sm"
                   >
                     Aceptar todas
                   </button>

@@ -206,7 +206,7 @@ const Contact = () => {
               damping: 15,
               delay: 0.2
             }}
-            className="inline-flex items-center px-4 py-2 bg-surface-2 border border-brand/30 rounded-full mb-4"
+            className="inline-flex items-center px-4 py-2 bg-surface-2 border border-line rounded-full mb-4"
           >
             <Sparkles className="w-4 h-4 text-brand mr-2" />
             <span className="text-xs sm:text-sm font-semibold text-brand">
@@ -214,7 +214,7 @@ const Contact = () => {
             </span>
           </motion.div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-[Rondana]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-4 font-[Rondana]">
             ¿Listo para empezar con <span className="text-brand">tu proyecto</span>?
           </h1>
 
@@ -252,7 +252,7 @@ const Contact = () => {
                     </div>
 
                     <div className="flex-grow min-w-0">
-                      <h3 className="text-sm font-bold text-white mb-1">
+                      <h3 className="text-sm font-bold text-ink mb-1">
                         {info.title}
                       </h3>
                       <p className="text-xs text-gray-300 mb-2 break-words">
@@ -280,7 +280,7 @@ const Contact = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={mainInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.7 }}
-              className="bg-surface-2 border-2 border-brand rounded-xl overflow-hidden"
+              className="bg-surface-2 border border-line-strong rounded-xl overflow-hidden"
             >
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3170.456193220813!2d-6.005224583886922!3d37.377445979833104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126dcad1bdd721%3A0xd80c106b41b3600e!2sEvenor-Tech!5e0!3m2!1ses!2ses!4v1694347141372!5m2!1ses!2ses"
@@ -301,9 +301,9 @@ const Contact = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={mainInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.4 }}
-              className="bg-surface-2 border-2 border-brand rounded-2xl p-6 sm:p-8"
+              className="bg-surface-2 border border-line-strong rounded-2xl p-6 sm:p-8"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-ink mb-6">
                 Envíanos un <span className="text-brand">mensaje</span>
               </h2>
 
@@ -321,7 +321,7 @@ const Contact = () => {
                       name="name"
                       placeholder="Tu nombre completo"
                       required
-                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-ink rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                     {formStatus.validationErrors.name && (
                       <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.name}</p>
@@ -339,7 +339,7 @@ const Contact = () => {
                       name="email"
                       placeholder="correo@ejemplo.com"
                       required
-                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-ink rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                     {formStatus.validationErrors.email && (
                       <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.email}</p>
@@ -359,7 +359,7 @@ const Contact = () => {
                       id="phone"
                       name="phone"
                       placeholder="+34 000 000 000"
-                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-ink rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                   </div>
 
@@ -373,7 +373,7 @@ const Contact = () => {
                       id="company"
                       name="company"
                       placeholder="Nombre de tu empresa"
-                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-ink rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                   </div>
                 </div>
@@ -390,7 +390,7 @@ const Contact = () => {
                     name="subject"
                     placeholder="¿En qué podemos ayudarte?"
                     required
-                    className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-line-strong bg-surface text-ink rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                   />
                   {formStatus.validationErrors.subject && (
                     <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.subject}</p>
@@ -409,7 +409,7 @@ const Contact = () => {
                     rows={5}
                     placeholder="Escribe aquí tu mensaje..."
                     required
-                    className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 resize-none text-sm"
+                    className="w-full px-4 py-2.5 border border-line-strong bg-surface text-ink rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 resize-none text-sm"
                   />
                   {formStatus.validationErrors.message && (
                     <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.message}</p>
@@ -431,7 +431,7 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-surface-2 border border-brand/30 rounded-lg text-brand text-sm flex items-center"
+                    className="p-3 bg-surface-2 border border-line rounded-lg text-brand text-sm flex items-center"
                   >
                     <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
                     {formStatus.successMessage}
@@ -444,9 +444,9 @@ const Contact = () => {
                   disabled={formStatus.loading || formStatus.submitted}
                   onMouseEnter={() => setIsHoveringButton(true)}
                   onMouseLeave={() => setIsHoveringButton(false)}
-                  className={`w-full relative px-6 py-3 font-bold rounded-xl shadow-lg overflow-hidden group transition-all ${
+                  className={`w-full relative px-6 py-3 font-bold rounded-xl shadow-card overflow-hidden group transition-all ${
                     formStatus.submitted
-                      ? 'bg-green-600 text-white cursor-not-allowed'
+                      ? 'bg-green-600 text-ink cursor-not-allowed'
                       : 'bg-brand text-on-brand hover:shadow-xl cursor-pointer'
                   }`}
                 >
@@ -483,7 +483,7 @@ const Contact = () => {
                 </button>
 
                 {/* Información básica RGPD */}
-                <div className="bg-surface border border-brand/15 rounded-xl p-4 text-xs">
+                <div className="bg-surface border border-line rounded-xl p-4 text-xs">
                   <table className="w-full">
                     <tbody>
                       {[
@@ -492,7 +492,7 @@ const Contact = () => {
                         ['Derechos', 'Acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.'],
                         ['Información adicional', null],
                       ].map(([k, v]) => (
-                        <tr key={k} className="border-b border-brand/10 last:border-0">
+                        <tr key={k} className="border-b border-line last:border-0">
                           <td className="py-1.5 pr-3 font-semibold text-brand w-2/5 align-top">{k}</td>
                           <td className="py-1.5 text-gray-400">
                             {k === 'Información adicional' ? (

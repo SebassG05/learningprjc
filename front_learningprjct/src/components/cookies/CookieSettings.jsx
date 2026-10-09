@@ -71,7 +71,7 @@ const CookieSettings = ({ onSave, onBack }) => {
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Encabezado */}
-      <div className="flex items-center gap-3 pb-4 border-b border-brand/30">
+      <div className="flex items-center gap-3 pb-4 border-b border-line">
         <button
           onClick={onBack}
           className="text-gray-400 hover:text-white transition-colors"
@@ -81,7 +81,7 @@ const CookieSettings = ({ onSave, onBack }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h3 className="text-xl font-bold text-white font-[Rondana]">
+        <h3 className="text-xl font-bold text-ink font-[Rondana]">
           Configuración de cookies
         </h3>
       </div>
@@ -91,7 +91,7 @@ const CookieSettings = ({ onSave, onBack }) => {
         {cookieTypes.map((cookie) => (
           <div
             key={cookie.id}
-            className="bg-surface/50 rounded-xl p-4 border border-brand/20 hover:border-brand/40 transition-all duration-200"
+            className="bg-surface/50 rounded-xl p-4 border border-line hover:border-brand/40 transition-all duration-200"
           >
             <div className="flex items-start gap-4">
               {/* Icono */}
@@ -107,7 +107,7 @@ const CookieSettings = ({ onSave, onBack }) => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-4 mb-2">
                   <div>
-                    <h4 className="text-white font-semibold text-base">
+                    <h4 className="text-ink font-semibold text-base">
                       {cookie.name}
                       {cookie.required && (
                         <span className="ml-2 text-xs text-brand font-normal">
@@ -145,16 +145,16 @@ const CookieSettings = ({ onSave, onBack }) => {
       </div>
 
       {/* Botones de acción */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-brand/30">
+      <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-line">
         <button
           onClick={onBack}
-          className="flex-1 px-6 py-3 bg-gray-700 text-white rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200"
+          className="flex-1 px-6 py-3 bg-gray-700 text-ink rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200"
         >
           Cancelar
         </button>
         <button
           onClick={handleSave}
-          className="flex-1 px-6 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-lg hover:shadow-brand/50"
+          className="flex-1 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-card hover:shadow-brand/50"
         >
           Guardar preferencias
         </button>

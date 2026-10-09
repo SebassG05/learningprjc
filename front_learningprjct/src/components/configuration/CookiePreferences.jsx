@@ -85,10 +85,10 @@ const CookiePreferences = () => {
   ];
 
   return (
-    <div className="bg-surface border border-brand/30 rounded-2xl p-6 sm:p-8">
+    <div className="bg-surface border border-line rounded-2xl p-6 sm:p-8">
       {/* Encabezado */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-2 font-[Rondana]">
+        <h2 className="text-2xl font-bold text-ink mb-2 font-[Rondana]">
           🍪 Preferencias de cookies
         </h2>
         <p className="text-gray-400 text-sm">
@@ -102,7 +102,7 @@ const CookiePreferences = () => {
           <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <span className="text-white">Preferencias guardadas correctamente</span>
+          <span className="text-ink">Preferencias guardadas correctamente</span>
         </div>
       )}
 
@@ -111,11 +111,11 @@ const CookiePreferences = () => {
         {cookieTypes.map((cookie) => (
           <div
             key={cookie.id}
-            className="bg-surface/50 rounded-xl p-5 border border-brand/20"
+            className="bg-surface/50 rounded-xl p-5 border border-line"
           >
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1">
-                <h3 className="text-white font-semibold text-lg">
+                <h3 className="text-ink font-semibold text-lg">
                   {cookie.name}
                   {cookie.required && (
                     <span className="ml-2 text-xs text-brand font-normal">
@@ -162,26 +162,26 @@ const CookiePreferences = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <button
           onClick={handleRejectAll}
-          className="px-6 py-3 bg-gray-700 text-white rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200 text-sm"
+          className="px-6 py-3 bg-gray-700 text-ink rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200 text-sm"
         >
           Rechazar todas
         </button>
         <button
           onClick={handleSave}
-          className="px-6 py-3 bg-brand/20 border-2 border-brand text-brand rounded-xl font-semibold hover:bg-brand/30 transition-all duration-200 text-sm"
+          className="px-6 py-3 bg-brand/20 border border-line-strong text-brand rounded-xl font-semibold hover:bg-brand/30 transition-all duration-200 text-sm"
         >
           Guardar cambios
         </button>
         <button
           onClick={handleAcceptAll}
-          className="px-6 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-lg hover:shadow-brand/50 text-sm"
+          className="px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-card hover:shadow-brand/50 text-sm"
         >
           Aceptar todas
         </button>
       </div>
 
       {/* Botón de reset (útil para desarrollo/testing) */}
-      <div className="mt-6 pt-6 border-t border-brand/20">
+      <div className="mt-6 pt-6 border-t border-line">
         <button
           onClick={() => {
             if (confirm('¿Estás seguro de que quieres restablecer tus preferencias de cookies? Volverás a ver el banner de consentimiento.')) {

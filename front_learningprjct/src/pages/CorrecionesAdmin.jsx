@@ -282,7 +282,7 @@ export default function CorreccionesAdmin() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-ink mb-2">
             Panel de Correcciones
           </h1>
           <p className="text-gray-400">
@@ -296,8 +296,8 @@ export default function CorreccionesAdmin() {
             onClick={() => setActiveTab('correcciones')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
               activeTab === 'correcciones'
-                ? 'bg-green-600 text-white shadow-lg shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-green-900/30 hover:border-green-700/50'
+                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
+                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
             }`}
           >
             <FileText className="w-4 h-4" />
@@ -307,8 +307,8 @@ export default function CorreccionesAdmin() {
             onClick={() => setActiveTab('reservas')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
               activeTab === 'reservas'
-                ? 'bg-green-600 text-white shadow-lg shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-green-900/30 hover:border-green-700/50'
+                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
+                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
             }`}
           >
             <Users className="w-4 h-4" />
@@ -318,8 +318,8 @@ export default function CorreccionesAdmin() {
             onClick={() => setActiveTab('progreso')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
               activeTab === 'progreso'
-                ? 'bg-green-600 text-white shadow-lg shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-green-900/30 hover:border-green-700/50'
+                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
+                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
             }`}
           >
             <TrendingUp className="w-4 h-4" />
@@ -329,8 +329,8 @@ export default function CorreccionesAdmin() {
             onClick={() => setActiveTab('gestion-cursos')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
               activeTab === 'gestion-cursos'
-                ? 'bg-green-600 text-white shadow-lg shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-green-900/30 hover:border-green-700/50'
+                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
+                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
             }`}
           >
             <Settings className="w-4 h-4" />
@@ -343,7 +343,7 @@ export default function CorreccionesAdmin() {
           <motion.div key="reservas" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             {!selectedCourse ? (
               <>
-                <h2 className="text-2xl font-bold text-white mb-6">Reservas por Curso</h2>
+                <h2 className="text-2xl font-bold text-ink mb-6">Reservas por Curso</h2>
                 {loadingCourses ? (
                   <div className="flex justify-center py-16">
                     <Loader className="w-10 h-10 text-green-500 animate-spin" />
@@ -354,7 +354,7 @@ export default function CorreccionesAdmin() {
                       <motion.div
                         key={course._id}
                         whileHover={{ y: -4, boxShadow: '0 12px 32px rgba(34,197,94,0.15)' }}
-                        className="bg-surface-2/40 border border-green-900/30 rounded-2xl overflow-hidden cursor-pointer hover:border-green-700/50 transition-colors"
+                        className="bg-surface-2/40 border border-line rounded-2xl overflow-hidden cursor-pointer hover:border-green-700/50 transition-colors"
                         onClick={() => verReservasCurso(course)}
                       >
                         <div className="h-36 bg-green-900/20 flex items-center justify-center overflow-hidden">
@@ -365,7 +365,7 @@ export default function CorreccionesAdmin() {
                           )}
                         </div>
                         <div className="p-5">
-                          <h3 className="text-white font-bold text-base leading-snug mb-3">{course.title}</h3>
+                          <h3 className="text-ink font-bold text-base leading-snug mb-3">{course.title}</h3>
                           <div className="flex items-center justify-between">
                             <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${
                               course.isOpen
@@ -426,7 +426,7 @@ export default function CorreccionesAdmin() {
                   </button>
                 </div>
 
-                <div className="bg-surface-2/40 border border-green-900/30 rounded-2xl p-6 mb-6">
+                <div className="bg-surface-2/40 border border-line rounded-2xl p-6 mb-6">
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-green-900/20 flex items-center justify-center flex-shrink-0">
                       {selectedCourse.image ? (
@@ -436,7 +436,7 @@ export default function CorreccionesAdmin() {
                       )}
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-white">{selectedCourse.title}</h2>
+                      <h2 className="text-xl font-bold text-ink">{selectedCourse.title}</h2>
                       <p className="text-gray-400 text-sm mt-1">
                         {courseEnrollments.length} {courseEnrollments.length === 1 ? 'persona ha reservado' : 'personas han reservado'} este curso
                       </p>
@@ -449,7 +449,7 @@ export default function CorreccionesAdmin() {
                     <Loader className="w-10 h-10 text-green-500 animate-spin" />
                   </div>
                 ) : courseEnrollments.length === 0 ? (
-                  <div className="bg-surface-2/40 border border-green-900/30 rounded-xl p-12 text-center">
+                  <div className="bg-surface-2/40 border border-line rounded-xl p-12 text-center">
                     <Users className="w-14 h-14 text-gray-600 mx-auto mb-4" />
                     <p className="text-gray-400 text-lg">Nadie ha reservado este curso todavía</p>
                   </div>
@@ -461,14 +461,14 @@ export default function CorreccionesAdmin() {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: idx * 0.04 }}
-                        className="bg-surface-2/40 border border-green-900/30 rounded-xl px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                        className="bg-surface-2/40 border border-line rounded-xl px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-green-900/40 border border-green-700/30 flex items-center justify-center flex-shrink-0">
+                          <div className="w-9 h-9 rounded-full bg-green-900/40 border border-line flex items-center justify-center flex-shrink-0">
                             <User className="w-4 h-4 text-green-400" />
                           </div>
                           <div>
-                            <p className="text-white font-semibold">{enrollment.name}</p>
+                            <p className="text-ink font-semibold">{enrollment.name}</p>
                             <p className="text-gray-400 text-sm">{enrollment.email}</p>
                           </div>
                         </div>
@@ -492,7 +492,7 @@ export default function CorreccionesAdmin() {
           <motion.div key="progreso" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             {!selectedProgressCourse ? (
               <>
-                <h2 className="text-2xl font-bold text-white mb-6">Progreso por Curso</h2>
+                <h2 className="text-2xl font-bold text-ink mb-6">Progreso por Curso</h2>
                 {loadingCourses ? (
                   <div className="flex justify-center py-16">
                     <Loader className="w-10 h-10 text-green-500 animate-spin" />
@@ -503,7 +503,7 @@ export default function CorreccionesAdmin() {
                       <motion.div
                         key={course._id}
                         whileHover={{ y: -4, boxShadow: '0 12px 32px rgba(34,197,94,0.15)' }}
-                        className="bg-surface-2/40 border border-green-900/30 rounded-2xl overflow-hidden cursor-pointer hover:border-green-700/50 transition-colors"
+                        className="bg-surface-2/40 border border-line rounded-2xl overflow-hidden cursor-pointer hover:border-green-700/50 transition-colors"
                         onClick={() => verProgresoCurso(course)}
                       >
                         <div className="h-36 bg-green-900/20 flex items-center justify-center overflow-hidden">
@@ -514,7 +514,7 @@ export default function CorreccionesAdmin() {
                           )}
                         </div>
                         <div className="p-5">
-                          <h3 className="text-white font-bold text-base leading-snug mb-3">{course.title}</h3>
+                          <h3 className="text-ink font-bold text-base leading-snug mb-3">{course.title}</h3>
                           <span className="text-xs text-gray-400 flex items-center gap-1">
                             <BarChart2 className="w-3.5 h-3.5" />
                             Ver progreso de alumnos
@@ -546,7 +546,7 @@ export default function CorreccionesAdmin() {
                   </button>
                 </div>
 
-                <div className="bg-surface-2/40 border border-green-900/30 rounded-2xl p-6 mb-6">
+                <div className="bg-surface-2/40 border border-line rounded-2xl p-6 mb-6">
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-green-900/20 flex items-center justify-center flex-shrink-0">
                       {selectedProgressCourse.image ? (
@@ -556,7 +556,7 @@ export default function CorreccionesAdmin() {
                       )}
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-white">{selectedProgressCourse.title}</h2>
+                      <h2 className="text-xl font-bold text-ink">{selectedProgressCourse.title}</h2>
                       <p className="text-gray-400 text-sm mt-1">
                         {progressEnrollments.length} {progressEnrollments.length === 1 ? 'alumno inscrito' : 'alumnos inscritos'}
                       </p>
@@ -566,7 +566,7 @@ export default function CorreccionesAdmin() {
 
                 {/* Leyenda de módulos */}
                 {selectedProgressCourse.temas && selectedProgressCourse.temas.length > 0 && (
-                  <div className="bg-surface-2/30 border border-green-900/20 rounded-xl p-4 mb-4 flex flex-wrap gap-3 text-xs text-gray-400">
+                  <div className="bg-surface-2/30 border border-line rounded-xl p-4 mb-4 flex flex-wrap gap-3 text-xs text-gray-400">
                     {selectedProgressCourse.temas
                       .slice()
                       .sort((a, b) => a.numeroTema - b.numeroTema)
@@ -588,7 +588,7 @@ export default function CorreccionesAdmin() {
                     <Loader className="w-10 h-10 text-green-500 animate-spin" />
                   </div>
                 ) : progressEnrollments.length === 0 ? (
-                  <div className="bg-surface-2/40 border border-green-900/30 rounded-xl p-12 text-center">
+                  <div className="bg-surface-2/40 border border-line rounded-xl p-12 text-center">
                     <Users className="w-14 h-14 text-gray-600 mx-auto mb-4" />
                     <p className="text-gray-400 text-lg">Nadie está inscrito en este curso</p>
                   </div>
@@ -607,15 +607,15 @@ export default function CorreccionesAdmin() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: idx * 0.04 }}
-                          className="bg-surface-2/40 border border-green-900/30 rounded-xl px-5 py-4"
+                          className="bg-surface-2/40 border border-line rounded-xl px-5 py-4"
                         >
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-full bg-green-900/40 border border-green-700/30 flex items-center justify-center flex-shrink-0">
+                              <div className="w-9 h-9 rounded-full bg-green-900/40 border border-line flex items-center justify-center flex-shrink-0">
                                 <User className="w-4 h-4 text-green-400" />
                               </div>
                               <div>
-                                <p className="text-white font-semibold">{enrollment.name}</p>
+                                <p className="text-ink font-semibold">{enrollment.name}</p>
                                 <p className="text-gray-400 text-sm">{enrollment.email}</p>
                               </div>
                             </div>
@@ -681,9 +681,9 @@ export default function CorreccionesAdmin() {
           animate={{ opacity: 1, y: 0 }}
           className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8"
         >
-          <div className="bg-surface-2/40 border border-green-900/30 rounded-xl p-4">
+          <div className="bg-surface-2/40 border border-line rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">Total</p>
-            <p className="text-2xl font-bold text-white">{estadisticas.total}</p>
+            <p className="text-2xl font-bold text-ink">{estadisticas.total}</p>
           </div>
           <div className="bg-blue-950/20 border border-blue-900/30 rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">Enviados</p>
@@ -693,7 +693,7 @@ export default function CorreccionesAdmin() {
             <p className="text-gray-400 text-sm mb-1">Revisados</p>
             <p className="text-2xl font-bold text-yellow-400">{estadisticas.revisado}</p>
           </div>
-          <div className="bg-green-950/20 border border-green-900/30 rounded-xl p-4">
+          <div className="bg-green-950/20 border border-line rounded-xl p-4">
             <p className="text-gray-400 text-sm mb-1">Aprobados</p>
             <p className="text-2xl font-bold text-green-400">{estadisticas.aprobado}</p>
           </div>
@@ -708,7 +708,7 @@ export default function CorreccionesAdmin() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-surface-2/40 border border-green-900/30 rounded-xl p-6 mb-6"
+          className="bg-surface-2/40 border border-line rounded-xl p-6 mb-6"
         >
           <div className="flex flex-col md:flex-row gap-4">
             {/* Búsqueda */}
@@ -719,7 +719,7 @@ export default function CorreccionesAdmin() {
                 placeholder="Buscar por alumno o ejercicio..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
-                className="w-full bg-canvas border border-green-900/30 rounded-lg pl-12 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition-colors"
+                className="w-full bg-canvas border border-line rounded-lg pl-12 pr-4 py-3 text-ink placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition-colors"
               />
             </div>
 
@@ -729,7 +729,7 @@ export default function CorreccionesAdmin() {
               <select
                 value={filtroEstado}
                 onChange={(e) => setFiltroEstado(e.target.value)}
-                className="bg-canvas border border-green-900/30 rounded-lg pl-12 pr-10 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors cursor-pointer appearance-none"
+                className="bg-canvas border border-line rounded-lg pl-12 pr-10 py-3 text-ink focus:outline-none focus:border-green-500/50 transition-colors cursor-pointer appearance-none"
               >
                 <option value="todos">Todos los estados</option>
                 <option value="enviado">Enviado</option>
@@ -749,7 +749,7 @@ export default function CorreccionesAdmin() {
           className="space-y-4"
         >
           {entregasFiltradas.length === 0 ? (
-            <div className="bg-surface-2/40 border border-green-900/30 rounded-xl p-12 text-center">
+            <div className="bg-surface-2/40 border border-line rounded-xl p-12 text-center">
               <AlertCircle className="w-16 h-16 text-gray-500 mx-auto mb-4" />
               <p className="text-gray-400 text-lg">
                 No se encontraron entregas{busqueda && ' que coincidan con tu búsqueda'}
@@ -762,7 +762,7 @@ export default function CorreccionesAdmin() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-surface-2/40 border border-green-900/30 rounded-xl p-6 hover:border-green-700/50 transition-colors"
+                className="bg-surface-2/40 border border-line rounded-xl p-6 hover:border-green-700/50 transition-colors"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   {/* Información del ejercicio y estudiante */}
@@ -772,7 +772,7 @@ export default function CorreccionesAdmin() {
                         <FileText className="w-5 h-5 text-green-400" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-white mb-1">
+                        <h3 className="text-lg font-semibold text-ink mb-1">
                           {entrega.ejercicioId?.titulo || 'Ejercicio sin título'}
                         </h3>
                         <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400">
@@ -840,13 +840,13 @@ export default function CorreccionesAdmin() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-canvas border border-green-900/30 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-canvas border border-line rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Corregir Entrega</h2>
+              <h2 className="text-2xl font-bold text-ink mb-6">Corregir Entrega</h2>
 
               {/* Información del estudiante */}
-              <div className="bg-surface-2/40 border border-green-900/30 rounded-xl p-4 mb-6">
-                <h3 className="text-lg font-semibold text-white mb-3">Información del Estudiante</h3>
+              <div className="bg-surface-2/40 border border-line rounded-xl p-4 mb-6">
+                <h3 className="text-lg font-semibold text-ink mb-3">Información del Estudiante</h3>
                 <div className="space-y-2 text-sm">
                   <p className="text-gray-300">
                     <span className="text-gray-500">Nombre:</span>{' '}
@@ -869,15 +869,15 @@ export default function CorreccionesAdmin() {
 
               {/* Comentarios del estudiante */}
               {entregaSeleccionada.comentarios && (
-                <div className="bg-surface-2/40 border border-green-900/30 rounded-xl p-4 mb-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">Comentarios del Estudiante</h3>
+                <div className="bg-surface-2/40 border border-line rounded-xl p-4 mb-6">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Comentarios del Estudiante</h3>
                   <p className="text-gray-300 text-sm whitespace-pre-wrap">{entregaSeleccionada.comentarios}</p>
                 </div>
               )}
 
               {/* Calificación */}
               <div className="mb-6">
-                <label className="block text-white font-semibold mb-2">
+                <label className="block text-ink font-semibold mb-2">
                   Calificación (0-10)
                 </label>
                 <input
@@ -887,14 +887,14 @@ export default function CorreccionesAdmin() {
                   step="0.5"
                   value={calificacion}
                   onChange={(e) => setCalificacion(e.target.value)}
-                  className="w-full bg-surface-2 border border-green-900/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors"
+                  className="w-full bg-surface-2 border border-line rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-green-500/50 transition-colors"
                   placeholder="Ej: 8.5"
                 />
               </div>
 
               {/* Feedback del profesor */}
               <div className="mb-6">
-                <label className="block text-white font-semibold mb-2">
+                <label className="block text-ink font-semibold mb-2">
                   Feedback para el Estudiante
                 </label>
                 <textarea
@@ -902,7 +902,7 @@ export default function CorreccionesAdmin() {
                   onChange={(e) => setFeedback(e.target.value)}
                   rows={6}
                   maxLength={1000}
-                  className="w-full bg-surface-2 border border-green-900/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-green-500/50 transition-colors resize-none"
+                  className="w-full bg-surface-2 border border-line rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-green-500/50 transition-colors resize-none"
                   placeholder="Escribe tu retroalimentación aquí..."
                 />
                 <p className="text-gray-500 text-sm mt-1">{feedback.length}/1000 caracteres</p>
@@ -913,7 +913,7 @@ export default function CorreccionesAdmin() {
                 <button
                   onClick={() => guardarCorreccion('aprobado')}
                   disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
                   Aprobar
@@ -921,7 +921,7 @@ export default function CorreccionesAdmin() {
                 <button
                   onClick={() => guardarCorreccion('rechazado')}
                   disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <XCircle className="w-5 h-5" />}
                   Rechazar
@@ -929,7 +929,7 @@ export default function CorreccionesAdmin() {
                 <button
                   onClick={() => guardarCorreccion('revisado')}
                   disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                   Marcar Revisado
@@ -937,7 +937,7 @@ export default function CorreccionesAdmin() {
                 <button
                   onClick={cerrarModal}
                   disabled={guardando}
-                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancelar
                 </button>
@@ -955,11 +955,11 @@ export default function CorreccionesAdmin() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-canvas border border-green-900/30 rounded-2xl w-full max-w-6xl h-[90vh] overflow-hidden"
+              className="bg-canvas border border-line rounded-2xl w-full max-w-6xl h-[90vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between p-6 border-b border-green-900/30">
-                <h2 className="text-2xl font-bold text-white">Vista Previa del PDF</h2>
+              <div className="flex items-center justify-between p-6 border-b border-line">
+                <h2 className="text-2xl font-bold text-ink">Vista Previa del PDF</h2>
                 <button
                   onClick={cerrarPdfModal}
                   className="p-2 hover:bg-green-900/20 rounded-lg transition-colors"

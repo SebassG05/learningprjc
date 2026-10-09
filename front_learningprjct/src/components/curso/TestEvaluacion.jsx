@@ -211,7 +211,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-brand/20 border-t-brand rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-line border-t-brand rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-400">{idioma === 'en' ? 'Loading test...' : 'Cargando test...'}</p>
         </div>
       </div>
@@ -225,7 +225,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto p-10 bg-surface/80 backdrop-blur-sm rounded-3xl border-2 border-red-500/30 shadow-2xl"
+          className="text-center max-w-2xl mx-auto p-10 bg-surface/80 backdrop-blur-sm rounded-3xl border-2 border-red-500/30 shadow-card"
         >
           <div className="w-24 h-24 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-500/50">
             <Lock className="w-12 h-12 text-red-400" />
@@ -244,7 +244,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           </div>
           <button
             onClick={onComplete}
-            className="px-8 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand/50 transition-all transform hover:scale-105"
+            className="px-8 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand/50 transition-all"
           >
             {idioma === 'en' ? 'Back to Course' : 'Volver al Curso'}
           </button>
@@ -271,7 +271,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="max-w-3xl w-full bg-surface/80 backdrop-blur-sm rounded-3xl p-10 border-2 border-brand/20 shadow-2xl"
+          className="max-w-3xl w-full bg-surface/80 backdrop-blur-sm rounded-3xl p-10 border-2 border-line shadow-card"
         >
           <div className="text-center mb-10">
             {resultado.aprobado ? (
@@ -288,7 +288,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-3"
+                  className="text-5xl font-bold text-ink mb-3"
                 >
                   {isTestFinal
                     ? (idioma === 'en' ? 'Course Complete!' : '¡Has completado el curso!')
@@ -309,7 +309,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
-                    className="mt-6 p-4 bg-gradient-to-r from-brand/10 to-brand-500/10 border border-brand/30 rounded-xl"
+                    className="mt-6 p-4 bg-gradient-to-r from-brand/10 to-brand-500/10 border border-line rounded-xl"
                   >
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 text-2xl mt-1">📧</div>
@@ -322,9 +322,9 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                         </p>
                       </div>
                     </div>
-                    <div className="mt-4 pt-4 border-t border-brand/20 text-center">
+                    <div className="mt-4 pt-4 border-t border-line text-center">
                       <p className="text-gray-400 text-sm mb-2">{idioma === 'en' ? 'Redirecting to home in' : 'Redirigiendo al inicio en'}</p>
-                      <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-brand to-brand-500 rounded-full shadow-lg">
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-brand hover:bg-brand-300 rounded-full shadow-card">
                         <span className="text-3xl font-bold text-on-brand">{countdown}</span>
                       </div>
                     </div>
@@ -367,11 +367,11 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
             transition={{ delay: 0.6 }}
             className="grid grid-cols-2 gap-6 mb-8"
           >
-            <div className="bg-gradient-to-br from-surface/80 to-surface/50 p-8 rounded-2xl text-center border border-brand/10 shadow-lg">
+            <div className="bg-gradient-to-br from-surface/80 to-surface/50 p-8 rounded-2xl text-center border border-line shadow-card">
               <p className="text-gray-400 text-sm font-medium mb-3 uppercase tracking-wider">{idioma === 'en' ? 'Your score' : 'Tu nota'}</p>
               <p className={`text-6xl font-bold mb-2 ${
                 resultado.aprobado 
-                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500' 
+                  ? 'text-ink' 
                   : 'text-red-500'
               }`}>
                 {resultado.nota}%
@@ -383,9 +383,9 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 </div>
               )}
             </div>
-            <div className="bg-gradient-to-br from-surface/80 to-surface/50 p-8 rounded-2xl text-center border border-brand/10 shadow-lg">
+            <div className="bg-gradient-to-br from-surface/80 to-surface/50 p-8 rounded-2xl text-center border border-line shadow-card">
               <p className="text-gray-400 text-sm font-medium mb-3 uppercase tracking-wider">{idioma === 'en' ? 'Correct answers' : 'Aciertos'}</p>
-              <p className="text-6xl font-bold text-white mb-2">
+              <p className="text-6xl font-bold text-ink mb-2">
                 {resultado.correctas}<span className="text-3xl text-gray-500">/{resultado.totalPreguntas}</span>
               </p>
               <div className="h-2 bg-surface rounded-full overflow-hidden mt-4">
@@ -395,7 +395,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
                   className={`h-full ${
                     resultado.aprobado 
-                      ? 'bg-gradient-to-r from-brand to-brand-500' 
+                      ? 'bg-brand hover:bg-brand-300' 
                       : 'bg-red-500'
                   }`}
                 />
@@ -407,13 +407,13 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="bg-surface/50 p-6 rounded-xl mb-8 border border-brand/10"
+            className="bg-surface/50 p-6 rounded-xl mb-8 border border-line"
           >
             <div className="flex items-center justify-between">
               <p className="text-gray-300">
                 Nota mínima requerida
               </p>
-              <span className="text-2xl font-bold text-white">{resultado.notaMinima}%</span>
+              <span className="text-2xl font-bold text-ink">{resultado.notaMinima}%</span>
             </div>
           </motion.div>
 
@@ -432,7 +432,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   setPreguntaActual(0);
                   cargarTest(); // Recargar el test para barajar de nuevo
                 }}
-                className="flex-1 px-8 py-4 bg-surface text-white font-semibold rounded-xl hover:bg-surface-2 border-2 border-gray-700 hover:border-brand/30 transition-all shadow-lg hover:shadow-xl"
+                className="flex-1 px-8 py-4 bg-surface text-ink font-semibold rounded-xl hover:bg-surface-2 border-2 border-gray-700 hover:border-brand/30 transition-all shadow-card hover:shadow-xl"
               >
                 {idioma === 'en' ? 'Retry Test' : 'Reintentar Test'}
               </button>
@@ -446,7 +446,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   onComplete();
                 }
               }}
-              className="flex-1 px-8 py-4 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl hover:shadow-2xl hover:shadow-brand/50 transition-all transform hover:scale-105"
+              className="flex-1 px-8 py-4 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-glow transition-all"
             >
               {resultado.aprobado
                 ? (isTestFinal
@@ -467,12 +467,12 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
   return (
     <div className="h-full flex flex-col bg-gradient-to-br from-surface via-surface to-surface">
       {/* Header del Test */}
-      <div className="bg-surface/80 backdrop-blur-sm border-b border-brand/20 p-6 shadow-lg">
+      <div className="bg-surface/80 backdrop-blur-sm border-b border-line p-6 shadow-card">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500">
+                <h2 className="text-3xl font-bold text-ink">
                   {idioma === 'en' ? (test.tituloEn || test.titulo) : test.titulo}
                 </h2>
                 {isTestFinal && (
@@ -484,9 +484,9 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               </div>
               <p className="text-sm text-gray-400 mt-2">{idioma === 'en' ? (test.descripcionEn || test.descripcion) : test.descripcion}</p>
             </div>
-            <div className="flex items-center gap-3 px-4 py-2 bg-surface/50 rounded-lg border border-brand/20">
+            <div className="flex items-center gap-3 px-4 py-2 bg-surface/50 rounded-lg border border-line">
               <Clock className="w-5 h-5 text-brand" />
-              <span className="text-sm font-medium text-white">{test.duracionMinutos} min</span>
+              <span className="text-sm font-medium text-ink">{test.duracionMinutos} min</span>
             </div>
           </div>
 
@@ -505,7 +505,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 initial={{ width: 0 }}
                 animate={{ width: `${progreso}%` }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="h-full bg-gradient-to-r from-brand via-brand-500 to-brand shadow-lg"
+                className="h-full bg-gradient-to-r from-brand via-brand-500 to-brand shadow-card"
                 style={{
                   boxShadow: '0 0 20px rgba(161, 219, 135, 0.5)'
                 }}
@@ -531,7 +531,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.1 }}
-                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-brand/20 to-brand-500/20 text-brand rounded-full text-sm font-semibold border border-brand/30 mb-6"
+                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-brand/20 to-brand-500/20 text-brand rounded-full text-sm font-semibold border border-line mb-6"
                 >
                   {idioma === 'en' ? (pregunta.bloqueEn || pregunta.bloque) : pregunta.bloque}
                 </motion.span>
@@ -539,7 +539,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-3xl font-bold text-white mb-2 leading-tight"
+                  className="text-3xl font-bold text-ink mb-2 leading-tight"
                 >
                   {idioma === 'en' ? (pregunta.preguntaEn || pregunta.pregunta) : pregunta.pregunta}
                 </motion.h3>
@@ -561,8 +561,8 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                       onClick={() => seleccionarRespuesta(pregunta.numero, opcion.id)}
                       className={`relative w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 group overflow-hidden ${
                         isSelected
-                          ? 'border-brand bg-gradient-to-r from-brand/15 to-brand-500/15 shadow-lg shadow-brand/20'
-                          : 'border-brand/10 bg-surface/50 hover:border-brand/40 hover:bg-surface/80'
+                          ? 'border-brand bg-gradient-to-r from-brand/15 to-brand-500/15 shadow-card shadow-brand/20'
+                          : 'border-line bg-surface/50 hover:border-brand/40 hover:bg-surface/80'
                       }`}
                     >
                       {isSelected && (
@@ -575,7 +575,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                       <div className="relative flex items-center gap-5">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                           isSelected 
-                            ? 'border-brand bg-gradient-to-br from-brand to-brand-500 shadow-lg shadow-brand/50'
+                            ? 'border-brand bg-brand hover:bg-brand-300 shadow-card shadow-brand/50'
                             : 'border-gray-600 group-hover:border-brand/50'
                         }`}>
                           {isSelected ? (
@@ -586,7 +586,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className={`text-base leading-relaxed transition-colors break-words ${
-                            isSelected ? 'text-white font-medium' : 'text-gray-300 group-hover:text-white'
+                            isSelected ? 'text-ink font-medium' : 'text-gray-300 group-hover:text-white'
                           }`}>
                             {idioma === 'en' ? (opcion.textoEn || opcion.texto) : opcion.texto}
                           </p>
@@ -602,14 +602,14 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
       </div>
 
       {/* Navegación mejorada */}
-      <div className="bg-surface/80 backdrop-blur-sm border-t border-brand/20 p-4 shadow-lg">
+      <div className="bg-surface/80 backdrop-blur-sm border-t border-line p-4 shadow-card">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-4">
             {/* Botón Anterior */}
             <button
               onClick={preguntaAnterior}
               disabled={preguntaActual === 0}
-              className="cursor-pointer flex-shrink-0 px-6 py-3 border-2 border-brand/30 text-gray-400 hover:text-white hover:border-brand rounded-xl transition-all flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg"
+              className="cursor-pointer flex-shrink-0 px-6 py-3 border-2 border-line text-gray-400 hover:text-white hover:border-brand rounded-xl transition-all flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg"
             >
               <ChevronLeft className="w-4 h-4" />
               <span className="hidden sm:inline">{idioma === 'en' ? 'Previous' : 'Anterior'}</span>
@@ -627,7 +627,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                     onClick={() => setPreguntaActual(index)}
                     className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-bold transition-all duration-300 ${
                       index === preguntaActual
-                        ? 'bg-gradient-to-br from-brand to-brand-500 text-on-brand shadow-lg shadow-brand/50 scale-110'
+                        ? 'bg-brand hover:bg-brand-300 text-on-brand shadow-card shadow-brand/50 scale-110'
                         : respuestas[test.preguntas[index].numero]
                         ? 'bg-brand/20 text-brand border border-brand/50 hover:bg-brand/30'
                         : 'bg-surface/80 text-gray-500 border border-gray-700 hover:text-white hover:border-brand/30'
@@ -644,7 +644,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               <button
                 onClick={enviarTest}
                 disabled={enviando || preguntasRespondidas < test.preguntas.length}
-                className="flex-shrink-0 px-8 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand/50 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
+                className="flex-shrink-0 px-8 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand/50 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
               >
                 <span className="hidden sm:inline">{enviando ? (idioma === 'en' ? 'Submitting...' : 'Enviando...') : (idioma === 'en' ? 'Finish Test' : 'Finalizar Test')}</span>
                 <span className="sm:hidden">{enviando ? '...' : (idioma === 'en' ? 'Finish' : 'Finalizar')}</span>
@@ -653,7 +653,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
             ) : (
               <button
                 onClick={siguientePregunta}
-                className="cursor-pointer flex-shrink-0 px-6 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand/50 transition-all flex items-center gap-2"
+                className="cursor-pointer flex-shrink-0 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand/50 transition-all flex items-center gap-2"
               >
                 <span className="hidden sm:inline">{idioma === 'en' ? 'Next' : 'Siguiente'}</span>
                 <ChevronRight className="w-4 h-4" />

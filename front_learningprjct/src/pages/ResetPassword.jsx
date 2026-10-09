@@ -101,14 +101,14 @@ export default function ResetPassword() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-md bg-surface border border-brand/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center relative"
+          className="w-full max-w-md bg-surface border border-line rounded-2xl shadow-card p-8 sm:p-12 flex flex-col items-center relative"
           style={{ boxShadow: '0 8px 32px rgba(90,168,51,0.10)' }}
         >
           <div className="flex flex-col items-center mb-6">
             <span className="inline-block bg-brand rounded-full p-3 mb-3">
               <svg width="32" height="32" fill="#141416" viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-7V8a6 6 0 1 0-12 0v2a4 4 0 0 0-2 3.465V18a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-3.535A4 4 0 0 0 18 10zm-8-2a4 4 0 1 1 8 0v2H6V8zm10 10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-3.535A2 2 0 0 1 8 12h8a2 2 0 0 1 2 2.465V18z"/></svg>
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-brand mb-2 text-center font-[Rondana]">Actualiza tu contraseña</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand mb-2 text-center font-[Rondana]">Actualiza tu contraseña</h2>
             <p className="text-gray-300 text-base text-center">Introduce y confirma tu nueva contraseña para tu cuenta.</p>
           </div>
           <div className="w-full mb-6 relative">

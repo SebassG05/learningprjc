@@ -42,10 +42,10 @@ export default function ForgotPassword() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-surface via-surface-2 to-surface py-12 px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-surface border border-brand/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center"
+        className="w-full max-w-md bg-surface border border-line rounded-2xl shadow-card p-8 sm:p-12 flex flex-col items-center"
         style={{ boxShadow: '0 8px 32px rgba(90,168,51,0.10)' }}
       >
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-brand mb-2 text-center font-[Rondana]">¿Olvidaste tu contraseña?</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-brand mb-2 text-center font-[Rondana]">¿Olvidaste tu contraseña?</h2>
         <p className="text-gray-300 text-base text-center mb-6">Introduce tu email y te enviaremos instrucciones para restablecer tu contraseña.</p>
         <div className="w-full mb-6">
           <label className="block text-brand font-semibold mb-2">Email</label>

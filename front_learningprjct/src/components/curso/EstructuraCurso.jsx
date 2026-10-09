@@ -15,7 +15,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
       color: '#a1db87',
       content: (
         <div className="space-y-4">
-          <p className="text-gray-300 text-justify leading-relaxed">
+          <p className="text-gray-300 leading-relaxed">
             {t(
               <>Hemos diseñado una experiencia de aprendizaje basada en la <span className="text-brand font-semibold">teoría del aprendizaje activo</span>, donde cada concepto teórico se valida inmediatamente mediante evaluaciones prácticas sobre la plataforma ANFORA.</>,
               <>We designed a learning experience based on <span className="text-brand font-semibold">active learning theory</span>, where every theoretical concept is immediately validated through practical assessments on the ANFORA platform.</>
@@ -80,7 +80,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               </div>
               <div className="flex-1">
                 <h4 className="font-semibold mb-1" style={{ color }}>{title}</h4>
-                <p className="text-sm text-gray-400 text-justify">{desc}</p>
+                <p className="text-sm text-gray-400 ">{desc}</p>
               </div>
             </div>
           ))}
@@ -99,7 +99,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               <Info className="w-4 h-4" />
               {t('Nota Mínima por Unidad: 60%', 'Minimum Grade per Unit: 60%')}
             </h4>
-            <p className="text-sm text-gray-300 text-justify">
+            <p className="text-sm text-gray-300 ">
               {t(
                 'Necesitas al menos un 60% de respuestas correctas en los tests de cada unidad temática (25 preguntas, 30 minutos).',
                 'You need at least 60% correct answers in each unit test (25 questions, 30 minutes).'
@@ -112,7 +112,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               <Info className="w-4 h-4" />
               {t('Nota Mínima Test Final: 70%', 'Minimum Grade Final Test: 70%')}
             </h4>
-            <p className="text-sm text-gray-300 text-justify">
+            <p className="text-sm text-gray-300 ">
               {t(
                 'El Test Final de Certificación requiere un mínimo del 70% para obtener el certificado (40 preguntas, 60 minutos).',
                 'The Final Certification Test requires a minimum of 70% to obtain the certificate (40 questions, 60 minutes).'
@@ -125,7 +125,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               <Info className="w-4 h-4" />
               {t('3 Oportunidades', '3 Attempts')}
             </h4>
-            <p className="text-sm text-gray-300 text-justify">
+            <p className="text-sm text-gray-300 ">
               {t(
                 'Cada test puede realizarse hasta 3 veces. Entre intentos, puedes revisar el material del tema para reforzar los conceptos.',
                 'Each test can be taken up to 3 times. Between attempts, you can review the unit material to reinforce concepts.'
@@ -138,7 +138,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               <Info className="w-4 h-4" />
               {t('Política de Fallos', 'Failure Policy')}
             </h4>
-            <p className="text-sm text-gray-300 text-justify">
+            <p className="text-sm text-gray-300 ">
               {t(
                 'Si agotas los 3 intentos sin aprobar, el curso quedará bloqueado. Deberás contactar con soporte para reinscribirte.',
                 'If you exhaust all 3 attempts without passing, the course will be locked. You will need to contact support to re-enrol.'
@@ -160,7 +160,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               <Trophy className="w-8 h-8 text-yellow-500" />
               <h4 className="text-yellow-400 font-bold text-lg">{t('Evaluación Final Integral', 'Comprehensive Final Assessment')}</h4>
             </div>
-            <p className="text-gray-300 text-justify mb-4">
+            <p className="text-gray-300 mb-4">
               {t(
                 'Al completar y aprobar los tests de las 6 unidades, se desbloquea el Test Final de Certificación, que evalúa de forma integrada todos los contenidos del curso ANFORA.',
                 'After completing and passing all 6 unit tests, the Final Certification Test is unlocked, providing an integrated evaluation of all ANFORA course content.'
@@ -184,7 +184,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
 
           <div className="bg-surface-2 border border-brand-400/30 p-4 rounded-lg">
             <h4 className="text-brand-300 font-semibold mb-2">🎓 {t('Certificado Digital', 'Digital Certificate')}</h4>
-            <p className="text-sm text-gray-300 text-justify">
+            <p className="text-sm text-gray-300 ">
               {t(
                 'Al aprobar el Test Final, recibirás un certificado digital verificable que acredita tus conocimientos sobre la gestión de la huella hídrica con la plataforma ANFORA.',
                 'Upon passing the Final Test, you will receive a verifiable digital certificate accrediting your knowledge of water footprint management using the ANFORA platform.'
@@ -201,7 +201,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               </svg>
               {t('Sistema Anti-Copia', 'Anti-Cheating System')}
             </h4>
-            <p className="text-sm text-gray-300 text-justify">
+            <p className="text-sm text-gray-300 ">
               {t(
                 <>Durante el Test Final, el sistema detecta automáticamente si <span className="text-red-400 font-semibold">cambias de pestaña, ventana o aplicación</span>. Cualquier intento de abandonar la pantalla del test se registrará y podría resultar en la <span className="text-red-400 font-semibold">anulación automática</span> del examen.</>,
                 <>During the Final Test, the system automatically detects if you <span className="text-red-400 font-semibold">switch tabs, windows or applications</span>. Any attempt to leave the test screen will be logged and may result in the <span className="text-red-400 font-semibold">automatic cancellation</span> of the exam.</>
@@ -217,10 +217,10 @@ export default function EstructuraCurso({ idioma = 'es' }) {
     <div className="w-full mb-12">
       {/* Título Principal */}
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-extrabold text-white mb-3">
+        <h2 className="text-4xl font-bold text-ink mb-3">
           {t('Estructura del Curso', 'Course Structure')}
         </h2>
-        <div className="h-1 w-32 bg-gradient-to-r from-brand to-brand-500 mx-auto rounded-full"></div>
+        <div className="h-1 w-32 bg-brand hover:bg-brand-300 mx-auto rounded-full"></div>
       </div>
 
       {/* Descripción */}
@@ -278,14 +278,14 @@ export default function EstructuraCurso({ idioma = 'es' }) {
                       {section.icon}
                     </div>
                     <h3 className={`font-bold text-lg transition-colors duration-300 ${
-                      activeSection === section.id ? 'text-white' : 'text-gray-300'
+                      activeSection === section.id ? 'text-ink' : 'text-gray-300'
                     }`}>
                       {section.title}
                     </h3>
                   </div>
                   <ChevronRight
                     className={`w-5 h-5 transition-all duration-300 ${
-                      activeSection === section.id ? 'rotate-90 text-white' : 'text-gray-500'
+                      activeSection === section.id ? 'rotate-90 text-ink' : 'text-gray-500'
                     }`}
                   />
                 </div>
@@ -313,7 +313,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
 
       {/* Footer */}
       <div className="mt-10 text-center">
-        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-surface-2 to-surface border border-brand/30 rounded-full">
+        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-surface-2 to-surface border border-line rounded-full">
           <Zap className="w-4 h-4 text-brand" />
           <span className="text-sm text-gray-300">
             {t(

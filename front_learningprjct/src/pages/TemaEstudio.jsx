@@ -99,7 +99,7 @@ export default function TemaEstudio() {
             className="absolute inset-0 bg-surface z-[60] flex items-center justify-center"
           >
             <div className="text-center">
-              <div className="w-16 h-16 border-4 border-brand/20 border-t-brand rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="w-16 h-16 border-4 border-line border-t-brand rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-400">{idioma === 'en' ? 'Loading material...' : 'Cargando material...'}</p>
             </div>
           </motion.div>
@@ -111,7 +111,7 @@ export default function TemaEstudio() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-        className="bg-surface border-b border-brand/20 px-6 py-4"
+        className="bg-surface border-b border-line px-6 py-4"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -122,7 +122,7 @@ export default function TemaEstudio() {
               <X className="w-6 h-6 text-gray-400 hover:text-white" />
             </button>
             <div>
-              <h1 className="text-xl font-bold text-white">
+              <h1 className="text-xl font-bold text-ink">
                 {idioma === 'en'
                   ? `Topic ${tema.numeroTema}: ${tema.tituloEn || tema.titulo}`
                   : `Tema ${tema.numeroTema}: ${tema.titulo}`}
@@ -143,7 +143,7 @@ export default function TemaEstudio() {
                   <div
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                       isActive
-                        ? 'bg-gradient-to-r from-brand to-brand-500 text-on-brand'
+                        ? 'bg-brand hover:bg-brand-300 text-on-brand'
                         : isCompleted
                         ? 'bg-brand/20 text-brand'
                         : 'bg-surface text-gray-500'
@@ -183,7 +183,7 @@ export default function TemaEstudio() {
                 {pdfUrl ? (
                   <iframe
                     src={`${pdfUrl}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
-                    className="w-full h-full rounded-lg border border-brand/20"
+                    className="w-full h-full rounded-lg border border-line"
                     title={material.titulo}
                     style={{ minHeight: '100%' }}
                   />
@@ -195,17 +195,17 @@ export default function TemaEstudio() {
               </div>
 
               {/* Navigation Footer */}
-              <div className="bg-surface border-t border-brand/20 px-6 py-4">
+              <div className="bg-surface border-t border-line px-6 py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                   <button
                     onClick={handleClose}
-                    className="cursor-pointer px-6 py-2 border border-brand/30 text-gray-400 hover:text-white hover:border-brand rounded-lg transition-colors"
+                    className="cursor-pointer px-6 py-2 border border-line text-gray-400 hover:text-white hover:border-brand rounded-lg transition-colors"
                   >
                     {idioma === 'en' ? 'Back to Course' : 'Volver al Curso'}
                   </button>
                   <button
                     onClick={handleNextPhase}
-                    className="cursor-pointer px-6 py-2 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-medium rounded-lg hover:shadow-lg hover:shadow-brand/30 transition-all flex items-center gap-2"
+                    className="cursor-pointer px-6 py-2 bg-brand hover:bg-brand-300 text-on-brand font-medium rounded-lg hover:shadow-lg hover:shadow-brand/30 transition-all flex items-center gap-2"
                   >
                     {idioma === 'en' ? 'Continue to Test' : 'Continuar al Test'}
                     <ChevronRight className="w-4 h-4" />

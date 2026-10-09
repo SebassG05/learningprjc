@@ -31,7 +31,7 @@ export default function EstructuraCursoPage() {
             onClick={() => handleLang('es')}
             className={`cursor-pointer px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
               idioma === 'es'
-                ? 'bg-gradient-to-r from-brand to-brand-500 text-on-brand'
+                ? 'bg-brand hover:bg-brand-300 text-on-brand'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -41,7 +41,7 @@ export default function EstructuraCursoPage() {
             onClick={() => handleLang('en')}
             className={`cursor-pointer px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
               idioma === 'en'
-                ? 'bg-gradient-to-r from-brand to-brand-500 text-on-brand'
+                ? 'bg-brand hover:bg-brand-300 text-on-brand'
                 : 'text-gray-400 hover:text-white'
             }`}
           >

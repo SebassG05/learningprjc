@@ -58,17 +58,17 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-br from-surface/80 to-surface/80 rounded-2xl border-2 border-brand-500/30 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300"
+      className="bg-gradient-to-br from-surface/80 to-surface/80 rounded-2xl border-2 border-line overflow-hidden shadow-card hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-brand-500/20 to-brand-600/20 border-b border-brand-500/30 p-6">
+      <div className="bg-gradient-to-r from-brand-500/20 to-brand-600/20 border-b border-line p-6">
         <div className="flex items-center gap-4">
           {/* Icono + título + badges */}
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <span className="text-3xl flex-shrink-0">{getTipoIcon(ejercicio.tipo)}</span>
             <div className="min-w-0">
               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-ink">
                   {ejercicio.titulo}
                 </h3>
                 {ejercicio.esOptativo && (
@@ -161,7 +161,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                   <Target className="w-4 h-4" />
                   Contexto
                 </h4>
-                <p className="text-gray-300 leading-relaxed text-justify">
+                <p className="text-gray-300 leading-relaxed ">
                   {ejercicio.contexto}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                   <BookOpen className="w-4 h-4" />
                   Enunciado
                 </h4>
-                <p className="text-gray-300 leading-relaxed text-justify">
+                <p className="text-gray-300 leading-relaxed ">
                   {ejercicio.enunciado}
                 </p>
               </div>
@@ -186,13 +186,13 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                   </h4>
                   <div className="space-y-4">
                     {ejercicio.pasos.map((paso) => (
-                      <div key={paso.numero} className="bg-surface/50 rounded-lg p-4 border border-brand-500/10">
+                      <div key={paso.numero} className="bg-surface/50 rounded-lg p-4 border border-line">
                         <div className="flex gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-on-brand font-bold text-sm">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-brand hover:bg-brand-300 flex items-center justify-center text-on-brand font-bold text-sm">
                             {paso.numero}
                           </div>
                           <div className="flex-1">
-                            <h5 className="font-semibold text-white mb-1">
+                            <h5 className="font-semibold text-ink mb-1">
                               {paso.titulo}
                             </h5>
                             <p className="text-gray-400 text-sm mb-2">
@@ -218,7 +218,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
 
               {/* Entregable */}
               {ejercicio.entregable && (
-                <div className="bg-gradient-to-br from-brand-500/10 to-brand-600/10 border border-brand-500/30 rounded-xl p-6">
+                <div className="bg-gradient-to-br from-brand-500/10 to-brand-600/10 border border-line rounded-xl p-6">
                   <h4 className="flex items-center gap-2 text-brand-500 font-semibold text-sm uppercase tracking-wide mb-3">
                     <AlertCircle className="w-4 h-4" />
                     Entregable
@@ -260,10 +260,10 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                         href={recurso.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between p-4 bg-surface/50 hover:bg-surface border border-brand-500/10 hover:border-brand-500/30 rounded-lg transition-all duration-300"
+                        className="group flex items-center justify-between p-4 bg-surface/50 hover:bg-surface border border-line hover:border-brand-500/30 rounded-lg transition-all duration-300"
                       >
                         <div className="flex-1">
-                          <p className="font-semibold text-white group-hover:text-brand-500 transition-colors">
+                          <p className="font-semibold text-ink group-hover:text-brand-500 transition-colors">
                             {recurso.titulo}
                           </p>
                           {recurso.descripcion && (
@@ -272,7 +272,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                             </p>
                           )}
                         </div>
-                        <ExternalLink className="w-5 h-5 text-brand-500 group-hover:scale-110 transition-transform" />
+                        <ExternalLink className="w-5 h-5 text-brand-500 group- transition-transform" />
                       </a>
                     ))}
                   </div>
@@ -280,11 +280,11 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
               )}
 
               {/* Botón de acción */}
-              <div className="pt-4 border-t border-brand-500/20 flex gap-3">
+              <div className="pt-4 border-t border-line flex gap-3">
                 {ejercicio.recursos && ejercicio.recursos.length > 0 && (
                   <button
                     onClick={() => window.open(ejercicio.recursos[0].url, '_blank')}
-                    className="cursor-pointer flex-1 px-6 py-3 bg-surface/80 border-2 border-brand-500/30 text-brand-500 font-semibold rounded-xl hover:bg-surface hover:border-brand-500/50 transition-all flex items-center justify-center gap-2"
+                    className="cursor-pointer flex-1 px-6 py-3 bg-surface/80 border-2 border-line text-brand-500 font-semibold rounded-xl hover:bg-surface hover:border-brand-500/50 transition-all flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-5 h-5" />
                     <span>Abrir Herramienta</span>
@@ -303,7 +303,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                     onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
                       state: { ejercicio }
                     })}
-                    className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-orange-500/40 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+                    className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-ink font-bold rounded-xl hover:shadow-xl hover:shadow-orange-500/40 transition-all flex items-center justify-center gap-2"
                   >
                     <RefreshCw className="w-5 h-5" />
                     <span>Intentar de nuevo</span>
@@ -315,7 +315,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                       onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
                         state: { ejercicio }
                       })}
-                      className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-600 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand-500/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+                      className="cursor-pointer flex-1 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand-500/50 transition-all flex items-center justify-center gap-2"
                     >
                       <FileUp className="w-5 h-5" />
                       <span>{entrega ? 'Entrega enviada — en revisión' : 'Entregar Ejercicio'}</span>

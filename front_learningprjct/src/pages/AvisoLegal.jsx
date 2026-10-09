@@ -9,7 +9,7 @@ export default function AvisoLegal() {
       title: 'Usuario y Régimen de Responsabilidades',
       content: (
         <div className="space-y-3 text-gray-300 text-sm leading-relaxed">
-          <p>La navegación, acceso y uso por el sitio web de <strong className="text-white">EVENOR TECH, S.L.U.</strong> confiere la condición de usuario. El usuario asume su responsabilidad en el uso correcto del sitio web. Esta responsabilidad se extenderá a:</p>
+          <p>La navegación, acceso y uso por el sitio web de <strong className="text-ink">EVENOR TECH, S.L.U.</strong> confiere la condición de usuario. El usuario asume su responsabilidad en el uso correcto del sitio web. Esta responsabilidad se extenderá a:</p>
           <ul className="space-y-2 mt-2">
             <li className="flex items-start gap-2"><ChevronRight className="w-4 h-4 text-brand flex-shrink-0 mt-0.5" /><span>La veracidad y licitud de las informaciones aportadas por el usuario en los formularios para el acceso a ciertos contenidos o servicios ofrecidos por el web.</span></li>
             <li className="flex items-start gap-2"><ChevronRight className="w-4 h-4 text-brand flex-shrink-0 mt-0.5" /><span>El uso de la información, servicios y datos ofrecidos por EVENOR TECH, S.L.U. contrariamente a lo dispuesto por las presentes condiciones, la Ley, la moral, las buenas costumbres o el orden público, o que de cualquier otro modo puedan suponer lesión de los derechos de terceros.</span></li>
@@ -52,8 +52,8 @@ export default function AvisoLegal() {
       content: (
         <div className="space-y-3 text-gray-300 text-sm leading-relaxed">
           <p>EVENOR TECH, S.L.U., por sí misma o como cesionaria, es titular de todos los derechos de propiedad intelectual e industrial de su página web, así como de los elementos contenidos en la misma (imágenes, sonido, audio, vídeo, software o textos; marcas o logotipos, combinaciones de colores, estructura y diseño, etc.).</p>
-          <p>Todos los derechos reservados. En virtud de lo dispuesto en la Ley de Propiedad Intelectual, quedan expresamente <strong className="text-white">prohibidas</strong> la reproducción, la distribución y la comunicación pública, incluida su modalidad de puesta a disposición, de la totalidad o parte de los contenidos de esta página web con fines comerciales, sin la autorización de EVENOR TECH, S.L.U.</p>
-          <p>El usuario podrá visualizar los elementos del portal e imprimirlos, copiarlos y almacenarlos en su equipo siempre y cuando sea, única y exclusivamente, para su <strong className="text-white">uso personal y privado</strong>.</p>
+          <p>Todos los derechos reservados. En virtud de lo dispuesto en la Ley de Propiedad Intelectual, quedan expresamente <strong className="text-ink">prohibidas</strong> la reproducción, la distribución y la comunicación pública, incluida su modalidad de puesta a disposición, de la totalidad o parte de los contenidos de esta página web con fines comerciales, sin la autorización de EVENOR TECH, S.L.U.</p>
+          <p>El usuario podrá visualizar los elementos del portal e imprimirlos, copiarlos y almacenarlos en su equipo siempre y cuando sea, única y exclusivamente, para su <strong className="text-ink">uso personal y privado</strong>.</p>
         </div>
       ),
     },
@@ -81,10 +81,10 @@ export default function AvisoLegal() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand to-brand-500 mb-6 shadow-lg shadow-brand/30">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand hover:bg-brand-300 mb-6 shadow-card shadow-brand/30">
             <Scale className="w-10 h-10 text-on-brand" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-2 font-[Rondana]">
+          <h1 className="text-4xl md:text-5xl font-bold text-ink mb-2 font-[Rondana]">
             Aviso Legal
           </h1>
           <p className="text-gray-500 text-sm">Última actualización: <span className="text-brand">4 de mayo de 2026</span></p>
@@ -95,7 +95,7 @@ export default function AvisoLegal() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-surface rounded-2xl p-6 border border-brand/20 mb-6"
+          className="bg-surface rounded-2xl p-6 border border-line mb-6"
         >
           <h2 className="text-xl font-bold text-brand mb-4">Datos Identificativos del Titular</h2>
           <p className="text-gray-400 text-sm mb-4">
@@ -113,7 +113,7 @@ export default function AvisoLegal() {
                   ['Teléfonos', '651 549 721'],
                   ['Nº Registro / Datos Adicionales', '—'],
                 ].map(([key, val]) => (
-                  <tr key={key} className="border-b border-brand/10 last:border-0">
+                  <tr key={key} className="border-b border-line last:border-0">
                     <td className="py-2.5 pr-4 font-semibold text-gray-200 w-2/5 align-top">{key}</td>
                     <td className="py-2.5 text-gray-400 align-top">{val}</td>
                   </tr>
@@ -133,13 +133,13 @@ export default function AvisoLegal() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 + idx * 0.07 }}
-                className="bg-surface rounded-2xl p-6 border border-brand/20 hover:border-brand/40 transition-all duration-300"
+                className="bg-surface rounded-2xl p-6 border border-line hover:border-brand/40 transition-all duration-300"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="flex-shrink-0 p-2.5 bg-gradient-to-br from-brand/20 to-brand-500/10 rounded-xl border border-brand/30">
+                  <div className="flex-shrink-0 p-2.5 bg-gradient-to-br from-brand/20 to-brand-500/10 rounded-xl border border-line">
                     <Icon className="w-5 h-5 text-brand" />
                   </div>
-                  <h2 className="text-lg font-bold text-white">{section.title}</h2>
+                  <h2 className="text-lg font-bold text-ink">{section.title}</h2>
                 </div>
                 <div className="ml-0 md:ml-12">
                   {section.content}

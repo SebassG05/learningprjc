@@ -13,9 +13,9 @@ export function ToastProvider({ children }) {
 
   // Colores: info=azul, success=verde, error=rojo
   const getColor = (type) => {
-    if (type === 'success') return 'bg-green-600 text-white';
-    if (type === 'error') return 'bg-red-600 text-white';
-    return 'bg-blue-600 text-white';
+    if (type === 'success') return 'bg-green-600 text-ink';
+    if (type === 'error') return 'bg-red-600 text-ink';
+    return 'bg-blue-600 text-ink';
   };
 
   return (
@@ -28,7 +28,7 @@ export function ToastProvider({ children }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.35 }}
-            className={`fixed bottom-8 right-8 z-[9999] px-6 py-3 rounded-xl shadow-lg font-semibold text-base ${getColor(toast.type)}`}
+            className={`fixed bottom-8 right-8 z-[9999] px-6 py-3 rounded-xl shadow-card font-semibold text-base ${getColor(toast.type)}`}
             style={{ minWidth: 220 }}
           >
             {toast.message}

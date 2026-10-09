@@ -150,10 +150,10 @@ export default function TerminosUso() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand to-brand-500 mb-6 shadow-lg shadow-brand/30">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand hover:bg-brand-300 mb-6 shadow-card shadow-brand/30">
             <Scale className="w-10 h-10 text-on-brand" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-ink mb-4">
             Términos de Uso
           </h1>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
@@ -180,13 +180,13 @@ export default function TerminosUso() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 + (idx * 0.1) }}
-                className="bg-surface rounded-2xl p-8 border border-brand/20 hover:border-brand/40 transition-all duration-300 shadow-lg"
+                className="bg-surface rounded-2xl p-8 border border-line hover:border-brand/40 transition-all duration-300 shadow-card"
               >
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 p-3 bg-gradient-to-br from-brand/20 to-brand-500/10 rounded-xl border border-brand/30">
+                  <div className="flex-shrink-0 p-3 bg-gradient-to-br from-brand/20 to-brand-500/10 rounded-xl border border-line">
                     <IconComponent className="w-6 h-6 text-brand" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mt-2">{section.title}</h2>
+                  <h2 className="text-2xl font-bold text-ink mt-2">{section.title}</h2>
                 </div>
 
                 <div className="space-y-6 ml-0 md:ml-16">
@@ -197,7 +197,7 @@ export default function TerminosUso() {
                           {item.subtitle}
                         </h3>
                       )}
-                      <p className="text-gray-300 leading-relaxed text-justify">
+                      <p className="text-gray-300 leading-relaxed ">
                         {item.text}
                       </p>
                     </div>
@@ -213,14 +213,14 @@ export default function TerminosUso() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
-          className="mt-12 bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-8 border border-brand/30"
+          className="mt-12 bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-8 border border-line"
         >
           <div className="flex items-start gap-4">
             <div className="flex-shrink-0 p-3 bg-brand/20 rounded-xl">
               <AlertTriangle className="w-6 h-6 text-brand" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">Aviso Importante</h3>
+              <h3 className="text-xl font-bold text-ink mb-2">Aviso Importante</h3>
               <p className="text-gray-300">
                 Al utilizar la plataforma CAMPUS, confirmas que has leído, comprendido y aceptado estos Términos de Uso. 
                 Si tienes alguna pregunta o inquietud sobre estos términos, por favor contáctanos antes de usar el servicio.

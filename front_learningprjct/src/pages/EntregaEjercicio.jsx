@@ -233,7 +233,7 @@ export default function EntregaEjercicio() {
             Volver al curso
           </button>
 
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-ink mb-2">
             {ejercicio?.titulo || 'Entrega de Ejercicio'}
           </h1>
           <p className="text-gray-400">
@@ -246,7 +246,7 @@ export default function EntregaEjercicio() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-brand-500/10 to-brand-600/10 border border-brand-500/30 rounded-xl p-6 mb-8"
+            className="bg-gradient-to-br from-brand-500/10 to-brand-600/10 border border-line rounded-xl p-6 mb-8"
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
@@ -301,12 +301,12 @@ export default function EntregaEjercicio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-surface/80 rounded-2xl border border-brand-500/20 p-8"
+          className="bg-surface/80 rounded-2xl border border-line p-8"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Área de subida */}
             <div>
-              <label className="block text-white font-semibold mb-3">
+              <label className="block text-ink font-semibold mb-3">
                 Archivo PDF *
               </label>
               <div
@@ -331,7 +331,7 @@ export default function EntregaEjercicio() {
                     <div className="flex items-center justify-center gap-3">
                       <FileText className="w-12 h-12 text-brand-500" />
                       <div className="text-left">
-                        <p className="text-white font-medium">{selectedFile.name}</p>
+                        <p className="text-ink font-medium">{selectedFile.name}</p>
                         <p className="text-sm text-gray-400">
                           {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                         </p>
@@ -350,7 +350,7 @@ export default function EntregaEjercicio() {
                   ) : (
                     <>
                       <Upload className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                      <p className="text-white font-medium mb-2">
+                      <p className="text-ink font-medium mb-2">
                         Arrastra tu archivo PDF aquí
                       </p>
                       <p className="text-sm text-gray-400 mb-3">
@@ -367,7 +367,7 @@ export default function EntregaEjercicio() {
 
             {/* Comentarios */}
             <div>
-              <label className="block text-white font-semibold mb-3">
+              <label className="block text-ink font-semibold mb-3">
                 Comentarios adicionales (opcional)
               </label>
               <textarea
@@ -376,7 +376,7 @@ export default function EntregaEjercicio() {
                 maxLength={2000}
                 rows={6}
                 placeholder="Agrega cualquier comentario o aclaración sobre tu trabajo..."
-                className="w-full px-4 py-3 bg-surface/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-colors"
+                className="w-full px-4 py-3 bg-surface/50 border border-gray-600 rounded-xl text-ink placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-colors"
               />
               <p className="text-xs text-gray-500 mt-2 text-right">
                 {comentarios.length}/2000 caracteres
@@ -422,7 +422,7 @@ export default function EntregaEjercicio() {
               <button
                 type="submit"
                 disabled={uploading || (!selectedFile && !entregaExistente)}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-600 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand-500/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
                 {uploading ? (
                   <>

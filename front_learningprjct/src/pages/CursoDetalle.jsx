@@ -253,13 +253,13 @@ export default function CursoDetalle() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md px-4">
           <Lock className="w-16 h-16 text-brand mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-4">Acceso Restringido</h2>
+          <h2 className="text-2xl font-bold text-ink mb-4">Acceso Restringido</h2>
           <p className="text-gray-400 mb-6">
             Debes inscribirte en este curso para acceder al contenido.
           </p>
           <button
             onClick={() => navigate(`/curso/${id}/inscripcion`)}
-            className="bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-brand/30 transition-all"
+            className="bg-brand hover:bg-brand-300 text-on-brand font-bold px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-brand/30 transition-all"
           >
             Ir a la página de inscripción
           </button>
@@ -284,14 +284,14 @@ export default function CursoDetalle() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.85, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-              className="bg-canvas border border-brand/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+              className="bg-canvas border border-line rounded-2xl shadow-card shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
             >
               <div className="flex items-center justify-center mb-4">
                 <div className="p-3 bg-brand/10 rounded-full">
                   <Globe className="w-8 h-8 text-brand" />
                 </div>
               </div>
-              <h2 className="text-2xl font-extrabold text-white mb-2">
+              <h2 className="text-2xl font-bold text-ink mb-2">
                 {curso.title && curso.titleEn ? 'Selecciona el idioma' : 'Select your language'}
               </h2>
               <p className="text-gray-400 mb-8 text-sm">
@@ -302,21 +302,21 @@ export default function CursoDetalle() {
               <div className="flex gap-4">
                 <button
                   onClick={() => seleccionarIdioma('es')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-line rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
                 >
                   <span className="text-4xl">🇪🇸</span>
                   <div>
-                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">Español</p>
+                    <p className="text-ink font-bold text-lg group-hover:text-brand transition-colors">Español</p>
                     <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
                   </div>
                 </button>
                 <button
                   onClick={() => seleccionarIdioma('en')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-line rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
                 >
                   <span className="text-4xl">🇬🇧</span>
                   <div>
-                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">English</p>
+                    <p className="text-ink font-bold text-lg group-hover:text-brand transition-colors">English</p>
                     <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
                   </div>
                 </button>
@@ -326,33 +326,33 @@ export default function CursoDetalle() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-7xl mx-auto py-16 px-4">
-        <div className="flex flex-row items-center justify-between w-full mb-6 gap-8">
+      <div className="mx-auto max-w-[1200px] px-4 pt-14 pb-10 sm:px-6 sm:pt-20 lg:px-8">
+        <div className="mb-8 flex w-full flex-row items-start justify-between gap-8">
           {/* Título a la izquierda */}
           <div className="flex-1">
-            <h1 className="text-2xl md:text-4xl font-extrabold text-white text-left">
+            <h1 className="max-w-4xl text-title-1 font-bold text-ink text-left">
               {t(curso.title, curso.titleEn)}
             </h1>
             {/* Selector de idioma para cursos bilingües */}
             {curso.idiomasDisponibles?.includes('es') && curso.idiomasDisponibles?.includes('en') && (
-              <div className="flex items-center gap-2 mt-3">
-                <Globe className="w-4 h-4 text-gray-500" />
+              <div className="mt-5 inline-flex items-center gap-1 rounded-full bg-white/[0.05] p-1">
+                <Globe className="mx-1.5 h-4 w-4 text-ink-3" />
                 <button
                   onClick={() => seleccionarIdioma('es')}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+                  className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                     idiomaSeleccionado !== 'en'
-                      ? 'bg-brand text-on-brand border-brand'
-                      : 'text-gray-400 border-gray-700 hover:border-brand/50'
+                      ? 'bg-brand text-on-brand'
+                      : 'text-ink-2 hover:text-ink'
                   }`}
                 >
                   🇪🇸 ES
                 </button>
                 <button
                   onClick={() => seleccionarIdioma('en')}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+                  className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                     idiomaSeleccionado === 'en'
-                      ? 'bg-brand text-on-brand border-brand'
-                      : 'text-gray-400 border-gray-700 hover:border-brand/50'
+                      ? 'bg-brand text-on-brand'
+                      : 'text-ink-2 hover:text-ink'
                   }`}
                 >
                   🇬🇧 EN
@@ -369,8 +369,8 @@ export default function CursoDetalle() {
                 cy="50"
                 r="42"
                 fill="none"
-                stroke="#141416"
-                strokeWidth="8"
+                stroke="rgb(255 255 255 / 0.08)"
+                strokeWidth="6"
               />
               {/* Círculo de progreso */}
               <circle
@@ -379,18 +379,15 @@ export default function CursoDetalle() {
                 r="42"
                 fill="none"
                 stroke="#a1db87"
-                strokeWidth="8"
+                strokeWidth="6"
                 strokeLinecap="round"
                 strokeDasharray={`${2 * Math.PI * 42}`}
                 strokeDashoffset={`${2 * Math.PI * 42 * (1 - progress / 100)}`}
-                className="transition-all duration-1000 ease-out"
-                style={{
-                  filter: 'drop-shadow(0 0 6px rgba(161, 219, 135, 0.4))'
-                }}
+                className="transition-[stroke-dashoffset] duration-1000 ease-out-expo"
               />
             </svg>
             {/* Porcentaje en el centro */}
-            <span className="absolute text-2xl font-extrabold text-brand">
+            <span className="absolute text-xl font-semibold tabular-nums text-ink">
               {progress}%
             </span>
           </div>
@@ -398,7 +395,7 @@ export default function CursoDetalle() {
 
         {/* Descripción del curso */}
         {(curso.description || curso.descriptionEn) && (
-          <p className="text-gray-300 text-base leading-relaxed mb-10 text-justify">
+          <p className="mb-12 max-w-3xl text-lg leading-relaxed text-ink-2">
             {t(curso.description, curso.descriptionEn)}
           </p>
         )}
@@ -420,21 +417,21 @@ export default function CursoDetalle() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Botón para ver la estructura del curso */}
-        <div className="flex justify-center mb-28">
+        <div className="mb-24 flex justify-start">
           <button
             onClick={() => navigate(`/curso/${id}/estructura`)}
-            className="cursor-pointer group flex items-center gap-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-brand/30 transform hover:scale-105 transition-all duration-300"
+            className="group flex items-center gap-2.5 rounded-full bg-brand px-7 py-3.5 font-semibold text-on-brand shadow-card transition-colors duration-200 hover:bg-brand-300"
           >
-            <BookOpen className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-            <span className="text-lg">{idiomaSeleccionado === 'en' ? 'View Course Structure' : 'Ver Estructura del Curso'}</span>
+            <BookOpen className="h-5 w-5" />
+            <span className="text-base">{idiomaSeleccionado === 'en' ? 'View Course Structure' : 'Ver Estructura del Curso'}</span>
           </button>
         </div>
       </div>
 
       {/* Material de Estudio - Temas y PDFs */}
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         <MaterialEstudio 
           cursoId={id}
           temas={curso.temas} 
@@ -447,12 +444,12 @@ export default function CursoDetalle() {
         {/* Mensaje de Curso Completado */}
         {isCursoCompletado() && (
           <div className="mt-16 mb-16">
-            <div className="bg-gradient-to-r from-brand/10 to-brand-500/10 border-2 border-brand rounded-3xl p-10 shadow-2xl shadow-brand/20">
+            <div className="bg-gradient-to-r from-brand/10 to-brand-500/10 border border-line-strong rounded-3xl p-10 shadow-card shadow-brand/20">
               <div className="flex flex-col items-center text-center">
-                <div className="w-24 h-24 bg-gradient-to-br from-brand to-brand-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand/50 animate-pulse">
+                <div className="w-24 h-24 bg-brand hover:bg-brand-300 rounded-full flex items-center justify-center mb-6 shadow-card shadow-brand/50 animate-pulse">
                   <span className="text-5xl">🎓</span>
                 </div>
-                <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-4">
+                <h2 className="text-4xl font-bold text-ink mb-4">
                   ¡Curso Completado!
                 </h2>
                 <p className="text-gray-300 text-lg mb-6 max-w-2xl">
@@ -460,18 +457,18 @@ export default function CursoDetalle() {
                   Tu certificado será enviado a tu correo electrónico en los próximos días.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <div className="bg-surface px-6 py-3 rounded-xl border border-brand/30">
+                  <div className="bg-surface px-6 py-3 rounded-xl border border-line">
                     <p className="text-gray-400 text-sm">Progreso</p>
                     <p className="text-2xl font-bold text-brand">{progress}%</p>
                   </div>
-                  <div className="bg-surface px-6 py-3 rounded-xl border border-brand/30">
+                  <div className="bg-surface px-6 py-3 rounded-xl border border-line">
                     <p className="text-gray-400 text-sm">Tests completados</p>
                     <p className="text-2xl font-bold text-brand">{completedTests.length}/{curso.temas?.length || 0}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => navigate('/')}
-                  className="mt-8 px-8 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl hover:shadow-2xl hover:shadow-brand/50 transition-all transform hover:scale-105"
+                  className="mt-8 px-8 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-glow transition-all"
                 >
                   Volver al Inicio
                 </button>
@@ -484,7 +481,7 @@ export default function CursoDetalle() {
         {ejerciciosOptativos.length > 0 && (
           <div className="mt-16 mb-16">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-600 mb-3">
+              <h2 className="text-3xl font-bold text-ink mb-3">
                 🎯 Ejercicios Prácticos Optativos
               </h2>
               <p className="text-gray-400 text-lg">

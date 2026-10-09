@@ -46,7 +46,7 @@ const GuiaUsuario = () => {
             <li>Haz clic en <span className="text-brand font-semibold">"Crear cuenta"</span></li>
             <li>Revisa tu correo electrónico para verificar tu cuenta</li>
           </ol>
-          <div className="bg-surface p-4 rounded-lg border border-brand/20 mt-4">
+          <div className="bg-surface p-4 rounded-lg border border-line mt-4">
             <p className="text-sm text-gray-400">
               <span className="text-brand font-semibold">💡 Consejo:</span> También puedes registrarte usando tu cuenta de Google para un acceso más rápido.
             </p>
@@ -62,17 +62,17 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">¡Absolutamente! Nuestra plataforma está optimizada para todos los dispositivos:</p>
           <div className="grid md:grid-cols-2 gap-4 mt-4">
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
+            <div className="bg-surface p-5 rounded-lg border border-line">
               <div className="flex items-center gap-3 mb-3">
                 <Monitor className="w-5 h-5 text-brand" />
-                <h4 className="font-semibold text-white">Ordenador</h4>
+                <h4 className="font-semibold text-ink">Ordenador</h4>
               </div>
               <p className="text-sm text-gray-400">Navegadores compatibles: Chrome, Firefox, Safari, Edge</p>
             </div>
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
+            <div className="bg-surface p-5 rounded-lg border border-line">
               <div className="flex items-center gap-3 mb-3">
                 <Smartphone className="w-5 h-5 text-brand" />
-                <h4 className="font-semibold text-white">Móvil/Tablet</h4>
+                <h4 className="font-semibold text-ink">Móvil/Tablet</h4>
               </div>
               <p className="text-sm text-gray-400">Compatible con iOS y Android. Diseño responsive adaptado.</p>
             </div>
@@ -88,19 +88,19 @@ const GuiaUsuario = () => {
       content: (
         <div className="space-y-4">
           <p className="text-gray-300">Cada curso tiene su propia duración estimada, pero tú marcas el ritmo:</p>
-          <div className="bg-surface p-6 rounded-lg border border-brand/20">
+          <div className="bg-surface p-6 rounded-lg border border-line">
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
-                <span><span className="font-semibold text-white">Acceso ilimitado:</span> Una vez inscrito, tienes acceso de por vida al curso</span>
+                <span><span className="font-semibold text-ink">Acceso ilimitado:</span> Una vez inscrito, tienes acceso de por vida al curso</span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
-                <span><span className="font-semibold text-white">A tu propio ritmo:</span> Puedes pausar y retomar cuando quieras</span>
+                <span><span className="font-semibold text-ink">A tu propio ritmo:</span> Puedes pausar y retomar cuando quieras</span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
-                <span><span className="font-semibold text-white">Sin fechas límite:</span> No hay presión, aprende cuando mejor te convenga</span>
+                <span><span className="font-semibold text-ink">Sin fechas límite:</span> No hay presión, aprende cuando mejor te convenga</span>
               </li>
             </ul>
           </div>
@@ -117,8 +117,8 @@ const GuiaUsuario = () => {
       content: (
         <div className="space-y-4">
           <p className="text-gray-300">¡Sí! Al completar un curso con éxito, recibirás un certificado profesional:</p>
-          <div className="bg-surface p-6 rounded-lg border border-brand/20">
-            <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
+          <div className="bg-surface p-6 rounded-lg border border-line">
+            <h4 className="font-semibold text-ink mb-4 flex items-center gap-2">
               <Award className="w-5 h-5 text-brand" />
               Características del certificado:
             </h4>
@@ -141,7 +141,7 @@ const GuiaUsuario = () => {
               </li>
             </ul>
           </div>
-          <div className="bg-surface p-4 rounded-lg border border-brand/30 mt-4">
+          <div className="bg-surface p-4 rounded-lg border border-line mt-4">
             <p className="text-sm text-gray-300">
               <span className="text-brand font-semibold">📥 Descarga:</span> Podrás descargar tu certificado desde la sección "Mis Cursos" una vez completado el 100% del contenido.
             </p>
@@ -158,8 +158,8 @@ const GuiaUsuario = () => {
           <p className="text-gray-300">Si encuentras algún problema técnico, sigue estos pasos:</p>
           
           <div className="space-y-3">
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <div className="bg-surface p-5 rounded-lg border border-line">
+              <h4 className="font-semibold text-ink mb-3 flex items-center gap-2">
                 <span className="bg-brand text-on-brand w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 Soluciones rápidas
               </h4>
@@ -183,8 +183,8 @@ const GuiaUsuario = () => {
               </ul>
             </div>
 
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+            <div className="bg-surface p-5 rounded-lg border border-line">
+              <h4 className="font-semibold text-ink mb-3 flex items-center gap-2">
                 <span className="bg-brand text-on-brand w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 Contacta con soporte
               </h4>
@@ -215,34 +215,34 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Guía rápida para navegar por la plataforma:</p>
           <div className="grid gap-4">
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
+            <div className="bg-surface p-5 rounded-lg border border-line">
               <div className="flex items-center gap-3 mb-3">
                 <Book className="w-5 h-5 text-brand" />
-                <h4 className="font-semibold text-white">Catálogo de cursos</h4>
+                <h4 className="font-semibold text-ink">Catálogo de cursos</h4>
               </div>
               <p className="text-sm text-gray-400">Explora todos nuestros cursos disponibles, filtra por categoría y encuentra el curso perfecto para ti.</p>
             </div>
             
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
+            <div className="bg-surface p-5 rounded-lg border border-line">
               <div className="flex items-center gap-3 mb-3">
                 <Play className="w-5 h-5 text-brand" />
-                <h4 className="font-semibold text-white">Mis cursos</h4>
+                <h4 className="font-semibold text-ink">Mis cursos</h4>
               </div>
               <p className="text-sm text-gray-400">Accede a todos los cursos en los que estás inscrito y continúa donde lo dejaste.</p>
             </div>
 
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
+            <div className="bg-surface p-5 rounded-lg border border-line">
               <div className="flex items-center gap-3 mb-3">
                 <Settings className="w-5 h-5 text-brand" />
-                <h4 className="font-semibold text-white">Ajustes</h4>
+                <h4 className="font-semibold text-ink">Ajustes</h4>
               </div>
               <p className="text-sm text-gray-400">Personaliza tu perfil, cambia tu contraseña y gestiona tus preferencias.</p>
             </div>
 
-            <div className="bg-surface p-5 rounded-lg border border-brand/20">
+            <div className="bg-surface p-5 rounded-lg border border-line">
               <div className="flex items-center gap-3 mb-3">
                 <Award className="w-5 h-5 text-brand" />
-                <h4 className="font-semibold text-white">Certificados</h4>
+                <h4 className="font-semibold text-ink">Certificados</h4>
               </div>
               <p className="text-sm text-gray-400">Descarga y comparte tus certificados de cursos completados.</p>
             </div>
@@ -258,8 +258,8 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Información sobre pagos y facturación:</p>
           
-          <div className="bg-surface p-6 rounded-lg border border-brand/20">
-            <h4 className="font-semibold text-white mb-4">Métodos de pago aceptados:</h4>
+          <div className="bg-surface p-6 rounded-lg border border-line">
+            <h4 className="font-semibold text-ink mb-4">Métodos de pago aceptados:</h4>
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
@@ -276,18 +276,18 @@ const GuiaUsuario = () => {
             </ul>
           </div>
 
-          <div className="bg-surface p-5 rounded-lg border border-brand/30">
+          <div className="bg-surface p-5 rounded-lg border border-line">
             <div className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold text-white mb-2">Seguridad de pagos</h4>
+                <h4 className="font-semibold text-ink mb-2">Seguridad de pagos</h4>
                 <p className="text-sm text-gray-400">Todos los pagos están protegidos con encriptación SSL. No almacenamos tus datos de tarjeta.</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-surface p-5 rounded-lg border border-brand/20">
-            <h4 className="font-semibold text-white mb-3">Facturación:</h4>
+          <div className="bg-surface p-5 rounded-lg border border-line">
+            <h4 className="font-semibold text-ink mb-3">Facturación:</h4>
             <p className="text-gray-300 text-sm">Recibirás tu factura automáticamente por correo electrónico después de completar la compra. También puedes descargarla desde tu área de ajustes.</p>
           </div>
         </div>
@@ -301,11 +301,11 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Tu privacidad es nuestra prioridad:</p>
           
-          <div className="bg-surface p-6 rounded-lg border border-brand/20">
+          <div className="bg-surface p-6 rounded-lg border border-line">
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
-                <span>Cumplimos con el <span className="font-semibold text-white">RGPD</span> (Reglamento General de Protección de Datos)</span>
+                <span>Cumplimos con el <span className="font-semibold text-ink">RGPD</span> (Reglamento General de Protección de Datos)</span>
               </li>
               <li className="flex items-start gap-3">
                 <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
@@ -322,7 +322,7 @@ const GuiaUsuario = () => {
             </ul>
           </div>
 
-          <div className="bg-surface p-4 rounded-lg border border-brand/30">
+          <div className="bg-surface p-4 rounded-lg border border-line">
             <p className="text-sm text-gray-300">
               Para más información, consulta nuestra <a href="/politica-privacidad" className="text-brand hover:underline">Política de Privacidad</a> y <a href="/cookies" className="text-brand hover:underline">Política de Cookies</a>.
             </p>
@@ -349,7 +349,7 @@ const GuiaUsuario = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-brand/10 rounded-full mb-6">
             <Book className="w-10 h-10 text-brand" />
           </div>
-          <h1 className="font-[Rondana] text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h1 className="font-[Rondana] text-4xl sm:text-5xl font-bold text-ink mb-4">
             Guía de Usuario
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -374,7 +374,7 @@ const GuiaUsuario = () => {
                 delay: index * 0.08,
                 ease: [0.4, 0.0, 0.2, 1]
               }}
-              className="bg-surface rounded-xl border border-brand/20 overflow-hidden shadow-lg hover:border-brand/50 hover:shadow-brand/10 hover:shadow-2xl transition-all duration-500"
+              className="bg-surface rounded-xl border border-line overflow-hidden shadow-card hover:border-brand/50 hover:shadow-brand/10 hover:shadow-2xl transition-all duration-500"
             >
               {/* Título clickeable */}
               <button
@@ -396,7 +396,7 @@ const GuiaUsuario = () => {
                   >
                     {section.icon}
                   </motion.div>
-                  <h3 className="text-xl font-semibold text-white font-[Rondana]">
+                  <h3 className="text-xl font-semibold text-ink font-[Rondana]">
                     {section.title}
                   </h3>
                 </div>
@@ -441,7 +441,7 @@ const GuiaUsuario = () => {
                     className="overflow-hidden"
                   >
                     <motion.div 
-                      className="p-6 pt-0 border-t border-brand/10"
+                      className="p-6 pt-0 border-t border-line"
                       initial={{ y: -20, opacity: 0 }}
                       animate={{ 
                         y: 0,
@@ -475,7 +475,7 @@ const GuiaUsuario = () => {
             delay: 0.5,
             ease: [0.4, 0.0, 0.2, 1]
           }}
-          className="mt-16 bg-gradient-to-r from-brand/10 to-brand/5 rounded-2xl p-8 border border-brand/20 hover:border-brand/40 transition-all duration-500"
+          className="mt-16 bg-gradient-to-r from-brand/10 to-brand/5 rounded-2xl p-8 border border-line hover:border-brand/40 transition-all duration-500"
         >
           <div className="text-center">
             <motion.div
@@ -492,7 +492,7 @@ const GuiaUsuario = () => {
             >
               <MessageCircle className="w-12 h-12 text-brand mx-auto mb-4" />
             </motion.div>
-            <h3 className="text-2xl font-bold text-white mb-3 font-[Rondana]">
+            <h3 className="text-2xl font-bold text-ink mb-3 font-[Rondana]">
               ¿Necesitas más ayuda?
             </h3>
             <p className="text-gray-300 mb-6">
@@ -540,7 +540,7 @@ const GuiaUsuario = () => {
         >
           <motion.a
             href="/sobre"
-            className="bg-surface p-6 rounded-xl border border-brand/20 hover:border-brand/40 transition-all duration-400 text-center group"
+            className="bg-surface p-6 rounded-xl border border-line hover:border-brand/40 transition-all duration-400 text-center group"
             whileHover={{ 
               y: -5,
               boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
@@ -564,13 +564,13 @@ const GuiaUsuario = () => {
             >
               <FileText className="w-8 h-8 text-brand mx-auto mb-3" />
             </motion.div>
-            <h4 className="text-white font-semibold mb-2">Sobre nosotros</h4>
+            <h4 className="text-ink font-semibold mb-2">Sobre nosotros</h4>
             <p className="text-sm text-gray-400">Conoce más sobre Evenor-Tech</p>
           </motion.a>
 
           <motion.a
             href="/cookies"
-            className="bg-surface p-6 rounded-xl border border-brand/20 hover:border-brand/40 transition-all duration-400 text-center group"
+            className="bg-surface p-6 rounded-xl border border-line hover:border-brand/40 transition-all duration-400 text-center group"
             whileHover={{ 
               y: -5,
               boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
@@ -594,13 +594,13 @@ const GuiaUsuario = () => {
             >
               <Shield className="w-8 h-8 text-brand mx-auto mb-3" />
             </motion.div>
-            <h4 className="text-white font-semibold mb-2">Política de Cookies</h4>
+            <h4 className="text-ink font-semibold mb-2">Política de Cookies</h4>
             <p className="text-sm text-gray-400">Información sobre cookies</p>
           </motion.a>
 
           <motion.a
             href="/cursos"
-            className="bg-surface p-6 rounded-xl border border-brand/20 hover:border-brand/40 transition-all duration-400 text-center group"
+            className="bg-surface p-6 rounded-xl border border-line hover:border-brand/40 transition-all duration-400 text-center group"
             whileHover={{ 
               y: -5,
               boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
@@ -624,7 +624,7 @@ const GuiaUsuario = () => {
             >
               <Book className="w-8 h-8 text-brand mx-auto mb-3" />
             </motion.div>
-            <h4 className="text-white font-semibold mb-2">Ver cursos</h4>
+            <h4 className="text-ink font-semibold mb-2">Ver cursos</h4>
             <p className="text-sm text-gray-400">Explora nuestro catálogo</p>
           </motion.a>
         </motion.div>

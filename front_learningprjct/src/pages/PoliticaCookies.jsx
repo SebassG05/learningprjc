@@ -33,10 +33,10 @@ export default function PoliticaCookies() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand to-brand-500 mb-6 shadow-lg shadow-brand/30">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand hover:bg-brand-300 mb-6 shadow-card shadow-brand/30">
             <Cookie className="w-10 h-10 text-on-brand" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-2 font-[Rondana]">
+          <h1 className="text-4xl md:text-5xl font-bold text-ink mb-2 font-[Rondana]">
             Política de Cookies
           </h1>
           <p className="text-gray-500 text-sm mt-2">Última actualización: <span className="text-brand">4 de mayo de 2026</span></p>
@@ -45,10 +45,10 @@ export default function PoliticaCookies() {
         <div className="space-y-6">
 
           {/* Intro legal */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-surface rounded-2xl p-6 border border-brand/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-surface rounded-2xl p-6 border border-line">
             <p className="text-gray-300 text-sm leading-relaxed">
-              De conformidad con el Art. 22.2 de la <strong className="text-white">Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE)</strong> y el{' '}
-              <strong className="text-white">Reglamento (UE) 2016/679 (RGPD)</strong>, le informamos que este sitio web utiliza cookies propias y de terceros para mejorar la experiencia del usuario, analizar el tráfico y mostrar publicidad personalizada.
+              De conformidad con el Art. 22.2 de la <strong className="text-ink">Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE)</strong> y el{' '}
+              <strong className="text-ink">Reglamento (UE) 2016/679 (RGPD)</strong>, le informamos que este sitio web utiliza cookies propias y de terceros para mejorar la experiencia del usuario, analizar el tráfico y mostrar publicidad personalizada.
             </p>
             <p className="text-gray-300 text-sm leading-relaxed mt-3">
               Para gestionar sus preferencias de cookies, puede acceder en cualquier momento al panel de configuración haciendo clic{' '}
@@ -65,12 +65,12 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Tipos de cookies */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-surface rounded-2xl p-6 border border-brand/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-surface rounded-2xl p-6 border border-line">
             <h2 className="text-xl font-bold text-brand mb-4">Tipos de Cookies</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-brand/30">
+                  <tr className="border-b border-line">
                     <th className="text-left py-2 pr-4 text-brand font-semibold w-1/4">Criterio</th>
                     <th className="text-left py-2 pr-4 text-brand font-semibold w-1/4">Tipo</th>
                     <th className="text-left py-2 text-brand font-semibold">Descripción</th>
@@ -88,9 +88,9 @@ export default function PoliticaCookies() {
                     ['Según finalidad', 'Publicidad', 'Permiten gestionar los espacios publicitarios.'],
                     ['Según finalidad', 'Comportamental', 'Almacenan información del comportamiento para mostrar publicidad personalizada.'],
                   ].map(([criterio, tipo, desc], i) => (
-                    <tr key={i} className="border-b border-brand/10 last:border-0">
+                    <tr key={i} className="border-b border-line last:border-0">
                       <td className="py-2.5 pr-4 text-gray-300">{criterio}</td>
-                      <td className="py-2.5 pr-4 font-semibold text-white">{tipo}</td>
+                      <td className="py-2.5 pr-4 font-semibold text-ink">{tipo}</td>
                       <td className="py-2.5 text-gray-400">{desc}</td>
                     </tr>
                   ))}
@@ -100,12 +100,12 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Cookies propias */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-surface rounded-2xl p-6 border border-brand/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-surface rounded-2xl p-6 border border-line">
             <h2 className="text-xl font-bold text-brand mb-4">Cookies Propias</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs min-w-[600px]">
                 <thead>
-                  <tr className="border-b border-brand/30">
+                  <tr className="border-b border-line">
                     {['Tipo', 'Titular', 'Cookie', 'Finalidad', 'Conservación'].map(h => (
                       <th key={h} className="text-left py-2 pr-3 text-brand font-semibold">{h}</th>
                     ))}
@@ -113,8 +113,8 @@ export default function PoliticaCookies() {
                 </thead>
                 <tbody>
                   {cookiesPropias.map((c, i) => (
-                    <tr key={i} className="border-b border-brand/10 last:border-0">
-                      <td className="py-2.5 pr-3 font-semibold text-white">{c.tipo}</td>
+                    <tr key={i} className="border-b border-line last:border-0">
+                      <td className="py-2.5 pr-3 font-semibold text-ink">{c.tipo}</td>
                       <td className="py-2.5 pr-3 text-gray-300">{c.titular}</td>
                       <td className="py-2.5 pr-3 text-gray-400 font-mono">{c.cookie}</td>
                       <td className="py-2.5 pr-3 text-gray-300">{c.finalidad}</td>
@@ -127,12 +127,12 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Cookies de terceros */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="bg-surface rounded-2xl p-6 border border-brand/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="bg-surface rounded-2xl p-6 border border-line">
             <h2 className="text-xl font-bold text-brand mb-4">Cookies de Terceros</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs min-w-[600px]">
                 <thead>
-                  <tr className="border-b border-brand/30">
+                  <tr className="border-b border-line">
                     {['Tipo', 'Titular', 'Cookie', 'Finalidad', 'Conservación'].map(h => (
                       <th key={h} className="text-left py-2 pr-3 text-brand font-semibold">{h}</th>
                     ))}
@@ -140,8 +140,8 @@ export default function PoliticaCookies() {
                 </thead>
                 <tbody>
                   {cookiesTerceros.map((c, i) => (
-                    <tr key={i} className="border-b border-brand/10 last:border-0">
-                      <td className="py-2.5 pr-3 font-semibold text-white">{c.tipo}</td>
+                    <tr key={i} className="border-b border-line last:border-0">
+                      <td className="py-2.5 pr-3 font-semibold text-ink">{c.tipo}</td>
                       <td className="py-2.5 pr-3 text-gray-300">{c.titular}</td>
                       <td className="py-2.5 pr-3 text-gray-400 font-mono">{c.cookie}</td>
                       <td className="py-2.5 pr-3 text-gray-300">{c.finalidad}</td>
@@ -154,12 +154,12 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Transferencias internacionales */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-surface rounded-2xl p-6 border border-brand/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-surface rounded-2xl p-6 border border-line">
             <h2 className="text-xl font-bold text-brand mb-4">Transferencias Internacionales de Datos</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs min-w-[500px]">
                 <thead>
-                  <tr className="border-b border-brand/30">
+                  <tr className="border-b border-line">
                     {['Titular', 'Cookie', 'País', 'Régimen de transferencia'].map(h => (
                       <th key={h} className="text-left py-2 pr-3 text-brand font-semibold">{h}</th>
                     ))}
@@ -167,8 +167,8 @@ export default function PoliticaCookies() {
                 </thead>
                 <tbody>
                   {transferencias.map((t, i) => (
-                    <tr key={i} className="border-b border-brand/10 last:border-0">
-                      <td className="py-2.5 pr-3 font-semibold text-white">{t.titular}</td>
+                    <tr key={i} className="border-b border-line last:border-0">
+                      <td className="py-2.5 pr-3 font-semibold text-ink">{t.titular}</td>
                       <td className="py-2.5 pr-3 text-gray-400 font-mono">{t.cookie}</td>
                       <td className="py-2.5 pr-3 text-gray-300">{t.pais}</td>
                       <td className="py-2.5 text-gray-300">{t.regimen}</td>
@@ -180,7 +180,7 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Configuración del navegador */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="bg-surface rounded-2xl p-6 border border-brand/20">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="bg-surface rounded-2xl p-6 border border-line">
             <h2 className="text-xl font-bold text-brand mb-3">Configuración del Navegador</h2>
             <p className="text-gray-300 text-sm mb-4 leading-relaxed">
               Puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de su navegador. Acceda a la página de soporte de su navegador:
@@ -198,7 +198,7 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Footer */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-6 border border-brand/30 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-6 border border-line text-center">
             <p className="text-gray-400 text-sm">
               La presente política puede ser actualizada. Para ejercer sus derechos o consultas, diríjase a{' '}
               <a href="mailto:info@evenor-tech.com" className="text-brand hover:underline">info@evenor-tech.com</a>

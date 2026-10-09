@@ -31,7 +31,7 @@ export default function ScrollToTop() {
         <button
           onClick={handleClick}
           aria-label="Subir arriba"
-          className="cursor-pointer fixed bottom-6 right-6 z-50 bg-brand hover:bg-brand-200 text-on-brand rounded-full shadow-lg focus:outline-none transition-all duration-200 border-2 border-line-strong/10"
+          className="cursor-pointer fixed bottom-6 right-6 z-50 bg-brand hover:bg-brand-200 text-on-brand rounded-full shadow-card focus:outline-none transition-all duration-200 border-2 border-line-strong/10"
           style={{ outline: 'none', boxShadow: '0 4px 24px 0 #23272f33' }}
         >
           <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
