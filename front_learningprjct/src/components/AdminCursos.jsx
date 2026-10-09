@@ -670,7 +670,7 @@ export default function AdminCursos() {
                     setArchivoEn(e.target.files[0]);
                     setNombreArchivoEn(e.target.files[0]?.name || '');
                   }}
-                  className="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer file:transition-colors"
+                  className="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-white/[0.1] file:text-ink hover:file:bg-blue-700 file:cursor-pointer file:transition-colors"
                 />
                 {nombreArchivoEn && (
                   <p className="text-xs text-blue-400 mt-2 flex items-center gap-1">
@@ -685,7 +685,7 @@ export default function AdminCursos() {
           <button
             onClick={handleSubirMateriales}
             disabled={subiendoMaterial || (!archivoEs && !archivoEn)}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-ink font-semibold rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-card shadow-purple-900/30"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-brand text-on-brand font-semibold rounded-lg hover:bg-brand-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-card shadow-purple-900/30"
           >
             {subiendoMaterial ? (
               <>
@@ -1021,7 +1021,7 @@ export default function AdminCursos() {
                     <button
                       type="button"
                       onClick={agregarObjetivoGeneralEn}
-                      className="px-4 py-2 bg-blue-600 text-ink rounded-lg hover:bg-blue-700 transition-colors shadow-card shadow-blue-900/30"
+                      className="px-4 py-2 bg-white/[0.08] text-ink border border-line-strong hover:bg-white/[0.12] rounded-full transition-colors"
                     >
                       <Plus className="w-5 h-5" />
                     </button>
@@ -1107,7 +1107,7 @@ export default function AdminCursos() {
                     <button
                       type="button"
                       onClick={agregarObjetivoEspecificoEn}
-                      className="px-4 py-2 bg-blue-600 text-ink rounded-lg hover:bg-blue-700 transition-colors shadow-card shadow-blue-900/30"
+                      className="px-4 py-2 bg-white/[0.08] text-ink border border-line-strong hover:bg-white/[0.12] rounded-full transition-colors"
                     >
                       <Plus className="w-5 h-5" />
                     </button>
@@ -1169,7 +1169,7 @@ export default function AdminCursos() {
                   <button
                     type="button"
                     onClick={() => setFase(2)}
-                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-ink rounded-lg hover:bg-blue-700 transition-colors shadow-card shadow-blue-900/30"
+                    className="flex items-center gap-2 px-6 py-3 bg-white/[0.08] text-ink border border-line-strong hover:bg-white/[0.12] rounded-full transition-colors"
                   >
                     <BookOpen className="w-5 h-5" />
                     Gestionar Temas
@@ -1373,7 +1373,7 @@ export default function AdminCursos() {
                 {/* Botones de finalización */}
                 <div className="space-y-3 pt-6">
                   {cursoCreado.temas && cursoCreado.temas.length > 0 && (
-                    <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-500/30 rounded-lg p-4">
+                    <div className="bg-white/[0.03] border border-line rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <CheckCircle className="w-5 h-5 text-blue-400" />
                         <p className="text-sm font-semibold text-blue-300">
@@ -1390,7 +1390,7 @@ export default function AdminCursos() {
                     <button
                       type="button"
                       onClick={finalizarCreacionCurso}
-                      className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-ink text-lg font-bold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-card shadow-blue-900/40 hover:shadow-2xl hover:shadow-blue-900/50"
+                      className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-brand text-on-brand text-lg font-bold rounded-lg hover:bg-brand-300 transition-all shadow-card shadow-blue-900/40 hover:shadow-2xl hover:shadow-blue-900/50"
                     >
                       <CheckCircle className="w-6 h-6" />
                       Finalizar y Publicar Curso
@@ -1490,7 +1490,7 @@ export default function AdminCursos() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => abrirFormularioEditar(curso)}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-ink rounded-lg hover:bg-blue-700 transition-colors shadow-card shadow-blue-900/30"
+                        className="flex items-center gap-2 px-4 py-2 bg-white/[0.08] text-ink border border-line-strong hover:bg-white/[0.12] rounded-full transition-colors"
                       >
                         <Edit2 className="w-4 h-4" />
                         Editar

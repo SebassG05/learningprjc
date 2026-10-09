@@ -272,7 +272,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                             </p>
                           )}
                         </div>
-                        <ExternalLink className="w-5 h-5 text-brand-500 group- transition-transform" />
+                        <ExternalLink className="w-5 h-5 text-brand-500 group-hover:scale-110 transition-transform" />
                       </a>
                     ))}
                   </div>

@@ -185,8 +185,6 @@ const Contact = () => {
     return (
       <div ref={containerRef} className="min-h-screen bg-transparent py-12 sm:py-16 md:py-20">
       {/* Decoraciones de fondo */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl" />
 
       <Container>
         {/* Header Principal */}

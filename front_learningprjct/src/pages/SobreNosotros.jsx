@@ -146,7 +146,7 @@ export default function SobreNosotros() {
         </div>
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-stretch justify-center mb-12">
           {/* Misión */}
-          <div className="bg-surface rounded-2xl shadow-card border border-line p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
+          <div className="bg-surface rounded-2xl shadow-card border border-line p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center transition-transform duration-300 h-full">
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-8 h-8 text-brand" />
               <span className="text-2xl font-bold text-brand">Misión</span>
@@ -157,7 +157,7 @@ export default function SobreNosotros() {
             </p>
           </div>
           {/* Visión */}
-          <div style={{backgroundColor: '#141416', borderColor: 'rgba(59, 130, 246, 0.5)', paddingBottom: '3.5rem'}} className="rounded-2xl shadow-card border p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
+          <div style={{backgroundColor: '#141416', borderColor: 'rgba(59, 130, 246, 0.5)', paddingBottom: '3.5rem'}} className="rounded-2xl shadow-card border p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center transition-transform duration-300 h-full">
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-8 h-8 text-blue-400" />
               <span className="text-2xl font-bold text-blue-400">Visión</span>

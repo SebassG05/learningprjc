@@ -107,8 +107,6 @@ export default function ReviewsPage() {
         </motion.div>
       </div>
       {/* Fondo decorativo animado */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none z-0" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none z-0" />
       <motion.div
         ref={sectionRef}
         initial={{ opacity: 0, y: 30 }}

@@ -813,7 +813,7 @@ export default function CorreccionesAdmin() {
                     {entrega.archivoPdf?.url && (
                       <button
                         onClick={() => abrirPdfModal(`${apiUrl}${entrega.archivoPdf.url}`)}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg border border-blue-500/30 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] hover:bg-white/[0.1] text-ink rounded-full border border-line-strong transition-colors"
                       >
                         <Eye className="w-4 h-4" />
                         Vista Previa

@@ -120,8 +120,8 @@ export default function EstructuraCurso({ idioma = 'es' }) {
             </p>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-l-4 border-blue-500 p-4 rounded-r-lg">
-            <h4 className="text-blue-400 font-semibold mb-2 flex items-center gap-2">
+          <div className="bg-white/[0.03] border-l-2 border-brand p-4 rounded-r-xl">
+            <h4 className="text-ink font-semibold mb-2 flex items-center gap-2">
               <Info className="w-4 h-4" />
               {t('3 Oportunidades', '3 Attempts')}
             </h4>
