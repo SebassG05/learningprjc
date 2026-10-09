@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import AuthModal from '../components/auth/AuthModal';
-import { BookOpen, Sparkles, Clock, Globe } from 'lucide-react';
+import { BookOpen, Clock, Globe, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Container from '../components/ui/Container';
+import Reveal from '../components/ui/Reveal';
+import { fadeUp, spring } from '../lib/motion';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -110,42 +113,14 @@ export default function Cursos() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-12 px-4">
-      {/* Encabezado animado */}
-      <section className="mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 relative z-10"
-        >
-          <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 200,
-              damping: 15,
-              delay: 0.2
-            }}
-            className="inline-flex items-center px-1 py-2 bg-surface-2 border border-brand/30 rounded-full mb-1"
-          >
-            <Sparkles className="w-4 h-4 text-brand mr-2 ml-2" />
-            <span className="text-xs sm:text-sm font-semibold text-brand mr-2">
-              Cursos
-            </span>
-          </motion.div>
-        </motion.div>
-
-        <motion.h1
-          className="text-4xl md:text-5xl font-extrabold text-white mb-16 text-center"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
-        >
-          Nuestros <span className="text-brand">Cursos</span>
-        </motion.h1>
-      </section>
+    <Container className="pt-16 pb-24 sm:pt-24">
+      {/* Encabezado */}
+      <Reveal group className="mb-14 flex flex-col items-start gap-4 sm:mb-20">
+        <Reveal.Item as="span" className="eyebrow">Cursos</Reveal.Item>
+        <Reveal.Item as="h1" className="text-display font-bold text-ink">
+          Nuestros <span className="text-brand">cursos</span>
+        </Reveal.Item>
+      </Reveal>
 
       {/* Modal de login si es necesario */}
       <AuthModal open={showLogin} onClose={handleCloseLogin} />
@@ -157,49 +132,46 @@ export default function Cursos() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-              className="bg-canvas border border-brand/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="lang-title"
+              initial={{ scale: 0.96, opacity: 0, y: 12 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.98, opacity: 0 }}
+              transition={spring.gentle}
+              className="w-full max-w-md rounded-3xl border border-line bg-surface-2 p-8 text-center shadow-overlay"
             >
-              <div className="flex items-center justify-center mb-4">
-                <div className="p-3 bg-brand/10 rounded-full">
-                  <Globe className="w-8 h-8 text-brand" />
-                </div>
-              </div>
-              <h2 className="text-2xl font-extrabold text-white mb-2">Selecciona el idioma</h2>
-              <p className="text-gray-400 mb-8 text-sm">
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+                <Globe className="h-6 w-6" />
+              </span>
+              <h2 id="lang-title" className="mt-5 text-title-3 font-bold text-ink">Selecciona el idioma</h2>
+              <p className="mt-2 text-sm text-ink-2">
                 Este curso está disponible en español e inglés. ¿En qué idioma quieres seguirlo?
               </p>
-              <div className="flex gap-4">
+              <div className="mt-7 grid grid-cols-2 gap-3">
                 <button
                   onClick={() => seleccionarIdioma('es')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-white/[0.03] p-5 transition-colors hover:border-brand/50 hover:bg-brand/[0.06]"
                 >
-                  <span className="text-4xl">🇪🇸</span>
-                  <div>
-                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">Español</p>
-                    <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
-                  </div>
+                  <span className="text-3xl" aria-hidden="true">🇪🇸</span>
+                  <span className="font-semibold text-ink">Español</span>
+                  <span className="text-xs text-ink-3">Continuar en español</span>
                 </button>
                 <button
                   onClick={() => seleccionarIdioma('en')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-line bg-white/[0.03] p-5 transition-colors hover:border-brand/50 hover:bg-brand/[0.06]"
                 >
-                  <span className="text-4xl">🇬🇧</span>
-                  <div>
-                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">English</p>
-                    <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
-                  </div>
+                  <span className="text-3xl" aria-hidden="true">🇬🇧</span>
+                  <span className="font-semibold text-ink">English</span>
+                  <span className="text-xs text-ink-3">Continue in English</span>
                 </button>
               </div>
               <button
                 onClick={() => setShowLangModal(false)}
-                className="mt-6 text-gray-500 hover:text-gray-300 text-sm transition-colors"
+                className="mt-6 rounded-full px-4 py-2 text-sm text-ink-3 transition-colors hover:text-ink"
               >
                 Cancelar
               </button>
@@ -207,172 +179,104 @@ export default function Cursos() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Tarjetas de cursos */}
-      {/* Grid original: visible en móvil y escritorio, oculto en md (tablet) */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-120 place-items-center block md:hidden lg:grid">
-        {loading ? (
-          <div className="text-center text-gray-400 col-span-3">Cargando cursos...</div>
-        ) : courses.length === 0 ? (
-          <div className="text-center text-gray-400 col-span-3">No hay cursos disponibles.</div>
-        ) : (
-          courses.map(course => {
-            const { title: courseTitle, description: courseDesc } = getCourseText(course);
-            return (
-            <motion.div
-              key={course._id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ 
-                y: -10, 
-                scale: 1.02,
-                boxShadow: "0 20px 40px rgba(161, 219, 135, 0.2)",
-                borderColor: "rgba(161, 219, 135, 0.6)"
-              }}
-              whileTap={{ 
-                scale: 0.98,
-                transition: { duration: 0.1 }
-              }}
-              className="bg-surface border border-brand/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full lg:w-[450px] lg:h-[600px] xl:w-[450px] xl:h-[600px] sm:max-w-[95vw] sm:h-[600px]"
-              style={{}}
-              onClick={() => handleCourseClick(course._id)}
-            >
-              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-brand/30 flex items-center justify-center">
-                {course.image ? (
-                  <img src={course.image} alt={courseTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                ) : (
-                  <BookOpen className="w-16 h-16 text-brand" />
-                )}
-              </div>
-              <div className="flex-1 flex flex-col justify-between p-10">
-                <div>
-                  <h3 className="text-2xl font-extrabold text-brand mb-2 leading-tight group-hover:text-white transition-colors duration-200">
-                    {courseTitle}
-                  </h3>
-                  {!course.isOpen && (
-                    <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-3">
-                      <Clock className="w-3 h-3" />
-                      Próximamente
-                    </div>
-                  )}
-                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{courseDesc}</p>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  <span className="bg-brand text-on-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-on-brand transition-colors duration-200 border border-brand">
-                    {course.duration}
-                  </span>
-                  {Array.isArray(course.category)
-                    ? course.category.map((cat, idx) => (
-                        <span key={idx} className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
-                          {cat}
-                        </span>
-                      ))
-                    : course.category && (
-                        <span className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
-                          {course.category}
-                        </span>
-                      )
-                  }
-                </div>
-                {/* Barra de progreso */}
-                <div className="w-full mt-4">
-                  <div className="w-full h-2 bg-surface rounded-full overflow-hidden border border-brand/40">
-                    <div 
-                      className="h-full bg-brand transition-all duration-500"
-                      style={{ width: `${courseProgress[course._id] || 0}%` }}
-                    />
-                  </div>
-                  <div className="text-xs text-brand mt-1 text-right">{courseProgress[course._id] || 0}%</div>
-                </div>
-              </div>
-            </motion.div>
-          );
-          })
-        )}
-      </section>
 
-      {/* Grid alternativo SOLO para tablets (md) */}
-      <section className="grid grid-cols-1 gap-y-10 gap-x-8 hidden md:grid lg:hidden md:place-items-center">
-        {loading ? (
-          <div className="text-center text-gray-400 col-span-1">Cargando cursos...</div>
-        ) : courses.length === 0 ? (
-          <div className="text-center text-gray-400 col-span-1">No hay cursos disponibles.</div>
-        ) : (
-          courses.map(course => {
+      {/* Tarjetas de cursos */}
+      {loading ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" aria-busy="true">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="overflow-hidden rounded-3xl border border-line bg-surface">
+              <div className="aspect-[16/10] animate-pulse bg-surface-2" />
+              <div className="space-y-3 p-7">
+                <div className="h-6 w-3/4 animate-pulse rounded-lg bg-surface-2" />
+                <div className="h-4 w-full animate-pulse rounded-lg bg-surface-2" />
+                <div className="h-4 w-2/3 animate-pulse rounded-lg bg-surface-2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : courses.length === 0 ? (
+        <div className="rounded-3xl border border-line bg-surface py-20 text-center text-ink-2">No hay cursos disponibles.</div>
+      ) : (
+        <Reveal group step={0.08} className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {courses.map(course => {
             const { title: courseTitle, description: courseDesc } = getCourseText(course);
+            const progress = courseProgress[course._id] || 0;
             return (
-            <motion.div
-              key={course._id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ 
-                y: -10, 
-                scale: 1.02,
-                boxShadow: "0 20px 40px rgba(161, 219, 135, 0.2)",
-                borderColor: "rgba(161, 219, 135, 0.6)"
-              }}
-              whileTap={{ 
-                scale: 0.98,
-                transition: { duration: 0.1 }
-              }}
-              className="bg-surface border border-brand/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full max-w-md h-[600px]"
-              style={{}}
-              onClick={() => handleCourseClick(course._id)}
-            >
-              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-brand/30 flex items-center justify-center">
-                {course.image ? (
-                  <img src={course.image} alt={courseTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                ) : (
-                  <BookOpen className="w-16 h-16 text-brand" />
-                )}
-              </div>
-              <div className="flex-1 flex flex-col justify-between p-10">
-                <div>
-                  <h3 className="text-2xl font-extrabold text-brand mb-2 leading-tight group-hover:text-white transition-colors duration-200">
-                    {courseTitle}
-                  </h3>
-                  {!course.isOpen && (
-                    <div className="inline-flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-3">
-                      <Clock className="w-3 h-3" />
-                      Próximamente
-                    </div>
-                  )}
-                  <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{courseDesc}</p>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  <span className="bg-brand text-on-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-on-brand transition-colors duration-200 border border-brand">
-                    {course.duration}
-                  </span>
-                  {Array.isArray(course.category)
-                    ? course.category.map((cat, idx) => (
-                        <span key={idx} className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
-                          {cat}
-                        </span>
-                      ))
-                    : course.category && (
-                        <span className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
-                          {course.category}
-                        </span>
-                      )
-                  }
-                </div>
-                {/* Barra de progreso */}
-                <div className="w-full mt-4">
-                  <div className="w-full h-2 bg-surface rounded-full overflow-hidden border border-brand/40">
-                    <div 
-                      className="h-full bg-brand transition-all duration-500"
-                      style={{ width: `${courseProgress[course._id] || 0}%` }}
+              <motion.button
+                key={course._id}
+                type="button"
+                variants={fadeUp}
+                whileHover={{ y: -6 }}
+                whileTap={{ scale: 0.985 }}
+                transition={spring.snappy}
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface text-left shadow-card transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-raised"
+                onClick={() => handleCourseClick(course._id)}
+              >
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
+                  {course.image ? (
+                    <img
+                      src={course.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
                     />
-                  </div>
-                  <div className="text-xs text-brand mt-1 text-right">{courseProgress[course._id] || 0}%</div>
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-brand"><BookOpen className="h-12 w-12" /></div>
+                  )}
+                  {!course.isOpen && (
+                    <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-amber-300 backdrop-blur-md">
+                      <Clock className="h-3 w-3" />
+                      Próximamente
+                    </span>
+                  )}
                 </div>
-              </div>
-            </motion.div>
-          );
-          })
-        )}
-      </section>
-    </div>
+                <div className="flex flex-1 flex-col p-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-sans text-xl font-semibold leading-snug text-ink">{courseTitle}</h3>
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-ink-2 transition-colors duration-200 group-hover:bg-brand group-hover:text-on-brand">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
+                  </div>
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ink-2">{courseDesc}</p>
+                  <div className="mt-6 flex flex-wrap gap-1.5">
+                    {course.duration && (
+                      <span className="rounded-full bg-brand/10 px-2.5 py-1 text-xs font-semibold text-brand">
+                        {course.duration}
+                      </span>
+                    )}
+                    {Array.isArray(course.category)
+                      ? course.category.map((cat, idx) => (
+                          <span key={idx} className="rounded-full bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-ink-2">
+                            {cat}
+                          </span>
+                        ))
+                      : course.category && (
+                          <span className="rounded-full bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-ink-2">
+                            {course.category}
+                          </span>
+                        )
+                    }
+                  </div>
+                  {/* Barra de progreso */}
+                  <div className="mt-auto pt-7">
+                    <div className="mb-2 flex items-center justify-between text-xs">
+                      <span className="text-ink-3">Progreso</span>
+                      <span className="font-semibold tabular-nums text-ink-2">{progress}%</span>
+                    </div>
+                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                      <div
+                        className="h-full origin-left rounded-full bg-brand transition-transform duration-700 ease-out-expo"
+                        style={{ transform: `scaleX(${progress / 100})` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </motion.button>
+            );
+          })}
+        </Reveal>
+      )}
+    </Container>
   );
 }
