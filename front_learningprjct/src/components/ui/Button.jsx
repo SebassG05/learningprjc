@@ -24,7 +24,7 @@ const sizes = {
   lg: 'h-14 px-8 text-base rounded-full',
 };
 
-export const buttonClass = (variant = 'primary', size = 'md') =>
+const buttonClass = (variant = 'primary', size = 'md') =>
   `${base} ${variants[variant]} ${variant === 'link' ? '' : sizes[size]}`;
 
 // Botón base. Con `to` se comporta como enlace del router.

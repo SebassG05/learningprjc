@@ -123,6 +123,9 @@
     --text-display: clamp(2.75rem, 1.4rem + 5.6vw, 6rem);
     --text-display--line-height: 0.98;
     --text-display--letter-spacing: -0.03em;
+    --text-hero: clamp(4rem, 0.5rem + 11vw, 10.5rem);
+    --text-hero--line-height: 0.9;
+    --text-hero--letter-spacing: -0.035em;
 
     /* Forma */
     --radius-lg: 0.625rem;
@@ -178,6 +181,7 @@
 
 @layer base {
     html {
+        position: relative; /* referencia para las escenas con useScroll */
         background-color: var(--color-canvas);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;

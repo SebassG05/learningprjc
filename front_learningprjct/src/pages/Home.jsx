@@ -1,232 +1,254 @@
-// Carrusel de reseñas de estudiantes
-import { Star } from 'lucide-react';
-import { useRef } from 'react';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { Star, ChevronDown, Clock, ArrowRight, Award, FileText, Video, ListChecks, Check } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { AnimatePresence, motion, motion as m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Container from '../components/ui/Container';
-import { 
-  TrendingUp, Building2, Clock, ArrowRight, Sparkles, 
-  Award, FileText, Euro, Video, ListChecks
-} from 'lucide-react';
-import Footer from '../components/layout/Footer';
+import Button from '../components/ui/Button';
+import Reveal from '../components/ui/Reveal';
+import SectionHeading from '../components/ui/SectionHeading';
 import { useUser } from '../context/UserContext';
 import AuthModal from '../components/auth/AuthModal';
+import useMediaQuery from '../hooks/useMediaQuery';
+import { ease, spring } from '../lib/motion';
 
-const HeroSection = () => {
-  const navigate = useNavigate();
-  const [animating, setAnimating] = useState(false);
-    const [showBoxes, setShowBoxes] = useState(true);
-    const [hideAnim, setHideAnim] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [stats, setStats] = useState(null);
+// Las escenas ligadas al scroll solo se activan en pantallas medianas+ y sin reduced-motion
+const useScenes = () => {
+  const wide = useMediaQuery('(min-width: 768px)');
+  const reduce = useReducedMotion();
+  return wide && !reduce;
+};
 
-  useEffect(() => {
-    const checkDevice = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    checkDevice();
-    window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
-  }, []);
+/* ==========================================================================
+   Escena 1 — Hero: el titular se aleja y suben las ventajas del campus
+   ========================================================================== */
+
+const features = [
+  { Icon: Clock, title: 'Acceso ilimitado', desc: 'A todos los cursos, en los que podrás aprender multiples habilidades y conocimientos a tu propio ritmo.' },
+  { Icon: Video, title: 'Material técnico', desc: 'Todo descargable y disponible online. Para obtener el máximo provecho de los cursos.' },
+  { Icon: ListChecks, title: 'Ejercicios prácticos + tests', desc: 'Autoevaluación por módulo y guía paso a paso.' },
+  { Icon: Award, title: 'Certificado profesional autorizado', desc: 'Evaluación final y diploma Evenor-Tech.' },
+];
+
+const perks = ['Registro gratuito', 'Acceso inmediato', 'Sin compromiso'];
+
+const HeroCopy = ({ onStart }) => (
+  <div className="flex flex-col items-center text-center">
+    <span className="eyebrow">E-learning · Evenor-Tech</span>
+    <h1 className="mt-5 text-hero font-bold text-ink">
+      Campus<span className="text-brand">.</span>
+    </h1>
+    <p className="mt-6 max-w-xl text-lg text-ink-2 sm:text-xl">
+      Plataforma de e-learning moderna y flexible. Formando profesionales con tecnología y pasión para el futuro digital.
+    </p>
+    <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+      <Button size="lg" onClick={onStart}>
+        Comenzar ahora <ArrowRight className="h-5 w-5" />
+      </Button>
+      <Button size="lg" variant="secondary" to="/cursos">
+        Ver cursos
+      </Button>
+    </div>
+    <ul className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink-3">
+      {perks.map((p) => (
+        <li key={p} className="inline-flex items-center gap-1.5">
+          <Check className="h-4 w-4 text-brand" /> {p}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const FeatureCard = ({ Icon, title, desc }) => (
+  <div className="h-full rounded-3xl border border-line bg-surface p-7 shadow-card">
+    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+      <Icon className="h-5 w-5" />
+    </span>
+    <h3 className="mt-6 font-sans text-lg font-semibold text-ink">{title}</h3>
+    <p className="mt-2 text-sm leading-relaxed text-ink-2">{desc}</p>
+  </div>
+);
+
+// Tarjeta cuyo ascenso depende del progreso de la escena (sin re-renders)
+const RisingCard = ({ progress, index, feature }) => {
+  const start = 0.28 + index * 0.06;
+  const y = useTransform(progress, [start, start + 0.32], [220 + index * 50, 0]);
+  const opacity = useTransform(progress, [start, start + 0.18], [0, 1]);
+  const scale = useTransform(progress, [start, start + 0.32], [0.92, 1]);
+  return (
+    <motion.div style={{ y, opacity, scale }} className="will-change-transform">
+      <FeatureCard {...feature} />
+    </motion.div>
+  );
+};
+
+const HeroScene = ({ onStart }) => {
+  const scenes = useScenes();
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const titleScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.82]);
+  const titleOpacity = useTransform(scrollYProgress, [0.05, 0.32], [1, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 0.4], [0, -60]);
+  const headingOpacity = useTransform(scrollYProgress, [0.26, 0.42], [0, 1]);
+  const headingY = useTransform(scrollYProgress, [0.26, 0.45], [40, 0]);
+  const glowY = useTransform(scrollYProgress, [0, 1], ['0%', '35%']);
+  const glowOpacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
+
+  if (!scenes) {
+    return (
+      <div ref={ref}>
+        <section className="relative pt-20 pb-24 sm:pt-28">
+          <Container>
+            <Reveal><HeroCopy onStart={onStart} /></Reveal>
+          </Container>
+        </section>
+        <section className="pb-24">
+          <Container>
+            <SectionHeading eyebrow="Ventajas del campus" title="¿Qué puedes esperar de los cursos?" />
+            <Reveal group className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {features.map((f) => (
+                <Reveal.Item key={f.title}><FeatureCard {...f} /></Reveal.Item>
+              ))}
+            </Reveal>
+          </Container>
+        </section>
+      </div>
+    );
+  }
 
   return (
-    <section className="relative pt-16 sm:pt-20 pb-8 sm:pb-12 overflow-hidden">
-      <Container>
-        {/* Título principal del sistema */}
+    <section ref={ref} className="relative h-[260vh]">
+      <div className="sticky top-16 flex h-[calc(100svh-4rem)] items-center overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-brand to-white bg-clip-text text-transparent mb-3">
-            <span className="font-[Rondana]">CAMPUS</span>
-          </h1>
+          aria-hidden="true"
+          style={{ y: glowY, opacity: glowOpacity }}
+          className="pointer-events-none absolute left-1/2 top-[8%] h-[70vh] w-[70vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.16),transparent)]"
+        />
+        <Container className="relative">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative mb-6"
+            style={{ scale: titleScale, opacity: titleOpacity, y: titleY }}
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 will-change-transform"
           >
-            <div className="flex items-center justify-center space-x-4 mb-3">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-brand"></div>
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-brand to-brand-300 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative bg-black/50 backdrop-blur-sm border border-brand/40 rounded-lg px-6 py-2">
-                  <span className="text-lg font-bold text-brand tracking-[0.2em]">
-                    E-LEARNING
-                  </span>
-                </div>
-              </div>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-brand"></div>
-            </div>
-            <div className="text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="inline-block"
-              >
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-brand/50 to-transparent mt-1"></div>
-              </motion.div>
-            </div>
+            <HeroCopy onStart={onStart} />
           </motion.div>
-        </motion.div>
 
-        {/* Badge superior centrado */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mb-6"
-        >
-          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-surface-2 border border-brand/30 rounded-full">
-            <TrendingUp className="w-4 h-4 text-brand" />
-            <span className="text-xs sm:text-sm font-semibold text-brand">
-              Ventajas del Campus
-            </span>
-          </div>
-        </motion.div>
-
-        {/* Showcase de Fuentes Institucionales - Ancho completo */}
-        <div className="w-full">
-          
-          {/* SHOWCASE DE FUENTES DE DATOS */}
-          <div className="relative max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-gradient-to-br from-surface-2 to-surface rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-line-strong shadow-2xl"
-            >
-              {/* Header del showcase */}
-              <div className="text-center mb-8">
-                <motion.h2
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="font-[Rondana] text-2xl sm:text-3xl font-bold text-white mb-3"
-                >
-                  ¿Qué puedes esperar de los cursos?
-                </motion.h2>
-              </div>
-
-          
-
-              {/* Tarjetas de características del curso */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
-              >
-                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-surface rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-brand/20 transition-all duration-300">
-                  <Clock className="w-8 h-8 text-brand mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">ACCESO ILIMITADO</h3>
-                  <p className="text-gray-400 text-sm">A todos los cursos, en los que podrás aprender multiples habilidades y conocimientos a tu propio ritmo.</p>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-surface rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-brand/20 transition-all duration-300">
-                  <Video className="w-8 h-8 text-brand mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Material Técnico</h3>
-                  <p className="text-gray-400 text-sm">Todo descargable y disponible online. Para obtener el máximo provecho de los cursos.</p>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-surface rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-brand/20 transition-all duration-300">
-                  <ListChecks className="w-8 h-8 text-brand mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Ejercicios Prácticos + Tests</h3>
-                  <p className="text-gray-400 text-sm">Autoevaluación por módulo y guía paso a paso.</p>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.04, y: -4 }} className="bg-surface rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-brand/20 transition-all duration-300">
-                  <Award className="w-8 h-8 text-brand mb-2" />
-                  <h3 className="font-bold text-lg text-white mb-1">Certificado Profesional Autorizado</h3>
-                  <p className="text-gray-400 text-sm">Evaluación final y diploma Evenor-Tech.</p>
-                </motion.div>
-              </motion.div>
+          <div className="relative">
+            <motion.div style={{ opacity: headingOpacity, y: headingY }} className="mx-auto max-w-3xl text-center">
+              <span className="eyebrow">Ventajas del campus</span>
+              <h2 className="mt-4 text-title-1 font-bold text-ink">¿Qué puedes esperar de los cursos?</h2>
             </motion.div>
-
-            {/* Decoraciones externas - solo desktop */}
-            {!isMobile && (
-              <>
-                <div className="absolute -bottom-4 sm:-bottom-8 -right-4 sm:-right-8 w-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-xl bg-brand/20 rotate-12" />
-                <div className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 w-5 sm:w-8 h-5 sm:h-8 rounded-lg border border-brand -rotate-12" />
-              </>
-            )}
-          </div>
-        </div>
-      </Container>
-      {/* Proceso de inscripción - vertical stepper */}
-      <section className="relative py-24 sm:py-32 flex items-center justify-center bg-transparent">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="flex flex-col items-center justify-center w-full"
-          >
-            <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-16 underline underline-offset-8 decoration-brand">
-              ¿Cómo funciona el proceso?
-            </h2>
-            <ol className="relative mx-auto min-h-[520px] max-w-4xl w-full">
-              {[{
-                icon: <ArrowRight className='w-6 h-6 text-brand' />,
-                title: 'Inicia sesión o regístrate',
-                desc: 'Crea tu cuenta o accede con tus credenciales para comenzar tu formación.'
-              }, {
-                icon: <FileText className='w-6 h-6 text-brand' />,
-                title: 'Aplica al curso de tu interés',
-                desc: 'Explora el catálogo, selecciona el curso y completa tu inscripción en pocos pasos.'
-              }, {
-                icon: <ListChecks className='w-6 h-6 text-brand' />,
-                title: 'Supera los temarios y tests',
-                desc: 'Avanza a tu ritmo, estudia los módulos y aprueba los tests de autoevaluación.'
-              }, {
-                icon: <Award className='w-6 h-6 text-brand' />,
-                title: 'Obtén tu certificado',
-                desc: 'Recibe tu diploma profesional al finalizar y aprobar el curso, listo para tu CV.'
-              }].map((step, idx) => (
-                <motion.li
-                  key={idx}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.3 + idx * 0.4 }}
-                  className={`relative flex w-full min-h-[140px] ${idx !== 3 ? 'mb-12' : ''}`}
-                >
-                  {/* Timeline vertical line */}
-                  <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full flex flex-col items-center z-0">
-                    <div className={`w-1 h-full bg-brand/60 ${idx === 0 ? 'rounded-t-full' : ''} ${idx === 3 ? 'rounded-b-full' : ''}`}></div>
-                  </div>
-                  {/* Icon */}
-                  <span className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-14 h-14 bg-surface border-4 border-brand rounded-full shadow-lg z-10">
-                    {step.icon}
-                  </span>
-                  {/* Text block, alternate left/right, not centered */}
-                  {idx % 2 === 0 ? (
-                    <div className="w-1/2 flex flex-col justify-center items-end pr-16 text-right ml-0 mr-auto" style={{minHeight:'140px'}}>
-                      <h3 className="font-bold text-xl text-white mb-2 mt-1"><span className="text-brand mr-2">{idx+1}.</span>{step.title}</h3>
-                      <p className="text-gray-300 text-base max-w-md">{step.desc}</p>
-                    </div>
-                  ) : (
-                    <div className="w-1/2 flex flex-col justify-center items-start pl-16 text-left ml-auto mr-0" style={{minHeight:'140px'}}>
-                      <h3 className="font-bold text-xl text-white mb-2 mt-1"><span className="text-brand mr-2">{idx+1}.</span>{step.title}</h3>
-                      <p className="text-gray-300 text-base max-w-md">{step.desc}</p>
-                    </div>
-                  )}
-                </motion.li>
+            <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {features.map((f, i) => (
+                <RisingCard key={f.title} progress={scrollYProgress} index={i} feature={f} />
               ))}
-            </ol>
-          </motion.div>
+            </div>
+          </div>
         </Container>
-      </section>
+      </div>
     </section>
   );
 };
 
+/* ==========================================================================
+   Escena 2 — Proceso: cada paso se enciende al avanzar el scroll
+   ========================================================================== */
 
-// FAQ Section Component con animaciones y diseño profesional
-import { ChevronDown } from 'lucide-react';
-import { AnimatePresence, motion as m } from 'framer-motion';
+const steps = [
+  { Icon: ArrowRight, title: 'Inicia sesión o regístrate', desc: 'Crea tu cuenta o accede con tus credenciales para comenzar tu formación.' },
+  { Icon: FileText, title: 'Aplica al curso de tu interés', desc: 'Explora el catálogo, selecciona el curso y completa tu inscripción en pocos pasos.' },
+  { Icon: ListChecks, title: 'Supera los temarios y tests', desc: 'Avanza a tu ritmo, estudia los módulos y aprueba los tests de autoevaluación.' },
+  { Icon: Award, title: 'Obtén tu certificado', desc: 'Recibe tu diploma profesional al finalizar y aprobar el curso, listo para tu CV.' },
+];
+
+const StepText = ({ step, index }) => (
+  <div className="pt-1">
+    <span className="text-xs font-semibold tracking-[0.14em] text-ink-3">PASO {String(index + 1).padStart(2, '0')}</span>
+    <h3 className="mt-1 font-sans text-xl font-semibold text-ink">{step.title}</h3>
+    <p className="mt-2 max-w-md text-base text-ink-2">{step.desc}</p>
+  </div>
+);
+
+const StepRowStatic = ({ step, index }) => (
+  <Reveal.Item as="li" className="relative flex gap-5">
+    <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface text-brand">
+      <step.Icon className="h-5 w-5" />
+    </span>
+    <StepText step={step} index={index} />
+  </Reveal.Item>
+);
+
+// Paso que se ilumina cuando el progreso de la escena lo alcanza
+const StepRowScroll = ({ step, index, progress }) => {
+  const at = 0.12 + index * 0.2;
+  const opacity = useTransform(progress, [at - 0.1, at], [0.25, 1]);
+  const x = useTransform(progress, [at - 0.1, at], [24, 0]);
+  const dot = useTransform(progress, [at - 0.04, at], [0, 1]);
+  const iconOpacity = useTransform(progress, [at - 0.04, at], [0, 1]);
+  return (
+    <motion.li style={{ opacity, x }} className="relative flex gap-5">
+      <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface text-brand">
+        <motion.span style={{ scale: dot, opacity: dot }} className="absolute inset-0 rounded-full bg-brand" />
+        <step.Icon className="relative h-5 w-5" />
+        <motion.span style={{ opacity: iconOpacity }} className="absolute inset-0 flex items-center justify-center text-on-brand">
+          <step.Icon className="h-5 w-5" />
+        </motion.span>
+      </span>
+      <StepText step={step} index={index} />
+    </motion.li>
+  );
+};
+
+const ProcessScene = () => {
+  const scenes = useScenes();
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const fill = useTransform(scrollYProgress, [0.05, 0.75], [0, 1]);
+
+  const heading = (
+    <>
+      <span className="eyebrow">Proceso</span>
+      <h2 className="mt-4 text-title-1 font-bold text-ink">¿Cómo funciona el proceso?</h2>
+      <p className="mt-5 max-w-sm text-lg text-ink-2">Cuatro pasos desde tu registro hasta tu certificado.</p>
+    </>
+  );
+
+  if (!scenes) {
+    return (
+      <section ref={ref} className="py-24">
+        <Container>
+          <Reveal>{heading}</Reveal>
+          <Reveal group as="ol" step={0.1} className="relative mt-12 space-y-10">
+            <span className="absolute bottom-6 left-6 top-6 w-px bg-line-strong" aria-hidden="true" />
+            {steps.map((s, i) => <StepRowStatic key={s.title} step={s} index={i} />)}
+          </Reveal>
+        </Container>
+      </section>
+    );
+  }
+
+  return (
+    <section ref={ref} className="relative h-[300vh]">
+      <div className="sticky top-16 flex h-[calc(100svh-4rem)] items-center">
+        <Container className="grid grid-cols-12 items-center gap-10">
+          <div className="col-span-5">{heading}</div>
+          <ol className="relative col-span-7 space-y-12">
+            <span className="absolute bottom-6 left-6 top-6 w-px bg-line-strong" aria-hidden="true" />
+            <motion.span
+              style={{ scaleY: fill }}
+              className="absolute bottom-6 left-6 top-6 w-px origin-top bg-brand"
+              aria-hidden="true"
+            />
+            {steps.map((s, i) => <StepRowScroll key={s.title} step={s} index={i} progress={scrollYProgress} />)}
+          </ol>
+        </Container>
+      </div>
+    </section>
+  );
+};
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
 
 const FAQSection = ({ animating, setAnimating, navigate }) => {
   const faqs = [
@@ -253,33 +275,63 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
   ];
   const [openIdx, setOpenIdx] = useState(null);
   return (
-    <section className="relative pt-0 pb-8 sm:pt-0 sm:pb-10 bg-transparent">
-      <div className="max-w-6xl mx-auto px-2">
-        <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-12 underline underline-offset-8 decoration-brand">Preguntas frecuentes</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-          {/* FAQ a la izquierda */}
-          <ul className="space-y-6 md:pr-4">
+    <section className="relative py-24 sm:py-32">
+      <Container>
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeading align="left" eyebrow="Ayuda" title="Preguntas frecuentes" />
+            <Reveal className="mt-8 rounded-3xl border border-line bg-surface p-7 shadow-card">
+              <p className="font-sans text-lg font-semibold text-ink">¿No encuentras tu respuesta?</p>
+              <p className="mt-1 text-sm text-ink-2">Estamos aquí para ayudarte</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setAnimating(true);
+                    setTimeout(() => {
+                      navigate('/contacto', { state: { scrollToForm: true } });
+                    }, 600);
+                  }}
+                >
+                  Contáctanos
+                </Button>
+                <Button size="sm" variant="secondary" onClick={() => navigate('/guia-usuario')}>
+                  Guía de usuario
+                </Button>
+              </div>
+              {/* Overlay animado para transición profesional */}
+              <AnimatePresence>
+                {animating && (
+                  <m.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: ease.inOutQuart }}
+                    className="fixed inset-0 z-[100] bg-canvas"
+                  />
+                )}
+              </AnimatePresence>
+            </Reveal>
+          </div>
+
+          <Reveal group as="ul" className="divide-y divide-line border-y border-line lg:col-span-8">
             {faqs.map((faq, idx) => (
-              <li key={idx} className="bg-surface border border-brand/30 rounded-2xl shadow-xl overflow-hidden transition-all duration-500 hover:border-brand/50 hover:shadow-brand/10 hover:shadow-2xl">
+              <Reveal.Item as="li" key={idx}>
                 <button
-                  className={`w-full flex justify-between items-center px-7 py-6 text-left focus:outline-none group transition-colors duration-400 ${openIdx === idx ? 'bg-surface/80 border-l-4 border-brand' : ''}`}
+                  className="group flex w-full items-center justify-between gap-6 py-6 text-left"
                   onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
                   aria-expanded={openIdx === idx}
                   aria-controls={`faq-answer-${idx}`}
                 >
-                  <span className="text-lg font-semibold text-white group-hover:text-brand transition-colors flex-1">
+                  <span className={`text-lg font-medium transition-colors duration-200 sm:text-xl ${openIdx === idx ? 'text-ink' : 'text-ink-2 group-hover:text-ink'}`}>
                     {faq.question}
                   </span>
                   <m.span
                     animate={{ rotate: openIdx === idx ? 180 : 0 }}
-                    transition={{ 
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 20
-                    }}
-                    className="ml-4"
+                    transition={spring.snappy}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-ink-2"
                   >
-                    <ChevronDown className="w-7 h-7 text-brand" />
+                    <ChevronDown className="h-4 w-4" />
                   </m.span>
                 </button>
                 <AnimatePresence initial={false}>
@@ -290,105 +342,25 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ 
-                        height: {
-                          duration: 0.5,
-                          ease: [0.4, 0.0, 0.2, 1]
-                        },
-                        opacity: {
-                          duration: 0.4,
-                          ease: 'easeInOut',
-                          delay: 0.1
-                        }
-                      }}
+                      transition={{ height: { duration: 0.35, ease: ease.outExpo }, opacity: { duration: 0.2 } }}
                       style={{ overflow: 'hidden' }}
-                      className="px-7 pb-6 text-gray-300 text-base origin-top"
-                      layout
                     >
-                      <m.div
-                        initial={{ opacity: 0, y: -15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -15 }}
-                        transition={{ 
-                          duration: 0.5,
-                          ease: [0.4, 0.0, 0.2, 1],
-                          delay: 0.15
-                        }}
-                      >
-                        {faq.answer}
-                      </m.div>
+                      <p className="max-w-2xl pb-6 text-base text-ink-2">{faq.answer}</p>
                     </m.div>
                   )}
                 </AnimatePresence>
-              </li>
+              </Reveal.Item>
             ))}
-          </ul>
-          {/* CTA y recursos útiles a la derecha */}
-          <div className="w-full flex flex-col items-center justify-start">
-            <m.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
-              className="w-full flex flex-col items-center justify-center bg-gradient-to-br from-surface to-surface border border-brand/30 rounded-2xl shadow-xl p-10 min-h-[340px]"
-            >
-              <div className="flex flex-col items-center mb-6">
-                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#a1db87" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="mb-2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <span className="text-xl font-bold text-white mb-1">¿No encuentras tu respuesta?</span>
-                <span className="text-brand text-base">Estamos aquí para ayudarte</span>
-              </div>
-              <motion.button
-                whileTap={{ scale: 0.96 }}
-                whileHover={{ scale: 1.04 }}
-                onClick={() => {
-                  setAnimating(true);
-                  setTimeout(() => {
-                    navigate('/contacto', { state: { scrollToForm: true } });
-                  }, 600);
-                }}
-                className="cursor-pointer mt-4 inline-block px-7 py-3 rounded-lg bg-brand text-on-brand font-bold text-lg shadow-md hover:bg-brand-300 transition-colors duration-200"
-              >
-                Contáctanos
-              </motion.button>
-              {/* Overlay animado para transición profesional */}
-              <AnimatePresence>
-                {animating && (
-                  <m.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6, ease: 'easeInOut', opacity: { duration: 1.1, ease: 'easeInOut' } }}
-                    style={{ position: 'fixed', inset: 0, zIndex: 100, background: '#23272f' }}
-                  />
-                )}
-              </AnimatePresence>
-            </m.div>
-            {/* Recursos útiles */}
-            <m.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-              className="w-full mt-8 flex flex-col items-center justify-center bg-surface border border-brand/20 rounded-2xl shadow-lg p-7"
-            >
-              <span className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                <svg width="22" height="22" fill="none" stroke="#a1db87" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M8 16h8M8 8h8"/></svg>
-                Recursos útiles
-              </span>
-              <ul className="space-y-2 w-full">
-                <li>
-                  <button onClick={() => navigate('/guia-usuario')} className="w-full block px-4 py-2 rounded-md text-brand font-semibold bg-surface hover:bg-brand hover:text-on-brand transition-colors duration-200 text-center cursor-pointer">Guía de usuario</button>
-                </li>
-              </ul>
-            </m.div>
-          </div>
+          </Reveal>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };
 
-
+/* ==========================================================================
+   Reseñas
+   ========================================================================== */
 
 const fetchReviews = async () => {
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
@@ -397,6 +369,14 @@ const fetchReviews = async () => {
   const json = await res.json();
   return json.data || json;
 };
+
+const Stars = ({ rating, size = 'h-4 w-4' }) => (
+  <div className="flex items-center gap-0.5" aria-label={`${rating} de 5 estrellas`}>
+    {[...Array(5)].map((_, i) => (
+      <Star key={i} className={`${size} ${i < rating ? 'text-brand' : 'text-gray-700'}`} fill={i < rating ? 'currentColor' : 'none'} />
+    ))}
+  </div>
+);
 
 const ReviewsCarousel = () => {
   const carouselRef = useRef(null);
@@ -412,7 +392,6 @@ const ReviewsCarousel = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const truncate = (str, n) => (str.length > n ? str.slice(0, n) + '…' : str);
   // Drag to scroll horizontal
   let isDown = false;
   let startX;
@@ -454,49 +433,26 @@ const ReviewsCarousel = () => {
   }, []);
 
   return (
-    <section className="relative py-16 bg-transparent">
+    <section className="relative py-24 sm:py-32">
       <Container>
-        <h2 className="font-[Rondana] text-3xl sm:text-4xl font-bold text-center text-white mb-12 underline underline-offset-8 decoration-brand">
-          ¿Qué opinan nuestros estudiantes?
-        </h2>
-        <div className="overflow-x-auto select-none custom-scrollbar">
-            <div
-              ref={carouselRef}
-              className="flex gap-10 whitespace-nowrap mb-6"
-              style={{ willChange: 'transform' }}
-            >
+        <SectionHeading eyebrow="Reseñas" title="¿Qué opinan nuestros estudiantes?" />
+        <div className="custom-scrollbar mt-12 select-none overflow-x-auto pb-4">
+          <div ref={carouselRef} className="flex gap-4">
             {loading ? (
-              <div className="text-center text-gray-400 w-full py-12">Cargando reseñas...</div>
+              [0, 1, 2].map((i) => (
+                <div key={i} className="h-56 min-w-[300px] flex-1 animate-pulse rounded-3xl border border-line bg-surface" />
+              ))
             ) : error ? (
-              <div className="text-center text-red-400 w-full py-12">{error}</div>
+              <div className="w-full py-12 text-center text-red-300">{error}</div>
             ) : reviews.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto bg-surface/90 border border-brand/10 rounded-2xl shadow-xl px-10 py-16 relative"
-              >
-                <div className="flex flex-col items-center mb-4 w-full">
-                  <Star className="w-16 h-16 text-brand mb-2 animate-bounce" />
-                  <span className="text-2xl font-bold text-brand mb-2 text-center w-full">¡Aún no hay reseñas!</span>
-                  <p className="text-gray-300 text-base text-center mb-2 w-full">Sé el primero en compartir tu experiencia y ayuda a conocer Evenor-Tech.</p>
-                  <div className="flex gap-2 mt-2 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-6 h-6 text-gray-600 animate-pulse" />
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => window.location.href = '/reseñas'}
-                    className="cursor-pointer mt-2 px-6 py-2 rounded-full bg-brand text-on-brand font-semibold shadow hover:bg-brand-300 transition-colors text-base focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2"
-                  >
-                    Ir a reseñas
-                  </button>
-                </div>
-                <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute left-10 top-10 w-32 h-32 bg-brand/10 rounded-full blur-2xl animate-pulse" />
-                  <div className="absolute right-10 bottom-10 w-32 h-32 bg-brand/10 rounded-full blur-2xl animate-pulse" />
-                </div>
-              </motion.div>
+              <Reveal className="mx-auto flex w-full max-w-xl flex-col items-center rounded-3xl border border-line bg-surface px-8 py-14 text-center shadow-card">
+                <Stars rating={0} size="h-6 w-6" />
+                <p className="mt-6 font-display text-title-3 font-bold text-ink">¡Aún no hay reseñas!</p>
+                <p className="mt-2 text-base text-ink-2">Sé el primero en compartir tu experiencia y ayuda a conocer Evenor-Tech.</p>
+                <Button size="sm" className="mt-8" onClick={() => window.location.href = '/reseñas'}>
+                  Ir a reseñas
+                </Button>
+              </Reveal>
             ) : (
               reviews.map((review, idx) => {
                 const description = typeof review.description === 'string' ? review.description : '';
@@ -506,108 +462,76 @@ const ReviewsCarousel = () => {
                 return (
                   <div
                     key={idx}
-                    className="min-w-[400px] max-w-md bg-surface border border-brand/20 rounded-2xl shadow-lg px-10 py-8 flex flex-col items-center text-center relative"
+                    className="flex min-w-[300px] max-w-sm flex-col rounded-3xl border border-line bg-surface p-7 shadow-card sm:min-w-[360px]"
                   >
-                    <img
-                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.charAt(0))}`}
-                      alt={user}
-                      className="w-20 h-20 rounded-full border-2 border-brand mb-4 object-cover"
-                      loading="lazy"
-                    />
-                    <div className="flex items-center justify-center mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-6 h-6 ${i < review.rating ? 'text-brand' : 'text-gray-600'}`} fill={i < review.rating ? '#a1db87' : 'none'} />
-                      ))}
+                    <Stars rating={review.rating} />
+                    <p className="mt-5 flex-1 break-words text-lg leading-snug text-ink">
+                      “{isLong ? description.slice(0, maxLen) + '…' : description}”
+                    </p>
+                    {isLong && (
+                      <button
+                        className="mt-3 self-start text-sm font-medium text-brand transition-colors hover:text-brand-300"
+                        onClick={() => setModalReview({ ...review, user })}
+                      >
+                        Ver más
+                      </button>
+                    )}
+                    <div className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+                      <img
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.charAt(0))}`}
+                        alt=""
+                        className="h-10 w-10 rounded-full object-cover"
+                        loading="lazy"
+                      />
+                      <span className="font-semibold text-ink">{user}</span>
                     </div>
-                    <div className="w-full flex flex-col items-center">
-                      <p className="text-gray-200 text-lg mb-2 w-full line-clamp-3 break-words">“{isLong ? description.slice(0, maxLen) + '…' : description}”</p>
-                      {isLong && (
-                        <button
-                          className="text-brand underline text-sm hover:text-brand-300 transition-colors mb-2 cursor-pointer"
-                          onClick={() => setModalReview({ ...review, user })}
-                        >
-                          Ver más
-                        </button>
-                      )}
-                    </div>
-                    <span className="font-bold text-brand text-xl">{user}</span>
                   </div>
                 );
               })
             )}
           </div>
         </div>
-        {/* Modal para reseña completa */}
         {/* Modal animado para reseña completa */}
         <AnimatePresence>
           {modalReview && (
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="bg-surface border border-brand/30 rounded-2xl shadow-2xl p-8 max-w-xl w-full sm:w-auto relative"
-                style={{wordBreak: 'break-word', minWidth: 280, maxWidth: '90vw'}}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.25 }}
+                role="dialog"
+                aria-modal="true"
+                className="relative w-full max-w-lg break-words rounded-3xl border border-line bg-surface-2 p-8 shadow-overlay"
+                initial={{ opacity: 0, scale: 0.96, y: 12 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={spring.gentle}
               >
                 <button
-                  className="absolute top-3 right-3 text-brand text-2xl font-bold hover:text-brand-300 transition-colors cursor-pointer"
+                  className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-ink-3 transition-colors hover:bg-white/[0.08] hover:text-ink"
                   onClick={() => setModalReview(null)}
                   aria-label="Cerrar"
                 >
                   ×
                 </button>
-                <img
-                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent((modalReview.user || 'U').charAt(0))}`}
-                  alt={modalReview.user || 'Usuario'}
-                  className="w-20 h-20 rounded-full border-2 border-brand mb-4 object-cover mx-auto"
-                  loading="lazy"
-                />
-                <div className="flex items-center justify-center mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`w-6 h-6 ${i < modalReview.rating ? 'text-brand' : 'text-gray-600'}`} fill={i < modalReview.rating ? '#a1db87' : 'none'} />
-                  ))}
+                <Stars rating={modalReview.rating} size="h-5 w-5" />
+                <p className="mt-5 text-lg leading-relaxed text-ink">“{modalReview.description}”</p>
+                <div className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+                  <img
+                    src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent((modalReview.user || 'U').charAt(0))}`}
+                    alt=""
+                    className="h-10 w-10 rounded-full object-cover"
+                    loading="lazy"
+                  />
+                  <span className="font-semibold text-ink">{modalReview.user || 'Usuario'}</span>
                 </div>
-                <p className="text-gray-200 text-lg mb-4 text-center break-words" style={{wordBreak: 'break-word', overflowWrap: 'break-word'}}>
-                  “{modalReview.description}”
-                </p>
-                <span className="font-bold text-brand text-xl block text-center">{modalReview.user || 'Usuario'}</span>
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
-        {/* Clamp multiline utility y scrollbar personalizada */}
-        <style>{`
-          .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          .custom-scrollbar {
-            scrollbar-width: thin;
-            scrollbar-color: #a1db87 #23272f;
-          }
-          .custom-scrollbar::-webkit-scrollbar {
-            height: 10px;
-            background: #23272f;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #a1db87;
-            border-radius: 8px;
-            border: 2px solid #23272f;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #7ed957;
-          }
-        `}</style>
       </Container>
       <style>{`
         .dragging {
@@ -619,50 +543,69 @@ const ReviewsCarousel = () => {
   );
 };
 
+/* ==========================================================================
+   Escena final — CTA que se expande al entrar
+   ========================================================================== */
+
+const CTAScene = ({ onStart }) => {
+  const scenes = useScenes();
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center center'] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [0.4, 1]);
+
+  return (
+    <section ref={ref} className="relative py-24 sm:py-32">
+      <Container>
+        <motion.div
+          style={scenes ? { scale, opacity } : undefined}
+          className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface px-6 py-20 text-center shadow-raised sm:px-16 sm:py-28"
+        >
+          <div className="pointer-events-none absolute inset-x-0 -top-1/2 mx-auto h-full w-3/4 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.18),transparent)]" aria-hidden="true" />
+          <div className="relative">
+            <h2 className="mx-auto max-w-3xl text-title-1 font-bold text-ink">
+              ¿Listo para encontrar tu próxima <span className="text-brand">oportunidad</span>?
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-lg text-ink-2">Únete a miles de empresas que ya están aprovechando nuestras herramientas</p>
+            <ul className="mt-8 flex flex-wrap justify-center gap-2">
+              {perks.map((p) => (
+                <li key={p} className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white/[0.04] px-4 py-1.5 text-sm text-ink-2">
+                  <Check className="h-3.5 w-3.5 text-brand" /> {p}
+                </li>
+              ))}
+            </ul>
+            <Button size="lg" className="mt-10" onClick={onStart}>
+              Comenzar ahora <ArrowRight className="h-5 w-5" />
+            </Button>
+            <p className="mt-4 text-xs text-ink-3">Cursos gratuitos y sin compromiso</p>
+          </div>
+        </motion.div>
+      </Container>
+    </section>
+  );
+};
 
 const Home = () => {
   const navigate = useNavigate();
   const [animating, setAnimating] = useState(false);
   const { user } = useUser();
   const [showLogin, setShowLogin] = useState(false);
+  const handleStart = () => {
+    if (user) {
+      navigate('/cursos');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setShowLogin(true);
+    }
+  };
   return (
     <>
       {showLogin && <AuthModal open={showLogin} onClose={() => setShowLogin(false)} />}
-      <HeroSection />
+      <HeroScene onStart={handleStart} />
+      <ProcessScene />
       <FAQSection animating={animating} setAnimating={setAnimating} navigate={navigate} />
       <ReviewsCarousel />
-      {/* Sección CTA inspirada en la imagen */}
-      <section className="relative flex items-center justify-center py-16 sm:py-20">
-        <Container>
-          <div className="relative bg-surface border border-brand rounded-2xl shadow-2xl px-6 sm:px-16 py-12 sm:py-16 flex flex-col items-center text-center overflow-hidden">
-            {/* Borde decorativo */}
-            <div className="absolute inset-0 rounded-2xl border border-brand/40 pointer-events-none" aria-hidden="true"></div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 leading-tight">
-              ¿Listo para encontrar tu próxima <span className="text-brand">oportunidad</span>?
-            </h2>
-            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">Únete a miles de empresas que ya están aprovechando nuestras herramientas</p>
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <span className="flex items-center gap-2 bg-black/70 border border-brand/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-brand">✔</span> Registro gratuito</span>
-              <span className="flex items-center gap-2 bg-black/70 border border-brand/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-brand">✔</span> Acceso inmediato</span>
-              <span className="flex items-center gap-2 bg-black/70 border border-brand/30 rounded-full px-5 py-2 text-sm text-gray-100 font-semibold"><span className="text-brand">✔</span> Sin compromiso</span>
-            </div>
-            <button
-              className="cursor-pointer bg-brand hover:bg-brand-300 text-black font-bold text-lg rounded-xl px-10 py-4 shadow-lg transition-colors flex items-center gap-2 mb-2"
-              onClick={() => {
-                if (user) {
-                  navigate('/cursos');
-                } else {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                  setShowLogin(true);
-                }
-              }}
-            >
-              Comenzar ahora <ArrowRight className="w-5 h-5" />
-            </button>
-            <span className="text-xs text-gray-400 mt-2">Cursos gratuitos y sin compromiso</span>
-          </div>
-        </Container>
-      </section>
+      <CTAScene onStart={handleStart} />
     </>
   );
 };
