@@ -539,7 +539,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-3xl font-bold text-ink mb-2 leading-tight"
+                  className="font-sans text-2xl font-semibold leading-snug tracking-tight text-ink mb-2 sm:text-3xl"
                 >
                   {idioma === 'en' ? (pregunta.preguntaEn || pregunta.pregunta) : pregunta.pregunta}
                 </motion.h3>
