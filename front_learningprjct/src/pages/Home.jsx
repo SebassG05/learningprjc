@@ -373,7 +373,7 @@ const fetchReviews = async () => {
 const Stars = ({ rating, size = 'h-4 w-4' }) => (
   <div className="flex items-center gap-0.5" aria-label={`${rating} de 5 estrellas`}>
     {[...Array(5)].map((_, i) => (
-      <Star key={i} className={`${size} ${i < rating ? 'text-brand' : 'text-gray-700'}`} fill={i < rating ? 'currentColor' : 'none'} />
+      <Star key={i} className={`${size} ${i < rating ? 'text-brand' : 'text-gray-600'}`} fill={i < rating ? 'currentColor' : 'none'} />
     ))}
   </div>
 );
