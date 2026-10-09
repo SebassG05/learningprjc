@@ -444,7 +444,7 @@ const Contact = () => {
                   onMouseLeave={() => setIsHoveringButton(false)}
                   className={`w-full relative px-6 py-3 font-bold rounded-xl shadow-card overflow-hidden group transition-all ${
                     formStatus.submitted
-                      ? 'bg-green-600 text-ink cursor-not-allowed'
+                      ? 'bg-brand text-on-brand cursor-not-allowed'
                       : 'bg-brand text-on-brand hover:shadow-xl cursor-pointer'
                   }`}
                 >

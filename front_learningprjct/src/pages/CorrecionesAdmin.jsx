@@ -291,13 +291,14 @@ export default function CorreccionesAdmin() {
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8">
+        <div className="scrollbar-hide -mx-4 mb-8 overflow-x-auto px-4 sm:mx-0 sm:px-0" role="tablist">
+         <div className="inline-flex gap-1 rounded-full border border-line bg-white/[0.03] p-1">
           <button
             onClick={() => setActiveTab('correcciones')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
+            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'correcciones'
-                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
+                ? 'bg-brand text-on-brand'
+                : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
             <FileText className="w-4 h-4" />
@@ -305,10 +306,10 @@ export default function CorreccionesAdmin() {
           </button>
           <button
             onClick={() => setActiveTab('reservas')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
+            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'reservas'
-                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
+                ? 'bg-brand text-on-brand'
+                : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
             <Users className="w-4 h-4" />
@@ -316,10 +317,10 @@ export default function CorreccionesAdmin() {
           </button>
           <button
             onClick={() => setActiveTab('progreso')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
+            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'progreso'
-                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
+                ? 'bg-brand text-on-brand'
+                : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
             <TrendingUp className="w-4 h-4" />
@@ -327,15 +328,16 @@ export default function CorreccionesAdmin() {
           </button>
           <button
             onClick={() => setActiveTab('gestion-cursos')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all ${
+            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'gestion-cursos'
-                ? 'bg-green-600 text-ink shadow-card shadow-green-900/30'
-                : 'bg-surface-2/40 text-gray-400 border border-line hover:border-green-700/50'
+                ? 'bg-brand text-on-brand'
+                : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
             <Settings className="w-4 h-4" />
             Gestión de Cursos
           </button>
+         </div>
         </div>
 
         {/* ======== TAB: RESERVAS ======== */}
@@ -913,7 +915,7 @@ export default function CorreccionesAdmin() {
                 <button
                   onClick={() => guardarCorreccion('aprobado')}
                   disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
                   Aprobar

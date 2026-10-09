@@ -61,7 +61,7 @@ const CookieBanner = () => {
         aria-label="Consentimiento de cookies"
       >
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-surface to-surface border-2 border-line rounded-2xl shadow-card p-6 sm:p-8">
+          <div className="material-thick border border-line rounded-3xl shadow-overlay p-6 sm:p-8">
             {!showSettings ? (
               <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
                 {/* Icono y contenido principal */}
@@ -69,7 +69,7 @@ const CookieBanner = () => {
                   <div className="flex items-start gap-4">
                     {/* Icono de cookie */}
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-brand/20 rounded-xl flex items-center justify-center">
+                      <div className="w-11 h-11 bg-brand/10 rounded-2xl flex items-center justify-center">
                         <svg 
                           className="w-6 h-6 text-brand" 
                           fill="none" 
@@ -89,10 +89,10 @@ const CookieBanner = () => {
 
                     {/* Texto */}
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-xl font-bold text-ink mb-2 font-[Rondana]">
+                      <h2 className="font-sans text-lg font-semibold text-ink mb-2">
                         Utilizamos Cookies
                       </h2>
-                      <p className="text-gray-300 text-sm leading-relaxed">
+                      <p className="text-ink-2 text-sm leading-relaxed">
                         Este sitio web utiliza Cookies propias y de terceros, para recopilar información con la finalidad de mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias, en base a un perfil elaborado a partir de sus hábitos de navegación. Puede obtener más información en la{' '}
                         <Link 
                           to="/politica-cookies" 
@@ -109,19 +109,19 @@ const CookieBanner = () => {
                 <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:flex-shrink-0">
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="px-6 py-3 bg-transparent border-2 border-brand/50 text-brand rounded-xl font-semibold hover:bg-brand/10 transition-all duration-200 whitespace-nowrap text-sm"
+                    className="px-5 h-11 bg-transparent text-ink-2 rounded-full font-semibold hover:bg-white/[0.06] hover:text-ink transition-colors duration-200 whitespace-nowrap text-sm"
                   >
                     Configurar
                   </button>
                   <button
                     onClick={handleRejectNonEssential}
-                    className="px-6 py-3 bg-gray-700 text-ink rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200 whitespace-nowrap text-sm"
+                    className="px-5 h-11 bg-white/[0.08] border border-line-strong text-ink rounded-full font-semibold hover:bg-white/[0.12] transition-colors duration-200 whitespace-nowrap text-sm"
                   >
                     Solo esenciales
                   </button>
                   <button
                     onClick={handleAcceptAll}
-                    className="px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-card hover:shadow-brand/50 whitespace-nowrap text-sm"
+                    className="px-5 h-11 bg-brand hover:bg-brand-300 text-on-brand rounded-full font-semibold transition-colors duration-200 whitespace-nowrap text-sm"
                   >
                     Aceptar todas
                   </button>

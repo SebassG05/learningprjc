@@ -13,9 +13,9 @@ export function ToastProvider({ children }) {
 
   // Colores: info=azul, success=verde, error=rojo
   const getColor = (type) => {
-    if (type === 'success') return 'bg-green-600 text-ink';
-    if (type === 'error') return 'bg-red-600 text-ink';
-    return 'bg-blue-600 text-ink';
+    if (type === 'success') return 'bg-brand';
+    if (type === 'error') return 'bg-red-400';
+    return 'bg-sky-400';
   };
 
   return (
@@ -24,13 +24,15 @@ export function ToastProvider({ children }) {
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.35 }}
-            className={`fixed bottom-8 right-8 z-[9999] px-6 py-3 rounded-xl shadow-card font-semibold text-base ${getColor(toast.type)}`}
-            style={{ minWidth: 220 }}
+            role="status"
+            aria-live="polite"
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+            className="fixed inset-x-4 bottom-6 z-[9999] mx-auto flex w-fit max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-line material-thick px-5 py-3 text-sm font-medium text-ink shadow-overlay sm:inset-x-auto sm:right-6 sm:mx-0"
           >
+            <span className={`h-2 w-2 shrink-0 rounded-full ${getColor(toast.type)}`} aria-hidden="true" />
             {toast.message}
           </motion.div>
         )}

@@ -642,7 +642,7 @@ export default function AdminCursos() {
                     setArchivoEs(e.target.files[0]);
                     setNombreArchivoEs(e.target.files[0]?.name || '');
                   }}
-                  className="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer file:transition-colors"
+                  className="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand file:text-on-brand hover:file:bg-brand-300 file:cursor-pointer file:transition-colors"
                 />
                 {nombreArchivoEs && (
                   <p className="text-xs text-green-400 mt-2 flex items-center gap-1">
@@ -731,7 +731,7 @@ export default function AdminCursos() {
         </div>
         <button
           onClick={abrirFormularioNuevo}
-          className="flex items-center gap-2 px-4 py-2 bg-green-600 text-ink rounded-lg hover:bg-green-700 transition-colors shadow-card shadow-green-900/30"
+          className="flex items-center gap-2 px-4 py-2 bg-brand text-on-brand rounded-lg hover:bg-brand-300 transition-colors shadow-card shadow-green-900/30"
         >
           <Plus className="w-5 h-5" />
           Nuevo Curso
@@ -901,7 +901,7 @@ export default function AdminCursos() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="flex-1 px-4 py-2 bg-surface-2 border border-line rounded-lg text-ink file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                    className="flex-1 px-4 py-2 bg-surface-2 border border-line rounded-lg text-ink file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand file:text-on-brand hover:file:bg-brand-300 file:cursor-pointer focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                   />
                   {(formData.image || formData.imageFile) && (
                     <div className="flex items-center gap-2 text-sm text-green-400">
@@ -936,7 +936,7 @@ export default function AdminCursos() {
                   <button
                     type="button"
                     onClick={agregarCategoria}
-                    className="px-4 py-2 bg-green-600 text-ink rounded-lg hover:bg-green-700 transition-colors shadow-card shadow-green-900/30"
+                    className="px-4 py-2 bg-brand text-on-brand rounded-lg hover:bg-brand-300 transition-colors shadow-card shadow-green-900/30"
                   >
                     <Plus className="w-5 h-5" />
                   </button>
@@ -978,7 +978,7 @@ export default function AdminCursos() {
                     <button
                       type="button"
                       onClick={agregarObjetivoGeneral}
-                      className="px-4 py-2 bg-green-600 text-ink rounded-lg hover:bg-green-700 transition-colors shadow-card shadow-green-900/30"
+                      className="px-4 py-2 bg-brand text-on-brand rounded-lg hover:bg-brand-300 transition-colors shadow-card shadow-green-900/30"
                     >
                       <Plus className="w-5 h-5" />
                     </button>
@@ -1064,7 +1064,7 @@ export default function AdminCursos() {
                     <button
                       type="button"
                       onClick={agregarObjetivoEspecifico}
-                      className="px-4 py-2 bg-green-600 text-ink rounded-lg hover:bg-green-700 transition-colors shadow-card shadow-green-900/30"
+                      className="px-4 py-2 bg-brand text-on-brand rounded-lg hover:bg-brand-300 transition-colors shadow-card shadow-green-900/30"
                     >
                       <Plus className="w-5 h-5" />
                     </button>
@@ -1151,7 +1151,7 @@ export default function AdminCursos() {
                 <button
                   type="submit"
                   disabled={guardando}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-ink rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-card shadow-green-900/30"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-brand text-on-brand rounded-lg hover:bg-brand-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-card shadow-green-900/30"
                 >
                   {guardando ? (
                     <>
@@ -1427,7 +1427,7 @@ export default function AdminCursos() {
             </p>
             <button
               onClick={abrirFormularioNuevo}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-ink rounded-lg hover:bg-green-700 transition-colors shadow-card shadow-green-900/30"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-brand text-on-brand rounded-lg hover:bg-brand-300 transition-colors shadow-card shadow-green-900/30"
             >
               <Plus className="w-5 h-5" />
               Crear Primer Curso
