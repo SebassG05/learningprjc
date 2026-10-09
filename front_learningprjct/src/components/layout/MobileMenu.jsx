@@ -79,7 +79,7 @@ const MobileMenu = ({
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             style={{ top: `${headerHeight}px`, bottom: 0 }}
-            className="absolute right-0 w-full max-w-[90%] sm:max-w-[360px] bg-gradient-to-br from-[#1e1e1e] to-[#262626] border-l border-green-400/30 flex flex-col overflow-hidden"
+            className="absolute right-0 w-full max-w-[90%] sm:max-w-[360px] bg-gradient-to-br from-surface-2 to-surface-2 border-l border-green-400/30 flex flex-col overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
             <div className="h-1 bg-gradient-to-r from-green-400/60 via-green-400 to-green-400/60" />
@@ -87,12 +87,12 @@ const MobileMenu = ({
               {menuItems.map((item) => (
                 <div key={`mobile-${item.name}`} className="rounded-xl overflow-hidden">
                   {item.dropdown ? (
-                    <div className="bg-[#2a2a2a] rounded-xl">
+                    <div className="bg-surface-2 rounded-xl">
                       <button
                         onClick={() => toggleDropdown(item.name)}
                         className={`w-full flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3.5 text-sm sm:text-base font-medium transition-all duration-200 ${activeDropdown === item.name
-                          ? 'bg-green-400 text-[#222222] shadow-xl'
-                          : 'text-white hover:bg-[#333333]'
+                          ? 'bg-green-400 text-on-brand shadow-xl'
+                          : 'text-white hover:bg-surface-3'
                           }`}
                       >
                         <div className="flex items-center min-w-0">
@@ -113,7 +113,7 @@ const MobileMenu = ({
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="overflow-hidden bg-[#222]/70"
+                            className="overflow-hidden bg-surface-2/70"
                           >
                             <div className="p-2 sm:p-3 space-y-1">
                               {item.dropdown.map((subItem) => (
@@ -121,8 +121,8 @@ const MobileMenu = ({
                                   key={subItem.path}
                                   onClick={() => handleNavigation(subItem.path)}
                                   className={`w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 ${location.pathname === subItem.path
-                                    ? 'bg-green-400 text-[#222222] font-semibold shadow-lg'
-                                    : 'text-gray-300 hover:bg-[#333333] hover:text-white'
+                                    ? 'bg-green-400 text-on-brand font-semibold shadow-lg'
+                                    : 'text-gray-300 hover:bg-surface-3 hover:text-white'
                                     }`}
                                   whileHover={{ x: 4 }}
                                   whileTap={{ scale: 0.98 }}
@@ -133,7 +133,7 @@ const MobileMenu = ({
                                       <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        className="w-1.5 h-1.5 rounded-full bg-[#222222] flex-shrink-0 ml-2"
+                                        className="w-1.5 h-1.5 rounded-full bg-surface-2 flex-shrink-0 ml-2"
                                       />
                                     )}
                                   </div>
@@ -148,8 +148,8 @@ const MobileMenu = ({
                     <motion.button
                       onClick={() => handleNavigation(item.path)}
                       className={`w-full flex items-center px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base font-medium transition-all duration-200 ${location.pathname === item.path
-                        ? 'bg-green-400 text-[#222222] shadow-xl'
-                        : 'text-white bg-[#2a2a2a] hover:bg-[#333333]'
+                        ? 'bg-green-400 text-on-brand shadow-xl'
+                        : 'text-white bg-surface-2 hover:bg-surface-3'
                         }`}
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.98 }}

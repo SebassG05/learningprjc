@@ -85,7 +85,7 @@ const CookiePreferences = () => {
   ];
 
   return (
-    <div className="bg-[#181f1b] border border-[#a1db87]/30 rounded-2xl p-6 sm:p-8">
+    <div className="bg-surface border border-brand/30 rounded-2xl p-6 sm:p-8">
       {/* Encabezado */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-white mb-2 font-[Rondana]">
@@ -98,8 +98,8 @@ const CookiePreferences = () => {
 
       {/* Mensaje de éxito */}
       {showSuccess && (
-        <div className="mb-4 bg-[#a1db87]/20 border border-[#a1db87] rounded-xl p-4 flex items-center gap-3 animate-fadeIn">
-          <svg className="w-5 h-5 text-[#a1db87]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-4 bg-brand/20 border border-brand rounded-xl p-4 flex items-center gap-3 animate-fadeIn">
+          <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           <span className="text-white">Preferencias guardadas correctamente</span>
@@ -111,14 +111,14 @@ const CookiePreferences = () => {
         {cookieTypes.map((cookie) => (
           <div
             key={cookie.id}
-            className="bg-[#23272f]/50 rounded-xl p-5 border border-[#a1db87]/20"
+            className="bg-surface/50 rounded-xl p-5 border border-brand/20"
           >
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1">
                 <h3 className="text-white font-semibold text-lg">
                   {cookie.name}
                   {cookie.required && (
-                    <span className="ml-2 text-xs text-[#a1db87] font-normal">
+                    <span className="ml-2 text-xs text-brand font-normal">
                       (Siempre activas)
                     </span>
                   )}
@@ -129,9 +129,9 @@ const CookiePreferences = () => {
               <button
                 onClick={() => handleToggle(cookie.id)}
                 disabled={cookie.required}
-                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 focus:ring-offset-[#181f1b] ${
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface ${
                   preferences[cookie.id]
-                    ? 'bg-[#a1db87]'
+                    ? 'bg-brand'
                     : 'bg-gray-600'
                 } ${cookie.required ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                 aria-label={`Toggle ${cookie.name}`}
@@ -168,20 +168,20 @@ const CookiePreferences = () => {
         </button>
         <button
           onClick={handleSave}
-          className="px-6 py-3 bg-[#a1db87]/20 border-2 border-[#a1db87] text-[#a1db87] rounded-xl font-semibold hover:bg-[#a1db87]/30 transition-all duration-200 text-sm"
+          className="px-6 py-3 bg-brand/20 border-2 border-brand text-brand rounded-xl font-semibold hover:bg-brand/30 transition-all duration-200 text-sm"
         >
           Guardar cambios
         </button>
         <button
           onClick={handleAcceptAll}
-          className="px-6 py-3 bg-gradient-to-r from-[#a1db87] to-[#8bc970] text-[#1a1f1c] rounded-xl font-bold hover:from-[#8bc970] hover:to-[#75b55e] transition-all duration-200 shadow-lg hover:shadow-[#a1db87]/50 text-sm"
+          className="px-6 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-lg hover:shadow-brand/50 text-sm"
         >
           Aceptar todas
         </button>
       </div>
 
       {/* Botón de reset (útil para desarrollo/testing) */}
-      <div className="mt-6 pt-6 border-t border-[#a1db87]/20">
+      <div className="mt-6 pt-6 border-t border-brand/20">
         <button
           onClick={() => {
             if (confirm('¿Estás seguro de que quieres restablecer tus preferencias de cookies? Volverás a ver el banner de consentimiento.')) {

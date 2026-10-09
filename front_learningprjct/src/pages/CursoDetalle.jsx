@@ -223,7 +223,7 @@ export default function CursoDetalle() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader className="w-12 h-12 text-[#a1db87] animate-spin" />
+          <Loader className="w-12 h-12 text-brand animate-spin" />
           <p className="text-gray-400">Cargando curso...</p>
         </div>
       </div>
@@ -238,7 +238,7 @@ export default function CursoDetalle() {
           <h2 className="text-2xl font-bold text-red-400 mb-4">Curso no encontrado</h2>
           <button
             onClick={() => navigate('/cursos')}
-            className="text-[#a1db87] hover:underline"
+            className="text-brand hover:underline"
           >
             Volver a cursos
           </button>
@@ -252,14 +252,14 @@ export default function CursoDetalle() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md px-4">
-          <Lock className="w-16 h-16 text-[#a1db87] mx-auto mb-4" />
+          <Lock className="w-16 h-16 text-brand mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-white mb-4">Acceso Restringido</h2>
           <p className="text-gray-400 mb-6">
             Debes inscribirte en este curso para acceder al contenido.
           </p>
           <button
             onClick={() => navigate(`/curso/${id}/inscripcion`)}
-            className="bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-[#a1db87]/30 transition-all"
+            className="bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-brand/30 transition-all"
           >
             Ir a la página de inscripción
           </button>
@@ -284,11 +284,11 @@ export default function CursoDetalle() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.85, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-              className="bg-[#0f1a12] border border-[#a1db87]/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+              className="bg-canvas border border-brand/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
             >
               <div className="flex items-center justify-center mb-4">
-                <div className="p-3 bg-[#a1db87]/10 rounded-full">
-                  <Globe className="w-8 h-8 text-[#a1db87]" />
+                <div className="p-3 bg-brand/10 rounded-full">
+                  <Globe className="w-8 h-8 text-brand" />
                 </div>
               </div>
               <h2 className="text-2xl font-extrabold text-white mb-2">
@@ -302,21 +302,21 @@ export default function CursoDetalle() {
               <div className="flex gap-4">
                 <button
                   onClick={() => seleccionarIdioma('es')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
                 >
                   <span className="text-4xl">🇪🇸</span>
                   <div>
-                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">Español</p>
+                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">Español</p>
                     <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
                   </div>
                 </button>
                 <button
                   onClick={() => seleccionarIdioma('en')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
                 >
                   <span className="text-4xl">🇬🇧</span>
                   <div>
-                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">English</p>
+                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">English</p>
                     <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
                   </div>
                 </button>
@@ -341,8 +341,8 @@ export default function CursoDetalle() {
                   onClick={() => seleccionarIdioma('es')}
                   className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
                     idiomaSeleccionado !== 'en'
-                      ? 'bg-[#a1db87] text-[#1a1a1a] border-[#a1db87]'
-                      : 'text-gray-400 border-gray-700 hover:border-[#a1db87]/50'
+                      ? 'bg-brand text-on-brand border-brand'
+                      : 'text-gray-400 border-gray-700 hover:border-brand/50'
                   }`}
                 >
                   🇪🇸 ES
@@ -351,8 +351,8 @@ export default function CursoDetalle() {
                   onClick={() => seleccionarIdioma('en')}
                   className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
                     idiomaSeleccionado === 'en'
-                      ? 'bg-[#a1db87] text-[#1a1a1a] border-[#a1db87]'
-                      : 'text-gray-400 border-gray-700 hover:border-[#a1db87]/50'
+                      ? 'bg-brand text-on-brand border-brand'
+                      : 'text-gray-400 border-gray-700 hover:border-brand/50'
                   }`}
                 >
                   🇬🇧 EN
@@ -369,7 +369,7 @@ export default function CursoDetalle() {
                 cy="50"
                 r="42"
                 fill="none"
-                stroke="#23272f"
+                stroke="#141416"
                 strokeWidth="8"
               />
               {/* Círculo de progreso */}
@@ -390,7 +390,7 @@ export default function CursoDetalle() {
               />
             </svg>
             {/* Porcentaje en el centro */}
-            <span className="absolute text-2xl font-extrabold text-[#a1db87]">
+            <span className="absolute text-2xl font-extrabold text-brand">
               {progress}%
             </span>
           </div>
@@ -425,7 +425,7 @@ export default function CursoDetalle() {
         <div className="flex justify-center mb-28">
           <button
             onClick={() => navigate(`/curso/${id}/estructura`)}
-            className="cursor-pointer group flex items-center gap-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-[#a1db87]/30 transform hover:scale-105 transition-all duration-300"
+            className="cursor-pointer group flex items-center gap-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-brand/30 transform hover:scale-105 transition-all duration-300"
           >
             <BookOpen className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
             <span className="text-lg">{idiomaSeleccionado === 'en' ? 'View Course Structure' : 'Ver Estructura del Curso'}</span>
@@ -447,12 +447,12 @@ export default function CursoDetalle() {
         {/* Mensaje de Curso Completado */}
         {isCursoCompletado() && (
           <div className="mt-16 mb-16">
-            <div className="bg-gradient-to-r from-[#a1db87]/10 to-[#5ec6a6]/10 border-2 border-[#a1db87] rounded-3xl p-10 shadow-2xl shadow-[#a1db87]/20">
+            <div className="bg-gradient-to-r from-brand/10 to-brand-500/10 border-2 border-brand rounded-3xl p-10 shadow-2xl shadow-brand/20">
               <div className="flex flex-col items-center text-center">
-                <div className="w-24 h-24 bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] rounded-full flex items-center justify-center mb-6 shadow-lg shadow-[#a1db87]/50 animate-pulse">
+                <div className="w-24 h-24 bg-gradient-to-br from-brand to-brand-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand/50 animate-pulse">
                   <span className="text-5xl">🎓</span>
                 </div>
-                <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-4">
+                <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-4">
                   ¡Curso Completado!
                 </h2>
                 <p className="text-gray-300 text-lg mb-6 max-w-2xl">
@@ -460,18 +460,18 @@ export default function CursoDetalle() {
                   Tu certificado será enviado a tu correo electrónico en los próximos días.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <div className="bg-[#23272f] px-6 py-3 rounded-xl border border-[#a1db87]/30">
+                  <div className="bg-surface px-6 py-3 rounded-xl border border-brand/30">
                     <p className="text-gray-400 text-sm">Progreso</p>
-                    <p className="text-2xl font-bold text-[#a1db87]">{progress}%</p>
+                    <p className="text-2xl font-bold text-brand">{progress}%</p>
                   </div>
-                  <div className="bg-[#23272f] px-6 py-3 rounded-xl border border-[#a1db87]/30">
+                  <div className="bg-surface px-6 py-3 rounded-xl border border-brand/30">
                     <p className="text-gray-400 text-sm">Tests completados</p>
-                    <p className="text-2xl font-bold text-[#a1db87]">{completedTests.length}/{curso.temas?.length || 0}</p>
+                    <p className="text-2xl font-bold text-brand">{completedTests.length}/{curso.temas?.length || 0}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => navigate('/')}
-                  className="mt-8 px-8 py-3 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-bold rounded-xl hover:shadow-2xl hover:shadow-[#a1db87]/50 transition-all transform hover:scale-105"
+                  className="mt-8 px-8 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl hover:shadow-2xl hover:shadow-brand/50 transition-all transform hover:scale-105"
                 >
                   Volver al Inicio
                 </button>
@@ -484,7 +484,7 @@ export default function CursoDetalle() {
         {ejerciciosOptativos.length > 0 && (
           <div className="mt-16 mb-16">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#5ec6a6] to-[#4da992] mb-3">
+              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-brand-600 mb-3">
                 🎯 Ejercicios Prácticos Optativos
               </h2>
               <p className="text-gray-400 text-lg">

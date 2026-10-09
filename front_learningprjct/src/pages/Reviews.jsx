@@ -98,23 +98,23 @@ export default function ReviewsPage() {
           initial={{ scale: 0, rotate: -180 }}
           animate={isInView ? { scale: 1, rotate: 0 } : {}}
           transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-          className="inline-flex items-center px-4 py-2 bg-[#2a2a2a] border border-[#a1db87]/30 rounded-full mb-4"
+          className="inline-flex items-center px-4 py-2 bg-surface-2 border border-brand/30 rounded-full mb-4"
         >
-          <Sparkles className="w-4 h-4 text-[#a1db87] mr-2 animate-pulse" />
-          <span className="text-xs sm:text-sm font-semibold text-[#a1db87]">
+          <Sparkles className="w-4 h-4 text-brand mr-2 animate-pulse" />
+          <span className="text-xs sm:text-sm font-semibold text-brand">
             Reseñas
           </span>
         </motion.div>
       </div>
       {/* Fondo decorativo animado */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-[#a1db87]/5 rounded-full blur-3xl pointer-events-none z-0" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#a1db87]/5 rounded-full blur-3xl pointer-events-none z-0" />
+      <div className="absolute top-20 left-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none z-0" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl pointer-events-none z-0" />
       <motion.div
         ref={sectionRef}
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="bg-[#23272f]/80 backdrop-blur-md border border-[#a1db87]/10 rounded-3xl shadow-2xl px-4 sm:px-10 py-10 relative z-10"
+        className="bg-surface/80 backdrop-blur-md border border-brand/10 rounded-3xl shadow-2xl px-4 sm:px-10 py-10 relative z-10"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -123,19 +123,19 @@ export default function ReviewsPage() {
           className="text-center"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-            Califica nuestros <span className="text-[#a1db87]">cursos</span>
+            Califica nuestros <span className="text-brand">cursos</span>
           </h1>
           <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8">
             Tu opinión ayuda a otros estudiantes a elegir mejor y nos permite mejorar la plataforma.
           </p>
         </motion.div>
         <div className="flex justify-center mb-8">
-          <div className="w-full max-w-xl bg-[#23272f] border border-[#a1db87]/20 rounded-2xl px-8 py-4 flex items-center justify-between shadow">
-            <span className="text-[#a1db87] font-bold text-lg">
+          <div className="w-full max-w-xl bg-surface border border-brand/20 rounded-2xl px-8 py-4 flex items-center justify-between shadow">
+            <span className="text-brand font-bold text-lg">
               {reviewsCount}
               <span className="text-gray-300 font-normal text-base ml-2">reseñas publicadas</span>
             </span>
-            <span className="text-[#a1db87] font-bold text-lg">
+            <span className="text-brand font-bold text-lg">
               {reviewsAvg} <span className="text-gray-300 font-normal text-base">/ 5 media</span>
             </span>
           </div>
@@ -143,19 +143,19 @@ export default function ReviewsPage() {
         {user ? (
           <motion.form
             onSubmit={handleSubmit}
-            className="bg-[#181b20] rounded-xl p-6 mb-10 shadow-lg"
+            className="bg-surface rounded-xl p-6 mb-10 shadow-lg"
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3 }}
           >
-            <h2 className="text-xl font-semibold mb-4 text-[#a1db87]">Escribe tu reseña</h2>
+            <h2 className="text-xl font-semibold mb-4 text-brand">Escribe tu reseña</h2>
             <div className="mb-3">
               <label className="block text-sm mb-1 text-gray-300">Email</label>
-              <input type="email" value={user.email} disabled className="w-full px-3 py-2 rounded bg-[#181b20] border border-[#a1db87]/30 text-gray-400 cursor-not-allowed" />
+              <input type="email" value={user.email} disabled className="w-full px-3 py-2 rounded bg-surface border border-brand/30 text-gray-400 cursor-not-allowed" />
             </div>
             <div className="mb-3">
               <label className="block text-sm mb-1 text-gray-300">Reseña</label>
-              <textarea name="description" value={form.description} onChange={handleChange} rows={3} required className="w-full px-3 py-2 rounded bg-[#181b20] border border-[#a1db87]/30 text-white" placeholder="¿Qué te ha parecido la plataforma?" />
+              <textarea name="description" value={form.description} onChange={handleChange} rows={3} required className="w-full px-3 py-2 rounded bg-surface border border-brand/30 text-white" placeholder="¿Qué te ha parecido la plataforma?" />
             </div>
             <div className="mb-4">
               <label className="block text-sm mb-1 text-gray-300">Puntuación</label>
@@ -171,7 +171,7 @@ export default function ReviewsPage() {
                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   >
                     <Star
-                      className={`w-7 h-7 ${i <= form.rating ? 'text-[#a1db87]' : 'text-gray-600'}`}
+                      className={`w-7 h-7 ${i <= form.rating ? 'text-brand' : 'text-gray-600'}`}
                       fill={i <= form.rating ? '#a1db87' : 'none'}
                       style={{ filter: i <= form.rating ? 'drop-shadow(0 0 6px #a1db87aa)' : 'none', transition: 'filter 0.2s' }}
                     />
@@ -186,31 +186,31 @@ export default function ReviewsPage() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
                 transition={{ duration: 0.4 }}
-                className="flex items-center justify-center gap-2 p-4 mb-4 rounded-xl bg-[#1e3a1a] border border-[#a1db87]/40 shadow-lg text-[#a1db87] text-base font-semibold"
+                className="flex items-center justify-center gap-2 p-4 mb-4 rounded-xl bg-surface-2 border border-brand/40 shadow-lg text-brand text-base font-semibold"
               >
-                <CheckCircle className="w-6 h-6 text-[#a1db87] animate-bounce" />
+                <CheckCircle className="w-6 h-6 text-brand animate-bounce" />
                 ¡Reseña publicada con éxito!
               </motion.div>
             )}
-            <button type="submit" disabled={submitting || !form.description || !form.rating} className="cursor-pointer w-full py-2 rounded bg-[#a1db87] text-[#181b20] font-bold hover:bg-emerald-400 transition-colors disabled:opacity-60">{submitting ? 'Enviando...' : 'Publicar reseña'}</button>
+            <button type="submit" disabled={submitting || !form.description || !form.rating} className="cursor-pointer w-full py-2 rounded bg-brand text-on-brand font-bold hover:bg-brand-300 transition-colors disabled:opacity-60">{submitting ? 'Enviando...' : 'Publicar reseña'}</button>
           </motion.form>
         ) : (
           <motion.div
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1a1f26] via-[#1e2530] to-[#1a1f26] border border-[#a1db87]/20 p-8 mb-10 shadow-2xl"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface via-surface to-surface border border-brand/20 p-8 mb-10 shadow-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             {/* Efecto de brillo de fondo */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#a1db87]/5 to-transparent animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand/5 to-transparent animate-pulse" />
             
             <div className="relative z-10 text-center space-y-6">
               {/* Icono decorativo */}
               <div className="flex justify-center">
                 <div className="relative">
-                  <div className="absolute inset-0 bg-[#a1db87]/20 blur-xl rounded-full" />
-                  <div className="relative bg-gradient-to-br from-[#a1db87]/10 to-[#a1db87]/5 p-4 rounded-full border border-[#a1db87]/30">
-                    <svg className="w-12 h-12 text-[#a1db87]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="absolute inset-0 bg-brand/20 blur-xl rounded-full" />
+                  <div className="relative bg-gradient-to-br from-brand/10 to-brand/5 p-4 rounded-full border border-brand/30">
+                    <svg className="w-12 h-12 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                     </svg>
                   </div>
@@ -233,7 +233,7 @@ export default function ReviewsPage() {
                   const authButton = document.querySelector('[data-auth-trigger]');
                   if (authButton) authButton.click();
                 }}
-                className="inline-flex items-center gap-3 px-8 py-3.5 bg-gradient-to-r from-[#a1db87] to-[#8bc970] text-[#181b20] font-bold rounded-xl shadow-lg hover:shadow-[#a1db87]/25 transition-all duration-300 hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-3 px-8 py-3.5 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-bold rounded-xl shadow-lg hover:shadow-brand/25 transition-all duration-300 hover:scale-105 active:scale-95"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -246,13 +246,13 @@ export default function ReviewsPage() {
               {/* Beneficios */}
               <div className="flex items-center justify-center gap-6 pt-4 text-sm text-gray-500">
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-[#a1db87]" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 text-brand" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   Rápido y seguro
                 </div>
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-[#a1db87]" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 text-brand" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   100% gratuito

@@ -214,20 +214,20 @@ export default function EntregaEjercicio() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
-        <Loader className="w-12 h-12 text-[#5ec6a6] animate-spin" />
+      <div className="min-h-screen bg-surface flex items-center justify-center">
+        <Loader className="w-12 h-12 text-brand-500 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#23272f] to-[#1a1a1a] py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-surface via-surface to-surface py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => navigate(`/curso/${cursoId}`)}
-            className="flex items-center gap-2 text-gray-400 hover:text-[#5ec6a6] transition-colors mb-6"
+            className="flex items-center gap-2 text-gray-400 hover:text-brand-500 transition-colors mb-6"
           >
             <ArrowLeft className="w-5 h-5" />
             Volver al curso
@@ -246,13 +246,13 @@ export default function EntregaEjercicio() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-[#5ec6a6]/10 to-[#4da992]/10 border border-[#5ec6a6]/30 rounded-xl p-6 mb-8"
+            className="bg-gradient-to-br from-brand-500/10 to-brand-600/10 border border-brand-500/30 rounded-xl p-6 mb-8"
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-3">
-                  <CheckCircle className="w-6 h-6 text-[#5ec6a6]" />
-                  <h3 className="text-xl font-bold text-[#5ec6a6]">
+                  <CheckCircle className="w-6 h-6 text-brand-500" />
+                  <h3 className="text-xl font-bold text-brand-500">
                     Ya has entregado este ejercicio
                   </h3>
                 </div>
@@ -275,7 +275,7 @@ export default function EntregaEjercicio() {
                     href={entregaExistente.archivoPdf.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-[#5ec6a6]/20 text-[#5ec6a6] rounded-lg hover:bg-[#5ec6a6]/30 transition-colors text-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-brand-500/20 text-brand-500 rounded-lg hover:bg-brand-500/30 transition-colors text-sm"
                   >
                     <Download className="w-4 h-4" />
                     Descargar PDF
@@ -301,7 +301,7 @@ export default function EntregaEjercicio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-[#23272f]/80 rounded-2xl border border-[#5ec6a6]/20 p-8"
+          className="bg-surface/80 rounded-2xl border border-brand-500/20 p-8"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Área de subida */}
@@ -312,8 +312,8 @@ export default function EntregaEjercicio() {
               <div
                 className={`relative border-2 border-dashed rounded-xl p-8 transition-all ${
                   dragActive
-                    ? 'border-[#5ec6a6] bg-[#5ec6a6]/5'
-                    : 'border-gray-600 hover:border-[#5ec6a6]/50'
+                    ? 'border-brand-500 bg-brand-500/5'
+                    : 'border-gray-600 hover:border-brand-500/50'
                 }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -329,7 +329,7 @@ export default function EntregaEjercicio() {
                 <div className="text-center">
                   {selectedFile ? (
                     <div className="flex items-center justify-center gap-3">
-                      <FileText className="w-12 h-12 text-[#5ec6a6]" />
+                      <FileText className="w-12 h-12 text-brand-500" />
                       <div className="text-left">
                         <p className="text-white font-medium">{selectedFile.name}</p>
                         <p className="text-sm text-gray-400">
@@ -376,7 +376,7 @@ export default function EntregaEjercicio() {
                 maxLength={2000}
                 rows={6}
                 placeholder="Agrega cualquier comentario o aclaración sobre tu trabajo..."
-                className="w-full px-4 py-3 bg-[#1a1a1a]/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#5ec6a6] transition-colors"
+                className="w-full px-4 py-3 bg-surface/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-colors"
               />
               <p className="text-xs text-gray-500 mt-2 text-right">
                 {comentarios.length}/2000 caracteres
@@ -415,14 +415,14 @@ export default function EntregaEjercicio() {
               <button
                 type="button"
                 onClick={() => navigate(`/curso/${cursoId}`)}
-                className="flex-1 px-6 py-3 border-2 border-gray-600 text-gray-300 font-semibold rounded-xl hover:border-[#5ec6a6]/50 hover:text-white transition-colors"
+                className="flex-1 px-6 py-3 border-2 border-gray-600 text-gray-300 font-semibold rounded-xl hover:border-brand-500/50 hover:text-white transition-colors"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
                 disabled={uploading || (!selectedFile && !entregaExistente)}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] font-bold rounded-xl hover:shadow-xl hover:shadow-[#5ec6a6]/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-600 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand-500/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
                 {uploading ? (
                   <>

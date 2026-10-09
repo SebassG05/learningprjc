@@ -86,7 +86,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-[#0f1a12]/96 backdrop-blur-xl border-b border-green-900/30 shadow-[0_2px_40px_rgba(0,0,0,0.5)]">
+      <header className="sticky top-0 z-50 bg-canvas/96 backdrop-blur-xl border-b border-green-900/30 shadow-[0_2px_40px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <nav className="flex items-center justify-between h-[5.5rem]">
 
@@ -124,12 +124,12 @@ const Header = () => {
               ) : (
                 <div className="relative" ref={userMenuRef}>
                   <button
-                    className={`group flex items-center gap-2.5 pl-2 pr-4 py-2 rounded-full bg-[#1a2e1f]/80 border border-green-700/50 text-white font-semibold shadow-md hover:border-green-400/70 hover:shadow-[0_0_18px_rgba(74,222,128,0.22)] transition-all duration-300 focus:outline-none cursor-pointer ${userMenuOpen ? 'border-green-400/70 shadow-[0_0_18px_rgba(74,222,128,0.22)]' : ''}`}
+                    className={`group flex items-center gap-2.5 pl-2 pr-4 py-2 rounded-full bg-surface-2/80 border border-green-700/50 text-white font-semibold shadow-md hover:border-green-400/70 hover:shadow-[0_0_18px_rgba(74,222,128,0.22)] transition-all duration-300 focus:outline-none cursor-pointer ${userMenuOpen ? 'border-green-400/70 shadow-[0_0_18px_rgba(74,222,128,0.22)]' : ''}`}
                     onClick={() => setUserMenuOpen((v) => !v)}
                     aria-haspopup="true"
                     aria-expanded={userMenuOpen}
                   >
-                    <span className="w-8 h-8 rounded-full flex items-center justify-center text-[#1a1a1a] font-bold text-sm shadow-inner" style={{backgroundColor:'#a1db87'}}>
+                    <span className="w-8 h-8 rounded-full flex items-center justify-center text-on-brand font-bold text-sm shadow-inner" style={{backgroundColor:'#a1db87'}}>
                       {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
                     </span>
                     <span className="hidden md:inline font-medium text-green-100 text-sm max-w-[140px] truncate">
@@ -151,10 +151,10 @@ const Header = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.97 }}
                         transition={{ duration: 0.18, ease: 'easeOut' }}
-                        className="absolute left-1/2 -translate-x-1/2 mt-3 w-96 bg-[#101a12] border border-green-900/60 rounded-2xl shadow-[0_20px_56px_rgba(0,0,0,0.55)] py-2 z-50 overflow-hidden"
+                        className="absolute left-1/2 -translate-x-1/2 mt-3 w-96 bg-canvas border border-green-900/60 rounded-2xl shadow-[0_20px_56px_rgba(0,0,0,0.55)] py-2 z-50 overflow-hidden"
                       >
                         <div className="flex items-center gap-3 px-5 py-4 border-b border-green-900/40">
-                          <span className="w-10 h-10 rounded-full flex items-center justify-center text-[#1a1a1a] font-bold text-base shadow-inner" style={{backgroundColor:'#a1db87'}}>
+                          <span className="w-10 h-10 rounded-full flex items-center justify-center text-on-brand font-bold text-base shadow-inner" style={{backgroundColor:'#a1db87'}}>
                             {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
                           </span>
                           <div className="flex flex-col min-w-0">

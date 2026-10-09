@@ -64,7 +64,7 @@ const AuthModal = ({ open, onClose }) => {
     <AnimatePresence>
       {open || isVisible ? (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1e2d23]/60"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-surface-2/60"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -80,12 +80,12 @@ const AuthModal = ({ open, onClose }) => {
             style={{ minHeight: 750 }}
           >
         {/* Left: Logo & frase */}
-        <div className="hidden md:flex flex-col items-center justify-center text-green-300 p-20 w-1/2 border-r border-[#22332a] min-h-[750px]" style={{background:'#2D3C40'}}>
+        <div className="hidden md:flex flex-col items-center justify-center text-green-300 p-20 w-1/2 border-r border-line-strong min-h-[750px]" style={{background:'#2D3C40'}}>
           <img src="https://res.cloudinary.com/dd9pjmuy9/image/upload/v1770629257/Gemini_Generated_Image_ufiqyxufiqyxufiq-removebg-preview_lohtpf.png" alt="Logo" className="w-40 h-40 mb-8 object-contain" />
           <p className="text-3xl font-extrabold text-center leading-tight">“EL CAMBIO COMIENZA CON LA FORMACIÓN”</p>
         </div>
         {/* Right: Tabs & Forms */}
-        <div className="flex-1 pt-8 pb-20 px-20 flex flex-col justify-center relative min-w-[500px] min-h-[750px] bg-[#232e26]" style={{background: '#0D0D0D'}}>
+        <div className="flex-1 pt-8 pb-20 px-20 flex flex-col justify-center relative min-w-[500px] min-h-[750px] bg-surface-2" style={{background: '#0D0D0D'}}>
           <button onClick={handleClose} className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-green-400">&times;</button>
           <div className="relative flex justify-between mb-8">
             <button
@@ -167,7 +167,7 @@ const AuthModal = ({ open, onClose }) => {
                   <input
                     type="email"
                     placeholder="email"
-                    className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                    className="border border-line-strong bg-surface-2 text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
                     value={loginData.email}
                     onChange={e => setLoginData(d => ({ ...d, email: e.target.value }))}
                     required
@@ -176,7 +176,7 @@ const AuthModal = ({ open, onClose }) => {
                   <input
                     type="password"
                     placeholder="contraseña"
-                    className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                    className="border border-line-strong bg-surface-2 text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
                     value={loginData.password}
                     onChange={e => setLoginData(d => ({ ...d, password: e.target.value }))}
                     required
@@ -259,7 +259,7 @@ const AuthModal = ({ open, onClose }) => {
                     <input
                       type="text"
                       placeholder="nombre"
-                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      className="border border-line-strong bg-surface-2 text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
                       value={registerData.name}
                       onChange={e => setRegisterData(d => ({ ...d, name: e.target.value }))}
                       required
@@ -270,7 +270,7 @@ const AuthModal = ({ open, onClose }) => {
                     <input
                       type="email"
                       placeholder="email"
-                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      className="border border-line-strong bg-surface-2 text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
                       value={registerData.email}
                       onChange={e => setRegisterData(d => ({ ...d, email: e.target.value }))}
                       required
@@ -281,7 +281,7 @@ const AuthModal = ({ open, onClose }) => {
                     <input
                       type="password"
                       placeholder="contraseña"
-                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      className="border border-line-strong bg-surface-2 text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
                       value={registerData.password}
                       onChange={e => setRegisterData(d => ({ ...d, password: e.target.value }))}
                       required
@@ -292,7 +292,7 @@ const AuthModal = ({ open, onClose }) => {
                     <input
                       type="password"
                       placeholder="repite la contraseña"
-                      className="border border-[#22332a] bg-[#1e2d23] text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                      className="border border-line-strong bg-surface-2 text-green-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
                       value={registerData.confirmPassword}
                       onChange={e => setRegisterData(d => ({ ...d, confirmPassword: e.target.value }))}
                       required

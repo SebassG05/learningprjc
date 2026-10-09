@@ -49,7 +49,7 @@ const GoogleAuthButton = ({ onSuccess }) => {
             type="button"
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className="flex items-center justify-center gap-3 w-full py-2 mt-2 rounded-lg shadow-md font-semibold text-base transition bg-[#181f1b] border border-[#22332a] hover:bg-[#232e26] text-green-200 hover:text-green-100 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="flex items-center justify-center gap-3 w-full py-2 mt-2 rounded-lg shadow-md font-semibold text-base transition bg-surface border border-line-strong hover:bg-surface-2 text-green-200 hover:text-green-100 focus:outline-none focus:ring-2 focus:ring-green-400"
             style={{ minHeight: 44 }}
           >
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-6 h-6" />

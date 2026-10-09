@@ -14,15 +14,15 @@ export default function ArrowUpIcon({ className = "", ...props }) {
       <circle cx="16" cy="16" r="16" fill="url(#paint0_linear)" />
       <path
         d="M16 22V10M16 10l-5 5M16 10l5 5"
-        stroke="#23272f"
+        stroke="#141416"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <defs>
         <linearGradient id="paint0_linear" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#7ec6ef" />
-          <stop offset="1" stopColor="#6bb6e6" />
+          <stop stopColor="#b3e39e" />
+          <stop offset="1" stopColor="#85c869" />
         </linearGradient>
       </defs>
     </svg>

@@ -70,14 +70,14 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#23272f] via-[#1e2d23] to-[#23272f] py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-surface via-surface-2 to-surface py-12 px-4">
       <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl gap-8">
         {/* Bloque de requisitos de contraseña */}
         <div
           className="password-rules-block mb-8 md:mb-0"
           style={{
             marginTop: '-38.5%',
-            background: '#181f1b',
+            background: '#141416',
             borderRadius: 16,
             boxShadow: '0 1px 6px rgba(90,168,51,0.07)',
             padding: '20px 24px',
@@ -89,11 +89,11 @@ export default function ResetPassword() {
         >
           <div style={{ fontWeight: 'bold', color: '#a1db87', marginBottom: '0.5rem', fontSize: '1rem' }}>Requisitos de la contraseña:</div>
           {rules.map((rule, i) => (
-            <div key={i} className={`flex items-center gap-2 mb-1 text-sm font-semibold ${rule.valid ? 'text-[#a1db87]' : 'text-gray-500'}`}> 
-              <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full border-2 ${rule.valid ? 'border-[#a1db87] bg-[#23272f]' : 'border-gray-500 bg-[#23272f]'}`}>{rule.valid ? (
-                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#23272f"/><path d="M6 10.5l3 3 5-5" stroke="#a1db87" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <div key={i} className={`flex items-center gap-2 mb-1 text-sm font-semibold ${rule.valid ? 'text-brand' : 'text-gray-500'}`}> 
+              <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full border-2 ${rule.valid ? 'border-brand bg-surface' : 'border-gray-500 bg-surface'}`}>{rule.valid ? (
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#141416"/><path d="M6 10.5l3 3 5-5" stroke="#a1db87" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               ) : (
-                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#23272f"/><path d="M7 7l6 6M13 7l-6 6" stroke="#bdbdbd" strokeWidth="2" strokeLinecap="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#141416"/><path d="M7 7l6 6M13 7l-6 6" stroke="#a1a1a6" strokeWidth="2" strokeLinecap="round"/></svg>
               )}</span>
               {rule.label}
             </div>
@@ -101,24 +101,24 @@ export default function ResetPassword() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-md bg-[#181f1b] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center relative"
+          className="w-full max-w-md bg-surface border border-brand/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center relative"
           style={{ boxShadow: '0 8px 32px rgba(90,168,51,0.10)' }}
         >
           <div className="flex flex-col items-center mb-6">
-            <span className="inline-block bg-[#a1db87] rounded-full p-3 mb-3">
-              <svg width="32" height="32" fill="#23272f" viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-7V8a6 6 0 1 0-12 0v2a4 4 0 0 0-2 3.465V18a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-3.535A4 4 0 0 0 18 10zm-8-2a4 4 0 1 1 8 0v2H6V8zm10 10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-3.535A2 2 0 0 1 8 12h8a2 2 0 0 1 2 2.465V18z"/></svg>
+            <span className="inline-block bg-brand rounded-full p-3 mb-3">
+              <svg width="32" height="32" fill="#141416" viewBox="0 0 24 24"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-7V8a6 6 0 1 0-12 0v2a4 4 0 0 0-2 3.465V18a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-3.535A4 4 0 0 0 18 10zm-8-2a4 4 0 1 1 8 0v2H6V8zm10 10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-3.535A2 2 0 0 1 8 12h8a2 2 0 0 1 2 2.465V18z"/></svg>
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#a1db87] mb-2 text-center font-[Rondana]">Actualiza tu contraseña</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-brand mb-2 text-center font-[Rondana]">Actualiza tu contraseña</h2>
             <p className="text-gray-300 text-base text-center">Introduce y confirma tu nueva contraseña para tu cuenta.</p>
           </div>
           <div className="w-full mb-6 relative">
-            <label className="block text-[#a1db87] font-semibold mb-2">Nueva contraseña</label>
+            <label className="block text-brand font-semibold mb-2">Nueva contraseña</label>
             <input
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={e => setPassword(e.target.value)}
               onBlur={() => setTouched(true)}
-              className={`w-full px-4 py-3 rounded-lg border ${touched && !allValid ? 'border-red-400 bg-[#2a2323]' : 'border-[#a1db87] bg-[#23272f]'} text-[#a1db87] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition`}
+              className={`w-full px-4 py-3 rounded-lg border ${touched && !allValid ? 'border-red-400 bg-surface-2' : 'border-brand bg-surface'} text-brand placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition`}
               placeholder="Nueva contraseña"
               required
             />
@@ -126,7 +126,7 @@ export default function ResetPassword() {
               type="button"
               tabIndex={-1}
               aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-              className="absolute right-3 top-[44px] text-[#a1db87] hover:text-emerald-400 focus:outline-none"
+              className="absolute right-3 top-[44px] text-brand hover:text-brand-300 focus:outline-none"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
               onClick={() => setShowPassword(v => !v)}
             >
@@ -138,12 +138,12 @@ export default function ResetPassword() {
             </button>
           </div>
           <div className="w-full mb-6">
-            <label className="block text-[#a1db87] font-semibold mb-2">Confirmar nueva contraseña</label>
+            <label className="block text-brand font-semibold mb-2">Confirmar nueva contraseña</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
-              className={`w-full px-4 py-3 rounded-lg border ${touched && confirmPassword && password !== confirmPassword ? 'border-red-400 bg-[#2a2323]' : 'border-[#a1db87] bg-[#23272f]'} text-[#a1db87] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition`}
+              className={`w-full px-4 py-3 rounded-lg border ${touched && confirmPassword && password !== confirmPassword ? 'border-red-400 bg-surface-2' : 'border-brand bg-surface'} text-brand placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition`}
               placeholder="Confirma la contraseña"
               required
               onCopy={e => e.preventDefault()}
@@ -154,7 +154,7 @@ export default function ResetPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-[#a1db87] text-[#181f1b] hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 disabled:opacity-60"
+            className="w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-brand text-on-brand hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:opacity-60"
           >
             {loading ? 'Actualizando...' : 'Actualizar contraseña'}
           </button>

@@ -128,10 +128,10 @@ export default function Cursos() {
               damping: 15,
               delay: 0.2
             }}
-            className="inline-flex items-center px-1 py-2 bg-[#2a2a2a] border border-[#a1db87]/30 rounded-full mb-1"
+            className="inline-flex items-center px-1 py-2 bg-surface-2 border border-brand/30 rounded-full mb-1"
           >
-            <Sparkles className="w-4 h-4 text-[#a1db87] mr-2 ml-2" />
-            <span className="text-xs sm:text-sm font-semibold text-[#a1db87] mr-2">
+            <Sparkles className="w-4 h-4 text-brand mr-2 ml-2" />
+            <span className="text-xs sm:text-sm font-semibold text-brand mr-2">
               Cursos
             </span>
           </motion.div>
@@ -143,7 +143,7 @@ export default function Cursos() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
         >
-          Nuestros <span className="text-[#a1db87]">Cursos</span>
+          Nuestros <span className="text-brand">Cursos</span>
         </motion.h1>
       </section>
 
@@ -164,11 +164,11 @@ export default function Cursos() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.85, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-              className="bg-[#0f1a12] border border-[#a1db87]/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+              className="bg-canvas border border-brand/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
             >
               <div className="flex items-center justify-center mb-4">
-                <div className="p-3 bg-[#a1db87]/10 rounded-full">
-                  <Globe className="w-8 h-8 text-[#a1db87]" />
+                <div className="p-3 bg-brand/10 rounded-full">
+                  <Globe className="w-8 h-8 text-brand" />
                 </div>
               </div>
               <h2 className="text-2xl font-extrabold text-white mb-2">Selecciona el idioma</h2>
@@ -178,21 +178,21 @@ export default function Cursos() {
               <div className="flex gap-4">
                 <button
                   onClick={() => seleccionarIdioma('es')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
                 >
                   <span className="text-4xl">🇪🇸</span>
                   <div>
-                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">Español</p>
+                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">Español</p>
                     <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
                   </div>
                 </button>
                 <button
                   onClick={() => seleccionarIdioma('en')}
-                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                  className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
                 >
                   <span className="text-4xl">🇬🇧</span>
                   <div>
-                    <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">English</p>
+                    <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">English</p>
                     <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
                   </div>
                 </button>
@@ -233,20 +233,20 @@ export default function Cursos() {
                 scale: 0.98,
                 transition: { duration: 0.1 }
               }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full lg:w-[450px] lg:h-[600px] xl:w-[450px] xl:h-[600px] sm:max-w-[95vw] sm:h-[600px]"
+              className="bg-surface border border-brand/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full lg:w-[450px] lg:h-[600px] xl:w-[450px] xl:h-[600px] sm:max-w-[95vw] sm:h-[600px]"
               style={{}}
               onClick={() => handleCourseClick(course._id)}
             >
-              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
+              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-brand/30 flex items-center justify-center">
                 {course.image ? (
                   <img src={course.image} alt={courseTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 ) : (
-                  <BookOpen className="w-16 h-16 text-[#a1db87]" />
+                  <BookOpen className="w-16 h-16 text-brand" />
                 )}
               </div>
               <div className="flex-1 flex flex-col justify-between p-10">
                 <div>
-                  <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
+                  <h3 className="text-2xl font-extrabold text-brand mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {courseTitle}
                   </h3>
                   {!course.isOpen && (
@@ -258,17 +258,17 @@ export default function Cursos() {
                   <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{courseDesc}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
-                  <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
+                  <span className="bg-brand text-on-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-on-brand transition-colors duration-200 border border-brand">
                     {course.duration}
                   </span>
                   {Array.isArray(course.category)
                     ? course.category.map((cat, idx) => (
-                        <span key={idx} className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                        <span key={idx} className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
                           {cat}
                         </span>
                       ))
                     : course.category && (
-                        <span className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                        <span className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
                           {course.category}
                         </span>
                       )
@@ -276,13 +276,13 @@ export default function Cursos() {
                 </div>
                 {/* Barra de progreso */}
                 <div className="w-full mt-4">
-                  <div className="w-full h-2 bg-[#23272f] rounded-full overflow-hidden border border-[#a1db87]/40">
+                  <div className="w-full h-2 bg-surface rounded-full overflow-hidden border border-brand/40">
                     <div 
-                      className="h-full bg-[#a1db87] transition-all duration-500"
+                      className="h-full bg-brand transition-all duration-500"
                       style={{ width: `${courseProgress[course._id] || 0}%` }}
                     />
                   </div>
-                  <div className="text-xs text-[#a1db87] mt-1 text-right">{courseProgress[course._id] || 0}%</div>
+                  <div className="text-xs text-brand mt-1 text-right">{courseProgress[course._id] || 0}%</div>
                 </div>
               </div>
             </motion.div>
@@ -316,20 +316,20 @@ export default function Cursos() {
                 scale: 0.98,
                 transition: { duration: 0.1 }
               }}
-              className="bg-[#23272f] border border-[#a1db87]/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full max-w-md h-[600px]"
+              className="bg-surface border border-brand/30 rounded-2xl shadow-xl p-0 flex flex-col cursor-pointer group w-full max-w-md h-[600px]"
               style={{}}
               onClick={() => handleCourseClick(course._id)}
             >
-              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-[#a1db87]/30 flex items-center justify-center">
+              <div className="w-full h-56 rounded-t-2xl overflow-hidden bg-brand/30 flex items-center justify-center">
                 {course.image ? (
                   <img src={course.image} alt={courseTitle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 ) : (
-                  <BookOpen className="w-16 h-16 text-[#a1db87]" />
+                  <BookOpen className="w-16 h-16 text-brand" />
                 )}
               </div>
               <div className="flex-1 flex flex-col justify-between p-10">
                 <div>
-                  <h3 className="text-2xl font-extrabold text-[#a1db87] mb-2 leading-tight group-hover:text-white transition-colors duration-200">
+                  <h3 className="text-2xl font-extrabold text-brand mb-2 leading-tight group-hover:text-white transition-colors duration-200">
                     {courseTitle}
                   </h3>
                   {!course.isOpen && (
@@ -341,17 +341,17 @@ export default function Cursos() {
                   <p className="text-gray-300 text-base mb-6 min-h-[48px] line-clamp-2">{courseDesc}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-auto">
-                  <span className="bg-[#a1db87] text-[#23272f] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-[#23272f] transition-colors duration-200 border border-[#a1db87]">
+                  <span className="bg-brand text-on-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-white group-hover:text-on-brand transition-colors duration-200 border border-brand">
                     {course.duration}
                   </span>
                   {Array.isArray(course.category)
                     ? course.category.map((cat, idx) => (
-                        <span key={idx} className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                        <span key={idx} className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
                           {cat}
                         </span>
                       ))
                     : course.category && (
-                        <span className="bg-[#23272f] text-[#a1db87] border border-[#a1db87] font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-[#a1db87] group-hover:text-[#23272f] transition-colors duration-200">
+                        <span className="bg-surface text-brand border border-brand font-bold px-3 py-1 rounded-full text-xs shadow group-hover:bg-brand group-hover:text-on-brand transition-colors duration-200">
                           {course.category}
                         </span>
                       )
@@ -359,13 +359,13 @@ export default function Cursos() {
                 </div>
                 {/* Barra de progreso */}
                 <div className="w-full mt-4">
-                  <div className="w-full h-2 bg-[#23272f] rounded-full overflow-hidden border border-[#a1db87]/40">
+                  <div className="w-full h-2 bg-surface rounded-full overflow-hidden border border-brand/40">
                     <div 
-                      className="h-full bg-[#a1db87] transition-all duration-500"
+                      className="h-full bg-brand transition-all duration-500"
                       style={{ width: `${courseProgress[course._id] || 0}%` }}
                     />
                   </div>
-                  <div className="text-xs text-[#a1db87] mt-1 text-right">{courseProgress[course._id] || 0}%</div>
+                  <div className="text-xs text-brand mt-1 text-right">{courseProgress[course._id] || 0}%</div>
                 </div>
               </div>
             </motion.div>

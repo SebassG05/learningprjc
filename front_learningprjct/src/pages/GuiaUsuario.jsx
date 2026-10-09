@@ -34,7 +34,7 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Registrarse en nuestra plataforma es muy sencillo:</p>
           <ol className="list-decimal list-inside space-y-3 text-gray-300 ml-4">
-            <li>Haz clic en el botón <span className="text-[#a1db87] font-semibold">"Registrarse"</span> en la esquina superior derecha</li>
+            <li>Haz clic en el botón <span className="text-brand font-semibold">"Registrarse"</span> en la esquina superior derecha</li>
             <li>Completa el formulario con tu información:
               <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
                 <li>Nombre completo</li>
@@ -43,12 +43,12 @@ const GuiaUsuario = () => {
               </ul>
             </li>
             <li>Acepta los términos y condiciones</li>
-            <li>Haz clic en <span className="text-[#a1db87] font-semibold">"Crear cuenta"</span></li>
+            <li>Haz clic en <span className="text-brand font-semibold">"Crear cuenta"</span></li>
             <li>Revisa tu correo electrónico para verificar tu cuenta</li>
           </ol>
-          <div className="bg-[#1a1a1a] p-4 rounded-lg border border-[#a1db87]/20 mt-4">
+          <div className="bg-surface p-4 rounded-lg border border-brand/20 mt-4">
             <p className="text-sm text-gray-400">
-              <span className="text-[#a1db87] font-semibold">💡 Consejo:</span> También puedes registrarte usando tu cuenta de Google para un acceso más rápido.
+              <span className="text-brand font-semibold">💡 Consejo:</span> También puedes registrarte usando tu cuenta de Google para un acceso más rápido.
             </p>
           </div>
         </div>
@@ -62,16 +62,16 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">¡Absolutamente! Nuestra plataforma está optimizada para todos los dispositivos:</p>
           <div className="grid md:grid-cols-2 gap-4 mt-4">
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <div className="flex items-center gap-3 mb-3">
-                <Monitor className="w-5 h-5 text-[#a1db87]" />
+                <Monitor className="w-5 h-5 text-brand" />
                 <h4 className="font-semibold text-white">Ordenador</h4>
               </div>
               <p className="text-sm text-gray-400">Navegadores compatibles: Chrome, Firefox, Safari, Edge</p>
             </div>
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <div className="flex items-center gap-3 mb-3">
-                <Smartphone className="w-5 h-5 text-[#a1db87]" />
+                <Smartphone className="w-5 h-5 text-brand" />
                 <h4 className="font-semibold text-white">Móvil/Tablet</h4>
               </div>
               <p className="text-sm text-gray-400">Compatible con iOS y Android. Diseño responsive adaptado.</p>
@@ -88,18 +88,18 @@ const GuiaUsuario = () => {
       content: (
         <div className="space-y-4">
           <p className="text-gray-300">Cada curso tiene su propia duración estimada, pero tú marcas el ritmo:</p>
-          <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#a1db87]/20">
+          <div className="bg-surface p-6 rounded-lg border border-brand/20">
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span><span className="font-semibold text-white">Acceso ilimitado:</span> Una vez inscrito, tienes acceso de por vida al curso</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span><span className="font-semibold text-white">A tu propio ritmo:</span> Puedes pausar y retomar cuando quieras</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span><span className="font-semibold text-white">Sin fechas límite:</span> No hay presión, aprende cuando mejor te convenga</span>
               </li>
             </ul>
@@ -117,33 +117,33 @@ const GuiaUsuario = () => {
       content: (
         <div className="space-y-4">
           <p className="text-gray-300">¡Sí! Al completar un curso con éxito, recibirás un certificado profesional:</p>
-          <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#a1db87]/20">
+          <div className="bg-surface p-6 rounded-lg border border-brand/20">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#a1db87]" />
+              <Award className="w-5 h-5 text-brand" />
               Características del certificado:
             </h4>
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
-                <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                 <span>Certificado oficial con sello de Evenor-Tech</span>
               </li>
               <li className="flex items-start gap-3">
-                <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                 <span>Incluye tu nombre, nombre del curso y fecha de finalización</span>
               </li>
               <li className="flex items-start gap-3">
-                <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                 <span>Formato PDF descargable e imprimible</span>
               </li>
               <li className="flex items-start gap-3">
-                <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                 <span>URL verificable para compartir en LinkedIn u otras plataformas</span>
               </li>
             </ul>
           </div>
-          <div className="bg-[#23272f] p-4 rounded-lg border border-[#a1db87]/30 mt-4">
+          <div className="bg-surface p-4 rounded-lg border border-brand/30 mt-4">
             <p className="text-sm text-gray-300">
-              <span className="text-[#a1db87] font-semibold">📥 Descarga:</span> Podrás descargar tu certificado desde la sección "Mis Cursos" una vez completado el 100% del contenido.
+              <span className="text-brand font-semibold">📥 Descarga:</span> Podrás descargar tu certificado desde la sección "Mis Cursos" una vez completado el 100% del contenido.
             </p>
           </div>
         </div>
@@ -158,47 +158,47 @@ const GuiaUsuario = () => {
           <p className="text-gray-300">Si encuentras algún problema técnico, sigue estos pasos:</p>
           
           <div className="space-y-3">
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <span className="bg-[#a1db87] text-[#1a1a1a] w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <span className="bg-brand text-on-brand w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 Soluciones rápidas
               </h4>
               <ul className="space-y-2 text-gray-300 ml-8">
                 <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                   <span>Actualiza la página (F5 o Ctrl+R)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                   <span>Limpia la caché del navegador</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                   <span>Prueba en modo incógnito</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-[#a1db87] mt-1 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-brand mt-1 flex-shrink-0" />
                   <span>Verifica tu conexión a internet</span>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <span className="bg-[#a1db87] text-[#1a1a1a] w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <span className="bg-brand text-on-brand w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 Contacta con soporte
               </h4>
               <div className="space-y-3 ml-8">
-                <a href="/contacto" className="flex items-center gap-3 text-[#a1db87] hover:text-[#8bc76d] transition-colors">
+                <a href="/contacto" className="flex items-center gap-3 text-brand hover:text-brand-500 transition-colors">
                   <Mail className="w-4 h-4" />
                   <span>Envía un mensaje desde el formulario de contacto</span>
                 </a>
                 <div className="flex items-center gap-3 text-gray-300">
-                  <MessageCircle className="w-4 h-4 text-[#a1db87]" />
+                  <MessageCircle className="w-4 h-4 text-brand" />
                   <span>Incluye capturas de pantalla si es posible</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-300">
-                  <Clock className="w-4 h-4 text-[#a1db87]" />
+                  <Clock className="w-4 h-4 text-brand" />
                   <span>Tiempo de respuesta: 24-48 horas</span>
                 </div>
               </div>
@@ -215,33 +215,33 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Guía rápida para navegar por la plataforma:</p>
           <div className="grid gap-4">
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <div className="flex items-center gap-3 mb-3">
-                <Book className="w-5 h-5 text-[#a1db87]" />
+                <Book className="w-5 h-5 text-brand" />
                 <h4 className="font-semibold text-white">Catálogo de cursos</h4>
               </div>
               <p className="text-sm text-gray-400">Explora todos nuestros cursos disponibles, filtra por categoría y encuentra el curso perfecto para ti.</p>
             </div>
             
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <div className="flex items-center gap-3 mb-3">
-                <Play className="w-5 h-5 text-[#a1db87]" />
+                <Play className="w-5 h-5 text-brand" />
                 <h4 className="font-semibold text-white">Mis cursos</h4>
               </div>
               <p className="text-sm text-gray-400">Accede a todos los cursos en los que estás inscrito y continúa donde lo dejaste.</p>
             </div>
 
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <div className="flex items-center gap-3 mb-3">
-                <Settings className="w-5 h-5 text-[#a1db87]" />
+                <Settings className="w-5 h-5 text-brand" />
                 <h4 className="font-semibold text-white">Ajustes</h4>
               </div>
               <p className="text-sm text-gray-400">Personaliza tu perfil, cambia tu contraseña y gestiona tus preferencias.</p>
             </div>
 
-            <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+            <div className="bg-surface p-5 rounded-lg border border-brand/20">
               <div className="flex items-center gap-3 mb-3">
-                <Award className="w-5 h-5 text-[#a1db87]" />
+                <Award className="w-5 h-5 text-brand" />
                 <h4 className="font-semibold text-white">Certificados</h4>
               </div>
               <p className="text-sm text-gray-400">Descarga y comparte tus certificados de cursos completados.</p>
@@ -258,27 +258,27 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Información sobre pagos y facturación:</p>
           
-          <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#a1db87]/20">
+          <div className="bg-surface p-6 rounded-lg border border-brand/20">
             <h4 className="font-semibold text-white mb-4">Métodos de pago aceptados:</h4>
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>Tarjetas de crédito y débito (Visa, Mastercard, American Express)</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>PayPal</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>Transferencia bancaria (para empresas)</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-[#23272f] p-5 rounded-lg border border-[#a1db87]/30">
+          <div className="bg-surface p-5 rounded-lg border border-brand/30">
             <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+              <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold text-white mb-2">Seguridad de pagos</h4>
                 <p className="text-sm text-gray-400">Todos los pagos están protegidos con encriptación SSL. No almacenamos tus datos de tarjeta.</p>
@@ -286,7 +286,7 @@ const GuiaUsuario = () => {
             </div>
           </div>
 
-          <div className="bg-[#1a1a1a] p-5 rounded-lg border border-[#a1db87]/20">
+          <div className="bg-surface p-5 rounded-lg border border-brand/20">
             <h4 className="font-semibold text-white mb-3">Facturación:</h4>
             <p className="text-gray-300 text-sm">Recibirás tu factura automáticamente por correo electrónico después de completar la compra. También puedes descargarla desde tu área de ajustes.</p>
           </div>
@@ -301,30 +301,30 @@ const GuiaUsuario = () => {
         <div className="space-y-4">
           <p className="text-gray-300">Tu privacidad es nuestra prioridad:</p>
           
-          <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#a1db87]/20">
+          <div className="bg-surface p-6 rounded-lg border border-brand/20">
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>Cumplimos con el <span className="font-semibold text-white">RGPD</span> (Reglamento General de Protección de Datos)</span>
               </li>
               <li className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>Tus datos personales están encriptados y protegidos</span>
               </li>
               <li className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>Nunca compartimos tu información con terceros sin tu consentimiento</span>
               </li>
               <li className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-[#a1db87] mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-brand mt-0.5 flex-shrink-0" />
                 <span>Puedes solicitar la eliminación de tus datos en cualquier momento</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-[#23272f] p-4 rounded-lg border border-[#a1db87]/30">
+          <div className="bg-surface p-4 rounded-lg border border-brand/30">
             <p className="text-sm text-gray-300">
-              Para más información, consulta nuestra <a href="/politica-privacidad" className="text-[#a1db87] hover:underline">Política de Privacidad</a> y <a href="/cookies" className="text-[#a1db87] hover:underline">Política de Cookies</a>.
+              Para más información, consulta nuestra <a href="/politica-privacidad" className="text-brand hover:underline">Política de Privacidad</a> y <a href="/cookies" className="text-brand hover:underline">Política de Cookies</a>.
             </p>
           </div>
         </div>
@@ -337,7 +337,7 @@ const GuiaUsuario = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0d0d] via-[#1a1a1a] to-[#0d0d0d] py-16 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-canvas via-surface to-canvas py-16 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -346,8 +346,8 @@ const GuiaUsuario = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#a1db87]/10 rounded-full mb-6">
-            <Book className="w-10 h-10 text-[#a1db87]" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-brand/10 rounded-full mb-6">
+            <Book className="w-10 h-10 text-brand" />
           </div>
           <h1 className="font-[Rondana] text-4xl sm:text-5xl font-bold text-white mb-4">
             Guía de Usuario
@@ -374,16 +374,16 @@ const GuiaUsuario = () => {
                 delay: index * 0.08,
                 ease: [0.4, 0.0, 0.2, 1]
               }}
-              className="bg-[#23272f] rounded-xl border border-[#a1db87]/20 overflow-hidden shadow-lg hover:border-[#a1db87]/50 hover:shadow-[#a1db87]/10 hover:shadow-2xl transition-all duration-500"
+              className="bg-surface rounded-xl border border-brand/20 overflow-hidden shadow-lg hover:border-brand/50 hover:shadow-brand/10 hover:shadow-2xl transition-all duration-500"
             >
               {/* Título clickeable */}
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-[#2a2e36] transition-all duration-400"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-surface-2 transition-all duration-400"
               >
                 <div className="flex items-center gap-4">
                   <motion.div 
-                    className="flex-shrink-0 w-12 h-12 bg-[#a1db87]/10 rounded-lg flex items-center justify-center text-[#a1db87]"
+                    className="flex-shrink-0 w-12 h-12 bg-brand/10 rounded-lg flex items-center justify-center text-brand"
                     whileHover={{ 
                       scale: 1.1,
                       backgroundColor: "rgba(161, 219, 135, 0.2)"
@@ -407,7 +407,7 @@ const GuiaUsuario = () => {
                     stiffness: 260,
                     damping: 20
                   }}
-                  className="text-[#a1db87]"
+                  className="text-brand"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </motion.div>
@@ -441,7 +441,7 @@ const GuiaUsuario = () => {
                     className="overflow-hidden"
                   >
                     <motion.div 
-                      className="p-6 pt-0 border-t border-[#a1db87]/10"
+                      className="p-6 pt-0 border-t border-brand/10"
                       initial={{ y: -20, opacity: 0 }}
                       animate={{ 
                         y: 0,
@@ -475,7 +475,7 @@ const GuiaUsuario = () => {
             delay: 0.5,
             ease: [0.4, 0.0, 0.2, 1]
           }}
-          className="mt-16 bg-gradient-to-r from-[#a1db87]/10 to-[#a1db87]/5 rounded-2xl p-8 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-500"
+          className="mt-16 bg-gradient-to-r from-brand/10 to-brand/5 rounded-2xl p-8 border border-brand/20 hover:border-brand/40 transition-all duration-500"
         >
           <div className="text-center">
             <motion.div
@@ -490,7 +490,7 @@ const GuiaUsuario = () => {
                 ease: "easeInOut"
               }}
             >
-              <MessageCircle className="w-12 h-12 text-[#a1db87] mx-auto mb-4" />
+              <MessageCircle className="w-12 h-12 text-brand mx-auto mb-4" />
             </motion.div>
             <h3 className="text-2xl font-bold text-white mb-3 font-[Rondana]">
               ¿Necesitas más ayuda?
@@ -500,7 +500,7 @@ const GuiaUsuario = () => {
             </p>
             <motion.a
               href="/contacto"
-              className="inline-flex items-center gap-2 bg-[#a1db87] text-[#1a1a1a] px-8 py-3 rounded-lg font-semibold hover:bg-[#8bc76d] transition-colors duration-300"
+              className="inline-flex items-center gap-2 bg-brand text-on-brand px-8 py-3 rounded-lg font-semibold hover:bg-brand-500 transition-colors duration-300"
               whileHover={{ 
                 scale: 1.05,
                 boxShadow: "0 10px 30px rgba(161, 219, 135, 0.3)"
@@ -540,7 +540,7 @@ const GuiaUsuario = () => {
         >
           <motion.a
             href="/sobre"
-            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-400 text-center group"
+            className="bg-surface p-6 rounded-xl border border-brand/20 hover:border-brand/40 transition-all duration-400 text-center group"
             whileHover={{ 
               y: -5,
               boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
@@ -562,7 +562,7 @@ const GuiaUsuario = () => {
                 damping: 17
               }}
             >
-              <FileText className="w-8 h-8 text-[#a1db87] mx-auto mb-3" />
+              <FileText className="w-8 h-8 text-brand mx-auto mb-3" />
             </motion.div>
             <h4 className="text-white font-semibold mb-2">Sobre nosotros</h4>
             <p className="text-sm text-gray-400">Conoce más sobre Evenor-Tech</p>
@@ -570,7 +570,7 @@ const GuiaUsuario = () => {
 
           <motion.a
             href="/cookies"
-            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-400 text-center group"
+            className="bg-surface p-6 rounded-xl border border-brand/20 hover:border-brand/40 transition-all duration-400 text-center group"
             whileHover={{ 
               y: -5,
               boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
@@ -592,7 +592,7 @@ const GuiaUsuario = () => {
                 damping: 17
               }}
             >
-              <Shield className="w-8 h-8 text-[#a1db87] mx-auto mb-3" />
+              <Shield className="w-8 h-8 text-brand mx-auto mb-3" />
             </motion.div>
             <h4 className="text-white font-semibold mb-2">Política de Cookies</h4>
             <p className="text-sm text-gray-400">Información sobre cookies</p>
@@ -600,7 +600,7 @@ const GuiaUsuario = () => {
 
           <motion.a
             href="/cursos"
-            className="bg-[#23272f] p-6 rounded-xl border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-400 text-center group"
+            className="bg-surface p-6 rounded-xl border border-brand/20 hover:border-brand/40 transition-all duration-400 text-center group"
             whileHover={{ 
               y: -5,
               boxShadow: "0 10px 30px rgba(161, 219, 135, 0.15)"
@@ -622,7 +622,7 @@ const GuiaUsuario = () => {
                 damping: 17
               }}
             >
-              <Book className="w-8 h-8 text-[#a1db87] mx-auto mb-3" />
+              <Book className="w-8 h-8 text-brand mx-auto mb-3" />
             </motion.div>
             <h4 className="text-white font-semibold mb-2">Ver cursos</h4>
             <p className="text-sm text-gray-400">Explora nuestro catálogo</p>

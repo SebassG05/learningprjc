@@ -154,7 +154,7 @@ const Contact = () => {
         url: "mailto:campusevenor@gmail.com",
         icon: <Send className="w-3 h-3" />
       },
-      color: '#8bc96a'
+      color: '#85c869'
     },
     {
       id: 3,
@@ -166,7 +166,7 @@ const Contact = () => {
         url: "tel:+34954151096",
         icon: <Phone className="w-3 h-3" />
       },
-      color: '#7fb85d'
+      color: '#67ab4b'
     },
     {
       id: 4,
@@ -178,15 +178,15 @@ const Contact = () => {
         url: "https://www.linkedin.com/company/evenor-tech/",
         icon: <ExternalLink className="w-3 h-3" />
       },
-      color: '#6fa550'
+      color: '#4f8939'
     }
   ];
 
     return (
       <div ref={containerRef} className="min-h-screen bg-transparent py-12 sm:py-16 md:py-20">
       {/* Decoraciones de fondo */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-[#a1db87]/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#a1db87]/5 rounded-full blur-3xl" />
+      <div className="absolute top-20 left-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-brand/5 rounded-full blur-3xl" />
 
       <Container>
         {/* Header Principal */}
@@ -206,16 +206,16 @@ const Contact = () => {
               damping: 15,
               delay: 0.2
             }}
-            className="inline-flex items-center px-4 py-2 bg-[#2a2a2a] border border-[#a1db87]/30 rounded-full mb-4"
+            className="inline-flex items-center px-4 py-2 bg-surface-2 border border-brand/30 rounded-full mb-4"
           >
-            <Sparkles className="w-4 h-4 text-[#a1db87] mr-2" />
-            <span className="text-xs sm:text-sm font-semibold text-[#a1db87]">
+            <Sparkles className="w-4 h-4 text-brand mr-2" />
+            <span className="text-xs sm:text-sm font-semibold text-brand">
               Contacto
             </span>
           </motion.div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-[Rondana]">
-            ¿Listo para empezar con <span className="text-[#a1db87]">tu proyecto</span>?
+            ¿Listo para empezar con <span className="text-brand">tu proyecto</span>?
           </h1>
 
           <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
@@ -241,7 +241,7 @@ const Contact = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={mainInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="bg-[#1a1a1a] border border-[#444444] rounded-xl p-4 hover:border-[#a1db87] transition-all group"
+                  className="bg-surface border border-line-strong rounded-xl p-4 hover:border-brand transition-all group"
                 >
                   <div className="flex items-start gap-3">
                     <div 
@@ -263,7 +263,7 @@ const Contact = () => {
                           href={info.action.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-[#a1db87] hover:text-[#8bc96a] font-medium"
+                          className="inline-flex items-center gap-1 text-xs text-brand hover:text-brand-500 font-medium"
                         >
                           {info.action.label}
                           {info.action.icon}
@@ -280,7 +280,7 @@ const Contact = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={mainInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.7 }}
-              className="bg-[#2a2a2a] border-2 border-[#a1db87] rounded-xl overflow-hidden"
+              className="bg-surface-2 border-2 border-brand rounded-xl overflow-hidden"
             >
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3170.456193220813!2d-6.005224583886922!3d37.377445979833104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126dcad1bdd721%3A0xd80c106b41b3600e!2sEvenor-Tech!5e0!3m2!1ses!2ses!4v1694347141372!5m2!1ses!2ses"
@@ -301,10 +301,10 @@ const Contact = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={mainInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.4 }}
-              className="bg-[#2a2a2a] border-2 border-[#a1db87] rounded-2xl p-6 sm:p-8"
+              className="bg-surface-2 border-2 border-brand rounded-2xl p-6 sm:p-8"
             >
               <h2 className="text-2xl font-bold text-white mb-6">
-                Envíanos un <span className="text-[#a1db87]">mensaje</span>
+                Envíanos un <span className="text-brand">mensaje</span>
               </h2>
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
@@ -312,7 +312,7 @@ const Contact = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="flex items-center text-sm font-medium text-gray-300 mb-2">
-                      <User className="w-4 h-4 text-[#a1db87] mr-2" />
+                      <User className="w-4 h-4 text-brand mr-2" />
                       Nombre completo<span className="text-red-400 ml-1">*</span>
                     </label>
                     <input
@@ -321,7 +321,7 @@ const Contact = () => {
                       name="name"
                       placeholder="Tu nombre completo"
                       required
-                      className="w-full px-4 py-2.5 border border-[#444444] bg-[#1a1a1a] text-white rounded-lg focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                     {formStatus.validationErrors.name && (
                       <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.name}</p>
@@ -330,7 +330,7 @@ const Contact = () => {
 
                   <div>
                     <label htmlFor="email" className="flex items-center text-sm font-medium text-gray-300 mb-2">
-                      <Mail className="w-4 h-4 text-[#a1db87] mr-2" />
+                      <Mail className="w-4 h-4 text-brand mr-2" />
                       Email<span className="text-red-400 ml-1">*</span>
                     </label>
                     <input
@@ -339,7 +339,7 @@ const Contact = () => {
                       name="email"
                       placeholder="correo@ejemplo.com"
                       required
-                      className="w-full px-4 py-2.5 border border-[#444444] bg-[#1a1a1a] text-white rounded-lg focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                     {formStatus.validationErrors.email && (
                       <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.email}</p>
@@ -351,7 +351,7 @@ const Contact = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="phone" className="flex items-center text-sm font-medium text-gray-300 mb-2">
-                      <Phone className="w-4 h-4 text-[#a1db87] mr-2" />
+                      <Phone className="w-4 h-4 text-brand mr-2" />
                       Teléfono
                     </label>
                     <input
@@ -359,13 +359,13 @@ const Contact = () => {
                       id="phone"
                       name="phone"
                       placeholder="+34 000 000 000"
-                      className="w-full px-4 py-2.5 border border-[#444444] bg-[#1a1a1a] text-white rounded-lg focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                   </div>
 
                   <div>
                     <label htmlFor="company" className="flex items-center text-sm font-medium text-gray-300 mb-2">
-                      <Building2 className="w-4 h-4 text-[#a1db87] mr-2" />
+                      <Building2 className="w-4 h-4 text-brand mr-2" />
                       Empresa/Organización
                     </label>
                     <input
@@ -373,7 +373,7 @@ const Contact = () => {
                       id="company"
                       name="company"
                       placeholder="Nombre de tu empresa"
-                      className="w-full px-4 py-2.5 border border-[#444444] bg-[#1a1a1a] text-white rounded-lg focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition-all placeholder-gray-500 text-sm"
+                      className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                     />
                   </div>
                 </div>
@@ -381,7 +381,7 @@ const Contact = () => {
                 {/* Fila 3: Asunto */}
                 <div>
                   <label htmlFor="subject" className="flex items-center text-sm font-medium text-gray-300 mb-2">
-                    <FileText className="w-4 h-4 text-[#a1db87] mr-2" />
+                    <FileText className="w-4 h-4 text-brand mr-2" />
                     Asunto<span className="text-red-400 ml-1">*</span>
                   </label>
                   <input
@@ -390,7 +390,7 @@ const Contact = () => {
                     name="subject"
                     placeholder="¿En qué podemos ayudarte?"
                     required
-                    className="w-full px-4 py-2.5 border border-[#444444] bg-[#1a1a1a] text-white rounded-lg focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition-all placeholder-gray-500 text-sm"
+                    className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 text-sm"
                   />
                   {formStatus.validationErrors.subject && (
                     <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.subject}</p>
@@ -400,7 +400,7 @@ const Contact = () => {
                 {/* Fila 4: Mensaje */}
                 <div>
                   <label htmlFor="message" className="flex items-center text-sm font-medium text-gray-300 mb-2">
-                    <MessageSquare className="w-4 h-4 text-[#a1db87] mr-2" />
+                    <MessageSquare className="w-4 h-4 text-brand mr-2" />
                     Mensaje<span className="text-red-400 ml-1">*</span>
                   </label>
                   <textarea
@@ -409,7 +409,7 @@ const Contact = () => {
                     rows={5}
                     placeholder="Escribe aquí tu mensaje..."
                     required
-                    className="w-full px-4 py-2.5 border border-[#444444] bg-[#1a1a1a] text-white rounded-lg focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition-all placeholder-gray-500 resize-none text-sm"
+                    className="w-full px-4 py-2.5 border border-line-strong bg-surface text-white rounded-lg focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-gray-500 resize-none text-sm"
                   />
                   {formStatus.validationErrors.message && (
                     <p className="text-red-400 text-xs mt-1">{formStatus.validationErrors.message}</p>
@@ -431,7 +431,7 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-[#1e3a1a] border border-[#a1db87]/30 rounded-lg text-[#a1db87] text-sm flex items-center"
+                    className="p-3 bg-surface-2 border border-brand/30 rounded-lg text-brand text-sm flex items-center"
                   >
                     <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0" />
                     {formStatus.successMessage}
@@ -447,7 +447,7 @@ const Contact = () => {
                   className={`w-full relative px-6 py-3 font-bold rounded-xl shadow-lg overflow-hidden group transition-all ${
                     formStatus.submitted
                       ? 'bg-green-600 text-white cursor-not-allowed'
-                      : 'bg-[#a1db87] text-[#1a1a1a] hover:shadow-xl cursor-pointer'
+                      : 'bg-brand text-on-brand hover:shadow-xl cursor-pointer'
                   }`}
                 >
                   {!formStatus.submitted && !formStatus.loading && (
@@ -483,7 +483,7 @@ const Contact = () => {
                 </button>
 
                 {/* Información básica RGPD */}
-                <div className="bg-[#1a1a1a] border border-[#a1db87]/15 rounded-xl p-4 text-xs">
+                <div className="bg-surface border border-brand/15 rounded-xl p-4 text-xs">
                   <table className="w-full">
                     <tbody>
                       {[
@@ -492,11 +492,11 @@ const Contact = () => {
                         ['Derechos', 'Acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.'],
                         ['Información adicional', null],
                       ].map(([k, v]) => (
-                        <tr key={k} className="border-b border-[#a1db87]/10 last:border-0">
-                          <td className="py-1.5 pr-3 font-semibold text-[#a1db87] w-2/5 align-top">{k}</td>
+                        <tr key={k} className="border-b border-brand/10 last:border-0">
+                          <td className="py-1.5 pr-3 font-semibold text-brand w-2/5 align-top">{k}</td>
                           <td className="py-1.5 text-gray-400">
                             {k === 'Información adicional' ? (
-                              <Link to="/privacidad" className="text-[#a1db87] hover:underline">
+                              <Link to="/privacidad" className="text-brand hover:underline">
                                 Consulte la política de privacidad
                               </Link>
                             ) : v}
@@ -513,11 +513,11 @@ const Contact = () => {
                     type="checkbox"
                     name="privacy"
                     required
-                    className="mt-0.5 w-4 h-4 flex-shrink-0 accent-[#a1db87] cursor-pointer"
+                    className="mt-0.5 w-4 h-4 flex-shrink-0 accent-brand cursor-pointer"
                   />
                   <span className="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
                     He leído y acepto la{' '}
-                    <Link to="/privacidad" className="text-[#a1db87] hover:underline">
+                    <Link to="/privacidad" className="text-brand hover:underline">
                       información básica de protección de datos
                     </Link>.
                   </span>

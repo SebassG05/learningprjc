@@ -19,19 +19,19 @@ export default function EstructuraCursoPage() {
       <div className="flex items-center justify-between mb-8">
         <button
           onClick={() => navigate(`/curso/${id}`)}
-          className="cursor-pointer flex items-center gap-2 text-[#a1db87] hover:text-white transition-colors duration-200 group"
+          className="cursor-pointer flex items-center gap-2 text-brand hover:text-white transition-colors duration-200 group"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
           <span className="font-semibold">{idioma === 'en' ? 'Back to course' : 'Volver al curso'}</span>
         </button>
 
         {/* Selector ES / EN */}
-        <div className="flex items-center gap-1 bg-[#1f2937] border border-gray-700 rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-surface-2 border border-gray-700 rounded-lg p-1">
           <button
             onClick={() => handleLang('es')}
             className={`cursor-pointer px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
               idioma === 'es'
-                ? 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a]'
+                ? 'bg-gradient-to-r from-brand to-brand-500 text-on-brand'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -41,7 +41,7 @@ export default function EstructuraCursoPage() {
             onClick={() => handleLang('en')}
             className={`cursor-pointer px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
               idioma === 'en'
-                ? 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a]'
+                ? 'bg-gradient-to-r from-brand to-brand-500 text-on-brand'
                 : 'text-gray-400 hover:text-white'
             }`}
           >

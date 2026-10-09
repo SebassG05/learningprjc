@@ -17,20 +17,20 @@ export default function EstructuraCurso({ idioma = 'es' }) {
         <div className="space-y-4">
           <p className="text-gray-300 text-justify leading-relaxed">
             {t(
-              <>Hemos diseñado una experiencia de aprendizaje basada en la <span className="text-[#a1db87] font-semibold">teoría del aprendizaje activo</span>, donde cada concepto teórico se valida inmediatamente mediante evaluaciones prácticas sobre la plataforma ANFORA.</>,
-              <>We designed a learning experience based on <span className="text-[#a1db87] font-semibold">active learning theory</span>, where every theoretical concept is immediately validated through practical assessments on the ANFORA platform.</>
+              <>Hemos diseñado una experiencia de aprendizaje basada en la <span className="text-brand font-semibold">teoría del aprendizaje activo</span>, donde cada concepto teórico se valida inmediatamente mediante evaluaciones prácticas sobre la plataforma ANFORA.</>,
+              <>We designed a learning experience based on <span className="text-brand font-semibold">active learning theory</span>, where every theoretical concept is immediately validated through practical assessments on the ANFORA platform.</>
             )}
           </p>
           <div className="grid grid-cols-3 gap-4 mt-6">
-            <div className="text-center p-4 bg-[#111827]/50 rounded-lg">
-              <div className="text-2xl font-bold text-[#a1db87]">60%</div>
+            <div className="text-center p-4 bg-surface/50 rounded-lg">
+              <div className="text-2xl font-bold text-brand">60%</div>
               <div className="text-xs text-gray-400 mt-1">{t('Teoría', 'Theory')}</div>
             </div>
-            <div className="text-center p-4 bg-[#111827]/50 rounded-lg">
-              <div className="text-2xl font-bold text-[#5ec6a6]">30%</div>
+            <div className="text-center p-4 bg-surface/50 rounded-lg">
+              <div className="text-2xl font-bold text-brand-500">30%</div>
               <div className="text-xs text-gray-400 mt-1">{t('Evaluación', 'Assessment')}</div>
             </div>
-            <div className="text-center p-4 bg-[#111827]/50 rounded-lg">
+            <div className="text-center p-4 bg-surface/50 rounded-lg">
               <div className="text-2xl font-bold text-yellow-500">10%</div>
               <div className="text-xs text-gray-400 mt-1">{t('Práctica', 'Practice')}</div>
             </div>
@@ -42,7 +42,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
       id: 'ciclo',
       title: t('Ciclo de Aprendizaje', 'Learning Cycle'),
       icon: <BookOpen className="w-5 h-5" />,
-      color: '#5ec6a6',
+      color: '#85c869',
       content: (
         <div className="space-y-6">
           {[
@@ -57,7 +57,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
             },
             {
               n: '2',
-              color: '#5ec6a6',
+              color: '#85c869',
               title: t('Test de Evaluación', 'Evaluation Test'),
               desc: t(
                 'Realiza el test de 25 preguntas asociado a cada unidad (30 min). Obtendrás feedback inmediato y necesitas un mínimo del 60% para avanzar.',
@@ -167,23 +167,23 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               )}
             </p>
             <div className="grid grid-cols-3 gap-3 mt-4">
-              <div className="bg-[#111827]/50 p-3 rounded-lg">
+              <div className="bg-surface/50 p-3 rounded-lg">
                 <div className="text-yellow-500 font-semibold text-sm mb-1">{t('Duración', 'Duration')}</div>
                 <div className="text-gray-400 text-xs">60 {t('minutos', 'minutes')}</div>
               </div>
-              <div className="bg-[#111827]/50 p-3 rounded-lg">
+              <div className="bg-surface/50 p-3 rounded-lg">
                 <div className="text-yellow-500 font-semibold text-sm mb-1">{t('Preguntas', 'Questions')}</div>
                 <div className="text-gray-400 text-xs">40 {t('ítems', 'items')}</div>
               </div>
-              <div className="bg-[#111827]/50 p-3 rounded-lg">
+              <div className="bg-surface/50 p-3 rounded-lg">
                 <div className="text-yellow-500 font-semibold text-sm mb-1">{t('Nota mín.', 'Min. grade')}</div>
                 <div className="text-gray-400 text-xs">70%</div>
               </div>
             </div>
           </div>
 
-          <div className="bg-[#1f2937] border border-emerald-500/30 p-4 rounded-lg">
-            <h4 className="text-emerald-400 font-semibold mb-2">🎓 {t('Certificado Digital', 'Digital Certificate')}</h4>
+          <div className="bg-surface-2 border border-brand-400/30 p-4 rounded-lg">
+            <h4 className="text-brand-300 font-semibold mb-2">🎓 {t('Certificado Digital', 'Digital Certificate')}</h4>
             <p className="text-sm text-gray-300 text-justify">
               {t(
                 'Al aprobar el Test Final, recibirás un certificado digital verificable que acredita tus conocimientos sobre la gestión de la huella hídrica con la plataforma ANFORA.',
@@ -220,15 +220,15 @@ export default function EstructuraCurso({ idioma = 'es' }) {
         <h2 className="text-4xl font-extrabold text-white mb-3">
           {t('Estructura del Curso', 'Course Structure')}
         </h2>
-        <div className="h-1 w-32 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mx-auto rounded-full"></div>
+        <div className="h-1 w-32 bg-gradient-to-r from-brand to-brand-500 mx-auto rounded-full"></div>
       </div>
 
       {/* Descripción */}
       <div className="max-w-2xl mx-auto text-center mb-12">
         <p className="text-gray-400 text-lg leading-relaxed">
           {t(
-            <> Un sistema de aprendizaje estructurado que combina teoría, práctica y evaluación continua para garantizar la <span className="text-[#a1db87] font-semibold">máxima retención de conocimientos</span>.</>,
-            <> A structured learning system combining theory, practice and continuous assessment to ensure <span className="text-[#a1db87] font-semibold">maximum knowledge retention</span>.</>
+            <> Un sistema de aprendizaje estructurado que combina teoría, práctica y evaluación continua para garantizar la <span className="text-brand font-semibold">máxima retención de conocimientos</span>.</>,
+            <> A structured learning system combining theory, practice and continuous assessment to ensure <span className="text-brand font-semibold">maximum knowledge retention</span>.</>
           )}
         </p>
       </div>
@@ -250,8 +250,8 @@ export default function EstructuraCurso({ idioma = 'es' }) {
               <div
                 className={`relative overflow-hidden rounded-xl transition-all duration-300 ${
                   activeSection === section.id
-                    ? 'bg-gradient-to-r from-[#1f2937] to-[#111827] border-2'
-                    : 'bg-[#1f2937] border border-gray-700 hover:border-gray-600'
+                    ? 'bg-gradient-to-r from-surface-2 to-surface border-2'
+                    : 'bg-surface-2 border border-gray-700 hover:border-gray-600'
                 }`}
                 style={{
                   backgroundColor: 'rgb(31, 41, 55)',
@@ -271,7 +271,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
                         activeSection === section.id ? 'scale-110' : 'scale-100'
                       }`}
                       style={{
-                        backgroundColor: activeSection === section.id ? `${section.color}20` : '#111827',
+                        backgroundColor: activeSection === section.id ? `${section.color}20` : '#141416',
                         color: section.color
                       }}
                     >
@@ -301,7 +301,7 @@ export default function EstructuraCurso({ idioma = 'es' }) {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="bg-[#111827] rounded-b-xl p-6 mt-[-8px] pt-8" style={{ backgroundColor: 'rgb(17, 24, 39)' }}>
+                  <div className="bg-surface rounded-b-xl p-6 mt-[-8px] pt-8" style={{ backgroundColor: 'rgb(17, 24, 39)' }}>
                     {section.content}
                   </div>
                 </motion.div>
@@ -313,12 +313,12 @@ export default function EstructuraCurso({ idioma = 'es' }) {
 
       {/* Footer */}
       <div className="mt-10 text-center">
-        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#1f2937] to-[#111827] border border-[#a1db87]/30 rounded-full">
-          <Zap className="w-4 h-4 text-[#a1db87]" />
+        <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-surface-2 to-surface border border-brand/30 rounded-full">
+          <Zap className="w-4 h-4 text-brand" />
           <span className="text-sm text-gray-300">
             {t(
-              <> Diseñado para <span className="text-[#a1db87] font-semibold">maximizar tu aprendizaje</span></>,
-              <> Designed to <span className="text-[#a1db87] font-semibold">maximise your learning</span></>
+              <> Diseñado para <span className="text-brand font-semibold">maximizar tu aprendizaje</span></>,
+              <> Designed to <span className="text-brand font-semibold">maximise your learning</span></>
             )}
           </span>
         </div>

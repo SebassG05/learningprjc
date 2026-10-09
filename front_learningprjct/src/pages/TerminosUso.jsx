@@ -141,7 +141,7 @@ export default function TerminosUso() {
   ];
 
   return (
-    <div ref={containerRef} className="fade-init min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#23272f] to-[#1a1a1a] py-16 px-4">
+    <div ref={containerRef} className="fade-init min-h-screen bg-gradient-to-br from-surface via-surface to-surface py-16 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -150,10 +150,10 @@ export default function TerminosUso() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] mb-6 shadow-lg shadow-[#a1db87]/30">
-            <Scale className="w-10 h-10 text-[#1a1a1a]" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand to-brand-500 mb-6 shadow-lg shadow-brand/30">
+            <Scale className="w-10 h-10 text-on-brand" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-4">
             Términos de Uso
           </h1>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
@@ -161,7 +161,7 @@ export default function TerminosUso() {
             Por favor, léelos cuidadosamente antes de utilizar nuestros servicios.
           </p>
           <div className="mt-4 text-sm text-gray-500">
-            Última actualización: <span className="text-[#a1db87] font-semibold">Marzo 2026</span>
+            Última actualización: <span className="text-brand font-semibold">Marzo 2026</span>
           </div>
         </motion.div>
 
@@ -180,11 +180,11 @@ export default function TerminosUso() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 + (idx * 0.1) }}
-                className="bg-[#23272f] rounded-2xl p-8 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-300 shadow-lg"
+                className="bg-surface rounded-2xl p-8 border border-brand/20 hover:border-brand/40 transition-all duration-300 shadow-lg"
               >
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 p-3 bg-gradient-to-br from-[#a1db87]/20 to-[#5ec6a6]/10 rounded-xl border border-[#a1db87]/30">
-                    <IconComponent className="w-6 h-6 text-[#a1db87]" />
+                  <div className="flex-shrink-0 p-3 bg-gradient-to-br from-brand/20 to-brand-500/10 rounded-xl border border-brand/30">
+                    <IconComponent className="w-6 h-6 text-brand" />
                   </div>
                   <h2 className="text-2xl font-bold text-white mt-2">{section.title}</h2>
                 </div>
@@ -193,7 +193,7 @@ export default function TerminosUso() {
                   {section.content.map((item, itemIdx) => (
                     <div key={itemIdx} className="group">
                       {item.subtitle && (
-                        <h3 className="text-lg font-semibold text-[#a1db87] mb-2 group-hover:text-[#5ec6a6] transition-colors">
+                        <h3 className="text-lg font-semibold text-brand mb-2 group-hover:text-brand-500 transition-colors">
                           {item.subtitle}
                         </h3>
                       )}
@@ -213,11 +213,11 @@ export default function TerminosUso() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
-          className="mt-12 bg-gradient-to-br from-[#a1db87]/10 to-[#5ec6a6]/5 rounded-2xl p-8 border border-[#a1db87]/30"
+          className="mt-12 bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-8 border border-brand/30"
         >
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 p-3 bg-[#a1db87]/20 rounded-xl">
-              <AlertTriangle className="w-6 h-6 text-[#a1db87]" />
+            <div className="flex-shrink-0 p-3 bg-brand/20 rounded-xl">
+              <AlertTriangle className="w-6 h-6 text-brand" />
             </div>
             <div>
               <h3 className="text-xl font-bold text-white mb-2">Aviso Importante</h3>

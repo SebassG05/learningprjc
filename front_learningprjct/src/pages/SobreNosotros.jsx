@@ -11,11 +11,11 @@ const team = [
 ];
 
 const values = [
-  { icon: <Star className="w-6 h-6 text-[#a1db87]" />, title: 'Innovación', desc: 'Siempre a la vanguardia en tecnología educativa.' },
-  { icon: <HeartHandshake className="w-6 h-6 text-[#a1db87]" />, title: 'Cercanía', desc: 'Acompañamos a cada alumno en su camino.' },
-  { icon: <Award className="w-6 h-6 text-[#a1db87]" />, title: 'Calidad', desc: 'Cursos y soporte de máxima calidad.' },
-  { icon: <Globe className="w-6 h-6 text-[#a1db87]" />, title: 'Accesibilidad', desc: 'Formación para todos, sin barreras.' },
-  { icon: <Globe className="w-6 h-6 text-[#a1db87]" />, title: 'Transparencia', desc: 'Comprometidos con la honestidad y claridad en todas nuestras acciones.' },
+  { icon: <Star className="w-6 h-6 text-brand" />, title: 'Innovación', desc: 'Siempre a la vanguardia en tecnología educativa.' },
+  { icon: <HeartHandshake className="w-6 h-6 text-brand" />, title: 'Cercanía', desc: 'Acompañamos a cada alumno en su camino.' },
+  { icon: <Award className="w-6 h-6 text-brand" />, title: 'Calidad', desc: 'Cursos y soporte de máxima calidad.' },
+  { icon: <Globe className="w-6 h-6 text-brand" />, title: 'Accesibilidad', desc: 'Formación para todos, sin barreras.' },
+  { icon: <Globe className="w-6 h-6 text-brand" />, title: 'Transparencia', desc: 'Comprometidos con la honestidad y claridad en todas nuestras acciones.' },
 ];
 
 export default function SobreNosotros() {
@@ -27,7 +27,7 @@ export default function SobreNosotros() {
       source: 'Trustburn',
       rating: 4,
       initials: 'AB',
-      color: 'bg-[#a1db87]/90',
+      color: 'bg-brand/90',
     },
     {
       text: 'Evenor tech has exceeded my expectations. Their soil solutions are exceptional and have greatly improved the quality of my land.',
@@ -43,7 +43,7 @@ export default function SobreNosotros() {
       source: 'Trustburn',
       rating: 5,
       initials: 'JF',
-      color: 'bg-[#a1db87]/90',
+      color: 'bg-brand/90',
     },
     {
       text: 'Evenor tech is simply amazing! Their expertise in soil use and protection is unparalleled.',
@@ -51,7 +51,7 @@ export default function SobreNosotros() {
       source: 'Trustburn',
       rating: 5,
       initials: 'GU',
-      color: 'bg-[#a1db87]/90',
+      color: 'bg-brand/90',
     },
   ];
   const [idx, setIdx] = React.useState(0);
@@ -85,17 +85,17 @@ export default function SobreNosotros() {
               damping: 15,
               delay: 0.2
             }}
-            className="inline-flex items-center px-4 py-2 bg-[#2a2a2a] border border-[#a1db87]/30 rounded-full mb-4"
+            className="inline-flex items-center px-4 py-2 bg-surface-2 border border-brand/30 rounded-full mb-4"
           >
-            <Sparkles className="w-4 h-4 text-[#a1db87] mr-2" />
-            <span className="text-xs sm:text-sm font-semibold text-[#a1db87]">
+            <Sparkles className="w-4 h-4 text-brand mr-2" />
+            <span className="text-xs sm:text-sm font-semibold text-brand">
               Sobre Nosotros
             </span>
           </motion.div>
         </motion.div>
 
         <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-16 text-center">
-          Sobre <span className="text-[#a1db87]">Evenor-Tech</span>
+          Sobre <span className="text-brand">Evenor-Tech</span>
         </h1>
         <motion.div
           className="flex flex-wrap justify-center gap-6 mt-8"
@@ -113,14 +113,14 @@ export default function SobreNosotros() {
           {values.map((v, i) => (
             <motion.div
               key={i}
-              className="bg-[#181b20] rounded-xl p-6 w-64 flex flex-col items-center shadow-md border border-[#a1db87]/10"
+              className="bg-surface rounded-xl p-6 w-64 flex flex-col items-center shadow-md border border-brand/10"
               variants={{
                 hidden: { opacity: 0, y: 40 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
               }}
             >
               {v.icon}
-              <h3 className="text-lg font-bold text-[#a1db87] mt-2 mb-1">{v.title}</h3>
+              <h3 className="text-lg font-bold text-brand mt-2 mb-1">{v.title}</h3>
               <p className="text-gray-400 text-sm text-center">{v.desc}</p>
             </motion.div>
           ))}
@@ -131,9 +131,9 @@ export default function SobreNosotros() {
       {/* Nuestra Esencia */}
       <section className="mb-20">
         <div className="flex flex-col items-center mb-8">
-          <span className="inline-block bg-[#a1db87]/80 text-[#23272f] font-semibold px-6 py-1 rounded-full mb-16 text-sm tracking-wide shadow">NUESTRA ESENCIA</span>
+          <span className="inline-block bg-brand/80 text-on-brand font-semibold px-6 py-1 rounded-full mb-16 text-sm tracking-wide shadow">NUESTRA ESENCIA</span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center mb-2" style={{fontFamily: 'inherit'}}>Misión, Visión y Valores</h2>
-          <div className="w-24 h-1 bg-[#a1db87] rounded mx-auto mt-2 mb-2"></div>
+          <div className="w-24 h-1 bg-brand rounded mx-auto mt-2 mb-2"></div>
         </div>
         <div className="w-full max-w-6xl mx-auto mb-10">
           <div className="rounded-2xl overflow-hidden shadow-lg relative">
@@ -146,10 +146,10 @@ export default function SobreNosotros() {
         </div>
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-stretch justify-center mb-12">
           {/* Misión */}
-          <div className="bg-[#181b20] rounded-2xl shadow-xl border border-[#a1db87]/20 p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
+          <div className="bg-surface rounded-2xl shadow-xl border border-brand/20 p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
             <div className="flex items-center gap-2 mb-3">
-              <Target className="w-8 h-8 text-[#a1db87]" />
-              <span className="text-2xl font-bold text-[#a1db87]">Misión</span>
+              <Target className="w-8 h-8 text-brand" />
+              <span className="text-2xl font-bold text-brand">Misión</span>
             </div>
             <p className="text-gray-300 text-base font-medium leading-relaxed text-justify">
               Nuestra misión es ayudar a gestionar todo el uso del territorio de una manera sostenible y bajo herramientas sensibilizadas con la innovación, la calidad y el medio ambiente.<br /><br />
@@ -157,7 +157,7 @@ export default function SobreNosotros() {
             </p>
           </div>
           {/* Visión */}
-          <div style={{backgroundColor: '#181b20', borderColor: 'rgba(59, 130, 246, 0.5)', paddingBottom: '3.5rem'}} className="rounded-2xl shadow-xl border p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
+          <div style={{backgroundColor: '#141416', borderColor: 'rgba(59, 130, 246, 0.5)', paddingBottom: '3.5rem'}} className="rounded-2xl shadow-xl border p-8 flex-1 min-w-[380px] max-w-3xl flex flex-col items-center text-center hover:scale-[1.03] transition-transform duration-300 h-full">
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-8 h-8 text-blue-400" />
               <span className="text-2xl font-bold text-blue-400">Visión</span>
@@ -172,28 +172,28 @@ export default function SobreNosotros() {
 
       {/* Equipo */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 justify-center text-center"><Users className="w-6 h-6 text-[#a1db87]" />Nuestro Equipo</h2>
+        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2 justify-center text-center"><Users className="w-6 h-6 text-brand" />Nuestro Equipo</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
           {team.slice(0, 3).map((m, i) => (
-            <div key={i} className="bg-[#23272f] rounded-xl p-5 flex flex-col items-center shadow border border-[#a1db87]/10">
-              <div className="w-16 h-16 rounded-full bg-[#a1db87]/20 flex items-center justify-center text-2xl font-bold text-[#a1db87] mb-2">
+            <div key={i} className="bg-surface rounded-xl p-5 flex flex-col items-center shadow border border-brand/10">
+              <div className="w-16 h-16 rounded-full bg-brand/20 flex items-center justify-center text-2xl font-bold text-brand mb-2">
                 {m.img ? <img src={m.img} alt={m.name} className="w-full h-full rounded-full object-cover" /> : m.name.charAt(0)}
               </div>
               <div className="text-white font-semibold text-base text-center">{m.name}</div>
               <div className="text-gray-400 text-xs text-center mb-1">{m.role}</div>
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#a1db87] text-xs hover:underline">LinkedIn</a>
+              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-brand text-xs hover:underline">LinkedIn</a>
             </div>
           ))}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
           {team.slice(3).map((m, i) => (
-            <div key={i} className="bg-[#23272f] rounded-xl p-5 flex flex-col items-center shadow border border-[#a1db87]/10">
-              <div className="w-16 h-16 rounded-full bg-[#a1db87]/20 flex items-center justify-center text-2xl font-bold text-[#a1db87] mb-2">
+            <div key={i} className="bg-surface rounded-xl p-5 flex flex-col items-center shadow border border-brand/10">
+              <div className="w-16 h-16 rounded-full bg-brand/20 flex items-center justify-center text-2xl font-bold text-brand mb-2">
                 {m.img ? <img src={m.img} alt={m.name} className="w-full h-full rounded-full object-cover" /> : m.name.charAt(0)}
               </div>
               <div className="text-white font-semibold text-base text-center">{m.name}</div>
               <div className="text-gray-400 text-xs text-center mb-1">{m.role}</div>
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#a1db87] text-xs hover:underline">LinkedIn</a>
+              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-brand text-xs hover:underline">LinkedIn</a>
             </div>
           ))}
         </div>
@@ -201,7 +201,7 @@ export default function SobreNosotros() {
 
       {/* Testimonios Slider */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 justify-center text-center"><MessageCircle className="w-6 h-6 text-[#a1db87]" />Testimonios</h2>
+        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2 justify-center text-center"><MessageCircle className="w-6 h-6 text-brand" />Testimonios</h2>
         {/* Testimonial Data */}
         <div className="relative flex flex-col items-center">
           {/* Card */}
@@ -212,22 +212,22 @@ export default function SobreNosotros() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: direction === 1 ? -40 : 40, scale: 0.96 }}
               transition={{ duration: 0.7, ease: [0.4, 0.0, 0.2, 1] }}
-              className="w-full max-w-3xl bg-[#23272f]/90 border border-[#a1db87]/10 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center relative"
+              className="w-full max-w-3xl bg-surface/90 border border-brand/10 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center relative"
             >
-              <MessageCircle className="w-12 h-12 text-[#a1db87] absolute -top-6 left-8 bg-[#23272f] rounded-full p-2 shadow" />
+              <MessageCircle className="w-12 h-12 text-brand absolute -top-6 left-8 bg-surface rounded-full p-2 shadow" />
               <p className="text-white text-lg md:text-xl font-medium text-center mb-8 mt-4 leading-relaxed" style={{ fontFamily: 'inherit' }}>
                 "{t.text}"
               </p>
               <div className="flex items-center gap-4 mt-4">
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-[#23272f] shadow ${t.color}`}>
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold text-on-brand shadow ${t.color}`}>
                   {t.initials}
                 </div>
                 <div className="flex flex-col">
                   <span className="text-white font-semibold text-base">{t.name}</span>
-                  <span className="text-[#a1db87] text-sm">{t.source}</span>
+                  <span className="text-brand text-sm">{t.source}</span>
                   <div className="flex items-center mt-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-4 h-4 ${i < t.rating ? 'text-[#a1db87]' : 'text-gray-500'}`} fill={i < t.rating ? '#a1db87' : 'none'} />
+                      <Star key={i} className={`w-4 h-4 ${i < t.rating ? 'text-brand' : 'text-gray-500'}`} fill={i < t.rating ? '#a1db87' : 'none'} />
                     ))}
                   </div>
                 </div>
@@ -235,16 +235,16 @@ export default function SobreNosotros() {
             </motion.div>
           </AnimatePresence>
           {/* Nav Buttons */}
-          <button onClick={prev} aria-label="Anterior" className="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
+          <button onClick={prev} aria-label="Anterior" className="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 bg-brand hover:bg-brand-200 text-on-brand rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
           </button>
-          <button onClick={next} aria-label="Siguiente" className="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 bg-[#a1db87] hover:bg-[#b8e6a8] text-[#23272f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
+          <button onClick={next} aria-label="Siguiente" className="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 bg-brand hover:bg-brand-200 text-on-brand rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-colors z-10">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
           </button>
           {/* Dots */}
           <div className="flex gap-2 mt-8">
             {testimonials.map((_, i) => (
-              <span key={i} className={`w-3 h-3 rounded-full ${i === idx ? 'bg-[#a1db87]' : 'bg-gray-600'}`}></span>
+              <span key={i} className={`w-3 h-3 rounded-full ${i === idx ? 'bg-brand' : 'bg-gray-600'}`}></span>
             ))}
           </div>
         </div>
@@ -252,19 +252,19 @@ export default function SobreNosotros() {
 
       {/* Contacto directo */}
       <section className="mb-8 text-center">
-        <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 justify-center"><HeartHandshake className="w-6 h-6 text-[#a1db87]" />¿Quieres colaborar o tienes dudas?</h2>
+        <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 justify-center"><HeartHandshake className="w-6 h-6 text-brand" />¿Quieres colaborar o tienes dudas?</h2>
         <p className="text-gray-300 mb-4">
           Escríbenos a{' '}
           <a
             href="https://outlook.live.com/mail/0/deeplink/compose?to=info@evenor-tech.com"
-            className="text-[#a1db87] underline"
+            className="text-brand underline"
             target="_blank"
             rel="noopener noreferrer"
             title="Abrir Outlook para escribir a info@evenor-tech.com"
           >
             info@evenor-tech.com
           </a>
-          {' '}o rellena nuestro <a href="/contacto" className="text-[#a1db87] underline">formulario de contacto</a>.
+          {' '}o rellena nuestro <a href="/contacto" className="text-brand underline">formulario de contacto</a>.
         </p>
       </section>
     </div>

@@ -71,7 +71,7 @@ const CookieSettings = ({ onSave, onBack }) => {
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Encabezado */}
-      <div className="flex items-center gap-3 pb-4 border-b border-[#a1db87]/30">
+      <div className="flex items-center gap-3 pb-4 border-b border-brand/30">
         <button
           onClick={onBack}
           className="text-gray-400 hover:text-white transition-colors"
@@ -91,13 +91,13 @@ const CookieSettings = ({ onSave, onBack }) => {
         {cookieTypes.map((cookie) => (
           <div
             key={cookie.id}
-            className="bg-[#23272f]/50 rounded-xl p-4 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-200"
+            className="bg-surface/50 rounded-xl p-4 border border-brand/20 hover:border-brand/40 transition-all duration-200"
           >
             <div className="flex items-start gap-4">
               {/* Icono */}
               <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
                 preferences[cookie.id] 
-                  ? 'bg-[#a1db87]/20 text-[#a1db87]' 
+                  ? 'bg-brand/20 text-brand' 
                   : 'bg-gray-700/50 text-gray-400'
               }`}>
                 {cookie.icon}
@@ -110,7 +110,7 @@ const CookieSettings = ({ onSave, onBack }) => {
                     <h4 className="text-white font-semibold text-base">
                       {cookie.name}
                       {cookie.required && (
-                        <span className="ml-2 text-xs text-[#a1db87] font-normal">
+                        <span className="ml-2 text-xs text-brand font-normal">
                           (Requeridas)
                         </span>
                       )}
@@ -121,9 +121,9 @@ const CookieSettings = ({ onSave, onBack }) => {
                   <button
                     onClick={() => handleToggle(cookie.id)}
                     disabled={cookie.required}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 focus:ring-offset-[#1a1f1c] ${
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 focus:ring-offset-surface ${
                       preferences[cookie.id]
-                        ? 'bg-[#a1db87]'
+                        ? 'bg-brand'
                         : 'bg-gray-600'
                     } ${cookie.required ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                     aria-label={`Toggle ${cookie.name}`}
@@ -145,7 +145,7 @@ const CookieSettings = ({ onSave, onBack }) => {
       </div>
 
       {/* Botones de acción */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#a1db87]/30">
+      <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-brand/30">
         <button
           onClick={onBack}
           className="flex-1 px-6 py-3 bg-gray-700 text-white rounded-xl font-semibold hover:bg-gray-600 transition-all duration-200"
@@ -154,7 +154,7 @@ const CookieSettings = ({ onSave, onBack }) => {
         </button>
         <button
           onClick={handleSave}
-          className="flex-1 px-6 py-3 bg-gradient-to-r from-[#a1db87] to-[#8bc970] text-[#1a1f1c] rounded-xl font-bold hover:from-[#8bc970] hover:to-[#75b55e] transition-all duration-200 shadow-lg hover:shadow-[#a1db87]/50"
+          className="flex-1 px-6 py-3 bg-gradient-to-r from-brand to-brand-500 text-on-brand rounded-xl font-bold hover:from-brand-500 hover:to-brand-600 transition-all duration-200 shadow-lg hover:shadow-brand/50"
         >
           Guardar preferencias
         </button>

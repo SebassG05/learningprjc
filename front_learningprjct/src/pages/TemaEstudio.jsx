@@ -87,7 +87,7 @@ export default function TemaEstudio() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed inset-0 bg-[#1a1a1a] z-50 flex flex-col"
+      className="fixed inset-0 bg-surface z-50 flex flex-col"
     >
       {/* Overlay de carga */}
       <AnimatePresence>
@@ -96,10 +96,10 @@ export default function TemaEstudio() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-[#1a1a1a] z-[60] flex items-center justify-center"
+            className="absolute inset-0 bg-surface z-[60] flex items-center justify-center"
           >
             <div className="text-center">
-              <div className="w-16 h-16 border-4 border-[#a1db87]/20 border-t-[#a1db87] rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="w-16 h-16 border-4 border-brand/20 border-t-brand rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-400">{idioma === 'en' ? 'Loading material...' : 'Cargando material...'}</p>
             </div>
           </motion.div>
@@ -111,13 +111,13 @@ export default function TemaEstudio() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-        className="bg-[#23272f] border-b border-[#a1db87]/20 px-6 py-4"
+        className="bg-surface border-b border-brand/20 px-6 py-4"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={handleClose}
-              className="p-2 hover:bg-[#1a1a1a] rounded-lg transition-colors"
+              className="p-2 hover:bg-surface rounded-lg transition-colors"
             >
               <X className="w-6 h-6 text-gray-400 hover:text-white" />
             </button>
@@ -143,10 +143,10 @@ export default function TemaEstudio() {
                   <div
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                       isActive
-                        ? 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a]'
+                        ? 'bg-gradient-to-r from-brand to-brand-500 text-on-brand'
                         : isCompleted
-                        ? 'bg-[#a1db87]/20 text-[#a1db87]'
-                        : 'bg-[#1a1a1a] text-gray-500'
+                        ? 'bg-brand/20 text-brand'
+                        : 'bg-surface text-gray-500'
                     }`}
                   >
                     {isCompleted ? (
@@ -179,11 +179,11 @@ export default function TemaEstudio() {
               className="h-full flex flex-col"
             >
               {/* PDF Viewer */}
-              <div className="flex-1 bg-[#23272f] p-4">
+              <div className="flex-1 bg-surface p-4">
                 {pdfUrl ? (
                   <iframe
                     src={`${pdfUrl}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
-                    className="w-full h-full rounded-lg border border-[#a1db87]/20"
+                    className="w-full h-full rounded-lg border border-brand/20"
                     title={material.titulo}
                     style={{ minHeight: '100%' }}
                   />
@@ -195,17 +195,17 @@ export default function TemaEstudio() {
               </div>
 
               {/* Navigation Footer */}
-              <div className="bg-[#23272f] border-t border-[#a1db87]/20 px-6 py-4">
+              <div className="bg-surface border-t border-brand/20 px-6 py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                   <button
                     onClick={handleClose}
-                    className="cursor-pointer px-6 py-2 border border-[#a1db87]/30 text-gray-400 hover:text-white hover:border-[#a1db87] rounded-lg transition-colors"
+                    className="cursor-pointer px-6 py-2 border border-brand/30 text-gray-400 hover:text-white hover:border-brand rounded-lg transition-colors"
                   >
                     {idioma === 'en' ? 'Back to Course' : 'Volver al Curso'}
                   </button>
                   <button
                     onClick={handleNextPhase}
-                    className="cursor-pointer px-6 py-2 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] font-medium rounded-lg hover:shadow-lg hover:shadow-[#a1db87]/30 transition-all flex items-center gap-2"
+                    className="cursor-pointer px-6 py-2 bg-gradient-to-r from-brand to-brand-500 text-on-brand font-medium rounded-lg hover:shadow-lg hover:shadow-brand/30 transition-all flex items-center gap-2"
                   >
                     {idioma === 'en' ? 'Continue to Test' : 'Continuar al Test'}
                     <ChevronRight className="w-4 h-4" />

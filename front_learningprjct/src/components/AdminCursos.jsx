@@ -549,7 +549,7 @@ export default function AdminCursos() {
     };
 
     return (
-      <div className="bg-[#1a2e1f]/80 border-2 border-green-900/40 rounded-xl p-6 shadow-lg hover:border-green-700/60 transition-all">
+      <div className="bg-surface-2/80 border-2 border-green-900/40 rounded-xl p-6 shadow-lg hover:border-green-700/60 transition-all">
         {/* Header del tema */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-start gap-3 flex-1">
@@ -584,14 +584,14 @@ export default function AdminCursos() {
 
         {/* Materiales existentes */}
         {tema.materiales && tema.materiales.length > 0 && (
-          <div className="mb-6 bg-[#0f1a12]/50 rounded-lg p-4 border border-green-900/20">
+          <div className="mb-6 bg-canvas/50 rounded-lg p-4 border border-green-900/20">
             <div className="flex items-center gap-2 mb-3">
               <CheckCircle className="w-4 h-4 text-green-400" />
               <p className="text-sm font-semibold text-green-300">Material de Estudio Disponible</p>
             </div>
             <div className="space-y-2">
               {tema.materiales.map((material, idx) => (
-                <div key={idx} className="flex items-center gap-3 text-sm text-gray-300 bg-[#1a2e1f] p-3 rounded-lg border border-green-900/20">
+                <div key={idx} className="flex items-center gap-3 text-sm text-gray-300 bg-surface-2 p-3 rounded-lg border border-green-900/20">
                   <FileText className="w-5 h-5 text-green-400" />
                   <span className="flex-1 font-medium">PDF Material {idx + 1}</span>
                   <div className="flex items-center gap-2">
@@ -745,7 +745,7 @@ export default function AdminCursos() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-[#0f1a12] rounded-xl shadow-lg border border-green-900/30 p-6"
+            className="bg-canvas rounded-xl shadow-lg border border-green-900/30 p-6"
           >
             <div className="flex items-center justify-between mb-6">
               <div>
@@ -787,7 +787,7 @@ export default function AdminCursos() {
                           : formData.idiomasDisponibles.filter(i => i !== 'es');
                         setFormData({ ...formData, idiomasDisponibles: idiomas.length > 0 ? idiomas : ['es'] });
                       }}
-                      className="w-5 h-5 text-blue-600 bg-[#1a2e1f] border-blue-900/30 rounded focus:ring-blue-500/50"
+                      className="w-5 h-5 text-blue-600 bg-surface-2 border-blue-900/30 rounded focus:ring-blue-500/50"
                     />
                     <span className="text-white">🇪🇸 Español</span>
                   </label>
@@ -801,7 +801,7 @@ export default function AdminCursos() {
                           : formData.idiomasDisponibles.filter(i => i !== 'en');
                         setFormData({ ...formData, idiomasDisponibles: idiomas.length > 0 ? idiomas : ['en'] });
                       }}
-                      className="w-5 h-5 text-blue-600 bg-[#1a2e1f] border-blue-900/30 rounded focus:ring-blue-500/50"
+                      className="w-5 h-5 text-blue-600 bg-surface-2 border-blue-900/30 rounded focus:ring-blue-500/50"
                     />
                     <span className="text-white">🇬🇧 English</span>
                   </label>
@@ -821,7 +821,7 @@ export default function AdminCursos() {
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                    className="w-full px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                     placeholder="Ej: Modelización Dinámica de Carbono"
                     required={formData.idiomasDisponibles.includes('es')}
                   />
@@ -838,7 +838,7 @@ export default function AdminCursos() {
                     type="text"
                     value={formData.titleEn}
                     onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
-                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                    className="w-full px-4 py-2 bg-surface-2 border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
                     placeholder="Ex: Dynamic Carbon Modeling"
                     required={formData.idiomasDisponibles.includes('en')}
                   />
@@ -854,7 +854,7 @@ export default function AdminCursos() {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors min-h-[100px]"
+                    className="w-full px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors min-h-[100px]"
                     placeholder="Descripción detallada del curso..."
                     required={formData.idiomasDisponibles.includes('es')}
                   />
@@ -870,7 +870,7 @@ export default function AdminCursos() {
                   <textarea
                     value={formData.descriptionEn}
                     onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
-                    className="w-full px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors min-h-[100px]"
+                    className="w-full px-4 py-2 bg-surface-2 border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors min-h-[100px]"
                     placeholder="Detailed course description..."
                     required={formData.idiomasDisponibles.includes('en')}
                   />
@@ -886,7 +886,7 @@ export default function AdminCursos() {
                   type="text"
                   value={formData.duration}
                   onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                  className="w-full px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                   placeholder="Ej: 18 horas"
                 />
               </div>
@@ -901,7 +901,7 @@ export default function AdminCursos() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                    className="flex-1 px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-600 file:text-white hover:file:bg-green-700 file:cursor-pointer focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                   />
                   {(formData.image || formData.imageFile) && (
                     <div className="flex items-center gap-2 text-sm text-green-400">
@@ -930,7 +930,7 @@ export default function AdminCursos() {
                     value={nuevaCategoria}
                     onChange={(e) => setNuevaCategoria(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarCategoria())}
-                    className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                    className="flex-1 px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                     placeholder="Ej: Ciencia del Suelo"
                   />
                   <button
@@ -972,7 +972,7 @@ export default function AdminCursos() {
                       value={nuevoObjetivoGeneral}
                       onChange={(e) => setNuevoObjetivoGeneral(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoGeneral())}
-                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                      className="flex-1 px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                       placeholder="Añadir objetivo general..."
                     />
                     <button
@@ -987,7 +987,7 @@ export default function AdminCursos() {
                     {formData.objetivosGenerales.map((obj, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
+                        className="flex items-start gap-2 p-3 bg-surface-2/60 border border-green-900/20 rounded-lg"
                       >
                         <span className="flex-1 text-sm text-gray-300">{obj}</span>
                         <button
@@ -1015,7 +1015,7 @@ export default function AdminCursos() {
                       value={nuevoObjetivoGeneralEn}
                       onChange={(e) => setNuevoObjetivoGeneralEn(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoGeneralEn())}
-                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                      className="flex-1 px-4 py-2 bg-surface-2 border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
                       placeholder="Add general objective..."
                     />
                     <button
@@ -1030,7 +1030,7 @@ export default function AdminCursos() {
                     {formData.objetivosGeneralesEn.map((obj, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-blue-900/20 rounded-lg"
+                        className="flex items-start gap-2 p-3 bg-surface-2/60 border border-blue-900/20 rounded-lg"
                       >
                         <span className="flex-1 text-sm text-gray-300">{obj}</span>
                         <button
@@ -1058,7 +1058,7 @@ export default function AdminCursos() {
                       value={nuevoObjetivoEspecifico}
                       onChange={(e) => setNuevoObjetivoEspecifico(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoEspecifico())}
-                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
+                      className="flex-1 px-4 py-2 bg-surface-2 border border-green-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-colors"
                       placeholder="Añadir objetivo específico..."
                     />
                     <button
@@ -1073,7 +1073,7 @@ export default function AdminCursos() {
                     {formData.objetivosEspecificos.map((obj, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-green-900/20 rounded-lg"
+                        className="flex items-start gap-2 p-3 bg-surface-2/60 border border-green-900/20 rounded-lg"
                       >
                         <span className="flex-1 text-sm text-gray-300">{obj}</span>
                         <button
@@ -1101,7 +1101,7 @@ export default function AdminCursos() {
                       value={nuevoObjetivoEspecificoEn}
                       onChange={(e) => setNuevoObjetivoEspecificoEn(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), agregarObjetivoEspecificoEn())}
-                      className="flex-1 px-4 py-2 bg-[#1a2e1f] border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
+                      className="flex-1 px-4 py-2 bg-surface-2 border border-blue-900/30 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-colors"
                       placeholder="Add specific objective..."
                     />
                     <button
@@ -1116,7 +1116,7 @@ export default function AdminCursos() {
                     {formData.objetivosEspecificosEn.map((obj, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 p-3 bg-[#1a2e1f]/60 border border-blue-900/20 rounded-lg"
+                        className="flex items-start gap-2 p-3 bg-surface-2/60 border border-blue-900/20 rounded-lg"
                       >
                         <span className="flex-1 text-sm text-gray-300">{obj}</span>
                         <button
@@ -1139,7 +1139,7 @@ export default function AdminCursos() {
                   id="isOpen"
                   checked={formData.isOpen}
                   onChange={(e) => setFormData({ ...formData, isOpen: e.target.checked })}
-                  className="w-5 h-5 text-green-600 bg-[#1a2e1f] border-green-900/30 rounded focus:ring-green-500/50"
+                  className="w-5 h-5 text-green-600 bg-surface-2 border-green-900/30 rounded focus:ring-green-500/50"
                 />
                 <label htmlFor="isOpen" className="text-sm font-medium text-gray-300">
                   Curso abierto (visible para estudiantes)
@@ -1178,7 +1178,7 @@ export default function AdminCursos() {
                 <button
                   type="button"
                   onClick={resetFormulario}
-                  className="px-6 py-3 border border-green-900/30 text-gray-300 rounded-lg hover:bg-[#1a2e1f]/60 transition-colors"
+                  className="px-6 py-3 border border-green-900/30 text-gray-300 rounded-lg hover:bg-surface-2/60 transition-colors"
                 >
                   Cancelar
                 </button>
@@ -1205,7 +1205,7 @@ export default function AdminCursos() {
                       <button
                         type="button"
                         onClick={() => setFase(1)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm bg-[#1a2e1f] border border-green-900/40 text-gray-300 rounded-lg hover:bg-green-900/20 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 text-sm bg-surface-2 border border-green-900/40 text-gray-300 rounded-lg hover:bg-green-900/20 transition-colors"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         Información básica
@@ -1215,7 +1215,7 @@ export default function AdminCursos() {
                 </div>
 
                 {/* Formulario para agregar tema */}
-                <div className="bg-[#1a2e1f]/60 border-2 border-green-500/50 rounded-xl p-6 shadow-xl">
+                <div className="bg-surface-2/60 border-2 border-green-500/50 rounded-xl p-6 shadow-xl">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-3 bg-green-600/20 rounded-lg">
                       <FileText className="w-6 h-6 text-green-400" />
@@ -1244,7 +1244,7 @@ export default function AdminCursos() {
                               type="text"
                               value={formTema.titulo}
                               onChange={(e) => setFormTema({ ...formTema, titulo: e.target.value })}
-                              className="w-full px-4 py-3 bg-[#0f1a12] border border-green-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-base"
+                              className="w-full px-4 py-3 bg-canvas border border-green-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-base"
                               placeholder="Ej: Introducción: Modelización de la dinámica del carbono orgánico del suelo"
                             />
                           </div>
@@ -1256,7 +1256,7 @@ export default function AdminCursos() {
                             <textarea
                               value={formTema.descripcion}
                               onChange={(e) => setFormTema({ ...formTema, descripcion: e.target.value })}
-                              className="w-full px-4 py-3 bg-[#0f1a12] border border-green-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all min-h-[100px] text-base resize-none"
+                              className="w-full px-4 py-3 bg-canvas border border-green-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all min-h-[100px] text-base resize-none"
                               placeholder="Módulo introductorio que presenta los conceptos fundamentales del carbono orgánico del suelo (SOC), su papel en el ciclo biogeoquímico global..."
                             />
                             <p className="text-xs text-gray-500 mt-1">Esta descripción se mostrará a los estudiantes</p>
@@ -1282,7 +1282,7 @@ export default function AdminCursos() {
                               type="text"
                               value={formTema.tituloEn}
                               onChange={(e) => setFormTema({ ...formTema, tituloEn: e.target.value })}
-                              className="w-full px-4 py-3 bg-[#0f1a12] border border-blue-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-base"
+                              className="w-full px-4 py-3 bg-canvas border border-blue-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-base"
                               placeholder="Ex: Introduction: Modeling the dynamics of soil organic carbon"
                             />
                           </div>
@@ -1294,7 +1294,7 @@ export default function AdminCursos() {
                             <textarea
                               value={formTema.descripcionEn}
                               onChange={(e) => setFormTema({ ...formTema, descripcionEn: e.target.value })}
-                              className="w-full px-4 py-3 bg-[#0f1a12] border border-blue-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all min-h-[100px] text-base resize-none"
+                              className="w-full px-4 py-3 bg-canvas border border-blue-900/50 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all min-h-[100px] text-base resize-none"
                               placeholder="Introductory module that presents the fundamental concepts of soil organic carbon (SOC), its role in the global biogeochemical cycle..."
                             />
                             <p className="text-xs text-gray-500 mt-1">This description will be shown to students</p>
@@ -1417,7 +1417,7 @@ export default function AdminCursos() {
       {/* Lista de cursos */}
       <div className="space-y-4">
         {cursos.length === 0 ? (
-          <div className="text-center py-12 bg-[#0f1a12] rounded-xl border border-green-900/30">
+          <div className="text-center py-12 bg-canvas rounded-xl border border-green-900/30">
             <BookOpen className="w-16 h-16 text-gray-600 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-300 mb-2">
               No hay cursos creados
@@ -1439,7 +1439,7 @@ export default function AdminCursos() {
               key={curso._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-[#0f1a12] rounded-xl shadow-lg border border-green-900/30 overflow-hidden"
+              className="bg-canvas rounded-xl shadow-lg border border-green-900/30 overflow-hidden"
             >
               <div className="p-6">
                 <div className="flex items-start gap-4">
@@ -1511,7 +1511,7 @@ export default function AdminCursos() {
                       </button>
                       <button
                         onClick={() => setCursoExpandido(cursoExpandido === curso._id ? null : curso._id)}
-                        className="flex items-center gap-2 px-4 py-2 border border-green-900/30 text-gray-300 rounded-lg hover:bg-[#1a2e1f]/60 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 border border-green-900/30 text-gray-300 rounded-lg hover:bg-surface-2/60 transition-colors"
                       >
                         {cursoExpandido === curso._id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                         Detalles

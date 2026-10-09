@@ -150,7 +150,7 @@ export default function CursoInscripcion() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader className="w-12 h-12 text-[#a1db87] animate-spin" />
+          <Loader className="w-12 h-12 text-brand animate-spin" />
           <p className="text-gray-400">Cargando información del curso...</p>
         </div>
       </div>
@@ -164,7 +164,7 @@ export default function CursoInscripcion() {
           <h2 className="text-2xl font-bold text-red-400 mb-4">Curso no encontrado</h2>
           <button
             onClick={() => navigate('/cursos')}
-            className="text-[#a1db87] hover:underline"
+            className="text-brand hover:underline"
           >
             Volver a cursos
           </button>
@@ -196,11 +196,11 @@ export default function CursoInscripcion() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.85, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-            className="bg-[#0f1a12] border border-[#a1db87]/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
+            className="bg-canvas border border-brand/30 rounded-2xl shadow-2xl shadow-black/50 p-10 mx-4 max-w-md w-full text-center"
           >
             <div className="flex items-center justify-center mb-4">
-              <div className="p-3 bg-[#a1db87]/10 rounded-full">
-                <Globe className="w-8 h-8 text-[#a1db87]" />
+              <div className="p-3 bg-brand/10 rounded-full">
+                <Globe className="w-8 h-8 text-brand" />
               </div>
             </div>
             <h2 className="text-2xl font-extrabold text-white mb-2">Selecciona el idioma</h2>
@@ -210,21 +210,21 @@ export default function CursoInscripcion() {
             <div className="flex gap-4">
               <button
                 onClick={() => seleccionarIdioma('es')}
-                className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
               >
                 <span className="text-4xl">🇪🇸</span>
                 <div>
-                  <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">Español</p>
+                  <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">Español</p>
                   <p className="text-gray-500 text-xs mt-0.5">Continuar en español</p>
                 </div>
               </button>
               <button
                 onClick={() => seleccionarIdioma('en')}
-                className="flex-1 flex flex-col items-center gap-3 p-6 bg-[#1a2e1f] border-2 border-[#a1db87]/30 rounded-xl hover:border-[#a1db87] hover:bg-[#1a2e1f]/80 transition-all group"
+                className="flex-1 flex flex-col items-center gap-3 p-6 bg-surface-2 border-2 border-brand/30 rounded-xl hover:border-brand hover:bg-surface-2/80 transition-all group"
               >
                 <span className="text-4xl">🇬🇧</span>
                 <div>
-                  <p className="text-white font-bold text-lg group-hover:text-[#a1db87] transition-colors">English</p>
+                  <p className="text-white font-bold text-lg group-hover:text-brand transition-colors">English</p>
                   <p className="text-gray-500 text-xs mt-0.5">Continue in English</p>
                 </div>
               </button>
@@ -239,16 +239,16 @@ export default function CursoInscripcion() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-gradient-to-br from-[#23272f] to-[#1a1a1a] rounded-2xl p-8 md:p-12 border border-[#a1db87]/20 shadow-2xl mb-8"
+        className="bg-gradient-to-br from-surface to-surface rounded-2xl p-8 md:p-12 border border-brand/20 shadow-2xl mb-8"
       >
         <div className="grid md:grid-cols-3 gap-8">
           {/* Imagen del curso */}
           <div className="md:col-span-1 flex flex-col">
-            <div className="w-full h-64 rounded-xl overflow-hidden bg-[#a1db87]/10 flex items-center justify-center border-2 border-[#a1db87]/30">
+            <div className="w-full h-64 rounded-xl overflow-hidden bg-brand/10 flex items-center justify-center border-2 border-brand/30">
               {curso.image ? (
                 <img src={curso.image} alt={t(curso.title, curso.titleEn)} className="w-full h-full object-cover" />
               ) : (
-                <BookOpen className="w-24 h-24 text-[#a1db87]" />
+                <BookOpen className="w-24 h-24 text-brand" />
               )}
             </div>
             
@@ -259,13 +259,13 @@ export default function CursoInscripcion() {
                   curso.category.map((cat, idx) => (
                     <span
                       key={idx}
-                      className="bg-[#a1db87]/10 text-[#a1db87] border border-[#a1db87]/30 px-3 py-1 rounded-full text-sm font-semibold"
+                      className="bg-brand/10 text-brand border border-brand/30 px-3 py-1 rounded-full text-sm font-semibold"
                     >
                       {cat}
                     </span>
                   ))
                 ) : (
-                  <span className="bg-[#a1db87]/10 text-[#a1db87] border border-[#a1db87]/30 px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-brand/10 text-brand border border-brand/30 px-3 py-1 rounded-full text-sm font-semibold">
                     {curso.category}
                   </span>
                 )}
@@ -295,22 +295,22 @@ export default function CursoInscripcion() {
 
             {/* Stats del curso */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-              <div className="flex items-center gap-3 bg-[#1a1a1a]/50 rounded-lg p-3 border border-[#a1db87]/20">
-                <Clock className="w-5 h-5 text-[#a1db87]" />
+              <div className="flex items-center gap-3 bg-surface/50 rounded-lg p-3 border border-brand/20">
+                <Clock className="w-5 h-5 text-brand" />
                 <div>
                   <p className="text-xs text-gray-400">{idioma === 'en' ? 'Duration' : 'Duración'}</p>
                   <p className="text-white font-semibold">{curso.duration}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 bg-[#1a1a1a]/50 rounded-lg p-3 border border-[#a1db87]/20">
-                <BookOpen className="w-5 h-5 text-[#a1db87]" />
+              <div className="flex items-center gap-3 bg-surface/50 rounded-lg p-3 border border-brand/20">
+                <BookOpen className="w-5 h-5 text-brand" />
                 <div>
                   <p className="text-xs text-gray-400">{idioma === 'en' ? 'Topics' : 'Temas'}</p>
                   <p className="text-white font-semibold">{totalTemas} {idioma === 'en' ? 'topics' : 'temas'}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 bg-[#1a1a1a]/50 rounded-lg p-3 border border-[#a1db87]/20">
-                <Award className="w-5 h-5 text-[#a1db87]" />
+              <div className="flex items-center gap-3 bg-surface/50 rounded-lg p-3 border border-brand/20">
+                <Award className="w-5 h-5 text-brand" />
                 <div>
                   <p className="text-xs text-gray-400">{idioma === 'en' ? 'Materials' : 'Materiales'}</p>
                   <p className="text-white font-semibold">{totalMateriales} {idioma === 'en' ? 'resources' : 'recursos'}</p>
@@ -320,10 +320,10 @@ export default function CursoInscripcion() {
 
             {/* Botón de inscripción / reserva */}
             {reservaConfirmada ? (
-              <div className="flex items-center gap-3 bg-[#a1db87]/10 border border-[#a1db87]/30 rounded-xl px-6 py-4">
-                <CheckCircle className="w-6 h-6 text-[#a1db87] flex-shrink-0" />
+              <div className="flex items-center gap-3 bg-brand/10 border border-brand/30 rounded-xl px-6 py-4">
+                <CheckCircle className="w-6 h-6 text-brand flex-shrink-0" />
                 <div>
-                  <p className="font-bold text-lg text-[#a1db87]">{idioma === 'en' ? '\uD83C\uDF89 Spot reserved!' : '\u00A1Plaza reservada!'}</p>
+                  <p className="font-bold text-lg text-brand">{idioma === 'en' ? '\uD83C\uDF89 Spot reserved!' : '\u00A1Plaza reservada!'}</p>
                   <p className="text-sm text-gray-300">{idioma === 'en' ? "We'll notify you when the course opens in May 2026." : 'Te notificaremos cuando el curso abra en mayo de 2026.'}</p>
                 </div>
               </div>
@@ -334,7 +334,7 @@ export default function CursoInscripcion() {
                 className={`cursor-pointer w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                   enrolling
                     ? 'bg-gray-600 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#a1db87]/30 hover:scale-105'
+                    : 'bg-gradient-to-r from-brand to-brand-500 text-on-brand hover:shadow-lg hover:shadow-brand/30 hover:scale-105'
                 }`}
               >
                 {enrolling ? (
@@ -369,15 +369,15 @@ export default function CursoInscripcion() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
-              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#a1db87] to-[#5ec6a6] mb-4 shadow-lg shadow-[#a1db87]/30"
+              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand to-brand-500 mb-4 shadow-lg shadow-brand/30"
             >
-              <GraduationCap className="w-8 h-8 text-[#1a1a1a]" />
+              <GraduationCap className="w-8 h-8 text-on-brand" />
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mb-3"
+              className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mb-3"
             >
               {idioma === 'en' ? 'Learning Objectives' : 'Objetivos de Aprendizaje'}
             </motion.h2>
@@ -400,11 +400,11 @@ export default function CursoInscripcion() {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="group relative"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] rounded-3xl opacity-20 group-hover:opacity-30 transition duration-500 blur"></div>
-                <div className="relative bg-[#23272f] rounded-3xl p-8 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-all duration-500 h-full">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-brand to-brand-500 rounded-3xl opacity-20 group-hover:opacity-30 transition duration-500 blur"></div>
+                <div className="relative bg-surface rounded-3xl p-8 border border-brand/20 hover:border-brand/40 transition-all duration-500 h-full">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#a1db87]/20 to-[#a1db87]/5 border border-[#a1db87]/30">
-                      <Target className="w-6 h-6 text-[#a1db87]" />
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-brand/20 to-brand/5 border border-brand/30">
+                      <Target className="w-6 h-6 text-brand" />
                     </div>
                     <h3 className="text-xl font-bold text-white">{idioma === 'en' ? 'General Objectives' : 'Objetivos Generales'}</h3>
                   </div>
@@ -419,8 +419,8 @@ export default function CursoInscripcion() {
                         className="flex items-start gap-3 group/item"
                       >
                         <div className="flex-shrink-0 mt-1">
-                          <div className="w-6 h-6 rounded-full bg-[#a1db87]/10 border border-[#a1db87]/30 flex items-center justify-center group-hover/item:bg-[#a1db87]/20 group-hover/item:border-[#a1db87]/50 transition-all">
-                            <div className="w-2 h-2 rounded-full bg-[#a1db87]"></div>
+                          <div className="w-6 h-6 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center group-hover/item:bg-brand/20 group-hover/item:border-brand/50 transition-all">
+                            <div className="w-2 h-2 rounded-full bg-brand"></div>
                           </div>
                         </div>
                         <p className="text-gray-300 leading-relaxed group-hover/item:text-white transition-colors text-justify">
@@ -441,11 +441,11 @@ export default function CursoInscripcion() {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="group relative"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#5ec6a6] to-[#a1db87] rounded-3xl opacity-20 group-hover:opacity-30 transition duration-500 blur"></div>
-                <div className="relative bg-[#23272f] rounded-3xl p-8 border border-[#5ec6a6]/20 hover:border-[#5ec6a6]/40 transition-all duration-500 h-full">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-brand rounded-3xl opacity-20 group-hover:opacity-30 transition duration-500 blur"></div>
+                <div className="relative bg-surface rounded-3xl p-8 border border-brand-500/20 hover:border-brand-500/40 transition-all duration-500 h-full">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#5ec6a6]/20 to-[#5ec6a6]/5 border border-[#5ec6a6]/30">
-                      <Sparkles className="w-6 h-6 text-[#5ec6a6]" />
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 border border-brand-500/30">
+                      <Sparkles className="w-6 h-6 text-brand-500" />
                     </div>
                     <h3 className="text-xl font-bold text-white">{idioma === 'en' ? 'Specific Objectives' : 'Objetivos Específicos'}</h3>
                   </div>
@@ -460,8 +460,8 @@ export default function CursoInscripcion() {
                         className="flex items-start gap-3 group/item"
                       >
                         <div className="flex-shrink-0 mt-1">
-                          <div className="w-6 h-6 rounded-full bg-[#5ec6a6]/10 border border-[#5ec6a6]/30 flex items-center justify-center group-hover/item:bg-[#5ec6a6]/20 group-hover/item:border-[#5ec6a6]/50 transition-all">
-                            <div className="w-2 h-2 rounded-full bg-[#5ec6a6]"></div>
+                          <div className="w-6 h-6 rounded-full bg-brand-500/10 border border-brand-500/30 flex items-center justify-center group-hover/item:bg-brand-500/20 group-hover/item:border-brand-500/50 transition-all">
+                            <div className="w-2 h-2 rounded-full bg-brand-500"></div>
                           </div>
                         </div>
                         <p className="text-gray-300 leading-relaxed group-hover/item:text-white transition-colors text-justify">
@@ -483,9 +483,9 @@ export default function CursoInscripcion() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-[#23272f] rounded-2xl p-8 border border-[#a1db87]/20"
+          className="bg-surface rounded-2xl p-8 border border-brand/20"
         >
-          <h2 className="text-2xl font-bold text-[#a1db87] mb-6 flex items-center gap-3">
+          <h2 className="text-2xl font-bold text-brand mb-6 flex items-center gap-3">
             <BookOpen className="w-7 h-7" />
             {idioma === 'en' ? 'Course Content' : 'Contenido del Curso'}
           </h2>
@@ -494,10 +494,10 @@ export default function CursoInscripcion() {
             {curso.temas.map((tema, idx) => (
               <div
                 key={tema._id}
-                className="bg-[#1a1a1a]/50 rounded-lg p-5 border border-[#a1db87]/10 hover:border-[#a1db87]/30 transition-colors"
+                className="bg-surface/50 rounded-lg p-5 border border-brand/10 hover:border-brand/30 transition-colors"
               >
                 <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-10 h-10 rounded-full bg-[#a1db87] text-[#1a1a1a] flex items-center justify-center font-bold">
+                  <span className="flex-shrink-0 w-10 h-10 rounded-full bg-brand text-on-brand flex items-center justify-center font-bold">
                     {tema.numeroTema}
                   </span>
                   <div className="flex-1">

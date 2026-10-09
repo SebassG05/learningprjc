@@ -39,21 +39,21 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#23272f] via-[#1e2d23] to-[#23272f] py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-surface via-surface-2 to-surface py-12 px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-[#181f1b] border border-[#a1db87]/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center"
+        className="w-full max-w-md bg-surface border border-brand/30 rounded-2xl shadow-2xl p-8 sm:p-12 flex flex-col items-center"
         style={{ boxShadow: '0 8px 32px rgba(90,168,51,0.10)' }}
       >
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#a1db87] mb-2 text-center font-[Rondana]">¿Olvidaste tu contraseña?</h2>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-brand mb-2 text-center font-[Rondana]">¿Olvidaste tu contraseña?</h2>
         <p className="text-gray-300 text-base text-center mb-6">Introduce tu email y te enviaremos instrucciones para restablecer tu contraseña.</p>
         <div className="w-full mb-6">
-          <label className="block text-[#a1db87] font-semibold mb-2">Email</label>
+          <label className="block text-brand font-semibold mb-2">Email</label>
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg border border-[#a1db87] bg-[#23272f] text-[#a1db87] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:border-[#a1db87] transition"
+            className="w-full px-4 py-3 rounded-lg border border-brand bg-surface text-brand placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition"
             placeholder="tu@email.com"
             required
           />
@@ -61,7 +61,7 @@ export default function ForgotPassword() {
         <button
           type="submit"
           disabled={loading}
-          className="cursor-pointer w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-[#a1db87] text-[#181f1b] hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-[#a1db87] focus:ring-offset-2 disabled:opacity-60"
+          className="cursor-pointer w-full py-3 rounded-lg font-bold text-lg shadow-md transition bg-brand text-on-brand hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:opacity-60"
         >
           {loading ? 'Enviando...' : 'Enviar Mail'}
         </button>

@@ -135,8 +135,8 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
 
   return (
     <div className="mb-16 space-y-8">
-      <div className="border-t border-[#a1db87]/30">
-        <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] mt-8 mb-8">
+      <div className="border-t border-brand/30">
+        <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-500 mt-8 mb-8">
           {idioma === 'en' ? '📚 Course Content' : '📚 Aquí Comienza el Curso'}
         </h2>
         
@@ -150,9 +150,9 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
             const testBloqueado = isTestFinalBloqueado(tema);
 
             return (
-              <div key={tema._id} className="bg-[#23272f]/50 rounded-xl p-10 border border-[#a1db87]/20 hover:border-[#a1db87]/40 transition-colors">
+              <div key={tema._id} className="bg-surface/50 rounded-xl p-10 border border-brand/20 hover:border-brand/40 transition-colors">
                 <div className="flex items-start gap-4 mb-6">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] flex items-center justify-center text-[#1a1a1a] font-bold text-sm">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-brand to-brand-500 flex items-center justify-center text-on-brand font-bold text-sm">
                     {tema.numeroTema}
                   </span>
                   <div className="flex-1">
@@ -174,7 +174,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                         {isTruncated && (
                           <button
                             onClick={() => toggleDescripcion(tema._id)}
-                            className="cursor-pointer flex items-center gap-1 text-[#a1db87] hover:text-[#5ec6a6] text-sm font-medium mt-2 transition-all duration-300 group/btn"
+                            className="cursor-pointer flex items-center gap-1 text-brand hover:text-brand-500 text-sm font-medium mt-2 transition-all duration-300 group/btn"
                           >
                             {isExpanded ? (
                               <>
@@ -196,7 +196,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
 
               {tema.materiales && tema.materiales.length > 0 && (
                 <div className="mt-4 space-y-2">
-                  <h4 className="text-sm font-semibold text-[#a1db87] uppercase tracking-wide mb-3">
+                  <h4 className="text-sm font-semibold text-brand uppercase tracking-wide mb-3">
                     {idioma === 'en' ? 'Study Material' : 'Material de Estudio'}
                   </h4>
                   {tema.materiales.filter(m => getMaterialUrl(m)).map((material) => {
@@ -209,16 +209,16 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                         onClick={() => archivoFinal && handleOpenMaterial(tema, material)}
                         className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                           isCompleted 
-                            ? 'bg-[#a1db87]/10 border-[#a1db87]/40 hover:bg-[#a1db87]/15' 
-                            : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#a1db87]/30'
+                            ? 'bg-brand/10 border-brand/40 hover:bg-brand/15' 
+                            : 'bg-surface/50 border-transparent hover:bg-surface hover:border-brand/30'
                         } ${archivoFinal ? 'cursor-pointer' : ''}`}
                       >
                         <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-[#a1db87]' : 'text-[#a1db87]'}`}>
+                          <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-brand' : 'text-brand'}`}>
                             {getIconByType(material.tipo)}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className={`font-medium transition-colors truncate ${isCompleted ? 'text-[#a1db87]' : 'text-white'}`}>
+                            <p className={`font-medium transition-colors truncate ${isCompleted ? 'text-brand' : 'text-white'}`}>
                               {idioma === 'en' ? `Unit ${tema.numeroTema}` : `Tema ${tema.numeroTema}`}
                             </p>
                           </div>
@@ -229,8 +229,8 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                             onClick={(e) => toggleCompleted(e, material._id)}
                             className={`cursor-pointer flex-shrink-0 ml-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                               isCompleted
-                                ? 'bg-[#a1db87] text-[#1a1a1a] hover:bg-[#5ec6a6] scale-100 opacity-100'
-                                : 'bg-gradient-to-r from-[#a1db87] to-[#5ec6a6] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#a1db87]/30 transform hover:scale-105 opacity-0 group-hover:opacity-100'
+                                ? 'bg-brand text-on-brand hover:bg-brand-500 scale-100 opacity-100'
+                                : 'bg-gradient-to-r from-brand to-brand-500 text-on-brand hover:shadow-lg hover:shadow-brand/30 transform hover:scale-105 opacity-0 group-hover:opacity-100'
                             }`}
                           >
                             {isCompleted ? (
@@ -254,24 +254,24 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
 
               {/* Test de Evaluación — solo si existe test para este tema */}
               {testInfo[tema._id] && <div className="mt-6 space-y-2">
-                <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
+                <h4 className="text-sm font-semibold text-brand-500 uppercase tracking-wide mb-3">
                   {idioma === 'en' ? 'Evaluation Test' : 'Test de Evaluación'}
                 </h4>
                 <div
                   onClick={() => !testBloqueado && handleOpenMaterial(tema, { titulo: 'Test de Evaluación', _id: `test-${tema._id}` })}
                   className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                     testBloqueado 
-                      ? 'bg-[#1a1a1a]/30 border-gray-700/50 cursor-not-allowed opacity-60'
+                      ? 'bg-surface/30 border-gray-700/50 cursor-not-allowed opacity-60'
                       : completedTests && completedTests.includes(tema._id)
-                      ? 'bg-[#5ec6a6]/10 border-[#5ec6a6]/50 cursor-pointer'
-                      : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/30 cursor-pointer'
+                      ? 'bg-brand-500/10 border-brand-500/50 cursor-pointer'
+                      : 'bg-surface/50 border-transparent hover:bg-surface hover:border-brand-500/30 cursor-pointer'
                   }`}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <div className={`flex-shrink-0 transition-colors ${
                       testBloqueado 
                         ? 'text-gray-600'
-                        : completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-[#5ec6a6]'
+                        : completedTests && completedTests.includes(tema._id) ? 'text-brand-500' : 'text-brand-500'
                     }`}>
                       {completedTests && completedTests.includes(tema._id) ? (
                         <Check className="w-5 h-5" />
@@ -283,11 +283,11 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                       <p className={`font-medium transition-colors truncate ${
                         testBloqueado 
                           ? 'text-gray-500'
-                          : completedTests && completedTests.includes(tema._id) ? 'text-[#5ec6a6]' : 'text-white'
+                          : completedTests && completedTests.includes(tema._id) ? 'text-brand-500' : 'text-white'
                       }`}>
                         {idioma === 'en' ? `Topic ${tema.numeroTema} - Evaluation Test` : `Test de Evaluación - Tema ${tema.numeroTema}`}
                         {completedTests && completedTests.includes(tema._id) && (
-                          <span className="ml-2 text-xs bg-[#5ec6a6]/20 text-[#5ec6a6] px-2 py-0.5 rounded-full">
+                          <span className="ml-2 text-xs bg-brand-500/20 text-brand-500 px-2 py-0.5 rounded-full">
                             Aprobado
                           </span>
                         )}
@@ -314,8 +314,8 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                   {!testBloqueado && (
                     <div className={`flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
                       completedTests && completedTests.includes(tema._id)
-                        ? 'bg-[#5ec6a6]/20 text-[#5ec6a6] border border-[#5ec6a6]/50'
-                        : 'bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 opacity-0 group-hover:opacity-100'
+                        ? 'bg-brand-500/20 text-brand-500 border border-brand-500/50'
+                        : 'bg-gradient-to-r from-brand-500 to-brand-600 text-on-brand hover:shadow-lg hover:shadow-brand-500/30 opacity-0 group-hover:opacity-100'
                     }`}>
                       {completedTests && completedTests.includes(tema._id)
                       ? (idioma === 'en' ? 'View results' : 'Ver resultados')
@@ -327,7 +327,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
 
               {tema.actividadesOptativas && tema.actividadesOptativas.length > 0 && (
                 <div className="mt-6 space-y-2">
-                  <h4 className="text-sm font-semibold text-[#5ec6a6] uppercase tracking-wide mb-3">
+                  <h4 className="text-sm font-semibold text-brand-500 uppercase tracking-wide mb-3">
                     {idioma === 'en' ? 'Optional Activities' : 'Actividades Optativas'}
                   </h4>
                   {tema.actividadesOptativas.map((actividad) => {
@@ -339,16 +339,16 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                         onClick={() => actividad.archivo && handleOpenMaterial(tema, actividad)}
                         className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                           isCompleted 
-                            ? 'bg-[#5ec6a6]/10 border-[#5ec6a6]/40 hover:bg-[#5ec6a6]/15' 
-                            : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-[#5ec6a6]/30'
+                            ? 'bg-brand-500/10 border-brand-500/40 hover:bg-brand-500/15' 
+                            : 'bg-surface/50 border-transparent hover:bg-surface hover:border-brand-500/30'
                         } ${actividad.archivo ? 'cursor-pointer' : ''}`}
                       >
                         <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-[#5ec6a6]' : 'text-[#5ec6a6]'}`}>
+                          <div className={`flex-shrink-0 transition-colors ${isCompleted ? 'text-brand-500' : 'text-brand-500'}`}>
                             {getIconByType(actividad.tipo)}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className={`font-medium transition-colors truncate ${isCompleted ? 'text-[#5ec6a6]' : 'text-white'}`}>
+                            <p className={`font-medium transition-colors truncate ${isCompleted ? 'text-brand-500' : 'text-white'}`}>
                               {actividad.titulo}
                             </p>
                           </div>
@@ -359,8 +359,8 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                             onClick={(e) => toggleCompleted(e, actividad._id)}
                             className={`cursor-pointer flex-shrink-0 ml-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 ${
                               isCompleted
-                                ? 'bg-[#5ec6a6] text-[#1a1a1a] hover:bg-[#4da992] scale-100 opacity-100'
-                                : 'bg-gradient-to-r from-[#5ec6a6] to-[#4da992] text-[#1a1a1a] hover:shadow-lg hover:shadow-[#5ec6a6]/30 transform hover:scale-105 opacity-0 group-hover:opacity-100'
+                                ? 'bg-brand-500 text-on-brand hover:bg-brand-600 scale-100 opacity-100'
+                                : 'bg-gradient-to-r from-brand-500 to-brand-600 text-on-brand hover:shadow-lg hover:shadow-brand-500/30 transform hover:scale-105 opacity-0 group-hover:opacity-100'
                             }`}
                           >
                             {isCompleted ? (
@@ -391,10 +391,10 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
           const todosAprobados = temas.length > 0 && temas.every(t => completedTests && completedTests.includes(t._id));
           const aprobado = completedTests && completedTests.includes('test-final-certificacion');
           return (
-            <div className="mt-8 bg-[#23272f]/50 rounded-xl p-10 border border-yellow-400/20 hover:border-yellow-400/40 transition-colors">
+            <div className="mt-8 bg-surface/50 rounded-xl p-10 border border-yellow-400/20 hover:border-yellow-400/40 transition-colors">
               {/* Header igual que los temas */}
               <div className="flex items-start gap-4 mb-6">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 flex items-center justify-center text-[#1a1a1a] font-bold text-sm">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 flex items-center justify-center text-on-brand font-bold text-sm">
                   {temas.length + 1}
                 </span>
                 <div className="flex-1">
@@ -425,10 +425,10 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                   }}
                   className={`group flex items-center justify-between rounded-lg py-2 px-4 transition-all duration-300 border ${
                     !todosAprobados
-                      ? 'bg-[#1a1a1a]/30 border-gray-700/50 cursor-not-allowed opacity-60'
+                      ? 'bg-surface/30 border-gray-700/50 cursor-not-allowed opacity-60'
                       : aprobado
                         ? 'bg-yellow-400/10 border-yellow-400/50 cursor-pointer'
-                        : 'bg-[#1a1a1a]/50 border-transparent hover:bg-[#1a1a1a] hover:border-yellow-400/40 cursor-pointer'
+                        : 'bg-surface/50 border-transparent hover:bg-surface hover:border-yellow-400/40 cursor-pointer'
                   }`}
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -459,7 +459,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                     </div>
                   </div>
                   {todosAprobados && !aprobado && (
-                    <div className="flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#1a1a1a] opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-105">
+                    <div className="flex-shrink-0 ml-3 px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-yellow-400 to-yellow-500 text-on-brand opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-105">
                       Iniciar Test
                     </div>
                   )}
