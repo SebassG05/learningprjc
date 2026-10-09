@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import ScrollToTop from './components/layout/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
 import Layout from './components/layout/Layout';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { duration, ease } from './lib/motion';
 import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import ReviewsPage from './pages/Reviews.jsx';
@@ -24,12 +25,12 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Home /></PageTransition>} />
           <Route path="/reset-password" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><ResetPassword /></PageTransition>
             </Suspense>
           } />
           <Route path="/forgot-password" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><ForgotPassword /></PageTransition>
             </Suspense>
           } />
@@ -40,32 +41,32 @@ function AnimatedRoutes() {
           <Route path="/ajustes" element={<PageTransition><Ajustes /></PageTransition>} />
           <Route path="/sobre" element={<PageTransition><SobreNosotros /></PageTransition>} />
           <Route path="/curso/:id" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><CursoDetalle /></PageTransition>
             </Suspense>
           } />
           <Route path="/curso/:id/inscripcion" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><CursoInscripcion /></PageTransition>
             </Suspense>
           } />
           <Route path="/curso/:id/estructura" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><EstructuraCursoPage /></PageTransition>
             </Suspense>
           } />
           <Route path="/curso/:cursoId/tema-estudio" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><TemaEstudio /></PageTransition>
             </Suspense>
           } />
           <Route path="/curso/:cursoId/ejercicio/:ejercicioId/entregar" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><EntregaEjercicio /></PageTransition>
             </Suspense>
           } />
           <Route path="/admin/correcciones" element={
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<RouteFallback />}>
               <PageTransition><CorreccionesAdmin /></PageTransition>
             </Suspense>
           } />
@@ -83,27 +84,35 @@ function AnimatedRoutes() {
 function PageTransition({ children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ 
-        duration: 0.4,
-        ease: [0.4, 0.0, 0.2, 1]
-      }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: duration.slow, ease: ease.outExpo } }}
+      exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.standard } }}
     >
       {children}
     </motion.div>
   );
 }
 
+// Carga diferida de rutas: indicador discreto en lugar de texto plano
+function RouteFallback() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-live="polite">
+      <span className="h-8 w-8 animate-spin rounded-full border-2 border-line-strong border-t-brand-400" />
+      <span className="sr-only">Cargando…</span>
+    </div>
+  );
+}
+
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Layout>
-        <AnimatedRoutes />
-      </Layout>
-    </Router>
+    <MotionConfig reducedMotion="user">
+      <Router>
+        <ScrollToTop />
+        <Layout>
+          <AnimatedRoutes />
+        </Layout>
+      </Router>
+    </MotionConfig>
   );
 }
 

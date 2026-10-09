@@ -33,10 +33,201 @@
     font-display: swap;
 }
 
-/* Aplicar Rondana como fuente principal */
-html,
-body {
-    font-family: 'Rondana', sans-serif;
+/* ==========================================================================
+   SISTEMA DE DISEÑO — tokens
+   Toda la paleta, tipografía, radios, sombras y curvas salen de aquí.
+   Las escalas gray/green por defecto de Tailwind se redefinen para que el
+   código existente herede la paleta sin valores sueltos.
+   ========================================================================== */
+@theme {
+    /* Superficies (grafito neutro) */
+    --color-canvas: #0a0a0b;
+    --color-surface: #141416;
+    --color-surface-2: #1c1c1f;
+    --color-surface-3: #26262a;
+    --color-line: rgb(255 255 255 / 0.08);
+    --color-line-strong: rgb(255 255 255 / 0.14);
+
+    /* Texto */
+    --color-ink: #f5f5f7;
+    --color-ink-2: #a1a1a6;
+    --color-ink-3: #86868b;
+    --color-on-brand: #0c1709;
+
+    /* Marca: escala construida sobre el verde corporativo #a1db87 (400) */
+    --color-brand: #a1db87;
+    --color-brand-50: #f3fbef;
+    --color-brand-100: #e3f5da;
+    --color-brand-200: #c9ecb7;
+    --color-brand-300: #b3e39e;
+    --color-brand-400: #a1db87;
+    --color-brand-500: #85c869;
+    --color-brand-600: #67ab4b;
+    --color-brand-700: #4f8939;
+    --color-brand-800: #3a672b;
+    --color-brand-900: #26451d;
+    --color-brand-950: #142710;
+
+    /* Grises por defecto → neutros tipo Apple (sin tinte azul) */
+    --color-gray-50: #fafafa;
+    --color-gray-100: #f5f5f7;
+    --color-gray-200: #e8e8ed;
+    --color-gray-300: #d2d2d7;
+    --color-gray-400: #a1a1a6;
+    --color-gray-500: #86868b;
+    --color-gray-600: #6e6e73;
+    --color-gray-700: #48484a;
+    --color-gray-800: #2c2c2e;
+    --color-gray-900: #1c1c1e;
+    --color-gray-950: #111113;
+
+    /* Verdes por defecto → escala de marca (un solo verde en toda la app) */
+    --color-green-50: var(--color-brand-50);
+    --color-green-100: var(--color-brand-100);
+    --color-green-200: var(--color-brand-200);
+    --color-green-300: var(--color-brand-300);
+    --color-green-400: var(--color-brand-400);
+    --color-green-500: var(--color-brand-500);
+    --color-green-600: var(--color-brand-600);
+    --color-green-700: var(--color-brand-700);
+    --color-green-800: var(--color-brand-800);
+    --color-green-900: var(--color-brand-900);
+    --color-green-950: var(--color-brand-950);
+
+    /* Tipografía */
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Rondana", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", sans-serif;
+
+    --text-xs: 0.8125rem;
+    --text-xs--line-height: 1.125rem;
+    --text-sm: 0.9375rem;
+    --text-sm--line-height: 1.375rem;
+    --text-base: 1.0625rem;
+    --text-base--line-height: 1.6rem;
+    --text-lg: 1.1875rem;
+    --text-lg--line-height: 1.75rem;
+
+    --text-footnote: 0.8125rem;
+    --text-footnote--line-height: 1.125rem;
+    --text-callout: 0.9375rem;
+    --text-callout--line-height: 1.375rem;
+    --text-title-3: 1.375rem;
+    --text-title-3--line-height: 1.25;
+    --text-title-3--letter-spacing: -0.01em;
+    --text-title-2: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+    --text-title-2--line-height: 1.15;
+    --text-title-2--letter-spacing: -0.02em;
+    --text-title-1: clamp(2rem, 1.35rem + 2.6vw, 3.5rem);
+    --text-title-1--line-height: 1.05;
+    --text-title-1--letter-spacing: -0.025em;
+    --text-display: clamp(2.75rem, 1.4rem + 5.6vw, 6rem);
+    --text-display--line-height: 0.98;
+    --text-display--letter-spacing: -0.03em;
+
+    /* Forma */
+    --radius-lg: 0.625rem;
+    --radius-xl: 0.875rem;
+    --radius-2xl: 1.25rem;
+    --radius-3xl: 1.75rem;
+
+    /* Profundidad */
+    --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+    --shadow-raised: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 6px rgb(0 0 0 / 0.35), 0 28px 56px -20px rgb(0 0 0 / 0.7);
+    --shadow-overlay: 0 0 0 1px rgb(255 255 255 / 0.08), 0 40px 96px -24px rgb(0 0 0 / 0.8);
+    --shadow-glow: 0 0 0 1px rgb(161 219 135 / 0.35), 0 10px 40px -10px rgb(161 219 135 / 0.45);
+
+    /* Materiales */
+    --blur-material: 20px;
+
+    /* Movimiento */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root {
+    --duration-fast: 150ms;
+    --duration-base: 250ms;
+    --duration-slow: 400ms;
+    --duration-scene: 700ms;
+    color-scheme: dark;
+}
+
+/* Material translúcido para capas flotantes (cabecera, menús, modales) */
+@utility material {
+    background-color: rgb(20 20 22 / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(var(--blur-material));
+    backdrop-filter: saturate(180%) blur(var(--blur-material));
+}
+
+@utility material-thick {
+    background-color: rgb(20 20 22 / 0.88);
+    -webkit-backdrop-filter: saturate(180%) blur(28px);
+    backdrop-filter: saturate(180%) blur(28px);
+}
+
+/* Etiqueta pequeña sobre titulares */
+@utility eyebrow {
+    font-size: var(--text-footnote);
+    line-height: var(--text-footnote--line-height);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand-400);
+}
+
+@layer base {
+    html {
+        background-color: var(--color-canvas);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    html,
+    body {
+        font-family: var(--font-sans);
+        color: var(--color-ink);
+    }
+
+    /* Rondana solo en titulares */
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-display);
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
+    ::selection {
+        background-color: rgb(161 219 135 / 0.35);
+        color: var(--color-ink);
+    }
+
+    /* Foco visible siempre (gana a focus:outline-none heredados) */
+    :focus-visible {
+        outline: 2px solid var(--color-brand-400) !important;
+        outline-offset: 2px !important;
+    }
+
+    button:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]) {
+        cursor: pointer;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /* Estilo para scrollbar personalizado */
