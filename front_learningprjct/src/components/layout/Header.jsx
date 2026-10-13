@@ -23,7 +23,7 @@ const NavItem = ({ to, label, active }) => (
     <Link
       to={to}
       aria-current={active ? 'page' : undefined}
-      className={`relative flex h-11 items-center rounded-full px-3 text-nav font-medium transition-colors duration-200 2xl:px-4 ${active ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
+      className={`relative flex h-11 items-center whitespace-nowrap rounded-full px-2 text-nav font-medium transition-colors duration-200 min-[1400px]:px-3.5 ${active ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
     >
       {active && (
         <>
@@ -99,7 +99,7 @@ const Header = () => {
           className="pointer-events-none absolute inset-0 origin-top glass-nav"
         />
         <motion.div style={compact ? { y: contentY } : undefined} className="relative mx-auto h-full max-w-site px-gutter">
-          <nav className="flex h-full items-center justify-between gap-6" aria-label="Principal">
+          <nav className="flex h-full items-center justify-between gap-4 min-[1400px]:gap-6" aria-label="Principal">
 
             <Logo style={compact ? { scale: logoScale } : undefined} />
 

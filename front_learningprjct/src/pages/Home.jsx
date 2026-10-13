@@ -184,6 +184,9 @@ const HeroScene = ({ onStart }) => {
   const globeOpacity = useTransform(p, [0.26, 0.42, 0.6, 0.8], [1, 0.5, 0.5, 0]);
   // Fondo y velo del hero se funden con la salida para no dejar un corte sobre el ambiente de la página
   const backdropOpacity = useTransform(p, [0.6, 0.8], [1, 0]);
+  // Solo es pulsable la capa que se ve: las ventajas (invisibles al principio) no tapan los botones del hero
+  const copyPointer = useTransform(p, (v) => (v < 0.2 ? 'auto' : 'none'));
+  const featuresPointer = useTransform(p, (v) => (v > 0.3 ? 'auto' : 'none'));
   const cueOpacity = useTransform(p, [0, 0.05], [1, 0]);
 
   if (!scenes) {
@@ -233,13 +236,13 @@ const HeroScene = ({ onStart }) => {
         <motion.div style={{ opacity: exitOpacity, scale: exitScale, y: exitY }} className="relative flex h-full items-center pt-header will-change-transform lg:pt-header-lg">
           <Site className="relative">
             <motion.div
-              style={{ scale: titleScale, opacity: titleOpacity, y: titleY }}
-              className="absolute inset-x-0 top-1/2 origin-left -translate-y-1/2 px-gutter will-change-transform"
+              style={{ scale: titleScale, opacity: titleOpacity, y: titleY, pointerEvents: copyPointer }}
+              className="absolute inset-x-0 top-1/2 z-10 origin-left -translate-y-1/2 px-gutter will-change-transform"
             >
               <HeroCopy onStart={onStart} />
             </motion.div>
 
-            <div className="relative">
+            <motion.div style={{ pointerEvents: featuresPointer }} className="relative">
               <motion.div style={{ opacity: headingOpacity, y: headingY }} className="max-w-3xl">
                 <h2 className="text-title-1 font-bold text-ink">¿Qué puedes esperar de los cursos?</h2>
               </motion.div>
@@ -248,7 +251,7 @@ const HeroScene = ({ onStart }) => {
                   <RisingCard key={f.title} progress={p} index={i} feature={f} />
                 ))}
               </div>
-            </div>
+            </motion.div>
           </Site>
         </motion.div>
 
