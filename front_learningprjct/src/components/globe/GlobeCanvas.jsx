@@ -20,7 +20,8 @@ const smooth = (t) => t * t * (3 - 2 * t);
 // Encaje del globo en el lienzo (unidades de mundo a z = 0)
 function frame(layout, vw, vh) {
   if (layout === 'center') return { x: 0, y: 0, s: Math.min(vw, vh) * 0.27 };
-  if (vw / vh < 1.2) return { x: vw * 0.26, y: -vh * 0.2, s: vw * 0.4 };
+  // Pantallas casi cuadradas o verticales: el globo asoma abajo a la derecha, lejos del texto
+  if (vw / vh < 1.2) return { x: vw * 0.3, y: -vh * 0.24, s: vw * 0.28 };
   return { x: vw * 0.22, y: vh * 0.01, s: vh * 0.335 };
 }
 
