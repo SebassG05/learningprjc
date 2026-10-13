@@ -564,7 +564,11 @@ const ReviewsCarousel = () => {
                 <div key={i} className="h-56 min-w-[300px] flex-1 animate-pulse rounded-3xl border border-line bg-surface" />
               ))
             ) : error ? (
-              <div className="w-full py-12 text-center text-red-300">{error}</div>
+              <div role="status" className="mx-auto flex w-full max-w-xl flex-col items-center rounded-3xl px-8 py-12 text-center glass-panel">
+                <Stars rating={0} size="h-5 w-5" />
+                <p className="mt-5 text-base text-red-300">{error}</p>
+                <Button size="sm" variant="secondary" className="mt-6" to="/reseñas">Ir a reseñas</Button>
+              </div>
             ) : reviews.length === 0 ? (
               <Reveal className="mx-auto flex w-full max-w-xl flex-col items-center rounded-3xl border border-line bg-surface px-8 py-14 text-center shadow-card">
                 <Stars rating={0} size="h-6 w-6" />
@@ -683,7 +687,9 @@ const CTAScene = ({ onStart }) => {
           style={scenes ? { scale, opacity, y } : undefined}
           className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface px-6 py-20 text-center shadow-raised will-change-transform sm:px-16 sm:py-28"
         >
-          <div className="pointer-events-none absolute inset-x-0 -top-1/2 mx-auto h-full w-3/4 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.18),transparent)]" aria-hidden="true" />
+          {/* Horizonte del globo: la página termina con el mismo motivo con el que empieza */}
+          <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[90%] aspect-square w-[150%] -translate-x-1/2 rounded-full border border-brand-400/30 bg-radial from-brand-900/70 via-brand-950/40 via-40% to-transparent to-70% shadow-glow-lg" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-radial-[at_50%_100%] from-brand-400/15 to-transparent to-70%" />
           <div className="relative">
             <SplitText as="h2" className="mx-auto block max-w-3xl text-title-1 font-bold text-ink">
               ¿Listo para encontrar tu próxima <span className="text-brand">oportunidad</span>?
