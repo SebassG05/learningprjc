@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, ChevronLeft, ChevronRight, Clock, Award, AlertCircle, Lock } from 'lucide-react';
+import { duration, ease, spring } from '../../lib/motion';
 
 export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = 'es' }) {
   const [test, setTest] = useState(null);
@@ -224,7 +225,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: duration.slow, ease: ease.outExpo }}
           className="text-center max-w-2xl mx-auto p-10 bg-surface/80 backdrop-blur-sm rounded-3xl border-2 border-red-500/30 shadow-card"
         >
           <div className="w-24 h-24 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-500/50">
@@ -270,7 +271,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: duration.slow, ease: ease.outExpo }}
           className="max-w-3xl w-full bg-surface/80 backdrop-blur-sm rounded-3xl p-10 border-2 border-line shadow-card"
         >
           <div className="text-center mb-10">
@@ -279,7 +280,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.2, type: "spring", bounce: 0.5, duration: 0.8 }}
+                  transition={{ ...spring.gentle, delay: 0.1 }}
                   className="mb-6"
                 >
                   <Award className="w-32 h-32 text-brand mx-auto drop-shadow-[0_0_30px_rgba(161,219,135,0.5)]" />
@@ -287,7 +288,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 <motion.h2 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: 0.2 }}
                   className="text-5xl font-bold text-ink mb-3"
                 >
                   {isTestFinal
@@ -297,7 +298,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 <motion.p 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: 0.25 }}
                   className="text-gray-300 text-lg"
                 >
                   {isTestFinal
@@ -308,7 +309,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
+                    transition={{ delay: 0.35 }}
                     className="mt-6 p-4 bg-gradient-to-r from-brand/10 to-brand-500/10 border border-line rounded-xl"
                   >
                     <div className="flex items-start gap-3">
@@ -334,9 +335,9 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
             ) : (
               <>
                 <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", bounce: 0.3 }}
+                  initial={{ scale: 0.85, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ ...spring.gentle, delay: 0.1 }}
                   className="mb-6"
                 >
                   <X className="w-32 h-32 text-red-500 mx-auto drop-shadow-[0_0_30px_rgba(239,68,68,0.5)]" />
@@ -344,7 +345,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 <motion.h2 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: 0.2 }}
                   className="text-5xl font-bold text-red-500 mb-3"
                 >
                   {idioma === 'en' ? 'Not passed' : 'No aprobado'}
@@ -352,7 +353,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 <motion.p 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: 0.25 }}
                   className="text-gray-300 text-lg"
                 >
                   {idioma === 'en' ? 'You need to review the study material a bit more' : 'Necesitas estudiar un poco más el material'}
@@ -364,7 +365,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.3 }}
             className="grid grid-cols-2 gap-6 mb-8"
           >
             <div className="bg-gradient-to-br from-surface/80 to-surface/50 p-8 rounded-2xl text-center border border-line shadow-card">
@@ -392,7 +393,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${(resultado.correctas / resultado.totalPreguntas) * 100}%` }}
-                  transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
+                  transition={{ delay: 0.4, duration: duration.reveal, ease: ease.outExpo }}
                   className={`h-full ${
                     resultado.aprobado 
                       ? 'bg-brand hover:bg-brand-300' 
@@ -406,7 +407,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.35 }}
             className="bg-surface/50 p-6 rounded-xl mb-8 border border-line"
           >
             <div className="flex items-center justify-between">
@@ -420,7 +421,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.4 }}
             className="flex gap-4"
           >
             {!resultado.aprobado && (
@@ -504,7 +505,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progreso}%` }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: duration.slow, ease: ease.outExpo }}
                 className="h-full bg-gradient-to-r from-brand via-brand-500 to-brand shadow-card"
                 style={{
                   boxShadow: '0 0 20px rgba(161, 219, 135, 0.5)'
@@ -524,7 +525,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: duration.slow, ease: ease.inOutQuart }}
             >
               <div className="mb-8">
                 <motion.span 
@@ -569,7 +570,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
                         <motion.div
                           layoutId="selected"
                           className="absolute inset-0 bg-gradient-to-r from-brand/5 to-brand-500/5 rounded-2xl"
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          transition={spring.glide}
                         />
                       )}
                       <div className="relative flex items-center gap-5">

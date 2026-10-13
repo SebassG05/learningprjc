@@ -21,6 +21,7 @@ import {
   CreditCard,
   MessageCircle
 } from 'lucide-react';
+import { duration, ease } from '../lib/motion';
 
 const GuiaUsuario = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -343,7 +344,7 @@ const GuiaUsuario = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: duration.scene, ease: ease.outExpo }}
           className="text-center mb-16"
         >
           <div className="inline-flex items-center justify-center w-20 h-20 bg-brand/10 rounded-full mb-6">
@@ -361,7 +362,7 @@ const GuiaUsuario = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: duration.scene, delay: 0.2, ease: ease.outExpo }}
           className="space-y-4"
         >
           {sections.map((section, index) => (
@@ -370,9 +371,9 @@ const GuiaUsuario = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ 
-                duration: 0.5,
+                duration: duration.slow,
                 delay: index * 0.08,
-                ease: [0.4, 0.0, 0.2, 1]
+                ease: ease.standard
               }}
               className="bg-surface rounded-xl border border-line overflow-hidden shadow-card hover:border-brand/50 hover:shadow-brand/10 hover:shadow-2xl transition-all duration-500"
             >
@@ -418,26 +419,9 @@ const GuiaUsuario = () => {
                 {activeSection === section.id && (
                   <motion.div
                     key="content"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ 
-                      height: 'auto',
-                      opacity: 1
-                    }}
-                    exit={{ 
-                      height: 0,
-                      opacity: 0
-                    }}
-                    transition={{ 
-                      height: {
-                        duration: 0.6,
-                        ease: [0.4, 0.0, 0.2, 1]
-                      },
-                      opacity: {
-                        duration: 0.5,
-                        ease: 'easeInOut',
-                        delay: 0.1
-                      }
-                    }}
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.outExpo } }}
+                    exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
                     className="overflow-hidden"
                   >
                     <motion.div 
@@ -452,8 +436,8 @@ const GuiaUsuario = () => {
                         opacity: 0
                       }}
                       transition={{
-                        duration: 0.5,
-                        ease: [0.4, 0.0, 0.2, 1],
+                        duration: duration.slow,
+                        ease: ease.standard,
                         delay: 0.15
                       }}
                     >
@@ -471,9 +455,9 @@ const GuiaUsuario = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ 
-            duration: 0.7,
-            delay: 0.5,
-            ease: [0.4, 0.0, 0.2, 1]
+            duration: duration.scene,
+            delay: 0.25,
+            ease: ease.standard
           }}
           className="mt-16 bg-gradient-to-r from-brand/10 to-brand/5 rounded-2xl p-8 border border-line hover:border-brand/40 transition-all duration-500"
         >
@@ -484,10 +468,10 @@ const GuiaUsuario = () => {
                 rotate: [0, 5, -5, 0]
               }}
               transition={{
-                duration: 3,
+                duration: duration.reveal,
                 repeat: Infinity,
                 repeatType: "reverse",
-                ease: "easeInOut"
+                ease: ease.inOutQuart
               }}
             >
               <MessageCircle className="w-12 h-12 text-brand mx-auto mb-4" />
@@ -516,9 +500,9 @@ const GuiaUsuario = () => {
               <motion.span
                 animate={{ x: [0, 3, 0] }}
                 transition={{
-                  duration: 1.5,
+                  duration: duration.reveal,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: ease.inOutQuart
                 }}
               >
                 <ChevronRight className="w-5 h-5" />
@@ -532,9 +516,9 @@ const GuiaUsuario = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ 
-            duration: 0.7,
-            delay: 0.6,
-            ease: [0.4, 0.0, 0.2, 1]
+            duration: duration.scene,
+            delay: 0.3,
+            ease: ease.standard
           }}
           className="mt-8 grid md:grid-cols-3 gap-4"
         >

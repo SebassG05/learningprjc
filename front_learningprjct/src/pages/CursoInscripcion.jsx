@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from '../context/UserContext';
 import { BookOpen, CheckCircle, Clock, Users, Award, ArrowRight, Loader, Target, Sparkles, GraduationCap, CalendarClock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { duration, ease, spring } from '../lib/motion';
 
 export default function CursoInscripcion() {
   const { id } = useParams();
@@ -238,7 +239,7 @@ export default function CursoInscripcion() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: duration.slow, ease: ease.outExpo }}
         className="bg-gradient-to-br from-surface to-surface rounded-2xl p-8 md:p-12 border border-line shadow-card mb-8"
       >
         <div className="grid md:grid-cols-3 gap-8">
@@ -360,15 +361,15 @@ export default function CursoInscripcion() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: duration.scene, delay: 0.2, ease: ease.outExpo }}
           className="mb-8"
         >
           {/* Header de la sección */}
           <div className="text-center mb-10">
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.3, type: "spring" }}
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ ...spring.gentle, delay: 0.15 }}
               className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand hover:bg-brand-300 mb-4 shadow-card shadow-brand/30"
             >
               <GraduationCap className="w-8 h-8 text-on-brand" />
@@ -376,7 +377,7 @@ export default function CursoInscripcion() {
             <motion.h2 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: duration.slow, delay: 0.2, ease: ease.outExpo }}
               className="text-3xl md:text-4xl font-bold text-ink mb-3"
             >
               {idioma === 'en' ? 'Learning Objectives' : 'Objetivos de Aprendizaje'}
@@ -384,7 +385,7 @@ export default function CursoInscripcion() {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: duration.slow, delay: 0.25, ease: ease.outExpo }}
               className="text-gray-400 max-w-2xl mx-auto"
             >
               {idioma === 'en' ? 'Master the essential skills and competencies of this course' : 'Domina las habilidades y competencias esenciales de este curso'}
@@ -397,7 +398,7 @@ export default function CursoInscripcion() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                transition={{ duration: duration.scene, delay: 0.3, ease: ease.outExpo }}
                 className="group relative"
               >
                 <div className="absolute -inset-0.5 bg-brand hover:bg-brand-300 rounded-3xl opacity-20 group-hover:opacity-30 transition duration-500 blur"></div>
@@ -415,7 +416,7 @@ export default function CursoInscripcion() {
                         key={idx}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: 0.7 + (idx * 0.1) }}
+                        transition={{ duration: duration.slow, delay: 0.7 + (idx * 0.1), ease: ease.outExpo }}
                         className="flex items-start gap-3 group/item"
                       >
                         <div className="flex-shrink-0 mt-1">
@@ -438,7 +439,7 @@ export default function CursoInscripcion() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                transition={{ duration: duration.scene, delay: 0.3, ease: ease.outExpo }}
                 className="group relative"
               >
                 <div className="absolute -inset-0.5 bg-brand hover:bg-brand-300 rounded-3xl opacity-20 group-hover:opacity-30 transition duration-500 blur"></div>
@@ -456,7 +457,7 @@ export default function CursoInscripcion() {
                         key={idx}
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: 0.7 + (idx * 0.1) }}
+                        transition={{ duration: duration.slow, delay: 0.7 + (idx * 0.1), ease: ease.outExpo }}
                         className="flex items-start gap-3 group/item"
                       >
                         <div className="flex-shrink-0 mt-1">
@@ -482,7 +483,7 @@ export default function CursoInscripcion() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: duration.slow, delay: 0.3, ease: ease.outExpo }}
           className="bg-surface rounded-2xl p-8 border border-line"
         >
           <h2 className="text-2xl font-bold text-brand mb-6 flex items-center gap-3">

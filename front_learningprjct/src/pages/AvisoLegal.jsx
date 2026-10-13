@@ -1,6 +1,7 @@
 import React from 'react';
 import { Scale, Shield, Link2, Edit3, Tag, Copyright, Gavel, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { duration, ease } from '../lib/motion';
 
 export default function AvisoLegal() {
   const sections = [
@@ -78,7 +79,7 @@ export default function AvisoLegal() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: duration.scene, ease: ease.outExpo }}
           className="text-center mb-12"
         >
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand hover:bg-brand-300 mb-6 shadow-card shadow-brand/30">
@@ -153,7 +154,7 @@ export default function AvisoLegal() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.4 }}
           className="mt-8 text-center text-xs text-gray-500"
         >
           <p>Última actualización: 4 de mayo de 2026 · EVENOR TECH, S.L.U. · NIF B91790527</p>

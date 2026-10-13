@@ -1,22 +1,43 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Star, ChevronDown, Clock, ArrowRight, Award, FileText, Video, ListChecks, Check } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
-import { AnimatePresence, motion, motion as m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion, motion as m, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
+import SplitText from '../components/ui/SplitText';
 import { useUser } from '../context/UserContext';
 import AuthModal from '../components/auth/AuthModal';
-import useMediaQuery from '../hooks/useMediaQuery';
-import { ease, spring } from '../lib/motion';
+import { useScenesEnabled, useSceneProgress } from '../hooks/useScene';
+import { disclose, duration, ease, spring } from '../lib/motion';
+import { glideTo } from '../lib/smoothScroll';
 
-// Las escenas ligadas al scroll solo se activan en pantallas medianas+ y sin reduced-motion
-const useScenes = () => {
-  const wide = useMediaQuery('(min-width: 768px)');
-  const reduce = useReducedMotion();
-  return wide && !reduce;
+/*
+ * Coreografía (ver MOTION-SPEC.md):
+ *   Hero (260vh, fijado) ─┐ solape 140vh: el proceso entra en fundido cruzado mientras el hero sale
+ *   Proceso (360vh, fijado) ─┐ solape 90vh: la FAQ sube por encima mientras el proceso se atenúa
+ *   FAQ → Reseñas → CTA (flujo normal)
+ * Todo el progreso va suavizado con useSpring y se aplica como motion values (sin re-render por frame).
+ */
+
+/* ==========================================================================
+   Fondo ambiental: el tono cambia de forma gradual de una escena a otra
+   ========================================================================== */
+
+const AmbientBackdrop = () => {
+  const { scrollYProgress } = useScroll();
+  const hero = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
+  const process = useTransform(scrollYProgress, [0.12, 0.26, 0.48, 0.6], [0, 1, 1, 0]);
+  const finale = useTransform(scrollYProgress, [0.78, 0.96], [0, 1]);
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <motion.div style={{ opacity: hero }} className="absolute left-1/2 top-[-20vh] h-[90vh] w-[110vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.14),transparent)]" />
+      <motion.div style={{ opacity: process }} className="absolute left-[-20vw] top-[10vh] h-[90vh] w-[80vw] rounded-[50%] bg-[radial-gradient(closest-side,rgb(133_200_105/0.09),transparent)]" />
+      <motion.div style={{ opacity: finale }} className="absolute bottom-[-30vh] left-1/2 h-[80vh] w-[100vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.12),transparent)]" />
+    </div>
+  );
 };
 
 /* ==========================================================================
@@ -32,30 +53,36 @@ const features = [
 
 const perks = ['Registro gratuito', 'Acceso inmediato', 'Sin compromiso'];
 
+// Entrada escalonada del hero al cargar (eyebrow → titular por palabras → texto → botones)
+const heroIn = (delay) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0, transition: { duration: duration.scene, ease: ease.outExpo, delay } },
+});
+
 const HeroCopy = ({ onStart }) => (
   <div className="flex flex-col items-center text-center">
-    <span className="eyebrow">E-learning · Evenor-Tech</span>
-    <h1 className="mt-5 text-hero font-bold text-ink">
+    <motion.span {...heroIn(0.05)} className="eyebrow">E-learning · Evenor-Tech</motion.span>
+    <SplitText as="h1" trigger="mount" delay={0.12} className="mt-5 text-hero font-bold text-ink">
       Campus<span className="text-brand">.</span>
-    </h1>
-    <p className="mt-6 max-w-xl text-lg text-ink-2 sm:text-xl">
+    </SplitText>
+    <motion.p {...heroIn(0.35)} className="mt-6 max-w-xl text-lg text-ink-2 sm:text-xl">
       Plataforma de e-learning moderna y flexible. Formando profesionales con tecnología y pasión para el futuro digital.
-    </p>
-    <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
+    </motion.p>
+    <motion.div {...heroIn(0.45)} className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
       <Button size="lg" onClick={onStart}>
         Comenzar ahora <ArrowRight className="h-5 w-5" />
       </Button>
       <Button size="lg" variant="secondary" to="/cursos">
         Ver cursos
       </Button>
-    </div>
-    <ul className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink-3">
+    </motion.div>
+    <motion.ul {...heroIn(0.55)} className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink-3">
       {perks.map((p) => (
         <li key={p} className="inline-flex items-center gap-1.5">
           <Check className="h-4 w-4 text-brand" /> {p}
         </li>
       ))}
-    </ul>
+    </motion.ul>
   </div>
 );
 
@@ -69,12 +96,13 @@ const FeatureCard = ({ Icon, title, desc }) => (
   </div>
 );
 
-// Tarjeta cuyo ascenso depende del progreso de la escena (sin re-renders)
+// Tarjeta en capas: cada una sube a su velocidad (profundidad) y se asienta
 const RisingCard = ({ progress, index, feature }) => {
-  const start = 0.28 + index * 0.06;
-  const y = useTransform(progress, [start, start + 0.32], [220 + index * 50, 0]);
-  const opacity = useTransform(progress, [start, start + 0.18], [0, 1]);
-  const scale = useTransform(progress, [start, start + 0.32], [0.92, 1]);
+  const start = 0.24 + index * 0.05;
+  const depth = [260, 200, 300, 230][index];
+  const y = useTransform(progress, [start, start + 0.3], [depth, 0]);
+  const opacity = useTransform(progress, [start, start + 0.14], [0, 1]);
+  const scale = useTransform(progress, [start, start + 0.3], [0.9, 1]);
   return (
     <motion.div style={{ y, opacity, scale }} className="will-change-transform">
       <FeatureCard {...feature} />
@@ -83,23 +111,30 @@ const RisingCard = ({ progress, index, feature }) => {
 };
 
 const HeroScene = ({ onStart }) => {
-  const scenes = useScenes();
+  const scenes = useScenesEnabled();
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const titleScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.82]);
-  const titleOpacity = useTransform(scrollYProgress, [0.05, 0.32], [1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.4], [0, -60]);
-  const headingOpacity = useTransform(scrollYProgress, [0.26, 0.42], [0, 1]);
-  const headingY = useTransform(scrollYProgress, [0.26, 0.45], [40, 0]);
-  const glowY = useTransform(scrollYProgress, [0, 1], ['0%', '35%']);
-  const glowOpacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
+  const p = useSceneProgress(ref);
+  // Desarrollo: el titular se aleja y se funde
+  const titleScale = useTransform(p, [0, 0.36], [1, 0.82]);
+  const titleOpacity = useTransform(p, [0.04, 0.28], [1, 0]);
+  const titleY = useTransform(p, [0, 0.36], [0, -70]);
+  // Las ventajas entran
+  const headingOpacity = useTransform(p, [0.22, 0.36], [0, 1]);
+  const headingY = useTransform(p, [0.22, 0.4], [48, 0]);
+  // Salida (solapada con la escena siguiente): todo se aleja y se atenúa
+  const exitOpacity = useTransform(p, [0.6, 0.8], [1, 0]);
+  const exitScale = useTransform(p, [0.6, 0.86], [1, 0.94]);
+  const exitY = useTransform(p, [0.6, 0.86], [0, -60]);
+  // Parallax en capas del resplandor
+  const glowNear = useTransform(p, [0, 1], ['0%', '45%']);
+  const glowFar = useTransform(p, [0, 1], ['0%', '18%']);
 
   if (!scenes) {
     return (
       <div ref={ref}>
         <section className="relative pt-20 pb-24 sm:pt-28">
           <Container>
-            <Reveal><HeroCopy onStart={onStart} /></Reveal>
+            <HeroCopy onStart={onStart} />
           </Container>
         </section>
         <section className="pb-24">
@@ -119,38 +154,37 @@ const HeroScene = ({ onStart }) => {
   return (
     <section ref={ref} className="relative h-[260vh]">
       <div className="sticky top-16 flex h-[calc(100svh-4rem)] items-center overflow-hidden">
-        <motion.div
-          aria-hidden="true"
-          style={{ y: glowY, opacity: glowOpacity }}
-          className="pointer-events-none absolute left-1/2 top-[8%] h-[70vh] w-[70vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.16),transparent)]"
-        />
-        <Container className="relative">
-          <motion.div
-            style={{ scale: titleScale, opacity: titleOpacity, y: titleY }}
-            className="absolute inset-x-0 top-1/2 -translate-y-1/2 will-change-transform"
-          >
-            <HeroCopy onStart={onStart} />
-          </motion.div>
-
-          <div className="relative">
-            <motion.div style={{ opacity: headingOpacity, y: headingY }} className="mx-auto max-w-3xl text-center">
-              <span className="eyebrow">Ventajas del campus</span>
-              <h2 className="mt-4 text-title-1 font-bold text-ink">¿Qué puedes esperar de los cursos?</h2>
+        <motion.div aria-hidden="true" style={{ y: glowFar }} className="pointer-events-none absolute left-1/2 top-[2%] h-[80vh] w-[90vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.10),transparent)]" />
+        <motion.div aria-hidden="true" style={{ y: glowNear }} className="pointer-events-none absolute left-1/2 top-[18%] h-[50vh] w-[46vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.12),transparent)]" />
+        <motion.div style={{ opacity: exitOpacity, scale: exitScale, y: exitY }} className="relative w-full will-change-transform">
+          <Container className="relative">
+            <motion.div
+              style={{ scale: titleScale, opacity: titleOpacity, y: titleY }}
+              className="absolute inset-x-0 top-1/2 -translate-y-1/2 will-change-transform"
+            >
+              <HeroCopy onStart={onStart} />
             </motion.div>
-            <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {features.map((f, i) => (
-                <RisingCard key={f.title} progress={scrollYProgress} index={i} feature={f} />
-              ))}
+
+            <div className="relative">
+              <motion.div style={{ opacity: headingOpacity, y: headingY }} className="mx-auto max-w-3xl text-center">
+                <span className="eyebrow">Ventajas del campus</span>
+                <h2 className="mt-4 text-title-1 font-bold text-ink">¿Qué puedes esperar de los cursos?</h2>
+              </motion.div>
+              <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+                {features.map((f, i) => (
+                  <RisingCard key={f.title} progress={p} index={i} feature={f} />
+                ))}
+              </div>
             </div>
-          </div>
-        </Container>
+          </Container>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 /* ==========================================================================
-   Escena 2 — Proceso: cada paso se enciende al avanzar el scroll
+   Escena 2 — Proceso: entra en fundido cruzado y cada paso se enciende con el scroll
    ========================================================================== */
 
 const steps = [
@@ -179,17 +213,16 @@ const StepRowStatic = ({ step, index }) => (
 
 // Paso que se ilumina cuando el progreso de la escena lo alcanza
 const StepRowScroll = ({ step, index, progress }) => {
-  const at = 0.12 + index * 0.2;
-  const opacity = useTransform(progress, [at - 0.1, at], [0.25, 1]);
-  const x = useTransform(progress, [at - 0.1, at], [24, 0]);
-  const dot = useTransform(progress, [at - 0.04, at], [0, 1]);
-  const iconOpacity = useTransform(progress, [at - 0.04, at], [0, 1]);
+  const at = 0.3 + index * 0.09;
+  const opacity = useTransform(progress, [at - 0.08, at], [0.22, 1]);
+  const x = useTransform(progress, [at - 0.08, at], [28, 0]);
+  const dot = useTransform(progress, [at - 0.03, at], [0, 1]);
   return (
-    <motion.li style={{ opacity, x }} className="relative flex gap-5">
+    <motion.li style={{ opacity, x }} className="relative flex gap-5 will-change-transform">
       <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface text-brand">
         <motion.span style={{ scale: dot, opacity: dot }} className="absolute inset-0 rounded-full bg-brand" />
         <step.Icon className="relative h-5 w-5" />
-        <motion.span style={{ opacity: iconOpacity }} className="absolute inset-0 flex items-center justify-center text-on-brand">
+        <motion.span style={{ opacity: dot }} className="absolute inset-0 flex items-center justify-center text-on-brand">
           <step.Icon className="h-5 w-5" />
         </motion.span>
       </span>
@@ -198,25 +231,25 @@ const StepRowScroll = ({ step, index, progress }) => {
   );
 };
 
-const ProcessScene = () => {
-  const scenes = useScenes();
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const fill = useTransform(scrollYProgress, [0.05, 0.75], [0, 1]);
+const PROCESS_LEAD = 'Cuatro pasos desde tu registro hasta tu certificado.';
 
-  const heading = (
-    <>
-      <span className="eyebrow">Proceso</span>
-      <h2 className="mt-4 text-title-1 font-bold text-ink">¿Cómo funciona el proceso?</h2>
-      <p className="mt-5 max-w-sm text-lg text-ink-2">Cuatro pasos desde tu registro hasta tu certificado.</p>
-    </>
-  );
+const ProcessScene = () => {
+  const scenes = useScenesEnabled();
+  const ref = useRef(null);
+  const p = useSceneProgress(ref);
+  // Entrada en fundido cruzado (mientras el hero sale) y salida mientras sube la FAQ
+  const sceneOpacity = useTransform(p, [0.03, 0.18, 0.64, 0.78], [0, 1, 1, 0]);
+  const sceneY = useTransform(p, [0.03, 0.2, 0.64, 0.82], [70, 0, 0, -60]);
+  const sceneScale = useTransform(p, [0.03, 0.2, 0.64, 0.82], [0.96, 1, 1, 0.95]);
+  const fill = useTransform(p, [0.24, 0.6], [0, 1]);
 
   if (!scenes) {
     return (
       <section ref={ref} className="py-24">
         <Container>
-          <Reveal>{heading}</Reveal>
+          <span className="eyebrow">Proceso</span>
+          <SplitText as="h2" className="mt-4 block text-title-1 font-bold text-ink">¿Cómo funciona el proceso?</SplitText>
+          <Reveal><p className="mt-5 max-w-sm text-lg text-ink-2">{PROCESS_LEAD}</p></Reveal>
           <Reveal group as="ol" step={0.1} className="relative mt-12 space-y-10">
             <span className="absolute bottom-6 left-6 top-6 w-px bg-line-strong" aria-hidden="true" />
             {steps.map((s, i) => <StepRowStatic key={s.title} step={s} index={i} />)}
@@ -227,20 +260,25 @@ const ProcessScene = () => {
   }
 
   return (
-    <section ref={ref} className="relative h-[300vh]">
+    // Solapada 140vh con el hero: su contenido fijado aparece mientras el del hero se va
+    <section ref={ref} className="pointer-events-none relative -mt-[140vh] h-[360vh]">
       <div className="sticky top-16 flex h-[calc(100svh-4rem)] items-center">
-        <Container className="grid grid-cols-12 items-center gap-10">
-          <div className="col-span-5">{heading}</div>
-          <ol className="relative col-span-7 space-y-12">
-            <span className="absolute bottom-6 left-6 top-6 w-px bg-line-strong" aria-hidden="true" />
-            <motion.span
-              style={{ scaleY: fill }}
-              className="absolute bottom-6 left-6 top-6 w-px origin-top bg-brand"
-              aria-hidden="true"
-            />
-            {steps.map((s, i) => <StepRowScroll key={s.title} step={s} index={i} progress={scrollYProgress} />)}
-          </ol>
-        </Container>
+        <motion.div style={{ opacity: sceneOpacity, y: sceneY, scale: sceneScale }} className="w-full will-change-transform">
+          <Container className="grid grid-cols-12 items-center gap-10">
+            <div className="col-span-5">
+              <span className="eyebrow">Proceso</span>
+              <h2 className="mt-4 text-title-1 font-bold text-ink">¿Cómo funciona el proceso?</h2>
+              <SplitText as="p" progress={p} from={0.14} to={0.3} className="mt-5 block max-w-sm text-lg text-ink">
+                {PROCESS_LEAD}
+              </SplitText>
+            </div>
+            <ol className="relative col-span-7 space-y-12">
+              <span className="absolute bottom-6 left-6 top-6 w-px bg-line-strong" aria-hidden="true" />
+              <motion.span style={{ scaleY: fill }} className="absolute bottom-6 left-6 top-6 w-px origin-top bg-brand" aria-hidden="true" />
+              {steps.map((s, i) => <StepRowScroll key={s.title} step={s} index={i} progress={p} />)}
+            </ol>
+          </Container>
+        </motion.div>
       </div>
     </section>
   );
@@ -274,8 +312,9 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
     },
   ];
   const [openIdx, setOpenIdx] = useState(null);
+  const scenes = useScenesEnabled();
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className={`relative z-10 py-24 sm:py-32 ${scenes ? '-mt-[90vh]' : ''}`}>
       <Container>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -306,7 +345,7 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: ease.inOutQuart }}
+                    transition={{ duration: duration.slow, ease: ease.inOutQuart }}
                     className="fixed inset-0 z-[100] bg-canvas"
                   />
                 )}
@@ -314,9 +353,10 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
             </Reveal>
           </div>
 
-          <Reveal group as="ul" className="divide-y divide-line border-y border-line lg:col-span-8">
+          <LayoutGroup>
+          <Reveal group as="ul" className="border-b border-line lg:col-span-8">
             {faqs.map((faq, idx) => (
-              <Reveal.Item as="li" key={idx}>
+              <Reveal.Item as="li" key={idx} layout="position" transition={{ layout: spring.gentle }} className="border-t border-line">
                 <button
                   className="group flex w-full items-center justify-between gap-6 py-6 text-left"
                   onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
@@ -334,16 +374,13 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
                     <ChevronDown className="h-4 w-4" />
                   </m.span>
                 </button>
-                <AnimatePresence initial={false}>
+                <AnimatePresence initial={false} mode="popLayout">
                   {openIdx === idx && (
                     <m.div
                       key="content"
                       id={`faq-answer-${idx}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ height: { duration: 0.35, ease: ease.outExpo }, opacity: { duration: 0.2 } }}
-                      style={{ overflow: 'hidden' }}
+                      layout="position"
+                      {...disclose}
                     >
                       <p className="max-w-2xl pb-6 text-base text-ink-2">{faq.answer}</p>
                     </m.div>
@@ -352,6 +389,7 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
               </Reveal.Item>
             ))}
           </Reveal>
+          </LayoutGroup>
         </div>
       </Container>
     </section>
@@ -548,36 +586,41 @@ const ReviewsCarousel = () => {
    ========================================================================== */
 
 const CTAScene = ({ onStart }) => {
-  const scenes = useScenes();
+  const scenes = useScenesEnabled();
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center center'] });
-  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [0.4, 1]);
+  const p = useSceneProgress(ref, ['start end', 'center center']);
+  const scale = useTransform(p, [0, 1], [0.88, 1]);
+  const opacity = useTransform(p, [0, 0.55], [0.3, 1]);
+  const y = useTransform(p, [0, 1], [80, 0]);
 
   return (
     <section ref={ref} className="relative py-24 sm:py-32">
       <Container>
         <motion.div
-          style={scenes ? { scale, opacity } : undefined}
-          className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface px-6 py-20 text-center shadow-raised sm:px-16 sm:py-28"
+          style={scenes ? { scale, opacity, y } : undefined}
+          className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface px-6 py-20 text-center shadow-raised will-change-transform sm:px-16 sm:py-28"
         >
           <div className="pointer-events-none absolute inset-x-0 -top-1/2 mx-auto h-full w-3/4 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.18),transparent)]" aria-hidden="true" />
           <div className="relative">
-            <h2 className="mx-auto max-w-3xl text-title-1 font-bold text-ink">
+            <SplitText as="h2" className="mx-auto block max-w-3xl text-title-1 font-bold text-ink">
               ¿Listo para encontrar tu próxima <span className="text-brand">oportunidad</span>?
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-lg text-ink-2">Únete a miles de empresas que ya están aprovechando nuestras herramientas</p>
-            <ul className="mt-8 flex flex-wrap justify-center gap-2">
-              {perks.map((p) => (
-                <li key={p} className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white/[0.04] px-4 py-1.5 text-sm text-ink-2">
-                  <Check className="h-3.5 w-3.5 text-brand" /> {p}
-                </li>
-              ))}
-            </ul>
-            <Button size="lg" className="mt-10" onClick={onStart}>
-              Comenzar ahora <ArrowRight className="h-5 w-5" />
-            </Button>
-            <p className="mt-4 text-xs text-ink-3">Cursos gratuitos y sin compromiso</p>
+            </SplitText>
+            <Reveal group className="flex flex-col items-center">
+              <Reveal.Item as="p" className="mx-auto mt-5 max-w-xl text-lg text-ink-2">Únete a miles de empresas que ya están aprovechando nuestras herramientas</Reveal.Item>
+              <Reveal.Item as="ul" className="mt-8 flex flex-wrap justify-center gap-2">
+                {perks.map((pk) => (
+                  <li key={pk} className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white/[0.04] px-4 py-1.5 text-sm text-ink-2">
+                    <Check className="h-3.5 w-3.5 text-brand" /> {pk}
+                  </li>
+                ))}
+              </Reveal.Item>
+              <Reveal.Item>
+                <Button size="lg" className="mt-10" onClick={onStart}>
+                  Comenzar ahora <ArrowRight className="h-5 w-5" />
+                </Button>
+              </Reveal.Item>
+              <Reveal.Item as="p" className="mt-4 text-xs text-ink-3">Cursos gratuitos y sin compromiso</Reveal.Item>
+            </Reveal>
           </div>
         </motion.div>
       </Container>
@@ -594,12 +637,13 @@ const Home = () => {
     if (user) {
       navigate('/cursos');
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      glideTo(0);
       setShowLogin(true);
     }
   };
   return (
     <>
+      <AmbientBackdrop />
       {showLogin && <AuthModal open={showLogin} onClose={() => setShowLogin(false)} />}
       <HeroScene onStart={handleStart} />
       <ProcessScene />

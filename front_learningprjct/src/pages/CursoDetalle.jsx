@@ -7,6 +7,7 @@ import MaterialEstudio from '../components/curso/MaterialEstudio';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
 import { BookOpen, Lock, Loader, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { duration, ease, spring } from '../lib/motion';
 
 export default function CursoDetalle() {
   const { id } = useParams();
@@ -221,10 +222,19 @@ export default function CursoDetalle() {
 
   if (loading || checkingEnrollment) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Loader className="w-12 h-12 text-brand animate-spin" />
-          <p className="text-gray-400">Cargando curso...</p>
+      <div className="mx-auto max-w-[1200px] px-4 pt-14 pb-10 sm:px-6 sm:pt-20 lg:px-8" role="status" aria-busy="true">
+        <span className="sr-only">Cargando curso...</span>
+        <div className="mb-10 aspect-[16/9] w-full animate-pulse rounded-3xl bg-surface sm:aspect-[21/7]" />
+        <div className="h-12 w-3/4 animate-pulse rounded-2xl bg-surface" />
+        <div className="mt-3 h-12 w-1/2 animate-pulse rounded-2xl bg-surface" />
+        <div className="mt-10 max-w-3xl space-y-3">
+          {[100, 96, 92, 70].map((w) => (
+            <div key={w} className="h-4 animate-pulse rounded-lg bg-surface" style={{ width: `${w}%` }} />
+          ))}
+        </div>
+        <div className="mt-12 grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="h-64 animate-pulse rounded-3xl bg-surface" />
+          <div className="h-64 animate-pulse rounded-3xl bg-surface" />
         </div>
       </div>
     );
@@ -327,6 +337,23 @@ export default function CursoDetalle() {
       </AnimatePresence>
 
       <div className="mx-auto max-w-[1200px] px-4 pt-14 pb-10 sm:px-6 sm:pt-20 lg:px-8">
+        {curso.image && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.86, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0, transition: { ...spring.gentle, opacity: { duration: duration.slow, ease: ease.outExpo } } }}
+            className="relative mb-10 aspect-[16/9] w-full origin-top overflow-hidden rounded-3xl border border-line bg-surface shadow-raised sm:aspect-[21/7]"
+          >
+            <motion.img
+              src={curso.image}
+              alt=""
+              decoding="async"
+              initial={{ scale: 1.12 }}
+              animate={{ scale: 1, transition: { duration: duration.reveal * 1.4, ease: ease.outExpo } }}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-canvas/70 via-transparent to-transparent" aria-hidden="true" />
+          </motion.div>
+        )}
         <div className="mb-8 flex w-full flex-row items-start justify-between gap-8">
           {/* Título a la izquierda */}
           <div className="flex-1">
@@ -339,23 +366,25 @@ export default function CursoDetalle() {
                 <Globe className="mx-1.5 h-4 w-4 text-ink-3" />
                 <button
                   onClick={() => seleccionarIdioma('es')}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+                  className={`relative rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                     idiomaSeleccionado !== 'en'
-                      ? 'bg-brand text-on-brand'
+                      ? 'text-on-brand'
                       : 'text-ink-2 hover:text-ink'
                   }`}
                 >
-                  🇪🇸 ES
+                  {idiomaSeleccionado !== 'en' && <motion.span layoutId="idioma-curso" transition={spring.glide} className="absolute inset-0 rounded-full bg-brand" />}
+                  <span className="relative">🇪🇸 ES</span>
                 </button>
                 <button
                   onClick={() => seleccionarIdioma('en')}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+                  className={`relative rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                     idiomaSeleccionado === 'en'
-                      ? 'bg-brand text-on-brand'
+                      ? 'text-on-brand'
                       : 'text-ink-2 hover:text-ink'
                   }`}
                 >
-                  🇬🇧 EN
+                  {idiomaSeleccionado === 'en' && <motion.span layoutId="idioma-curso" transition={spring.glide} className="absolute inset-0 rounded-full bg-brand" />}
+                  <span className="relative">🇬🇧 EN</span>
                 </button>
               </div>
             )}

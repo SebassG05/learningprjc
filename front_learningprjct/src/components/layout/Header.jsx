@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import AuthModal from '../auth/AuthModal';
@@ -8,6 +8,8 @@ import { useToast } from '../../context/ToastContext.jsx';
 import MobileMenu from './MobileMenu';
 import Button from '../ui/Button';
 import { spring } from '../../lib/motion';
+
+const MotionLink = motion.create(Link);
 
 /* Enlace de navegación: la píldora activa se desliza entre enlaces (layoutId) */
 // eslint-disable-next-line react/prop-types
@@ -46,6 +48,10 @@ const Header = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
   const { pathname } = useLocation();
+  // Cabecera progresiva: el material, el borde y la escala del logo siguen al scroll (motion values, sin re-render)
+  const { scrollY } = useScroll();
+  const surfaceOpacity = useTransform(scrollY, [0, 80], [0, 1]);
+  const logoScale = useTransform(scrollY, [0, 80], [1, 0.94]);
 
   // Crear navLinks dinámicamente según el rol del usuario
   const navLinks = useMemo(() => {
@@ -84,18 +90,23 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 material border-b border-line">
+      <header className="sticky top-0 z-50">
+        <motion.div
+          aria-hidden="true"
+          style={{ opacity: surfaceOpacity }}
+          className="pointer-events-none absolute inset-0 -z-10 material border-b border-line shadow-[0_8px_32px_-16px_rgb(0_0_0/0.6)]"
+        />
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
           <nav className="flex h-16 items-center justify-between gap-6" aria-label="Principal">
 
             {/* Logo */}
-            <Link to="/" className="group flex shrink-0 items-center gap-2.5" aria-label="Evenor Tech Campus, inicio">
+            <MotionLink to="/" style={{ scale: logoScale }} className="group flex shrink-0 origin-left items-center gap-2.5" aria-label="Evenor Tech Campus, inicio">
               <span className="font-display text-xl font-bold tracking-tight text-brand transition-opacity duration-200 group-hover:opacity-80">
                 Evenor Tech
               </span>
               <span className="h-4 w-px bg-line-strong" aria-hidden="true" />
               <span className="text-xs font-semibold uppercase tracking-[0.22em] text-ink-3">Campus</span>
-            </Link>
+            </MotionLink>
 
             {/* Desktop Nav */}
             <div className="isolate hidden items-center gap-1 lg:flex">

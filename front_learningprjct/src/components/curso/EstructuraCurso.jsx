@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BookOpen, FileCheck, Trophy, Info, ChevronRight, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { duration, ease } from '../../lib/motion';
 
 export default function EstructuraCurso({ idioma = 'es' }) {
   const [activeSection, setActiveSection] = useState(null);
@@ -295,10 +296,10 @@ export default function EstructuraCurso({ idioma = 'es' }) {
             <AnimatePresence>
               {activeSection === section.id && (
                 <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
+                  transition={{ duration: duration.base, ease: ease.outExpo }}
                   className="overflow-hidden"
                 >
                   <div className="bg-surface rounded-b-xl p-6 mt-[-8px] pt-8" style={{ backgroundColor: 'rgb(17, 24, 39)' }}>

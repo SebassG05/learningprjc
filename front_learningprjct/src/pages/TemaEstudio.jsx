@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { X, ChevronLeft, ChevronRight, BookOpen, ClipboardCheck, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TestEvaluacion from '../components/curso/TestEvaluacion';
+import { duration, ease } from '../lib/motion';
 
 export default function TemaEstudio() {
   const { cursoId } = useParams();
@@ -86,7 +87,7 @@ export default function TemaEstudio() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: duration.base, ease: ease.inOutQuart }}
       className="fixed inset-0 bg-surface z-50 flex flex-col"
     >
       {/* Overlay de carga */}
@@ -95,7 +96,7 @@ export default function TemaEstudio() {
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: duration.base, ease: ease.outExpo }}
             className="absolute inset-0 bg-surface z-[60] flex items-center justify-center"
           >
             <div className="text-center">
@@ -110,7 +111,7 @@ export default function TemaEstudio() {
       <motion.div 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+        transition={{ duration: duration.slow, delay: 0.2, ease: ease.outExpo }}
         className="bg-surface border-b border-line px-6 py-4"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -175,7 +176,7 @@ export default function TemaEstudio() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: duration.base, ease: ease.outExpo }}
               className="h-full flex flex-col"
             >
               {/* PDF Viewer */}
@@ -221,7 +222,7 @@ export default function TemaEstudio() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: duration.base, ease: ease.outExpo }}
               className="h-full"
             >
               <TestEvaluacion 

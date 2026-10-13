@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Cookie } from 'lucide-react';
+import { duration, ease } from '../lib/motion';
 
 const cookiesPropias = [
   { tipo: 'Técnicas', titular: 'EVENOR TECH, S.L.U.', cookie: 'Sesión/Autenticación', finalidad: 'Identificar al usuario durante la sesión, gestión de la plataforma.', conservacion: 'Sesión / Hasta 1 año' },
@@ -32,7 +33,7 @@ export default function PoliticaCookies() {
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center mb-12">
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: duration.scene, ease: ease.outExpo }} className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand hover:bg-brand-300 mb-6 shadow-card shadow-brand/30">
             <Cookie className="w-10 h-10 text-on-brand" />
           </div>
@@ -180,7 +181,7 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Configuración del navegador */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="bg-surface rounded-2xl p-6 border border-line">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.17 }} className="bg-surface rounded-2xl p-6 border border-line">
             <h2 className="text-xl font-bold text-brand mb-3">Configuración del Navegador</h2>
             <p className="text-gray-300 text-sm mb-4 leading-relaxed">
               Puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de su navegador. Acceda a la página de soporte de su navegador:
@@ -198,7 +199,7 @@ export default function PoliticaCookies() {
           </motion.div>
 
           {/* Footer */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-6 border border-line text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-6 border border-line text-center">
             <p className="text-gray-400 text-sm">
               La presente política puede ser actualizada. Para ejercer sus derechos o consultas, diríjase a{' '}
               <a href="mailto:info@evenor-tech.com" className="text-brand hover:underline">info@evenor-tech.com</a>

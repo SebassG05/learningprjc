@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import ArrowUpIcon from '../ui/ArrowUpIcon';
+import { glideTo } from '../../lib/smoothScroll';
 
 export default function ScrollToTop() {
-  const { pathname } = useLocation();
   const [show, setShow] = useState(false);
 
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [pathname]);
+  // La posición al cambiar de ruta la restaura App, al terminar la salida de la página
 
   // Show button on scroll
   useEffect(() => {
@@ -21,7 +17,7 @@ export default function ScrollToTop() {
   }, []);
 
   const handleClick = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    glideTo(0);
   };
 
   return (

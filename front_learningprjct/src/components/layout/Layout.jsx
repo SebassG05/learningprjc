@@ -1,6 +1,5 @@
 import PageBackground from './PageBackground';
 import Header from './Header';
-import Footer from './Footer';
 import CookieBanner from '../cookies/CookieBanner';
 
 const Layout = ({ children }) => {
@@ -17,7 +16,6 @@ const Layout = ({ children }) => {
         <main id="contenido" className="flex-grow">
           {children}
         </main>
-        <Footer />
       </div>
       <CookieBanner />
     </PageBackground>

@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import ScrollToTop from './components/layout/ScrollToTop';
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useLayoutEffect, useRef } from 'react';
 import Layout from './components/layout/Layout';
+import Footer from './components/layout/Footer';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
-import { duration, ease } from './lib/motion';
+import { distance, duration, ease } from './lib/motion';
+import { glideToHash, jumpTo, startSmoothScroll, stopSmoothScroll } from './lib/smoothScroll';
 import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import ReviewsPage from './pages/Reviews.jsx';
@@ -17,11 +19,53 @@ import Privacidad from './pages/Privacidad.jsx';
 import TerminosUso from './pages/TerminosUso.jsx';
 import AvisoLegal from './pages/AvisoLegal.jsx';
 
+// Posiciones de scroll por entrada del historial, para restaurarlas al volver atrás
+const scrollPositions = new Map();
+
+// Restaura el scroll cuando la página saliente ya es invisible. Si el destino aún está cargando
+// datos y no alcanza la altura, reintenta unos fotogramas (se cancela si el usuario hace scroll).
+function restoreScroll({ y, hash }) {
+  if (hash && glideToHash(hash, { immediate: true })) return;
+  jumpTo(y);
+  if (y <= 0) return;
+  let cancelled = false;
+  const cancel = () => { cancelled = true; };
+  window.addEventListener('wheel', cancel, { once: true, passive: true });
+  window.addEventListener('touchstart', cancel, { once: true, passive: true });
+  const until = performance.now() + 1200;
+  (function retry() {
+    if (cancelled || Math.abs(window.scrollY - y) < 2 || performance.now() > until) return;
+    jumpTo(y);
+    requestAnimationFrame(retry);
+  })();
+}
+
 function AnimatedRoutes() {
   const location = useLocation();
-  
+  const navigationType = useNavigationType();
+  const target = useRef(null);
+
+  // Guarda la posición de la entrada que se abandona (la página saliente sigue montada)
+  useLayoutEffect(() => {
+    const key = location.key;
+    return () => { scrollPositions.set(key, window.scrollY); };
+  }, [location.key]);
+
+  target.current = {
+    y: navigationType === 'POP' ? scrollPositions.get(location.key) ?? 0 : 0,
+    hash: location.hash,
+  };
+
+  // Enlace directo con #seccion al cargar la app
+  useEffect(() => {
+    if (location.hash) {
+      const t = setTimeout(() => glideToHash(location.hash), 400);
+      return () => clearTimeout(t);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" onExitComplete={() => restoreScroll(target.current)}>
       <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Home /></PageTransition>} />
           <Route path="/reset-password" element={
@@ -81,14 +125,17 @@ function AnimatedRoutes() {
   );
 }
 
+// La página sale (rápida, acelerando) y la nueva entra; el pie viaja con la página para que no salte.
 function PageTransition({ children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      className="flex min-h-[calc(100svh-4rem)] flex-col"
+      initial={{ opacity: 0, y: distance.page }}
       animate={{ opacity: 1, y: 0, transition: { duration: duration.slow, ease: ease.outExpo } }}
-      exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.standard } }}
+      exit={{ opacity: 0, y: -8, transition: { duration: duration.fast, ease: ease.exit } }}
     >
-      {children}
+      <div className="flex-grow">{children}</div>
+      <Footer />
     </motion.div>
   );
 }
@@ -104,6 +151,13 @@ function RouteFallback() {
 }
 
 function App() {
+  // Scroll con inercia (solo ratón/trackpad y sin reduced-motion) y restauración manual del scroll
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+    startSmoothScroll();
+    return stopSmoothScroll;
+  }, []);
+
   return (
     <MotionConfig reducedMotion="user">
       <Router>

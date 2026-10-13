@@ -6,6 +6,7 @@ import {
   CheckCircle, Loader, ChevronDown, ChevronUp, ChevronLeft, Image as ImageIcon
 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
+import { duration, ease } from '../lib/motion';
 
 export default function AdminCursos() {
   const { showToast } = useToast();
@@ -1524,9 +1525,9 @@ export default function AdminCursos() {
                 <AnimatePresence>
                   {cursoExpandido === curso._id && (
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
                       className="mt-4 pt-4 border-t border-line"
                     >
                       {curso.objetivosGenerales && curso.objetivosGenerales.length > 0 && (

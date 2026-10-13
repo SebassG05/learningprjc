@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { motion } from 'framer-motion';
-import { fadeUp, inView, stagger } from '../../lib/motion';
+import { fadeUp, fadeUpSoft, inView, stagger, staggerGroup } from '../../lib/motion';
 
 // Entrada al entrar en el viewport. Con `group`, escalona a los hijos <Reveal.Item>.
-const Reveal = ({ as = 'div', group = false, step = 0.07, delay = 0, className = '', children, ...props }) => {
+// `soft` usa la entrada contenida de las pantallas de trabajo.
+const Reveal = ({ as = 'div', group = false, soft = false, step = stagger.cards, delay = 0, className = '', children, ...props }) => {
   const Comp = motion[as];
   return (
     <Comp
@@ -11,7 +12,7 @@ const Reveal = ({ as = 'div', group = false, step = 0.07, delay = 0, className =
       initial="hidden"
       whileInView="show"
       viewport={inView}
-      variants={group ? stagger(step, delay) : fadeUp}
+      variants={group ? staggerGroup(soft ? stagger.list : step, delay) : (soft ? fadeUpSoft : fadeUp)}
       {...props}
     >
       {children}
@@ -19,10 +20,10 @@ const Reveal = ({ as = 'div', group = false, step = 0.07, delay = 0, className =
   );
 };
 
-const Item = ({ as = 'div', className = '', children, ...props }) => {
+const Item = ({ as = 'div', soft = false, className = '', children, ...props }) => {
   const Comp = motion[as];
   return (
-    <Comp className={className} variants={fadeUp} {...props}>
+    <Comp className={className} variants={soft ? fadeUpSoft : fadeUp} {...props}>
       {children}
     </Comp>
   );

@@ -149,10 +149,11 @@
 }
 
 :root {
-    --duration-fast: 150ms;
-    --duration-base: 250ms;
-    --duration-slow: 400ms;
+    --duration-fast: 180ms;
+    --duration-base: 280ms;
+    --duration-slow: 450ms;
     --duration-scene: 700ms;
+    --duration-reveal: 900ms;
     color-scheme: dark;
 }
 
@@ -220,6 +221,31 @@
     button:not(:disabled),
     [role="button"]:not([aria-disabled="true"]) {
         cursor: pointer;
+    }
+}
+
+/* Respuesta inmediata al pulsar (en pointer-down), usando `scale` para no pisar los transforms de Motion */
+@layer base {
+    button:not(:disabled),
+    a[href] {
+        transition-property: color, background-color, border-color, box-shadow, opacity, scale;
+        transition-duration: var(--duration-fast);
+        transition-timing-function: var(--ease-out-expo);
+    }
+
+    button:not(:disabled):active {
+        scale: 0.97;
+        transition-duration: 100ms;
+    }
+}
+
+/* Materiales sólidos cuando el usuario reduce las transparencias */
+@media (prefers-reduced-transparency: reduce) {
+    .material,
+    .material-thick {
+        background-color: var(--color-surface-2);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
     }
 }
 

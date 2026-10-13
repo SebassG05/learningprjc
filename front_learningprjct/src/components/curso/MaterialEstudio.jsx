@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { duration, ease } from '../../lib/motion';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck, Lock, Trophy } from 'lucide-react';
 
@@ -159,17 +161,18 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
                     <h3 className="mb-2 font-sans text-xl font-semibold text-ink">{tituloTema}</h3>
                     {descTema && (
                       <div>
-                        <div 
-                          className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                            isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-[120px] opacity-95'
-                          }`}
-                        >
-                          <p className="text-sm leading-relaxed text-ink-2">
+                        <div>
+                          <motion.p
+                            key={isExpanded ? 'completo' : 'resumen'}
+                            initial={{ opacity: 0.4 }}
+                            animate={{ opacity: 1, transition: { duration: duration.base, ease: ease.outExpo } }}
+                            className="text-sm leading-relaxed text-ink-2"
+                          >
                             {displayText}
                             {isTruncated && !isExpanded && (
-                              <span className="inline-block animate-pulse">...</span>
+                              <span className="inline-block">...</span>
                             )}
-                          </p>
+                          </motion.p>
                         </div>
                         {isTruncated && (
                           <button

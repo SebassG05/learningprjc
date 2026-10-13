@@ -6,6 +6,7 @@ import {
   LogIn, User, X, Crown, ExternalLink, ArrowRight,
   Mail, Eye, EyeOff, LogOut
 } from 'lucide-react';
+import { duration, ease } from '../../lib/motion';
 // import { useAuth } from '../../context/AuthContext';
 // import { usePWAInstall } from '../../hooks/usePWAInstall';
 
@@ -68,7 +69,7 @@ const MobileMenu = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: duration.base, ease: ease.outExpo }}
           className="fixed inset-0 z-40 lg:hidden"
           onClick={onClose}
         >
@@ -100,7 +101,7 @@ const MobileMenu = ({
                         </div>
                         <motion.div
                           animate={{ rotate: activeDropdown === item.name ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: duration.base, ease: ease.outExpo }}
                         >
                           <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                         </motion.div>
@@ -108,10 +109,10 @@ const MobileMenu = ({
                       <AnimatePresence>
                         {activeDropdown === item.name && (
                           <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            initial={{ opacity: 0, y: -6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
+                            transition={{ duration: duration.base, ease: ease.outExpo }}
                             className="overflow-hidden bg-surface-2/70"
                           >
                             <div className="p-2 sm:p-3 space-y-1">
@@ -130,8 +131,8 @@ const MobileMenu = ({
                                     <span className="truncate">{subItem.name}</span>
                                     {location.pathname === subItem.path && (
                                       <motion.div
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: 1 }}
+                                        initial={{ scale: 0.5, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
                                         className="w-1.5 h-1.5 rounded-full bg-surface-2 flex-shrink-0 ml-2"
                                       />
                                     )}

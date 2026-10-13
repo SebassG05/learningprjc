@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { spring } from '../lib/motion';
 import { 
   FileText, Download, CheckCircle, XCircle, Clock, 
   Search, Filter, Eye, Save, Loader, AlertCircle, User,
@@ -295,47 +296,59 @@ export default function CorreccionesAdmin() {
          <div className="inline-flex gap-1 rounded-full border border-line bg-white/[0.03] p-1">
           <button
             onClick={() => setActiveTab('correcciones')}
-            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
+            className={`relative flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'correcciones'
-                ? 'bg-brand text-on-brand'
+                ? 'text-on-brand'
                 : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
-            <FileText className="w-4 h-4" />
-            Correcciones
+            {activeTab === 'correcciones' && <motion.span layoutId="admin-tab" transition={spring.glide} className="absolute inset-0 rounded-full bg-brand" />}
+            <span className="relative flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              Correcciones
+              </span>
           </button>
           <button
             onClick={() => setActiveTab('reservas')}
-            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
+            className={`relative flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'reservas'
-                ? 'bg-brand text-on-brand'
+                ? 'text-on-brand'
                 : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
-            <Users className="w-4 h-4" />
-            Ver Reservas
+            {activeTab === 'reservas' && <motion.span layoutId="admin-tab" transition={spring.glide} className="absolute inset-0 rounded-full bg-brand" />}
+            <span className="relative flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Ver Reservas
+              </span>
           </button>
           <button
             onClick={() => setActiveTab('progreso')}
-            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
+            className={`relative flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'progreso'
-                ? 'bg-brand text-on-brand'
+                ? 'text-on-brand'
                 : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
-            <TrendingUp className="w-4 h-4" />
-            Progreso del Curso
+            {activeTab === 'progreso' && <motion.span layoutId="admin-tab" transition={spring.glide} className="absolute inset-0 rounded-full bg-brand" />}
+            <span className="relative flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              Progreso del Curso
+              </span>
           </button>
           <button
             onClick={() => setActiveTab('gestion-cursos')}
-            className={`flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
+            className={`relative flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 ${
               activeTab === 'gestion-cursos'
-                ? 'bg-brand text-on-brand'
+                ? 'text-on-brand'
                 : 'text-ink-2 hover:bg-white/[0.06] hover:text-ink'
             }`}
           >
-            <Settings className="w-4 h-4" />
-            Gestión de Cursos
+            {activeTab === 'gestion-cursos' && <motion.span layoutId="admin-tab" transition={spring.glide} className="absolute inset-0 rounded-full bg-brand" />}
+            <span className="relative flex items-center gap-2">
+              <Settings className="w-4 h-4" />
+              Gestión de Cursos
+              </span>
           </button>
          </div>
         </div>

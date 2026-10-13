@@ -30,6 +30,10 @@ import {
   Sparkles
 } from 'lucide-react';
 import Container from '../components/ui/Container';
+import SplitText from '../components/ui/SplitText';
+import StickyIntro from '../components/ui/StickyIntro';
+import { duration, ease, spring } from '../lib/motion';
+import { glideTo } from '../lib/smoothScroll';
 
 
 const Contact = () => {
@@ -68,10 +72,7 @@ const Contact = () => {
     if (location.state && location.state.scrollToForm && containerRef.current) {
       const headerOffset = 80; // Ajusta según el alto de tu header
       const elementPosition = containerRef.current.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementPosition - headerOffset,
-        behavior: 'smooth'
-      });
+      glideTo(elementPosition - headerOffset);
     }
   }, [location.state]);
 
@@ -187,23 +188,19 @@ const Contact = () => {
       {/* Decoraciones de fondo */}
 
       <Container>
-        {/* Header Principal */}
+        {/* Header Principal fijado: el formulario se desliza por encima */}
+        <StickyIntro distance={360}>
         <motion.div
           ref={sectionRef}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 relative z-10"
+          transition={{ duration: duration.slow, ease: ease.outExpo }}
+          className="text-center mb-12"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
-            animate={isInView ? { scale: 1, rotate: 0 } : {}}
-            transition={{ 
-              type: "spring",
-              stiffness: 200,
-              damping: 15,
-              delay: 0.2
-            }}
+            animate={isInView ? { scale: 1, opacity: 1 } : {}}
+            transition={{ ...spring.gentle, delay: 0.1 }}
             className="inline-flex items-center px-4 py-2 bg-surface-2 border border-line rounded-full mb-4"
           >
             <Sparkles className="w-4 h-4 text-brand mr-2" />
@@ -212,21 +209,22 @@ const Contact = () => {
             </span>
           </motion.div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-4 font-[Rondana]">
+          <SplitText as="h1" trigger="mount" delay={0.15} className="mb-4 block text-title-1 font-bold text-ink">
             ¿Listo para empezar con <span className="text-brand">tu proyecto</span>?
-          </h1>
+          </SplitText>
 
           <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
             Estamos disponibles para responder todas tus preguntas
           </p>
         </motion.div>
+        </StickyIntro>
 
         {/* Contenedor principal en grid */}
         <motion.div
           ref={mainRef}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={mainInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: duration.scene, ease: ease.outExpo, delay: 0.2 }}
           className="grid lg:grid-cols-3 gap-8 relative z-10"
         >
           {/* Columna izquierda: Información de contacto */}
@@ -277,7 +275,7 @@ const Contact = () => {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={mainInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.35 }}
               className="bg-surface-2 border border-line-strong rounded-xl overflow-hidden"
             >
               <iframe
@@ -298,7 +296,7 @@ const Contact = () => {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={mainInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.2 }}
               className="bg-surface-2 border border-line-strong rounded-2xl p-6 sm:p-8"
             >
               <h2 className="text-2xl font-bold text-ink mb-6">
@@ -453,7 +451,7 @@ const Contact = () => {
                       className="absolute inset-0 bg-white"
                       initial={{ x: '-100%', opacity: 0.3 }}
                       animate={isHoveringButton ? { x: '100%' } : {}}
-                      transition={{ duration: 0.6 }}
+                      transition={{ duration: duration.scene, ease: ease.outExpo }}
                     />
                   )}
 

@@ -4,7 +4,10 @@ import { BookOpen, Clock, Globe, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Container from '../components/ui/Container';
 import Reveal from '../components/ui/Reveal';
-import { fadeUp, spring } from '../lib/motion';
+import SplitText from '../components/ui/SplitText';
+import StickyIntro from '../components/ui/StickyIntro';
+import ParallaxImage from '../components/ui/ParallaxImage';
+import { fadeUp, spring, stagger } from '../lib/motion';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -114,13 +117,15 @@ export default function Cursos() {
 
   return (
     <Container className="pt-16 pb-24 sm:pt-24">
-      {/* Encabezado */}
-      <Reveal group className="mb-14 flex flex-col items-start gap-4 sm:mb-20">
-        <Reveal.Item as="span" className="eyebrow">Cursos</Reveal.Item>
-        <Reveal.Item as="h1" className="text-display font-bold text-ink">
-          Nuestros <span className="text-brand">cursos</span>
-        </Reveal.Item>
-      </Reveal>
+      {/* Encabezado fijado: las tarjetas se deslizan por encima */}
+      <StickyIntro className="mb-14 sm:mb-20">
+        <div className="flex flex-col items-start gap-4">
+          <Reveal as="span" className="eyebrow">Cursos</Reveal>
+          <SplitText as="h1" trigger="mount" className="block text-display font-bold text-ink">
+            Nuestros <span className="text-brand">cursos</span>
+          </SplitText>
+        </div>
+      </StickyIntro>
 
       {/* Modal de login si es necesario */}
       <AuthModal open={showLogin} onClose={handleCloseLogin} />
@@ -180,7 +185,8 @@ export default function Cursos() {
         )}
       </AnimatePresence>
 
-      {/* Tarjetas de cursos */}
+      {/* Tarjetas de cursos (por encima del encabezado fijado) */}
+      <div className="relative z-10">
       {loading ? (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" aria-busy="true">
           {[0, 1, 2].map((i) => (
@@ -197,7 +203,7 @@ export default function Cursos() {
       ) : courses.length === 0 ? (
         <div className="rounded-3xl border border-line bg-surface py-20 text-center text-ink-2">No hay cursos disponibles.</div>
       ) : (
-        <Reveal group step={0.08} className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Reveal group step={stagger.cards} className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {courses.map(course => {
             const { title: courseTitle, description: courseDesc } = getCourseText(course);
             const progress = courseProgress[course._id] || 0;
@@ -214,12 +220,10 @@ export default function Cursos() {
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
                   {course.image ? (
-                    <img
+                    <ParallaxImage
                       src={course.image}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                      strength={6}
+                      className="h-full w-full transition-[scale] duration-700 ease-out-expo group-hover:scale-[1.04]"
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-brand"><BookOpen className="h-12 w-12" /></div>
@@ -277,6 +281,7 @@ export default function Cursos() {
           })}
         </Reveal>
       )}
+      </div>
     </Container>
   );
 }

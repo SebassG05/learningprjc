@@ -2,6 +2,9 @@ import React from "react";
 import { Briefcase, Users, Award, HeartHandshake, Star, Globe, MessageCircle, Target, Eye, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ParallaxImage from '../components/ui/ParallaxImage';
+import SplitText from '../components/ui/SplitText';
+import StickyIntro from '../components/ui/StickyIntro';
+import { duration, ease, spring, stagger } from '../lib/motion';
 
 const team = [
   { name: 'Maria Anaya Romero', role: 'CEO & Fundador', img: '', linkedin: 'https://www.linkedin.com/in/mar%C3%ADa-anaya-romero-95005727/' },
@@ -70,22 +73,18 @@ export default function SobreNosotros() {
     <div className="max-w-5xl mx-auto py-12 px-4">
       {/* Encabezado animado */}
       <section className="mb-20">
-        {/* Header Principal animado */}
+        {/* Header Principal fijado: los valores se deslizan por encima */}
+        <StickyIntro>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 relative z-10"
+          transition={{ duration: duration.slow, ease: ease.outExpo }}
+          className="text-center mb-12"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 200,
-              damping: 15,
-              delay: 0.2
-            }}
+            transition={{ ...spring.gentle, delay: 0.1 }}
             className="inline-flex items-center px-4 py-2 bg-surface-2 border border-line rounded-full mb-4"
           >
             <Sparkles className="w-4 h-4 text-brand mr-2" />
@@ -95,17 +94,19 @@ export default function SobreNosotros() {
           </motion.div>
         </motion.div>
 
-        <h1 className="text-display font-bold text-ink mb-14 text-center">
+        <SplitText as="h1" trigger="mount" delay={0.15} className="block text-display font-bold text-ink mb-14 text-center">
           Sobre <span className="text-brand">Evenor-Tech</span>
-        </h1>
+        </SplitText>
+        </StickyIntro>
         <motion.div
-          className="flex flex-wrap justify-center gap-6 mt-8"
+          className="relative z-10 flex flex-wrap justify-center gap-6 mt-8"
           initial="hidden"
           animate="visible"
           variants={{
             visible: {
               transition: {
-                staggerChildren: 0.18
+                staggerChildren: stagger.cards,
+                delayChildren: 0.35
               }
             },
             hidden: {}
@@ -116,8 +117,8 @@ export default function SobreNosotros() {
               key={i}
               className="bg-surface rounded-3xl p-6 w-full sm:w-64 flex flex-col items-center shadow-card border border-line"
               variants={{
-                hidden: { opacity: 0, y: 40 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+                hidden: { opacity: 0, y: 24 },
+                visible: { opacity: 1, y: 0, transition: { duration: duration.scene, ease: ease.outExpo } }
               }}
             >
               {v.icon}
@@ -208,13 +209,12 @@ export default function SobreNosotros() {
         {/* Testimonial Data */}
         <div className="relative flex flex-col items-center">
           {/* Card */}
-          <AnimatePresence mode="wait" initial={false}>
+          <AnimatePresence mode="popLayout" initial={false}>
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: direction === 1 ? 40 : -40, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: direction === 1 ? -40 : 40, scale: 0.96 }}
-              transition={{ duration: 0.7, ease: [0.4, 0.0, 0.2, 1] }}
+              initial={{ opacity: 0, x: direction === 1 ? 56 : -56 }}
+              animate={{ opacity: 1, x: 0, transition: spring.gentle }}
+              exit={{ opacity: 0, x: direction === 1 ? -56 : 56, transition: { duration: duration.fast, ease: ease.exit } }}
               className="w-full max-w-3xl bg-surface/90 border border-line rounded-2xl shadow-card px-8 py-10 flex flex-col items-center relative"
             >
               <MessageCircle className="w-12 h-12 text-brand absolute -top-6 left-8 bg-surface rounded-full p-2 shadow" />

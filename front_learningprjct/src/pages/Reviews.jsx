@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { Star, CheckCircle } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
+import { duration, ease, spring } from '../lib/motion';
+import { glideTo } from '../lib/smoothScroll';
 import { Sparkles } from 'lucide-react';
 
 const fetchReviews = async () => {
@@ -77,7 +79,7 @@ export default function ReviewsPage() {
         setSuccess(false);
         navigate('/');
         setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          glideTo(0);
         }, 100); // Espera breve para asegurar que la navegación ocurrió
       }, 1000);
     } catch {
@@ -96,11 +98,11 @@ export default function ReviewsPage() {
       <div className="flex flex-col items-center justify-center text-center mb-8">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
-          animate={isInView ? { scale: 1, rotate: 0 } : {}}
-          transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+          animate={isInView ? { scale: 1, opacity: 1 } : {}}
+          transition={{ ...spring.gentle, delay: 0.1 }}
           className="inline-flex items-center px-4 py-2 bg-surface-2 border border-line rounded-full mb-4"
         >
-          <Sparkles className="w-4 h-4 text-brand mr-2 animate-pulse" />
+          <Sparkles className="w-4 h-4 text-brand mr-2" />
           <span className="text-xs sm:text-sm font-semibold text-brand">
             Reseñas
           </span>
@@ -111,13 +113,13 @@ export default function ReviewsPage() {
         ref={sectionRef}
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: duration.scene, ease: ease.outExpo }}
         className="bg-surface/80 backdrop-blur-md border border-line rounded-3xl shadow-card px-4 sm:px-10 py-10 relative z-10"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: duration.scene, delay: 0.1, ease: ease.outExpo }}
           className="text-center"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-4">
@@ -183,10 +185,10 @@ export default function ReviewsPage() {
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: duration.slow, ease: ease.outExpo }}
                 className="flex items-center justify-center gap-2 p-4 mb-4 rounded-xl bg-surface-2 border border-line shadow-card text-brand text-base font-semibold"
               >
-                <CheckCircle className="w-6 h-6 text-brand animate-bounce" />
+                <CheckCircle className="w-6 h-6 text-brand" />
                 ¡Reseña publicada con éxito!
               </motion.div>
             )}
@@ -197,7 +199,7 @@ export default function ReviewsPage() {
             className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface via-surface to-surface border border-line p-8 mb-10 shadow-card"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.3, duration: duration.slow, ease: ease.outExpo }}
           >
             {/* Efecto de brillo de fondo */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand/5 to-transparent animate-pulse" />

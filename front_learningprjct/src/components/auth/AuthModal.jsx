@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import { inputClass } from '../ui/Field';
-import { ease, spring } from '../../lib/motion';
+import { duration, ease, spring } from '../../lib/motion';
 
 const AuthModal = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const AuthModal = ({ open, onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: duration.base, ease: ease.outExpo }}
           style={{ pointerEvents: open ? 'auto' : 'none' }}
         >
           <motion.div
@@ -147,7 +147,7 @@ const AuthModal = ({ open, onClose }) => {
                   initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -16 }}
-                  transition={{ duration: 0.2, ease: ease.outExpo }}
+                  transition={{ duration: duration.fast, ease: ease.outExpo }}
                   className="flex flex-col gap-4"
                   onSubmit={async (e) => {
                     e.preventDefault();
@@ -244,7 +244,7 @@ const AuthModal = ({ open, onClose }) => {
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 16 }}
-                  transition={{ duration: 0.2, ease: ease.outExpo }}
+                  transition={{ duration: duration.fast, ease: ease.outExpo }}
                   className="flex flex-col gap-4"
                   onSubmit={async (e) => {
                     e.preventDefault();

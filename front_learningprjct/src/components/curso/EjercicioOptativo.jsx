@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, ExternalLink, Clock, Target, CheckCircle, ChevronDown, ChevronUp, AlertCircle, FileUp, Lock, RefreshCw } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
+import { duration, ease } from '../../lib/motion';
 
 export default function EjercicioOptativo({ ejercicio, cursoId }) {
   const [expandido, setExpandido] = useState(false);
@@ -57,7 +58,7 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: duration.slow, ease: ease.outExpo }}
       className="bg-gradient-to-br from-surface/80 to-surface/80 rounded-2xl border-2 border-line overflow-hidden shadow-card hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300"
     >
       {/* Header */}
@@ -148,10 +149,10 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
       <AnimatePresence>
         {expandido && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
+            transition={{ duration: duration.base, ease: ease.outExpo }}
             className="overflow-hidden"
           >
             <div className="p-6 space-y-6">

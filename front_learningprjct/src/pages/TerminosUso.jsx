@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { FileText, CheckCircle, AlertTriangle, Scale, Users, Clock, XCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { duration, ease } from '../lib/motion';
 
 export default function TerminosUso() {
   const containerRef = useRef(null);
@@ -147,7 +148,7 @@ export default function TerminosUso() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: duration.scene, ease: ease.outExpo }}
           className="text-center mb-12"
         >
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand hover:bg-brand-300 mb-6 shadow-card shadow-brand/30">
@@ -169,7 +170,7 @@ export default function TerminosUso() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: duration.scene, delay: 0.2, ease: ease.outExpo }}
           className="space-y-8"
         >
           {sections.map((section, idx) => {
@@ -179,7 +180,7 @@ export default function TerminosUso() {
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + (idx * 0.1) }}
+                transition={{ duration: duration.slow, delay: 0.3 + (idx * 0.1), ease: ease.outExpo }}
                 className="bg-surface rounded-2xl p-8 border border-line hover:border-brand/40 transition-all duration-300 shadow-card"
               >
                 <div className="flex items-start gap-4 mb-6">
@@ -212,7 +213,7 @@ export default function TerminosUso() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
+          transition={{ duration: duration.scene, delay: 0.5, ease: ease.outExpo }}
           className="mt-12 bg-gradient-to-br from-brand/10 to-brand-500/5 rounded-2xl p-8 border border-line"
         >
           <div className="flex items-start gap-4">
@@ -233,7 +234,7 @@ export default function TerminosUso() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: duration.scene, delay: 0.6, ease: ease.outExpo }}
           className="mt-8 text-center text-sm text-gray-500"
         >
           <p>
