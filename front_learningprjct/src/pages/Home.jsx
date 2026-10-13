@@ -9,7 +9,8 @@ import SectionHeading from '../components/ui/SectionHeading';
 import SplitText from '../components/ui/SplitText';
 import { useUser } from '../context/UserContext';
 import AuthModal from '../components/auth/AuthModal';
-import GlobeStage from '../components/globe/GlobeStage';
+import GlobeStage, { GlobeAnchor } from '../components/globe/GlobeStage';
+import { emitPulse, setCtaBoost, setReviewCount, useJourneyHorizon, useJourneySection } from '../components/globe/journey/store';
 import FloatingCards from '../components/globe/FloatingCards';
 import { useScenesEnabled, useSceneProgress } from '../hooks/useScene';
 import useMediaQuery from '../hooks/useMediaQuery';
@@ -26,17 +27,18 @@ import { glideTo } from '../lib/smoothScroll';
  */
 
 /* ==========================================================================
-   Fondo ambiental: el globo es el fondo del hero; aquí solo el tono de las escenas siguientes
+   Fondo: un único lienzo 3D fijo (GlobeStage) recorre la página como un viaje de vuelta a la
+   Tierra: globo (hero) → espacio profundo (FAQ) → órbita (reseñas) → horizonte al amanecer (CTA).
+   Las secciones solo registran su progreso y el estado que ya tienen; el lienzo lo lee por frame.
+   Aquí, además, el tono ambiental del proceso.
    ========================================================================== */
 
 const AmbientBackdrop = () => {
   const { scrollYProgress } = useScroll();
   const process = useTransform(scrollYProgress, [0.12, 0.26, 0.48, 0.6], [0, 1, 1, 0]);
-  const finale = useTransform(scrollYProgress, [0.78, 0.96], [0, 1]);
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
       <motion.div style={{ opacity: process }} className="absolute left-[-20vw] top-[10vh] h-[90vh] w-[80vw] rounded-[50%] bg-[radial-gradient(closest-side,rgb(133_200_105/0.09),transparent)]" />
-      <motion.div style={{ opacity: finale }} className="absolute bottom-[-30vh] left-1/2 h-[80vh] w-[100vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.12),transparent)]" />
     </div>
   );
 };
@@ -180,9 +182,9 @@ const HeroScene = ({ onStart }) => {
   const exitOpacity = useTransform(p, [0.6, 0.8], [1, 0]);
   const exitScale = useTransform(p, [0.6, 0.86], [1, 0.94]);
   const exitY = useTransform(p, [0.6, 0.86], [0, -60]);
-  // El globo se atenúa detrás de las ventajas y se va con la escena
+  // Las tarjetas flotantes se atenúan con el globo y se van con la escena
   const globeOpacity = useTransform(p, [0.26, 0.42, 0.6, 0.8], [1, 0.5, 0.5, 0]);
-  // Fondo y velo del hero se funden con la salida para no dejar un corte sobre el ambiente de la página
+  // El velo del hero se funde con la salida para no dejar un corte sobre el fondo de la página
   const backdropOpacity = useTransform(p, [0.6, 0.8], [1, 0]);
   // Solo es pulsable la capa que se ve: las ventajas (invisibles al principio) no tapan los botones del hero
   const copyPointer = useTransform(p, (v) => (v < 0.2 ? 'auto' : 'none'));
@@ -195,7 +197,7 @@ const HeroScene = ({ onStart }) => {
         <section className="relative -mt-header overflow-hidden lg:-mt-header-lg">
           {wide && (
             <>
-              <GlobeStage progress={null} layout="side" className="absolute inset-0" />
+              <GlobeAnchor layout="side" className="absolute inset-0" />
               <HeroVeil />
             </>
           )}
@@ -205,7 +207,7 @@ const HeroScene = ({ onStart }) => {
             </div>
           </Site>
           {!wide && (
-            <GlobeStage progress={null} layout="center" className="relative mx-auto -mt-2 aspect-square w-full max-w-[30rem]" />
+            <GlobeAnchor layout="center" className="relative mx-auto -mt-2 aspect-square w-full max-w-[30rem]" />
           )}
         </section>
         <section className="pb-24 pt-12 md:pt-24">
@@ -225,10 +227,11 @@ const HeroScene = ({ onStart }) => {
   return (
     <section ref={ref} className="relative -mt-header h-[260vh] lg:-mt-header-lg">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <motion.div aria-hidden="true" style={{ opacity: backdropOpacity }} className="absolute inset-0 bg-canvas" />
-        <GlobeStage progress={p} observe={ref} layout="side" style={{ opacity: globeOpacity }} className="absolute inset-0">
+        {/* El globo lo pinta el lienzo de la página encajado en este ancla; las tarjetas van encima */}
+        <GlobeAnchor progress={p} layout="side" className="absolute inset-0" />
+        <motion.div aria-hidden="true" style={{ opacity: globeOpacity }} className="pointer-events-none absolute inset-0">
           <FloatingCards progress={p} />
-        </GlobeStage>
+        </motion.div>
         <motion.div style={{ opacity: backdropOpacity }} className="absolute inset-0">
           <HeroVeil />
         </motion.div>
@@ -399,8 +402,18 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
   ];
   const [openIdx, setOpenIdx] = useState(null);
   const scenes = useScenesEnabled();
+  const ref = useRef(null);
+  useJourneySection(ref, 'faq');
+  // Fondo: al abrir una pregunta sale un pulso desde su chevron (solo lee el estado del acordeón)
+  useEffect(() => {
+    if (openIdx === null) return;
+    const r = document.querySelector(`[aria-controls="faq-answer-${openIdx}"]`)?.getBoundingClientRect();
+    if (r) emitPulse(openIdx, r.right - 16, r.top + r.height / 2);
+  }, [openIdx]);
   return (
-    <section className={`relative z-10 py-24 sm:py-32 ${scenes ? '-mt-[90vh]' : ''}`}>
+    <section ref={ref} className={`relative z-10 py-24 sm:py-32 ${scenes ? '-mt-[90vh]' : ''}`}>
+      {/* Velo de lectura: el espacio profundo queda detrás del texto casi sin contraste */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_55%_at_55%_50%,rgb(10_10_11/0.72),transparent)]" />
       <Site>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -503,6 +516,7 @@ const Stars = ({ rating, size = 'h-4 w-4' }) => (
 );
 
 const ReviewsCarousel = () => {
+  const sectionRef = useRef(null);
   const carouselRef = useRef(null);
   const [modalReview, setModalReview] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -515,6 +529,12 @@ const ReviewsCarousel = () => {
       .catch(() => setError('No se pudieron cargar las reseñas'))
       .finally(() => setLoading(false));
   }, []);
+
+  // Fondo: un satélite por reseña cargada (lee los datos que ya hay; sin llamadas nuevas)
+  useJourneySection(sectionRef, 'reviews');
+  useEffect(() => {
+    setReviewCount(loading || error ? null : reviews.length);
+  }, [loading, error, reviews.length]);
 
   // Drag to scroll horizontal
   let isDown = false;
@@ -557,7 +577,7 @@ const ReviewsCarousel = () => {
   }, []);
 
   return (
-    <section className="relative py-24 sm:py-32">
+    <section ref={sectionRef} className="relative py-24 sm:py-32">
       <Site>
         <SectionHeading eyebrow="Reseñas" title="¿Qué opinan nuestros estudiantes?" />
         <div className="custom-scrollbar mt-12 select-none overflow-x-auto pb-4">
@@ -576,7 +596,7 @@ const ReviewsCarousel = () => {
               <Reveal className="mx-auto flex w-full max-w-xl flex-col items-center rounded-3xl border border-line bg-surface px-8 py-14 text-center shadow-card">
                 <Stars rating={0} size="h-6 w-6" />
                 <p className="mt-6 font-display text-title-3 font-bold text-ink">¡Aún no hay reseñas!</p>
-                <p className="mt-2 text-base text-ink-2">Sé el primero en compartir tu experiencia y ayuda a conocer Evenor-Tech.</p>
+                <p className="mt-2 text-base text-ink-2">La órbita espera su primera señal. Sé el primero en compartir tu experiencia con Evenor-Tech.</p>
                 <Button size="sm" className="mt-8" onClick={() => window.location.href = '/reseñas'}>
                   Ir a reseñas
                 </Button>
@@ -678,7 +698,13 @@ const ReviewsCarousel = () => {
 const CTAScene = ({ onStart }) => {
   const scenes = useScenesEnabled();
   const ref = useRef(null);
+  const card = useRef(null);
   const p = useSceneProgress(ref, ['start end', 'center center']);
+  useJourneySection(ref, 'cta');
+  useJourneyHorizon(card);
+  // Fondo: hover o foco de "Comenzar ahora" avivan el amanecer (el botón no cambia)
+  const boostOn = (e) => setCtaBoost(true, e.currentTarget.querySelector('button, a') ?? e.currentTarget);
+  const boostOff = () => setCtaBoost(false);
   const scale = useTransform(p, [0, 1], [0.88, 1]);
   const opacity = useTransform(p, [0, 0.55], [0.3, 1]);
   const y = useTransform(p, [0, 1], [80, 0]);
@@ -687,12 +713,13 @@ const CTAScene = ({ onStart }) => {
     <section ref={ref} className="relative py-24 sm:py-32">
       <Site>
         <motion.div
+          ref={card}
           style={scenes ? { scale, opacity, y } : undefined}
-          className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface px-6 py-20 text-center shadow-raised will-change-transform sm:px-16 sm:py-28"
+          className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface/55 px-6 pb-32 pt-20 text-center shadow-raised will-change-transform sm:px-16 sm:py-28"
         >
-          {/* Horizonte del globo: la página termina con el mismo motivo con el que empieza */}
-          <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[90%] aspect-square w-[150%] -translate-x-1/2 rounded-full border border-brand-400/30 bg-radial from-brand-900/70 via-brand-950/40 via-40% to-transparent to-70% shadow-glow-lg" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-radial-[at_50%_100%] from-brand-400/15 to-transparent to-70%" />
+          {/* Detrás, el horizonte real del globo al amanecer (lienzo de la página): la página termina
+              con el mismo motivo con el que empieza. Velo superior para que el texto quede sobre fondo oscuro */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface/85 via-surface/60 via-70% to-surface/10" />
           <div className="relative">
             <SplitText as="h2" className="mx-auto block max-w-3xl text-title-1 font-bold text-ink">
               ¿Listo para encontrar tu próxima <span className="text-brand">oportunidad</span>?
@@ -707,11 +734,13 @@ const CTAScene = ({ onStart }) => {
                 ))}
               </Reveal.Item>
               <Reveal.Item>
-                <Button size="lg" className="mt-10" onClick={onStart}>
-                  Comenzar ahora <ArrowRight className="h-5 w-5" />
-                </Button>
+                <div onPointerEnter={boostOn} onPointerLeave={boostOff} onFocus={boostOn} onBlur={boostOff}>
+                  <Button size="lg" className="mt-10" onClick={onStart}>
+                    Comenzar ahora <ArrowRight className="h-5 w-5" />
+                  </Button>
+                </div>
               </Reveal.Item>
-              <Reveal.Item as="p" className="mt-4 text-xs text-ink-3">Cursos gratuitos y sin compromiso</Reveal.Item>
+              <Reveal.Item as="p" className="mt-4 text-xs text-ink-2">Cursos gratuitos y sin compromiso</Reveal.Item>
             </Reveal>
           </div>
         </motion.div>
@@ -735,6 +764,7 @@ const Home = () => {
   };
   return (
     <>
+      <GlobeStage />
       <AmbientBackdrop />
       {showLogin && <AuthModal open={showLogin} onClose={() => setShowLogin(false)} />}
       <HeroScene onStart={handleStart} />
