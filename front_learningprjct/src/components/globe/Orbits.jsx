@@ -4,6 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { BoxGeometry } from 'three';
 import { ORBITS } from './config';
 import { circleGeometry, useSatelliteMaterials } from './satelliteParts';
+import { journey } from './journey/store';
 
 // Geometrías compartidas por todos los satélites (low-poly, sin modelos externos)
 const bodyGeo = new BoxGeometry(0.07, 0.07, 0.07);
@@ -38,7 +39,15 @@ export default function Orbits({ palette, count, animate }) {
   const orbits = ORBITS.slice(0, count);
   const materials = useSatelliteMaterials(palette);
 
+  const arms = useRef([]);
+
   useFrame((state) => {
+    // Fundido que decide el viaje (1 en el hero y en la órbita de reseñas)
+    const k = journey.frame?.orbitsFade ?? 1;
+    materials.line.opacity = 0.22 * k;
+    materials.dashed.opacity = 0.3 * k;
+    materials.glow.opacity = 0.85 * k;
+    arms.current.forEach((a) => a?.scale.setScalar(0.72 * k));
     if (!animate) return;
     const t = state.clock.elapsedTime;
     orbits.forEach((o, i) => {
@@ -53,7 +62,7 @@ export default function Orbits({ palette, count, animate }) {
         <group key={o.radius} rotation={[o.tilt[0], 0, o.tilt[1]]}>
           <OrbitLine radius={o.radius} dashed={o.dashed} materials={materials} />
           <group ref={(el) => { pivots.current[i] = el; }} rotation={[0, o.phase, 0]}>
-            <group position={[o.radius, 0, 0]} scale={0.72}>
+            <group ref={(el) => { arms.current[i] = el; }} position={[o.radius, 0, 0]} scale={0.72}>
               <Satellite materials={materials} />
             </group>
           </group>

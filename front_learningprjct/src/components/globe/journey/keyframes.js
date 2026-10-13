@@ -9,7 +9,7 @@ export const ramp = (v, a, b) => clamp01((v - a) / (b - a));
 export const lerp = (a, b, t) => a + (b - a) * t;
 
 // Tramo del progreso de cada sección ('start end' → 'end start') en el que la cámara llega a ella
-export const ARRIVAL = [0.1, 0.42];
+export const ARRIVAL = [0.04, 0.5];
 export const CAMERA_Z = 6;
 // Altura del horizonte dentro de la tarjeta de la llamada final (fracción desde arriba)
 export const HORIZON_AT = 0.93;
@@ -149,21 +149,24 @@ export function dampFrame(current, target, lambda, dt) {
   return current;
 }
 
-// Seguimiento del encaje: los pasos pequeños del objetivo (scroll normal, el ancla del hero que se
-// desplaza) se siguen al momento, sin retraso; los saltos (anclas, glideTo, scroll muy rápido) se
-// amortiguan, así el globo nunca aparece de golpe en otro sitio
+// Seguimiento del encaje. En las estaciones atadas a un elemento del DOM (hero y horizonte) los
+// pasos pequeños del objetivo se siguen al momento (`carry` = 1), sin retraso respecto al texto; en
+// el viaje entre estaciones (`carry` = 0) todo se amortigua y el movimiento tiene inercia. Los saltos
+// (anclas, glideTo, scroll muy rápido) siempre se amortiguan: el globo nunca aparece de golpe
 export const TRAVEL_LAMBDA = 4.5;
 const STEP_LIMIT = { x: 0.03, y: 0.03, s: 0.03 }; // fracción de vh; el resto (0…1) usa 0.05
 
-export function followFrame(current, target, previous, vh, dt) {
+export function followFrame(current, target, previous, vh, dt, carry = 1) {
   FRAME_KEYS.forEach((k) => {
     const step = target[k] - previous[k];
     const limit = STEP_LIMIT[k] ? STEP_LIMIT[k] * vh : 0.05;
-    const carry = Math.abs(step) < limit ? step : 0;
-    current[k] = damp(current[k] + carry, target[k], TRAVEL_LAMBDA, dt);
+    current[k] = damp(current[k] + (Math.abs(step) < limit ? step * carry : 0), target[k], TRAVEL_LAMBDA, dt);
   });
   return current;
 }
+
+// Cuánto se arrastra el objetivo según la posición: 1 en el hero y en el horizonte, 0 entre medias
+export const carryAt = (position) => (position < 1 ? 1 - position : clamp01(position - 2));
 
 // Muelle amortiguado (interrumpible: conserva la velocidad al cambiar de objetivo)
 export function stepSpring(state, target, { stiffness = 170, damping = 26 } = {}, dt = 1 / 60) {

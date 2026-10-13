@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { BufferAttribute, BufferGeometry, LineBasicMaterial, SpriteMaterial } from 'three';
+import usePrecompile from './usePrecompile';
 import { journey } from '../journey/store';
 import { CAMERA_Z, clamp01, pxToWorld, silhouetteTop } from '../journey/keyframes';
 import { glowTexture } from '../geo';
@@ -40,6 +41,8 @@ export default function DawnScene({ palette }) {
   useEffect(() => () => {
     [res.core, res.corona, res.head, res.arcMat, ...res.arcs].forEach((o) => o.dispose());
   }, [res]);
+
+  usePrecompile(root);
 
   useFrame((state) => {
     const f = journey.frame;

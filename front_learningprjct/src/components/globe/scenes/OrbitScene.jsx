@@ -3,6 +3,7 @@
 // reseña (máx. 12; 6 en móvil). Sin reseñas, un único satélite en espera emite su "señal".
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import usePrecompile from './usePrecompile';
 import { journey, subscribe } from '../journey/store';
 import { Satellite } from '../Orbits';
 import { circleGeometry, useSatelliteMaterials } from '../satelliteParts';
@@ -42,6 +43,8 @@ export default function OrbitScene({ palette, quality }) {
   const outerGeo = useMemo(() => circleGeometry(1, 240), []);
   useLayoutEffect(() => { outer.current?.computeLineDistances(); }, [outerGeo]);
   useEffect(() => () => { beacon.dispose(); wave.dispose(); ringGeo.dispose(); outerGeo.dispose(); }, [beacon, wave, ringGeo, outerGeo]);
+
+  usePrecompile(root);
 
   useFrame((state) => {
     const f = journey.frame;

@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  damp, dawnFrame, heroFrame, heroLeave, journeyFrame, journeyPosition, orbitFrame,
+  ARRIVAL, damp, dawnFrame, heroFrame, heroLeave, journeyFrame, journeyPosition, orbitFrame,
   deepSpaceFrame, followFrame, HORIZON_AT, processFrame, silhouetteTop, stationWeights, stepSpring,
 } from './keyframes.js';
 
@@ -21,7 +21,7 @@ test('la FAQ centrada pone la cámara en el espacio profundo', () => {
 });
 
 test('a medio camino entre FAQ y reseñas los pesos se reparten a partes iguales', () => {
-  const pos = journeyPosition({ faq: 1, reviews: 0.26, cta: 0 });
+  const pos = journeyPosition({ faq: 1, reviews: (ARRIVAL[0] + ARRIVAL[1]) / 2, cta: 0 });
   close(pos, 1.5);
   const w = stationWeights(pos);
   close(w[1], 0.5); close(w[2], 0.5);

@@ -6,7 +6,7 @@
 //   espacio profundo (FAQ), órbita (reseñas) y horizonte al amanecer (llamada final).
 // El director lee el scroll (motion values) y el puente de journey/store.js dentro de useFrame:
 // ningún estado de React cambia por frame.
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerformanceMonitor } from '@react-three/drei';
 import { Vector3 } from 'three';
@@ -18,7 +18,7 @@ import Orbits from './Orbits';
 import { Arcs, Dawn, Moon, Signals, Stars } from './Extras';
 import { journey, progressOf, readPosition, SECTIONS, subscribe } from './journey/store';
 import {
-  blendFrames, clamp01, dawnFrame, followFrame, FRAME_KEYS, deepSpaceFrame, heroFrame, heroLeave,
+  blendFrames, carryAt, clamp01, dawnFrame, followFrame, FRAME_KEYS, deepSpaceFrame, heroFrame, heroLeave,
   journeyFrame, orbitFrame, processFrame, smooth, stationWeights, stepSpring,
 } from './journey/keyframes';
 import DeepSpaceScene from './scenes/DeepSpaceScene';
@@ -34,7 +34,7 @@ const SWEEP_SECONDS = 2.6;
 
 const tmpLight = new Vector3();
 
-function Director({ still, children, spinChildren, staticChildren, heroOnly, starsChildren }) {
+function Director({ still, moonMaterial, children, spinChildren, staticChildren, heroOnly, starsChildren }) {
   const rig = useRef();
   const tilt = useRef();
   const spin = useRef();
@@ -75,7 +75,7 @@ function Director({ still, children, spinChildren, staticChildren, heroOnly, sta
     // globo (puntos de tierra) la toman del frame anterior
     if (still && current.current && FRAME_KEYS.some((k) => Math.abs(current.current[k] - target[k]) > 1e-4)) state.invalidate();
     if (!current.current || still) current.current = { ...target };
-    else followFrame(current.current, target, previous.current, vh, dt);
+    else followFrame(current.current, target, previous.current, vh, dt, carryAt(exact));
     previous.current = target;
     const f = current.current;
 
@@ -85,10 +85,17 @@ function Director({ still, children, spinChildren, staticChildren, heroOnly, sta
     if (!still) turned.current += dt * GLOBE.spin;
     spin.current.rotation.y = -GLOBE.centerLon * DEG + turned.current + (heroIn.progress ?? 0) * 0.9;
     stars.current.position.y = f.starsY;
-    // Órbitas del hero: fuera en el espacio profundo (asomarían tras el texto) y en el horizonte
-    // (a esa escala cruzarían toda la pantalla)
-    const w1 = Math.max(0, 1 - Math.abs((still ? position : exact) - 1));
-    extras.current.visible = f.dawn < 0.5 && w1 < 0.5;
+    // Órbitas y luna del hero: se funden (nunca aparecen de golpe). Las órbitas se van en el espacio
+    // profundo (asomarían tras el texto) y en el horizonte (a esa escala cruzarían la pantalla); la luna
+    // solo acompaña al hero (luego quedaría sobre las tarjetas)
+    const w = stationWeights(still ? position : exact);
+    const orbitsFade = smooth(clamp01(1 - w[1] - w[3]));
+    extras.current.visible = orbitsFade > 0.01;
+    if (moonMaterial.current) {
+      const moonFade = smooth(w[0]);
+      moonMaterial.current.opacity = moonFade;
+      moonMaterial.current.visible = moonFade > 0.01;
+    }
 
     // Amanecer: barrido de luz una vez al llegar; refuerzo con hover/foco del botón (muelle)
     const sw = sweep.current;
@@ -117,7 +124,7 @@ function Director({ still, children, spinChildren, staticChildren, heroOnly, sta
     }
 
     journey.frame = Object.assign(journey.frame ?? {}, f, {
-      view, weights: stationWeights(still ? position : exact), sweep: sw.k, boost: boostK, time: t, still,
+      view, weights: w, orbitsFade, sweep: sw.k, boost: boostK, time: t, still,
     });
   });
 
@@ -165,7 +172,28 @@ function StillInvalidator({ still }) {
   return null;
 }
 
-// Monta cada escena solo cuando su sección está cerca de la pantalla
+// Gama baja de verdad: fps bajos sostenidos (no los picos al compilar shaders o al cargar)
+const LOW_FPS = 20;
+function LowEndGuard({ active, onLow }) {
+  const frames = useRef(0);
+  useFrame(() => { frames.current += 1; });
+  useEffect(() => {
+    if (!active) return undefined;
+    let slow = 0;
+    let warmup = 2;
+    const id = setInterval(() => {
+      const fps = frames.current / 2;
+      frames.current = 0;
+      if (document.hidden || warmup > 0) { warmup -= 1; return; }
+      slow = fps < LOW_FPS ? slow + 1 : 0;
+      if (slow >= 3) { clearInterval(id); onLow(); }
+    }, 2000);
+    return () => clearInterval(id);
+  }, [active, onLow]);
+  return null;
+}
+
+// Monta cada escena cuando su sección se acerca a la pantalla y la conserva (se compila una sola vez)
 function useNearSections() {
   const [near, setNear] = useState({ faq: false, reviews: false, cta: false });
   useEffect(() => {
@@ -181,7 +209,7 @@ function useNearSections() {
           const out = { ...prev };
           entries.forEach((e) => {
             const k = SECTIONS.find((s) => journey.elements[s] === e.target);
-            if (k) out[k] = e.isIntersecting;
+            if (k) out[k] = prev[k] || e.isIntersecting;
           });
           return SECTIONS.every((s) => out[s] === prev[s]) ? prev : out;
         });
@@ -204,6 +232,8 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
   const light = useMemo(() => LIGHT_DIR.map((v) => v * 6), []);
   const near = useNearSections();
   const still = !animate || lowEnd;
+  const moonMaterial = useRef();
+  const onLow = useCallback(() => setLowEnd(true), []);
 
   return (
     <Canvas
@@ -218,14 +248,16 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
       style={{ pointerEvents: 'none' }}
       aria-hidden="true"
     >
-      {/* Si el equipo va justo: menos resolución y calidad móvil; si no se recupera, fotograma estático */}
-      <PerformanceMonitor flipflops={3} onDecline={() => { setDpr(1); setQuality('low'); }} onFallback={() => setLowEnd(true)} />
+      {/* Si el equipo va justo: menos resolución y calidad móvil; con fps bajos sostenidos, fotograma estático */}
+      <PerformanceMonitor onDecline={() => { setDpr(1); setQuality('low'); }} />
+      <LowEndGuard active={!still && running} onLow={onLow} />
       <StillInvalidator still={still} />
       <ambientLight intensity={0.35} />
       <directionalLight position={light} intensity={2.4} />
 
       <Director
         still={still}
+        moonMaterial={moonMaterial}
         starsChildren={<Stars palette={palette} count={cfg.stars} animate={!still} />}
         spinChildren={(
           <>
@@ -245,7 +277,7 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
         )}
         heroOnly={<Orbits palette={palette} count={cfg.orbits} animate={!still} />}
       >
-        {cfg.moon && <Moon palette={palette} animate={!still} />}
+        {cfg.moon && <Moon palette={palette} animate={!still} materialRef={moonMaterial} />}
       </Director>
 
       {near.faq && <DeepSpaceScene palette={palette} quality={quality} />}

@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { BufferAttribute, BufferGeometry, Float32BufferAttribute, LineBasicMaterial, ShaderMaterial } from 'three';
+import usePrecompile from './usePrecompile';
 import { journey, takePulse } from '../journey/store';
 import { clamp01 } from '../journey/keyframes';
 import { Moon } from '../Extras';
@@ -108,6 +109,8 @@ export default function DeepSpaceScene({ palette, quality }) {
       [res.nodeGeo, res.edgeGeo, res.headGeo, ...res.trailGeos, res.nodeMat, res.headMat, res.edgeMat, ...res.trailMats].forEach((o) => o.dispose());
     };
   }, [res]);
+
+  usePrecompile(group, moon);
 
   useFrame((state, delta) => {
     const f = journey.frame;
