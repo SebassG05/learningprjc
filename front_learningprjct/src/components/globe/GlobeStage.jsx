@@ -58,22 +58,44 @@ export default function GlobeStage({ progress, layout = 'side', extras, observe,
   const webgl = useMemo(hasWebGL, []);
   const quality = useMemo(() => (window.matchMedia('(max-width: 767px), (pointer: coarse)').matches ? 'low' : 'high'), []);
 
-  // Carga diferida: después del evento load y en un momento ocioso, para no competir con el texto del hero
+  // Carga diferida: después del evento load, en un momento ocioso y solo cuando el contenedor
+  // está cerca de la pantalla. En móvil (calidad baja) el globo queda bajo el texto y la CPU es
+  // limitada: además se espera a la primera interacción (scroll, toque o tecla).
   useEffect(() => {
+    const INTENT = ['scroll', 'wheel', 'touchstart', 'pointerdown', 'keydown'];
     let idle;
     let timer;
+    let loaded = document.readyState === 'complete';
+    let near = false;
+    let intent = quality !== 'low';
     const go = () => {
+      if (!loaded || !near || !intent) return;
       if ('requestIdleCallback' in window) idle = window.requestIdleCallback(() => setReady(true), { timeout: 1500 });
       else timer = setTimeout(() => setReady(true), 200);
     };
-    if (document.readyState === 'complete') go();
-    else window.addEventListener('load', go, { once: true });
+    const onLoad = () => { loaded = true; go(); };
+    const onIntent = () => {
+      intent = true;
+      INTENT.forEach((type) => window.removeEventListener(type, onIntent));
+      go();
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      near = true;
+      io.disconnect();
+      go();
+    }, { rootMargin: '300px 0px' });
+    if (host.current) io.observe(host.current);
+    if (!loaded) window.addEventListener('load', onLoad, { once: true });
+    if (!intent) INTENT.forEach((type) => window.addEventListener(type, onIntent, { passive: true }));
     return () => {
-      window.removeEventListener('load', go);
+      io.disconnect();
+      window.removeEventListener('load', onLoad);
+      INTENT.forEach((type) => window.removeEventListener(type, onIntent));
       if (idle) window.cancelIdleCallback?.(idle);
       clearTimeout(timer);
     };
-  }, []);
+  }, [quality]);
 
   // Pausa: fuera de pantalla, pestaña oculta o escena ya terminada por el scroll
   useEffect(() => {

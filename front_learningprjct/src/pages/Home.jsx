@@ -158,7 +158,7 @@ const Site = ({ className = '', children }) => (
 // Velo de legibilidad: el texto queda siempre sobre fondo casi sólido (contraste AA)
 const HeroVeil = () => (
   <>
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-r from-canvas from-10% via-canvas/60 via-30% to-transparent to-52%" />
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-r from-canvas from-10% via-canvas/70 via-35% to-transparent to-62% xl:via-canvas/60 xl:via-30% xl:to-52%" />
     <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-canvas to-transparent" />
   </>
 );
@@ -492,7 +492,7 @@ const fetchReviews = async () => {
 };
 
 const Stars = ({ rating, size = 'h-4 w-4' }) => (
-  <div className="flex items-center gap-0.5" aria-label={`${rating} de 5 estrellas`}>
+  <div className="flex items-center gap-0.5" role="img" aria-label={`${rating} de 5 estrellas`}>
     {[...Array(5)].map((_, i) => (
       <Star key={i} className={`${size} ${i < rating ? 'text-brand' : 'text-gray-600'}`} fill={i < rating ? 'currentColor' : 'none'} />
     ))}

@@ -6,7 +6,7 @@ import { Award, Download } from 'lucide-react';
 import { duration, ease } from '../../lib/motion';
 
 const cards = [
-  { Icon: Award, title: 'Certificado profesional', desc: 'Diploma Evenor-Tech al aprobar', className: 'left-[44%] top-[74%]', depth: -70, delay: 1.1 },
+  { Icon: Award, title: 'Certificado profesional', desc: 'Diploma Evenor-Tech al aprobar', className: 'left-[48%] top-[76%]', depth: -70, delay: 1.1 },
   { Icon: Download, title: 'Material técnico', desc: 'Descargable y disponible online', className: 'right-[4%] top-[58%]', depth: -40, delay: 1.3 },
 ];
 
@@ -36,7 +36,7 @@ const Card = ({ card, progress, reduce }) => {
 export default function FloatingCards({ progress }) {
   const reduce = useReducedMotion();
   return (
-    <div className="absolute inset-0 hidden lg:block">
+    <div className="absolute inset-0 hidden xl:block">
       {cards.map((card) => <Card key={card.title} card={card} progress={progress} reduce={reduce} />)}
     </div>
   );
