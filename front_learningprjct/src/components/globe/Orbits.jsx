@@ -1,29 +1,14 @@
 /* eslint-disable react/prop-types, react/no-unknown-property -- props de R3F */
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import {
-  BoxGeometry, BufferGeometry, Float32BufferAttribute,
-  LineBasicMaterial, LineDashedMaterial, MeshStandardMaterial, SpriteMaterial,
-} from 'three';
+import { BoxGeometry } from 'three';
 import { ORBITS } from './config';
-import { glowTexture } from './geo';
-import { glowBlending } from './uniforms';
+import { circleGeometry, useSatelliteMaterials } from './satelliteParts';
 
 // Geometrías compartidas por todos los satélites (low-poly, sin modelos externos)
 const bodyGeo = new BoxGeometry(0.07, 0.07, 0.07);
 const panelGeo = new BoxGeometry(0.05, 0.006, 0.15);
 const armGeo = new BoxGeometry(0.012, 0.012, 0.05);
-
-function circleGeometry(radius, segments = 180) {
-  const pts = [];
-  for (let i = 0; i <= segments; i += 1) {
-    const a = (i / segments) * Math.PI * 2;
-    pts.push(Math.cos(a) * radius, 0, Math.sin(a) * radius);
-  }
-  const g = new BufferGeometry();
-  g.setAttribute('position', new Float32BufferAttribute(pts, 3));
-  return g;
-}
 
 /* Satélite: cuerpo, brazos y dos paneles en verde de marca, con un halo suave */
 export function Satellite({ materials }) {
@@ -51,13 +36,7 @@ function OrbitLine({ radius, dashed, materials }) {
 export default function Orbits({ palette, count, animate }) {
   const pivots = useRef([]);
   const orbits = ORBITS.slice(0, count);
-  const materials = useMemo(() => ({
-    body: new MeshStandardMaterial({ color: palette.surface3, metalness: 0.55, roughness: 0.35 }),
-    panel: new MeshStandardMaterial({ color: palette.brand600, emissive: palette.brand800, emissiveIntensity: 0.9, metalness: 0.3, roughness: 0.4 }),
-    glow: new SpriteMaterial({ map: glowTexture(), color: palette.brand400, ...glowBlending, transparent: true, opacity: 0.85, depthWrite: false }),
-    line: new LineBasicMaterial({ color: palette.brand200, transparent: true, opacity: 0.22, depthWrite: false }),
-    dashed: new LineDashedMaterial({ color: palette.brand200, transparent: true, opacity: 0.3, dashSize: 0.025, gapSize: 0.045, depthWrite: false }),
-  }), [palette]);
+  const materials = useSatelliteMaterials(palette);
 
   useFrame((state) => {
     if (!animate) return;

@@ -94,33 +94,39 @@ export function Signals({ palette, count, animate }) {
 
 /* Amanecer: creciente de luz intensa en el borde iluminado */
 export function Dawn({ palette }) {
-  const uniforms = useMemo(() => ({ uColor: { value: palette.brand100 }, uLight: shared.uLight }), [palette]);
+  const uniforms = useMemo(() => ({ uColor: { value: palette.brand100 }, uLight: shared.uLight, uGain: shared.uDawnGain, uTrueView: shared.uTrueView }), [palette]);
   return (
     <mesh scale={1.03} renderOrder={5}>
-      <sphereGeometry args={[1, 64, 64]} />
+      <sphereGeometry args={[1, 128, 128]} />
       <shaderMaterial
         transparent
         depthWrite={false}
         {...glowBlending}
         uniforms={uniforms}
         vertexShader={/* glsl */`
-          varying vec3 vN;
-          void main() { vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`}
+          varying vec3 vN; varying vec3 vV;
+          void main() {
+            vN = normalize(normalMatrix * normal);
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            vV = -mv.xyz;
+            gl_Position = projectionMatrix * mv;
+          }`}
         fragmentShader={/* glsl */`
-          uniform vec3 uColor; uniform vec3 uLight; varying vec3 vN;
+          uniform vec3 uColor; uniform vec3 uLight; uniform float uGain; uniform float uTrueView; varying vec3 vN; varying vec3 vV;
           void main() {
             vec3 n = normalize(vN);
-            float f = pow(1.0 - clamp(n.z, 0.0, 1.0), 4.5);
+            float nz = mix(n.z, dot(n, normalize(vV)), uTrueView);
+            float f = pow(1.0 - clamp(nz, 0.0, 1.0), mix(4.5, 12.0, uTrueView));
             float sun = smoothstep(0.35, 0.95, dot(n, uLight));
-            gl_FragColor = vec4(uColor * f * sun * 1.6, 1.0);
+            gl_FragColor = vec4(uColor * f * sun * 1.6 * uGain, 1.0);
           }`}
       />
     </mesh>
   );
 }
 
-/* Luna pequeña, lejana, iluminada por la misma luz */
-export function Moon({ palette, animate }) {
+/* Luna pequeña, lejana, iluminada por la misma luz (en el espacio profundo se usa fija y más cerca) */
+export function Moon({ palette, animate, radius = 0.13, position = [2.4, 1.65, -1.2], materialRef }) {
   const ref = useRef();
   useFrame((state) => {
     if (!animate || !ref.current) return;
@@ -128,9 +134,9 @@ export function Moon({ palette, animate }) {
     ref.current.position.set(Math.cos(t + 0.6) * 2.9, 1.65 + Math.sin(t) * 0.08, Math.sin(t + 0.6) * -1.4);
   });
   return (
-    <mesh ref={ref} position={[2.4, 1.65, -1.2]}>
-      <sphereGeometry args={[0.13, 32, 32]} />
-      <meshStandardMaterial color={palette.ink3} roughness={0.85} metalness={0.05} />
+    <mesh ref={ref} position={position}>
+      <sphereGeometry args={[radius, 32, 32]} />
+      <meshStandardMaterial ref={materialRef} color={palette.ink3} roughness={0.85} metalness={0.05} transparent={!!materialRef} />
     </mesh>
   );
 }
@@ -153,7 +159,7 @@ export function Stars({ palette, count, animate }) {
     g.setAttribute('aSeed', new BufferAttribute(seed, 1));
     return g;
   }, [count]);
-  const uniforms = useMemo(() => ({ uTime: shared.uTime, uColor: { value: palette.ink }, uTwinkle: { value: animate ? 1 : 0 } }), [palette, animate]);
+  const uniforms = useMemo(() => ({ uTime: shared.uTime, uFade: shared.uStarFade, uColor: { value: palette.ink }, uTwinkle: { value: animate ? 1 : 0 } }), [palette, animate]);
   return (
     <points geometry={geometry} renderOrder={-1}>
       <shaderMaterial
@@ -168,10 +174,10 @@ export function Stars({ palette, count, animate }) {
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
           }`}
         fragmentShader={/* glsl */`
-          uniform vec3 uColor; varying float vA;
+          uniform vec3 uColor; uniform float uFade; varying float vA;
           void main() {
             float d = length(gl_PointCoord - 0.5);
-            gl_FragColor = vec4(uColor, vA * (1.0 - smoothstep(0.2, 0.5, d)));
+            gl_FragColor = vec4(uColor, uFade * vA * (1.0 - smoothstep(0.2, 0.5, d)));
           }`}
       />
     </points>

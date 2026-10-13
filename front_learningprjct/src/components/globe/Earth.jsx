@@ -13,25 +13,28 @@ export function Sphere({ palette }) {
     uLight: shared.uLight,
     uDay: { value: palette.brand800 },
     uNight: { value: palette.canvas.clone().lerp(palette.brand950, 0.55) },
+    uTrueView: shared.uTrueView,
   }), [palette]);
   return (
     <mesh renderOrder={0}>
-      <sphereGeometry args={[1, 72, 72]} />
+      <sphereGeometry args={[1, 144, 144]} />
       <shaderMaterial
         uniforms={uniforms}
         vertexShader={/* glsl */`
-          varying vec3 vN;
+          varying vec3 vN; varying vec3 vV;
           void main() {
             vN = normalize(normalMatrix * normal);
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            vV = -mv.xyz;
+            gl_Position = projectionMatrix * mv;
           }`}
         fragmentShader={/* glsl */`
-          uniform vec3 uLight; uniform vec3 uDay; uniform vec3 uNight;
-          varying vec3 vN;
+          uniform vec3 uLight; uniform vec3 uDay; uniform vec3 uNight; uniform float uTrueView;
+          varying vec3 vN; varying vec3 vV;
           void main() {
             vec3 n = normalize(vN);
             float lit = smoothstep(-0.45, 1.0, dot(n, uLight));
-            float facing = clamp(n.z, 0.0, 1.0);
+            float facing = clamp(mix(n.z, dot(n, normalize(vV)), uTrueView), 0.0, 1.0);
             vec3 col = mix(uNight, uDay, lit * 0.85);
             col += uDay * 0.45 * pow(lit, 3.0) * facing;
             gl_FragColor = vec4(col, 1.0);
@@ -90,6 +93,7 @@ export function LandDots({ palette, samples }) {
     uSize: { value: worldSize },
     uScale: { value: 1 },
     uResY: { value: 900 },
+    uTrueView: shared.uTrueView,
   }), [palette, worldSize]);
 
   useFrame((state) => {
@@ -105,16 +109,17 @@ export function LandDots({ palette, samples }) {
         depthWrite={false}
         uniforms={uniforms}
         vertexShader={/* glsl */`
-          uniform vec3 uLight; uniform float uSize; uniform float uScale; uniform float uResY;
+          uniform vec3 uLight; uniform float uSize; uniform float uScale; uniform float uResY; uniform float uTrueView;
           attribute float aSeed;
           varying float vLit; varying float vFacing; varying float vSeed;
           void main() {
             vec3 n = normalize(normalMatrix * normalize(position));
             vLit = smoothstep(-0.25, 0.85, dot(n, uLight));
-            vFacing = n.z;
-            vSeed = aSeed;
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = uSize * uScale * projectionMatrix[1][1] * uResY * 0.5 / -mv.z;
+            vFacing = mix(n.z, dot(n, normalize(-mv.xyz)), uTrueView);
+            vSeed = aSeed;
+            // Con tope: en el horizonte de la llamada final el globo es enorme y el punto no crece con él
+            gl_PointSize = uSize * min(uScale, 2.0) * projectionMatrix[1][1] * uResY * 0.5 / -mv.z;
             gl_Position = projectionMatrix * mv;
           }`}
         fragmentShader={/* glsl */`
@@ -158,15 +163,20 @@ export function NightShade({ palette }) {
 
 /* Capa "atmósfera": halo Fresnel exterior y anillo de luz en el borde, en verde de marca */
 export function Atmosphere({ palette }) {
-  const halo = useMemo(() => ({ uColor: { value: palette.brand500 }, uLight: shared.uLight }), [palette]);
-  const rim = useMemo(() => ({ uColor: { value: palette.brand400 }, uLight: shared.uLight }), [palette]);
+  const halo = useMemo(() => ({ uColor: { value: palette.brand500 }, uLight: shared.uLight, uTrueView: shared.uTrueView }), [palette]);
+  const rim = useMemo(() => ({ uColor: { value: palette.brand400 }, uLight: shared.uLight, uTrueView: shared.uTrueView }), [palette]);
   const vertex = /* glsl */`
-    varying vec3 vN;
-    void main() { vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+    varying vec3 vN; varying vec3 vV;
+    void main() {
+      vN = normalize(normalMatrix * normal);
+      vec4 mv = modelViewMatrix * vec4(position, 1.0);
+      vV = -mv.xyz;
+      gl_Position = projectionMatrix * mv;
+    }`;
   return (
     <group>
       <mesh scale={1.22} renderOrder={4}>
-        <sphereGeometry args={[1, 64, 64]} />
+        <sphereGeometry args={[1, 128, 128]} />
         <shaderMaterial
           transparent
           depthWrite={false}
@@ -175,17 +185,18 @@ export function Atmosphere({ palette }) {
           uniforms={halo}
           vertexShader={vertex}
           fragmentShader={/* glsl */`
-            uniform vec3 uColor; uniform vec3 uLight; varying vec3 vN;
+            uniform vec3 uColor; uniform vec3 uLight; uniform float uTrueView; varying vec3 vN; varying vec3 vV;
             void main() {
               vec3 n = normalize(vN);
-              float i = pow(clamp(0.72 + n.z, 0.0, 1.0), 4.0);
+              float nz = mix(n.z, dot(n, normalize(vV)), uTrueView);
+              float i = pow(clamp(0.72 + nz, 0.0, 1.0), mix(4.0, 14.0, uTrueView));
               float side = 0.55 + 0.45 * smoothstep(-0.6, 0.8, dot(-n, uLight));
               gl_FragColor = vec4(uColor * i * side, 1.0) * 0.9;
             }`}
         />
       </mesh>
       <mesh scale={1.012} renderOrder={5}>
-        <sphereGeometry args={[1, 64, 64]} />
+        <sphereGeometry args={[1, 128, 128]} />
         <shaderMaterial
           transparent
           depthWrite={false}
@@ -193,10 +204,11 @@ export function Atmosphere({ palette }) {
           uniforms={rim}
           vertexShader={vertex}
           fragmentShader={/* glsl */`
-            uniform vec3 uColor; uniform vec3 uLight; varying vec3 vN;
+            uniform vec3 uColor; uniform vec3 uLight; uniform float uTrueView; varying vec3 vN; varying vec3 vV;
             void main() {
               vec3 n = normalize(vN);
-              float f = pow(1.0 - clamp(n.z, 0.0, 1.0), 3.2);
+              float nz = mix(n.z, dot(n, normalize(vV)), uTrueView);
+              float f = pow(1.0 - clamp(nz, 0.0, 1.0), mix(3.2, 9.0, uTrueView));
               float side = 0.45 + 0.55 * smoothstep(-0.5, 0.9, dot(n, uLight));
               gl_FragColor = vec4(uColor * f * side * 1.15, 1.0);
             }`}
