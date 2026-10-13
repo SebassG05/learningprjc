@@ -1,39 +1,40 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Star, ChevronDown, Clock, ArrowRight, Award, FileText, Video, ListChecks, Check } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
-import { AnimatePresence, LayoutGroup, motion, motion as m, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion, motion as m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
 import SplitText from '../components/ui/SplitText';
 import { useUser } from '../context/UserContext';
 import AuthModal from '../components/auth/AuthModal';
+import GlobeStage from '../components/globe/GlobeStage';
+import FloatingCards from '../components/globe/FloatingCards';
 import { useScenesEnabled, useSceneProgress } from '../hooks/useScene';
-import { disclose, duration, ease, spring } from '../lib/motion';
+import useMediaQuery from '../hooks/useMediaQuery';
+import { disclose, duration, ease, spring, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
 
 /*
  * Coreografía (ver MOTION-SPEC.md):
- *   Hero (260vh, fijado) ─┐ solape 140vh: el proceso entra en fundido cruzado mientras el hero sale
+ *   Hero (260vh, fijado, globo 3D detrás) ─┐ solape 140vh: el proceso entra en fundido cruzado mientras el hero sale
  *   Proceso (360vh, fijado) ─┐ solape 90vh: la FAQ sube por encima mientras el proceso se atenúa
  *   FAQ → Reseñas → CTA (flujo normal)
- * Todo el progreso va suavizado con useSpring y se aplica como motion values (sin re-render por frame).
+ * Todo el progreso va suavizado con useSpring y se aplica como motion values (sin re-render por frame);
+ * el lienzo 3D lee el mismo progreso dentro de su bucle de render.
  */
 
 /* ==========================================================================
-   Fondo ambiental: el tono cambia de forma gradual de una escena a otra
+   Fondo ambiental: el globo es el fondo del hero; aquí solo el tono de las escenas siguientes
    ========================================================================== */
 
 const AmbientBackdrop = () => {
   const { scrollYProgress } = useScroll();
-  const hero = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
   const process = useTransform(scrollYProgress, [0.12, 0.26, 0.48, 0.6], [0, 1, 1, 0]);
   const finale = useTransform(scrollYProgress, [0.78, 0.96], [0, 1]);
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
-      <motion.div style={{ opacity: hero }} className="absolute left-1/2 top-[-20vh] h-[90vh] w-[110vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.14),transparent)]" />
       <motion.div style={{ opacity: process }} className="absolute left-[-20vw] top-[10vh] h-[90vh] w-[80vw] rounded-[50%] bg-[radial-gradient(closest-side,rgb(133_200_105/0.09),transparent)]" />
       <motion.div style={{ opacity: finale }} className="absolute bottom-[-30vh] left-1/2 h-[80vh] w-[100vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.12),transparent)]" />
     </div>
@@ -41,7 +42,7 @@ const AmbientBackdrop = () => {
 };
 
 /* ==========================================================================
-   Escena 1 — Hero: el titular se aleja y suben las ventajas del campus
+   Escena 1: Hero con el globo; el titular se aleja y suben las ventajas del campus
    ========================================================================== */
 
 const features = [
@@ -53,65 +54,119 @@ const features = [
 
 const perks = ['Registro gratuito', 'Acceso inmediato', 'Sin compromiso'];
 
-// Entrada escalonada del hero al cargar (eyebrow → titular por palabras → texto → botones)
-const heroIn = (delay) => ({
-  initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0, transition: { duration: duration.scene, ease: ease.outExpo, delay } },
+// Entrada escalonada del hero al cargar. El texto es visible desde el primer frame
+// (solo se desplaza), así el contenido es usable y la primera pintura no espera a la animación.
+const heroIn = (delay, reduce) => (reduce ? {} : {
+  initial: { y: 18 },
+  animate: { y: 0, transition: { duration: duration.scene, ease: ease.outExpo, delay } },
 });
 
-const HeroCopy = ({ onStart }) => (
-  <div className="flex flex-col items-center text-center">
-    <motion.span {...heroIn(0.05)} className="eyebrow">E-learning · Evenor-Tech</motion.span>
-    <SplitText as="h1" trigger="mount" delay={0.12} className="mt-5 text-hero font-bold text-ink">
-      Campus<span className="text-brand">.</span>
-    </SplitText>
-    <motion.p {...heroIn(0.35)} className="mt-6 max-w-xl text-lg text-ink-2 sm:text-xl">
-      Plataforma de e-learning moderna y flexible. Formando profesionales con tecnología y pasión para el futuro digital.
-    </motion.p>
-    <motion.div {...heroIn(0.45)} className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
-      <Button size="lg" onClick={onStart}>
-        Comenzar ahora <ArrowRight className="h-5 w-5" />
-      </Button>
-      <Button size="lg" variant="secondary" to="/cursos">
-        Ver cursos
-      </Button>
-    </motion.div>
-    <motion.ul {...heroIn(0.55)} className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ink-3">
-      {perks.map((p) => (
-        <li key={p} className="inline-flex items-center gap-1.5">
-          <Check className="h-4 w-4 text-brand" /> {p}
-        </li>
-      ))}
-    </motion.ul>
-  </div>
-);
+// "Campus." sube letra a letra desde su máscara con un muelle; el punto verde se asienta al final
+const HeroTitle = () => {
+  const reduce = useReducedMotion();
+  const letters = 'Campus'.split('');
+  return (
+    <h1 className="mt-5 text-hero font-bold text-ink" aria-label="Campus.">
+      <span aria-hidden="true" className="-mb-[0.18em] inline-flex overflow-hidden pb-[0.18em] pr-[0.06em]">
+        {letters.map((l, i) => (
+          <motion.span
+            key={i}
+            className="inline-block"
+            initial={reduce ? false : { y: '108%' }}
+            animate={{ y: '0%' }}
+            transition={{ ...spring.letter, delay: 0.08 + i * stagger.words }}
+          >
+            {l}
+          </motion.span>
+        ))}
+        <motion.span
+          className="inline-block origin-bottom text-brand"
+          initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ ...spring.pop, delay: 0.42 }}
+        >
+          .
+        </motion.span>
+      </span>
+    </h1>
+  );
+};
 
-const FeatureCard = ({ Icon, title, desc }) => (
-  <div className="h-full rounded-3xl border border-line bg-surface p-7 shadow-card">
-    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand/10 text-brand">
-      <Icon className="h-5 w-5" />
+const HeroCopy = ({ onStart }) => {
+  const reduce = useReducedMotion();
+  return (
+    <div className="flex max-w-[46rem] flex-col items-start text-left">
+      <motion.span {...heroIn(0.02, reduce)} className="eyebrow">E-learning · Evenor-Tech</motion.span>
+      <HeroTitle />
+      <motion.p {...heroIn(0.3, reduce)} className="mt-6 max-w-[56ch] text-lg text-balance sm:text-xl">
+        <span className="text-ink">Plataforma de e-learning moderna y flexible.</span>{' '}
+        <span className="text-ink-2">Formando profesionales con tecnología y pasión para el futuro digital.</span>
+      </motion.p>
+      <motion.div {...heroIn(0.4, reduce)} className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <Button size="lg" className="text-button-lg shadow-glow-lg" onClick={onStart}>
+          Comenzar ahora <ArrowRight className="h-5 w-5" aria-hidden="true" />
+        </Button>
+        <Button size="lg" variant="secondary" className="text-button-lg" to="/cursos">
+          Ver cursos
+        </Button>
+      </motion.div>
+      <motion.ul {...heroIn(0.5, reduce)} className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-callout text-ink-2">
+        {perks.map((p) => (
+          <li key={p} className="inline-flex items-center gap-2">
+            <Check className="h-4 w-4 text-brand" aria-hidden="true" /> {p}
+          </li>
+        ))}
+      </motion.ul>
+    </div>
+  );
+};
+
+// Ventajas en bento asimétrico (7/5 y 5/7); la primera lleva el tinte de marca
+const bento = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7'];
+
+const FeatureCard = ({ Icon, title, desc, accent }) => (
+  <div className={`relative flex h-full gap-5 overflow-hidden rounded-3xl p-6 glass-panel sm:p-7 ${accent ? 'bg-linear-to-br from-brand-900/70 to-transparent' : ''}`}>
+    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+      <Icon className="h-5 w-5" aria-hidden="true" />
     </span>
-    <h3 className="mt-6 font-sans text-lg font-semibold text-ink">{title}</h3>
-    <p className="mt-2 text-sm leading-relaxed text-ink-2">{desc}</p>
+    <div className="pt-1">
+      <h3 className="font-sans text-lg font-semibold text-ink">{title}</h3>
+      <p className="mt-1.5 max-w-[48ch] text-sm leading-relaxed text-ink-2">{desc}</p>
+    </div>
   </div>
 );
 
 // Tarjeta en capas: cada una sube a su velocidad (profundidad) y se asienta
 const RisingCard = ({ progress, index, feature }) => {
-  const start = 0.24 + index * 0.05;
+  const start = 0.22 + index * 0.04;
   const depth = [260, 200, 300, 230][index];
-  const y = useTransform(progress, [start, start + 0.3], [depth, 0]);
-  const opacity = useTransform(progress, [start, start + 0.14], [0, 1]);
-  const scale = useTransform(progress, [start, start + 0.3], [0.9, 1]);
+  const y = useTransform(progress, [start, start + 0.24], [depth, 0]);
+  const opacity = useTransform(progress, [start, start + 0.12], [0, 1]);
+  const scale = useTransform(progress, [start, start + 0.24], [0.9, 1]);
   return (
-    <motion.div style={{ y, opacity, scale }} className="will-change-transform">
-      <FeatureCard {...feature} />
+    <motion.div style={{ y, opacity, scale }} className={`will-change-transform ${bento[index]}`}>
+      <FeatureCard {...feature} accent={index === 0} />
     </motion.div>
   );
 };
 
+// Contenedor amplio común con la cabecera (boceto: 1440 con 120 de margen)
+const Site = ({ className = '', children }) => (
+  <div className={`mx-auto w-full max-w-site px-gutter ${className}`}>{children}</div>
+);
+
+// Velo de legibilidad: el texto queda siempre sobre fondo casi sólido (contraste AA)
+const HeroVeil = () => (
+  <>
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-r from-canvas from-10% via-canvas/60 via-30% to-transparent to-52%" />
+    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-canvas to-transparent" />
+  </>
+);
+
 const HeroScene = ({ onStart }) => {
   const scenes = useScenesEnabled();
+  const wide = useMediaQuery('(min-width: 768px)');
+  const reduce = useReducedMotion();
   const ref = useRef(null);
   const p = useSceneProgress(ref);
   // Desarrollo: el titular se aleja y se funde
@@ -125,58 +180,88 @@ const HeroScene = ({ onStart }) => {
   const exitOpacity = useTransform(p, [0.6, 0.8], [1, 0]);
   const exitScale = useTransform(p, [0.6, 0.86], [1, 0.94]);
   const exitY = useTransform(p, [0.6, 0.86], [0, -60]);
-  // Parallax en capas del resplandor
-  const glowNear = useTransform(p, [0, 1], ['0%', '45%']);
-  const glowFar = useTransform(p, [0, 1], ['0%', '18%']);
+  // El globo se atenúa detrás de las ventajas y se va con la escena
+  const globeOpacity = useTransform(p, [0.26, 0.42, 0.6, 0.8], [1, 0.5, 0.5, 0]);
+  // Fondo y velo del hero se funden con la salida para no dejar un corte sobre el ambiente de la página
+  const backdropOpacity = useTransform(p, [0.6, 0.8], [1, 0]);
+  const cueOpacity = useTransform(p, [0, 0.05], [1, 0]);
 
   if (!scenes) {
     return (
       <div ref={ref}>
-        <section className="relative pt-20 pb-24 sm:pt-28">
-          <Container>
-            <HeroCopy onStart={onStart} />
-          </Container>
+        <section className="relative -mt-header overflow-hidden lg:-mt-header-lg">
+          {wide && (
+            <>
+              <GlobeStage progress={null} layout="side" className="absolute inset-0" />
+              <HeroVeil />
+            </>
+          )}
+          <Site className={`relative flex flex-col pt-header lg:pt-header-lg ${wide ? 'min-h-[100svh] justify-center pb-24' : 'pb-4'}`}>
+            <div className="pt-10 md:pt-0">
+              <HeroCopy onStart={onStart} />
+            </div>
+          </Site>
+          {!wide && (
+            <GlobeStage progress={null} layout="center" className="relative mx-auto -mt-2 aspect-square w-full max-w-[30rem]" />
+          )}
         </section>
-        <section className="pb-24">
-          <Container>
-            <SectionHeading eyebrow="Ventajas del campus" title="¿Qué puedes esperar de los cursos?" />
-            <Reveal group className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {features.map((f) => (
-                <Reveal.Item key={f.title}><FeatureCard {...f} /></Reveal.Item>
+        <section className="pb-24 pt-12 md:pt-24">
+          <Site>
+            <SectionHeading align="left" title="¿Qué puedes esperar de los cursos?" />
+            <Reveal group className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+              {features.map((f, i) => (
+                <Reveal.Item key={f.title} className={bento[i]}><FeatureCard {...f} accent={i === 0} /></Reveal.Item>
               ))}
             </Reveal>
-          </Container>
+          </Site>
         </section>
       </div>
     );
   }
 
   return (
-    <section ref={ref} className="relative h-[260vh]">
-      <div className="sticky top-16 flex h-[calc(100svh-4rem)] items-center overflow-hidden">
-        <motion.div aria-hidden="true" style={{ y: glowFar }} className="pointer-events-none absolute left-1/2 top-[2%] h-[80vh] w-[90vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.10),transparent)]" />
-        <motion.div aria-hidden="true" style={{ y: glowNear }} className="pointer-events-none absolute left-1/2 top-[18%] h-[50vh] w-[46vw] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgb(161_219_135/0.12),transparent)]" />
-        <motion.div style={{ opacity: exitOpacity, scale: exitScale, y: exitY }} className="relative w-full will-change-transform">
-          <Container className="relative">
+    <section ref={ref} className="relative -mt-header h-[260vh] lg:-mt-header-lg">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        <motion.div aria-hidden="true" style={{ opacity: backdropOpacity }} className="absolute inset-0 bg-canvas" />
+        <GlobeStage progress={p} observe={ref} layout="side" style={{ opacity: globeOpacity }} className="absolute inset-0">
+          <FloatingCards progress={p} />
+        </GlobeStage>
+        <motion.div style={{ opacity: backdropOpacity }} className="absolute inset-0">
+          <HeroVeil />
+        </motion.div>
+
+        <motion.div style={{ opacity: exitOpacity, scale: exitScale, y: exitY }} className="relative flex h-full items-center pt-header will-change-transform lg:pt-header-lg">
+          <Site className="relative">
             <motion.div
               style={{ scale: titleScale, opacity: titleOpacity, y: titleY }}
-              className="absolute inset-x-0 top-1/2 -translate-y-1/2 will-change-transform"
+              className="absolute inset-x-0 top-1/2 origin-left -translate-y-1/2 px-gutter will-change-transform"
             >
               <HeroCopy onStart={onStart} />
             </motion.div>
 
             <div className="relative">
-              <motion.div style={{ opacity: headingOpacity, y: headingY }} className="mx-auto max-w-3xl text-center">
-                <span className="eyebrow">Ventajas del campus</span>
-                <h2 className="mt-4 text-title-1 font-bold text-ink">¿Qué puedes esperar de los cursos?</h2>
+              <motion.div style={{ opacity: headingOpacity, y: headingY }} className="max-w-3xl">
+                <h2 className="text-title-1 font-bold text-ink">¿Qué puedes esperar de los cursos?</h2>
               </motion.div>
-              <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-12">
                 {features.map((f, i) => (
                   <RisingCard key={f.title} progress={p} index={i} feature={f} />
                 ))}
               </div>
             </div>
-          </Container>
+          </Site>
+        </motion.div>
+
+        {/* Boceto: "Desliza para explorar" (se va en cuanto empieza el scroll) */}
+        <motion.div style={{ opacity: cueOpacity }} aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center gap-3">
+          <span className="text-footnote text-ink-3">Desliza para explorar</span>
+          <span className="relative h-10 w-px overflow-hidden bg-line">
+            <motion.span
+              className="absolute inset-x-0 top-0 h-1/2 bg-brand"
+              animate={reduce ? undefined : { y: ['-100%', '200%'] }}
+              transition={{ duration: 2.2, ease: ease.inOutQuart, repeat: Infinity, repeatDelay: 0.4 }}
+            />
+          </span>
         </motion.div>
       </div>
     </section>
@@ -184,7 +269,7 @@ const HeroScene = ({ onStart }) => {
 };
 
 /* ==========================================================================
-   Escena 2 — Proceso: entra en fundido cruzado y cada paso se enciende con el scroll
+   Escena 2: Proceso, entra en fundido cruzado y cada paso se enciende con el scroll
    ========================================================================== */
 
 const steps = [
@@ -246,15 +331,14 @@ const ProcessScene = () => {
   if (!scenes) {
     return (
       <section ref={ref} className="py-24">
-        <Container>
-          <span className="eyebrow">Proceso</span>
+        <Site>
           <SplitText as="h2" className="mt-4 block text-title-1 font-bold text-ink">¿Cómo funciona el proceso?</SplitText>
           <Reveal><p className="mt-5 max-w-sm text-lg text-ink-2">{PROCESS_LEAD}</p></Reveal>
           <Reveal group as="ol" step={0.1} className="relative mt-12 space-y-10">
             <span className="absolute bottom-6 left-6 top-6 w-px bg-line-strong" aria-hidden="true" />
             {steps.map((s, i) => <StepRowStatic key={s.title} step={s} index={i} />)}
           </Reveal>
-        </Container>
+        </Site>
       </section>
     );
   }
@@ -262,11 +346,10 @@ const ProcessScene = () => {
   return (
     // Solapada 140vh con el hero: su contenido fijado aparece mientras el del hero se va
     <section ref={ref} className="pointer-events-none relative -mt-[140vh] h-[360vh]">
-      <div className="sticky top-16 flex h-[calc(100svh-4rem)] items-center">
+      <div className="sticky top-header flex h-[calc(100svh-var(--spacing-header))] items-center lg:top-header-lg lg:h-[calc(100svh-var(--spacing-header-lg))]">
         <motion.div style={{ opacity: sceneOpacity, y: sceneY, scale: sceneScale }} className="w-full will-change-transform">
-          <Container className="grid grid-cols-12 items-center gap-10">
+          <Site className="grid grid-cols-12 items-center gap-10">
             <div className="col-span-5">
-              <span className="eyebrow">Proceso</span>
               <h2 className="mt-4 text-title-1 font-bold text-ink">¿Cómo funciona el proceso?</h2>
               <SplitText as="p" progress={p} from={0.14} to={0.3} className="mt-5 block max-w-sm text-lg text-ink">
                 {PROCESS_LEAD}
@@ -277,7 +360,7 @@ const ProcessScene = () => {
               <motion.span style={{ scaleY: fill }} className="absolute bottom-6 left-6 top-6 w-px origin-top bg-brand" aria-hidden="true" />
               {steps.map((s, i) => <StepRowScroll key={s.title} step={s} index={i} progress={p} />)}
             </ol>
-          </Container>
+          </Site>
         </motion.div>
       </div>
     </section>
@@ -315,10 +398,10 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
   const scenes = useScenesEnabled();
   return (
     <section className={`relative z-10 py-24 sm:py-32 ${scenes ? '-mt-[90vh]' : ''}`}>
-      <Container>
+      <Site>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeading align="left" eyebrow="Ayuda" title="Preguntas frecuentes" />
+            <SectionHeading align="left" title="Preguntas frecuentes" />
             <Reveal className="mt-8 rounded-3xl border border-line bg-surface p-7 shadow-card">
               <p className="font-sans text-lg font-semibold text-ink">¿No encuentras tu respuesta?</p>
               <p className="mt-1 text-sm text-ink-2">Estamos aquí para ayudarte</p>
@@ -391,7 +474,7 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
           </Reveal>
           </LayoutGroup>
         </div>
-      </Container>
+      </Site>
     </section>
   );
 };
@@ -472,7 +555,7 @@ const ReviewsCarousel = () => {
 
   return (
     <section className="relative py-24 sm:py-32">
-      <Container>
+      <Site>
         <SectionHeading eyebrow="Reseñas" title="¿Qué opinan nuestros estudiantes?" />
         <div className="custom-scrollbar mt-12 select-none overflow-x-auto pb-4">
           <div ref={carouselRef} className="flex gap-4">
@@ -570,7 +653,7 @@ const ReviewsCarousel = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </Container>
+      </Site>
       <style>{`
         .dragging {
           cursor: grabbing !important;
@@ -595,7 +678,7 @@ const CTAScene = ({ onStart }) => {
 
   return (
     <section ref={ref} className="relative py-24 sm:py-32">
-      <Container>
+      <Site>
         <motion.div
           style={scenes ? { scale, opacity, y } : undefined}
           className="relative overflow-hidden rounded-[2.5rem] border border-line bg-surface px-6 py-20 text-center shadow-raised will-change-transform sm:px-16 sm:py-28"
@@ -623,7 +706,7 @@ const CTAScene = ({ onStart }) => {
             </Reveal>
           </div>
         </motion.div>
-      </Container>
+      </Site>
     </section>
   );
 };

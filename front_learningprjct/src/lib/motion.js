@@ -24,6 +24,10 @@ export const spring = {
   gentle: { type: 'spring', stiffness: 260, damping: 30, mass: 0.9 },
   // Indicadores que se desplazan (pestañas, subrayados con layoutId)
   glide: { type: 'spring', stiffness: 380, damping: 36 },
+  // Letras que suben desde su máscara (titular del hero)
+  letter: { type: 'spring', stiffness: 260, damping: 26, mass: 0.9 },
+  // Pequeño rebote del punto de "Campus." al asentarse
+  pop: { type: 'spring', stiffness: 520, damping: 16 },
 };
 
 // Suavizado del progreso de escena (useSpring): da inercia sin quedarse atrás del scroll
