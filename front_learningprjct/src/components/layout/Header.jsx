@@ -1,43 +1,46 @@
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { ChevronDown, LogOut, Menu, Settings } from 'lucide-react';
 import AuthModal from '../auth/AuthModal';
 import { useUser } from '../../context/UserContext.jsx';
-import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext.jsx';
 import MobileMenu from './MobileMenu';
+import Logo from './Logo';
 import Button from '../ui/Button';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import { spring } from '../../lib/motion';
+import { getNavLinks, isActivePath } from './navigation';
 
-const MotionLink = motion.create(Link);
+// Compactación de la barra en escritorio: de 88 a 68 px (solo transform y opacity)
+const COMPACT_AT = 120;
+const COMPACT_SCALE = 68 / 88;
 
-/* Enlace de navegación: la píldora activa se desliza entre enlaces (layoutId) */
-// eslint-disable-next-line react/prop-types
+/* Enlace de navegación: píldora de cristal y el punto verde de "Campus." se deslizan al activo */
 const NavItem = ({ to, label, active }) => (
-  <Link
-    to={to}
-    aria-current={active ? 'page' : undefined}
-    className={`relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors duration-200 ${active ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
-  >
-    {active && (
-      <motion.span
-        layoutId="nav-pill"
-        className="absolute inset-0 -z-10 rounded-full bg-white/[0.08] ring-1 ring-inset ring-white/10"
-        transition={spring.glide}
-      />
-    )}
-    {label}
-  </Link>
+  <li>
+    <Link
+      to={to}
+      aria-current={active ? 'page' : undefined}
+      className={`relative flex h-11 items-center rounded-full px-3 text-nav font-medium transition-colors duration-200 2xl:px-4 ${active ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
+    >
+      {active && (
+        <>
+          <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full bg-glass-strong ring-1 ring-inset ring-line" transition={spring.glide} />
+          <motion.span layoutId="nav-dot" className="absolute inset-x-0 bottom-1 mx-auto h-1 w-1 rounded-full bg-brand" transition={spring.glide} aria-hidden="true" />
+        </>
+      )}
+      {label}
+    </Link>
+  </li>
 );
 
-const menuItems = [
-  { name: 'Inicio', path: '/' },
-  { name: 'Cursos', path: '/cursos' },
-  { name: 'Sobre Nosotros', path: '/sobre' },
-  { name: 'Contacto', path: '/contacto' },
-  { name: 'Iniciar sesión', path: '/login' },
-  { name: 'Regístrate', path: '/registro' },
-];
+const Avatar = ({ user, className }) => (
+  <span className={`flex shrink-0 items-center justify-center rounded-full bg-brand font-bold text-on-brand ${className}`} aria-hidden="true">
+    {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
+  </span>
+);
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -48,34 +51,18 @@ const Header = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
   const { pathname } = useLocation();
-  // Cabecera progresiva: el material, el borde y la escala del logo siguen al scroll (motion values, sin re-render)
+  const desktop = useMediaQuery('(min-width: 1024px)');
+  const reduce = useReducedMotion();
+
+  // Cabecera progresiva: el cristal se asienta y la barra se compacta con el scroll (motion values, sin re-render)
   const { scrollY } = useScroll();
-  const surfaceOpacity = useTransform(scrollY, [0, 80], [0, 1]);
-  const logoScale = useTransform(scrollY, [0, 80], [1, 0.94]);
+  const surfaceOpacity = useTransform(scrollY, [0, 80], [0.6, 1]);
+  const barScale = useTransform(scrollY, [0, COMPACT_AT], [1, COMPACT_SCALE], { clamp: true });
+  const contentY = useTransform(scrollY, [0, COMPACT_AT], [0, -10], { clamp: true });
+  const logoScale = useTransform(scrollY, [0, COMPACT_AT], [1, 0.9], { clamp: true });
+  const compact = desktop && !reduce;
 
-  // Crear navLinks dinámicamente según el rol del usuario
-  const navLinks = useMemo(() => {
-    console.log('🔍 Usuario en Header:', user); // DEBUG
-    console.log('🔍 Role del usuario:', user?.role); // DEBUG
-    
-    const links = [
-      { to: '/', label: 'Inicio' },
-      { to: '/cursos', label: 'Cursos' },
-      { to: '/sobre', label: 'Sobre Nosotros' },
-      { to: '/reseñas', label: 'Reseñas' },
-      { to: '/contacto', label: 'Contacto' },
-    ];
-
-    // Agregar "Corrección" si el usuario es admin o superadmin
-    if (user && (user.role === 'admin' || user.role === 'superadmin')) {
-      console.log('✅ Agregando link de Corrección'); // DEBUG
-      links.push({ to: '/admin/correcciones', label: 'Corrección' });
-    } else {
-      console.log('❌ No se agrega link de Corrección. User:', user, 'Role:', user?.role); // DEBUG
-    }
-
-    return links;
-  }, [user]);
+  const navLinks = useMemo(() => getNavLinks(user), [user]);
 
   useEffect(() => {
     if (!userMenuOpen) return;
@@ -88,64 +75,61 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [userMenuOpen]);
 
+  const goToSettings = () => {
+    setUserMenuOpen(false);
+    setMobileMenuOpen(false);
+    navigate('/ajustes');
+  };
+
+  const handleLogout = async () => {
+    setUserMenuOpen(false);
+    setMobileMenuOpen(false);
+    await new Promise(res => setTimeout(res, 350));
+    logout();
+    navigate('/');
+    showToast('Sesión cerrada correctamente', 'success');
+  };
+
   return (
     <>
-      <header className="sticky top-0 z-50">
+      <header className="sticky top-0 z-50 h-header lg:h-header-lg">
         <motion.div
           aria-hidden="true"
-          style={{ opacity: surfaceOpacity }}
-          className="pointer-events-none absolute inset-0 -z-10 material border-b border-line shadow-[0_8px_32px_-16px_rgb(0_0_0/0.6)]"
+          style={compact ? { opacity: surfaceOpacity, scaleY: barScale } : { opacity: surfaceOpacity }}
+          className="pointer-events-none absolute inset-0 origin-top glass-nav"
         />
-        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-          <nav className="flex h-16 items-center justify-between gap-6" aria-label="Principal">
+        <motion.div style={compact ? { y: contentY } : undefined} className="relative mx-auto h-full max-w-site px-gutter">
+          <nav className="flex h-full items-center justify-between gap-6" aria-label="Principal">
 
-            {/* Logo */}
-            <MotionLink to="/" style={{ scale: logoScale }} className="group flex shrink-0 origin-left items-center gap-2.5" aria-label="Evenor Tech Campus, inicio">
-              <span className="font-display text-xl font-bold tracking-tight text-brand transition-opacity duration-200 group-hover:opacity-80">
-                Evenor Tech
-              </span>
-              <span className="h-4 w-px bg-line-strong" aria-hidden="true" />
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-ink-3">Campus</span>
-            </MotionLink>
+            <Logo style={compact ? { scale: logoScale } : undefined} />
 
-            {/* Desktop Nav */}
-            <div className="isolate hidden items-center gap-1 lg:flex">
+            {/* Enlaces en línea: desde xl caben en una sola línea, también con "Corrección" */}
+            <ul className="isolate hidden items-center gap-0.5 xl:flex">
               {navLinks.map((link) => (
-                <NavItem
-                  key={link.to}
-                  to={link.to}
-                  label={link.label}
-                  active={link.to === '/' ? pathname === '/' : pathname.startsWith(link.to)}
-                />
+                <NavItem key={link.to} to={link.to} label={link.label} active={isActivePath(pathname, link.to)} />
               ))}
-            </div>
+            </ul>
 
-            {/* Actions */}
-            <div className="hidden items-center gap-3 lg:flex">
+            {/* Acciones */}
+            <div className="hidden items-center gap-3 xl:flex">
               {!user ? (
-                <Button size="sm" onClick={() => setAuthOpen(true)}>
-                  Acceder
+                <Button size="md" className="text-nav shadow-glow" onClick={() => setAuthOpen(true)} aria-label="Acceder al campus">
+                  <span className="min-[1400px]:hidden">Acceder</span>
+                  <span className="hidden min-[1400px]:inline">Acceder al campus</span>
                 </Button>
               ) : (
                 <div className="relative" ref={userMenuRef}>
                   <button
-                    className={`flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-sm font-medium transition-colors duration-200 ${userMenuOpen ? 'border-line-strong bg-white/[0.08]' : 'border-line bg-white/[0.04] hover:bg-white/[0.08]'}`}
+                    className={`flex h-11 items-center gap-2.5 rounded-full border py-1 pl-1.5 pr-4 text-nav font-medium transition-colors duration-200 ${userMenuOpen ? 'border-line-strong bg-glass-strong' : 'border-line bg-glass hover:bg-glass-strong'}`}
                     onClick={() => setUserMenuOpen((v) => !v)}
                     aria-haspopup="true"
                     aria-expanded={userMenuOpen}
                   >
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-bold text-on-brand">
-                      {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
-                    </span>
-                    <span className="max-w-[140px] truncate text-ink">
+                    <Avatar user={user} className="h-8 w-8 text-sm" />
+                    <span className="max-w-[8rem] truncate text-ink 2xl:max-w-[14rem]">
                       {user.name || user.email}
                     </span>
-                    <svg
-                      className={`h-3.5 w-3.5 text-ink-3 transition-transform duration-300 ${userMenuOpen ? 'rotate-180' : ''}`}
-                      fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <ChevronDown className={`h-4 w-4 text-ink-3 transition-transform duration-300 ${userMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
                   </button>
 
                   <AnimatePresence>
@@ -157,33 +141,25 @@ const Header = () => {
                         exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.12 } }}
                         className="absolute right-0 z-50 mt-2 w-72 origin-top-right overflow-hidden rounded-2xl material-thick border border-line shadow-overlay p-1.5"
                       >
-                        <div className="flex items-center gap-3 px-3 py-3 mb-1 border-b border-line">
-                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-on-brand">
-                            {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
-                          </span>
-                          <div className="flex flex-col min-w-0">
+                        <div className="mb-1 flex items-center gap-3 border-b border-line px-3 py-3">
+                          <Avatar user={user} className="h-10 w-10 text-base" />
+                          <div className="flex min-w-0 flex-col">
                             <span className="truncate text-sm font-semibold text-ink">{user.name || 'Usuario'}</span>
                             <span className="truncate text-xs text-ink-3">{user.email}</span>
                           </div>
                         </div>
                         <button
-                          className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-white/[0.06] hover:text-ink"
-                          onClick={() => { setUserMenuOpen(false); navigate('/ajustes'); }}
+                          className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-white/[0.06] hover:text-ink"
+                          onClick={goToSettings}
                         >
-                          <svg className="w-4 h-4 opacity-50" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                          <Settings className="h-4 w-4 opacity-60" aria-hidden="true" />
                           Ajustes
                         </button>
                         <button
-                          className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-red-400 transition-colors duration-150 hover:bg-red-500/10 hover:text-red-300"
-                          onClick={async () => {
-                            setUserMenuOpen(false);
-                            await new Promise(res => setTimeout(res, 350));
-                            logout();
-                            navigate('/');
-                            showToast('Sesión cerrada correctamente', 'success');
-                          }}
+                          className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-medium text-red-400 transition-colors duration-150 hover:bg-red-500/10 hover:text-red-300"
+                          onClick={handleLogout}
                         >
-                          <svg className="w-4 h-4 opacity-60" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                          <LogOut className="h-4 w-4 opacity-70" aria-hidden="true" />
                           Cerrar sesión
                         </button>
                       </motion.div>
@@ -193,28 +169,47 @@ const Header = () => {
               )}
             </div>
 
-            {/* Mobile menu button */}
+            {/* Botón del menú (por debajo de xl) */}
             <button
               type="button"
-              className="flex h-10 w-10 items-center justify-center rounded-full text-ink-2 transition-colors duration-200 hover:bg-white/[0.08] hover:text-ink lg:hidden"
+              className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink-2 transition-colors duration-200 hover:bg-glass-strong hover:text-ink xl:hidden"
               aria-label="Abrir menú"
+              aria-haspopup="dialog"
               aria-expanded={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-controls="menu-movil"
+              onClick={() => setMobileMenuOpen(true)}
             >
-              <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
 
           </nav>
-        </div>
+        </motion.div>
       </header>
 
       <MobileMenu
+        id="menu-movil"
         isOpen={mobileMenuOpen}
-        menuItems={menuItems}
+        links={navLinks}
         onClose={() => setMobileMenuOpen(false)}
-        onNavigation={() => setMobileMenuOpen(false)}
+        account={
+          user ? (
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-3 px-1 pb-3">
+                <Avatar user={user} className="h-11 w-11 text-base" />
+                <div className="flex min-w-0 flex-col">
+                  <span className="truncate text-base font-semibold text-ink">{user.name || 'Usuario'}</span>
+                  <span className="truncate text-sm text-ink-3">{user.email}</span>
+                </div>
+              </div>
+              <button className="flex min-h-12 items-center gap-3 rounded-2xl px-3 text-left text-lg font-medium text-ink-2 transition-colors hover:bg-glass-strong hover:text-ink" onClick={goToSettings}>
+                <Settings className="h-5 w-5 opacity-60" aria-hidden="true" /> Ajustes
+              </button>
+              <button className="flex min-h-12 items-center gap-3 rounded-2xl px-3 text-left text-lg font-medium text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300" onClick={handleLogout}>
+                <LogOut className="h-5 w-5 opacity-70" aria-hidden="true" /> Cerrar sesión
+              </button>
+            </div>
+          ) : null
+        }
       />
       <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>

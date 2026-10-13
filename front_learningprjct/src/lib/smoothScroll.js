@@ -4,7 +4,7 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 
 // Distancia bajo la cabecera fija al saltar a una sección
-export const HEADER_OFFSET = 80;
+export const HEADER_OFFSET = 96;
 
 let lenis = null;
 

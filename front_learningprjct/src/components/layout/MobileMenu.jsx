@@ -1,166 +1,117 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
-import {
-  Home, Globe, Wrench, BookOpen, Phone, ChevronDown,
-  LogIn, User, X, Crown, ExternalLink, ArrowRight,
-  Mail, Eye, EyeOff, LogOut
-} from 'lucide-react';
-import { duration, ease } from '../../lib/motion';
-// import { useAuth } from '../../context/AuthContext';
-// import { usePWAInstall } from '../../hooks/usePWAInstall';
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight, X } from 'lucide-react';
+import useFocusTrap from '../../hooks/useFocusTrap';
+import { duration, ease, spring, stagger } from '../../lib/motion';
+import { accountLinks, isActivePath } from './navigation';
+import Logo from './Logo';
 
-const MobileMenu = ({
-  isOpen,
-  menuItems,
-  onClose,
-  onNavigation
-}) => {
-  const location = useLocation();
-  // const { login, logout, user, isAuthenticated } = useAuth();
-  // const { shouldShowInstallButton, handleInstall, isIOS } = usePWAInstall();
+// Menú a pantalla completa (por debajo de xl): mismos enlaces que la cabecera de escritorio,
+// en letra grande, y debajo las acciones de cuenta. Foco atrapado, Escape cierra.
+const MobileMenu = ({ id, isOpen, links, account, onClose }) => {
+  const { pathname } = useLocation();
+  const panelRef = useRef(null);
+  const reduce = useReducedMotion();
+  useFocusTrap(panelRef, isOpen, onClose);
 
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [headerHeight, setHeaderHeight] = useState(80); // Default header height
-
+  // Bloquea el scroll de la página mientras está abierto
   useEffect(() => {
-    const updateHeaderHeight = () => {
-      const header = document.querySelector('header');
-      if (header) {
-        setHeaderHeight(header.offsetHeight);
-      }
-    };
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    return () => window.removeEventListener('resize', updateHeaderHeight);
-  }, [location.pathname]);
+    if (!isOpen) return undefined;
+    const root = document.documentElement;
+    const prev = root.style.overflow;
+    root.style.overflow = 'hidden';
+    return () => { root.style.overflow = prev; };
+  }, [isOpen]);
 
-  useEffect(() => {
-    setActiveDropdown(null);
-  }, [location]);
+  // Cierra al cambiar de ruta (atrás/adelante del navegador)
+  useEffect(() => { onClose(); }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggleDropdown = (name) => {
-    setActiveDropdown(prev => prev === name ? null : name);
-  };
-
-  const handleNavigation = (path) => {
-    setActiveDropdown(null);
-    setTimeout(() => {
-      onClose();
-      onNavigation(path);
-    }, 10);
-  };
-
-  const getMenuIcon = (name) => {
-    switch (name) {
-      case 'Inicio': return <Home className="w-5 h-5" />;
-      case 'Proyectos': return <Globe className="w-5 h-5" />;
-      case 'Herramientas': return <Wrench className="w-5 h-5" />;
-      case 'Publicaciones': return <BookOpen className="w-5 h-5" />;
-      case 'Contacto': return <Phone className="w-5 h-5" />;
-      default: return null;
-    }
-  };
+  // Cada enlace sube desde detrás de su máscara, escalonado
+  const item = (i) => (reduce
+    ? { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: duration.fast } } }
+    : {
+      initial: { y: '110%' },
+      animate: { y: '0%', transition: { ...spring.gentle, delay: 0.06 + i * stagger.list } },
+      exit: { y: '110%', transition: { duration: duration.fast, ease: ease.exit } },
+    });
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          key="menu-movil"
+          id={id}
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menú"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: duration.base, ease: ease.outExpo }}
-          className="fixed inset-0 z-40 lg:hidden"
-          onClick={onClose}
+          animate={{ opacity: 1, transition: { duration: duration.base, ease: ease.outExpo } }}
+          exit={{ opacity: 0, transition: { duration: duration.base, ease: ease.exit } }}
+          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain material-thick xl:hidden"
+          data-lenis-prevent
         >
-          <div className="absolute inset-0 bg-black/50" />
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
-            transition={{ type: 'spring', stiffness: 380, damping: 34 }}
-            style={{ top: `${headerHeight}px`, bottom: 0 }}
-            className="absolute inset-x-0 material-thick border-b border-line shadow-overlay flex flex-col overflow-hidden"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="overflow-y-auto overflow-x-hidden px-4 py-3 space-y-1">
-              {menuItems.map((item) => (
-                <div key={`mobile-${item.name}`} className="rounded-xl overflow-hidden">
-                  {item.dropdown ? (
-                    <div className="bg-surface-2 rounded-xl">
-                      <button
-                        onClick={() => toggleDropdown(item.name)}
-                        className={`w-full flex items-center justify-between px-3 sm:px-4 py-3 sm:py-3.5 text-sm sm:text-base font-medium transition-all duration-200 ${activeDropdown === item.name
-                          ? 'bg-green-400 text-on-brand shadow-xl'
-                          : 'text-white hover:bg-surface-3'
-                          }`}
-                      >
-                        <div className="flex items-center min-w-0">
-                          {getMenuIcon(item.name)}
-                          <span className="ml-3 truncate">{item.name}</span>
-                        </div>
-                        <motion.div
-                          animate={{ rotate: activeDropdown === item.name ? 180 : 0 }}
-                          transition={{ duration: duration.base, ease: ease.outExpo }}
+          <div className="mx-auto flex h-header w-full max-w-site shrink-0 items-center justify-between px-gutter lg:h-header-lg">
+            <Logo onClick={onClose} />
+            <button
+              type="button"
+              className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink-2 transition-colors duration-200 hover:bg-glass-strong hover:text-ink"
+              aria-label="Cerrar menú"
+              onClick={onClose}
+            >
+              <X className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="mx-auto flex w-full max-w-site flex-1 flex-col justify-between gap-10 px-gutter pb-10 pt-6">
+            <nav aria-label="Principal">
+              <ul className="flex flex-col">
+                {links.map((link, i) => {
+                  const active = isActivePath(pathname, link.to);
+                  return (
+                    <li key={link.to} className="overflow-hidden">
+                      <motion.div {...item(i)}>
+                        <Link
+                          to={link.to}
+                          onClick={onClose}
+                          aria-current={active ? 'page' : undefined}
+                          className={`flex min-h-14 items-center gap-3 py-1 font-display text-title-1 font-bold transition-colors duration-200 ${active ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
                         >
-                          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </motion.div>
-                      </button>
-                      <AnimatePresence>
-                        {activeDropdown === item.name && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -6 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
-                            transition={{ duration: duration.base, ease: ease.outExpo }}
-                            className="overflow-hidden bg-surface-2/70"
-                          >
-                            <div className="p-2 sm:p-3 space-y-1">
-                              {item.dropdown.map((subItem) => (
-                                <motion.button
-                                  key={subItem.path}
-                                  onClick={() => handleNavigation(subItem.path)}
-                                  className={`w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm transition-all duration-200 ${location.pathname === subItem.path
-                                    ? 'bg-green-400 text-on-brand font-semibold shadow-lg'
-                                    : 'text-gray-300 hover:bg-surface-3 hover:text-white'
-                                    }`}
-                                  whileHover={{ x: 4 }}
-                                  whileTap={{ scale: 0.98 }}
-                                >
-                                  <div className="flex items-center justify-between">
-                                    <span className="truncate">{subItem.name}</span>
-                                    {location.pathname === subItem.path && (
-                                      <motion.div
-                                        initial={{ scale: 0.5, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        className="w-1.5 h-1.5 rounded-full bg-surface-2 flex-shrink-0 ml-2"
-                                      />
-                                    )}
-                                  </div>
-                                </motion.button>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ) : (
-                    <motion.button
-                      onClick={() => handleNavigation(item.path)}
-                      className={`w-full flex items-center px-4 py-3.5 rounded-2xl text-lg font-semibold transition-colors duration-150 ${location.pathname === item.path
-                        ? 'bg-white/[0.08] text-brand'
-                        : 'text-ink hover:bg-white/[0.06]'
-                        }`}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {getMenuIcon(item.name)}
-                      <span className="ml-3">{item.name}</span>
-                    </motion.button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                          {link.label}
+                          {active && <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-brand" aria-hidden="true" />}
+                        </Link>
+                      </motion.div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            <motion.div
+              initial={{ opacity: 0, y: reduce ? 0 : 12 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: duration.slow, ease: ease.outExpo, delay: 0.06 + links.length * stagger.list } }}
+              className="border-t border-line pt-6"
+            >
+              {account ?? (
+                <ul className="flex flex-col gap-3 sm:flex-row">
+                  {accountLinks.map((a, i) => (
+                    <li key={a.to} className="sm:flex-1">
+                      <Link
+                        to={a.to}
+                        onClick={onClose}
+                        className={`flex h-14 items-center justify-center gap-2 rounded-full px-6 text-button-lg font-semibold transition-colors duration-200 ${i === 0 ? 'border border-line-strong bg-glass text-ink hover:bg-glass-strong' : 'bg-brand text-on-brand shadow-glow hover:bg-brand-300'}`}
+                      >
+                        {a.label}
+                        {i === 1 && <ArrowRight className="h-5 w-5" aria-hidden="true" />}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

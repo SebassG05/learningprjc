@@ -16,7 +16,7 @@ const StickyIntro = ({ children, className = '', distance = 360 }) => {
 
   if (!scenes) return <div className={className}>{children}</div>;
   return (
-    <motion.div style={{ opacity, scale, y }} className={`sticky top-16 z-0 origin-top will-change-transform ${className}`}>
+    <motion.div style={{ opacity, scale, y }} className={`sticky top-header z-0 lg:top-header-lg origin-top will-change-transform ${className}`}>
       {children}
     </motion.div>
   );
