@@ -5,7 +5,7 @@ import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
-import { BookOpen, Lock, Loader, AlertCircle, Clock, Globe } from 'lucide-react';
+import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { duration, ease, spring } from '../lib/motion';
 
