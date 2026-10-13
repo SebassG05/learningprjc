@@ -189,7 +189,7 @@ const Contact = () => {
 
       <Container>
         {/* Header Principal fijado: el formulario se desliza por encima */}
-        <StickyIntro distance={360}>
+        <StickyIntro distance={320}>
         <motion.div
           ref={sectionRef}
           initial={{ opacity: 0, y: 16 }}
