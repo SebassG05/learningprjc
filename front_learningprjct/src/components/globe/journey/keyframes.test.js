@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   damp, dawnFrame, heroFrame, heroLeave, journeyFrame, journeyPosition, orbitFrame,
-  deepSpaceFrame, HORIZON_AT, processFrame, silhouetteTop, stationWeights, stepSpring,
+  deepSpaceFrame, followFrame, HORIZON_AT, processFrame, silhouetteTop, stationWeights, stepSpring,
 } from './keyframes.js';
 
 const view = (W, H) => ({ W, H, vh: 3.2, vw: 3.2 * (W / H) });
@@ -75,4 +75,35 @@ test('el muelle del botón se puede interrumpir y vuelve a reposo', () => {
   assert.ok(s.v > 0);
   for (let i = 0; i < 240; i += 1) stepSpring(s, 0, undefined, 1 / 60);
   close(s.x, 0, 1e-3);
+});
+
+test('volver al hero de golpe (glideTo(0) desde la CTA) no teletransporta el globo', () => {
+  const v = view(1440, 900);
+  const frames = (pos) => journeyFrame([processFrame(v), deepSpaceFrame(v), orbitFrame(v), dawnFrame(v, null)], pos);
+  let previous = frames(3);
+  const cur = { ...previous };
+  let maxStep = 0;
+  // La posición cae de 3 a 0 en ~60 ms y luego se queda en el hero
+  for (let i = 0; i < 180; i += 1) {
+    const target = frames(Math.max(0, 3 - i * 0.75));
+    const before = cur.y;
+    followFrame(cur, target, previous, v.vh, 1 / 60);
+    previous = target;
+    maxStep = Math.max(maxStep, Math.abs(cur.y - before));
+  }
+  assert.ok(maxStep < v.vh * 0.25, `salto por frame ${maxStep}`);
+  close(cur.y, frames(0).y, 1e-3);
+});
+
+test('con scroll normal el globo sigue a su ancla sin retraso', () => {
+  const v = view(390, 844);
+  const at = (top) => heroFrame({ layout: 'center', rect: { left: 0, top, width: 390, height: 390 }, progress: null }, v);
+  let previous = at(400);
+  const cur = { ...previous };
+  for (let top = 400; top > 0; top -= 18) {
+    const target = at(top);
+    followFrame(cur, target, previous, v.vh, 1 / 60);
+    previous = target;
+    close(cur.y, target.y, 1e-9);
+  }
 });

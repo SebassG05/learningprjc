@@ -25,10 +25,8 @@ export const journey = {
 
 // Suscripción mínima para lo poco que sí cambia el DOM (estado de carga) o despierta el lienzo
 const listeners = new Set();
-let version = 0;
-const notify = () => { version += 1; listeners.forEach((fn) => fn()); };
+const notify = () => listeners.forEach((fn) => fn());
 export const subscribe = (fn) => { listeners.add(fn); return () => listeners.delete(fn); };
-export const getVersion = () => version;
 
 let status = 'idle'; // idle | ready | failed | nogl
 export const getStatus = () => status;
@@ -49,6 +47,7 @@ export function useJourneySection(ref, key) {
       if (journey.sections[key] === scrollYProgress) {
         journey.sections[key] = null;
         journey.elements[key] = null;
+        notify();
       }
     };
   }, [key, ref, scrollYProgress]);
@@ -76,12 +75,16 @@ export function useJourneyHorizon(ref) {
 
 // Pulso de la FAQ: sale de (x, y) en píxeles de pantalla hacia el nodo de la pregunta `index`
 export function emitPulse(index, x, y) {
-  journey.pulses.push({ index, x, y });
+  journey.pulses.push({ index, x, y, at: performance.now() });
   if (journey.pulses.length > MAX_QUEUED) journey.pulses.shift();
   notify();
 }
 
+// Siguiente pulso pendiente; los de hace más de un segundo se descartan (su origen ya no es válido)
+const PULSE_TTL = 1000;
 export function takePulse() {
+  const now = performance.now();
+  while (journey.pulses.length && now - journey.pulses[0].at > PULSE_TTL) journey.pulses.shift();
   return journey.pulses.shift();
 }
 
@@ -93,8 +96,15 @@ export function setReviewCount(n) {
 
 export function setCtaBoost(on, el) {
   journey.boost.on = on;
-  if (el) journey.boost.el = el;
+  if (el !== undefined) journey.boost.el = el;
   notify();
+}
+
+// Al salir de la home: nada de refuerzos ni pulsos colgados para la próxima visita
+export function resetJourney() {
+  journey.frame = null;
+  journey.pulses.length = 0;
+  journey.boost = { on: false, el: null };
 }
 
 // Posición continua en la trayectoria (0…3) según el scroll de las secciones registradas

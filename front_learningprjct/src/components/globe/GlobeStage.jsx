@@ -8,7 +8,7 @@
 import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { duration, ease } from '../../lib/motion';
-import { getStatus, journey, setStatus, subscribe, useJourneyHero } from './journey/store';
+import { getStatus, resetJourney, setStatus, subscribe, useJourneyHero } from './journey/store';
 
 const GlobeCanvas = lazy(() => import('./GlobeCanvas'));
 
@@ -79,7 +79,7 @@ export default function GlobeStage() {
     setStatus(webgl ? 'idle' : 'nogl');
     return () => {
       setStatus('idle');
-      journey.frame = null;
+      resetJourney();
     };
   }, [webgl]);
 
@@ -124,7 +124,7 @@ export default function GlobeStage() {
   if (!webgl || !ready) return null;
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-lvh">
       <CanvasBoundary>
         <Suspense fallback={null}>
           <motion.div

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Star, ChevronDown, Clock, ArrowRight, Award, FileText, Video, ListChecks, Check } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useSyncExternalStore } from 'react';
 import { AnimatePresence, LayoutGroup, motion, motion as m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
@@ -10,7 +10,7 @@ import SplitText from '../components/ui/SplitText';
 import { useUser } from '../context/UserContext';
 import AuthModal from '../components/auth/AuthModal';
 import GlobeStage, { GlobeAnchor } from '../components/globe/GlobeStage';
-import { emitPulse, setCtaBoost, setReviewCount, useJourneyHorizon, useJourneySection } from '../components/globe/journey/store';
+import { emitPulse, getStatus, setCtaBoost, setReviewCount, subscribe, useJourneyHorizon, useJourneySection } from '../components/globe/journey/store';
 import FloatingCards from '../components/globe/FloatingCards';
 import { useScenesEnabled, useSceneProgress } from '../hooks/useScene';
 import useMediaQuery from '../hooks/useMediaQuery';
@@ -705,6 +705,10 @@ const CTAScene = ({ onStart }) => {
   // Fondo: hover o foco de "Comenzar ahora" avivan el amanecer (el botón no cambia)
   const boostOn = (e) => setCtaBoost(true, e.currentTarget.querySelector('button, a') ?? e.currentTarget);
   const boostOff = () => setCtaBoost(false);
+  // Al navegar con el puntero encima no llega pointerleave: el refuerzo no debe quedarse encendido
+  useEffect(() => () => setCtaBoost(false, null), []);
+  // Sin lienzo (sin WebGL, si falla o mientras carga) se mantiene el horizonte dibujado en CSS
+  const canvasReady = useSyncExternalStore(subscribe, getStatus) === 'ready';
   const scale = useTransform(p, [0, 1], [0.88, 1]);
   const opacity = useTransform(p, [0, 0.55], [0.3, 1]);
   const y = useTransform(p, [0, 1], [80, 0]);
@@ -720,6 +724,9 @@ const CTAScene = ({ onStart }) => {
           {/* Detrás, el horizonte real del globo al amanecer (lienzo de la página): la página termina
               con el mismo motivo con el que empieza. Velo superior para que el texto quede sobre fondo oscuro */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface/85 via-surface/60 via-70% to-surface/10" />
+          {!canvasReady && (
+            <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[90%] aspect-square w-[150%] -translate-x-1/2 rounded-full border border-brand-400/30 bg-radial from-brand-900/70 via-brand-950/40 via-40% to-transparent to-70% shadow-glow-lg" />
+          )}
           <div className="relative">
             <SplitText as="h2" className="mx-auto block max-w-3xl text-title-1 font-bold text-ink">
               ¿Listo para encontrar tu próxima <span className="text-brand">oportunidad</span>?
@@ -734,7 +741,7 @@ const CTAScene = ({ onStart }) => {
                 ))}
               </Reveal.Item>
               <Reveal.Item>
-                <div onPointerEnter={boostOn} onPointerLeave={boostOff} onFocus={boostOn} onBlur={boostOff}>
+                <div className="mx-auto w-fit" onPointerEnter={boostOn} onPointerLeave={boostOff} onFocus={boostOn} onBlur={boostOff}>
                   <Button size="lg" className="mt-10" onClick={onStart}>
                     Comenzar ahora <ArrowRight className="h-5 w-5" />
                   </Button>

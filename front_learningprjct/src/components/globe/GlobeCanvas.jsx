@@ -18,7 +18,7 @@ import Orbits from './Orbits';
 import { Arcs, Dawn, Moon, Signals, Stars } from './Extras';
 import { journey, progressOf, readPosition, SECTIONS, subscribe } from './journey/store';
 import {
-  blendFrames, clamp01, dampFrame, dawnFrame, FRAME_KEYS, deepSpaceFrame, heroFrame, heroLeave,
+  blendFrames, clamp01, dawnFrame, followFrame, FRAME_KEYS, deepSpaceFrame, heroFrame, heroLeave,
   journeyFrame, orbitFrame, processFrame, smooth, stationWeights, stepSpring,
 } from './journey/keyframes';
 import DeepSpaceScene from './scenes/DeepSpaceScene';
@@ -31,7 +31,6 @@ const BASE_LIGHT = new Vector3(...LIGHT_DIR).normalize();
 const DAWN_FROM = new Vector3(0.1, 0.3, -0.95).normalize();
 const DAWN_TO = new Vector3(-0.14, 0.8, -0.08).normalize();
 const SWEEP_SECONDS = 2.6;
-const TRAVEL_LAMBDA = 4.5;
 
 const tmpLight = new Vector3();
 
@@ -42,6 +41,7 @@ function Director({ still, children, spinChildren, staticChildren, heroOnly, sta
   const stars = useRef();
   const extras = useRef();
   const current = useRef(null);
+  const previous = useRef(null);
   const turned = useRef(0);
   const boost = useRef({ x: 0, v: 0 });
   const sweep = useRef({ start: null, k: 0 });
@@ -54,27 +54,29 @@ function Director({ still, children, spinChildren, staticChildren, heroOnly, sta
     const t = state.clock.elapsedTime;
     const dt = Math.min(delta, 0.1);
 
-    // Hero (ancla en el DOM, con o sin escena fijada) y su salida hacia el proceso
-    const { hero } = journey;
-    const heroIn = {
-      layout: hero.layout,
-      rect: hero.anchor ? hero.anchor.getBoundingClientRect() : null,
-      progress: progressOf(hero.progress),
-    };
-    const pre = blendFrames(heroFrame(heroIn, view), processFrame(view), heroLeave(heroIn, view));
-
     // Posición en la trayectoria: continua; con reduced motion, la estación más cercana (sin viaje)
     const exact = readPosition();
     const position = still ? Math.round(exact) : exact;
-    const horizonRect = journey.horizon ? journey.horizon.getBoundingClientRect() : null;
+
+    // Hero (ancla en el DOM, con o sin escena fijada) y su salida hacia el proceso. Los rectángulos
+    // solo se leen cuando su estación pesa (evita forzar layout en el resto del recorrido)
+    const { hero } = journey;
+    const heroIn = {
+      layout: hero.layout,
+      rect: hero.anchor && position < 1 ? hero.anchor.getBoundingClientRect() : null,
+      progress: progressOf(hero.progress),
+    };
+    const pre = blendFrames(heroFrame(heroIn, view), processFrame(view), heroLeave(heroIn, view));
+    const horizonRect = journey.horizon && position > 2 ? journey.horizon.getBoundingClientRect() : null;
     const target = journeyFrame([pre, deepSpaceFrame(view), orbitFrame(view), dawnFrame(view, horizonRect)], position);
 
-    // En el hero el progreso ya viene suavizado (y el ancla sigue al scroll): sin retardo extra.
+    // Pasos pequeños del objetivo se siguen al momento y los saltos se amortiguan (followFrame).
     // En modo estático se pinta un frame más si el encaje cambió: las capas que leen la escala del
     // globo (puntos de tierra) la toman del frame anterior
     if (still && current.current && FRAME_KEYS.some((k) => Math.abs(current.current[k] - target[k]) > 1e-4)) state.invalidate();
-    if (!current.current || still || exact < 0.001) current.current = { ...target };
-    else dampFrame(current.current, target, TRAVEL_LAMBDA, dt);
+    if (!current.current || still) current.current = { ...target };
+    else followFrame(current.current, target, previous.current, vh, dt);
+    previous.current = target;
     const f = current.current;
 
     rig.current.position.set(f.x, f.y, 0);

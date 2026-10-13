@@ -71,7 +71,7 @@ export default function DeepSpaceScene({ palette, quality }) {
   const slots = useRef(Array.from({ length: SLOTS }, () => ({ active: false })));
   const low = quality === 'low';
 
-  const net = useMemo(() => buildNetwork(low ? 5 : 9), [low]);
+  const net = useMemo(() => buildNetwork(low ? 3 : 9), [low]);
 
   const res = useMemo(() => {
     const nodeGeo = new BufferGeometry();
@@ -116,7 +116,10 @@ export default function DeepSpaceScene({ palette, quality }) {
     const w = f.weights[1];
     group.current.visible = w > 0.01;
     moon.current.visible = w > 0.01;
-    if (w <= 0.01) return;
+    if (w <= 0.01) {
+      journey.pulses.length = 0; // fuera de la FAQ no se acumulan pulsos
+      return;
+    }
     const t = state.clock.elapsedTime;
     const dt = Math.min(delta, 0.1);
     const ease = w * w * (3 - 2 * w);

@@ -67,7 +67,7 @@ export default function DawnScene({ palette }) {
     // Arcos hacia el botón: se dibujan con el muelle del refuerzo y los recorre un destello
     const el = journey.boost.el;
     res.arcMat.opacity = 0.7 * boost * appear;
-    const visible = boost > 0.002 && el;
+    const visible = boost > 0.002 && el?.isConnected;
     if (!visible) {
       res.arcs.forEach((g) => g.setDrawRange(0, 0));
       heads.current.forEach((h) => { if (h) h.visible = false; });

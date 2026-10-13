@@ -149,6 +149,22 @@ export function dampFrame(current, target, lambda, dt) {
   return current;
 }
 
+// Seguimiento del encaje: los pasos pequeños del objetivo (scroll normal, el ancla del hero que se
+// desplaza) se siguen al momento, sin retraso; los saltos (anclas, glideTo, scroll muy rápido) se
+// amortiguan, así el globo nunca aparece de golpe en otro sitio
+export const TRAVEL_LAMBDA = 4.5;
+const STEP_LIMIT = { x: 0.03, y: 0.03, s: 0.03 }; // fracción de vh; el resto (0…1) usa 0.05
+
+export function followFrame(current, target, previous, vh, dt) {
+  FRAME_KEYS.forEach((k) => {
+    const step = target[k] - previous[k];
+    const limit = STEP_LIMIT[k] ? STEP_LIMIT[k] * vh : 0.05;
+    const carry = Math.abs(step) < limit ? step : 0;
+    current[k] = damp(current[k] + carry, target[k], TRAVEL_LAMBDA, dt);
+  });
+  return current;
+}
+
 // Muelle amortiguado (interrumpible: conserva la velocidad al cambiar de objetivo)
 export function stepSpring(state, target, { stiffness = 170, damping = 26 } = {}, dt = 1 / 60) {
   let left = Math.min(dt, 0.1);
