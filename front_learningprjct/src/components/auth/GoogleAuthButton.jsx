@@ -65,7 +65,9 @@ const GoogleAuthButton = ({ onSuccess }) => {
   }, []);
 
   return (
-    <div ref={box} className="relative flex h-10 w-full justify-center">
+    // El iframe de Google es un documento claro dentro de una página `color-scheme: dark`: con
+    // esquemas distintos el navegador le pinta un fondo blanco opaco. Con el mismo esquema, transparente
+    <div ref={box} className="relative flex h-10 w-full justify-center [&_iframe]:[color-scheme:light]">
       <span
         className={`pointer-events-none absolute inset-y-0 rounded-full bg-surface-3 transition-opacity duration-300 ease-out ${ready ? 'opacity-0' : 'opacity-100'}`}
         style={{ width: width ?? '100%' }}

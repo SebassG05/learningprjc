@@ -2,12 +2,14 @@
 // Contenedor modal del acceso: velo, tarjeta con role="dialog", foco atrapado,
 // Escape, fondo inerte, bloqueo de scroll sin salto y vuelta del foco al cerrar. No sabe nada de
 // autenticación: solo abre, cierra y avisa al lienzo del viaje (journey.overlay).
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { AnimatePresence, motion, useDragControls, useReducedMotion } from 'framer-motion';
 import { duration, ease, overlay, spring } from '../../lib/motion';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { shouldDismissSheet } from './validation';
 import { setOverlay } from '../globe/journey/store';
+
+const AuthGlobe = lazy(() => import('../globe/AuthGlobe'));
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -111,8 +113,13 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
   const reduce = useReducedMotion();
   const desktop = useMediaQuery('(min-width: 640px)');
   const cardMotion = reduce ? fade : desktop ? console_ : sheet;
-  // Sin lienzo del viaje (fuera de la home) el fondo es un horizonte al amanecer en CSS
-  const hasGlobe = open && !!document.querySelector('#root canvas');
+  // Fuera de la home no hay lienzo del viaje: el diálogo monta su propio planeta (solo en
+  // pantallas anchas, donde se ve el escenario). Se decide al abrir, sin contar su propio lienzo
+  const wide = useMediaQuery('(min-width: 1024px)');
+  const hasGlobe = useMemo(
+    () => open && [...document.querySelectorAll('#root canvas')].some((c) => !c.closest('[data-auth-overlay]')),
+    [open],
+  );
   // Móvil: la hoja se cierra arrastrándola hacia abajo desde el asa (no desde el contenido,
   // que tiene su propio scroll y campos)
   const drag = useDragControls();
@@ -225,12 +232,14 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
           onMouseDown={(e) => { if (e.target === e.currentTarget) e.preventDefault(); }}
           {...overlay}
         >
-          {/* Escenario: lectura del panel a la izquierda; el planeta (o el amanecer) a la derecha */}
+          {/* Escenario: lectura del panel a la izquierda; el planeta a la derecha */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
-            <div className="absolute inset-0 bg-linear-to-r from-canvas via-canvas/60 to-transparent" />
-            {!hasGlobe && (
-              <div className="absolute left-[66%] top-[62%] aspect-square w-[160vh] -translate-x-1/2 rounded-full bg-canvas shadow-[0_-24px_120px_-24px_var(--color-brand-400)] ring-1 ring-brand-400/40" />
+            {!hasGlobe && wide && (
+              <Suspense fallback={null}>
+                <AuthGlobe />
+              </Suspense>
             )}
+            <div className="absolute inset-0 bg-linear-to-r from-canvas via-canvas/60 to-transparent" />
           </div>
           {sentinel('last')}
           <motion.div

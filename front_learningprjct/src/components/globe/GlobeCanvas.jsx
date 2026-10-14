@@ -34,7 +34,7 @@ const SWEEP_SECONDS = 2.6;
 
 const tmpLight = new Vector3();
 
-function Director({ still, moonMaterial, children, spinChildren, staticChildren, heroOnly, starsChildren }) {
+function Director({ still, portal, moonMaterial, children, spinChildren, staticChildren, heroOnly, starsChildren }) {
   const rig = useRef();
   const tilt = useRef();
   const spin = useRef();
@@ -47,7 +47,8 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
   const sweep = useRef({ start: null, k: 0 });
   const opacity = useRef(-1);
   // Diálogo abierto (journey.overlay): muelle 0→1 que lleva el globo al encaje del acceso y ralentiza el giro
-  const dim = useRef({ x: 0, v: 0 });
+  // Con `portal` (lienzo propio del acceso, fuera de la home) empieza ya junto al panel
+  const dim = useRef({ x: portal ? 1 : 0, v: 0 });
   const shaderTime = useRef(0);
 
   useFrame((state, delta) => {
@@ -57,7 +58,7 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     const t = state.clock.elapsedTime;
     const dt = Math.min(delta, 0.1);
     const d = dim.current;
-    const dimTarget = journey.overlay ? 1 : 0;
+    const dimTarget = portal || journey.overlay ? 1 : 0;
     if (still) { d.x = dimTarget; d.v = 0; } else stepSpring(d, dimTarget, undefined, dt);
     const dimK = clamp01(d.x);
     const rate = 1 - 0.6 * dimK;
@@ -235,7 +236,7 @@ function useNearSections() {
   return near;
 }
 
-export default function GlobeCanvas({ quality: initialQuality = 'high', animate = true, running = true, onReady }) {
+export default function GlobeCanvas({ quality: initialQuality = 'high', animate = true, running = true, portal = false, onReady }) {
   const [quality, setQuality] = useState(initialQuality);
   const [dpr, setDpr] = useState(QUALITY[initialQuality].dpr);
   const [lowEnd, setLowEnd] = useState(false);
@@ -269,6 +270,7 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
 
       <Director
         still={still}
+        portal={portal}
         moonMaterial={moonMaterial}
         starsChildren={<Stars palette={palette} count={cfg.stars} animate={!still} />}
         spinChildren={(
