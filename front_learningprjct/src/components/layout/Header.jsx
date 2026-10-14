@@ -54,15 +54,18 @@ const Header = () => {
   const desktop = useMediaQuery('(min-width: 1024px)');
   const reduce = useReducedMotion();
 
-  // Cabecera progresiva: el cristal se asienta y la barra se compacta con el scroll (motion values, sin re-render)
+  // Cabecera progresiva: arriba no hay barra (el fondo sigue sin cortes bajo un velo que se desvanece);
+  // con el scroll el cristal se asienta y la barra se compacta (motion values, sin re-render)
   const { scrollY } = useScroll();
-  const surfaceOpacity = useTransform(scrollY, [0, 80], [0.6, 1]);
+  const surfaceOpacity = useTransform(scrollY, [0, 80], [0, 1]);
+  const scrimOpacity = useTransform(surfaceOpacity, [0, 1], [1, 0]);
   const barScale = useTransform(scrollY, [0, COMPACT_AT], [1, COMPACT_SCALE], { clamp: true });
   const contentY = useTransform(scrollY, [0, COMPACT_AT], [0, -10], { clamp: true });
   const logoScale = useTransform(scrollY, [0, COMPACT_AT], [1, 0.9], { clamp: true });
   const compact = desktop && !reduce;
 
   const navLinks = useMemo(() => getNavLinks(user), [user]);
+  const userButtonRef = useRef(null);
 
   useEffect(() => {
     if (!userMenuOpen) return;
@@ -71,8 +74,18 @@ const Header = () => {
         setUserMenuOpen(false);
       }
     }
+    // Escape cierra el menú y devuelve el foco al botón que lo abrió
+    function handleKey(e) {
+      if (e.key !== 'Escape') return;
+      setUserMenuOpen(false);
+      userButtonRef.current?.focus();
+    }
     document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
   }, [userMenuOpen]);
 
   const goToSettings = () => {
@@ -93,6 +106,11 @@ const Header = () => {
   return (
     <>
       <header className="sticky top-0 z-50 h-header lg:h-header-lg">
+        <motion.div
+          aria-hidden="true"
+          style={{ opacity: scrimOpacity }}
+          className="pointer-events-none absolute inset-x-0 top-0 -bottom-8 bg-linear-to-b from-canvas/75 via-canvas/35 to-transparent"
+        />
         <motion.div
           aria-hidden="true"
           style={compact ? { opacity: surfaceOpacity, scaleY: barScale } : { opacity: surfaceOpacity }}
@@ -120,6 +138,8 @@ const Header = () => {
               ) : (
                 <div className="relative" ref={userMenuRef}>
                   <button
+                    ref={userButtonRef}
+                    type="button"
                     className={`flex h-11 items-center gap-2.5 rounded-full border py-1 pl-1.5 pr-4 text-nav font-medium transition-colors duration-200 ${userMenuOpen ? 'border-line-strong bg-glass-strong' : 'border-line bg-glass hover:bg-glass-strong'}`}
                     onClick={() => setUserMenuOpen((v) => !v)}
                     aria-haspopup="true"
@@ -149,7 +169,7 @@ const Header = () => {
                           </div>
                         </div>
                         <button
-                          className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-white/[0.06] hover:text-ink"
+                          className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-glass-strong hover:text-ink"
                           onClick={goToSettings}
                         >
                           <Settings className="h-4 w-4 opacity-60" aria-hidden="true" />
