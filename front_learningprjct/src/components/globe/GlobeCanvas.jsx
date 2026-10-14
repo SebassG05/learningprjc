@@ -19,7 +19,7 @@ import { Arcs, Dawn, Moon, Signals, Stars } from './Extras';
 import { journey, progressOf, readPosition, SECTIONS, subscribe } from './journey/store';
 import {
   blendFrames, carryAt, clamp01, dawnFrame, followFrame, FRAME_KEYS, deepSpaceFrame, heroFrame, heroLeave,
-  journeyFrame, orbitFrame, processFrame, smooth, stationWeights, stepSpring,
+  journeyFrame, orbitFrame, portalFrame, processFrame, smooth, stationWeights, stepSpring,
 } from './journey/keyframes';
 import DeepSpaceScene from './scenes/DeepSpaceScene';
 import OrbitScene from './scenes/OrbitScene';
@@ -46,7 +46,7 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
   const boost = useRef({ x: 0, v: 0 });
   const sweep = useRef({ start: null, k: 0 });
   const opacity = useRef(-1);
-  // Diálogo abierto (journey.overlay): muelle 0→1 que atenúa el lienzo y ralentiza giro y shaders
+  // Diálogo abierto (journey.overlay): muelle 0→1 que lleva el globo al encaje del acceso y ralentiza el giro
   const dim = useRef({ x: 0, v: 0 });
   const shaderTime = useRef(0);
 
@@ -60,7 +60,7 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     const dimTarget = journey.overlay ? 1 : 0;
     if (still) { d.x = dimTarget; d.v = 0; } else stepSpring(d, dimTarget, undefined, dt);
     const dimK = clamp01(d.x);
-    const rate = 1 - 0.8 * dimK;
+    const rate = 1 - 0.6 * dimK;
 
     // Posición en la trayectoria: continua; con reduced motion, la estación más cercana (sin viaje)
     const exact = readPosition();
@@ -76,7 +76,9 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     };
     const pre = blendFrames(heroFrame(heroIn, view), processFrame(view), heroLeave(heroIn, view));
     const horizonRect = journey.horizon && position > 2 ? journey.horizon.getBoundingClientRect() : null;
-    const target = journeyFrame([pre, deepSpaceFrame(view), orbitFrame(view), dawnFrame(view, horizonRect)], position);
+    const route = journeyFrame([pre, deepSpaceFrame(view), orbitFrame(view), dawnFrame(view, horizonRect)], position);
+    // Con el acceso abierto el globo deja su estación y se coloca junto al panel
+    const target = dimK > 0.001 ? blendFrames(route, portalFrame(view), dimK) : route;
 
     // Pasos pequeños del objetivo se siguen al momento y los saltos se amortiguan (followFrame).
     // En modo estático se pinta un frame más si el encaje cambió: las capas que leen la escala del
@@ -127,7 +129,7 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     shared.uTime.value = still ? t : shaderTime.current;
 
     // Opacidad del lienzo (solo si cambia: es un estilo del compositor, sin reflujo)
-    const shown = f.opacity * (1 - 0.45 * dimK);
+    const shown = f.opacity;
     if (Math.abs(opacity.current - shown) > 0.004) {
       opacity.current = shown;
       state.gl.domElement.style.opacity = shown.toFixed(3);

@@ -4,7 +4,7 @@
 // autenticación: solo abre, cierra y avisa al lienzo del viaje (journey.overlay).
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { AnimatePresence, motion, useDragControls, useReducedMotion } from 'framer-motion';
-import { duration, ease, overlay, panel } from '../../lib/motion';
+import { duration, ease, overlay, spring } from '../../lib/motion';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { shouldDismissSheet } from './validation';
 import { setOverlay } from '../globe/journey/store';
@@ -31,10 +31,28 @@ function inertOutside(node, out) {
   return out;
 }
 
+// "Ventana al planeta" (escritorio): la página se desvanece salvo el lienzo del viaje, que queda
+// a la vista sin desenfoque. Solo opacidad (WAAPI, compositor); se deshace a la inversa al cerrar.
+function fadeStage(node, out, reduce) {
+  for (const child of node.children) {
+    if (child.matches(KEEP)) continue;
+    if (child.querySelector('canvas, ' + KEEP)) fadeStage(child, out, reduce);
+    else if (!child.querySelector('canvas') && child.tagName !== 'CANVAS') {
+      out.push(child.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: reduce ? 120 : 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards',
+      }));
+    }
+  }
+  return out;
+}
+
 // Fondo inerte + scroll bloqueado mientras el diálogo está abierto. Devuelve cómo deshacerlo.
 function lockPage() {
   const root = document.getElementById('root');
   const inerted = root ? inertOutside(root, []) : [];
+  const stage = root && window.matchMedia('(min-width: 640px)').matches
+    ? fadeStage(root, [], window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    : [];
 
   const html = document.documentElement;
   const prev = { overflow: html.style.overflow, gutter: html.style.scrollbarGutter };
@@ -46,6 +64,7 @@ function lockPage() {
 
   return () => {
     inerted.forEach((el) => { el.inert = false; });
+    stage.forEach((a) => { a.onfinish = () => a.cancel(); a.reverse(); });
     html.style.overflow = prev.overflow;
     html.style.scrollbarGutter = prev.gutter;
     setOverlay(false);
@@ -69,8 +88,13 @@ function restoreFocus(opener) {
   main.focus({ preventScroll: true });
 }
 
-// Aparición de la tarjeta. Escritorio: escala desde el centro (un modal no se ancla a su botón).
+// Aparición del panel. Escritorio: entra desde la izquierda, como una consola junto al planeta.
 // Móvil: la hoja sube un poco. Reduced motion: solo opacidad, corta.
+const console_ = {
+  initial: { opacity: 0, x: -24 },
+  animate: { opacity: 1, x: 0, transition: spring.gentle },
+  exit: { opacity: 0, x: -16, transition: { duration: duration.fast, ease: ease.exit } },
+};
 const sheet = {
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.outExpo } },
@@ -86,7 +110,9 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
   const cardRef = useRef(null);
   const reduce = useReducedMotion();
   const desktop = useMediaQuery('(min-width: 640px)');
-  const cardMotion = reduce ? fade : desktop ? { ...panel, initial: { ...panel.initial, y: 0, scale: 0.96 } } : sheet;
+  const cardMotion = reduce ? fade : desktop ? console_ : sheet;
+  // Sin lienzo del viaje (fuera de la home) el fondo es un horizonte al amanecer en CSS
+  const hasGlobe = open && !!document.querySelector('#root canvas');
   // Móvil: la hoja se cierra arrastrándola hacia abajo desde el asa (no desde el contenido,
   // que tiene su propio scroll y campos)
   const drag = useDragControls();
@@ -192,13 +218,20 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
       {open && (
         <motion.div
           key="auth-dialog"
-          className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-[60] flex items-start justify-center bg-canvas/80 sm:items-center sm:p-6 lg:justify-start lg:bg-transparent lg:px-gutter"
           data-lenis-prevent
           data-auth-overlay
           // Un clic en el velo no cierra ni saca el foco de la tarjeta
           onMouseDown={(e) => { if (e.target === e.currentTarget) e.preventDefault(); }}
           {...overlay}
         >
+          {/* Escenario: lectura del panel a la izquierda; el planeta (o el amanecer) a la derecha */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block">
+            <div className="absolute inset-0 bg-linear-to-r from-canvas via-canvas/60 to-transparent" />
+            {!hasGlobe && (
+              <div className="absolute left-[66%] top-[62%] aspect-square w-[160vh] -translate-x-1/2 rounded-full bg-canvas shadow-[0_-24px_120px_-24px_var(--color-brand-400)] ring-1 ring-brand-400/40" />
+            )}
+          </div>
           {sentinel('last')}
           <motion.div
             ref={cardRef}
@@ -206,7 +239,7 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
             aria-modal="true"
             aria-labelledby={labelledBy}
             tabIndex={-1}
-            className="relative h-[var(--auth-vh,100dvh)] w-full overflow-y-auto overscroll-contain bg-surface/90 backdrop-blur-2xl outline-none sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-120 sm:rounded-3xl sm:border sm:border-line sm:bg-surface/80 sm:shadow-overlay"
+            className="relative h-[var(--auth-vh,100dvh)] w-full overflow-y-auto overscroll-contain bg-surface/90 backdrop-blur-2xl outline-none sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-120 sm:rounded-3xl sm:glass-panel"
             {...cardMotion}
             {...sheetDrag}
           >

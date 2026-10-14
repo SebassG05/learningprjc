@@ -70,6 +70,15 @@ export function processFrame({ vw, vh }) {
   return { ...base, x: vw * 0.4, y: vh * 0.27, s: vh * 0.12, opacity: 0.45, starsY: 0.12 };
 }
 
+// Acceso abierto ("ventana al planeta"): el globo se acerca y queda a la derecha del panel,
+// a plena luz y entero en pantalla
+export function portalFrame({ vw, vh }) {
+  const s = Math.min(vh * 0.34, vw * 0.2);
+  // En pantallas menos panorámicas el panel ocupa más ancho: el planeta se aparta un poco más
+  const x = vw * (vw / vh < 1.5 ? 0.24 : 0.18);
+  return { ...base, x, y: -vh * 0.01, s, opacity: 1, starsY: 0.2 };
+}
+
 // FAQ, espacio profundo: el globo sale de plano por abajo (solo asoma su halo), la cámara sube
 export function deepSpaceFrame({ vw, vh }) {
   const s = vh * 0.3;
