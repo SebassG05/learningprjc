@@ -240,6 +240,35 @@
     transition: background-color 9999s ease-out 0s;
 }
 
+/* Contacto: pulso de Sevilla en el mapa de puntos (con reduced motion queda quieto por la regla global) */
+.contact-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: contact-pulse 2.8s var(--ease-out-expo) infinite;
+}
+
+.contact-pulse-late {
+    animation-delay: 1.4s;
+}
+
+@keyframes contact-pulse {
+    from {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(4.5);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-pulse {
+        animation: none;
+        opacity: 0.4;
+    }
+}
+
 @layer base {
     html {
         position: relative; /* referencia para las escenas con useScroll */
