@@ -1,0 +1,422 @@
+{
+  "front_learningprjct/dev-dist/registerSW.js": {
+    "mtime": 1791876072.5435803,
+    "seen": 1791879863.1312532,
+    "ast_hash": "3ca0b8505b4bec776b69afdba2768812",
+    "semantic_hash": "3ca0b8505b4bec776b69afdba2768812"
+  },
+  "front_learningprjct/dev-dist/sw.js": {
+    "mtime": 1791876076.080637,
+    "seen": 1791879863.1312575,
+    "ast_hash": "a7f133adb8a3de490d8d32168c352e0a",
+    "semantic_hash": "a7f133adb8a3de490d8d32168c352e0a"
+  },
+  "front_learningprjct/dev-dist/workbox-4772ad73.js": {
+    "mtime": 1791876076.080637,
+    "seen": 1791879863.1312594,
+    "ast_hash": "dfa6c1bef40dabbfe9ca48cfb19107e0",
+    "semantic_hash": "dfa6c1bef40dabbfe9ca48cfb19107e0"
+  },
+  "front_learningprjct/eslint.config.js": {
+    "mtime": 1768397609.4409373,
+    "seen": 1791879863.1312602,
+    "ast_hash": "f67d8fbc78c9581d9962cd4955b07768",
+    "semantic_hash": "f67d8fbc78c9581d9962cd4955b07768"
+  },
+  "front_learningprjct/package.json": {
+    "mtime": 1791878864.0324528,
+    "seen": 1791879863.1312609,
+    "ast_hash": "9f77c5a96cd6c8616010662ad2c7f9ce",
+    "semantic_hash": "9f77c5a96cd6c8616010662ad2c7f9ce"
+  },
+  "front_learningprjct/postcss.config.js": {
+    "mtime": 1768401270.9180593,
+    "seen": 1791879863.1312616,
+    "ast_hash": "e1ba2627814efb19e39e9816d2dc22a9",
+    "semantic_hash": "e1ba2627814efb19e39e9816d2dc22a9"
+  },
+  "front_learningprjct/src/App.jsx": {
+    "mtime": 1791878864.0330033,
+    "seen": 1791879863.1312625,
+    "ast_hash": "4a49fa91d7f3bf918ee0797e9c40c42a",
+    "semantic_hash": "4a49fa91d7f3bf918ee0797e9c40c42a"
+  },
+  "front_learningprjct/src/components/AdminCursos.jsx": {
+    "mtime": 1791878864.0335164,
+    "seen": 1791879863.1312633,
+    "ast_hash": "7e668d658ba35e54450df4dcb959a37d",
+    "semantic_hash": "7e668d658ba35e54450df4dcb959a37d"
+  },
+  "front_learningprjct/src/components/auth/AuthModal.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.131264,
+    "ast_hash": "a0362a0b18ec7977be9c575c5f93f893",
+    "semantic_hash": "a0362a0b18ec7977be9c575c5f93f893"
+  },
+  "front_learningprjct/src/components/auth/GoogleAuthButton.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.1312644,
+    "ast_hash": "f6c4fccb5019c6e425721c7fac9a71ef",
+    "semantic_hash": "f6c4fccb5019c6e425721c7fac9a71ef"
+  },
+  "front_learningprjct/src/components/configuration/CookiePreferences.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.1312652,
+    "ast_hash": "3d0c9c429211b87ff7049c8950f69e1e",
+    "semantic_hash": "3d0c9c429211b87ff7049c8950f69e1e"
+  },
+  "front_learningprjct/src/components/cookies/CookieBanner.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.131266,
+    "ast_hash": "2f875a4711b8267a9775f20e78a8f531",
+    "semantic_hash": "2f875a4711b8267a9775f20e78a8f531"
+  },
+  "front_learningprjct/src/components/cookies/CookieSettings.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.1312668,
+    "ast_hash": "2e3ada80c6e4a0dc26a40d408eec0778",
+    "semantic_hash": "2e3ada80c6e4a0dc26a40d408eec0778"
+  },
+  "front_learningprjct/src/components/cursoSuelos/ObjetivosSuelos.jsx": {
+    "mtime": 1791878864.0389555,
+    "seen": 1791879863.1312673,
+    "ast_hash": "b788e95f03721d3ed5e6b9915b602ae8",
+    "semantic_hash": "b788e95f03721d3ed5e6b9915b602ae8"
+  },
+  "front_learningprjct/src/components/curso/ContenidosCurso.jsx": {
+    "mtime": 1772612422.173505,
+    "seen": 1791879863.131268,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "front_learningprjct/src/components/curso/EjercicioOptativo.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.131269,
+    "ast_hash": "bd2724874ea8c6da1c4e29b1c7711b9f",
+    "semantic_hash": "bd2724874ea8c6da1c4e29b1c7711b9f"
+  },
+  "front_learningprjct/src/components/curso/EstructuraCurso.jsx": {
+    "mtime": 1791878864.0369503,
+    "seen": 1791879863.1312697,
+    "ast_hash": "24181a9eb2570ec7839668e29f43d88d",
+    "semantic_hash": "24181a9eb2570ec7839668e29f43d88d"
+  },
+  "front_learningprjct/src/components/curso/MaterialEstudio.jsx": {
+    "mtime": 1791878864.0369503,
+    "seen": 1791879863.1312702,
+    "ast_hash": "0008959b4686caabee00fe69d693534c",
+    "semantic_hash": "0008959b4686caabee00fe69d693534c"
+  },
+  "front_learningprjct/src/components/curso/ObjetivosCurso.jsx": {
+    "mtime": 1791878864.0379543,
+    "seen": 1791879863.131271,
+    "ast_hash": "6db719069fd39113d72cd844ba9dc3fa",
+    "semantic_hash": "6db719069fd39113d72cd844ba9dc3fa"
+  },
+  "front_learningprjct/src/components/curso/TestEvaluacion.jsx": {
+    "mtime": 1791878864.0379543,
+    "seen": 1791879863.1312714,
+    "ast_hash": "a366dbe7d0bcd0e6ed2b7cc2e37156e0",
+    "semantic_hash": "a366dbe7d0bcd0e6ed2b7cc2e37156e0"
+  },
+  "front_learningprjct/src/components/layout/Footer.jsx": {
+    "mtime": 1791878864.0389555,
+    "seen": 1791879863.131272,
+    "ast_hash": "5155de33d4b15f7a144ce6a2b2df5b1c",
+    "semantic_hash": "5155de33d4b15f7a144ce6a2b2df5b1c"
+  },
+  "front_learningprjct/src/components/layout/Header.jsx": {
+    "mtime": 1791878864.0399559,
+    "seen": 1791879863.1312728,
+    "ast_hash": "57aa02faeb1ea69f3da3d00b1ef97336",
+    "semantic_hash": "57aa02faeb1ea69f3da3d00b1ef97336"
+  },
+  "front_learningprjct/src/components/layout/Layout.jsx": {
+    "mtime": 1791878864.0399559,
+    "seen": 1791879863.1312737,
+    "ast_hash": "9eaf6721263088f551594ea53bda1ab7",
+    "semantic_hash": "9eaf6721263088f551594ea53bda1ab7"
+  },
+  "front_learningprjct/src/components/layout/MobileMenu.jsx": {
+    "mtime": 1791878864.0409536,
+    "seen": 1791879863.1312745,
+    "ast_hash": "6bd61b45f9c0a70cb0c58083ce759245",
+    "semantic_hash": "6bd61b45f9c0a70cb0c58083ce759245"
+  },
+  "front_learningprjct/src/components/layout/PageBackground.jsx": {
+    "mtime": 1791878864.0409536,
+    "seen": 1791879863.131275,
+    "ast_hash": "02b8aa0e1e6ee992780d61474e4bea6e",
+    "semantic_hash": "02b8aa0e1e6ee992780d61474e4bea6e"
+  },
+  "front_learningprjct/src/components/layout/ScrollToTop.jsx": {
+    "mtime": 1791878864.0409536,
+    "seen": 1791879863.131276,
+    "ast_hash": "ff5e3b7ede6c23b1a4c1087cd29cdfd4",
+    "semantic_hash": "ff5e3b7ede6c23b1a4c1087cd29cdfd4"
+  },
+  "front_learningprjct/src/components/ui/ArrowUpIcon.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312764,
+    "ast_hash": "229b591dc0cb3a5af426146c5970028d",
+    "semantic_hash": "229b591dc0cb3a5af426146c5970028d"
+  },
+  "front_learningprjct/src/components/ui/Button.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.131277,
+    "ast_hash": "a64f8b77008f1a4b0fb859f22547a26c",
+    "semantic_hash": "a64f8b77008f1a4b0fb859f22547a26c"
+  },
+  "front_learningprjct/src/components/ui/Card.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312778,
+    "ast_hash": "ad48cf5ac8f5f632e513b2adbab465dc",
+    "semantic_hash": "ad48cf5ac8f5f632e513b2adbab465dc"
+  },
+  "front_learningprjct/src/components/ui/Container.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312783,
+    "ast_hash": "2c984b7f8a2a8c27230efdfd9108d5f5",
+    "semantic_hash": "2c984b7f8a2a8c27230efdfd9108d5f5"
+  },
+  "front_learningprjct/src/components/ui/Field.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312788,
+    "ast_hash": "eef56161cda12e5f7c505bbd585ac042",
+    "semantic_hash": "eef56161cda12e5f7c505bbd585ac042"
+  },
+  "front_learningprjct/src/components/ui/ParallaxImage.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312797,
+    "ast_hash": "69e0e1f9009763f9aa9c1a4de0ad325a",
+    "semantic_hash": "69e0e1f9009763f9aa9c1a4de0ad325a"
+  },
+  "front_learningprjct/src/components/ui/Reveal.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312804,
+    "ast_hash": "0e135dd33ab8a89760167977e2fb3da8",
+    "semantic_hash": "0e135dd33ab8a89760167977e2fb3da8"
+  },
+  "front_learningprjct/src/components/ui/SectionHeading.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.131281,
+    "ast_hash": "527d7d2cddccc150ebb888fdb9d59ed1",
+    "semantic_hash": "527d7d2cddccc150ebb888fdb9d59ed1"
+  },
+  "front_learningprjct/src/components/ui/SplitText.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312816,
+    "ast_hash": "47c9c36c1a8912d2e301cdca91077a7d",
+    "semantic_hash": "47c9c36c1a8912d2e301cdca91077a7d"
+  },
+  "front_learningprjct/src/components/ui/StickyIntro.jsx": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.131282,
+    "ast_hash": "4218c9afa654c05b02e79d974cecea51",
+    "semantic_hash": "4218c9afa654c05b02e79d974cecea51"
+  },
+  "front_learningprjct/src/context/CookieConsentContext.jsx": {
+    "mtime": 1770718548.5164025,
+    "seen": 1791879863.131283,
+    "ast_hash": "829a21d3ada1d41a9cbd9456b7dc351c",
+    "semantic_hash": "829a21d3ada1d41a9cbd9456b7dc351c"
+  },
+  "front_learningprjct/src/context/ToastContext.jsx": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.1312838,
+    "ast_hash": "74d43a671d28aa23ba32c116800ba409",
+    "semantic_hash": "74d43a671d28aa23ba32c116800ba409"
+  },
+  "front_learningprjct/src/context/UserContext.jsx": {
+    "mtime": 1773667390.286528,
+    "seen": 1791879863.1312842,
+    "ast_hash": "07d4a17ab429ea5cf525d8021b5ebc40",
+    "semantic_hash": "07d4a17ab429ea5cf525d8021b5ebc40"
+  },
+  "front_learningprjct/src/hooks/useCookieConsent.js": {
+    "mtime": 1770718548.5164025,
+    "seen": 1791879863.131285,
+    "ast_hash": "6d48328eeba19f76a988a77d45973edc",
+    "semantic_hash": "6d48328eeba19f76a988a77d45973edc"
+  },
+  "front_learningprjct/src/hooks/useMediaQuery.js": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.1312857,
+    "ast_hash": "4faafc115be3c02d37c58d321bae855b",
+    "semantic_hash": "4faafc115be3c02d37c58d321bae855b"
+  },
+  "front_learningprjct/src/hooks/useScene.js": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.1312866,
+    "ast_hash": "dad81731d7f229f71fe7768d0502492e",
+    "semantic_hash": "dad81731d7f229f71fe7768d0502492e"
+  },
+  "front_learningprjct/src/lib/motion.js": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.131287,
+    "ast_hash": "de3756e355b031d8074733f67ebd7fa6",
+    "semantic_hash": "de3756e355b031d8074733f67ebd7fa6"
+  },
+  "front_learningprjct/src/lib/smoothScroll.js": {
+    "mtime": 1791878864.0471084,
+    "seen": 1791879863.131288,
+    "ast_hash": "6463cc553d1bd02abc2ade0fdc785f6e",
+    "semantic_hash": "6463cc553d1bd02abc2ade0fdc785f6e"
+  },
+  "front_learningprjct/src/main.jsx": {
+    "mtime": 1769082064.5831945,
+    "seen": 1791879863.1312888,
+    "ast_hash": "d89dd096fe573577104755dc55009840",
+    "semantic_hash": "d89dd096fe573577104755dc55009840"
+  },
+  "front_learningprjct/src/pages/Ajustes.jsx": {
+    "mtime": 1791878864.047643,
+    "seen": 1791879863.1312895,
+    "ast_hash": "853e6c0fcd0d78f9f5308ab6e4afe391",
+    "semantic_hash": "853e6c0fcd0d78f9f5308ab6e4afe391"
+  },
+  "front_learningprjct/src/pages/AvisoLegal.jsx": {
+    "mtime": 1791878864.047643,
+    "seen": 1791879863.1312902,
+    "ast_hash": "f0f0f030b8d85560352c3e9fbd0cce63",
+    "semantic_hash": "f0f0f030b8d85560352c3e9fbd0cce63"
+  },
+  "front_learningprjct/src/pages/Contacto.jsx": {
+    "mtime": 1791878864.0486467,
+    "seen": 1791879863.1312907,
+    "ast_hash": "b1601a6a7337fe3cdcc614c820e15389",
+    "semantic_hash": "b1601a6a7337fe3cdcc614c820e15389"
+  },
+  "front_learningprjct/src/pages/CorrecionesAdmin.jsx": {
+    "mtime": 1791878864.0486467,
+    "seen": 1791879863.1312914,
+    "ast_hash": "fb1186538221f74f35c3026977617941",
+    "semantic_hash": "fb1186538221f74f35c3026977617941"
+  },
+  "front_learningprjct/src/pages/CursoDetalle.jsx": {
+    "mtime": 1791878864.0496478,
+    "seen": 1791879863.1312919,
+    "ast_hash": "50ac64c12483e5738340aa32ea68f5e6",
+    "semantic_hash": "50ac64c12483e5738340aa32ea68f5e6"
+  },
+  "front_learningprjct/src/pages/CursoInscripcion.jsx": {
+    "mtime": 1791878864.050234,
+    "seen": 1791879863.1312926,
+    "ast_hash": "11e0d8171ad56b3d74581573552740ca",
+    "semantic_hash": "11e0d8171ad56b3d74581573552740ca"
+  },
+  "front_learningprjct/src/pages/Cursos.jsx": {
+    "mtime": 1791878864.0508406,
+    "seen": 1791879863.1312933,
+    "ast_hash": "485fdbea9c9a5155749238f5ed5e2ae6",
+    "semantic_hash": "485fdbea9c9a5155749238f5ed5e2ae6"
+  },
+  "front_learningprjct/src/pages/EntregaEjercicio.jsx": {
+    "mtime": 1791878864.0511897,
+    "seen": 1791879863.131294,
+    "ast_hash": "06691cbae67bec34f46212c2681028a1",
+    "semantic_hash": "06691cbae67bec34f46212c2681028a1"
+  },
+  "front_learningprjct/src/pages/EstructuraCursoPage.jsx": {
+    "mtime": 1791878864.0511897,
+    "seen": 1791879863.1312947,
+    "ast_hash": "73eb68c73375980857b375b5fef69242",
+    "semantic_hash": "73eb68c73375980857b375b5fef69242"
+  },
+  "front_learningprjct/src/pages/ForgotPassword.jsx": {
+    "mtime": 1791878864.0521908,
+    "seen": 1791879863.1312952,
+    "ast_hash": "d7cb634f58397d800d8873189bc46723",
+    "semantic_hash": "d7cb634f58397d800d8873189bc46723"
+  },
+  "front_learningprjct/src/pages/GuiaUsuario.jsx": {
+    "mtime": 1791878864.0521908,
+    "seen": 1791879863.131296,
+    "ast_hash": "afc4299ff68695542418914f9aae543c",
+    "semantic_hash": "afc4299ff68695542418914f9aae543c"
+  },
+  "front_learningprjct/src/pages/Home.jsx": {
+    "mtime": 1791878864.0531912,
+    "seen": 1791879863.1312969,
+    "ast_hash": "d26170ba0b396e184467c1d0c08d7fba",
+    "semantic_hash": "d26170ba0b396e184467c1d0c08d7fba"
+  },
+  "front_learningprjct/src/pages/Login.jsx": {
+    "mtime": 1791878864.0531912,
+    "seen": 1791879863.1312973,
+    "ast_hash": "161ea5cfdb33d45674f5563601523157",
+    "semantic_hash": "161ea5cfdb33d45674f5563601523157"
+  },
+  "front_learningprjct/src/pages/PoliticaCookies.jsx": {
+    "mtime": 1791878864.0541902,
+    "seen": 1791879863.131298,
+    "ast_hash": "0c1741132e49d4c39f0cfeb7243c2257",
+    "semantic_hash": "0c1741132e49d4c39f0cfeb7243c2257"
+  },
+  "front_learningprjct/src/pages/Privacidad.jsx": {
+    "mtime": 1791878864.0541902,
+    "seen": 1791879863.1312988,
+    "ast_hash": "38b810446cbf938989a9d3456caaff86",
+    "semantic_hash": "38b810446cbf938989a9d3456caaff86"
+  },
+  "front_learningprjct/src/pages/ResetPassword.jsx": {
+    "mtime": 1791878864.0541902,
+    "seen": 1791879863.1312993,
+    "ast_hash": "f697877ed326ee7a64cd2210f475fce0",
+    "semantic_hash": "f697877ed326ee7a64cd2210f475fce0"
+  },
+  "front_learningprjct/src/pages/Reviews.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313002,
+    "ast_hash": "93c0bb9180be39e48eccab5115b35b09",
+    "semantic_hash": "93c0bb9180be39e48eccab5115b35b09"
+  },
+  "front_learningprjct/src/pages/SobreNosotros.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313007,
+    "ast_hash": "f3b851c18264f5db8cb94f84bb401241",
+    "semantic_hash": "f3b851c18264f5db8cb94f84bb401241"
+  },
+  "front_learningprjct/src/pages/TemaEstudio.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313014,
+    "ast_hash": "0d87e7176d7540ef0c0cce67ccb1f225",
+    "semantic_hash": "0d87e7176d7540ef0c0cce67ccb1f225"
+  },
+  "front_learningprjct/src/pages/TerminosUso.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313019,
+    "ast_hash": "cdc5c864264b614542984e3957f0c12c",
+    "semantic_hash": "cdc5c864264b614542984e3957f0c12c"
+  },
+  "front_learningprjct/vite.config.js": {
+    "mtime": 1772784104.770041,
+    "seen": 1791879863.1313026,
+    "ast_hash": "22680000d95eede81df5dd08bc94090b",
+    "semantic_hash": "22680000d95eede81df5dd08bc94090b"
+  },
+  "front_learningprjct/README.md": {
+    "mtime": 1768397609.4569368,
+    "seen": 1791879863.1313033,
+    "ast_hash": "8f88e53d72fef57027d43c68602558e5",
+    "semantic_hash": "8f88e53d72fef57027d43c68602558e5"
+  },
+  "front_learningprjct/index.html": {
+    "mtime": 1768916562.455882,
+    "seen": 1791879863.1313043,
+    "ast_hash": "f4fea024fdf0e19e728fd5bb33876e57",
+    "semantic_hash": "f4fea024fdf0e19e728fd5bb33876e57"
+  },
+  "front_learningprjct/public/vite.svg": {
+    "mtime": 1768397609.441937,
+    "seen": 1791879863.1313047,
+    "ast_hash": "8e3a10e157f75ada21ab742c022d5430",
+    "semantic_hash": "8e3a10e157f75ada21ab742c022d5430"
+  },
+  "front_learningprjct/src/assets/react.svg": {
+    "mtime": 1768397609.4569368,
+    "seen": 1791879863.1313055,
+    "ast_hash": "f0402b67b6ce880f65666bb49e841696",
+    "semantic_hash": "f0402b67b6ce880f65666bb49e841696"
+  }
+}
