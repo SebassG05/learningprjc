@@ -46,6 +46,9 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
   const boost = useRef({ x: 0, v: 0 });
   const sweep = useRef({ start: null, k: 0 });
   const opacity = useRef(-1);
+  // Diálogo abierto (journey.overlay): muelle 0→1 que atenúa el lienzo y ralentiza giro y shaders
+  const dim = useRef({ x: 0, v: 0 });
+  const shaderTime = useRef(0);
 
   useFrame((state, delta) => {
     const { width: vw, height: vh } = state.viewport;
@@ -53,6 +56,11 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     const view = { W, H, vw, vh };
     const t = state.clock.elapsedTime;
     const dt = Math.min(delta, 0.1);
+    const d = dim.current;
+    const dimTarget = journey.overlay ? 1 : 0;
+    if (still) { d.x = dimTarget; d.v = 0; } else stepSpring(d, dimTarget, undefined, dt);
+    const dimK = clamp01(d.x);
+    const rate = 1 - 0.8 * dimK;
 
     // Posición en la trayectoria: continua; con reduced motion, la estación más cercana (sin viaje)
     const exact = readPosition();
@@ -82,7 +90,7 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     rig.current.position.set(f.x, f.y, 0);
     rig.current.scale.setScalar(f.s);
     tilt.current.rotation.x = GLOBE.tilt + f.tilt;
-    if (!still) turned.current += dt * GLOBE.spin;
+    if (!still) turned.current += dt * GLOBE.spin * rate;
     spin.current.rotation.y = -GLOBE.centerLon * DEG + turned.current + (heroIn.progress ?? 0) * 0.9;
     stars.current.position.y = f.starsY;
     // Órbitas y luna del hero: se funden (nunca aparecen de golpe). Las órbitas se van en el espacio
@@ -115,12 +123,14 @@ function Director({ still, moonMaterial, children, spinChildren, staticChildren,
     shared.uTrueView.value = f.dawn;
     // En el horizonte el creciente es rasante y ocupa toda la curva: más contenido, salvo con el refuerzo
     shared.uDawnGain.value = 1 + (0.35 * sw.k + 0.9 * boostK - 0.45) * f.dawn;
-    shared.uTime.value = t;
+    if (!still) shaderTime.current += dt * rate;
+    shared.uTime.value = still ? t : shaderTime.current;
 
     // Opacidad del lienzo (solo si cambia: es un estilo del compositor, sin reflujo)
-    if (Math.abs(opacity.current - f.opacity) > 0.004) {
-      opacity.current = f.opacity;
-      state.gl.domElement.style.opacity = f.opacity.toFixed(3);
+    const shown = f.opacity * (1 - 0.45 * dimK);
+    if (Math.abs(opacity.current - shown) > 0.004) {
+      opacity.current = shown;
+      state.gl.domElement.style.opacity = shown.toFixed(3);
     }
 
     journey.frame = Object.assign(journey.frame ?? {}, f, {

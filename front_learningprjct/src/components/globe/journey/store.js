@@ -3,7 +3,7 @@
 // lienzo lo lee dentro de useFrame. Nada aquí provoca re-renders del Canvas.
 import { useEffect } from 'react';
 import { useScroll } from 'framer-motion';
-import { journeyPosition } from './keyframes';
+import { journeyPosition } from './keyframes.js';
 
 export const SECTIONS = ['faq', 'reviews', 'cta'];
 const MAX_QUEUED = 8;
@@ -19,6 +19,8 @@ export const journey = {
   pulses: [],
   reviews: null, // null = cargando o error
   boost: { on: false, el: null },
+  // Hay un diálogo modal abierto (acceso): el lienzo se atenúa y se ralentiza
+  overlay: false,
   // Escrito por el lienzo en cada frame (encaje actual del globo y pesos de estación)
   frame: null,
 };
@@ -97,6 +99,13 @@ export function setReviewCount(n) {
 export function setCtaBoost(on, el) {
   journey.boost.on = on;
   if (el !== undefined) journey.boost.el = el;
+  notify();
+}
+
+// La escribe el diálogo de acceso al abrirse y cerrarse. Fuera de la home nadie la lee
+export function setOverlay(on) {
+  if (journey.overlay === on) return;
+  journey.overlay = on;
   notify();
 }
 
