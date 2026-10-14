@@ -44,22 +44,53 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
   await transporter.sendMail(mailOptions);
 };
 
+// Escapa el texto del usuario antes de meterlo en el HTML del correo (evita HTML o enlaces inyectados)
+const escapeHtml = (value) =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+// Destinatarios del formulario de contacto: CONTACT_TO admite varias direcciones separadas por comas
+const contactRecipients = () =>
+  (process.env.CONTACT_TO || 'campusevenor@gmail.com')
+    .split(',')
+    .map((address) => address.trim())
+    .filter(Boolean);
+
+// Una sola línea: el asunto no puede llevar saltos (evita cabeceras inyectadas)
+const singleLine = (value) => String(value ?? '').replace(/[\r\n]+/g, ' ').trim();
+
 export const sendContactEmail = async ({ name, email, phone, company, subject, message }) => {
+  const safe = {
+    name: escapeHtml(name),
+    email: escapeHtml(email),
+    phone: escapeHtml(phone) || '-',
+    company: escapeHtml(company) || '-',
+    subject: escapeHtml(subject),
+    message: escapeHtml(message).replace(/\n/g, '<br>'),
+  };
+
   const mailOptions = {
     from: `Campus Contacto <${process.env.EMAIL_USER}>`,
-    to: 'campusevenor@gmail.com',
-    subject: `[Contacto Campus] ${subject}`,
+    to: contactRecipients(),
+    // "Responder" en el correo va directamente a quien escribió
+    replyTo: { name: singleLine(name), address: singleLine(email) },
+    subject: `[Contacto Campus] ${singleLine(subject)}`,
     html: `
       <div style="font-family: Arial, sans-serif; background: #f8fafc; padding: 32px; color: #333;">
         <div style="max-width: 480px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
           <h2 style="color: #5aa833; margin-bottom: 16px;">Nuevo mensaje de contacto</h2>
-          <p><b>Nombre:</b> ${name}</p>
-          <p><b>Email:</b> ${email}</p>
-          <p><b>Teléfono:</b> ${phone || '-'} </p>
-          <p><b>Empresa/Organización:</b> ${company || '-'} </p>
-          <p><b>Asunto:</b> ${subject}</p>
+          <p><b>Nombre:</b> ${safe.name}</p>
+          <p><b>Email:</b> ${safe.email}</p>
+          <p><b>Teléfono:</b> ${safe.phone} </p>
+          <p><b>Empresa/Organización:</b> ${safe.company} </p>
+          <p><b>Asunto:</b> ${safe.subject}</p>
           <p><b>Mensaje:</b></p>
-          <div style="background: #f0f9ea; border-radius: 6px; padding: 16px; margin-bottom: 16px; color: #222;">${message.replace(/\n/g, '<br>')}</div>
+          <div style="background: #f0f9ea; border-radius: 6px; padding: 16px; margin-bottom: 16px; color: #222;">${safe.message}</div>
+          <p style="font-size: 12px; color: #6b7280;">Responde a este correo para contestar directamente a ${safe.name}.</p>
         </div>
       </div>
     `
