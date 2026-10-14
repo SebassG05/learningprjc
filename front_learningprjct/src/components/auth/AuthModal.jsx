@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useId } from 'react';
 import GoogleAuthButton from './GoogleAuthButton.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
@@ -7,6 +7,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Button from '../ui/Button';
 import { inputClass } from '../ui/Field';
 import { duration, ease, spring } from '../../lib/motion';
+import AuthDialog from './AuthDialog';
 
 const AuthModal = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -52,59 +53,42 @@ const AuthModal = ({ open, onClose }) => {
     }
   }, [open]);
 
+  // Visible = el diálogo se ve. Al cerrar con × o Escape se anima la salida y después se avisa al
+  // padre (antes: 350 ms fijos). Los cierres por éxito u olvido mantienen su secuencia original.
   const [isVisible, setIsVisible] = useState(open);
   React.useEffect(() => {
-    if (open) setIsVisible(true);
+    setIsVisible(open);
   }, [open]);
+  const dismissed = useRef(false);
   const handleClose = () => {
+    dismissed.current = true;
     setIsVisible(false);
-    setTimeout(() => {
-      onClose && onClose();
-    }, 350);
   };
+  const handleExited = () => {
+    if (!dismissed.current) return;
+    dismissed.current = false;
+    onClose && onClose();
+  };
+  const titleId = useId();
+  const firstFieldRef = useRef(null);
 
   return (
-    <AnimatePresence>
-      {open || isVisible ? (
-        <motion.div
-          className="fixed inset-0 z-[60] flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: duration.base, ease: ease.outExpo }}
-          style={{ pointerEvents: open ? 'auto' : 'none' }}
-        >
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label={tab === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
-            initial={{ opacity: 0, y: 32, scale: 0.98 }}
-            animate={open ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 16, scale: 0.98 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={spring.gentle}
-            className="relative flex w-full max-w-4xl max-h-[100dvh] overflow-hidden rounded-t-3xl sm:rounded-3xl bg-surface border border-line shadow-overlay"
-          >
-        {/* Izquierda: marca y frase (solo escritorio) */}
-        <div className="relative hidden md:flex w-[42%] flex-col justify-between overflow-hidden bg-surface-2 p-10 border-r border-line">
-          <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,rgb(161_219_135/0.22),transparent)]" aria-hidden="true" />
-          <img src="https://res.cloudinary.com/dd9pjmuy9/image/upload/v1770629257/Gemini_Generated_Image_ufiqyxufiqyxufiq-removebg-preview_lohtpf.png" alt="Logo" className="relative h-20 w-20 object-contain" />
-          <div className="relative">
-            <span className="eyebrow">Campus Evenor-Tech</span>
-            <p className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink">
-              El cambio comienza con la <span className="text-brand">formación</span>.
-            </p>
-          </div>
-        </div>
-        {/* Derecha: pestañas y formularios */}
-        <div className="relative flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-6 sm:px-10 sm:pb-10 sm:pt-8">
+    <AuthDialog
+      open={isVisible}
+      onRequestClose={handleClose}
+      onExited={handleExited}
+      labelledBy={titleId}
+      initialFocusRef={firstFieldRef}
+    >
+        <div className="relative flex flex-col px-5 pb-8 pt-6 sm:px-10 sm:pb-10 sm:pt-8">
           <button
             onClick={handleClose}
             aria-label="Cerrar"
-            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-ink-3 transition-colors hover:bg-white/[0.08] hover:text-ink"
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-ink-3 transition-colors hover:bg-white/[0.08] hover:text-ink"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
-          <h2 className="pr-10 text-title-2 font-bold text-ink">
+          <h2 id={titleId} className="pr-10 text-title-2 font-bold text-ink">
             {tab === 'login' ? 'Bienvenido de nuevo' : 'Crea tu cuenta'}
           </h2>
           <p className="mt-2 text-sm text-ink-2">
@@ -188,6 +172,7 @@ const AuthModal = ({ open, onClose }) => {
                     <label htmlFor="login-email" className="text-sm font-medium text-ink-2">Correo electrónico</label>
                     <input
                       id="login-email"
+                      ref={firstFieldRef}
                       type="email"
                       autoComplete="email"
                       placeholder="tu@email.com"
@@ -288,6 +273,7 @@ const AuthModal = ({ open, onClose }) => {
                     <label htmlFor="register-name" className="text-sm font-medium text-ink-2">Nombre</label>
                     <input
                       id="register-name"
+                      ref={firstFieldRef}
                       type="text"
                       autoComplete="name"
                       placeholder="Nombre"
@@ -358,10 +344,7 @@ const AuthModal = ({ open, onClose }) => {
             </AnimatePresence>
           </div>
         </div>
-      </motion.div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+    </AuthDialog>
   );
 };
 
