@@ -23,15 +23,15 @@ const navGroups = [
 ];
 
 const contact = [
-  { href: 'mailto:info@evenor-tech.com', label: 'info@evenor-tech.com', Icon: Mail },
+  { href: 'mailto:campusevenor@gmail.com', label: 'campusevenor@gmail.com', Icon: Mail },
   { href: 'tel:+34954151096', label: '+34 954 151 096', Icon: Phone },
 ];
 
 const social = [
   { href: 'https://www.instagram.com/evenortech/', label: 'Instagram', Icon: Instagram, external: true },
-  { href: '#', label: 'LinkedIn', Icon: Linkedin },
+  { href: 'https://www.linkedin.com/company/evenor-tech/', label: 'LinkedIn', Icon: Linkedin, external: true },
   { href: 'http://x.com/evenor_tech', label: 'X', Icon: X, external: true },
-  { href: 'mailto:info@evenor-tech.com', label: 'Email', Icon: Mail },
+  { href: 'mailto:campusevenor@gmail.com', label: 'Email', Icon: Mail },
 ];
 
 const legalLinks = [
