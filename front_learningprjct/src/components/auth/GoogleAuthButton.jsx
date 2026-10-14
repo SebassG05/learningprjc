@@ -1,5 +1,7 @@
-import React from 'react';
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { useLayoutEffect, useRef, useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
+import { googleButtonWidth } from './validation';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 
@@ -32,31 +34,40 @@ const GoogleAuthButton = ({ onSuccess }) => {
     }
   };
 
+  // Ancho en píxeles (GIS no acepta "100%"): se mide una vez al montar el diálogo, no al redimensionar.
+  // Mientras llega el iframe, un esqueleto ocupa su sitio con el mismo alto: sin saltos.
+  const box = useRef(null);
+  const [width, setWidth] = useState(null);
+  const [ready, setReady] = useState(false);
+  useLayoutEffect(() => {
+    const el = box.current;
+    setWidth(googleButtonWidth(el.offsetWidth)); // offsetWidth: sin la escala de entrada del diálogo
+    const mo = new MutationObserver(() => {
+      // Botón estándar (div role=button) o personalizado (iframe), lo que llegue antes
+      if (el.querySelector('iframe, [role="button"]')) { setReady(true); mo.disconnect(); }
+    });
+    mo.observe(el, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, []);
+
   return (
-    <div className="flex w-full flex-col items-center">
-      <GoogleLogin
+    <div ref={box} className="relative flex h-10 w-full justify-center">
+      <span
+        className={`pointer-events-none absolute inset-y-0 rounded-full bg-surface-3 transition-opacity duration-300 ease-out ${ready ? 'opacity-0' : 'opacity-100'}`}
+        style={{ width: width ?? '100%' }}
+        aria-hidden="true"
+      />
+      {width && <GoogleLogin
         onSuccess={handleGoogleSuccess}
         onError={() => showToast('Error al autenticar con Google', 'error')}
         locale="es"
         useOneTap
-        width="100%"
+        width={width}
         theme="filled_black"
         text="signin_with"
         shape="pill"
         logo_alignment="left"
-        render={renderProps => (
-          <button
-            type="button"
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-            className="flex items-center justify-center gap-3 w-full py-2 mt-2 rounded-lg shadow-md font-semibold text-base transition bg-surface border border-line-strong hover:bg-surface-2 text-green-200 hover:text-green-100 focus:outline-none focus:ring-2 focus:ring-green-400"
-            style={{ minHeight: 44 }}
-          >
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-6 h-6" />
-            <span>Iniciar sesión con Google</span>
-          </button>
-        )}
-      />
+      />}
     </div>
   );
 };
