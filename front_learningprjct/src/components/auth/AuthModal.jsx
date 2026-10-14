@@ -220,11 +220,11 @@ const AuthModal = ({ open, onClose }) => {
       labelledBy={titleId}
       initialFocusRef={firstFieldRef}
     >
-        <div className="relative flex flex-col px-5 pb-8 pt-6 sm:px-10 sm:pb-10 sm:pt-8">
+        <div className="relative mx-auto flex w-full max-w-100 flex-col px-5 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] sm:max-w-none sm:px-10 sm:pb-10 sm:pt-8">
           <button
             onClick={handleClose}
             aria-label="Cerrar"
-            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-ink-3 transition-colors hover:bg-white/[0.08] hover:text-ink"
+            className="absolute right-3 top-[max(0.75rem,env(safe-area-inset-top))] flex h-11 w-11 sm:right-4 sm:top-4 items-center justify-center rounded-full text-ink-3 transition-colors hover:bg-white/[0.08] hover:text-ink"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>

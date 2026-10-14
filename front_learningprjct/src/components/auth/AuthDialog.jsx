@@ -106,8 +106,22 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
       }
     };
     document.addEventListener('keydown', onKeyDown);
+
+    // Móvil con teclado virtual: la hoja ocupa solo lo visible (visualViewport) y el campo con foco
+    // se mantiene a la vista dentro de su scroll. Se escribe en el estilo, sin estado de React.
+    const card = cardRef.current;
+    const vv = window.visualViewport;
+    const fit = () => card?.style.setProperty('--auth-vh', `${vv.height}px`);
+    const reveal = (e) => {
+      if (e.target.matches?.('input')) requestAnimationFrame(() => e.target.scrollIntoView({ block: 'nearest' }));
+    };
+    if (vv) { fit(); vv.addEventListener('resize', fit); }
+    card?.addEventListener('focusin', reveal);
+
     return () => {
       document.removeEventListener('keydown', onKeyDown);
+      vv?.removeEventListener('resize', fit);
+      card?.removeEventListener('focusin', reveal);
       unlock();
     };
   }, [open, initialFocusRef]);
@@ -129,7 +143,7 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
       {open && (
         <motion.div
           key="auth-dialog"
-          className="fixed inset-0 z-[60] flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-6"
           data-lenis-prevent
           {...overlay}
         >
@@ -140,7 +154,7 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
             aria-modal="true"
             aria-labelledby={labelledBy}
             tabIndex={-1}
-            className="relative w-full max-w-120 max-h-[100dvh] overflow-y-auto overscroll-contain rounded-t-3xl border border-line bg-surface/80 shadow-overlay backdrop-blur-2xl outline-none sm:rounded-3xl"
+            className="relative h-[var(--auth-vh,100dvh)] w-full overflow-y-auto overscroll-contain bg-surface/90 backdrop-blur-2xl outline-none sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-120 sm:rounded-3xl sm:border sm:border-line sm:bg-surface/80 sm:shadow-overlay"
             {...panel}
           >
             {children}
