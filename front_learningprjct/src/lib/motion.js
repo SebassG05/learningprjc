@@ -86,5 +86,11 @@ export const disclose = {
   exit: { opacity: 0, transition: { duration: duration.fast, ease: ease.exit } },
 };
 
+// Error de un formulario: un desplazamiento horizontal corto y amortiguado (nunca con reduced motion)
+export const nudge = {
+  x: [0, -6, 5, -2, 0],
+  transition: { duration: duration.base, ease: ease.standard },
+};
+
 // Margen del viewport para disparar entradas un poco antes de que el bloque sea visible
 export const inView = { once: true, margin: '0px 0px -12% 0px' };

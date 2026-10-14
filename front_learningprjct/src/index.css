@@ -56,6 +56,8 @@
     --color-ink-2: #a1a1a6;
     --color-ink-3: #86868b;
     --color-on-brand: #0c1709;
+    /* Error (acceso y formularios): AA sobre surface, surface-3 y danger/10 */
+    --color-danger: #ff8f85;
 
     /* Marca: escala construida sobre el verde corporativo #a1db87 (400) */
     --color-brand: #a1db87;
@@ -226,6 +228,16 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-brand-400);
+}
+
+/* Autorrelleno del navegador en los campos del acceso: sin fondo amarillo/blanco sobre el tema oscuro */
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:hover,
+.auth-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-ink);
+    caret-color: var(--color-ink);
+    box-shadow: 0 0 0 1000px var(--color-surface-3) inset;
+    transition: background-color 9999s ease-out 0s;
 }
 
 @layer base {
