@@ -5,6 +5,8 @@ import { googleButtonWidth } from './validation';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 
+const RESIZE_DELAY_MS = 150;
+
 const GoogleAuthButton = ({ onSuccess }) => {
   const { showToast } = useToast();
   const { login: setUserLogin } = useUser();
@@ -34,20 +36,32 @@ const GoogleAuthButton = ({ onSuccess }) => {
     }
   };
 
-  // Ancho en píxeles (GIS no acepta "100%"): se mide una vez al montar el diálogo, no al redimensionar.
-  // Mientras llega el iframe, un esqueleto ocupa su sitio con el mismo alto: sin saltos.
+  // Ancho en píxeles (GIS no acepta "100%", máximo 400). Se mide al abrir y se vuelve a medir con un
+  // ResizeObserver (con un pequeño retardo) si cambia el contenedor, p. ej. al aparecer la barra de
+  // scroll. offsetWidth no incluye la escala de entrada del diálogo.
+  // Mientras llega el botón, un esqueleto ocupa su sitio con el mismo alto: sin saltos.
   const box = useRef(null);
   const [width, setWidth] = useState(null);
   const [ready, setReady] = useState(false);
   useLayoutEffect(() => {
     const el = box.current;
-    setWidth(googleButtonWidth(el.offsetWidth)); // offsetWidth: sin la escala de entrada del diálogo
+    setWidth(googleButtonWidth(el.offsetWidth));
+    let timer = null;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(() => setWidth(googleButtonWidth(el.offsetWidth)), RESIZE_DELAY_MS);
+    });
+    ro.observe(el);
     const mo = new MutationObserver(() => {
       // Botón estándar (div role=button) o personalizado (iframe), lo que llegue antes
       if (el.querySelector('iframe, [role="button"]')) { setReady(true); mo.disconnect(); }
     });
     mo.observe(el, { childList: true, subtree: true });
-    return () => mo.disconnect();
+    return () => {
+      clearTimeout(timer);
+      ro.disconnect();
+      mo.disconnect();
+    };
   }, []);
 
   return (

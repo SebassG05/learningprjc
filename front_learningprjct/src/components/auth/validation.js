@@ -28,3 +28,29 @@ export function passwordMatch(password, confirm) {
   if (!confirm) return null;
   return password === confirm ? 'match' : 'mismatch';
 }
+
+// Textos propios para los fallos que ya detecta el navegador (required y type="email").
+// Solo se usan cuando el campo ya es inválido de forma nativa: no hay reglas nuevas.
+const MISSING = {
+  name: 'Escribe tu nombre.',
+  email: 'Escribe tu correo electrónico.',
+  password: 'Escribe tu contraseña.',
+  confirmPassword: 'Repite la contraseña.',
+};
+const EMAIL_FORMAT = 'Revisa el correo: debe tener el formato nombre@dominio.com.';
+
+export function customMessage(el) {
+  const v = el.validity;
+  if (!v || v.valid) return '';
+  if (v.valueMissing) return MISSING[el.name] ?? '';
+  if (v.typeMismatch && el.name === 'email') return EMAIL_FORMAT;
+  return '';
+}
+
+// Hoja móvil: se cierra al soltarla lejos (px) o con un gesto rápido hacia abajo (px/s)
+const DISMISS_DISTANCE = 120;
+const DISMISS_VELOCITY = 600;
+
+export function shouldDismissSheet(offsetY, velocityY) {
+  return offsetY > DISMISS_DISTANCE || (velocityY > DISMISS_VELOCITY && offsetY > 0);
+}

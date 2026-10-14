@@ -3,9 +3,10 @@
 // Escape, fondo inerte, bloqueo de scroll sin salto y vuelta del foco al cerrar. No sabe nada de
 // autenticación: solo abre, cierra y avisa al lienzo del viaje (journey.overlay).
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion, useDragControls, useReducedMotion } from 'framer-motion';
 import { duration, ease, overlay, panel } from '../../lib/motion';
 import useMediaQuery from '../../hooks/useMediaQuery';
+import { shouldDismissSheet } from './validation';
 import { setOverlay } from '../globe/journey/store';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -86,6 +87,18 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
   const reduce = useReducedMotion();
   const desktop = useMediaQuery('(min-width: 640px)');
   const cardMotion = reduce ? fade : desktop ? { ...panel, initial: { ...panel.initial, y: 0, scale: 0.96 } } : sheet;
+  // Móvil: la hoja se cierra arrastrándola hacia abajo desde el asa (no desde el contenido,
+  // que tiene su propio scroll y campos)
+  const drag = useDragControls();
+  const sheetDrag = desktop ? {} : {
+    drag: 'y',
+    dragListener: false,
+    dragControls: drag,
+    dragConstraints: { top: 0, bottom: 0 },
+    dragElastic: { top: 0, bottom: 0.7 },
+    dragSnapToOrigin: true,
+    onDragEnd: (_, info) => { if (shouldDismissSheet(info.offset.y, info.velocity.y)) onRequestClose(); },
+  };
   const openerRef = useRef(null);
 
   // Quién lo abrió (antes de que el foco entre en el diálogo). Lo que ya está dentro del diálogo no
@@ -111,14 +124,20 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
     // En el documento (no en el velo): Escape funciona aunque el foco esté fuera de la tarjeta,
     // y Tab devuelve el foco a la tarjeta si se escapó (p. ej. desde el iframe de Google)
     const onKeyDown = (e) => {
+      if (e.isComposing || !cardRef.current) return;
+      const active = document.activeElement;
+      // Otro diálogo que sigue operativo (el banner de cookies) gestiona su propio teclado
+      const otherDialog = active?.closest('[role="dialog"]');
+      if (otherDialog && otherDialog !== cardRef.current) return;
       if (e.key === 'Escape') {
+        // Solo con el foco dentro del diálogo
+        if (!cardRef.current.contains(active)) return;
         e.stopPropagation();
         closeRef.current();
         return;
       }
-      if (e.key !== 'Tab' || !cardRef.current) return;
+      if (e.key !== 'Tab') return;
       const { first, last } = edges();
-      const active = document.activeElement;
       const outside = !cardRef.current.contains(active);
       if (outside || (e.shiftKey ? active === first : active === last)) {
         e.preventDefault();
@@ -176,6 +195,8 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
           className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-6"
           data-lenis-prevent
           data-auth-overlay
+          // Un clic en el velo no cierra ni saca el foco de la tarjeta
+          onMouseDown={(e) => { if (e.target === e.currentTarget) e.preventDefault(); }}
           {...overlay}
         >
           {sentinel('last')}
@@ -187,7 +208,17 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
             tabIndex={-1}
             className="relative h-[var(--auth-vh,100dvh)] w-full overflow-y-auto overscroll-contain bg-surface/90 backdrop-blur-2xl outline-none sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-120 sm:rounded-3xl sm:border sm:border-line sm:bg-surface/80 sm:shadow-overlay"
             {...cardMotion}
+            {...sheetDrag}
           >
+            {!desktop && (
+              <div
+                className="absolute left-1/2 top-[env(safe-area-inset-top)] z-10 flex h-11 w-24 -translate-x-1/2 touch-none cursor-grab items-center justify-center active:cursor-grabbing"
+                onPointerDown={(e) => drag.start(e)}
+                aria-hidden="true"
+              >
+                <span className="h-1.5 w-10 rounded-full bg-line-strong" />
+              </div>
+            )}
             {children}
           </motion.div>
           {sentinel('first')}

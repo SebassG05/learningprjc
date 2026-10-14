@@ -1,7 +1,7 @@
 // node --test src/components/auth/validation.test.js
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { googleButtonWidth, fieldMessage, firstInvalid, passwordMatch } from './validation.js';
+import { googleButtonWidth, fieldMessage, firstInvalid, passwordMatch, customMessage, shouldDismissSheet } from './validation.js';
 
 const ok = { validity: { valid: true }, validationMessage: '' };
 const bad = (msg = 'Rellena este campo.') => ({ validity: { valid: false }, validationMessage: msg });
@@ -43,4 +43,29 @@ test('passwordMatch no dice nada mientras "Repetir" está vacío', () => {
 test('passwordMatch distingue coincidencia y diferencia', () => {
   assert.equal(passwordMatch('secreto', 'secreto'), 'match');
   assert.equal(passwordMatch('secreto', 'secret'), 'mismatch');
+});
+
+const field = (name, validity) => ({ name, validity: { valid: false, ...validity } });
+
+test('customMessage da el texto propio de un campo vacío', () => {
+  assert.equal(customMessage(field('name', { valueMissing: true })), 'Escribe tu nombre.');
+  assert.equal(customMessage(field('email', { valueMissing: true })), 'Escribe tu correo electrónico.');
+  assert.equal(customMessage(field('password', { valueMissing: true })), 'Escribe tu contraseña.');
+  assert.equal(customMessage(field('confirmPassword', { valueMissing: true })), 'Repite la contraseña.');
+});
+
+test('customMessage da el texto propio de un correo con formato no válido', () => {
+  assert.equal(customMessage(field('email', { typeMismatch: true })), 'Revisa el correo: debe tener el formato nombre@dominio.com.');
+});
+
+test('customMessage no inventa reglas: un campo válido o un fallo sin texto propio no tiene mensaje', () => {
+  assert.equal(customMessage({ name: 'email', validity: { valid: true } }), '');
+  assert.equal(customMessage(field('email', { tooLong: true })), '');
+});
+
+test('shouldDismissSheet cierra al arrastrar lejos o con un gesto rápido hacia abajo', () => {
+  assert.equal(shouldDismissSheet(160, 0), true);
+  assert.equal(shouldDismissSheet(30, 900), true);
+  assert.equal(shouldDismissSheet(60, 200), false);
+  assert.equal(shouldDismissSheet(-200, -900), false);
 });

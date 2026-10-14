@@ -18,8 +18,6 @@ import AuthTabs from './AuthTabs';
 import { panelId, tabId } from './tabIds';
 import AutoHeight from './AutoHeight';
 
-const LOGO = 'https://res.cloudinary.com/dd9pjmuy9/image/upload/v1770629257/Gemini_Generated_Image_ufiqyxufiqyxufiq-removebg-preview_lohtpf.png';
-
 // Cambio de texto con la pestaña: fundido cruzado corto (sin desplazamiento con reduced motion)
 function Swap({ id, children }) {
   const reduce = useReducedMotion();
@@ -101,6 +99,12 @@ const AuthModal = ({ open, onClose }) => {
     setIsVisible(false);
   };
   const handleExited = () => {
+    // Al cerrar se limpia solo lo visual de los errores (mensajes, aria-invalid, alerta del servidor).
+    // Los valores de los campos y la lógica de envío no se tocan.
+    login.reset();
+    register.reset();
+    setLoginError('');
+    setRegisterError('');
     if (!dismissed.current) return;
     dismissed.current = false;
     onClose && onClose();
@@ -224,7 +228,7 @@ const AuthModal = ({ open, onClose }) => {
       labelledBy={titleId}
       initialFocusRef={firstFieldRef}
     >
-        <motion.div variants={staggerGroup(stagger.list, 0.04)} initial="hidden" animate="show" className="relative mx-auto flex w-full max-w-100 flex-col px-5 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] sm:max-w-none sm:px-10 sm:pb-10 sm:pt-8">
+        <motion.div variants={staggerGroup(stagger.list, 0.04)} initial="hidden" animate="show" className="relative mx-auto flex w-full max-w-100 flex-col px-5 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[calc(max(0.75rem,env(safe-area-inset-top))+2.75rem)] sm:max-w-none sm:px-10 sm:pb-10 sm:pt-8">
           <button
             onClick={handleClose}
             aria-label="Cerrar"
@@ -232,14 +236,8 @@ const AuthModal = ({ open, onClose }) => {
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
-          <motion.div variants={item} className="flex items-center gap-3 pr-12">
-            <img src={LOGO} alt="" className="h-10 w-10 shrink-0 object-contain" />
-            <p className="text-footnote text-ink-3">
-              El cambio comienza con la <span className="text-brand">formación</span>.
-            </p>
-          </motion.div>
           <motion.div variants={item}>
-          <h2 id={titleId} className="relative mt-6 text-title-2 font-bold text-ink">
+          <h2 id={titleId} className="relative pr-12 text-title-2 font-bold text-ink">
             <Swap id={tab}>{tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}</Swap>
           </h2>
           <p className="relative mt-2 text-sm text-ink-2">
@@ -250,7 +248,7 @@ const AuthModal = ({ open, onClose }) => {
             <AuthTabs value={tab} onChange={setTab} idPrefix={tabsId} />
           </motion.div>
           <motion.div variants={item}>
-          <AutoHeight className="mt-6">
+          <AutoHeight className="mt-4">
             <AnimatePresence mode="popLayout" initial={false}>
               {tab === 'login' ? (
                 <motion.form
