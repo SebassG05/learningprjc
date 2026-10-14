@@ -3,7 +3,8 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { ChevronDown, LogOut, Menu, Settings } from 'lucide-react';
-import AuthModal from '../auth/AuthModal';
+import AuthModal from '../auth/LazyAuthModal';
+import { preloadAuthModal } from '../auth/loadAuthModal';
 import { useUser } from '../../context/UserContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import MobileMenu from './MobileMenu';
@@ -131,7 +132,7 @@ const Header = () => {
             {/* Acciones */}
             <div className="hidden items-center gap-3 xl:flex">
               {!user ? (
-                <Button size="md" className="text-nav shadow-glow" onClick={() => setAuthOpen(true)} aria-label="Acceder al campus">
+                <Button size="md" className="text-nav shadow-glow" onClick={() => setAuthOpen(true)} onPointerEnter={preloadAuthModal} onFocus={preloadAuthModal} data-auth-trigger aria-label="Acceder al campus">
                   <span className="min-[1400px]:hidden">Acceder</span>
                   <span className="hidden min-[1400px]:inline">Acceder al campus</span>
                 </Button>

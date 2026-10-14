@@ -1,4 +1,4 @@
-import AuthModal from '../components/auth/AuthModal';
+import AuthModal from '../components/auth/LazyAuthModal';
 import React, { useState } from 'react';
 
 const LoginPage = () => {

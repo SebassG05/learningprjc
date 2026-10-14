@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AuthModal from '../components/auth/AuthModal';
+import AuthModal from '../components/auth/LazyAuthModal';
+import { preloadAuthModal } from '../components/auth/loadAuthModal';
 import { BookOpen, Clock, Globe, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Container from '../components/ui/Container';
@@ -217,6 +218,8 @@ export default function Cursos() {
                 transition={spring.snappy}
                 className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface text-left shadow-card transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-raised"
                 onClick={() => handleCourseClick(course._id)}
+                onPointerEnter={user ? undefined : preloadAuthModal}
+                onFocus={user ? undefined : preloadAuthModal}
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
                   {course.image ? (

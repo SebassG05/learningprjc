@@ -8,7 +8,8 @@ import Reveal from '../components/ui/Reveal';
 import SectionHeading from '../components/ui/SectionHeading';
 import SplitText from '../components/ui/SplitText';
 import { useUser } from '../context/UserContext';
-import AuthModal from '../components/auth/AuthModal';
+import AuthModal from '../components/auth/LazyAuthModal';
+import { preloadAuthModal } from '../components/auth/loadAuthModal';
 import GlobeStage, { GlobeAnchor } from '../components/globe/GlobeStage';
 import { emitPulse, getStatus, setCtaBoost, setReviewCount, subscribe, useJourneyHorizon, useJourneySection } from '../components/globe/journey/store';
 import FloatingCards from '../components/globe/FloatingCards';
@@ -105,7 +106,7 @@ const HeroCopy = ({ onStart }) => {
         <span className="text-ink-2">Formando profesionales con tecnología y pasión para el futuro digital.</span>
       </motion.p>
       <motion.div {...heroIn(0.4, reduce)} className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-        <Button size="lg" className="text-button-lg shadow-glow-lg" onClick={onStart}>
+        <Button size="lg" className="text-button-lg shadow-glow-lg" onClick={onStart} onPointerEnter={preloadAuthModal} onFocus={preloadAuthModal}>
           Comenzar ahora <ArrowRight className="h-5 w-5" aria-hidden="true" />
         </Button>
         <Button size="lg" variant="secondary" className="text-button-lg" to="/cursos">
@@ -742,7 +743,7 @@ const CTAScene = ({ onStart }) => {
               </Reveal.Item>
               <Reveal.Item>
                 <div className="mx-auto w-fit" onPointerEnter={boostOn} onPointerLeave={boostOff} onFocus={boostOn} onBlur={boostOff}>
-                  <Button size="lg" className="mt-10" onClick={onStart}>
+                  <Button size="lg" className="mt-10" onClick={onStart} onPointerEnter={preloadAuthModal} onFocus={preloadAuthModal}>
                     Comenzar ahora <ArrowRight className="h-5 w-5" />
                   </Button>
                 </div>
