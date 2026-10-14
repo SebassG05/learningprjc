@@ -1,17 +1,44 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
-// Momento de éxito: una señal sale de Sevilla y viaja en arco hasta un satélite (mismo lenguaje que
-// el globo de la home, sin WebGL). Con reduced motion se muestra el estado final, sin recorrido.
-import { motion, useReducedMotion } from 'framer-motion';
+// Momento de éxito: un avión de papel lleva el mensaje en arco hasta el campus en Sevilla (un libro
+// abierto). El vuelo lo mueve Motion punto a punto sobre el arco, así empieza justo al aparecer el
+// panel. Con reduced motion se muestra el estado final, sin recorrido.
+import { useEffect, useRef } from 'react';
+import { animate, motion, useReducedMotion } from 'framer-motion';
+import { BookOpen, Send } from 'lucide-react';
 import { duration, ease, spring } from '../../lib/motion';
 
-const ARC = 'M 28 84 Q 150 -12 284 34';
-const TRAVEL = 0.9;
+const ARC = 'M 30 80 Q 150 -14 262 46';
+const TRAVEL = 1.2;
 
 export default function SentSignal({ className = '' }) {
   const reduce = useReducedMotion();
+  const arcRef = useRef(null);
+  const planeRef = useRef(null);
+
+  useEffect(() => {
+    const arc = arcRef.current;
+    const plane = planeRef.current;
+    if (reduce || !arc || !plane) return undefined;
+    const length = arc.getTotalLength();
+    // Despega y aterriza suave (acelera y frena) para que el vuelo se lea entero
+    const controls = animate(0, 1, {
+      duration: TRAVEL,
+      ease: ease.inOutQuart,
+      onUpdate: (t) => {
+        const at = t * length;
+        const p = arc.getPointAtLength(at);
+        const q = arc.getPointAtLength(Math.min(length, at + 1));
+        const angle = (Math.atan2(q.y - p.y, q.x - p.x) * 180) / Math.PI;
+        plane.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle})`);
+        plane.setAttribute('opacity', t > 0.92 ? String(Math.max(0, (1 - t) / 0.08)) : '1');
+      },
+    });
+    return () => controls.stop();
+  }, [reduce]);
 
   return (
     <svg viewBox="0 0 320 100" className={className} aria-hidden="true" focusable="false">
+      <path ref={arcRef} d={ARC} fill="none" stroke="none" />
       <motion.path
         d={ARC}
         fill="none"
@@ -21,41 +48,30 @@ export default function SentSignal({ className = '' }) {
         strokeDasharray="1 6"
         initial={reduce ? false : { pathLength: 0, opacity: 0 }}
         animate={{ pathLength: 1, opacity: 0.7 }}
-        transition={{ duration: TRAVEL, ease: ease.outExpo }}
+        transition={{ duration: TRAVEL, ease: ease.inOutQuart }}
       />
 
-      {/* Origen: Sevilla */}
-      <circle cx="28" cy="84" r="10" fill="var(--color-brand-400)" opacity="0.15" />
-      <circle cx="28" cy="84" r="4.5" fill="var(--color-brand-400)" />
+      {/* Origen: quien escribe */}
+      <circle cx="30" cy="80" r="4" fill="var(--color-ink-3)" />
 
-      {/* Señal en camino */}
+      {/* El mensaje en vuelo: avión de papel orientado según el arco (el icono apunta a 45°) */}
       {!reduce && (
-        <circle r="3.5" fill="var(--color-brand-200)">
-          <animateMotion
-            dur={`${TRAVEL}s`}
-            fill="freeze"
-            path={ARC}
-            calcMode="spline"
-            keyPoints="0;1"
-            keyTimes="0;1"
-            keySplines={ease.outExpo.join(' ')}
-          />
-          <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.85;1" dur={`${TRAVEL}s`} fill="freeze" />
-        </circle>
+        <g ref={planeRef} transform="translate(30 80)">
+          <g transform="rotate(45)">
+            <Send x={-9} y={-9} width={18} height={18} color="var(--color-brand-200)" strokeWidth={1.8} />
+          </g>
+        </g>
       )}
 
-      {/* Destino: satélite */}
+      {/* Destino: el campus en Sevilla */}
       <motion.g
         initial={reduce ? false : { opacity: 0, scale: 0.4 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={reduce ? { duration: duration.fast } : { ...spring.pop, delay: TRAVEL * 0.8 }}
       >
-        <g transform="rotate(-24 290 30)">
-          <rect x="268" y="26" width="14" height="8" rx="1.5" fill="var(--color-ink-3)" />
-          <rect x="298" y="26" width="14" height="8" rx="1.5" fill="var(--color-ink-3)" />
-          <rect x="284" y="23" width="12" height="14" rx="3" fill="var(--color-ink)" />
-          <circle cx="290" cy="30" r="2" fill="var(--color-brand-400)" />
-        </g>
+        <circle cx="282" cy="50" r="26" fill="var(--color-brand-400)" opacity="0.12" />
+        <circle cx="282" cy="50" r="17" fill="var(--color-surface-3)" stroke="var(--color-brand-400)" strokeOpacity="0.5" />
+        <BookOpen x={272} y={40} width={20} height={20} color="var(--color-brand-300)" strokeWidth={1.7} />
       </motion.g>
     </svg>
   );

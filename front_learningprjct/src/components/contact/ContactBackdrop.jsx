@@ -1,14 +1,48 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // Fondo de Contacto: una estación nocturna sobre el planeta. Cielo verde y petróleo, estrellas,
-// auroras que derivan despacio, una órbita con su satélite y, al final de la página, el horizonte
-// con la luz de Sevilla. Mismo universo que el globo de la home, sin WebGL (CSS + SVG).
+// auroras que derivan despacio, una órbita decorativa y, al final, el horizonte con la luz de Sevilla y
+// los tipos de curso girando a su alrededor. Mismo universo que el globo de la home, sin WebGL (CSS + SVG).
 import { useReducedMotion } from 'framer-motion';
+import { BookOpen, CodeXml, GraduationCap, Lightbulb } from 'lucide-react';
 
-// Órbita en un sistema girado: el satélite recorre exactamente el trazo dibujado
-// Rodea el formulario (columna derecha): no cruza el texto de la izquierda
+// Órbita decorativa alrededor del formulario (columna derecha): no cruza el texto de la izquierda
 const ORBIT = 'M 700 430 a 520 250 0 1 0 1040 0 a 520 250 0 1 0 -1040 0';
+const TILT = -9;
 
-function Orbit({ animate }) {
+// Anillo del campus: los tipos de curso giran alrededor de Sevilla, sobre el horizonte
+const RING = 'M -520 0 a 520 64 0 1 0 1040 0 a 520 64 0 1 0 -1040 0';
+const LAP = 70; // segundos por vuelta
+// Lectura, titulación, ideas y tecnología: lo que se aprende en el campus
+const COURSE_ICONS = [BookOpen, GraduationCap, Lightbulb, CodeXml];
+
+function CampusRing({ animate }) {
+  return (
+    <svg
+      viewBox="-560 -110 1120 220"
+      className="absolute left-1/2 top-0 hidden w-[min(70rem,92vw)] -translate-x-1/2 -translate-y-1/2 sm:block"
+      focusable="false"
+    >
+      <path d={RING} fill="none" stroke="var(--color-brand-300)" strokeOpacity="0.28" strokeWidth="1" strokeDasharray="2 8" strokeLinecap="round" />
+      {COURSE_ICONS.map((Icon, i) => {
+        const at = i / COURSE_ICONS.length;
+        return (
+          <g key={Icon.displayName ?? i}>
+            {animate ? (
+              <animateMotion dur={`${LAP}s`} begin={`-${at * LAP}s`} repeatCount="indefinite" path={RING} />
+            ) : (
+              <animateMotion dur="1s" fill="freeze" keyPoints={`${at};${at}`} keyTimes="0;1" calcMode="linear" path={RING} />
+            )}
+            <circle r="30" fill="var(--color-brand-400)" opacity="0.08" />
+            <circle r="19" fill="var(--color-night-deep)" stroke="var(--color-brand-400)" strokeOpacity="0.4" strokeWidth="1" />
+            <Icon x={-10} y={-10} width={20} height={20} color="var(--color-brand-200)" strokeWidth={1.6} />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function Orbit() {
   return (
     <svg
       viewBox="0 0 1600 900"
@@ -24,20 +58,8 @@ function Orbit({ animate }) {
           <stop offset="1" stopColor="var(--color-brand-300)" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <g transform="rotate(-9 1220 430)">
+      <g transform={`rotate(${TILT} 1220 430)`}>
         <path d={ORBIT} fill="none" stroke="url(#orbit-fade)" strokeWidth="1.2" strokeDasharray="2 9" strokeLinecap="round" />
-        <g>
-          {animate ? (
-            <animateMotion dur="80s" repeatCount="indefinite" rotate="auto" path={ORBIT} />
-          ) : (
-            <animateMotion dur="1s" fill="freeze" keyPoints="0.18;0.18" keyTimes="0;1" calcMode="linear" path={ORBIT} />
-          )}
-          <circle r="16" fill="var(--color-brand-400)" opacity="0.12" />
-          <rect x="-15" y="-3" width="9" height="6" rx="1" fill="var(--color-ink-3)" />
-          <rect x="6" y="-3" width="9" height="6" rx="1" fill="var(--color-ink-3)" />
-          <rect x="-5" y="-5" width="10" height="10" rx="2.5" fill="var(--color-ink)" />
-          <circle r="1.6" fill="var(--color-brand-400)" />
-        </g>
       </g>
     </svg>
   );
@@ -75,12 +97,13 @@ export default function ContactBackdrop() {
       <div className="contact-aurora absolute -left-[10%] top-[-12%] h-[55vh] w-[60vw] bg-brand-700/25" />
       <div className="contact-aurora contact-aurora-late absolute -right-[12%] top-[8%] h-[50vh] w-[50vw] bg-night-teal/60" />
 
-      <Orbit animate={!reduce} />
+      <Orbit />
 
       {/* Horizonte: asoma al final de la página, por debajo de la ubicación */}
       <div className="contact-atmosphere absolute left-1/2 top-[calc(100%-16rem-9rem)] h-[18rem] w-[140vw] -translate-x-1/2" />
       <div className="contact-planet absolute left-1/2 top-[calc(100%-16rem)] aspect-square w-[max(240vw,150rem)] -translate-x-1/2 rounded-full">
         <Sevilla />
+        <CampusRing animate={!reduce} />
       </div>
       {/* Funde el planeta con el pie, que arranca sobre el lienzo */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-canvas" />
