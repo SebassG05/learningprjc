@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
-import React, { useState, useRef, useLayoutEffect, useId } from 'react';
+import React, { useState, useRef, useId } from 'react';
 import GoogleAuthButton from './GoogleAuthButton.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AlertCircle } from 'lucide-react';
-import { duration, ease, nudge, spring } from '../../lib/motion';
+import { duration, ease, nudge } from '../../lib/motion';
 import AuthDialog from './AuthDialog';
 import TextField from './TextField';
 import PasswordField from './PasswordField';
@@ -14,6 +14,30 @@ import SubmitButton from './SubmitButton';
 import AuthDivider from './AuthDivider';
 import { PasswordMatchAnnouncer, PasswordMatchHint } from './PasswordMatchHint';
 import useNativeValidation from './useNativeValidation';
+import AuthTabs from './AuthTabs';
+import { panelId, tabId } from './tabIds';
+import AutoHeight from './AutoHeight';
+
+const LOGO = 'https://res.cloudinary.com/dd9pjmuy9/image/upload/v1770629257/Gemini_Generated_Image_ufiqyxufiqyxufiq-removebg-preview_lohtpf.png';
+
+// Cambio de texto con la pestaña: fundido cruzado corto (sin desplazamiento con reduced motion)
+function Swap({ id, children }) {
+  const reduce = useReducedMotion();
+  return (
+    <AnimatePresence mode="popLayout" initial={false}>
+      <motion.span
+        key={id}
+        className="block"
+        initial={{ opacity: 0, y: reduce ? 0 : 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: reduce ? 0 : -4 }}
+        transition={{ duration: duration.fast, ease: ease.outExpo }}
+      >
+        {children}
+      </motion.span>
+    </AnimatePresence>
+  );
+}
 
 // Error devuelto por el servidor: encima del botón, con icono y texto (no solo color)
 function ServerAlert({ message }) {
@@ -55,23 +79,6 @@ const AuthModal = ({ open, onClose }) => {
   const [loginError, setLoginError] = useState('');
   const [, setLoginSuccess] = useState('');
 
-  const tabRefs = {
-    login: useRef(null),
-    register: useRef(null),
-  };
-  const [tabBarStyle, setTabBarStyle] = useState({ left: 0, width: 0 });
-
-  useLayoutEffect(() => {
-    const ref = tabRefs[tab].current;
-    if (ref) {
-      setTabBarStyle({
-        left: ref.offsetLeft,
-        width: ref.offsetWidth,
-      });
-    }
-  }, [tab]);
-
-
   // Limpiar mensajes al abrir modal
   React.useEffect(() => {
     if (open) {
@@ -99,6 +106,15 @@ const AuthModal = ({ open, onClose }) => {
     onClose && onClose();
   };
   const titleId = useId();
+  const tabsId = useId();
+  const reduce = useReducedMotion();
+  // Paneles: fundido cruzado con un desplazamiento corto en el sentido del cambio
+  const panelMotion = (dir) => ({
+    initial: { opacity: 0, x: reduce ? 0 : 12 * dir },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: reduce ? 0 : -12 * dir },
+    transition: { duration: duration.fast, ease: ease.outExpo },
+  });
   const firstFieldRef = useRef(null);
 
   // Handlers originales, sin cambios
@@ -212,51 +228,31 @@ const AuthModal = ({ open, onClose }) => {
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
-          <h2 id={titleId} className="pr-10 text-title-2 font-bold text-ink">
-            {tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}
-          </h2>
-          <p className="mt-2 text-sm text-ink-2">
-            {tab === 'login' ? 'Accede para seguir con tus cursos.' : 'Empieza a formarte hoy. Solo te llevará un minuto.'}
-          </p>
-          {/* Control segmentado */}
-          <div className="relative mt-6 flex rounded-full bg-surface-3/70 p-1" role="tablist">
-            <motion.div
-              className="absolute inset-y-1 rounded-full bg-white/[0.1] ring-1 ring-inset ring-white/10"
-              initial={false}
-              animate={{ x: tabBarStyle.left }}
-              style={{ left: 0, width: tabBarStyle.width }}
-              transition={spring.glide}
-              aria-hidden="true"
-            />
-            <button
-              ref={tabRefs.login}
-              role="tab"
-              aria-selected={tab === 'login'}
-              className={`relative z-10 flex-1 rounded-full py-2 text-sm font-semibold transition-colors duration-200 ${tab === 'login' ? 'text-ink' : 'text-ink-3 hover:text-ink-2'}`}
-              onClick={() => setTab('login')}
-            >
-              Iniciar sesión
-            </button>
-            <button
-              ref={tabRefs.register}
-              role="tab"
-              aria-selected={tab === 'register'}
-              className={`relative z-10 flex-1 rounded-full py-2 text-sm font-semibold transition-colors duration-200 ${tab === 'register' ? 'text-ink' : 'text-ink-3 hover:text-ink-2'}`}
-              onClick={() => setTab('register')}
-            >
-              Registrarse
-            </button>
+          <div className="flex items-center gap-3 pr-12">
+            <img src={LOGO} alt="" className="h-10 w-10 shrink-0 object-contain" />
+            <p className="text-footnote text-ink-3">
+              El cambio comienza con la <span className="text-brand">formación</span>.
+            </p>
           </div>
-          <div className="relative mt-6">
-            <AnimatePresence mode="wait" initial={false}>
+          <h2 id={titleId} className="relative mt-6 text-title-2 font-bold text-ink">
+            <Swap id={tab}>{tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}</Swap>
+          </h2>
+          <p className="relative mt-2 text-sm text-ink-2">
+            <Swap id={tab}>{tab === 'login' ? 'Accede para seguir con tus cursos.' : 'Empieza a formarte hoy. Solo te llevará un minuto.'}</Swap>
+          </p>
+          <div className="mt-6">
+            <AuthTabs value={tab} onChange={setTab} idPrefix={tabsId} />
+          </div>
+          <AutoHeight className="mt-6">
+            <AnimatePresence mode="popLayout" initial={false}>
               {tab === 'login' ? (
                 <motion.form
                   key="login"
+                  id={panelId(tabsId, 'login')}
+                  role="tabpanel"
+                  aria-labelledby={tabId(tabsId, 'login')}
                   noValidate
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -16 }}
-                  transition={{ duration: duration.fast, ease: ease.outExpo }}
+                  {...panelMotion(-1)}
                   className="flex flex-col gap-5"
                   aria-busy={loginLoading || undefined}
                   onSubmit={login.onSubmit}
@@ -304,11 +300,11 @@ const AuthModal = ({ open, onClose }) => {
               ) : (
                 <motion.form
                   key="register"
+                  id={panelId(tabsId, 'register')}
+                  role="tabpanel"
+                  aria-labelledby={tabId(tabsId, 'register')}
                   noValidate
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 16 }}
-                  transition={{ duration: duration.fast, ease: ease.outExpo }}
+                  {...panelMotion(1)}
                   className="flex flex-col gap-5"
                   aria-busy={registerLoading || undefined}
                   onSubmit={register.onSubmit}
@@ -376,7 +372,7 @@ const AuthModal = ({ open, onClose }) => {
                 </motion.form>
               )}
             </AnimatePresence>
-          </div>
+          </AutoHeight>
           <div className="mt-6 flex flex-col gap-6">
             <AuthDivider />
             <GoogleAuthButton onSuccess={handleGoogleSuccess} />
