@@ -14,12 +14,12 @@ function validateContactForm(data) {
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import Container from '../components/ui/Container';
 import ContactHero from '../components/contact/ContactHero';
 import ContactChannels from '../components/contact/ContactChannels';
 import ContactForm from '../components/contact/ContactForm';
 import QuickAnswers from '../components/contact/QuickAnswers';
 import LocationCard from '../components/contact/LocationCard';
+import ContactBackdrop from '../components/contact/ContactBackdrop';
 import { duration, ease, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
 
@@ -129,39 +129,39 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-dvh bg-transparent pb-20 pt-6 sm:pt-10 lg:pb-28">
-      <Container>
-        <motion.div
-          variants={group}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:grid-rows-[auto_auto_auto_1fr] lg:gap-x-16 lg:gap-y-10"
-        >
-          <motion.div variants={item} className="lg:col-span-5 lg:row-start-1 lg:pt-4">
-            <ContactHero />
-          </motion.div>
+    <div className="relative isolate min-h-dvh pb-[22rem]">
+      <ContactBackdrop />
 
-          <motion.div variants={item} className="lg:col-span-5 lg:row-start-2">
-            <ContactChannels />
-          </motion.div>
+      <motion.div
+        variants={group}
+        initial="hidden"
+        animate="show"
+        className="mx-auto w-full max-w-wide px-gutter pt-8 sm:pt-12 lg:pt-16"
+      >
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-x-16 xl:gap-x-24">
+          <div className="flex flex-col gap-10 lg:col-span-5 lg:gap-12 lg:pt-6">
+            <motion.div variants={item}>
+              <ContactHero />
+            </motion.div>
+            <motion.div variants={item}>
+              <ContactChannels />
+            </motion.div>
+          </div>
 
-          <motion.div
-            ref={formCardRef}
-            variants={item}
-            className="scroll-mt-24 lg:col-span-7 lg:col-start-6 lg:row-span-4 lg:row-start-1 lg:self-start"
-          >
+          <motion.div ref={formCardRef} variants={item} className="scroll-mt-24 lg:col-span-7">
             <ContactForm ref={formRef} status={formStatus} onSubmit={handleSubmit} onReset={resetStatus} />
           </motion.div>
+        </div>
 
-          <motion.div variants={item} className="lg:col-span-5 lg:row-start-3">
+        <div className="mt-16 grid grid-cols-1 gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-x-16 xl:gap-x-24">
+          <motion.div variants={item} className="lg:col-span-5">
             <QuickAnswers />
           </motion.div>
-
-          <motion.div variants={item} className="lg:col-span-5 lg:row-start-4">
+          <motion.div variants={item} className="lg:col-span-7">
             <LocationCard />
           </motion.div>
-        </motion.div>
-      </Container>
+        </div>
+      </motion.div>
     </div>
   );
 };

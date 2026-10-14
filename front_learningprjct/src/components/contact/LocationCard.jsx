@@ -10,8 +10,8 @@ export default function LocationCard({ className = '' }) {
   const [showMap, setShowMap] = useState(false);
 
   return (
-    <section aria-labelledby="contact-location" className={`overflow-hidden rounded-3xl border border-line bg-surface/70 ${className}`}>
-      <div className="relative aspect-[16/10] bg-canvas">
+    <section aria-labelledby="contact-location" className={`grid overflow-hidden rounded-3xl border border-line bg-surface/60 backdrop-blur-md md:grid-cols-[1.5fr_1fr] ${className}`}>
+      <div className="relative aspect-[16/10] bg-night-deep/80">
         {showMap ? (
           <iframe
             src={ADDRESS.embedUrl}
@@ -36,7 +36,7 @@ export default function LocationCard({ className = '' }) {
         )}
       </div>
 
-      <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col justify-between gap-4 p-5 sm:p-6">
         <div>
           <h2 id="contact-location" className="font-sans text-sm font-medium text-ink-3">
             Dónde estamos
@@ -51,7 +51,7 @@ export default function LocationCard({ className = '' }) {
           href={ADDRESS.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex min-h-11 items-center gap-1.5 self-start rounded-full text-sm font-semibold text-brand-400 hover:text-brand-300 sm:self-auto"
+          className="group inline-flex min-h-11 items-center gap-1.5 self-start rounded-full text-sm font-semibold text-brand-400 hover:text-brand-300"
         >
           Abrir en Maps
           <ArrowUpRight

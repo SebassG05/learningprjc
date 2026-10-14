@@ -6,7 +6,7 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { AlertCircle, ArrowRight } from 'lucide-react';
+import { AlertCircle, ArrowRight, Plus } from 'lucide-react';
 import TextField from '../auth/TextField';
 import SubmitButton from '../auth/SubmitButton';
 import useNativeValidation from '../auth/useNativeValidation';
@@ -104,6 +104,9 @@ const ContactForm = forwardRef(function ContactForm({ status, onSubmit, onReset,
   const { errors: nativeErrors, onSubmit: submit, onInput, reset } = useNativeValidation(onSubmit);
   const subjectRef = useRef(null);
   const [topic, setTopic] = useState('');
+  // Teléfono y centro son opcionales: plegados para que el formulario pida lo justo.
+  // Siguen dentro del <form> (mismos campos y mismo payload); solo se ocultan a la vista.
+  const [showOptional, setShowOptional] = useState(false);
 
   // Errores nativos (al vuelo) + los de validateContactForm (p. ej. un campo con solo espacios)
   const errors = { ...status.validationErrors, ...nativeErrors };
@@ -112,6 +115,7 @@ const ContactForm = forwardRef(function ContactForm({ status, onSubmit, onReset,
   useEffect(() => {
     if (sent) {
       setTopic('');
+      setShowOptional(false);
       reset();
     }
   }, [sent, reset]);
@@ -167,24 +171,6 @@ const ContactForm = forwardRef(function ContactForm({ status, onSubmit, onReset,
             />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <TextField
-              id="phone"
-              name="phone"
-              type="tel"
-              label="Teléfono (opcional)"
-              placeholder="+34 600 000 000"
-              autoComplete="tel"
-              inputMode="tel"
-            />
-            <TextField
-              id="company"
-              name="company"
-              label="Centro o empresa (opcional)"
-              autoComplete="organization"
-            />
-          </div>
-
           <div className="flex flex-col gap-3">
             <TextField
               ref={subjectRef}
@@ -209,53 +195,89 @@ const ContactForm = forwardRef(function ContactForm({ status, onSubmit, onReset,
             error={errors.message}
           />
 
-          <div className="flex flex-col gap-1.5">
-            <label className="flex min-h-11 cursor-pointer items-start gap-3 py-1">
-              <input
-                type="checkbox"
-                name="privacy"
-                required
-                aria-invalid={errors.privacy ? true : undefined}
-                aria-describedby={errors.privacy ? 'privacy-error' : undefined}
-                className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-brand-400"
+          <div>
+            <button
+              type="button"
+              aria-expanded={showOptional}
+              aria-controls="contact-optional"
+              onClick={() => setShowOptional((v) => !v)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full text-sm font-medium text-ink-2 hover:text-ink"
+            >
+              <Plus
+                className={`h-4 w-4 text-brand-400 transition-transform duration-200 ease-out-expo ${showOptional ? 'rotate-45' : ''}`}
+                aria-hidden="true"
               />
-              <span className="text-sm text-ink-2">
-                He leído y acepto la{' '}
-                <Link to="/privacidad" className="font-medium text-brand-400 underline-offset-4 hover:underline">
-                  información básica de protección de datos
-                </Link>
-                .
-              </span>
-            </label>
-            {errors.privacy && (
-              <p id="privacy-error" className="flex items-start gap-1.5 text-sm text-danger">
-                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>{errors.privacy}</span>
-              </p>
-            )}
+              {showOptional ? 'Ocultar teléfono y centro' : 'Añadir teléfono o centro (opcional)'}
+            </button>
+            <div id="contact-optional" hidden={!showOptional} className="mt-2">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <TextField
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  label="Teléfono (opcional)"
+                  placeholder="+34 600 000 000"
+                  autoComplete="tel"
+                  inputMode="tel"
+                />
+                <TextField
+                  id="company"
+                  name="company"
+                  label="Centro o empresa (opcional)"
+                  autoComplete="organization"
+                />
+              </div>
+            </div>
           </div>
 
           <FormAlert message={status.error} />
 
-          <div className="flex flex-col gap-3">
-            <SubmitButton loading={status.loading} loadingText="Enviando…">
-              <span className="inline-flex items-center gap-2">
-                Enviar mensaje
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
-              </span>
-            </SubmitButton>
-            <p className="text-center text-sm text-ink-3">Te responderemos por email a la dirección que nos indiques.</p>
+          <div className="flex flex-col gap-4 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+            <div className="flex flex-col gap-1.5 sm:max-w-sm">
+              <label className="flex min-h-11 cursor-pointer items-start gap-3 py-1">
+                <input
+                  type="checkbox"
+                  name="privacy"
+                  required
+                  aria-invalid={errors.privacy ? true : undefined}
+                  aria-describedby={errors.privacy ? 'privacy-error' : undefined}
+                  className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-brand-400"
+                />
+                <span className="text-sm text-ink-2">
+                  He leído y acepto la{' '}
+                  <Link to="/privacidad" className="font-medium text-brand-400 underline-offset-4 hover:underline">
+                    información básica de protección de datos
+                  </Link>
+                  .
+                </span>
+              </label>
+              {errors.privacy && (
+                <p id="privacy-error" className="flex items-start gap-1.5 text-sm text-danger">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>{errors.privacy}</span>
+                </p>
+              )}
+            </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:w-64">
+              <SubmitButton loading={status.loading} loadingText="Enviando…">
+                <span className="inline-flex items-center gap-2">
+                  Enviar mensaje
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </span>
+              </SubmitButton>
+            </div>
           </div>
+          <p className="text-sm text-ink-3">Te responderemos por email a la dirección que nos indiques.</p>
 
-          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 border-t border-line pt-4 text-xs text-ink-3">
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr] sm:gap-y-1.5 rounded-2xl bg-white/[0.03] p-4 text-xs text-ink-3">
             {PRIVACY_SUMMARY.map(([term, text]) => (
               <div key={term} className="contents">
-                <dt className="font-semibold text-ink-2">{term}</dt>
+                <dt className="mt-2 font-semibold text-ink-2 first:mt-0 sm:mt-0">{term}</dt>
                 <dd>{text}</dd>
               </div>
             ))}
             <div className="contents">
-              <dt className="font-semibold text-ink-2">Información adicional</dt>
+              <dt className="mt-2 font-semibold text-ink-2 sm:mt-0">Información adicional</dt>
               <dd>
                 <Link to="/privacidad" className="text-brand-400 underline-offset-4 hover:underline">
                   Consulte la política de privacidad

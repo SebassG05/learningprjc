@@ -26,13 +26,13 @@ export default function ContactChannel({ icon: Icon, label, value, href, copyLab
 
   return (
     <li className="group/channel relative flex items-center gap-2 rounded-2xl transition-colors duration-200 ease-standard hover:bg-white/[0.04]">
-      <a href={href} className="flex min-w-0 flex-1 items-center gap-4 rounded-2xl p-3 sm:p-4">
+      <a href={href} className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl p-3 sm:gap-4 sm:p-4">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-400/10 text-brand-400 transition-colors duration-200 group-hover/channel:bg-brand-400/15">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <span className="min-w-0">
           <span className="block text-sm text-ink-3">{label}</span>
-          <span className="block text-lg font-semibold tracking-tight text-ink [overflow-wrap:anywhere] transition-colors duration-200 group-hover/channel:text-brand-300 sm:text-title-3">
+          <span className="block text-base font-semibold tracking-tight text-ink [overflow-wrap:anywhere] transition-colors duration-200 group-hover/channel:text-brand-300 sm:text-title-3">
             {value}
           </span>
         </span>

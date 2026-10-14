@@ -6,10 +6,10 @@ export default function ContactHero({ className = '' }) {
   return (
     <header className={className}>
       <p className="eyebrow">Contacto</p>
-      <SplitText as="h1" trigger="mount" delay={0.1} className="mt-4 block text-title-1 font-bold text-ink">
+      <SplitText as="h1" trigger="mount" delay={0.1} className="mt-5 block text-contact font-bold text-ink">
         ¿Tienes una duda? <span className="text-brand-400">Te ayudamos.</span>
       </SplitText>
-      <p className="mt-5 max-w-md text-lg text-ink-2">
+      <p className="mt-6 max-w-lg text-lg text-ink-2">
         Escríbenos sobre un curso, tu matrícula, el acceso a la plataforma o tu certificado. Te responde el
         equipo del campus.
       </p>
