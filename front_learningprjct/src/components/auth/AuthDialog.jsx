@@ -11,11 +11,14 @@ import { setOverlay } from '../globe/journey/store';
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 const isVisible = (el) => el.getClientRects().length > 0;
+// Un iframe solo cuenta si se ve (el botón personalizado de Google lo es; su iframe auxiliar mide 0)
+const isTabStop = (el) => (el.tagName === 'IFRAME' ? el.offsetWidth > 0 && el.offsetHeight > 0 : isVisible(el));
 const canReceiveFocus = (el) =>
   !!el && el !== document.body && el.isConnected && isVisible(el) && !el.closest('[inert]');
 
 // Lo que debe seguir operativo bajo el diálogo: el banner de cookies (otro diálogo) y los avisos
-const KEEP = '[role="dialog"], [role="alertdialog"], [role="status"], [aria-live]';
+// (y el propio velo del acceso: sus centinelas de foco no pueden quedar inertes)
+const KEEP = '[data-auth-overlay], [role="dialog"], [role="alertdialog"], [role="status"], [aria-live]';
 
 // Marca inerte todo lo que cuelga de `node` salvo las ramas que contienen algo de KEEP
 function inertOutside(node, out) {
@@ -96,7 +99,7 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
   closeRef.current = onRequestClose;
 
   const edges = () => {
-    const items = cardRef.current ? [...cardRef.current.querySelectorAll(FOCUSABLE)].filter(isVisible) : [];
+    const items = cardRef.current ? [...cardRef.current.querySelectorAll(`${FOCUSABLE}, iframe`)].filter(isTabStop) : [];
     return { first: items[0] ?? cardRef.current, last: items[items.length - 1] ?? cardRef.current };
   };
 
@@ -126,18 +129,28 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
 
     // Móvil con teclado virtual: la hoja ocupa solo lo visible (visualViewport) y el campo con foco
     // se mantiene a la vista dentro de su scroll. Se escribe en el estilo, sin estado de React.
+    // En iOS el teclado desplaza el viewport visual (offsetTop): el velo lo sigue en posición y alto.
+    // Con zoom de pellizco (scale ≠ 1) no se ajusta nada: la hoja conserva su tamaño de diseño.
     const card = cardRef.current;
+    const layer = card?.parentElement;
     const vv = window.visualViewport;
-    const fit = () => card?.style.setProperty('--auth-vh', `${vv.height}px`);
+    const fit = () => {
+      if (!card || !layer) return;
+      const zoomed = Math.abs((vv.scale ?? 1) - 1) > 0.01;
+      card.style.setProperty('--auth-vh', zoomed ? '' : `${vv.height}px`);
+      layer.style.top = zoomed ? '' : `${vv.offsetTop}px`;
+      layer.style.height = zoomed ? '' : `${vv.height}px`;
+    };
     const reveal = (e) => {
       if (e.target.matches?.('input')) requestAnimationFrame(() => e.target.scrollIntoView({ block: 'nearest' }));
     };
-    if (vv) { fit(); vv.addEventListener('resize', fit); }
+    if (vv) { fit(); vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
     card?.addEventListener('focusin', reveal);
 
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       vv?.removeEventListener('resize', fit);
+      vv?.removeEventListener('scroll', fit);
       card?.removeEventListener('focusin', reveal);
       unlock();
     };
@@ -162,6 +175,7 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
           key="auth-dialog"
           className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-6"
           data-lenis-prevent
+          data-auth-overlay
           {...overlay}
         >
           {sentinel('last')}
