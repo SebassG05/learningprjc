@@ -1,23 +1,35 @@
-// Contenedor modal del acceso: portal a <body>, velo, tarjeta con role="dialog", foco atrapado,
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+// Contenedor modal del acceso: velo, tarjeta con role="dialog", foco atrapado,
 // Escape, fondo inerte, bloqueo de scroll sin salto y vuelta del foco al cerrar. No sabe nada de
 // autenticación: solo abre, cierra y avisa al lienzo del viaje (journey.overlay).
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { overlay, panel } from '../../lib/motion';
 import { setOverlay } from '../globe/journey/store';
 
-const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 const isVisible = (el) => el.getClientRects().length > 0;
 const canReceiveFocus = (el) =>
   !!el && el !== document.body && el.isConnected && isVisible(el) && !el.closest('[inert]');
 
+// Lo que debe seguir operativo bajo el diálogo: el banner de cookies (otro diálogo) y los avisos
+const KEEP = '[role="dialog"], [role="alertdialog"], [role="status"], [aria-live]';
+
+// Marca inerte todo lo que cuelga de `node` salvo las ramas que contienen algo de KEEP
+function inertOutside(node, out) {
+  for (const child of node.children) {
+    if (child.matches(KEEP)) continue;
+    if (child.querySelector(KEEP)) inertOutside(child, out);
+    else if (!child.inert) { child.inert = true; out.push(child); }
+  }
+  return out;
+}
+
 // Fondo inerte + scroll bloqueado mientras el diálogo está abierto. Devuelve cómo deshacerlo.
 function lockPage() {
   const root = document.getElementById('root');
-  const inerted = root ? [...root.children].filter((el) => !el.inert) : [];
-  inerted.forEach((el) => { el.inert = true; });
+  const inerted = root ? inertOutside(root, []) : [];
 
   const html = document.documentElement;
   const prev = { overflow: html.style.overflow, gutter: html.style.scrollbarGutter };
@@ -110,7 +122,9 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
     onExited?.();
   };
 
-  return createPortal(
+  // Sin portal: se pinta donde se monta (como antes), dentro del contexto `isolate` del layout,
+  // para que el banner de cookies (z-[9999], mismo contexto) siga por encima y operativo
+  return (
     <AnimatePresence onExitComplete={handleExitComplete}>
       {open && (
         <motion.div
@@ -134,7 +148,6 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
           {sentinel('first')}
         </motion.div>
       )}
-    </AnimatePresence>,
-    document.body
+    </AnimatePresence>
   );
 }

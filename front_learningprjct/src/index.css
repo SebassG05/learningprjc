@@ -278,6 +278,11 @@
         outline-offset: 2px !important;
     }
 
+    /* Campo inválido del acceso con foco: el anillo pasa a color de error (misma capa, más específico) */
+    .auth-input[aria-invalid="true"]:focus-visible {
+        outline-color: var(--color-danger) !important;
+    }
+
     button:not(:disabled),
     [role="button"]:not([aria-disabled="true"]) {
         cursor: pointer;

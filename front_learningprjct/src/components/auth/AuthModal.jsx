@@ -1,13 +1,42 @@
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import React, { useState, useRef, useLayoutEffect, useId } from 'react';
 import GoogleAuthButton from './GoogleAuthButton.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useUser } from '../../context/UserContext.jsx';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useNavigate, Link } from 'react-router-dom';
-import Button from '../ui/Button';
-import { inputClass } from '../ui/Field';
-import { duration, ease, spring } from '../../lib/motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { AlertCircle } from 'lucide-react';
+import { duration, ease, nudge, spring } from '../../lib/motion';
 import AuthDialog from './AuthDialog';
+import TextField from './TextField';
+import PasswordField from './PasswordField';
+import SubmitButton from './SubmitButton';
+import AuthDivider from './AuthDivider';
+import { PasswordMatchAnnouncer, PasswordMatchHint } from './PasswordMatchHint';
+import useNativeValidation from './useNativeValidation';
+
+// Error devuelto por el servidor: encima del botón, con icono y texto (no solo color)
+function ServerAlert({ message }) {
+  const reduce = useReducedMotion();
+  return (
+    <AnimatePresence initial={false}>
+      {message && (
+        <motion.div
+          key={message}
+          role="alert"
+          initial={{ opacity: 0 }}
+          animate={reduce ? { opacity: 1 } : { opacity: 1, x: nudge.x }}
+          exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
+          transition={nudge.transition}
+          className="flex items-start gap-2.5 rounded-xl bg-danger/10 px-4 py-3 text-sm font-medium text-danger"
+        >
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+          <span className="min-w-0 break-words">{message}</span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 const AuthModal = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -18,13 +47,13 @@ const AuthModal = ({ open, onClose }) => {
   const [registerData, setRegisterData] = useState({ email: '', password: '', confirmPassword: '', name: '' });
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerError, setRegisterError] = useState('');
-  const [registerSuccess, setRegisterSuccess] = useState('');
+  const [, setRegisterSuccess] = useState('');
 
-    // Login
+  // Login
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
-  const [loginSuccess, setLoginSuccess] = useState('');
+  const [, setLoginSuccess] = useState('');
 
   const tabRefs = {
     login: useRef(null),
@@ -72,6 +101,101 @@ const AuthModal = ({ open, onClose }) => {
   const titleId = useId();
   const firstFieldRef = useRef(null);
 
+  // Handlers originales, sin cambios
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLoginError('');
+    setLoginLoading(true);
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
+      const res = await fetch(`${apiUrl}/api/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: loginData.email,
+          password: loginData.password,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setLoginError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al iniciar sesión');
+      } else {
+        setUserLogin(data.user, data.token);
+        setLoginSuccess('');
+        showToast('¡Bienvenido! Has iniciado sesión correctamente.', 'info');
+        // Cierra el modal y elimina el overlay inmediatamente y sin retardo
+        setIsVisible(false);
+        onClose && onClose();
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 10);
+      }
+    } catch (err) {
+      setLoginError('Error de red');
+    } finally {
+      setLoginLoading(false);
+    }
+
+  };
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setRegisterError('');
+    setRegisterSuccess('');
+    setRegisterLoading(true);
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
+      const res = await fetch(`${apiUrl}/api/users/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: registerData.name,
+          email: registerData.email,
+          password: registerData.password,
+          confirmPassword: registerData.confirmPassword,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setRegisterError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al registrar');
+      } else {
+        setUserLogin(data.user, data.token);
+        setRegisterSuccess('');
+        showToast('¡Registro exitoso! Ya puedes disfrutar del campus.', 'success');
+        setIsVisible(false);
+        onClose && onClose();
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 10);
+        setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
+      }
+    } catch (err) {
+      setRegisterError('Error de red');
+    } finally {
+      setRegisterLoading(false);
+    }
+
+  };
+  const handleForgotPassword = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose && onClose();
+      navigate('/forgot-password');
+    }, 350);
+
+  };
+  const handleGoogleSuccess = () => {
+    setIsVisible(false);
+    onClose && onClose();
+    setTimeout(() => {
+      navigate('/', { replace: true });
+    }, 10);
+
+  };
+
+  const login = useNativeValidation(handleLoginSubmit);
+  const register = useNativeValidation(handleRegisterSubmit);
+  const [confirmBlurs, setConfirmBlurs] = useState(0);
+
   return (
     <AuthDialog
       open={isVisible}
@@ -89,10 +213,10 @@ const AuthModal = ({ open, onClose }) => {
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
           <h2 id={titleId} className="pr-10 text-title-2 font-bold text-ink">
-            {tab === 'login' ? 'Bienvenido de nuevo' : 'Crea tu cuenta'}
+            {tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}
           </h2>
           <p className="mt-2 text-sm text-ink-2">
-            {tab === 'login' ? '¿Ya tienes tu cuenta? Accede para continuar.' : '¿Eres nuevo cliente? Regístrate en un minuto.'}
+            {tab === 'login' ? 'Accede para seguir con tus cursos.' : 'Empieza a formarte hoy. Solo te llevará un minuto.'}
           </p>
           {/* Control segmentado */}
           <div className="relative mt-6 flex rounded-full bg-surface-3/70 p-1" role="tablist">
@@ -128,220 +252,134 @@ const AuthModal = ({ open, onClose }) => {
               {tab === 'login' ? (
                 <motion.form
                   key="login"
+                  noValidate
                   initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -16 }}
                   transition={{ duration: duration.fast, ease: ease.outExpo }}
-                  className="flex flex-col gap-4"
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    setLoginError('');
-                    setLoginLoading(true);
-                    try {
-                      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
-                      const res = await fetch(`${apiUrl}/api/users/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          email: loginData.email,
-                          password: loginData.password,
-                        }),
-                      });
-                      const data = await res.json();
-                      if (!res.ok) {
-                        setLoginError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al iniciar sesión');
-                      } else {
-                        setUserLogin(data.user, data.token);
-                        setLoginSuccess('');
-                        showToast('¡Bienvenido! Has iniciado sesión correctamente.', 'info');
-                        // Cierra el modal y elimina el overlay inmediatamente y sin retardo
-                        setIsVisible(false);
-                        onClose && onClose();
-                        setTimeout(() => {
-                          navigate('/', { replace: true });
-                        }, 10);
-                      }
-                    } catch (err) {
-                      setLoginError('Error de red');
-                    } finally {
-                      setLoginLoading(false);
-                    }
-                  }}
+                  className="flex flex-col gap-5"
+                  aria-busy={loginLoading || undefined}
+                  onSubmit={login.onSubmit}
+                  onInput={login.onInput}
                 >
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="login-email" className="text-sm font-medium text-ink-2">Correo electrónico</label>
-                    <input
-                      id="login-email"
-                      ref={firstFieldRef}
-                      type="email"
-                      autoComplete="email"
-                      placeholder="tu@email.com"
-                      className={inputClass}
-                      value={loginData.email}
-                      onChange={e => setLoginData(d => ({ ...d, email: e.target.value }))}
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-baseline justify-between">
-                      <label htmlFor="login-password" className="text-sm font-medium text-ink-2">Contraseña</label>
+                  <TextField
+                    ref={firstFieldRef}
+                    id="login-email"
+                    label="Correo electrónico"
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    placeholder="tu@email.com"
+                    value={loginData.email}
+                    onChange={e => setLoginData(d => ({ ...d, email: e.target.value }))}
+                    readOnly={loginLoading}
+                    required
+                    error={login.errors.email}
+                  />
+                  <PasswordField
+                    id="login-password"
+                    label="Contraseña"
+                    name="password"
+                    autoComplete="current-password"
+                    placeholder="Contraseña"
+                    value={loginData.password}
+                    onChange={e => setLoginData(d => ({ ...d, password: e.target.value }))}
+                    readOnly={loginLoading}
+                    required
+                    error={login.errors.password}
+                    labelAction={(
                       <button
                         type="button"
-                        className="text-sm text-brand transition-colors hover:text-brand-300"
-                        onClick={() => {
-                        setIsVisible(false);
-                        setTimeout(() => {
-                          onClose && onClose();
-                          navigate('/forgot-password');
-                        }, 350);
-                      }}
+                        className="-my-3 inline-flex min-h-11 items-center rounded-md text-sm text-brand transition-colors hover:text-brand-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/60"
+                        onClick={handleForgotPassword}
                       >¿Has olvidado tu contraseña?</button>
-                    </div>
-                    <input
-                      id="login-password"
-                      type="password"
-                      autoComplete="current-password"
-                      placeholder="Contraseña"
-                      className={inputClass}
-                      value={loginData.password}
-                      onChange={e => setLoginData(d => ({ ...d, password: e.target.value }))}
-                      required
-                    />
-                  </div>
-                  <Button type="submit" size="lg" className="mt-2 w-full" disabled={loginLoading}>
-                    {loginLoading ? 'Accediendo...' : 'Acceder'}
-                  </Button>
-                  {loginError && <div role="alert" className="rounded-xl bg-red-500/10 px-4 py-3 text-center text-sm font-medium text-red-300">{loginError}</div>}
-                  <div className="flex items-center gap-3 text-xs text-ink-3" aria-hidden="true">
-                    <span className="h-px flex-1 bg-line" />o<span className="h-px flex-1 bg-line" />
-                  </div>
-                  <GoogleAuthButton onSuccess={() => {
-                        setIsVisible(false);
-                        onClose && onClose();
-                        setTimeout(() => {
-                          navigate('/', { replace: true });
-                        }, 10);
-                      }} />
+                    )}
+                  />
+                  <ServerAlert message={loginError} />
+                  <SubmitButton loading={loginLoading} loadingText="Accediendo...">Acceder</SubmitButton>
                 </motion.form>
               ) : (
                 <motion.form
                   key="register"
+                  noValidate
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 16 }}
                   transition={{ duration: duration.fast, ease: ease.outExpo }}
-                  className="flex flex-col gap-4"
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    setRegisterError('');
-                    setRegisterSuccess('');
-                    setRegisterLoading(true);
-                    try {
-                      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
-                      const res = await fetch(`${apiUrl}/api/users/register`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          name: registerData.name,
-                          email: registerData.email,
-                          password: registerData.password,
-                          confirmPassword: registerData.confirmPassword,
-                        }),
-                      });
-                      const data = await res.json();
-                      if (!res.ok) {
-                        setRegisterError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al registrar');
-                      } else {
-                        setUserLogin(data.user, data.token);
-                        setRegisterSuccess('');
-                        showToast('¡Registro exitoso! Ya puedes disfrutar del campus.', 'success');
-                        setIsVisible(false);
-                        onClose && onClose();
-                        setTimeout(() => {
-                          navigate('/', { replace: true });
-                        }, 10);
-                        setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
-                      }
-                    } catch (err) {
-                      setRegisterError('Error de red');
-                    } finally {
-                      setRegisterLoading(false);
-                    }
-                  }}
+                  className="flex flex-col gap-5"
+                  aria-busy={registerLoading || undefined}
+                  onSubmit={register.onSubmit}
+                  onInput={register.onInput}
                 >
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="register-name" className="text-sm font-medium text-ink-2">Nombre</label>
-                    <input
-                      id="register-name"
-                      ref={firstFieldRef}
-                      type="text"
-                      autoComplete="name"
-                      placeholder="Nombre"
-                      className={inputClass}
-                      value={registerData.name}
-                      onChange={e => setRegisterData(d => ({ ...d, name: e.target.value }))}
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="register-email" className="text-sm font-medium text-ink-2">Correo electrónico</label>
-                    <input
-                      id="register-email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder="tu@email.com"
-                      className={inputClass}
-                      value={registerData.email}
-                      onChange={e => setRegisterData(d => ({ ...d, email: e.target.value }))}
-                      required
-                    />
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="register-password" className="text-sm font-medium text-ink-2">Contraseña</label>
-                      <input
-                        id="register-password"
-                        type="password"
-                        autoComplete="new-password"
-                        placeholder="Contraseña"
-                        className={inputClass}
-                        value={registerData.password}
-                        onChange={e => setRegisterData(d => ({ ...d, password: e.target.value }))}
-                        required
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="register-confirm" className="text-sm font-medium text-ink-2">Repetir contraseña</label>
-                      <input
-                        id="register-confirm"
-                        type="password"
-                        autoComplete="new-password"
-                        placeholder="Repite la contraseña"
-                        className={inputClass}
-                        value={registerData.confirmPassword}
-                        onChange={e => setRegisterData(d => ({ ...d, confirmPassword: e.target.value }))}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <Button type="submit" size="lg" className="mt-2 w-full" disabled={registerLoading}>
-                    {registerLoading ? 'Registrando...' : 'Registrarse'}
-                  </Button>
-                  {registerError && <div role="alert" className="rounded-xl bg-red-500/10 px-4 py-3 text-center text-sm font-medium text-red-300">{registerError}</div>}
-                  <div className="flex items-center gap-3 text-xs text-ink-3" aria-hidden="true">
-                    <span className="h-px flex-1 bg-line" />o<span className="h-px flex-1 bg-line" />
-                  </div>
-                  {/* Google Auth Button debajo del registro */}
-                  <GoogleAuthButton onSuccess={() => {
-                    setIsVisible(false);
-                    onClose && onClose();
-                    setTimeout(() => {
-                      navigate('/', { replace: true });
-                    }, 10);
-                  }} />
+                  <TextField
+                    ref={firstFieldRef}
+                    id="register-name"
+                    label="Nombre"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Nombre"
+                    value={registerData.name}
+                    onChange={e => setRegisterData(d => ({ ...d, name: e.target.value }))}
+                    readOnly={registerLoading}
+                    required
+                    error={register.errors.name}
+                  />
+                  <TextField
+                    id="register-email"
+                    label="Correo electrónico"
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    placeholder="tu@email.com"
+                    value={registerData.email}
+                    onChange={e => setRegisterData(d => ({ ...d, email: e.target.value }))}
+                    readOnly={registerLoading}
+                    required
+                    error={register.errors.email}
+                  />
+                  <PasswordField
+                    id="register-password"
+                    label="Contraseña"
+                    name="password"
+                    autoComplete="new-password"
+                    placeholder="Contraseña"
+                    value={registerData.password}
+                    onChange={e => setRegisterData(d => ({ ...d, password: e.target.value }))}
+                    readOnly={registerLoading}
+                    required
+                    error={register.errors.password}
+                  />
+                  <PasswordField
+                    id="register-confirm"
+                    label="Repetir contraseña"
+                    name="confirmPassword"
+                    autoComplete="new-password"
+                    placeholder="Repite la contraseña"
+                    value={registerData.confirmPassword}
+                    onChange={e => setRegisterData(d => ({ ...d, confirmPassword: e.target.value }))}
+                    onBlur={() => setConfirmBlurs(n => n + 1)}
+                    readOnly={registerLoading}
+                    required
+                    error={register.errors.confirmPassword}
+                    hint={<PasswordMatchHint password={registerData.password} confirm={registerData.confirmPassword} />}
+                  />
+                  <PasswordMatchAnnouncer password={registerData.password} confirm={registerData.confirmPassword} flushKey={confirmBlurs} />
+                  <ServerAlert message={registerError} />
+                  <SubmitButton loading={registerLoading} loadingText="Registrando...">Registrarse</SubmitButton>
                 </motion.form>
               )}
             </AnimatePresence>
+          </div>
+          <div className="mt-6 flex flex-col gap-6">
+            <AuthDivider />
+            <GoogleAuthButton onSuccess={handleGoogleSuccess} />
           </div>
         </div>
     </AuthDialog>
