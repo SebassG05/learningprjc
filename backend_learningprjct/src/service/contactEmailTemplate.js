@@ -113,7 +113,7 @@ export function buildContactEmail({ name, email, phone, company, subject, messag
               <!-- Mensaje -->
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top: 20px;">
                 <tr>
-                  <td bgcolor="${C.panel}" style="background-color: ${C.panel}; border-left: 3px solid ${C.brand}; border-radius: 14px; padding: 20px 22px; font-family: ${FONT}; font-size: 16px; line-height: 1.6; color: ${C.ink};">${s.message}</td>
+                  <td bgcolor="${C.panel}" style="background-color: ${C.panel}; border: 1px solid ${C.cardLine}; border-radius: 14px; padding: 20px 22px; font-family: ${FONT}; font-size: 16px; line-height: 1.6; color: ${C.ink};">${s.message}</td>
                 </tr>
               </table>
 
