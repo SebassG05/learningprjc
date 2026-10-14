@@ -88,10 +88,21 @@ export function buildContactEmail({ name, email, phone, company, subject, messag
       <td align="center" style="padding: 40px 16px 0;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px;">
 
-          <!-- Cabecera -->
+          <!-- Cabecera: la marca como en la web (Evenor Tech | CAMPUS) y el tipo de aviso -->
           <tr>
-            <td style="padding: 0 8px 20px;">
-              <p style="margin: 0; font-family: ${FONT}; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: ${C.brand};">Contacto · Campus Evenor-Tech</p>
+            <td style="padding: 0 8px 22px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align: middle;">
+                    <span style="font-family: ${FONT}; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: ${C.brand};">Evenor Tech</span>
+                    <span style="display: inline-block; width: 1px; height: 18px; margin: 0 10px; background-color: ${C.cardLine}; vertical-align: -3px;"></span>
+                    <span style="font-family: ${FONT}; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: ${C.ink2};">Campus</span>
+                  </td>
+                  <td align="right" style="vertical-align: middle;">
+                    <span style="display: inline-block; border: 1px solid ${C.cardLine}; border-radius: 999px; padding: 6px 12px; font-family: ${FONT}; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: ${C.brand};">&#9679; Nuevo mensaje</span>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
@@ -150,6 +161,7 @@ export function buildContactEmail({ name, email, phone, company, subject, messag
           </tr>
           <tr>
             <td align="center" style="padding: 18px 8px 36px;">
+              <p style="margin: 0 0 8px; font-family: ${FONT}; font-size: 20px; font-weight: 800; letter-spacing: -0.4px; color: ${C.ink};">Campus<span style="color: ${C.brand};">.</span></p>
               <p style="margin: 0; font-family: ${FONT}; font-size: 12px; line-height: 1.6; color: ${C.ink3};">Mensaje enviado desde el formulario de contacto del Campus Evenor-Tech.<br>Av. de la República Argentina, 27 · 41011 Sevilla</p>
             </td>
           </tr>
