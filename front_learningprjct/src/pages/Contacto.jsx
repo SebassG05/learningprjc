@@ -129,7 +129,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="relative isolate min-h-dvh pb-[22rem]">
+    <div className="relative isolate min-h-dvh pb-[27rem]">
       <ContactBackdrop />
 
       <motion.div
