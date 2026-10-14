@@ -36,6 +36,10 @@ const MISSING = {
   email: 'Escribe tu correo electrónico.',
   password: 'Escribe tu contraseña.',
   confirmPassword: 'Repite la contraseña.',
+  // Formulario de Contacto
+  subject: 'Escribe el asunto o elige un motivo.',
+  message: 'Escribe tu mensaje.',
+  privacy: 'Acepta la información de protección de datos para poder enviar el mensaje.',
 };
 const EMAIL_FORMAT = 'Revisa el correo: debe tener el formato nombre@dominio.com.';
 
