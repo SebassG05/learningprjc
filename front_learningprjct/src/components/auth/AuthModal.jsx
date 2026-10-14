@@ -6,7 +6,7 @@ import { useUser } from '../../context/UserContext.jsx';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AlertCircle } from 'lucide-react';
-import { duration, ease, nudge } from '../../lib/motion';
+import { duration, ease, nudge, stagger, staggerGroup } from '../../lib/motion';
 import AuthDialog from './AuthDialog';
 import TextField from './TextField';
 import PasswordField from './PasswordField';
@@ -109,6 +109,10 @@ const AuthModal = ({ open, onClose }) => {
   const tabsId = useId();
   const reduce = useReducedMotion();
   // Paneles: fundido cruzado con un desplazamiento corto en el sentido del cambio
+  // Entrada escalonada muy corta de los bloques al abrir (solo opacidad con reduced motion)
+  const item = reduce
+    ? { hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: duration.fast } } }
+    : { hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.outExpo } } };
   const panelMotion = (dir) => ({
     initial: { opacity: 0, x: reduce ? 0 : 12 * dir },
     animate: { opacity: 1, x: 0 },
@@ -220,7 +224,7 @@ const AuthModal = ({ open, onClose }) => {
       labelledBy={titleId}
       initialFocusRef={firstFieldRef}
     >
-        <div className="relative mx-auto flex w-full max-w-100 flex-col px-5 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] sm:max-w-none sm:px-10 sm:pb-10 sm:pt-8">
+        <motion.div variants={staggerGroup(stagger.list, 0.04)} initial="hidden" animate="show" className="relative mx-auto flex w-full max-w-100 flex-col px-5 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(1.5rem,env(safe-area-inset-top))] sm:max-w-none sm:px-10 sm:pb-10 sm:pt-8">
           <button
             onClick={handleClose}
             aria-label="Cerrar"
@@ -228,21 +232,24 @@ const AuthModal = ({ open, onClose }) => {
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
-          <div className="flex items-center gap-3 pr-12">
+          <motion.div variants={item} className="flex items-center gap-3 pr-12">
             <img src={LOGO} alt="" className="h-10 w-10 shrink-0 object-contain" />
             <p className="text-footnote text-ink-3">
               El cambio comienza con la <span className="text-brand">formación</span>.
             </p>
-          </div>
+          </motion.div>
+          <motion.div variants={item}>
           <h2 id={titleId} className="relative mt-6 text-title-2 font-bold text-ink">
             <Swap id={tab}>{tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}</Swap>
           </h2>
           <p className="relative mt-2 text-sm text-ink-2">
             <Swap id={tab}>{tab === 'login' ? 'Accede para seguir con tus cursos.' : 'Empieza a formarte hoy. Solo te llevará un minuto.'}</Swap>
           </p>
-          <div className="mt-6">
+          </motion.div>
+          <motion.div variants={item} className="mt-6">
             <AuthTabs value={tab} onChange={setTab} idPrefix={tabsId} />
-          </div>
+          </motion.div>
+          <motion.div variants={item}>
           <AutoHeight className="mt-6">
             <AnimatePresence mode="popLayout" initial={false}>
               {tab === 'login' ? (
@@ -373,11 +380,12 @@ const AuthModal = ({ open, onClose }) => {
               )}
             </AnimatePresence>
           </AutoHeight>
-          <div className="mt-6 flex flex-col gap-6">
+          </motion.div>
+          <motion.div variants={item} className="mt-6 flex flex-col gap-6">
             <AuthDivider />
             <GoogleAuthButton onSuccess={handleGoogleSuccess} />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
     </AuthDialog>
   );
 };

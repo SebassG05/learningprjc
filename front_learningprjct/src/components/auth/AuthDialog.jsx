@@ -3,8 +3,9 @@
 // Escape, fondo inerte, bloqueo de scroll sin salto y vuelta del foco al cerrar. No sabe nada de
 // autenticación: solo abre, cierra y avisa al lienzo del viaje (journey.overlay).
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { overlay, panel } from '../../lib/motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { duration, ease, overlay, panel } from '../../lib/motion';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import { setOverlay } from '../globe/journey/store';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -64,8 +65,24 @@ function restoreFocus(opener) {
   main.focus({ preventScroll: true });
 }
 
+// Aparición de la tarjeta. Escritorio: escala desde el centro (un modal no se ancla a su botón).
+// Móvil: la hoja sube un poco. Reduced motion: solo opacidad, corta.
+const sheet = {
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.outExpo } },
+  exit: { opacity: 0, y: 12, transition: { duration: duration.fast, ease: ease.exit } },
+};
+const fade = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: duration.fast } },
+  exit: { opacity: 0, transition: { duration: duration.fast } },
+};
+
 export default function AuthDialog({ open, onRequestClose, onExited, labelledBy, initialFocusRef, children }) {
   const cardRef = useRef(null);
+  const reduce = useReducedMotion();
+  const desktop = useMediaQuery('(min-width: 640px)');
+  const cardMotion = reduce ? fade : desktop ? { ...panel, initial: { ...panel.initial, y: 0, scale: 0.96 } } : sheet;
   const openerRef = useRef(null);
 
   // Quién lo abrió (antes de que el foco entre en el diálogo). Lo que ya está dentro del diálogo no
@@ -155,7 +172,7 @@ export default function AuthDialog({ open, onRequestClose, onExited, labelledBy,
             aria-labelledby={labelledBy}
             tabIndex={-1}
             className="relative h-[var(--auth-vh,100dvh)] w-full overflow-y-auto overscroll-contain bg-surface/90 backdrop-blur-2xl outline-none sm:h-auto sm:max-h-[calc(100dvh-3rem)] sm:max-w-120 sm:rounded-3xl sm:border sm:border-line sm:bg-surface/80 sm:shadow-overlay"
-            {...panel}
+            {...cardMotion}
           >
             {children}
           </motion.div>
