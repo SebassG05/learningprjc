@@ -6,11 +6,13 @@ import { glideTo } from '../lib/smoothScroll';
 import usePageMeta from '../hooks/usePageMeta';
 import useReviews from '../hooks/useReviews';
 import useReviewForm from '../components/reviews/useReviewForm';
+import useDemoReviews from '../components/reviews/useDemoReviews';
 import ReviewsBackdrop from '../components/reviews/ReviewsBackdrop';
 import ReviewsHero from '../components/reviews/ReviewsHero';
 import ReviewsSummary from '../components/reviews/ReviewsSummary';
 import ReviewComposer from '../components/reviews/ReviewComposer';
 import ReviewStation from '../components/reviews/ReviewStation';
+import ReviewPreview from '../components/reviews/ReviewPreview';
 import ReviewInvite from '../components/reviews/ReviewInvite';
 import ReviewList from '../components/reviews/ReviewList';
 import ReviewsEmptyState from '../components/reviews/ReviewsEmptyState';
@@ -29,7 +31,10 @@ export default function ReviewsPage() {
   const reduce = useReducedMotion();
   // Con sesión, el servidor marca la reseña propia; se vuelve a pedir al entrar o salir
   const viewer = user ? user._id || user.id || user.email : null;
-  const { reviews, loading, loadError, reload, create, update, remove } = useReviews(viewer);
+  const { reviews: loaded, loading, loadError, reload, create, update, remove } = useReviews(viewer);
+  // Solo en desarrollo (?demo=reviews): reseñas de ejemplo en lugar de las cargadas
+  const demo = useDemoReviews();
+  const reviews = demo ?? loaded;
   // Tarjeta y su barra de la huella de voces enlazadas (solo presentación)
   const [activeId, setActiveId] = useState(null);
 
@@ -51,6 +56,15 @@ export default function ReviewsPage() {
     glideTo(card.getBoundingClientRect().top + window.scrollY - 140);
     card.focus({ preventScroll: true });
   }, []);
+
+  // "Escribir la primera reseña": con sesión, al selector de estrellas; sin ella, al acceso
+  const writeFirst = useCallback(() => {
+    if (!user) return openAuth();
+    const first = document.querySelector('input[name="rating"]');
+    if (!first) return;
+    glideTo(first.getBoundingClientRect().top + window.scrollY - 200);
+    first.focus({ preventScroll: true });
+  }, [user]);
 
   // Entrada escalonada corta; con reduced motion, solo fundido
   const group = { hidden: {}, show: { transition: { staggerChildren: stagger.cards, delayChildren: 0.05 } } };
@@ -76,6 +90,8 @@ export default function ReviewsPage() {
             <motion.div variants={item}>
               <ReviewsSummary count={reviewsCount} average={Number(reviewsAvg)} distribution={distribution} loading={loading} />
             </motion.div>
+            {/* Escritorio: la vista previa ocupa el hueco junto al formulario */}
+            <ReviewPreview user={user} form={composer.form} className="hidden max-w-xl lg:block" />
           </div>
 
           <motion.div variants={item} className="lg:col-span-5 lg:self-start">
@@ -99,13 +115,14 @@ export default function ReviewsPage() {
               onActivate={activate}
               onDeactivate={deactivate}
             >
-              <ReviewsEmptyState />
+              <ReviewsEmptyState onWrite={writeFirst} />
             </ReviewList>
           </div>
 
           {hasReviews && (
             <aside aria-label="Huella de voces" className="hidden lg:col-span-4 lg:block">
-              <figure className="sticky top-32">
+              <figure className="relative sticky top-32">
+                <div aria-hidden="true" className="reviews-halo absolute -inset-x-10 -top-6 -z-10 h-72" />
                 <span className="mb-5 block font-mono text-xs uppercase tracking-[0.18em] text-brand-200/80">
                   {VOICES.label(Math.min(items.length, MAX_VOICES))}
                 </span>

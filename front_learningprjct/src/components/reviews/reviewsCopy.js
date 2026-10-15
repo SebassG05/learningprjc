@@ -14,6 +14,7 @@ export const SUBTITLE = 'Opiniones de alumnos del campus. Si ya has hecho un cur
 export const WALL_TITLE = 'Lo que cuentan los alumnos';
 export const LATEST = 'La más reciente';
 export const MINE = 'Tu reseña';
+export const PREVIEW = 'Así se verá tu reseña';
 export const NO_TEXT = 'Dejó su puntuación sin comentario.';
 
 export const EMPTY = {
@@ -21,6 +22,7 @@ export const EMPTY = {
   body: 'Sé la primera persona en contar cómo te fue. Mientras tanto, echa un vistazo a los cursos.',
   waiting: 'Esperando la primera voz',
   cta: 'Ver cursos',
+  write: 'Escribir la primera reseña',
 };
 
 export const INVITE = {
@@ -76,5 +78,5 @@ export const VOICES = {
 
 export const SUMMARY_EMPTY = {
   title: 'Sin reseñas todavía',
-  body: 'La media aparecerá con la primera.',
+  body: 'La media aparecerá con la primera. ¿Será la tuya?',
 };

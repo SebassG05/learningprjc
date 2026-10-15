@@ -36,6 +36,10 @@ export default function ReviewStation({ rating = 0, className = '', children }) 
           transition={{ duration: duration.base }}
         />
       </div>
+      {/* Destello de llegada: una pasada de luz sobre el cristal */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
+        <div className="reviews-sweep absolute inset-0 opacity-40" style={{ animationDelay: '0.55s' }} />
+      </div>
       <div className="relative p-6 sm:p-8">{children}</div>
     </div>
   );

@@ -423,6 +423,22 @@
     }
 }
 
+/* Anillo de luz del avatar: gira solo mientras se pasa por la tarjeta */
+.reviews-ring {
+    background: conic-gradient(from 0deg, transparent, rgb(201 236 183 / 0.9), transparent 40%, rgb(246 215 167 / 0.7), transparent 75%);
+}
+
+.group\/card:hover .reviews-ring,
+.group\/card:focus-visible .reviews-ring {
+    animation: reviews-spin 2.4s linear infinite;
+}
+
+@keyframes reviews-spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
 /* Fuera de pantalla, las animaciones de la decoración se detienen */
 .reviews-paused,
 .reviews-paused * {
@@ -451,6 +467,8 @@
     }
 
     .reviews-caret,
+    .reviews-ring,
+    .group\/card:hover .reviews-ring,
     .reviews-aurora,
     .reviews-twinkle,
     .reviews-sweep {

@@ -4,20 +4,21 @@
 // Cada barra está enlazada a su tarjeta (`activeId`). "Respira" muy despacio con un único motion
 // value: sin re-render por frame, solo transform y opacidad; se pausa fuera de pantalla o con la
 // pestaña oculta y queda quieta con reduced motion. Con `waiting`, línea plana y un cursor.
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { spring } from '../../lib/motion';
 
 export const MAX_VOICES = 40;
-const STEP = 9; // ancho de barra + hueco
-const BAR = 5;
-const H = 120;
+const MIN_SLOTS = 16; // con pocas reseñas la fila no se queda medio vacía
+const STEP = 12; // ancho de barra + hueco
+const BAR = 7;
+const H = 180;
 const MID = H / 2;
 const BREATH = 9; // segundos por ciclo
-const WIDTH = MAX_VOICES * STEP - (STEP - BAR);
+const widthFor = (slots) => slots * STEP - (STEP - BAR);
 
 // Altura por longitud del texto (raíz: los textos muy largos no lo aplastan todo)
-const heightOf = (text) => 14 + Math.min(1, Math.sqrt(text.length / 420)) * (H - 24);
+const heightOf = (text) => 22 + Math.min(1, Math.sqrt(text.length / 320)) * (H - 40);
 
 function useBreath(ref, still) {
   const t = useMotionValue(0);
@@ -39,7 +40,7 @@ function useBreath(ref, still) {
   return t;
 }
 
-function Voice({ review, index, offset, t, active, onActivate, onDeactivate, onSelect }) {
+function Voice({ review, index, offset, t, gradientId, active, onActivate, onDeactivate, onSelect }) {
   const scaleY = useTransform(t, (v) => 1 + 0.07 * Math.sin(v + index * 0.6));
   const h = heightOf(review.text);
   const x = offset + index * STEP;
@@ -53,19 +54,20 @@ function Voice({ review, index, offset, t, active, onActivate, onDeactivate, onS
           width={BAR}
           height={h}
           rx={BAR / 2}
-          fill="var(--color-brand-300)"
+          fill={`url(#${gradientId})`}
           style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: active ? 1 : 0.25 + review.rating * 0.11 }}
-          transition={spring.gentle}
+          // Al entrar, las barras suben en cadena; después, la opacidad responde al instante
+          transition={{ scaleY: { ...spring.gentle, delay: 0.3 + index * 0.025 }, opacity: { duration: 0.25 } }}
         />
       </motion.g>
       {/* Marca de la barra activa: un punto sobre ella */}
       <motion.circle
         cx={x + BAR / 2}
-        cy={MID - h / 2 - 9}
-        r="2.5"
-        fill="var(--color-brand-200)"
+        cy={MID - h / 2 - 11}
+        r="3"
+        fill="var(--color-dawn)"
         initial={false}
         animate={{ opacity: active ? 1 : 0 }}
         transition={{ duration: 0.2 }}
@@ -90,23 +92,33 @@ export default function ReviewsVoiceprint({ reviews = [], waiting = false, activ
   const ref = useRef(null);
   const reduce = useReducedMotion();
   const t = useBreath(ref, reduce || waiting);
+  const gradientId = `voices-${useId().replace(/:/g, '')}`;
 
   if (waiting) {
+    const WIDTH = widthFor(MIN_SLOTS * 2);
     return (
-      <svg ref={ref} viewBox={`-4 0 ${WIDTH + 8} ${H}`} className={`w-full ${className}`} aria-hidden="true" focusable="false">
+      <svg ref={ref} viewBox={`-4 0 ${WIDTH + 8} ${H}`} className={`w-full drop-shadow-[0_0_12px_rgb(161_219_135/0.45)] ${className}`} aria-hidden="true" focusable="false">
         <line x1="-4" x2={WIDTH + 4} y1={MID} y2={MID} stroke="var(--color-brand-300)" strokeOpacity="0.35" strokeDasharray="2 6" strokeLinecap="round" />
-        <rect x={WIDTH / 2 - 1.5} y={MID - 18} width="3" height="36" rx="1.5" fill="var(--color-brand-300)" className="reviews-caret" />
+        <rect x={WIDTH / 2 - 2} y={MID - 26} width="4" height="52" rx="2" fill="var(--color-brand-200)" className="reviews-caret" />
       </svg>
     );
   }
 
-  // De la más antigua a la más reciente, alineadas a la derecha: la nueva entra por ese lado y la
-  // escala no cambia con el número de reseñas
+  // De la más antigua a la más reciente, alineadas a la derecha: la nueva entra por ese lado
   const voices = reviews.slice(0, MAX_VOICES).reverse();
-  const offset = (MAX_VOICES - voices.length) * STEP;
+  const slots = Math.max(MIN_SLOTS, voices.length);
+  const WIDTH = widthFor(slots);
+  const offset = (slots - voices.length) * STEP;
 
   return (
-    <svg ref={ref} viewBox={`-4 0 ${WIDTH + 8} ${H}`} className={`w-full ${className}`} aria-hidden="true" focusable="false">
+    <svg ref={ref} viewBox={`-4 0 ${WIDTH + 8} ${H}`} className={`w-full drop-shadow-[0_0_14px_rgb(161_219_135/0.4)] ${className}`} aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="var(--color-brand-100)" />
+          <stop offset="0.5" stopColor="var(--color-brand-300)" />
+          <stop offset="1" stopColor="var(--color-brand-500)" />
+        </linearGradient>
+      </defs>
       <line x1="-4" x2={offset - 2} y1={MID} y2={MID} stroke="var(--color-brand-300)" strokeOpacity="0.3" strokeDasharray="2 6" strokeLinecap="round" />
       <line x1={offset - 2} x2={WIDTH + 4} y1={MID} y2={MID} stroke="var(--color-line-strong)" />
       {voices.map((review, i) => (
@@ -116,6 +128,7 @@ export default function ReviewsVoiceprint({ reviews = [], waiting = false, activ
           index={i}
           offset={offset}
           t={t}
+          gradientId={gradientId}
           active={review.id === activeId}
           onActivate={onActivate}
           onDeactivate={onDeactivate}
