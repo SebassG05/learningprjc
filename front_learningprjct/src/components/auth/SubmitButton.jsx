@@ -3,9 +3,9 @@
 import { Loader2 } from 'lucide-react';
 import Button from '../ui/Button';
 
-export default function SubmitButton({ loading, loadingText, children }) {
+export default function SubmitButton({ loading, loadingText, disabled = false, children, ...props }) {
   return (
-    <Button type="submit" size="lg" className="w-full" disabled={loading} aria-busy={loading || undefined}>
+    <Button type="submit" size="lg" className="w-full" disabled={loading || disabled} aria-busy={loading || undefined} {...props}>
       {loading && <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />}
       <span>{loading ? loadingText : children}</span>
     </Button>
