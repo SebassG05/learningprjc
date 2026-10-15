@@ -18,7 +18,7 @@ export default function ReviewsEmptyState() {
       </div>
       <Button variant="secondary" to="/cursos">
         {EMPTY.cta}
-        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
       </Button>
     </div>
   );

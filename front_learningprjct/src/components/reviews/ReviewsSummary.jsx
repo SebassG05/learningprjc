@@ -44,7 +44,7 @@ export default function ReviewsSummary({ count, average, distribution, loading, 
       <h2 id="reviews-summary-title" className="sr-only">
         Valoración de los alumnos
       </h2>
-      <div className="grid grid-cols-1 items-end gap-x-12 gap-y-8 sm:grid-cols-[auto_1fr]">
+      <div className="grid grid-cols-1 items-end gap-x-12 gap-y-8 sm:grid-cols-[auto_1fr] lg:grid-cols-1 xl:grid-cols-[auto_1fr]">
         <div className="flex items-end gap-5" aria-busy={loading || undefined}>
           <p className="font-display text-display font-bold tabular-nums text-ink">
             {loading || empty ? (
