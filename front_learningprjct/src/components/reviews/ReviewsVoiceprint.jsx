@@ -5,8 +5,8 @@
 // value: sin re-render por frame, solo transform y opacidad; se pausa fuera de pantalla o con la
 // pestaña oculta y queda quieta con reduced motion. Con `waiting`, línea plana y un cursor.
 import { useEffect, useId, useRef } from 'react';
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
-import { spring } from '../../lib/motion';
+import { AnimatePresence, animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
+import { duration, ease, spring } from '../../lib/motion';
 
 export const MAX_VOICES = 40;
 const MIN_SLOTS = 16; // con pocas reseñas la fila no se queda medio vacía
@@ -46,7 +46,10 @@ function Voice({ review, index, offset, t, gradientId, active, onActivate, onDea
   const x = offset + index * STEP;
 
   return (
-    <g>
+    <motion.g
+      style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+      exit={{ scaleY: 0, opacity: 0, transition: { duration: duration.slow, ease: ease.exit } }}
+    >
       <motion.g style={{ scaleY, transformBox: 'fill-box', transformOrigin: 'center' }}>
         <motion.rect
           x={x}
@@ -84,7 +87,7 @@ function Voice({ review, index, offset, t, gradientId, active, onActivate, onDea
         onPointerLeave={() => onDeactivate(review.id)}
         onClick={() => onSelect(review.id)}
       />
-    </g>
+    </motion.g>
   );
 }
 
@@ -121,6 +124,7 @@ export default function ReviewsVoiceprint({ reviews = [], waiting = false, activ
       </defs>
       <line x1="-4" x2={offset - 2} y1={MID} y2={MID} stroke="var(--color-brand-300)" strokeOpacity="0.3" strokeDasharray="2 6" strokeLinecap="round" />
       <line x1={offset - 2} x2={WIDTH + 4} y1={MID} y2={MID} stroke="var(--color-line-strong)" />
+      <AnimatePresence>
       {voices.map((review, i) => (
         <Voice
           key={review.id}
@@ -135,6 +139,7 @@ export default function ReviewsVoiceprint({ reviews = [], waiting = false, activ
           onSelect={onSelect}
         />
       ))}
+      </AnimatePresence>
     </svg>
   );
 }

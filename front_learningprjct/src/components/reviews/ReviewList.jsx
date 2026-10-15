@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // Muro de reseñas: la más reciente arriba a gran tamaño y el resto en dos columnas (masonry con CSS
 // columns: el orden del DOM y del tabulador sigue siendo el de lectura). Mientras carga, esqueletos con
-// la misma silueta para que nada salte. Solo las tarjetas que entran en pantalla se animan.
-import { motion, useReducedMotion } from 'framer-motion';
+// la misma silueta para que nada salte. Solo las tarjetas que entran en pantalla se animan. Al borrar
+// una, primero se desvanece encogiendo en su sitio y después el resto cierra el hueco con una animación
+// de layout (transform), sin saltos; con reduced motion, solo un fundido.
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import ReviewCard from './ReviewCard';
 import { MAX_VOICES } from './ReviewsVoiceprint';
 import { WALL_TITLE } from './reviewsCopy';
-import { duration, ease, inView, stagger } from '../../lib/motion';
+import { duration, ease, inView, spring, stagger } from '../../lib/motion';
 
 const SKELETON_HEIGHTS = ['h-44', 'h-56', 'h-40', 'h-52'];
 
@@ -29,12 +31,20 @@ export default function ReviewList({ reviews, loading, error, activeId, onActiva
     initial: { opacity: 0, y: reduce ? 0 : 16 },
     whileInView: { opacity: 1, y: 0 },
     viewport: inView,
-    transition: { duration: reduce ? duration.fast : duration.scene, ease: ease.outExpo, delay: reduce ? 0 : (i % 4) * stagger.cards },
+    transition: {
+      duration: reduce ? duration.fast : duration.scene,
+      ease: ease.outExpo,
+      delay: reduce ? 0 : (i % 4) * stagger.cards,
+      layout: spring.gentle,
+    },
   });
+  const leave = reduce
+    ? { opacity: 0, transition: { duration: duration.fast } }
+    : { opacity: 0, scale: 0.92, y: -8, transition: { duration: duration.slow, ease: ease.exit } };
 
   return (
     <section aria-labelledby="reviews-wall-title" aria-busy={loading || undefined}>
-      <h2 id="reviews-wall-title" className="eyebrow mb-6">
+      <h2 id="reviews-wall-title" tabIndex={-1} className="eyebrow mb-6 outline-none">
         {WALL_TITLE}
       </h2>
       {loading ? (
@@ -49,10 +59,14 @@ export default function ReviewList({ reviews, loading, error, activeId, onActiva
       ) : reviews.length === 0 ? (
         children
       ) : (
-        <ul aria-labelledby="reviews-wall-title" className="gap-x-6 md:columns-2">
+        <ul aria-labelledby="reviews-wall-title" className="relative gap-x-6 md:columns-2">
+          {/* Primero se va la tarjeta, en su sitio; después las demás cierran el hueco */}
+          <AnimatePresence>
           {reviews.map((review, i) => (
             <motion.li
               key={review.id}
+              layout={reduce ? false : 'position'}
+              exit={leave}
               {...enter(i)}
               className={i === 0 ? 'mb-6 [column-span:all]' : 'mb-2 break-inside-avoid'}
             >
@@ -67,6 +81,7 @@ export default function ReviewList({ reviews, loading, error, activeId, onActiva
               />
             </motion.li>
           ))}
+          </AnimatePresence>
         </ul>
       )}
     </section>

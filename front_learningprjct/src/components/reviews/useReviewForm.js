@@ -14,6 +14,15 @@ const without = (obj, key) => {
 
 // Foco tras pintar (el elemento puede aparecer en este mismo render)
 const focusSoon = (selector) => requestAnimationFrame(() => document.querySelector(selector)?.focus());
+// Igual, pero sin mover la página (tras borrar no hay que llevar a nadie a otro sitio)
+const focusQuiet = (selector) => requestAnimationFrame(() => document.querySelector(selector)?.focus({ preventScroll: true }));
+
+// Tras borrar desde una tarjeta, el foco pasa a la tarjeta de al lado (o al título del muro)
+const neighbourOf = (id) => {
+  const item = document.getElementById(`review-${id}`)?.closest('li');
+  const next = (item?.nextElementSibling ?? item?.previousElementSibling)?.querySelector('article');
+  return next ? `#${CSS.escape(next.id)}` : '#reviews-wall-title';
+};
 
 // Estado del panel "Tu turno" y de las acciones de tus reseñas: escribir (una cada 24 h), editar
 // cualquiera de las tuyas o borrarla. Las acciones son estables (useCallback + ref) para que las
@@ -123,10 +132,12 @@ export default function useReviewForm({ user, create, update, remove, reload, bl
     focusSoon(`#${scope}-${review.id}-delete`);
   }, []);
 
-  const confirmDelete = useCallback(async (review) => {
+  const confirmDelete = useCallback(async (review, scope) => {
     if (latest.current.deleting) return;
     setDeleting(true);
     setSendError(null);
+    // Se decide antes de borrar, mientras la tarjeta y sus vecinas siguen en el DOM
+    const focusTarget = scope === 'card' ? neighbourOf(review.id) : '#composer-title';
     try {
       await remove(review.id);
       setConfirmingId(null);
@@ -135,7 +146,7 @@ export default function useReviewForm({ user, create, update, remove, reload, bl
         setForm(EMPTY);
       }
       flash(OWN.deleted);
-      focusSoon('#composer-title');
+      focusQuiet(focusTarget);
     } catch (err) {
       fail(err, OWN.deleteError);
     } finally {
