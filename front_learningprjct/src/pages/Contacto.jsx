@@ -22,34 +22,13 @@ import LocationCard from '../components/contact/LocationCard';
 import ContactBackdrop from '../components/contact/ContactBackdrop';
 import { duration, ease, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
+import usePageMeta from '../hooks/usePageMeta';
 
 const PAGE_TITLE = 'Contacto · Evenor-Tech Campus';
 const PAGE_DESCRIPTION =
   'Resuelve tus dudas sobre cursos, matrícula, acceso a la plataforma o certificados. Escribe al equipo del campus de Evenor-Tech en Sevilla.';
 
 const IDLE = { submitted: false, loading: false, error: null, successMessage: null, validationErrors: {} };
-
-// Título y descripción de la ruta; se restauran al salir
-function usePageMeta(title, description) {
-  useEffect(() => {
-    const prevTitle = document.title;
-    let meta = document.querySelector('meta[name="description"]');
-    const created = !meta;
-    if (created) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'description');
-      document.head.appendChild(meta);
-    }
-    const prevDescription = meta.getAttribute('content');
-    document.title = title;
-    meta.setAttribute('content', description);
-    return () => {
-      document.title = prevTitle;
-      if (created) meta.remove();
-      else meta.setAttribute('content', prevDescription ?? '');
-    };
-  }, [title, description]);
-}
 
 const Contact = () => {
   const location = useLocation();
