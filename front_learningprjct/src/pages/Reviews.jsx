@@ -1,11 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import { Star, CheckCircle } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
-import { duration, ease, spring } from '../lib/motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { duration, ease, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
-import { Sparkles } from 'lucide-react';
+import usePageMeta from '../hooks/usePageMeta';
+import ReviewsBackdrop from '../components/reviews/ReviewsBackdrop';
+import ReviewsHero from '../components/reviews/ReviewsHero';
+import ReviewsSummary from '../components/reviews/ReviewsSummary';
+import ReviewComposer from '../components/reviews/ReviewComposer';
+import ReviewInvite from '../components/reviews/ReviewInvite';
+import ReviewList from '../components/reviews/ReviewList';
+import ReviewsEmptyState from '../components/reviews/ReviewsEmptyState';
+import ReviewsOrbit, { MAX_SATELLITES } from '../components/reviews/ReviewsOrbit';
+import { ratingDistribution, toReviewViewModel } from '../components/reviews/reviewFormat';
+import { ORBIT_HINT, PAGE_DESCRIPTION, PAGE_TITLE } from '../components/reviews/reviewsCopy';
+
+const LOAD_ERROR = 'No se pudieron cargar las reseñas';
+const SEND_ERROR = 'No se pudo enviar la reseña';
 
 const fetchReviews = async () => {
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
@@ -29,24 +41,31 @@ const postReview = async (review, token) => {
   return res.json();
 };
 
+// Abre el mismo diálogo de acceso que el botón del header
+const openAuth = () => {
+  const authButton = document.querySelector('[data-auth-trigger]');
+  if (authButton) authButton.click();
+};
+
 export default function ReviewsPage() {
   const { user } = useUser();
   const navigate = useNavigate();
+  const reduce = useReducedMotion();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [form, setForm] = useState({ description: '', rating: 0 });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  // Tarjeta y satélite enlazados (solo presentación)
+  const [activeId, setActiveId] = useState(null);
 
-  // Animación de entrada
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  usePageMeta(PAGE_TITLE, PAGE_DESCRIPTION);
 
   useEffect(() => {
     fetchReviews()
       .then(data => setReviews(data))
-      .catch(() => setError('No se pudieron cargar las reseñas'))
+      .catch(() => setError(LOAD_ERROR))
       .finally(() => setLoading(false));
   }, []);
 
@@ -83,7 +102,7 @@ export default function ReviewsPage() {
         }, 100); // Espera breve para asegurar que la navegación ocurrió
       }, 1000);
     } catch {
-      setError('No se pudo enviar la reseña');
+      setError(SEND_ERROR);
     } finally {
       setSubmitting(false);
     }
@@ -93,175 +112,90 @@ export default function ReviewsPage() {
   const reviewsCount = reviews.length;
   const reviewsAvg = reviewsCount > 0 ? (reviews.reduce((acc, r) => acc + (r.rating || 0), 0) / reviewsCount).toFixed(2) : '0.00';
 
+  // Presentación: una sola forma para tarjetas y órbita
+  const items = useMemo(() => reviews.map(toReviewViewModel), [reviews]);
+  const distribution = useMemo(() => ratingDistribution(items), [items]);
+
+  const activate = useCallback(id => setActiveId(id), []);
+  const deactivate = useCallback(id => setActiveId(current => (current === id ? null : current)), []);
+  const revealCard = useCallback(id => {
+    const card = document.getElementById(`review-${id}`);
+    if (!card) return;
+    glideTo(card.getBoundingClientRect().top + window.scrollY - 140);
+    card.focus({ preventScroll: true });
+  }, []);
+
+  // Entrada escalonada corta; con reduced motion, solo fundido
+  const group = { hidden: {}, show: { transition: { staggerChildren: stagger.cards, delayChildren: 0.05 } } };
+  const item = {
+    hidden: { opacity: 0, y: reduce ? 0 : 16 },
+    show: { opacity: 1, y: 0, transition: { duration: reduce ? duration.fast : duration.scene, ease: ease.outExpo } },
+  };
+
+  const hasReviews = !loading && !error && items.length > 0;
+
   return (
-    <div className="max-w-3xl mx-auto py-12 px-2">
-      <div className="flex flex-col items-center justify-center text-center mb-8">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={isInView ? { scale: 1, opacity: 1 } : {}}
-          transition={{ ...spring.gentle, delay: 0.1 }}
-          className="inline-flex items-center px-4 py-2 bg-surface-2 border border-line rounded-full mb-4"
-        >
-          <Sparkles className="w-4 h-4 text-brand mr-2" />
-          <span className="text-xs sm:text-sm font-semibold text-brand">
-            Reseñas
-          </span>
-        </motion.div>
-      </div>
-      {/* Fondo decorativo animado */}
-      <motion.div
-        ref={sectionRef}
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: duration.scene, ease: ease.outExpo }}
-        className="bg-surface/80 backdrop-blur-md border border-line rounded-3xl shadow-card px-4 sm:px-10 py-10 relative z-10"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: duration.scene, delay: 0.1, ease: ease.outExpo }}
-          className="text-center"
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-ink mb-4">
-            Califica nuestros <span className="text-brand">cursos</span>
-          </h1>
-          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8">
-            Tu opinión ayuda a otros estudiantes a elegir mejor y nos permite mejorar la plataforma.
-          </p>
-        </motion.div>
-        <div className="flex justify-center mb-8">
-          <div className="w-full max-w-xl bg-surface border border-line rounded-2xl px-8 py-4 flex items-center justify-between shadow">
-            <span className="text-brand font-bold text-lg">
-              {reviewsCount}
-              <span className="text-gray-300 font-normal text-base ml-2">reseñas publicadas</span>
-            </span>
-            <span className="text-brand font-bold text-lg">
-              {reviewsAvg} <span className="text-gray-300 font-normal text-base">/ 5 media</span>
-            </span>
+    <div className="relative isolate min-h-dvh pb-32">
+      <ReviewsBackdrop />
+
+      <motion.div variants={group} initial="hidden" animate="show" className="mx-auto w-full max-w-wide px-gutter pt-8 sm:pt-12 lg:pt-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-x-16 xl:gap-x-24">
+          <div className="flex flex-col gap-12 lg:col-span-7 lg:gap-16 lg:pt-6">
+            <motion.div variants={item}>
+              <ReviewsHero />
+            </motion.div>
+            <motion.div variants={item}>
+              <ReviewsSummary count={reviewsCount} average={Number(reviewsAvg)} distribution={distribution} loading={loading} />
+            </motion.div>
           </div>
-        </div>
-        {user ? (
-          <motion.form
-            onSubmit={handleSubmit}
-            className="bg-surface rounded-xl p-6 mb-10 shadow-card"
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.3 }}
-          >
-            <h2 className="text-xl font-semibold mb-4 text-brand">Escribe tu reseña</h2>
-            <div className="mb-3">
-              <label className="block text-sm mb-1 text-gray-300">Email</label>
-              <input type="email" value={user.email} disabled className="w-full px-3 py-2 rounded bg-surface border border-line text-gray-400 cursor-not-allowed" />
-            </div>
-            <div className="mb-3">
-              <label className="block text-sm mb-1 text-gray-300">Reseña</label>
-              <textarea name="description" value={form.description} onChange={handleChange} rows={3} required className="w-full px-3 py-2 rounded bg-surface border border-line text-ink" placeholder="¿Qué te ha parecido la plataforma?" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1 text-gray-300">Puntuación</label>
-              <div className="flex gap-1">
-                {[1,2,3,4,5].map(i => (
-                  <motion.button
-                    type="button"
-                    key={i}
-                    onClick={() => handleRating(i)}
-                    className="focus:outline-none"
-                    whileHover={{ scale: 1.2, rotate: -8 }}
-                    whileTap={{ scale: 1.35, rotate: 8 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  >
-                    <Star
-                      className={`w-7 h-7 ${i <= form.rating ? 'text-brand' : 'text-gray-600'}`}
-                      fill={i <= form.rating ? '#a1db87' : 'none'}
-                      style={{ filter: i <= form.rating ? 'drop-shadow(0 0 6px #a1db87aa)' : 'none', transition: 'filter 0.2s' }}
-                    />
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-            {error && <div className="text-red-400 mb-2">{error}</div>}
-            {success && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                transition={{ duration: duration.slow, ease: ease.outExpo }}
-                className="flex items-center justify-center gap-2 p-4 mb-4 rounded-xl bg-surface-2 border border-line shadow-card text-brand text-base font-semibold"
-              >
-                <CheckCircle className="w-6 h-6 text-brand" />
-                ¡Reseña publicada con éxito!
-              </motion.div>
+
+          <motion.div variants={item} className="relative rounded-3xl glass-panel p-6 sm:p-8 lg:col-span-5 lg:self-start">
+            {user ? (
+              <ReviewComposer
+                user={user}
+                form={form}
+                onTextChange={handleChange}
+                onRate={handleRating}
+                onSubmit={handleSubmit}
+                submitting={submitting}
+                error={error === SEND_ERROR ? error : null}
+                success={success}
+              />
+            ) : (
+              <ReviewInvite onAccess={openAuth} />
             )}
-            <button type="submit" disabled={submitting || !form.description || !form.rating} className="cursor-pointer w-full py-2 rounded bg-brand text-on-brand font-bold hover:bg-brand-300 transition-colors disabled:opacity-60">{submitting ? 'Enviando...' : 'Publicar reseña'}</button>
-          </motion.form>
-        ) : (
-          <motion.div
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface via-surface to-surface border border-line p-8 mb-10 shadow-card"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3, duration: duration.slow, ease: ease.outExpo }}
-          >
-            {/* Efecto de brillo de fondo */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand/5 to-transparent animate-pulse" />
-            
-            <div className="relative z-10 text-center space-y-6">
-              {/* Icono decorativo */}
-              <div className="flex justify-center">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-brand/20 blur-xl rounded-full" />
-                  <div className="relative bg-gradient-to-br from-brand/10 to-brand/5 p-4 rounded-full border border-line">
-                    <svg className="w-12 h-12 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Título principal */}
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
-                  Comparte tu experiencia
-                </h3>
-                <p className="text-gray-400 text-base leading-relaxed max-w-md mx-auto">
-                  Tu opinión es valiosa para nuestra comunidad. Únete para compartir tus reseñas y ayudar a otros estudiantes.
-                </p>
-              </div>
-
-              {/* Botón de acción */}
-              <motion.button
-                onClick={() => {
-                  const authButton = document.querySelector('[data-auth-trigger]');
-                  if (authButton) authButton.click();
-                }}
-                className="inline-flex items-center gap-3 px-8 py-3.5 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl shadow-card hover:shadow-brand/25 transition-all duration-300 active:scale-95"
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                </svg>
-                <span>Iniciar sesión o registrarse</span>
-              </motion.button>
-
-              {/* Beneficios */}
-              <div className="flex items-center justify-center gap-6 pt-4 text-sm text-gray-500">
-                <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-brand" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Rápido y seguro
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-brand" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  100% gratuito
-                </div>
-              </div>
-            </div>
           </motion.div>
-        )}
-        {/* Aquí no se muestran las reseñas */}
+        </div>
+
+        <div className="mt-20 grid grid-cols-1 gap-12 lg:mt-28 lg:grid-cols-12 lg:gap-x-16 xl:gap-x-24">
+          <div className={hasReviews || loading ? 'lg:col-span-8' : 'lg:col-span-12'}>
+            <ReviewList
+              reviews={items}
+              loading={loading}
+              error={error === LOAD_ERROR ? error : null}
+              activeId={activeId}
+              onActivate={activate}
+              onDeactivate={deactivate}
+            >
+              <ReviewsEmptyState />
+            </ReviewList>
+          </div>
+
+          {hasReviews && (
+            <aside aria-label="Órbita de reseñas" className="hidden lg:col-span-4 lg:block">
+              <figure className="sticky top-32 -mx-6 xl:-mx-10">
+                <ReviewsOrbit reviews={items} activeId={activeId} onActivate={activate} onDeactivate={deactivate} onSelect={revealCard} />
+                <figcaption className="mx-6 mt-6 max-w-xs text-sm text-ink-2 xl:mx-10">
+                  <span className="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-brand-200/80">
+                    {`${Math.min(items.length, MAX_SATELLITES)} señales en órbita`}
+                  </span>
+                  {ORBIT_HINT}
+                  {items.length > MAX_SATELLITES && ` Se muestran las ${MAX_SATELLITES} más recientes.`}
+                </figcaption>
+              </figure>
+            </aside>
+          )}
+        </div>
       </motion.div>
     </div>
   );
