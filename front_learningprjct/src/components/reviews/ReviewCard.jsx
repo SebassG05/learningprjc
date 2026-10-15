@@ -5,7 +5,7 @@
 import { memo } from 'react';
 import StarRating from './StarRating';
 import { formatFullDate, formatRelativeDate, starsLabel } from './reviewFormat';
-import { LATEST, NO_TEXT } from './reviewsCopy';
+import { LATEST, MINE, NO_TEXT } from './reviewsCopy';
 
 const AVATAR_TONES = [
   'bg-brand-400/15 text-brand-200',
@@ -26,7 +26,7 @@ function Avatar({ initials, tone }) {
 }
 
 function ReviewCard({ review, featured = false, active = false, linked = false, onActivate, onDeactivate }) {
-  const { id, name, initials, tone, rating, text, date } = review;
+  const { id, name, initials, tone, rating, text, date, mine } = review;
   // Destacada: cita grande en display si es breve; si es larga, cuerpo amplio y legible
   const quote = featured && text.length <= 180;
   const enter = linked ? () => onActivate(id) : undefined;
@@ -59,9 +59,14 @@ function ReviewCard({ review, featured = false, active = false, linked = false, 
       />
 
       <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <StarRating value={rating} label={starsLabel(rating)} size={featured ? 'h-5 w-5' : 'h-4 w-4'} />
           {featured && <span className="eyebrow">{LATEST}</span>}
+          {mine && (
+            <span className="rounded-full bg-brand-400/15 px-2.5 py-0.5 text-xs font-semibold text-brand-200 ring-1 ring-inset ring-brand-400/30">
+              {MINE}
+            </span>
+          )}
         </div>
         {linked && (
           // Su barra en miniatura (solo donde se ve la huella de voces)

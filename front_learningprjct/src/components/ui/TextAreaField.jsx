@@ -3,7 +3,7 @@
 // Crece con el contenido donde el navegador lo permite (field-sizing) y si no, tamaño fijo cómodo.
 import { forwardRef } from 'react';
 import { AlertCircle } from 'lucide-react';
-import { inputClass } from '../ui/Field';
+import { inputClass } from './Field';
 
 const errorClass = 'border-danger! hover:border-danger! focus:border-danger! focus:ring-danger/20!';
 

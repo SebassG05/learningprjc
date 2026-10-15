@@ -1,19 +1,23 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // Formulario de nueva reseña (solo presentación). Los datos, la validación y el envío siguen en la
-// página: aquí llegan como props. Mismos campos (`description`, `rating`), mismas reglas: el botón se
-// habilita con ambos rellenos. El error general se anuncia (role="alert") con un desplazamiento leve.
+// página: aquí llegan como props. El botón se habilita con puntuación y texto. Los errores del
+// servidor van junto a su campo (aria-invalid / aria-describedby); el general se anuncia
+// (role="alert") con un desplazamiento leve. Contador solo cerca del límite.
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import TextAreaField from '../contact/TextAreaField';
+import TextAreaField from '../ui/TextAreaField';
 import SubmitButton from '../auth/SubmitButton';
 import StarRatingInput from './StarRatingInput';
 import ReviewSent from './ReviewSent';
 import { COMPOSER } from './reviewsCopy';
+import { MAX_TEXT } from './reviewFormat';
 import { nudge } from '../../lib/motion';
 
-export default function ReviewComposer({ user, form, onTextChange, onRate, onSubmit, submitting, error, success }) {
+export default function ReviewComposer({ user, form, onTextChange, onRate, onSubmit, submitting, error, fieldErrors = {}, success, ownReview, onShowOwn }) {
   const reduce = useReducedMotion();
   const incomplete = !form.description || !form.rating;
+  const length = form.description.length;
+  const nearLimit = length > MAX_TEXT * 0.8;
 
   return (
     <form onSubmit={onSubmit} aria-labelledby="composer-title" className="flex flex-col gap-6">
@@ -26,6 +30,14 @@ export default function ReviewComposer({ user, form, onTextChange, onRate, onSub
           {COMPOSER.as} <span className="font-semibold text-ink">{user.name || user.email}</span>
           {user.name && user.email && <span className="text-ink-3"> · {user.email}</span>}
         </p>
+        {ownReview && (
+          <p className="text-sm text-ink-2">
+            {COMPOSER.own}{' '}
+            <button type="button" onClick={() => onShowOwn(ownReview.id)} className="font-semibold text-brand-300 underline-offset-4 hover:underline focus-visible:underline">
+              {COMPOSER.showOwn}
+            </button>
+          </p>
+        )}
       </div>
 
       <StarRatingInput
@@ -35,6 +47,7 @@ export default function ReviewComposer({ user, form, onTextChange, onRate, onSub
         value={form.rating}
         onChange={onRate}
         disabled={submitting}
+        error={fieldErrors.rating}
       />
 
       <TextAreaField
@@ -45,8 +58,15 @@ export default function ReviewComposer({ user, form, onTextChange, onRate, onSub
         onChange={onTextChange}
         placeholder={COMPOSER.placeholder}
         required
+        maxLength={MAX_TEXT}
         readOnly={submitting}
+        error={fieldErrors.description}
       />
+      {nearLimit && (
+        <p className="-mt-4 text-right text-sm tabular-nums text-ink-2" aria-live="polite">
+          {COMPOSER.count(length, MAX_TEXT)}
+        </p>
+      )}
 
       <AnimatePresence initial={false}>
         {error && (

@@ -2,6 +2,7 @@
 
 const LOCALE = 'es-ES';
 export const MAX_RATING = 5;
+export const MAX_TEXT = 2000; // igual que el límite del servidor
 
 // Forma única que reciben las tarjetas y la huella de voces, venga la reseña del GET o del POST.
 // El POST responde { message, review }; la página la guarda tal cual en la lista.
@@ -19,6 +20,8 @@ export function toReviewViewModel(item, index = 0) {
     rating,
     text,
     date: date && !Number.isNaN(date.getTime()) ? date : null,
+    // El servidor marca así las reseñas del usuario con sesión
+    mine: raw.mine === true,
   };
 }
 

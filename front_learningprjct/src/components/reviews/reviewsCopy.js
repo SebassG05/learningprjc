@@ -13,6 +13,7 @@ export const SUBTITLE = 'Opiniones de alumnos del campus. Si ya has hecho un cur
 
 export const WALL_TITLE = 'Lo que cuentan los alumnos';
 export const LATEST = 'La más reciente';
+export const MINE = 'Tu reseña';
 export const NO_TEXT = 'Dejó su puntuación sin comentario.';
 
 export const EMPTY = {
@@ -41,6 +42,9 @@ export const COMPOSER = {
   submit: 'Publicar reseña',
   sending: 'Publicando…',
   success: 'Reseña publicada. Gracias por contarlo.',
+  own: 'Ya has publicado una reseña.',
+  showOwn: 'Ver la tuya',
+  count: (n, max) => `${n} / ${max}`,
 };
 
 export const VOICES = {

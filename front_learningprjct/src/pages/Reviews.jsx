@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useUser } from '../context/UserContext';
 import { motion, useReducedMotion } from 'framer-motion';
 import { duration, ease, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
+import { fetchReviews, postReview } from '../lib/reviewsApi';
 import usePageMeta from '../hooks/usePageMeta';
 import ReviewsBackdrop from '../components/reviews/ReviewsBackdrop';
 import ReviewsHero from '../components/reviews/ReviewsHero';
@@ -18,27 +18,14 @@ import { PAGE_DESCRIPTION, PAGE_TITLE, VOICES } from '../components/reviews/revi
 
 const LOAD_ERROR = 'No se pudieron cargar las reseñas';
 const SEND_ERROR = 'No se pudo enviar la reseña';
+const SUCCESS_MS = 2400; // lo que dura el momento de éxito antes de volver al formulario
 
-const fetchReviews = async () => {
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
-  const res = await fetch(`${apiUrl}/api/reviews`);
-  if (!res.ok) throw new Error('Error al cargar reseñas');
-  const json = await res.json();
-  return json.data || json;
-};
-
-const postReview = async (review, token) => {
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
-  const res = await fetch(`${apiUrl}/api/reviews`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(review),
-  });
-  if (!res.ok) throw new Error('Error al enviar reseña');
-  return res.json();
+// Copia sin una clave (para limpiar el error de un campo al editarlo)
+const without = (obj, key) => {
+  if (!(key in obj)) return obj;
+  const next = { ...obj };
+  delete next[key];
+  return next;
 };
 
 // Abre el mismo diálogo de acceso que el botón del header
@@ -49,39 +36,56 @@ const openAuth = () => {
 
 export default function ReviewsPage() {
   const { user } = useUser();
-  const navigate = useNavigate();
   const reduce = useReducedMotion();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loadError, setLoadError] = useState(null);
+  const [sendError, setSendError] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [form, setForm] = useState({ description: '', rating: 0 });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   // Tarjeta y su barra de la huella de voces enlazadas (solo presentación)
   const [activeId, setActiveId] = useState(null);
+  const successTimer = useRef(null);
 
   usePageMeta(PAGE_TITLE, PAGE_DESCRIPTION);
 
+  // Con sesión, el servidor marca las reseñas propias; se vuelve a pedir al entrar o salir
+  const viewer = user ? user._id || user.id || user.email : null;
   useEffect(() => {
-    fetchReviews()
-      .then(data => setReviews(data))
-      .catch(() => setError(LOAD_ERROR))
-      .finally(() => setLoading(false));
-  }, []);
+    let alive = true;
+    fetchReviews(viewer ? localStorage.getItem('token') : undefined)
+      .then(data => alive && (setReviews(data), setLoadError(null)))
+      .catch(() => alive && setLoadError(LOAD_ERROR))
+      .finally(() => alive && setLoading(false));
+    return () => { alive = false; };
+  }, [viewer]);
+
+  useEffect(() => () => clearTimeout(successTimer.current), []);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setFieldErrors(current => without(current, e.target.name));
   };
 
   const handleRating = r => {
     setForm(f => ({ ...f, rating: r }));
+    setFieldErrors(current => without(current, 'rating'));
+  };
+
+  // Foco al primer campo con error, en el orden del formulario
+  const focusFirstError = fields => {
+    if (fields.rating) document.querySelector('input[name="rating"]')?.focus();
+    else if (fields.description) document.getElementById('review-description')?.focus();
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!form.description || !form.rating) return;
+    if (!form.description || !form.rating || submitting) return;
     setSubmitting(true);
-    setError(null);
+    setSendError(null);
+    setFieldErrors({});
     try {
       const token = localStorage.getItem('token');
       const review = {
@@ -90,19 +94,20 @@ export default function ReviewsPage() {
         name: user?.name || ''
       };
       const newReview = await postReview(review, token);
-      setReviews([newReview, ...reviews]);
+      setReviews(current => [newReview, ...current]);
       setForm({ description: '', rating: 0 });
       setSuccess(true);
-      // Redirige al home después de 1 segundo
-      setTimeout(() => {
-        setSuccess(false);
-        navigate('/');
-        setTimeout(() => {
-          glideTo(0);
-        }, 100); // Espera breve para asegurar que la navegación ocurrió
-      }, 1000);
-    } catch {
-      setError(SEND_ERROR);
+      // Se queda en la página: la reseña nueva encabeza el muro como "Tu reseña"
+      clearTimeout(successTimer.current);
+      successTimer.current = setTimeout(() => setSuccess(false), SUCCESS_MS);
+    } catch (err) {
+      const fields = err?.fields || {};
+      if (Object.keys(fields).length) {
+        setFieldErrors(fields);
+        focusFirstError(fields);
+      } else {
+        setSendError(err?.status === 429 || err?.status === 401 ? err.message : SEND_ERROR);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -132,7 +137,8 @@ export default function ReviewsPage() {
     show: { opacity: 1, y: 0, transition: { duration: reduce ? duration.fast : duration.scene, ease: ease.outExpo } },
   };
 
-  const hasReviews = !loading && !error && items.length > 0;
+  const hasReviews = !loading && !loadError && items.length > 0;
+  const ownReview = items.find(r => r.mine);
 
   return (
     <div className="relative isolate min-h-dvh pb-32">
@@ -158,8 +164,11 @@ export default function ReviewsPage() {
                 onRate={handleRating}
                 onSubmit={handleSubmit}
                 submitting={submitting}
-                error={error === SEND_ERROR ? error : null}
+                error={sendError}
+                fieldErrors={fieldErrors}
                 success={success}
+                ownReview={ownReview}
+                onShowOwn={revealCard}
               />
             ) : (
               <ReviewInvite onAccess={openAuth} />
@@ -172,7 +181,7 @@ export default function ReviewsPage() {
             <ReviewList
               reviews={items}
               loading={loading}
-              error={error === LOAD_ERROR ? error : null}
+              error={loadError}
               activeId={activeId}
               onActivate={activate}
               onDeactivate={deactivate}

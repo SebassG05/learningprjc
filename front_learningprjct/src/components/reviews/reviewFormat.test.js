@@ -25,6 +25,12 @@ test('toReviewViewModel: datos incompletos no rompen la tarjeta', () => {
   assert.equal(vm.rating, 5);
   assert.equal(vm.text, '');
   assert.equal(vm.date, null);
+  assert.equal(vm.mine, false);
+});
+
+test('toReviewViewModel: marca las propias solo con mine === true', () => {
+  assert.equal(toReviewViewModel({ review: { mine: true } }).mine, true);
+  assert.equal(toReviewViewModel({ mine: 'true' }).mine, false);
 });
 
 test('initialsOf: nombres, correos y nombres de una palabra', () => {

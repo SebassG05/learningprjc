@@ -17,6 +17,7 @@ import { useScenesEnabled, useSceneProgress } from '../hooks/useScene';
 import useMediaQuery from '../hooks/useMediaQuery';
 import { disclose, duration, ease, spring, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
+import { fetchReviews } from '../lib/reviewsApi';
 
 /*
  * Coreografía (ver MOTION-SPEC.md):
@@ -500,14 +501,6 @@ const FAQSection = ({ animating, setAnimating, navigate }) => {
    Reseñas
    ========================================================================== */
 
-const fetchReviews = async () => {
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
-  const res = await fetch(`${apiUrl}/api/reviews`);
-  if (!res.ok) throw new Error('Error al cargar reseñas');
-  const json = await res.json();
-  return json.data || json;
-};
-
 const Stars = ({ rating, size = 'h-4 w-4' }) => (
   <div className="flex items-center gap-0.5" role="img" aria-label={`${rating} de 5 estrellas`}>
     {[...Array(5)].map((_, i) => (
@@ -537,13 +530,13 @@ const ReviewsCarousel = () => {
     setReviewCount(loading || error ? null : reviews.length);
   }, [loading, error, reviews.length]);
 
-  // Drag to scroll horizontal
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+  // Drag to scroll horizontal (el estado del arrastre vive dentro del efecto: no se pierde al re-renderizar)
   useEffect(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
     const handleMouseDown = (e) => {
       isDown = true;
       carousel.classList.add('dragging');

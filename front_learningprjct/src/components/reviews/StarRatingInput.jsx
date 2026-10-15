@@ -4,18 +4,20 @@
 // solo por el color. Cada estrella tiene 44 × 44 px de zona táctil. Al elegir, un pequeño muelle.
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { AlertCircle } from 'lucide-react';
 import { StarShape } from './StarRating';
 import { MAX_RATING, starsLabel } from './reviewFormat';
 import { spring } from '../../lib/motion';
 
-export default function StarRatingInput({ id, legend, hint, value, onChange, disabled }) {
+export default function StarRatingInput({ id, legend, hint, value, onChange, disabled, error }) {
   const reduce = useReducedMotion();
   const [preview, setPreview] = useState(0);
   const shown = preview || value;
   const hintId = `${id}-hint`;
+  const errorId = `${id}-error`;
 
   return (
-    <fieldset className="flex flex-col gap-2" aria-describedby={hintId} disabled={disabled}>
+    <fieldset className="flex flex-col gap-2" aria-describedby={error ? `${errorId} ${hintId}` : hintId} disabled={disabled}>
       <legend className="mb-2 text-sm font-medium text-ink-2">{legend}</legend>
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <div className="-ml-2.5 flex" onPointerLeave={() => setPreview(0)}>
@@ -35,6 +37,7 @@ export default function StarRatingInput({ id, legend, hint, value, onChange, dis
                   checked={value === n}
                   onChange={(e) => onChange(Number(e.target.value))}
                   onFocus={() => setPreview(0)}
+                  aria-invalid={error ? true : undefined}
                   className="sr-only"
                 />
                 <span className="sr-only">{starsLabel(n)}</span>
@@ -57,6 +60,12 @@ export default function StarRatingInput({ id, legend, hint, value, onChange, dis
           {shown ? <span className="font-semibold text-ink">{`${shown} de ${MAX_RATING}`}</span> : hint}
         </p>
       </div>
+      {error && (
+        <p id={errorId} className="flex items-start gap-1.5 text-sm text-danger">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+          <span>{error}</span>
+        </p>
+      )}
     </fieldset>
   );
 }

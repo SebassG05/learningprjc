@@ -11,7 +11,7 @@ import TextField from '../auth/TextField';
 import SubmitButton from '../auth/SubmitButton';
 import useNativeValidation from '../auth/useNativeValidation';
 import Button from '../ui/Button';
-import TextAreaField from './TextAreaField';
+import TextAreaField from '../ui/TextAreaField';
 import SentSignal from './SentSignal';
 import { PRIVACY_SUMMARY, TOPICS } from './contactInfo';
 import { duration, ease, nudge, spring } from '../../lib/motion';
