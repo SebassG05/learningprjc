@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { MailCheck, ShieldCheck, Cookie } from 'lucide-react';
-import CookiePreferences from '../components/configuration/CookiePreferences';
+import PrivacySection from '../components/settings/PrivacySection';
 
 export default function Ajustes() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function Ajustes() {
               <Cookie className="w-7 h-7 text-brand animate-pulse ml-2" />
             </div>
           </div>
-          <CookiePreferences />
+          <PrivacySection />
         </div>
       </div>
     </div>

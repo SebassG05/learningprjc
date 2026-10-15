@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useCookieConsent from '../../hooks/useCookieConsent';
 
-const CookiePreferences = () => {
+const PrivacySection = () => {
   const {
     cookiePreferences,
     saveCustomPreferences,
@@ -197,4 +197,4 @@ const CookiePreferences = () => {
   );
 };
 
-export default CookiePreferences;
+export default PrivacySection;
