@@ -341,6 +341,20 @@
     }
 }
 
+/* ---------- Reseñas: en órbita (borde del planeta arriba a la derecha) ---------- */
+.reviews-planet {
+    background:
+        radial-gradient(60% 60% at 30% 70%, rgb(161 219 135 / 0.1), transparent 70%),
+        radial-gradient(circle at 35% 75%, color-mix(in oklab, var(--color-night-teal) 85%, var(--color-brand-900)) 0%, var(--color-night-deep) 70%);
+    box-shadow:
+        inset 18px -18px 60px -30px rgb(201 236 183 / 0.45),
+        0 0 0 1px rgb(201 236 183 / 0.12);
+}
+
+.reviews-atmosphere {
+    background: radial-gradient(closest-side, transparent 80%, rgb(161 219 135 / 0.12) 88%, transparent 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .contact-pulse {
         animation: none;
