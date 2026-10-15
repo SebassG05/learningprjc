@@ -4,7 +4,7 @@
 // la misma silueta para que nada salte. Solo las tarjetas que entran en pantalla se animan.
 import { motion, useReducedMotion } from 'framer-motion';
 import ReviewCard from './ReviewCard';
-import { MAX_SATELLITES } from './ReviewsOrbit';
+import { MAX_VOICES } from './ReviewsVoiceprint';
 import { WALL_TITLE } from './reviewsCopy';
 import { duration, ease, inView, stagger } from '../../lib/motion';
 
@@ -60,7 +60,7 @@ export default function ReviewList({ reviews, loading, error, activeId, onActiva
                 review={review}
                 featured={i === 0}
                 active={review.id === activeId}
-                orbitIndex={i < MAX_SATELLITES ? i : undefined}
+                linked={i < MAX_VOICES}
                 onActivate={onActivate}
                 onDeactivate={onDeactivate}
               />

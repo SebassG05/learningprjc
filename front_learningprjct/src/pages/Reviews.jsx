@@ -12,9 +12,9 @@ import ReviewComposer from '../components/reviews/ReviewComposer';
 import ReviewInvite from '../components/reviews/ReviewInvite';
 import ReviewList from '../components/reviews/ReviewList';
 import ReviewsEmptyState from '../components/reviews/ReviewsEmptyState';
-import ReviewsOrbit, { MAX_SATELLITES } from '../components/reviews/ReviewsOrbit';
+import ReviewsVoiceprint, { MAX_VOICES } from '../components/reviews/ReviewsVoiceprint';
 import { ratingDistribution, toReviewViewModel } from '../components/reviews/reviewFormat';
-import { ORBIT_HINT, PAGE_DESCRIPTION, PAGE_TITLE } from '../components/reviews/reviewsCopy';
+import { PAGE_DESCRIPTION, PAGE_TITLE, VOICES } from '../components/reviews/reviewsCopy';
 
 const LOAD_ERROR = 'No se pudieron cargar las reseñas';
 const SEND_ERROR = 'No se pudo enviar la reseña';
@@ -57,7 +57,7 @@ export default function ReviewsPage() {
   const [form, setForm] = useState({ description: '', rating: 0 });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  // Tarjeta y satélite enlazados (solo presentación)
+  // Tarjeta y su barra de la huella de voces enlazadas (solo presentación)
   const [activeId, setActiveId] = useState(null);
 
   usePageMeta(PAGE_TITLE, PAGE_DESCRIPTION);
@@ -112,7 +112,7 @@ export default function ReviewsPage() {
   const reviewsCount = reviews.length;
   const reviewsAvg = reviewsCount > 0 ? (reviews.reduce((acc, r) => acc + (r.rating || 0), 0) / reviewsCount).toFixed(2) : '0.00';
 
-  // Presentación: una sola forma para tarjetas y órbita
+  // Presentación: una sola forma para tarjetas y huella de voces
   const items = useMemo(() => reviews.map(toReviewViewModel), [reviews]);
   const distribution = useMemo(() => ratingDistribution(items), [items]);
 
@@ -182,15 +182,15 @@ export default function ReviewsPage() {
           </div>
 
           {hasReviews && (
-            <aside aria-label="Órbita de reseñas" className="hidden lg:col-span-4 lg:block">
-              <figure className="sticky top-32 -mx-6 xl:-mx-10">
-                <ReviewsOrbit reviews={items} activeId={activeId} onActivate={activate} onDeactivate={deactivate} onSelect={revealCard} />
-                <figcaption className="mx-6 mt-6 max-w-xs text-sm text-ink-2 xl:mx-10">
-                  <span className="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-brand-200/80">
-                    {`${Math.min(items.length, MAX_SATELLITES)} señales en órbita`}
-                  </span>
-                  {ORBIT_HINT}
-                  {items.length > MAX_SATELLITES && ` Se muestran las ${MAX_SATELLITES} más recientes.`}
+            <aside aria-label="Huella de voces" className="hidden lg:col-span-4 lg:block">
+              <figure className="sticky top-32">
+                <span className="mb-5 block font-mono text-xs uppercase tracking-[0.18em] text-brand-200/80">
+                  {VOICES.label(Math.min(items.length, MAX_VOICES))}
+                </span>
+                <ReviewsVoiceprint reviews={items} activeId={activeId} onActivate={activate} onDeactivate={deactivate} onSelect={revealCard} />
+                <figcaption className="mt-5 max-w-xs text-sm text-ink-2">
+                  {VOICES.hint}
+                  {items.length > MAX_VOICES && VOICES.more(MAX_VOICES)}
                 </figcaption>
               </figure>
             </aside>

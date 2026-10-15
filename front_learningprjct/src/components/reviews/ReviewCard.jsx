@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // Tarjeta de reseña. El texto manda; la puntuación, el autor y la fecha lo acompañan.
-// Enlazada a su satélite de la órbita: al pasar o enfocar la tarjeta se ilumina su satélite y al
+// Enlazada a su barra de la huella de voces: al pasar o enfocar la tarjeta se ilumina su barra y al
 // revés (estado `active`). El brillo es una capa aparte que solo cambia de opacidad.
 import { memo } from 'react';
 import StarRating from './StarRating';
@@ -25,11 +25,10 @@ function Avatar({ initials, tone }) {
   );
 }
 
-function ReviewCard({ review, featured = false, active = false, orbitIndex, onActivate, onDeactivate }) {
+function ReviewCard({ review, featured = false, active = false, linked = false, onActivate, onDeactivate }) {
   const { id, name, initials, tone, rating, text, date } = review;
   // Destacada: cita grande en display si es breve; si es larga, cuerpo amplio y legible
   const quote = featured && text.length <= 180;
-  const linked = orbitIndex != null;
   const enter = linked ? () => onActivate(id) : undefined;
   const leave = linked ? () => onDeactivate(id) : undefined;
 
@@ -53,7 +52,7 @@ function ReviewCard({ review, featured = false, active = false, orbitIndex, onAc
       ) : (
         <span aria-hidden="true" className="absolute inset-x-6 top-0 h-px bg-line-strong sm:inset-x-7" />
       )}
-      {/* Brillo enlazado con el satélite: aparece solo al activarse (opacidad) */}
+      {/* Brillo enlazado con su barra: aparece solo al activarse (opacidad) */}
       <span
         aria-hidden="true"
         className="absolute inset-0 -z-10 rounded-3xl bg-white/[0.04] opacity-0 shadow-glow transition-opacity duration-300 ease-out-expo group-data-active/card:opacity-100"
@@ -65,10 +64,10 @@ function ReviewCard({ review, featured = false, active = false, orbitIndex, onAc
           {featured && <span className="eyebrow">{LATEST}</span>}
         </div>
         {linked && (
-          <span aria-hidden="true" className="relative hidden h-3 w-3 place-items-center lg:grid">
-            <span className="absolute h-3 w-3 rounded-full bg-brand-400/30 opacity-0 transition-opacity duration-300 group-data-active/card:opacity-100" />
-            <span className="h-1.5 w-1.5 rounded-full bg-ink-3 transition-opacity duration-300 group-data-active/card:opacity-0" />
-            <span className="absolute h-1.5 w-1.5 rounded-full bg-brand-300 opacity-0 transition-opacity duration-300 group-data-active/card:opacity-100" />
+          // Su barra en miniatura (solo donde se ve la huella de voces)
+          <span aria-hidden="true" className="relative hidden h-4 w-1 lg:block">
+            <span className="absolute inset-0 rounded-full bg-ink-3/60 transition-opacity duration-300 group-data-active/card:opacity-0" />
+            <span className="absolute inset-0 rounded-full bg-brand-300 opacity-0 transition-opacity duration-300 group-data-active/card:opacity-100" />
           </span>
         )}
       </div>

@@ -16,9 +16,9 @@ export const LATEST = 'La más reciente';
 export const NO_TEXT = 'Dejó su puntuación sin comentario.';
 
 export const EMPTY = {
-  title: 'Aún no hay señales en esta órbita.',
+  title: 'Todavía nadie ha contado su experiencia.',
   body: 'Sé la primera persona en contar cómo te fue. Mientras tanto, echa un vistazo a los cursos.',
-  waiting: 'Esperando la primera señal',
+  waiting: 'Esperando la primera voz',
   cta: 'Ver cursos',
 };
 
@@ -40,7 +40,16 @@ export const COMPOSER = {
   incomplete: 'Elige una puntuación y escribe tu reseña para publicarla.',
   submit: 'Publicar reseña',
   sending: 'Publicando…',
-  success: 'Reseña publicada. Ya está en órbita.',
+  success: 'Reseña publicada. Gracias por contarlo.',
 };
 
-export const ORBIT_HINT = 'Cada punto es una reseña. Pasa por una tarjeta para encontrar la suya.';
+export const VOICES = {
+  label: (n) => (n === 1 ? '1 voz' : `${n} voces`),
+  hint: 'Una barra por reseña: la altura es lo que escribió cada alumno y el brillo, su nota. Pasa por una tarjeta para encontrar la suya.',
+  more: (n) => ` Se muestran las ${n} más recientes.`,
+};
+
+export const SUMMARY_EMPTY = {
+  title: 'Sin reseñas todavía',
+  body: 'La media aparecerá con la primera.',
+};

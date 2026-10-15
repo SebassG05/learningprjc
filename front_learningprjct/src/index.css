@@ -341,18 +341,39 @@
     }
 }
 
-/* ---------- Reseñas: en órbita (borde del planeta arriba a la derecha) ---------- */
-.reviews-planet {
+/* ---------- Reseñas: cuaderno en la penumbra (pauta, margen y luz de ventana) ---------- */
+.reviews-window {
     background:
-        radial-gradient(60% 60% at 30% 70%, rgb(161 219 135 / 0.1), transparent 70%),
-        radial-gradient(circle at 35% 75%, color-mix(in oklab, var(--color-night-teal) 85%, var(--color-brand-900)) 0%, var(--color-night-deep) 70%);
-    box-shadow:
-        inset 18px -18px 60px -30px rgb(201 236 183 / 0.45),
-        0 0 0 1px rgb(201 236 183 / 0.12);
+        radial-gradient(55% 60% at 8% 0%, rgb(58 103 43 / 0.32), transparent 70%),
+        radial-gradient(45% 45% at 92% 18%, color-mix(in oklab, var(--color-night-teal) 55%, transparent), transparent 75%);
 }
 
-.reviews-atmosphere {
-    background: radial-gradient(closest-side, transparent 80%, rgb(161 219 135 / 0.12) 88%, transparent 100%);
+/* Pauta: una línea finísima cada 2 rem en la cabecera de la hoja; se desvanece antes del muro */
+.reviews-ruled {
+    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 100% 2rem;
+    mask-image: linear-gradient(180deg, transparent 0, #000 6rem, #000 50%, transparent 100%);
+}
+
+/* Margen del cuaderno: una línea verde a la izquierda de la columna de lectura */
+.reviews-margin::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: -1.75rem;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgb(161 219 135 / 0.35) 12%, rgb(161 219 135 / 0.2) 60%, transparent);
+}
+
+/* Cursor de la huella de voces vacía: parpadeo suave (solo opacidad) */
+.reviews-caret {
+    animation: reviews-caret 1.1s steps(1, end) infinite;
+}
+
+@keyframes reviews-caret {
+    50% {
+        opacity: 0;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -362,6 +383,10 @@
     }
 
     .contact-aurora {
+        animation: none;
+    }
+
+    .reviews-caret {
         animation: none;
     }
 }

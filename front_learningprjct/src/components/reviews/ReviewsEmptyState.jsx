@@ -1,15 +1,15 @@
-// Sin reseñas: la órbita con un único satélite esperando la primera señal (como en la home), una
-// invitación a publicar y algo para quien solo viene a mirar: los cursos.
+// Sin reseñas: la huella de voces en silencio (línea plana y un cursor), una invitación a publicar y
+// algo para quien solo viene a mirar: los cursos.
 import { ArrowRight } from 'lucide-react';
 import Button from '../ui/Button';
-import ReviewsOrbit from './ReviewsOrbit';
+import ReviewsVoiceprint from './ReviewsVoiceprint';
 import { EMPTY } from './reviewsCopy';
 
 export default function ReviewsEmptyState() {
   return (
     <div className="flex flex-col items-center gap-8 py-6 text-center sm:py-10">
       <figure className="w-full max-w-md">
-        <ReviewsOrbit waiting />
+        <ReviewsVoiceprint waiting />
         <figcaption className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-brand-200/80">{EMPTY.waiting}</figcaption>
       </figure>
       <div className="flex max-w-md flex-col items-center gap-3">

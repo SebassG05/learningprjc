@@ -3,7 +3,7 @@
 const LOCALE = 'es-ES';
 export const MAX_RATING = 5;
 
-// Forma única que reciben las tarjetas y la órbita, venga la reseña del GET o del POST.
+// Forma única que reciben las tarjetas y la huella de voces, venga la reseña del GET o del POST.
 // El POST responde { message, review }; la página la guarda tal cual en la lista.
 export function toReviewViewModel(item, index = 0) {
   const raw = item && typeof item === 'object' && item.review ? item.review : item ?? {};
