@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "test": "node --test src/components/globe/journey/keyframes.test.js",
+    "test": "node --test src/components/globe/journey/keyframes.test.js src/components/reviews/reviewFormat.test.js",
     "preview": "vite preview"
   },
   "dependencies": {
