@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCookieConsent from '../../hooks/useCookieConsent';
 
 const PrivacySection = () => {
@@ -12,6 +12,12 @@ const PrivacySection = () => {
 
   const [preferences, setPreferences] = useState(cookiePreferences);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  // El hook lee localStorage después del primer render: sin esto, la copia local
+  // se quedaba con los valores por defecto y "Guardar" sobrescribía el consentimiento real.
+  useEffect(() => {
+    setPreferences(cookiePreferences);
+  }, [cookiePreferences]);
 
   const handleToggle = (type) => {
     if (type === 'necessary') return; // No se puede desactivar
