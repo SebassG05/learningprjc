@@ -64,6 +64,9 @@
     /* Error (acceso y formularios): AA sobre surface, surface-3 y danger/10 */
     --color-danger: #ff8f85;
 
+    /* Acento cálido de amanecer (derivado de la marca): solo brillos puntuales, nunca texto largo */
+    --color-dawn: #f6d7a7;
+
     /* Marca: escala construida sobre el verde corporativo #a1db87 (400) */
     --color-brand: #a1db87;
     --color-brand-50: #f3fbef;
@@ -341,28 +344,89 @@
     }
 }
 
-/* ---------- Reseñas: cuaderno en la penumbra (pauta, margen y luz de ventana) ---------- */
-.reviews-window {
+/* ---------- Reseñas: aurora (luz verde viva, halos y destellos; sin espacio) ---------- */
+.reviews-sky {
     background:
-        radial-gradient(55% 60% at 8% 0%, rgb(58 103 43 / 0.32), transparent 70%),
-        radial-gradient(45% 45% at 92% 18%, color-mix(in oklab, var(--color-night-teal) 55%, transparent), transparent 75%);
+        radial-gradient(80% 60% at 15% -5%, rgb(79 137 57 / 0.55), transparent 65%),
+        radial-gradient(60% 55% at 100% 10%, color-mix(in oklab, var(--color-night-teal) 95%, transparent), transparent 70%),
+        radial-gradient(70% 50% at 50% 55%, rgb(38 69 29 / 0.45), transparent 75%),
+        linear-gradient(180deg, var(--color-night) 0%, #0c1610 55%, var(--color-canvas) 100%);
 }
 
-/* Pauta: una línea finísima cada 2 rem en la cabecera de la hoja; se desvanece antes del muro */
-.reviews-ruled {
-    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
-    background-size: 100% 2rem;
-    mask-image: linear-gradient(180deg, transparent 0, #000 6rem, #000 50%, transparent 100%);
+/* Cortinas de aurora: elipses muy desenfocadas que derivan despacio (solo transform) */
+.reviews-aurora {
+    border-radius: 50%;
+    filter: blur(70px);
+    animation: reviews-drift 32s var(--ease-in-out-quart) infinite alternate;
+    will-change: transform;
 }
 
-/* Margen del cuaderno: una línea verde a la izquierda de la columna de lectura */
-.reviews-margin::before {
+.reviews-aurora-slow {
+    animation-duration: 46s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes reviews-drift {
+    from {
+        transform: translate3d(-6%, -2%, 0) rotate(-8deg) scale(1);
+    }
+    to {
+        transform: translate3d(8%, 5%, 0) rotate(6deg) scale(1.15);
+    }
+}
+
+/* Halo bajo un bloque de texto: más luz detrás sin restar contraste delante */
+.reviews-halo {
+    background: radial-gradient(closest-side, rgb(161 219 135 / 0.16), rgb(161 219 135 / 0.05) 60%, transparent);
+}
+
+/* Destellos: parpadeo lento y desfasado (solo opacidad) */
+.reviews-twinkle {
+    animation: reviews-twinkle 5.5s ease-in-out infinite;
+}
+
+@keyframes reviews-twinkle {
+    0%,
+    100% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.9;
+    }
+}
+
+/* Estación: cristal con borde de luz (degradado enmascarado al borde) */
+.reviews-station::before {
     content: "";
     position: absolute;
-    inset-block: 0;
-    left: -1.75rem;
-    width: 1px;
-    background: linear-gradient(180deg, transparent, rgb(161 219 135 / 0.35) 12%, rgb(161 219 135 / 0.2) 60%, transparent);
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(140deg, rgb(201 236 183 / 0.65), rgb(161 219 135 / 0.08) 35%, rgb(255 255 255 / 0.04) 60%, rgb(246 215 167 / 0.45));
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Barrido de luz del botón al despertar (una pasada) */
+.reviews-sweep {
+    background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 0.55) 50%, transparent 80%);
+    animation: reviews-sweep 0.9s var(--ease-out-expo) 1 both;
+}
+
+@keyframes reviews-sweep {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(120%);
+    }
+}
+
+/* Fuera de pantalla, las animaciones de la decoración se detienen */
+.reviews-paused,
+.reviews-paused * {
+    animation-play-state: paused !important;
 }
 
 /* Cursor de la huella de voces vacía: parpadeo suave (solo opacidad) */
@@ -386,8 +450,15 @@
         animation: none;
     }
 
-    .reviews-caret {
+    .reviews-caret,
+    .reviews-aurora,
+    .reviews-twinkle,
+    .reviews-sweep {
         animation: none;
+    }
+
+    .reviews-sweep {
+        opacity: 0;
     }
 }
 
