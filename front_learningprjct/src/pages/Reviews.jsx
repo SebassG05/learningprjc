@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useUser } from '../context/UserContext';
 import { motion, useReducedMotion } from 'framer-motion';
 import { duration, ease, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
-import { fetchReviews, postReview } from '../lib/reviewsApi';
 import usePageMeta from '../hooks/usePageMeta';
+import useReviews from '../hooks/useReviews';
+import useReviewForm from '../components/reviews/useReviewForm';
 import ReviewsBackdrop from '../components/reviews/ReviewsBackdrop';
 import ReviewsHero from '../components/reviews/ReviewsHero';
 import ReviewsSummary from '../components/reviews/ReviewsSummary';
@@ -16,18 +17,6 @@ import ReviewsVoiceprint, { MAX_VOICES } from '../components/reviews/ReviewsVoic
 import { ratingDistribution, toReviewViewModel } from '../components/reviews/reviewFormat';
 import { PAGE_DESCRIPTION, PAGE_TITLE, VOICES } from '../components/reviews/reviewsCopy';
 
-const LOAD_ERROR = 'No se pudieron cargar las reseñas';
-const SEND_ERROR = 'No se pudo enviar la reseña';
-const SUCCESS_MS = 2400; // lo que dura el momento de éxito antes de volver al formulario
-
-// Copia sin una clave (para limpiar el error de un campo al editarlo)
-const without = (obj, key) => {
-  if (!(key in obj)) return obj;
-  const next = { ...obj };
-  delete next[key];
-  return next;
-};
-
 // Abre el mismo diálogo de acceso que el botón del header
 const openAuth = () => {
   const authButton = document.querySelector('[data-auth-trigger]');
@@ -37,81 +26,13 @@ const openAuth = () => {
 export default function ReviewsPage() {
   const { user } = useUser();
   const reduce = useReducedMotion();
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState(null);
-  const [sendError, setSendError] = useState(null);
-  const [fieldErrors, setFieldErrors] = useState({});
-  const [form, setForm] = useState({ description: '', rating: 0 });
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // Con sesión, el servidor marca la reseña propia; se vuelve a pedir al entrar o salir
+  const viewer = user ? user._id || user.id || user.email : null;
+  const { reviews, loading, loadError, reload, create, update, remove } = useReviews(viewer);
   // Tarjeta y su barra de la huella de voces enlazadas (solo presentación)
   const [activeId, setActiveId] = useState(null);
-  const successTimer = useRef(null);
 
   usePageMeta(PAGE_TITLE, PAGE_DESCRIPTION);
-
-  // Con sesión, el servidor marca las reseñas propias; se vuelve a pedir al entrar o salir
-  const viewer = user ? user._id || user.id || user.email : null;
-  useEffect(() => {
-    let alive = true;
-    fetchReviews(viewer ? localStorage.getItem('token') : undefined)
-      .then(data => alive && (setReviews(data), setLoadError(null)))
-      .catch(() => alive && setLoadError(LOAD_ERROR))
-      .finally(() => alive && setLoading(false));
-    return () => { alive = false; };
-  }, [viewer]);
-
-  useEffect(() => () => clearTimeout(successTimer.current), []);
-
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setFieldErrors(current => without(current, e.target.name));
-  };
-
-  const handleRating = r => {
-    setForm(f => ({ ...f, rating: r }));
-    setFieldErrors(current => without(current, 'rating'));
-  };
-
-  // Foco al primer campo con error, en el orden del formulario
-  const focusFirstError = fields => {
-    if (fields.rating) document.querySelector('input[name="rating"]')?.focus();
-    else if (fields.description) document.getElementById('review-description')?.focus();
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-    if (!form.description || !form.rating || submitting) return;
-    setSubmitting(true);
-    setSendError(null);
-    setFieldErrors({});
-    try {
-      const token = localStorage.getItem('token');
-      const review = {
-        description: form.description,
-        rating: form.rating,
-        name: user?.name || ''
-      };
-      const newReview = await postReview(review, token);
-      setReviews(current => [newReview, ...current]);
-      setForm({ description: '', rating: 0 });
-      setSuccess(true);
-      // Se queda en la página: la reseña nueva encabeza el muro como "Tu reseña"
-      clearTimeout(successTimer.current);
-      successTimer.current = setTimeout(() => setSuccess(false), SUCCESS_MS);
-    } catch (err) {
-      const fields = err?.fields || {};
-      if (Object.keys(fields).length) {
-        setFieldErrors(fields);
-        focusFirstError(fields);
-      } else {
-        setSendError(err?.status === 429 || err?.status === 401 ? err.message : SEND_ERROR);
-      }
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   // Calcular número de reseñas y media
   const reviewsCount = reviews.length;
@@ -139,6 +60,7 @@ export default function ReviewsPage() {
 
   const hasReviews = !loading && !loadError && items.length > 0;
   const ownReview = items.find(r => r.mine);
+  const composer = useReviewForm({ user, ownReview, create, update, remove, reload });
 
   return (
     <div className="relative isolate min-h-dvh pb-32">
@@ -157,19 +79,7 @@ export default function ReviewsPage() {
 
           <motion.div variants={item} className="relative rounded-3xl glass-panel p-6 sm:p-8 lg:col-span-5 lg:self-start">
             {user ? (
-              <ReviewComposer
-                user={user}
-                form={form}
-                onTextChange={handleChange}
-                onRate={handleRating}
-                onSubmit={handleSubmit}
-                submitting={submitting}
-                error={sendError}
-                fieldErrors={fieldErrors}
-                success={success}
-                ownReview={ownReview}
-                onShowOwn={revealCard}
-              />
+              <ReviewComposer user={user} ownReview={ownReview} onShowOwn={revealCard} state={composer} />
             ) : (
               <ReviewInvite onAccess={openAuth} />
             )}

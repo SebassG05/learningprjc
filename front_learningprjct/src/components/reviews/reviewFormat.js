@@ -22,6 +22,7 @@ export function toReviewViewModel(item, index = 0) {
     date: date && !Number.isNaN(date.getTime()) ? date : null,
     // El servidor marca así las reseñas del usuario con sesión
     mine: raw.mine === true,
+    edited: Boolean(raw.updatedAt),
   };
 }
 

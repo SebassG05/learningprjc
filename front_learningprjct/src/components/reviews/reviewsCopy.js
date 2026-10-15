@@ -42,9 +42,30 @@ export const COMPOSER = {
   submit: 'Publicar reseña',
   sending: 'Publicando…',
   success: 'Reseña publicada. Gracias por contarlo.',
-  own: 'Ya has publicado una reseña.',
-  showOwn: 'Ver la tuya',
+  error: 'No se pudo enviar la reseña',
   count: (n, max) => `${n} / ${max}`,
+};
+
+// Tu reseña (una por persona): verla, editarla o borrarla
+export const OWN = {
+  eyebrow: 'Tu reseña',
+  title: 'Ya has contado tu experiencia',
+  edited: 'editada',
+  show: 'Ver en el muro',
+  edit: 'Editar',
+  delete: 'Borrar',
+  editTitle: 'Edita tu reseña',
+  as: 'Publicada como',
+  save: 'Guardar cambios',
+  saving: 'Guardando…',
+  cancel: 'Cancelar',
+  confirm: '¿Borrar tu reseña? No se puede deshacer.',
+  confirmYes: 'Sí, borrar',
+  deleting: 'Borrando…',
+  updated: 'Cambios guardados.',
+  deleted: 'Reseña borrada. Puedes escribir otra cuando quieras.',
+  updateError: 'No se pudieron guardar los cambios',
+  deleteError: 'No se pudo borrar la reseña',
 };
 
 export const VOICES = {

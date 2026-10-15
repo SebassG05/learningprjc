@@ -12,28 +12,31 @@ export class ReviewApiError extends Error {
   }
 }
 
-// Con token, el servidor marca las reseñas propias (`mine: true`)
-export async function fetchReviews(token) {
-  const res = await fetch(`${apiUrl()}/api/reviews`, token ? { headers: { Authorization: `Bearer ${token}` } } : undefined);
-  if (!res.ok) throw new ReviewApiError('Error al cargar reseñas', { status: res.status });
-  const json = await res.json();
-  return json.data || json;
-}
-
-export async function postReview(review, token) {
-  const res = await fetch(`${apiUrl()}/api/reviews`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(review),
-  });
+async function request(path, { method = 'GET', token, body, fallback }) {
+  const headers = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+  if (body) headers['Content-Type'] = 'application/json';
+  const res = await fetch(`${apiUrl()}/api/reviews${path}`, { method, headers, body: body && JSON.stringify(body) });
   if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
+    const data = await res.json().catch(() => ({}));
     // express-validator: [{ path: 'rating', msg: '…' }] → { rating: '…' }
-    const fields = Object.fromEntries((body.errors || []).filter((e) => e.path).map((e) => [e.path, e.msg]));
-    throw new ReviewApiError(body.error || 'Error al enviar reseña', { status: res.status, fields });
+    const fields = Object.fromEntries((data.errors || []).filter((e) => e.path && e.location !== 'params').map((e) => [e.path, e.msg]));
+    throw new ReviewApiError(data.error || fallback, { status: res.status, fields });
   }
   return res.json();
 }
+
+// Con token, el servidor marca las reseñas propias (`mine: true`)
+export async function fetchReviews(token) {
+  const json = await request('', { token, fallback: 'Error al cargar reseñas' });
+  return json.data || json;
+}
+
+export const postReview = (review, token) => request('', { method: 'POST', token, body: review, fallback: 'Error al enviar reseña' });
+
+// Solo su autor puede editarla o borrarla (el servidor lo comprueba)
+export const updateReview = (id, review, token) =>
+  request(`/${encodeURIComponent(id)}`, { method: 'PUT', token, body: review, fallback: 'Error al guardar los cambios' });
+
+export const deleteReview = (id, token) =>
+  request(`/${encodeURIComponent(id)}`, { method: 'DELETE', token, fallback: 'Error al borrar la reseña' });
