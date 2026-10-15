@@ -13,8 +13,9 @@ export default function ConsentActions({ onReject, onAccept, onSave, onReset, sa
   return (
     <>
       <div className={`mt-3 ${pinned ? 'sticky bottom-0 z-10 pb-[env(safe-area-inset-bottom)]' : ''}`}>
-        <div className="material flex flex-col gap-3 rounded-2xl border border-line p-3 shadow-raised sm:flex-row sm:items-center">
-          <p role="status" className="flex flex-1 items-center px-1 text-sm text-ink-2 sm:min-h-6">
+        <div className="material flex flex-col gap-2 rounded-2xl border border-line p-3 shadow-raised">
+          {/* Línea de estado con altura reservada: el aviso aparece sin mover los botones */}
+          <p role="status" className="flex min-h-6 items-center px-1 text-sm text-ink-2">
             <AnimatePresence mode="wait" initial={false}>
               {saved ? (
                 <motion.span key="saved" {...disclose} className="inline-flex items-center gap-2 text-ink">
@@ -29,7 +30,7 @@ export default function ConsentActions({ onReject, onAccept, onSave, onReset, sa
               ) : null}
             </AnimatePresence>
           </p>
-          <div className="grid grid-cols-2 gap-2 sm:flex">
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:justify-end">
             <Button variant="secondary" onClick={onReject} className="px-3 sm:px-6">
               {PRIVACY.reject}
             </Button>
