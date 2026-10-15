@@ -380,6 +380,11 @@
     background: radial-gradient(closest-side, rgb(161 219 135 / 0.16), rgb(161 219 135 / 0.05) 60%, transparent);
 }
 
+/* Velo bajo el titular y el resumen: la aurora brilla alrededor, no detrás de las letras */
+.reviews-veil {
+    background: radial-gradient(closest-side, rgb(7 10 10 / 0.72), rgb(7 10 10 / 0.45) 55%, transparent);
+}
+
 /* Destellos: parpadeo lento y desfasado (solo opacidad) */
 .reviews-twinkle {
     animation: reviews-twinkle 5.5s ease-in-out infinite;

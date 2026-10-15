@@ -6,11 +6,11 @@ import { HEADLINE, SUBTITLE } from './reviewsCopy';
 export default function ReviewsHero({ headline = HEADLINE, className = '' }) {
   return (
     <header className={className}>
-      <p className="eyebrow">Reseñas</p>
+      <p className="eyebrow text-brand-300!">Reseñas</p>
       <SplitText as="h1" trigger="mount" delay={0.1} className="mt-5 block max-w-[16ch] text-contact font-bold text-ink">
         {headline.lead} <span className="text-brand-400">{headline.accent}</span>
       </SplitText>
-      <p className="mt-6 max-w-lg text-lg text-ink-2">{SUBTITLE}</p>
+      <p className="mt-6 max-w-lg text-lg text-gray-200">{SUBTITLE}</p>
     </header>
   );
 }

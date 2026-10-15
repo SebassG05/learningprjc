@@ -145,7 +145,7 @@ function ReviewCard({ review, featured = false, active = false, linked = false, 
             {name}
           </h3>
           {date && (
-            <time dateTime={date.toISOString()} title={formatFullDate(date)} className="text-sm text-ink-3">
+            <time dateTime={date.toISOString()} title={formatFullDate(date)} className="text-sm text-ink-2">
               {formatRelativeDate(date)}
             </time>
           )}

@@ -83,7 +83,8 @@ export default function ReviewsPage() {
 
       <motion.div variants={group} initial="hidden" animate="show" className="mx-auto w-full max-w-wide px-gutter pt-8 sm:pt-12 lg:pt-16">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-x-16 xl:gap-x-24">
-          <div className="flex flex-col gap-12 lg:col-span-7 lg:gap-16 lg:pt-6">
+          <div className="relative flex flex-col gap-12 lg:col-span-7 lg:gap-16 lg:pt-6">
+            <div aria-hidden="true" className="reviews-veil pointer-events-none absolute -inset-x-16 -inset-y-10 -z-10" />
             <motion.div variants={item}>
               <ReviewsHero />
             </motion.div>

@@ -2,14 +2,15 @@
 // Fondo de Reseñas: una aurora. Base profunda con matiz verde, cortinas de luz verde (y un toque de
 // amanecer) que derivan despacio, destellos que parpadean y se desplazan muy poco con el cursor, y una
 // ligera parallax de las auroras con el scroll. Sin espacio ni WebGL: CSS y SVG, solo transform y
-// opacidad. En móvil, menos capas; con reduced motion, todo quieto.
+// opacidad. En móvil, menos capas y sin destellos; con reduced motion, todo quieto.
 import { useEffect, useRef } from 'react';
 import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 // Destellos en posiciones fijas (pseudoaleatorias y estables entre renders)
 const SPARKLES = Array.from({ length: 34 }, (_, i) => {
   const r = (n) => ((Math.sin(i * 12.9898 + n * 78.233) * 43758.5453) % 1 + 1) % 1;
-  return { x: r(1) * 100, y: r(2) * 70, size: 0.6 + r(3) * 1.4, delay: r(4) * 5.5, dawn: i % 7 === 0, mobile: i % 3 === 0 };
+  // Solo en la mitad derecha: nunca bajo el titular ni el resumen (contraste del texto)
+  return { x: 48 + r(1) * 52, y: r(2) * 70, size: 0.6 + r(3) * 1.4, delay: r(4) * 5.5, dawn: i % 7 === 0 };
 });
 const DRIFT = 14; // px máximos que se desplazan con el cursor
 
@@ -37,7 +38,7 @@ function Sparkles({ reduce }) {
       {SPARKLES.map((s, i) => (
         <span
           key={i}
-          className={`reviews-twinkle absolute rounded-full ${s.dawn ? 'bg-dawn' : 'bg-brand-100'} ${s.mobile ? '' : 'hidden sm:block'}`}
+          className={`reviews-twinkle absolute hidden rounded-full lg:block ${s.dawn ? 'bg-dawn' : 'bg-brand-100'}`}
           style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size * 2, height: s.size * 2, animationDelay: `-${s.delay}s` }}
         />
       ))}

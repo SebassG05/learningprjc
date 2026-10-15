@@ -51,14 +51,14 @@ function Distribution({ rows, total, reduce }) {
     >
       {rows.map(({ stars, count }, i) => (
         <li key={stars} className="grid grid-cols-[2.25rem_1fr_2.5rem] items-center gap-3 text-sm">
-          <span className="flex items-center gap-1 tabular-nums text-ink-2" aria-hidden="true">
+          <span className="flex items-center gap-1 tabular-nums text-gray-200" aria-hidden="true">
             {stars}
             <StarShape fill={1} className="h-3.5 w-3.5 text-brand-400" />
           </span>
           <span className="relative h-1.5 overflow-hidden rounded-full bg-white/[0.08]" aria-hidden="true">
             <motion.span className="absolute inset-0 origin-left rounded-full bg-brand-400" variants={fill} custom={i} />
           </span>
-          <span className="text-right tabular-nums text-ink-2" aria-hidden="true">
+          <span className="text-right tabular-nums text-gray-200" aria-hidden="true">
             {count}
           </span>
           <span className="sr-only">{`${stars} ${stars === 1 ? 'estrella' : 'estrellas'}: ${reviewsLabel(count)}`}</span>
@@ -91,7 +91,7 @@ export default function ReviewsSummary({ count, average, distribution, loading, 
               <StarRating value={0} size="h-7 w-7" />
             </span>
             <p className="font-display text-title-2 font-bold text-ink">{SUMMARY_EMPTY.title}</p>
-            <p className="text-base text-ink-2">{SUMMARY_EMPTY.body}</p>
+            <p className="text-base text-gray-200">{SUMMARY_EMPTY.body}</p>
           </div>
         ) : (
           <div className="flex items-end gap-5">
@@ -101,7 +101,7 @@ export default function ReviewsSummary({ count, average, distribution, loading, 
             </p>
             <div className="flex flex-col gap-1.5 pb-2">
               <StarRating value={average} size="h-5 w-5" />
-              <p className="text-base text-ink-2">
+              <p className="text-base text-gray-200">
                 <span aria-hidden="true">{`de ${MAX_RATING} · `}</span>
                 {reviewsLabel(count)}
               </p>
