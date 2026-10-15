@@ -252,6 +252,11 @@
     transition: background-color 9999s ease-out 0s;
 }
 
+/* ---------- Ajustes: halo verde muy tenue tras la cabecera de la cuenta ---------- */
+.settings-halo {
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand) 12%, transparent), transparent);
+}
+
 /* ---------- Contacto: estación nocturna (cielo, estrellas, auroras, planeta) ---------- */
 .contact-sky {
     background:
