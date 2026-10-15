@@ -23,7 +23,7 @@ function Skeleton() {
   );
 }
 
-export default function ReviewList({ reviews, loading, error, activeId, onActivate, onDeactivate, children }) {
+export default function ReviewList({ reviews, loading, error, activeId, onActivate, onDeactivate, ownActions, children }) {
   const reduce = useReducedMotion();
   const enter = (i) => ({
     initial: { opacity: 0, y: reduce ? 0 : 16 },
@@ -63,6 +63,7 @@ export default function ReviewList({ reviews, loading, error, activeId, onActiva
                 linked={i < MAX_VOICES}
                 onActivate={onActivate}
                 onDeactivate={onDeactivate}
+                ownActions={review.mine ? ownActions : undefined}
               />
             </motion.li>
           ))}

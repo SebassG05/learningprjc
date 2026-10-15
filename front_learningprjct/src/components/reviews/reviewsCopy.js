@@ -51,7 +51,11 @@ export const COMPOSER = {
 // Tu reseña (una por persona): verla, editarla o borrarla
 export const OWN = {
   eyebrow: 'Tu reseña',
-  title: 'Ya has contado tu experiencia',
+  cooldownTitle: 'Ya has publicado hoy',
+  cooldownBody: 'Puedes escribir una reseña al día. La siguiente, a partir de',
+  latest: 'Tu última reseña',
+  count: (n) => (n === 1 ? 'Tienes 1 reseña publicada.' : `Tienes ${n} reseñas publicadas.`),
+  editWhich: 'tu reseña',
   edited: 'editada',
   show: 'Ver en el muro',
   edit: 'Editar',
@@ -65,7 +69,7 @@ export const OWN = {
   confirmYes: 'Sí, borrar',
   deleting: 'Borrando…',
   updated: 'Cambios guardados.',
-  deleted: 'Reseña borrada. Puedes escribir otra cuando quieras.',
+  deleted: 'Reseña borrada.',
   updateError: 'No se pudieron guardar los cambios',
   deleteError: 'No se pudo borrar la reseña',
 };

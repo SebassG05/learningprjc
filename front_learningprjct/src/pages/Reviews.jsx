@@ -31,7 +31,7 @@ export default function ReviewsPage() {
   const reduce = useReducedMotion();
   // Con sesión, el servidor marca la reseña propia; se vuelve a pedir al entrar o salir
   const viewer = user ? user._id || user.id || user.email : null;
-  const { reviews: loaded, loading, loadError, reload, create, update, remove } = useReviews(viewer);
+  const { reviews: loaded, loading, loadError, reload, create, update, remove, nextReviewAt, blockUntil } = useReviews(viewer);
   // Solo en desarrollo (?demo=reviews): reseñas de ejemplo en lugar de las cargadas
   const demo = useDemoReviews();
   const reviews = demo ?? loaded;
@@ -74,8 +74,14 @@ export default function ReviewsPage() {
   };
 
   const hasReviews = !loading && !loadError && items.length > 0;
-  const ownReview = items.find(r => r.mine);
-  const composer = useReviewForm({ user, ownReview, create, update, remove, reload });
+  const ownReviews = useMemo(() => items.filter(r => r.mine), [items]);
+  const composer = useReviewForm({ user, create, update, remove, reload, blockUntil });
+  // Acciones de tus tarjetas: objeto estable para no volver a pintar el muro en cada tecla
+  const { confirmingId, deleting, startEdit, askDelete, cancelDelete, confirmDelete } = composer;
+  const ownActions = useMemo(
+    () => ({ confirmingId, deleting, startEdit, askDelete, cancelDelete, confirmDelete }),
+    [confirmingId, deleting, startEdit, askDelete, cancelDelete, confirmDelete]
+  );
 
   return (
     <div className="relative isolate min-h-dvh pb-32">
@@ -98,7 +104,7 @@ export default function ReviewsPage() {
           <motion.div variants={item} className="lg:col-span-5 lg:self-start">
             <ReviewStation rating={user ? composer.form.rating : 0}>
               {user ? (
-                <ReviewComposer user={user} ownReview={ownReview} onShowOwn={revealCard} state={composer} />
+                <ReviewComposer user={user} ownReviews={ownReviews} nextReviewAt={nextReviewAt} onShowOwn={revealCard} state={composer} />
               ) : (
                 <ReviewInvite onAccess={openAuth} />
               )}
@@ -115,6 +121,7 @@ export default function ReviewsPage() {
               activeId={activeId}
               onActivate={activate}
               onDeactivate={deactivate}
+              ownActions={user ? ownActions : undefined}
             >
               <ReviewsEmptyState onWrite={writeFirst} />
             </ReviewList>

@@ -7,6 +7,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-moti
 import StarRating from './StarRating';
 import { formatFullDate, formatRelativeDate, starsLabel } from './reviewFormat';
 import { LATEST, MINE, NO_TEXT } from './reviewsCopy';
+import OwnActions from './OwnActions';
 
 const AVATAR_TONES = [
   'bg-brand-400/15 text-brand-200',
@@ -57,7 +58,7 @@ function useTilt(maxDeg) {
   };
 }
 
-function ReviewCard({ review, featured = false, active = false, linked = false, onActivate, onDeactivate }) {
+function ReviewCard({ review, featured = false, active = false, linked = false, onActivate, onDeactivate, ownActions }) {
   const { id, name, initials, tone, rating, text, date, mine } = review;
   // Destacada: cita grande en display si es breve; si es larga, cuerpo amplio y legible
   const quote = featured && text.length <= 180;
@@ -151,6 +152,12 @@ function ReviewCard({ review, featured = false, active = false, linked = false, 
           )}
         </div>
       </footer>
+      {/* Tus reseñas: editar y borrar desde su propia tarjeta */}
+      {mine && ownActions && (
+        <div className="mt-5 border-t border-white/[0.06] pt-4">
+          <OwnActions review={review} actions={ownActions} scope="card" size="sm" />
+        </div>
+      )}
     </motion.article>
   );
 }

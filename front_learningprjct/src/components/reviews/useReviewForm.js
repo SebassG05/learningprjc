@@ -15,17 +15,21 @@ const without = (obj, key) => {
 // Foco tras pintar (el elemento puede aparecer en este mismo render)
 const focusSoon = (selector) => requestAnimationFrame(() => document.querySelector(selector)?.focus());
 
-// Estado del panel "Tu turno": escribir una reseña, editar o borrar la propia (una por persona).
-export default function useReviewForm({ user, ownReview, create, update, remove, reload }) {
+// Estado del panel "Tu turno" y de las acciones de tus reseñas: escribir (una cada 24 h), editar
+// cualquiera de las tuyas o borrarla. Las acciones son estables (useCallback + ref) para que las
+// tarjetas memoizadas del muro no se vuelvan a pintar en cada tecla.
+export default function useReviewForm({ user, create, update, remove, reload, blockUntil }) {
   const [form, setForm] = useState(EMPTY);
   const [fieldErrors, setFieldErrors] = useState({});
   const [sendError, setSendError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [confirming, setConfirming] = useState(false);
+  const [editing, setEditing] = useState(null); // reseña que se está editando (y desde dónde: scope)
+  const [confirmingId, setConfirmingId] = useState(null); // `${scope}-${id}` pendiente de confirmar el borrado
   const [deleting, setDeleting] = useState(false);
   const [success, setSuccess] = useState(null); // mensaje del momento de éxito
   const timer = useRef(null);
+  const latest = useRef({});
+  latest.current = { form, editing, submitting, deleting, user };
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
@@ -44,9 +48,14 @@ export default function useReviewForm({ user, ownReview, create, update, remove,
       else if (fields.description) focusSoon('#review-description');
       return;
     }
-    // 409: ya tenía una reseña (p. ej. publicada en otra pestaña): se recarga para mostrarla
-    if (err?.status === 409) reload();
-    setSendError([401, 403, 409, 429].includes(err?.status) ? err.message : fallback);
+    // 429 por el plazo diario: el panel pasa a mostrar cuándo podrá escribir la siguiente
+    if (err?.status === 429 && err.data?.nextReviewAt) {
+      blockUntil(err.data.nextReviewAt);
+      setSendError(null);
+      return;
+    }
+    if (err?.status === 404) reload();
+    setSendError([401, 403, 404, 429].includes(err?.status) ? err.message : fallback);
   };
 
   const onTextChange = (e) => {
@@ -59,23 +68,25 @@ export default function useReviewForm({ user, ownReview, create, update, remove,
     setFieldErrors((current) => without(current, 'rating'));
   };
 
-  const startEdit = useCallback(() => {
-    if (!ownReview) return;
-    setForm({ description: ownReview.text, rating: ownReview.rating });
+  // Editar cualquiera de las tuyas (desde el panel o desde su tarjeta del muro)
+  const startEdit = useCallback((review, scope) => {
+    setForm({ description: review.text, rating: review.rating });
     setFieldErrors({});
     setSendError(null);
-    setConfirming(false);
-    setEditing(true);
+    setConfirmingId(null);
+    setEditing({ ...review, scope });
     focusSoon('#review-description');
-  }, [ownReview]);
+  }, []);
 
-  const cancelEdit = () => {
-    setEditing(false);
+  const cancelEdit = useCallback(() => {
+    const from = latest.current.editing;
+    setEditing(null);
     setForm(EMPTY);
     setFieldErrors({});
     setSendError(null);
-    focusSoon('#own-review-edit');
-  };
+    // Vuelve al botón Editar desde el que se abrió
+    focusSoon(from ? `#${from.scope}-${from.id}-edit` : '#composer-title');
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -85,9 +96,9 @@ export default function useReviewForm({ user, ownReview, create, update, remove,
     setFieldErrors({});
     const review = { description: form.description, rating: form.rating };
     try {
-      if (editing && ownReview) {
-        await update(ownReview.id, review);
-        setEditing(false);
+      if (editing) {
+        await update(editing.id, review);
+        setEditing(null);
         flash(OWN.updated);
       } else {
         await create({ ...review, name: user?.name || '' });
@@ -101,26 +112,28 @@ export default function useReviewForm({ user, ownReview, create, update, remove,
     }
   };
 
-  const askDelete = () => {
+  const askDelete = useCallback((review, scope) => {
     setSendError(null);
-    setConfirming(true);
-    focusSoon('#own-review-cancel-delete');
-  };
+    setConfirmingId(`${scope}-${review.id}`);
+    focusSoon(`#${scope}-${review.id}-cancel-delete`);
+  }, []);
 
-  const cancelDelete = () => {
-    setConfirming(false);
-    focusSoon('#own-review-delete');
-  };
+  const cancelDelete = useCallback((review, scope) => {
+    setConfirmingId(null);
+    focusSoon(`#${scope}-${review.id}-delete`);
+  }, []);
 
-  const confirmDelete = async () => {
-    if (!ownReview || deleting) return;
+  const confirmDelete = useCallback(async (review) => {
+    if (latest.current.deleting) return;
     setDeleting(true);
     setSendError(null);
     try {
-      await remove(ownReview.id);
-      setConfirming(false);
-      setEditing(false);
-      setForm(EMPTY);
+      await remove(review.id);
+      setConfirmingId(null);
+      if (latest.current.editing?.id === review.id) {
+        setEditing(null);
+        setForm(EMPTY);
+      }
       flash(OWN.deleted);
       focusSoon('#composer-title');
     } catch (err) {
@@ -128,10 +141,12 @@ export default function useReviewForm({ user, ownReview, create, update, remove,
     } finally {
       setDeleting(false);
     }
-  };
+    // flash y fail solo usan setters y props estables
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [remove]);
 
   return {
-    form, fieldErrors, sendError, submitting, success, editing, confirming, deleting,
+    form, fieldErrors, sendError, submitting, success, editing, confirmingId, deleting,
     onTextChange, onRate, onSubmit, startEdit, cancelEdit, askDelete, cancelDelete, confirmDelete,
   };
 }

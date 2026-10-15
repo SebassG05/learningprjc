@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   formatAverage,
+  formatNextTime,
   formatRelativeDate,
   initialsOf,
   ratingDistribution,
@@ -57,4 +58,11 @@ test('ratingDistribution: de 5 a 1 estrellas', () => {
   const d = ratingDistribution([{ rating: 5 }, { rating: 5 }, { rating: 2 }]);
   assert.deepEqual(d.map((r) => r.stars), [5, 4, 3, 2, 1]);
   assert.deepEqual(d.map((r) => r.count), [2, 0, 0, 1, 0]);
+});
+
+test('formatNextTime: hoy, mañana o la fecha, con la hora', () => {
+  const now = new Date(2026, 9, 15, 10, 0);
+  assert.equal(formatNextTime(new Date(2026, 9, 15, 18, 5), now), 'hoy a las 18:05');
+  assert.equal(formatNextTime(new Date(2026, 9, 16, 9, 30), now), 'mañana a las 09:30');
+  assert.match(formatNextTime(new Date(2026, 9, 18, 9, 30), now), /^el 18 de octubre de 2026 a las 09:30$/);
 });

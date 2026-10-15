@@ -65,6 +65,16 @@ export function formatRelativeDate(date, now = new Date()) {
 
 export const formatFullDate = (date) => full.format(date);
 
+const clock = new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2-digit' });
+const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+
+// Cuándo se podrá publicar la siguiente: "hoy a las 18:05", "mañana a las 10:32" o la fecha
+export function formatNextTime(date, now = new Date()) {
+  const days = Math.round((startOfDay(date) - startOfDay(now)) / (24 * 3600 * 1000));
+  const when = days <= 0 ? 'hoy' : days === 1 ? 'mañana' : `el ${full.format(date)}`;
+  return `${when} a las ${clock.format(date)}`;
+}
+
 const average = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 export const formatAverage = (value) => average.format(value);
 

@@ -36,28 +36,27 @@ function GeneralError({ error }) {
   );
 }
 
-export default function ReviewComposer({ user, ownReview, onShowOwn, state }) {
+export default function ReviewComposer({ user, ownReviews = [], nextReviewAt, onShowOwn, state }) {
   const reduce = useReducedMotion();
-  const { form, fieldErrors, sendError, submitting, success, editing, confirming, deleting } = state;
+  const { form, fieldErrors, sendError, submitting, success, editing } = state;
   const incomplete = !form.description || !form.rating;
   const length = form.description.length;
   const nearLimit = length > MAX_TEXT * 0.8;
   // Éxito de publicar o guardar: momento grande; al borrar, solo un aviso
   const celebrate = success && success !== OWN.deleted;
+  const latestOwn = ownReviews[0];
+  const deletedNotice = success === OWN.deleted && (
+    <p role="status" className="text-sm text-brand-200">
+      {success}
+    </p>
+  );
 
-  if (ownReview && !editing) {
+  // Ya ha publicado hoy (una reseña cada 24 h): cuándo podrá la siguiente y su última, editable
+  if (nextReviewAt && !editing) {
     return (
       <div className="flex flex-col gap-4">
-        <OwnReview
-          review={ownReview}
-          onShow={onShowOwn}
-          onEdit={state.startEdit}
-          onAskDelete={state.askDelete}
-          onCancelDelete={state.cancelDelete}
-          onConfirmDelete={state.confirmDelete}
-          confirming={confirming}
-          deleting={deleting}
-        />
+        <OwnReview review={latestOwn} nextReviewAt={nextReviewAt} onShow={onShowOwn} actions={state} />
+        {deletedNotice}
         <GeneralError error={sendError} />
         <AnimatePresence>{celebrate && <ReviewSent message={success} />}</AnimatePresence>
       </div>
@@ -75,11 +74,15 @@ export default function ReviewComposer({ user, ownReview, onShowOwn, state }) {
           {editing ? OWN.as : COMPOSER.as} <span className="font-semibold text-ink">{user.name || user.email}</span>
           {user.name && user.email && <span className="text-ink-3"> · {user.email}</span>}
         </p>
-        {success === OWN.deleted && (
-          <p role="status" className="text-sm text-brand-200">
-            {success}
+        {!editing && latestOwn && (
+          <p className="text-sm text-ink-2">
+            {OWN.count(ownReviews.length)}{' '}
+            <button type="button" onClick={() => onShowOwn(latestOwn.id)} className="font-semibold text-brand-300 underline-offset-4 hover:underline focus-visible:underline">
+              {OWN.show}
+            </button>
           </p>
         )}
+        {deletedNotice}
       </div>
 
       <StarRatingInput
