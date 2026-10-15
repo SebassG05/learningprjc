@@ -85,7 +85,7 @@ const PrivacySection = () => {
           {PRIVACY.description} {PRIVACY.policyLead}{' '}
           <Link
             to="/politica-cookies"
-            className="text-brand-400 underline-offset-4 hover:text-brand-300 hover:underline"
+            className="text-brand-400 underline underline-offset-4 transition-colors duration-200 ease-standard hover:text-brand-300"
           >
             {PRIVACY.policyLink}
           </Link>
