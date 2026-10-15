@@ -1,19 +1,19 @@
 {
   "front_learningprjct/dev-dist/registerSW.js": {
-    "mtime": 1792049591.7162497,
-    "seen": 1792052015.4425879,
+    "mtime": 1792061149.2675683,
+    "seen": 1792061675.3197916,
     "ast_hash": "3ca0b8505b4bec776b69afdba2768812",
     "semantic_hash": "3ca0b8505b4bec776b69afdba2768812"
   },
   "front_learningprjct/dev-dist/sw.js": {
-    "mtime": 1792049604.9392555,
-    "seen": 1792052015.442589,
+    "mtime": 1792061153.3466558,
+    "seen": 1792061675.3197937,
     "ast_hash": "a7f133adb8a3de490d8d32168c352e0a",
     "semantic_hash": "a7f133adb8a3de490d8d32168c352e0a"
   },
   "front_learningprjct/dev-dist/workbox-4772ad73.js": {
-    "mtime": 1792049604.9407592,
-    "seen": 1792052015.4425898,
+    "mtime": 1792061153.3502798,
+    "seen": 1792061675.3197951,
     "ast_hash": "dfa6c1bef40dabbfe9ca48cfb19107e0",
     "semantic_hash": "dfa6c1bef40dabbfe9ca48cfb19107e0"
   },
@@ -366,9 +366,9 @@
     "semantic_hash": "f697877ed326ee7a64cd2210f475fce0"
   },
   "front_learningprjct/src/pages/Reviews.jsx": {
-    "mtime": 1792054500.7600667,
-    "seen": 1792054852.9245498,
-    "ast_hash": "0f04b8868c9f4ab1ceed9d6cde1a5c9c",
+    "mtime": 1792061470.0092719,
+    "seen": 1792061675.3200185,
+    "ast_hash": "2ae3832ad4fe46fa7f67a1a79176afb4",
     "semantic_hash": ""
   },
   "front_learningprjct/src/pages/SobreNosotros.jsx": {
@@ -528,9 +528,9 @@
     "semantic_hash": ""
   },
   "backend_learningprjct/src/controller/reviewController.js": {
-    "mtime": 1792052866.1876242,
-    "seen": 1792053289.670289,
-    "ast_hash": "16c7e807cb756a54ccd8fe765edd9e88",
+    "mtime": 1792061306.8450046,
+    "seen": 1792061675.3196008,
+    "ast_hash": "646f4a93d9a1eaa7bdd86360237b3221",
     "semantic_hash": ""
   },
   "backend_learningprjct/src/controller/testController.js": {
@@ -768,9 +768,9 @@
     "semantic_hash": ""
   },
   "backend_learningprjct/src/models/Review.js": {
-    "mtime": 1792052846.0099752,
-    "seen": 1792053289.6703596,
-    "ast_hash": "5fca361bce75c4d42457bdea502ef31a",
+    "mtime": 1792061282.097041,
+    "seen": 1792061675.3196967,
+    "ast_hash": "089406bff804c1a6f80df93b6870be59",
     "semantic_hash": ""
   },
   "backend_learningprjct/src/models/Test.js": {
@@ -780,9 +780,9 @@
     "semantic_hash": ""
   },
   "backend_learningprjct/src/models/User.js": {
-    "mtime": 1773667390.2851155,
-    "seen": 1791971632.0657973,
-    "ast_hash": "2825ad263f9432662653ca111721e1b0",
+    "mtime": 1792061282.097041,
+    "seen": 1792061675.3197,
+    "ast_hash": "71fef5f08e3bfd148d93970053a3b090",
     "semantic_hash": ""
   },
   "backend_learningprjct/src/models/UserProgress.js": {
@@ -822,9 +822,9 @@
     "semantic_hash": ""
   },
   "backend_learningprjct/src/routes/review.routes.js": {
-    "mtime": 1792052867.2287421,
-    "seen": 1792053289.6703734,
-    "ast_hash": "474ac83c1487e2a3db267d1dbe93d7fd",
+    "mtime": 1792061308.1824837,
+    "seen": 1792061675.319714,
+    "ast_hash": "38a67f96f755792faa1c5fab937a050a",
     "semantic_hash": ""
   },
   "backend_learningprjct/src/routes/test.routes.js": {
@@ -1434,15 +1434,15 @@
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/ReviewCard.jsx": {
-    "mtime": 1792054500.7610664,
-    "seen": 1792054852.924453,
-    "ast_hash": "e7737b5c0ece919362692ef674f45061",
+    "mtime": 1792061577.9425344,
+    "seen": 1792061675.3199198,
+    "ast_hash": "d9c15682724a569510e000a2479a4dc1",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/ReviewComposer.jsx": {
-    "mtime": 1792053978.0407093,
-    "seen": 1792054852.924455,
-    "ast_hash": "cc3cc9fc8e554bd2022517f0f614928d",
+    "mtime": 1792061453.434063,
+    "seen": 1792061675.3199213,
+    "ast_hash": "d3b3a9e208c9b9ad67de8fc2d430ecb3",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/ReviewInvite.jsx": {
@@ -1452,9 +1452,9 @@
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/ReviewList.jsx": {
-    "mtime": 1792051425.9615142,
-    "seen": 1792052015.442657,
-    "ast_hash": "3df80495e6627d4b8f3cc8b8d454cc51",
+    "mtime": 1792061470.0092719,
+    "seen": 1792061675.319924,
+    "ast_hash": "21c6620ffac098531617e9ee01446590",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/ReviewSent.jsx": {
@@ -1506,21 +1506,21 @@
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/reviewFormat.js": {
-    "mtime": 1792053014.587609,
-    "seen": 1792053289.670576,
-    "ast_hash": "fa4d06eb325926df7426ac9164a1f7b6",
+    "mtime": 1792061438.61693,
+    "seen": 1792061675.319944,
+    "ast_hash": "7d5c81bc143e833d3d268602b817495b",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/reviewFormat.test.js": {
-    "mtime": 1792051908.8434365,
-    "seen": 1792052015.4426641,
-    "ast_hash": "33f6e2c9b9a057ce31bee0c74950875c",
+    "mtime": 1792061438.61693,
+    "seen": 1792061675.319945,
+    "ast_hash": "82d1f8533167f6d82ccb9e9628a4b51d",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/reviewsCopy.js": {
-    "mtime": 1792054154.741261,
-    "seen": 1792054852.9244807,
-    "ast_hash": "c4e64c18ba9b3427bee999f4b8030641",
+    "mtime": 1792061438.6159306,
+    "seen": 1792061675.3199468,
+    "ast_hash": "052dadc708ae2246b18a82611ed1aee4",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/ui/TextAreaField.jsx": {
@@ -1536,9 +1536,9 @@
     "semantic_hash": ""
   },
   "front_learningprjct/src/lib/reviewsApi.js": {
-    "mtime": 1792052981.3401341,
-    "seen": 1792053289.6706142,
-    "ast_hash": "f46ab87a6e8a0ac4c6a76a76a2db3767",
+    "mtime": 1792061367.2707913,
+    "seen": 1792061675.3199866,
+    "ast_hash": "eef07977c6b8d83e1ee485e738768fa6",
     "semantic_hash": ""
   },
   "backend_learningprjct/src/config/jwt.js": {
@@ -1548,27 +1548,27 @@
     "semantic_hash": ""
   },
   "backend_learningprjct/test/reviews.test.js": {
-    "mtime": 1792052929.482717,
-    "seen": 1792053289.6704376,
-    "ast_hash": "eff62bf75f4809fd70e7ac37c2a1316e",
+    "mtime": 1792061343.4337997,
+    "seen": 1792061675.3197894,
+    "ast_hash": "18d45f13d3fa97a3d71939fc292b9859",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/OwnReview.jsx": {
-    "mtime": 1792053234.153772,
-    "seen": 1792053289.6705563,
-    "ast_hash": "4c3bf638771c3c1c19232fceae5927f4",
+    "mtime": 1792061577.9415333,
+    "seen": 1792061675.3199184,
+    "ast_hash": "821c40b602ecb25e89827cf01f59c4a2",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/useReviewForm.js": {
-    "mtime": 1792053013.232649,
-    "seen": 1792053289.6705801,
-    "ast_hash": "0fa51f08fc87a67e691fc0f3f3ac1efe",
+    "mtime": 1792061577.9425344,
+    "seen": 1792061675.3199499,
+    "ast_hash": "213de84ebb90294aba8bd58ac759f3f8",
     "semantic_hash": ""
   },
   "front_learningprjct/src/hooks/useReviews.js": {
-    "mtime": 1792052982.38342,
-    "seen": 1792053289.6706095,
-    "ast_hash": "25de758209dd076443ba07a8529b675a",
+    "mtime": 1792061380.361466,
+    "seen": 1792061675.319982,
+    "ast_hash": "cf05e1e6ba60411539e93a3f8f3eed55",
     "semantic_hash": ""
   },
   "front_learningprjct/src/components/reviews/ReviewPreview.jsx": {
@@ -1593,6 +1593,12 @@
     "mtime": 1792054105.050357,
     "seen": 1792054852.924482,
     "ast_hash": "591d0107f0d6da2ddea9c7af24f300bb",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/OwnActions.jsx": {
+    "mtime": 1792061577.9415333,
+    "seen": 1792061675.3199165,
+    "ast_hash": "a26e35bcd5febe91c403a0cc7d84e150",
     "semantic_hash": ""
   }
 }
