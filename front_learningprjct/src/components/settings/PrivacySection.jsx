@@ -92,9 +92,9 @@ const PrivacySection = () => {
           .
         </p>
       }
-      aside={<ConsentStatus saved={cookiePreferences} />}
       footer={
         <ConsentActions
+          summary={<ConsentStatus saved={cookiePreferences} />}
           onReject={handleRejectAll}
           onAccept={handleAcceptAll}
           onSave={handleSave}
