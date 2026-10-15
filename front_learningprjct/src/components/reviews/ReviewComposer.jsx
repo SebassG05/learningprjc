@@ -13,7 +13,7 @@ import ReviewSent from './ReviewSent';
 import OwnReview from './OwnReview';
 import { COMPOSER, OWN } from './reviewsCopy';
 import { MAX_TEXT } from './reviewFormat';
-import { nudge } from '../../lib/motion';
+import { nudge, spring } from '../../lib/motion';
 
 function GeneralError({ error }) {
   const reduce = useReducedMotion();
@@ -37,6 +37,7 @@ function GeneralError({ error }) {
 }
 
 export default function ReviewComposer({ user, ownReview, onShowOwn, state }) {
+  const reduce = useReducedMotion();
   const { form, fieldErrors, sendError, submitting, success, editing, confirming, deleting } = state;
   const incomplete = !form.description || !form.rating;
   const length = form.description.length;
@@ -112,14 +113,24 @@ export default function ReviewComposer({ user, ownReview, onShowOwn, state }) {
       <GeneralError error={sendError} />
 
       <div className="flex flex-col gap-3">
-        <SubmitButton
-          loading={submitting}
-          loadingText={editing ? OWN.saving : COMPOSER.sending}
-          disabled={incomplete}
-          aria-describedby={incomplete ? 'composer-incomplete' : undefined}
+        {/* Al quedar listo, el botón despierta: un muelle y un barrido de luz (solo su aspecto) */}
+        <motion.div
+          key={incomplete ? 'asleep' : 'awake'}
+          initial={!incomplete && !reduce ? { scale: 0.97 } : false}
+          animate={{ scale: 1 }}
+          transition={spring.pop}
         >
-          {editing ? OWN.save : COMPOSER.submit}
-        </SubmitButton>
+          <SubmitButton
+            loading={submitting}
+            loadingText={editing ? OWN.saving : COMPOSER.sending}
+            disabled={incomplete}
+            aria-describedby={incomplete ? 'composer-incomplete' : undefined}
+            className="overflow-hidden disabled:opacity-100! disabled:bg-brand-400/12! disabled:text-brand-100! disabled:shadow-none! disabled:ring-1 disabled:ring-inset disabled:ring-brand-300/35"
+          >
+            {editing ? OWN.save : COMPOSER.submit}
+            {!incomplete && !submitting && <span aria-hidden="true" className="reviews-sweep pointer-events-none absolute inset-0" />}
+          </SubmitButton>
+        </motion.div>
         {editing && (
           <Button type="button" variant="ghost" onClick={state.cancelEdit} disabled={submitting}>
             {OWN.cancel}

@@ -10,6 +10,7 @@ import ReviewsBackdrop from '../components/reviews/ReviewsBackdrop';
 import ReviewsHero from '../components/reviews/ReviewsHero';
 import ReviewsSummary from '../components/reviews/ReviewsSummary';
 import ReviewComposer from '../components/reviews/ReviewComposer';
+import ReviewStation from '../components/reviews/ReviewStation';
 import ReviewInvite from '../components/reviews/ReviewInvite';
 import ReviewList from '../components/reviews/ReviewList';
 import ReviewsEmptyState from '../components/reviews/ReviewsEmptyState';
@@ -77,12 +78,14 @@ export default function ReviewsPage() {
             </motion.div>
           </div>
 
-          <motion.div variants={item} className="relative rounded-3xl glass-panel p-6 sm:p-8 lg:col-span-5 lg:self-start">
-            {user ? (
-              <ReviewComposer user={user} ownReview={ownReview} onShowOwn={revealCard} state={composer} />
-            ) : (
-              <ReviewInvite onAccess={openAuth} />
-            )}
+          <motion.div variants={item} className="lg:col-span-5 lg:self-start">
+            <ReviewStation rating={user ? composer.form.rating : 0}>
+              {user ? (
+                <ReviewComposer user={user} ownReview={ownReview} onShowOwn={revealCard} state={composer} />
+              ) : (
+                <ReviewInvite onAccess={openAuth} />
+              )}
+            </ReviewStation>
           </motion.div>
         </div>
 
