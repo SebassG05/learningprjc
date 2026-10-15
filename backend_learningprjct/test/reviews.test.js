@@ -17,12 +17,8 @@ const LUIS = '64b000000000000000000002';
 const ADMIN = '64b000000000000000000009';
 const ID_ANA = '64c000000000000000000001';
 const ID_LUIS = '64c000000000000000000002';
-const accounts = {
-  [ANA]: { _id: ANA, name: 'Ana', email: 'ana@x.com', role: 'usuario' },
-  [LUIS]: { _id: LUIS, name: 'Luis', email: 'luis@x.com', role: 'usuario' },
-  [ADMIN]: { _id: ADMIN, name: 'Admin', email: 'admin@x.com', role: 'admin' },
-};
-
+const DAY = 24 * 60 * 60 * 1000;
+let accounts;
 let db;
 const asDoc = (r) =>
   r &&
@@ -32,7 +28,23 @@ const asDoc = (r) =>
     toObject() { const { save, deleteOne, toObject, ...plain } = this; return plain; },
   });
 
-User.findById = (id) => ({ select: () => ({ lean: async () => accounts[id] ?? null }) });
+User.findById = (id) => ({ select: () => ({ lean: async () => (accounts[id] ? { ...accounts[id] } : null) }) });
+// Reserva atómica del plazo: solo si no hay lastReviewAt o tiene más de 24 h; devuelve el documento anterior
+User.findOneAndUpdate = (filter, update) => ({
+  select: () => ({
+    lean: async () => {
+      const acc = accounts[filter._id];
+      const limit = filter.$or[1].lastReviewAt.$lte;
+      if (!acc || (acc.lastReviewAt && acc.lastReviewAt > limit)) return null;
+      const before = { ...acc };
+      acc.lastReviewAt = update.$set.lastReviewAt;
+      return before;
+    },
+  }),
+});
+User.updateOne = async (filter, update) => {
+  accounts[filter._id].lastReviewAt = update.$set.lastReviewAt ?? undefined;
+};
 Review.find = () => ({ sort: () => ({ lean: async () => Object.values(db) }) });
 Review.exists = async ({ userId }) => Object.values(db).some((r) => String(r.userId) === String(userId));
 Review.findById = async (id) => asDoc(db[id]);
@@ -49,13 +61,21 @@ before(() => {
 });
 after(() => server.close());
 beforeEach(() => {
+  accounts = {
+    [ANA]: { _id: ANA, name: 'Ana', email: 'ana@x.com', role: 'usuario' },
+    [LUIS]: { _id: LUIS, name: 'Luis', email: 'luis@x.com', role: 'usuario', lastReviewAt: new Date(Date.now() - 2 * DAY) },
+    [ADMIN]: { _id: ADMIN, name: 'Admin', email: 'admin@x.com', role: 'admin' },
+  };
   db = {
     [ID_LUIS]: { _id: ID_LUIS, user: 'Luis', userId: LUIS, rating: 3, description: 'De Luis', __v: 0 },
   };
 });
 
+// Cada petición con una IP distinta: así se prueba el límite diario por cuenta, no el de IP
+let ip = 0;
 const call = async (method, path, who, body) => {
-  const headers = { 'Content-Type': 'application/json' };
+  ip += 1;
+  const headers = { 'Content-Type': 'application/json', 'X-Forwarded-For': `10.0.${Math.floor(ip / 250)}.${ip % 250}` };
   if (who) headers.Authorization = `Bearer ${signToken({ id: who, email: accounts[who].email })}`;
   const res = await fetch(base + path, { method, headers, body: body && JSON.stringify(body) });
   return { status: res.status, body: await res.json() };
@@ -78,9 +98,43 @@ test('POST: el nombre sale de la cuenta, no del cuerpo', async () => {
   assert.equal(res.body.review.mine, true);
 });
 
-test('POST: una reseña por cuenta (409 si ya tiene una)', async () => {
-  const res = await call('POST', '/', LUIS, { rating: 5, description: 'Otra' });
-  assert.equal(res.status, 409);
+test('POST: una reseña cada 24 h (429 con la hora a la que podrá)', async () => {
+  const first = await call('POST', '/', ANA, { rating: 5, description: 'Primera' });
+  assert.equal(first.status, 201);
+  assert.ok(new Date(first.body.nextReviewAt) > new Date(Date.now() + DAY - 5000));
+  const second = await call('POST', '/', ANA, { rating: 4, description: 'Segunda el mismo día' });
+  assert.equal(second.status, 429);
+  assert.match(second.body.error, /24 horas/);
+  assert.ok(new Date(second.body.nextReviewAt) > new Date());
+});
+
+test('POST: pasado el plazo puede publicar otra aunque ya tenga reseñas', async () => {
+  const res = await call('POST', '/', LUIS, { rating: 5, description: 'Otra, dos días después' });
+  assert.equal(res.status, 201);
+});
+
+test('POST: borrar la reseña del día no reabre el plazo', async () => {
+  const created = await call('POST', '/', ANA, { rating: 5, description: 'La borro enseguida' });
+  assert.equal((await call('DELETE', `/${created.body.review._id}`, ANA)).status, 200);
+  assert.equal((await call('POST', '/', ANA, { rating: 5, description: 'Otra vez' })).status, 429);
+});
+
+test('POST: si no se guarda, el plazo vuelve a como estaba', async () => {
+  const original = Review.prototype.save;
+  Review.prototype.save = async () => { throw new Error('fallo de BD'); };
+  assert.equal((await call('POST', '/', ANA, { rating: 5, description: 'x' })).status, 500);
+  Review.prototype.save = original;
+  assert.equal(accounts[ANA].lastReviewAt, undefined);
+  assert.equal((await call('POST', '/', ANA, { rating: 5, description: 'Ahora sí' })).status, 201);
+});
+
+test('GET /status: cuándo puede publicar la siguiente', async () => {
+  assert.deepEqual((await call('GET', '/status', ANA)).body, { canPost: true, nextReviewAt: null });
+  await call('POST', '/', ANA, { rating: 5, description: 'Hoy' });
+  const after = (await call('GET', '/status', ANA)).body;
+  assert.equal(after.canPost, false);
+  assert.ok(after.nextReviewAt);
+  assert.equal((await call('GET', '/status', null)).status, 401);
 });
 
 test('POST: validación y sesión obligatoria', async () => {
@@ -88,6 +142,14 @@ test('POST: validación y sesión obligatoria', async () => {
   assert.equal(bad.status, 400);
   assert.deepEqual(bad.body.errors.map((e) => e.path), ['rating', 'description']);
   assert.equal((await call('POST', '/', null, { rating: 4, description: 'x' })).status, 401);
+});
+
+test('PUT: editar no consume el plazo diario', async () => {
+  await call('POST', '/', ANA, { rating: 5, description: 'Hoy' });
+  const stamp = accounts[ANA].lastReviewAt;
+  const id = Object.values(db).find((r) => String(r.userId) === ANA)._id;
+  assert.equal((await call('PUT', `/${id}`, ANA, { rating: 4, description: 'Editada' })).status, 200);
+  assert.equal(accounts[ANA].lastReviewAt, stamp);
 });
 
 test('PUT: solo su autor edita', async () => {

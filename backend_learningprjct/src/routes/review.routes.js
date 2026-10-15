@@ -1,6 +1,6 @@
 import express from 'express';
 import { body, param } from 'express-validator';
-import { createReview, deleteReview, getReviews, updateReview } from '../controller/reviewController.js';
+import { createReview, deleteReview, getReviewStatus, getReviews, updateReview } from '../controller/reviewController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { optionalAuth } from '../middleware/optionalAuth.js';
 import createRateLimit from '../middleware/rateLimit.js';
@@ -32,7 +32,10 @@ const reviewId = param('id').isMongoId().withMessage('Identificador de reseña n
 // Listar reseñas (pública; con sesión marca las propias)
 router.get('/', optionalAuth, getReviews);
 
-// Crear reseña (solo usuarios logeados; una por cuenta)
+// Con sesión: si ya puede publicar o cuándo podrá (una reseña cada 24 h)
+router.get('/status', authenticateJWT, getReviewStatus);
+
+// Crear reseña (solo usuarios logeados; una cada 24 h por cuenta)
 router.post('/', authenticateJWT, reviewRateLimit, reviewFields, createReview);
 
 // Editar o borrar la propia

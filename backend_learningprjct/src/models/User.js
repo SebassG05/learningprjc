@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
   },
   lastLogin: {
     type: Date
+  },
+  // Última reseña publicada: limita a una reseña cada 24 h (borrarla no reabre el plazo)
+  lastReviewAt: {
+    type: Date
   }
 });
 

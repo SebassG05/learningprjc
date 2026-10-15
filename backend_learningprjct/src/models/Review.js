@@ -8,8 +8,8 @@ const reviewSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  // Autor (las reseñas antiguas no lo tienen). No se expone en la API: marca las propias y limita a
-  // una reseña por cuenta.
+  // Autor (las reseñas antiguas no lo tienen). No se expone en la API: marca las propias y permite
+  // editarlas o borrarlas.
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -33,7 +33,7 @@ const reviewSchema = new mongoose.Schema({
   updatedAt: Date
 });
 
-// Una reseña por cuenta (solo cuenta las que tienen autor: las antiguas no chocan entre sí)
-reviewSchema.index({ userId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true } } });
+// Reseñas de un autor, de la más reciente a la más antigua (el límite diario vive en User.lastReviewAt)
+reviewSchema.index({ userId: 1, createdAt: -1 });
 
 export default mongoose.model('Review', reviewSchema);

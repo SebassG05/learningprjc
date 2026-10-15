@@ -6,7 +6,13 @@ const isProduction = process.env.NODE_ENV === 'production';
 const serverError = (res, err) =>
   res.status(500).json({ error: 'Error en el servidor', ...(isProduction ? {} : { details: err.message }) });
 
-const ALREADY_REVIEWED = 'Ya has publicado una reseña. Puedes editarla o borrarla.';
+// Una reseña cada 24 h por cuenta. El plazo vive en User.lastReviewAt: borrar la reseña no lo reabre.
+export const REVIEW_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+const COOLDOWN_MESSAGE = 'Ya has publicado una reseña hoy. Podrás escribir otra cuando pasen 24 horas.';
+const nextReviewAt = (lastReviewAt) =>
+  lastReviewAt && Date.now() - new Date(lastReviewAt).getTime() < REVIEW_COOLDOWN_MS
+    ? new Date(new Date(lastReviewAt).getTime() + REVIEW_COOLDOWN_MS)
+    : null;
 
 // Forma pública de una reseña: nunca expone userId; marca `mine` si es del usuario que pregunta
 const toPublic = (review, viewerId) => {
@@ -23,23 +29,58 @@ const validationFailed = (req, res) => {
   return true;
 };
 
+const cooldown = (res, until) => {
+  res.set('Retry-After', String(Math.max(1, Math.ceil((until.getTime() - Date.now()) / 1000))));
+  return res.status(429).json({ error: COOLDOWN_MESSAGE, nextReviewAt: until });
+};
+
 export const createReview = async (req, res) => {
   if (validationFailed(req, res)) return;
   const { rating, description } = req.body;
   try {
-    const account = req.user?.id ? await User.findById(req.user.id).select('name email').lean() : null;
-    // Una reseña por cuenta: si ya hay una, se edita en lugar de crear otra
-    if (account && (await Review.exists({ userId: account._id }))) {
-      return res.status(409).json({ error: ALREADY_REVIEWED });
+    const account = await User.findById(req.user?.id).select('name email lastReviewAt').lean();
+    if (!account) return res.status(401).json({ error: 'Usuario no encontrado' });
+
+    // Reserva el plazo de forma atómica: dos envíos a la vez no pueden pasar los dos
+    const now = new Date();
+    const claimed = await User.findOneAndUpdate(
+      { _id: account._id, $or: [{ lastReviewAt: null }, { lastReviewAt: { $lte: new Date(now.getTime() - REVIEW_COOLDOWN_MS) } }] },
+      { $set: { lastReviewAt: now } },
+      { new: false }
+    ).select('lastReviewAt').lean();
+    if (!claimed) {
+      const fresh = await User.findById(account._id).select('lastReviewAt').lean();
+      return cooldown(res, nextReviewAt(fresh?.lastReviewAt) ?? new Date(now.getTime() + REVIEW_COOLDOWN_MS));
     }
+
     // El nombre sale de la cuenta, no del cuerpo de la petición (no se puede firmar como otro)
-    const user = account?.name || account?.email?.split('@')[0] || req.user?.email?.split('@')[0] || 'Usuario';
-    const review = new Review({ user, userId: account?._id, rating, description });
-    await review.save();
-    res.status(201).json({ message: 'Reseña creada correctamente', review: toPublic(review.toObject(), req.user?.id) });
+    const user = account.name || account.email?.split('@')[0] || 'Usuario';
+    try {
+      const review = new Review({ user, userId: account._id, rating, description });
+      await review.save();
+      res.status(201).json({
+        message: 'Reseña creada correctamente',
+        review: toPublic(review.toObject(), req.user.id),
+        nextReviewAt: new Date(now.getTime() + REVIEW_COOLDOWN_MS),
+      });
+    } catch (err) {
+      // No se publicó: se devuelve el plazo a como estaba
+      await User.updateOne({ _id: account._id }, { $set: { lastReviewAt: claimed.lastReviewAt ?? null } });
+      throw err;
+    }
   } catch (err) {
-    // Dos envíos simultáneos: el índice único frena el segundo
-    if (err?.code === 11000) return res.status(409).json({ error: ALREADY_REVIEWED });
+    serverError(res, err);
+  }
+};
+
+// Con sesión: cuándo puede publicar la siguiente (null si ya puede)
+export const getReviewStatus = async (req, res) => {
+  try {
+    const account = await User.findById(req.user?.id).select('lastReviewAt').lean();
+    if (!account) return res.status(401).json({ error: 'Usuario no encontrado' });
+    const next = nextReviewAt(account.lastReviewAt);
+    res.json({ canPost: !next, nextReviewAt: next });
+  } catch (err) {
     serverError(res, err);
   }
 };
@@ -53,7 +94,7 @@ export const getReviews = async (req, res) => {
   }
 };
 
-// Solo su autor puede editarla
+// Solo su autor puede editarla (editar no consume el plazo diario)
 export const updateReview = async (req, res) => {
   if (validationFailed(req, res)) return;
   try {
