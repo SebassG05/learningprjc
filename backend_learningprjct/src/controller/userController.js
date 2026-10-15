@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import { signToken } from '../config/jwt.js';
 import UserProgress from '../models/UserProgress.js';
 import Course from '../models/Course.js';
 import Test from '../models/Test.js';
@@ -45,11 +45,7 @@ export const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
-    const token = jwt.sign(
-      { id: user._id, email: user.email },
-      process.env.JWT_SECRET || 'fallback-secret-key',
-      { expiresIn: '7d' }
-    );
+    const token = signToken({ id: user._id, email: user.email });
     
     // Actualizar lastLogin
     user.lastLogin = new Date();

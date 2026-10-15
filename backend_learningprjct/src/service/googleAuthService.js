@@ -1,7 +1,7 @@
 // Servicio para la verificación y manejo de usuarios con Google OAuth
 import { OAuth2Client } from 'google-auth-library';
 import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
+import { signToken } from '../config/jwt.js';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -30,9 +30,5 @@ export async function findOrCreateGoogleUser(googlePayload) {
 }
 
 export function generateJWT(user) {
-  return jwt.sign(
-    { id: user._id, email: user.email },
-    process.env.JWT_SECRET || 'fallback-secret-key',
-    { expiresIn: '7d' }
-  );
+  return signToken({ id: user._id, email: user.email });
 }

@@ -6,7 +6,6 @@ export default {
     port: process.env.PORT || 8547,
     nodeEnv: process.env.NODE_ENV || 'development',
     mongoURI: process.env.MONGODB_URI || 'mongodb://localhost:27017/base_project',
-    jwtSecret: process.env.JWT_SECRET || 'fallback-secret-key',
     // Configuración de email
     email: {
         host: process.env.EMAIL_HOST || 'smtp.gmail.com',

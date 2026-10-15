@@ -1,4 +1,5 @@
 import Test from '../models/Test.js';
+import { verifyToken } from '../config/jwt.js';
 import Course from '../models/Course.js';
 import UserProgress from '../models/UserProgress.js';
 
@@ -36,8 +37,7 @@ export const obtenerTestPorTema = async (req, res) => {
           if (isTestFinal) {
             // Extraer userId del token
             const token = authHeader.split(' ')[1];
-            const jwt = await import('jsonwebtoken');
-            const decoded = jwt.default.verify(token, process.env.JWT_SECRET || 'clave-secreta-para-jwt-en-desarrollo');
+            const decoded = verifyToken(token);
             const userId = decoded.id;
             
             // Verificar enrollment del usuario

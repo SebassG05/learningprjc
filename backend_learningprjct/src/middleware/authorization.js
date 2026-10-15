@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '../config/jwt.js';
 import User from '../models/User.js';
 
 /**
@@ -16,7 +16,7 @@ export const autenticar = async (req, res, next) => {
     }
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key');
+    const decoded = verifyToken(token);
     
     // Buscar usuario y verificar que esté activo
     const usuario = await User.findById(decoded.id).select('-password');
