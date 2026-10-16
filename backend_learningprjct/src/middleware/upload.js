@@ -26,6 +26,16 @@ const storageDinamico = new CloudinaryStorage({
         size: file.size
       });
 
+      // Foto del profesor: cuadrada, recortada sobre la cara
+      if (file.fieldname === 'profesorFoto') {
+        return {
+          folder: 'learning-platform/profesores',
+          resource_type: 'image',
+          public_id: generateUniqueFilename(file.originalname),
+          allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+          transformation: [{ width: 400, height: 400, crop: 'fill', gravity: 'face', quality: 'auto' }]
+        };
+      }
       // Si el campo se llama 'image', es una imagen de portada
       if (file.fieldname === 'image') {
         const config = {
@@ -66,8 +76,8 @@ const fileFilterDinamico = (req, file, cb) => {
 
   const extension = file.originalname.split('.').pop().toLowerCase();
 
-  if (file.fieldname === 'image') {
-    // Para imágenes de portada
+  if (file.fieldname === 'image' || file.fieldname === 'profesorFoto') {
+    // Para imágenes de portada y fotos del profesor
     const allowedImageTypes = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
     const isValidImage = allowedImageTypes.includes(extension);
     

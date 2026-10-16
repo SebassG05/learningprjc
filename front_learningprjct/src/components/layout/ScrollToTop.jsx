@@ -4,6 +4,7 @@ import { glideTo } from '../../lib/smoothScroll';
 import { duration, ease } from '../../lib/motion';
 
 const SHOW_AFTER = 200;
+// --bottom-bar: altura de una barra fija inferior (p. ej. la CTA de la ficha en móvil); el botón sube con ella
 
 export default function ScrollToTop() {
   const { scrollY } = useScroll();
@@ -32,7 +33,7 @@ export default function ScrollToTop() {
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1, transition: { duration: duration.base, ease: ease.outExpo } }}
           exit={{ opacity: 0, scale: 0.85, transition: { duration: duration.fast, ease: ease.exit } }}
-          className="fixed bottom-6 right-4 z-40 flex size-11 items-center justify-center rounded-full border border-line-strong material text-ink shadow-raised hover:bg-surface-3 sm:right-6"
+          className="fixed bottom-[calc(1.5rem+var(--bottom-bar,0px))] right-4 z-40 flex size-11 items-center justify-center rounded-full border border-line-strong material text-ink shadow-raised hover:bg-surface-3 sm:right-6"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

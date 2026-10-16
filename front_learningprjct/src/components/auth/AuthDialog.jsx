@@ -8,6 +8,7 @@ import { duration, ease, overlay, spring } from '../../lib/motion';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { shouldDismissSheet } from './validation';
 import { setOverlay } from '../globe/journey/store';
+import { inertOutside as inertOutsideKeeping } from '../../lib/modalLock';
 
 const AuthGlobe = lazy(() => import('../globe/AuthGlobe'));
 
@@ -22,16 +23,7 @@ const canReceiveFocus = (el) =>
 // Lo que debe seguir operativo bajo el diálogo: el banner de cookies (otro diálogo) y los avisos
 // (y el propio velo del acceso: sus centinelas de foco no pueden quedar inertes)
 const KEEP = '[data-auth-overlay], [role="dialog"], [role="alertdialog"], [role="status"], [aria-live]';
-
-// Marca inerte todo lo que cuelga de `node` salvo las ramas que contienen algo de KEEP
-function inertOutside(node, out) {
-  for (const child of node.children) {
-    if (child.matches(KEEP)) continue;
-    if (child.querySelector(KEEP)) inertOutside(child, out);
-    else if (!child.inert) { child.inert = true; out.push(child); }
-  }
-  return out;
-}
+const inertOutside = (node, out) => inertOutsideKeeping(node, KEEP, out);
 
 // "Ventana al planeta" (escritorio): la página se desvanece salvo el lienzo del viaje, que queda
 // a la vista sin desenfoque. Solo opacidad (WAAPI, compositor); se deshace a la inversa al cerrar.

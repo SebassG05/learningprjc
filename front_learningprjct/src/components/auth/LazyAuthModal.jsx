@@ -21,7 +21,7 @@ class LoadBoundary extends Component {
 
 // Misma API que AuthModal. No descarga ni monta nada hasta la primera apertura; después se queda
 // montado para que el cierre pueda animarse.
-export default function LazyAuthModal({ open, onClose }) {
+export default function LazyAuthModal({ open, onClose, redirectTo }) {
   const [opened, setOpened] = useState(open);
   const [attempt, setAttempt] = useState(0);
   // React.lazy recuerda un fallo para siempre: cada reintento usa un componente diferido nuevo
@@ -46,7 +46,7 @@ export default function LazyAuthModal({ open, onClose }) {
   return (
     <LoadBoundary key={attempt} onFail={onFail}>
       <Suspense fallback={null}>
-        <AuthModal open={open} onClose={onClose} />
+        <AuthModal open={open} onClose={onClose} redirectTo={redirectTo} />
       </Suspense>
     </LoadBoundary>
   );

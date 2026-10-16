@@ -5,6 +5,7 @@ import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
+import TermsGate from '../components/courses/TermsGate';
 import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { duration, ease, spring } from '../lib/motion';
@@ -280,6 +281,8 @@ export default function CursoDetalle() {
 
   return (
     <>
+      {/* Condiciones de confidencialidad: se vuelven a pedir si cambió la versión */}
+      <TermsGate courseId={id} courseTitle={t(curso.title, curso.titleEn)} enabled={Boolean(enrollmentStatus?.enrolled)} />
       {/* Modal de selección de idioma para cursos bilingües */}
       <AnimatePresence>
         {showLangModal && (

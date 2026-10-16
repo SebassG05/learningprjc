@@ -60,7 +60,8 @@ function ServerAlert({ message }) {
   );
 }
 
-const AuthModal = ({ open, onClose }) => {
+// `redirectTo`: adónde ir tras entrar (la home por defecto); null = quedarse en la página actual
+const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
   const navigate = useNavigate();
   const { login: setUserLogin } = useUser();
   const { showToast } = useToast();
@@ -151,7 +152,7 @@ const AuthModal = ({ open, onClose }) => {
         setIsVisible(false);
         onClose && onClose();
         setTimeout(() => {
-          navigate('/', { replace: true });
+          if (redirectTo !== null) navigate(redirectTo, { replace: true });
         }, 10);
       }
     } catch (err) {
@@ -188,7 +189,7 @@ const AuthModal = ({ open, onClose }) => {
         setIsVisible(false);
         onClose && onClose();
         setTimeout(() => {
-          navigate('/', { replace: true });
+          if (redirectTo !== null) navigate(redirectTo, { replace: true });
         }, 10);
         setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
       }
@@ -211,7 +212,7 @@ const AuthModal = ({ open, onClose }) => {
     setIsVisible(false);
     onClose && onClose();
     setTimeout(() => {
-      navigate('/', { replace: true });
+      if (redirectTo !== null) navigate(redirectTo, { replace: true });
     }, 10);
 
   };

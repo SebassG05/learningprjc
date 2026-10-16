@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import { signToken } from '../config/jwt.js';
+import { hasAcceptedCurrentTerms, isValidAcceptance, recordAcceptance, termsRequired } from '../service/termsService.js';
 import UserProgress from '../models/UserProgress.js';
 import Course from '../models/Course.js';
 import Test from '../models/Test.js';
@@ -192,7 +193,7 @@ export const googleLogin = async (req, res, next) => {
 export const enrollInCourse = async (req, res) => {
   try {
     const { courseId } = req.params;
-    const { preferredLanguage } = req.body; // Idioma preferido del usuario
+    const { preferredLanguage } = req.body ?? {}; // Idioma preferido del usuario
     const userId = req.user.id; // Del middleware authenticateJWT
 
     // Verificar que el curso existe
@@ -220,6 +221,13 @@ export const enrollInCourse = async (req, res) => {
         error: 'Ya estás inscrito en este curso',
         enrollment: existingEnrollment
       });
+    }
+
+    // Términos de confidencialidad: sin aceptación de la versión vigente no hay inscripción.
+    // Vale una aceptación ya guardada o la que llega en esta petición (que se registra ahora).
+    if (!(await hasAcceptedCurrentTerms(userId, courseId))) {
+      if (!isValidAcceptance(req.body)) return res.status(428).json(termsRequired());
+      await recordAcceptance(req, userId, courseId);
     }
 
     // Crear nueva inscripción

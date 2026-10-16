@@ -18,6 +18,14 @@ import {
   getAdminCourseEnrollments
 } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
+import createRateLimit from '../middleware/rateLimit.js';
+
+// Inscribirse guarda la aceptación de los términos (una prueba): pocas por minuto y por IP
+const enrollRateLimit = createRateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: 'Demasiadas peticiones. Espera un momento e inténtalo de nuevo.',
+});
 
 const router = express.Router();
 
@@ -76,7 +84,7 @@ router.get('/me', authenticateJWT, getCurrentUser);
 // ============= RUTAS DE INSCRIPCIÓN A CURSOS =============
 
 // Inscribirse a un curso
-router.post('/enroll/:courseId', authenticateJWT, enrollInCourse);
+router.post('/enroll/:courseId', enrollRateLimit, authenticateJWT, enrollInCourse);
 
 // Verificar estado de inscripción
 router.get('/enrollment/:courseId', authenticateJWT, getEnrollmentStatus);
