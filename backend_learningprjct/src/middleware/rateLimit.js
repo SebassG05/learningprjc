@@ -1,12 +1,7 @@
 // Límite sencillo de peticiones, en memoria y por IP (sin dependencias).
 // Frena bots y envíos repetidos; con varias instancias del servidor cada una lleva su propia cuenta.
 
-// Detrás de un proxy (Render, Nginx…) la IP real viene en X-Forwarded-For
-const clientIp = (req) => {
-  const forwarded = req.headers['x-forwarded-for'];
-  if (typeof forwarded === 'string' && forwarded.length) return forwarded.split(',')[0].trim();
-  return req.ip || req.socket?.remoteAddress || 'desconocida';
-};
+import { clientIp } from '../utils/requestInfo.js';
 
 export default function createRateLimit({ windowMs, max, message }) {
   const hits = new Map();

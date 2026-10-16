@@ -6,6 +6,7 @@ import courseRoutes from './course.routes.js';
 import testRoutes from './test.routes.js';
 import ejercicioRoutes from './ejercicio.routes.js';
 import entregaEjercicioRoutes from './entregaEjercicio.routes.js';
+import termsRoutes from './terms.routes.js';
 import { proxyPdf } from '../controller/pdfProxyController.js';
 
 const router = express.Router();
@@ -18,6 +19,7 @@ router.use('/courses', courseRoutes);
 router.use('/tests', testRoutes);
 router.use('/ejercicios', ejercicioRoutes);
 router.use('/entregas', entregaEjercicioRoutes);
+router.use('/terms', termsRoutes);
 
 // Ruta proxy para PDFs de Cloudinary
 router.get('/pdf-proxy', proxyPdf);
