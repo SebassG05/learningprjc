@@ -80,3 +80,32 @@ export async function fetchEnrollmentMap(token, signal) {
   }
   return map;
 }
+
+// Términos de confidencialidad: el texto vive en el backend (src/content/terms.js). Una petición por carga.
+let termsPromise;
+export function fetchTerms() {
+  termsPromise ??= getJson(`${API_URL}/api/terms/current`).catch((err) => {
+    termsPromise = undefined;
+    throw err;
+  });
+  return termsPromise;
+}
+
+// Si el servidor dice que la versión cambió, se vuelve a pedir el texto
+export const invalidateTerms = () => {
+  termsPromise = undefined;
+};
+
+export const fetchTermsStatus = (courseId, token, signal) =>
+  getJson(`${API_URL}/api/terms/status/${courseId}`, { signal, headers: authHeaders(token) });
+
+export async function acceptTerms(courseId, token, termsVersion) {
+  const res = await fetch(`${API_URL}/api/terms/accept/${courseId}`, {
+    method: 'POST',
+    headers: { ...authHeaders(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ acceptTerms: true, termsVersion }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new ApiError(data.error || `HTTP ${res.status}`, res.status, data);
+  return data;
+}

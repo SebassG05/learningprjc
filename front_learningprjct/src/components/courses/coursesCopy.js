@@ -113,5 +113,33 @@ export const ENROLL = {
   comingSoon: 'Próximamente',
   error: 'No se pudo completar la inscripción. Inténtalo de nuevo.',
   done: 'Inscripción completada',
+  termsChanged: 'Las condiciones se acaban de actualizar. Revísalas antes de confirmar.',
 };
 
+
+export const TERMS_DIALOG = {
+  eyebrow: { enroll: 'Antes de inscribirte', reaccept: 'Condiciones actualizadas' },
+  reacceptLead: 'Hemos actualizado las condiciones de uso del material. Para seguir con el curso necesitamos que las aceptes de nuevo.',
+  meta: (version, date) => `Versión ${version} · ${date}`,
+  textRegion: 'Texto de las condiciones',
+  close: 'Cerrar',
+  loading: 'Cargando las condiciones…',
+  loadError: 'No hemos podido cargar las condiciones.',
+  retry: 'Reintentar',
+  scrollHint: 'Desplázate hasta el final del texto para poder aceptar.',
+  reachedEnd: 'Has llegado al final. Ya puedes aceptar.',
+  checkbox: 'He leído y acepto las condiciones de confidencialidad, propiedad intelectual y competencia desleal',
+  language: (name) => `Idioma del curso: ${name}`,
+  cancel: 'Cancelar',
+  confirm: { enroll: 'Confirmar inscripción', reserve: 'Confirmar reserva', reaccept: 'Aceptar y continuar' },
+  endOfDocument: (version) => `Fin del documento · versión ${version}`,
+  sending: 'Un momento…',
+};
+
+export const formatTermsDate = (iso) => {
+  try {
+    return new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${iso}T12:00:00`));
+  } catch {
+    return iso;
+  }
+};

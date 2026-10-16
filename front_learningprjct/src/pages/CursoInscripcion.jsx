@@ -1,7 +1,7 @@
 // Ficha pública de un curso, por escenas: portada → qué aprenderás → temario → ficha técnica → cierre.
 // Sin sesión se puede ver entera; «Inscribirme» pide acceso y continúa al entrar.
 // Las piezas viven en components/courses/sheet y los textos en components/courses/coursesCopy.js.
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AuthModal from '../components/auth/LazyAuthModal';
 import CourseHero from '../components/courses/sheet/CourseHero';
@@ -11,6 +11,7 @@ import CourseFacts from '../components/courses/sheet/CourseFacts';
 import CourseClosing from '../components/courses/sheet/CourseClosing';
 import CourseJsonLd from '../components/courses/sheet/CourseJsonLd';
 import StickyEnrollBar from '../components/courses/sheet/StickyEnrollBar';
+import TermsDialog from '../components/courses/sheet/TermsDialog';
 import { SheetMessage, SheetSkeleton } from '../components/courses/sheet/SheetStates';
 import useCourseSheet from '../components/courses/sheet/useCourseSheet';
 import useEnrollAction from '../components/courses/sheet/useEnrollAction';
@@ -28,6 +29,7 @@ import {
 } from '../components/courses/courseFormat';
 import { useUser } from '../context/UserContext';
 import usePageMeta from '../hooks/usePageMeta';
+import { fetchTerms } from '../lib/coursesApi';
 
 // Idioma inicial: el elegido antes (lang_<id>), el de su inscripción o el primero disponible
 function initialLanguage(course, enrollment) {
@@ -62,6 +64,16 @@ export default function CursoInscripcion() {
   const checking = Boolean(user) && enrollment.status === 'loading';
   const cta = { state: enroll.state, sending: enroll.sending || checking, onClick: enroll.act };
 
+  // Con sesión y sin inscribir, las condiciones se piden en un momento libre: el diálogo abre ya con el texto
+  const wantsTerms = Boolean(user) && enrollment.status === 'ready' && !enrollment.data?.enrolled;
+  useEffect(() => {
+    if (!wantsTerms) return undefined;
+    const idle = window.requestIdleCallback ?? ((cb) => setTimeout(cb, 200));
+    const cancel = window.cancelIdleCallback ?? clearTimeout;
+    const handle = idle(() => fetchTerms().catch(() => {}));
+    return () => cancel(handle);
+  }, [wantsTerms]);
+
   const heroCta = useRef(null);
   const closingCta = useRef(null);
   const watch = useMemo(() => [heroCta, closingCta], [status]); // eslint-disable-line react-hooks/exhaustive-deps -- se re-observa al pintar la ficha
@@ -93,6 +105,16 @@ export default function CursoInscripcion() {
 
       <StickyEnrollBar watch={watch} meta={courseMeta(course)} cta={cta} />
       <AuthModal open={enroll.login.open} onClose={enroll.login.close} redirectTo={null} />
+      <TermsDialog
+        key={enroll.terms.key}
+        open={enroll.terms.open}
+        mode={course.isOpen ? 'enroll' : 'reserve'}
+        courseTitle={title}
+        language={isBilingual(course) ? lang : null}
+        sending={enroll.sending}
+        onConfirm={enroll.terms.confirm}
+        onClose={enroll.terms.close}
+      />
     </div>
   );
 }
