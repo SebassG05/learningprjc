@@ -1,0 +1,1604 @@
+{
+  "front_learningprjct/dev-dist/registerSW.js": {
+    "mtime": 1792061149.2675683,
+    "seen": 1792061675.3197916,
+    "ast_hash": "3ca0b8505b4bec776b69afdba2768812",
+    "semantic_hash": "3ca0b8505b4bec776b69afdba2768812"
+  },
+  "front_learningprjct/dev-dist/sw.js": {
+    "mtime": 1792061153.3466558,
+    "seen": 1792061675.3197937,
+    "ast_hash": "a7f133adb8a3de490d8d32168c352e0a",
+    "semantic_hash": "a7f133adb8a3de490d8d32168c352e0a"
+  },
+  "front_learningprjct/dev-dist/workbox-4772ad73.js": {
+    "mtime": 1792061153.3502798,
+    "seen": 1792061675.3197951,
+    "ast_hash": "dfa6c1bef40dabbfe9ca48cfb19107e0",
+    "semantic_hash": "dfa6c1bef40dabbfe9ca48cfb19107e0"
+  },
+  "front_learningprjct/eslint.config.js": {
+    "mtime": 1768397609.4409373,
+    "seen": 1791879863.1312602,
+    "ast_hash": "f67d8fbc78c9581d9962cd4955b07768",
+    "semantic_hash": "f67d8fbc78c9581d9962cd4955b07768"
+  },
+  "front_learningprjct/package.json": {
+    "mtime": 1792050686.9897525,
+    "seen": 1792052015.4425917,
+    "ast_hash": "021fc07b439f275da6904ffef660dce8",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/postcss.config.js": {
+    "mtime": 1768401270.9180593,
+    "seen": 1791879863.1312616,
+    "ast_hash": "e1ba2627814efb19e39e9816d2dc22a9",
+    "semantic_hash": "e1ba2627814efb19e39e9816d2dc22a9"
+  },
+  "front_learningprjct/src/App.jsx": {
+    "mtime": 1791878864.0330033,
+    "seen": 1791879863.1312625,
+    "ast_hash": "4a49fa91d7f3bf918ee0797e9c40c42a",
+    "semantic_hash": "4a49fa91d7f3bf918ee0797e9c40c42a"
+  },
+  "front_learningprjct/src/components/AdminCursos.jsx": {
+    "mtime": 1791878864.0335164,
+    "seen": 1791879863.1312633,
+    "ast_hash": "7e668d658ba35e54450df4dcb959a37d",
+    "semantic_hash": "7e668d658ba35e54450df4dcb959a37d"
+  },
+  "front_learningprjct/src/components/auth/AuthModal.jsx": {
+    "mtime": 1791970622.0054407,
+    "seen": 1791971632.0658789,
+    "ast_hash": "2b715e5567d088d2ea0f9841df5599e1",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/GoogleAuthButton.jsx": {
+    "mtime": 1791978052.526757,
+    "seen": 1792052015.4426003,
+    "ast_hash": "43f7393f13cee54b4f0e0dc44cdd681d",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/configuration/CookiePreferences.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.1312652,
+    "ast_hash": "3d0c9c429211b87ff7049c8950f69e1e",
+    "semantic_hash": "3d0c9c429211b87ff7049c8950f69e1e"
+  },
+  "front_learningprjct/src/components/cookies/CookieBanner.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.131266,
+    "ast_hash": "2f875a4711b8267a9775f20e78a8f531",
+    "semantic_hash": "2f875a4711b8267a9775f20e78a8f531"
+  },
+  "front_learningprjct/src/components/cookies/CookieSettings.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.1312668,
+    "ast_hash": "2e3ada80c6e4a0dc26a40d408eec0778",
+    "semantic_hash": "2e3ada80c6e4a0dc26a40d408eec0778"
+  },
+  "front_learningprjct/src/components/cursoSuelos/ObjetivosSuelos.jsx": {
+    "mtime": 1791878864.0389555,
+    "seen": 1791879863.1312673,
+    "ast_hash": "b788e95f03721d3ed5e6b9915b602ae8",
+    "semantic_hash": "b788e95f03721d3ed5e6b9915b602ae8"
+  },
+  "front_learningprjct/src/components/curso/ContenidosCurso.jsx": {
+    "mtime": 1772612422.173505,
+    "seen": 1791879863.131268,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "front_learningprjct/src/components/curso/EjercicioOptativo.jsx": {
+    "mtime": 1791878864.0340889,
+    "seen": 1791879863.131269,
+    "ast_hash": "bd2724874ea8c6da1c4e29b1c7711b9f",
+    "semantic_hash": "bd2724874ea8c6da1c4e29b1c7711b9f"
+  },
+  "front_learningprjct/src/components/curso/EstructuraCurso.jsx": {
+    "mtime": 1791878864.0369503,
+    "seen": 1791879863.1312697,
+    "ast_hash": "24181a9eb2570ec7839668e29f43d88d",
+    "semantic_hash": "24181a9eb2570ec7839668e29f43d88d"
+  },
+  "front_learningprjct/src/components/curso/MaterialEstudio.jsx": {
+    "mtime": 1791878864.0369503,
+    "seen": 1791879863.1312702,
+    "ast_hash": "0008959b4686caabee00fe69d693534c",
+    "semantic_hash": "0008959b4686caabee00fe69d693534c"
+  },
+  "front_learningprjct/src/components/curso/ObjetivosCurso.jsx": {
+    "mtime": 1791878864.0379543,
+    "seen": 1791879863.131271,
+    "ast_hash": "6db719069fd39113d72cd844ba9dc3fa",
+    "semantic_hash": "6db719069fd39113d72cd844ba9dc3fa"
+  },
+  "front_learningprjct/src/components/curso/TestEvaluacion.jsx": {
+    "mtime": 1791878864.0379543,
+    "seen": 1791879863.1312714,
+    "ast_hash": "a366dbe7d0bcd0e6ed2b7cc2e37156e0",
+    "semantic_hash": "a366dbe7d0bcd0e6ed2b7cc2e37156e0"
+  },
+  "front_learningprjct/src/components/layout/Footer.jsx": {
+    "mtime": 1791976871.0802033,
+    "seen": 1792052015.4426467,
+    "ast_hash": "404c9b1a5f7fe7f7387bbfd8b4513c60",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/layout/Header.jsx": {
+    "mtime": 1791970622.0124402,
+    "seen": 1791971632.0659397,
+    "ast_hash": "ae97180e4bc28ff032ab34796a3288e6",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/layout/Layout.jsx": {
+    "mtime": 1791878864.0399559,
+    "seen": 1791879863.1312737,
+    "ast_hash": "9eaf6721263088f551594ea53bda1ab7",
+    "semantic_hash": "9eaf6721263088f551594ea53bda1ab7"
+  },
+  "front_learningprjct/src/components/layout/MobileMenu.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659444,
+    "ast_hash": "54cdfbc9ddb17cda2c880ab44aa31458",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/layout/PageBackground.jsx": {
+    "mtime": 1791878864.0409536,
+    "seen": 1791879863.131275,
+    "ast_hash": "02b8aa0e1e6ee992780d61474e4bea6e",
+    "semantic_hash": "02b8aa0e1e6ee992780d61474e4bea6e"
+  },
+  "front_learningprjct/src/components/layout/ScrollToTop.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659473,
+    "ast_hash": "bf0de0c80f818865f62261518e3509f3",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/ui/ArrowUpIcon.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312764,
+    "ast_hash": "229b591dc0cb3a5af426146c5970028d",
+    "semantic_hash": "229b591dc0cb3a5af426146c5970028d"
+  },
+  "front_learningprjct/src/components/ui/Button.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.131277,
+    "ast_hash": "a64f8b77008f1a4b0fb859f22547a26c",
+    "semantic_hash": "a64f8b77008f1a4b0fb859f22547a26c"
+  },
+  "front_learningprjct/src/components/ui/Card.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312778,
+    "ast_hash": "ad48cf5ac8f5f632e513b2adbab465dc",
+    "semantic_hash": "ad48cf5ac8f5f632e513b2adbab465dc"
+  },
+  "front_learningprjct/src/components/ui/Container.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312783,
+    "ast_hash": "2c984b7f8a2a8c27230efdfd9108d5f5",
+    "semantic_hash": "2c984b7f8a2a8c27230efdfd9108d5f5"
+  },
+  "front_learningprjct/src/components/ui/Field.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312788,
+    "ast_hash": "eef56161cda12e5f7c505bbd585ac042",
+    "semantic_hash": "eef56161cda12e5f7c505bbd585ac042"
+  },
+  "front_learningprjct/src/components/ui/ParallaxImage.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312797,
+    "ast_hash": "69e0e1f9009763f9aa9c1a4de0ad325a",
+    "semantic_hash": "69e0e1f9009763f9aa9c1a4de0ad325a"
+  },
+  "front_learningprjct/src/components/ui/Reveal.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312804,
+    "ast_hash": "0e135dd33ab8a89760167977e2fb3da8",
+    "semantic_hash": "0e135dd33ab8a89760167977e2fb3da8"
+  },
+  "front_learningprjct/src/components/ui/SectionHeading.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.131281,
+    "ast_hash": "527d7d2cddccc150ebb888fdb9d59ed1",
+    "semantic_hash": "527d7d2cddccc150ebb888fdb9d59ed1"
+  },
+  "front_learningprjct/src/components/ui/SplitText.jsx": {
+    "mtime": 1791878864.0419538,
+    "seen": 1791879863.1312816,
+    "ast_hash": "47c9c36c1a8912d2e301cdca91077a7d",
+    "semantic_hash": "47c9c36c1a8912d2e301cdca91077a7d"
+  },
+  "front_learningprjct/src/components/ui/StickyIntro.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659642,
+    "ast_hash": "bc3fa95b94d736821812d82ec9ca7620",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/context/CookieConsentContext.jsx": {
+    "mtime": 1770718548.5164025,
+    "seen": 1791879863.131283,
+    "ast_hash": "829a21d3ada1d41a9cbd9456b7dc351c",
+    "semantic_hash": "829a21d3ada1d41a9cbd9456b7dc351c"
+  },
+  "front_learningprjct/src/context/ToastContext.jsx": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.1312838,
+    "ast_hash": "74d43a671d28aa23ba32c116800ba409",
+    "semantic_hash": "74d43a671d28aa23ba32c116800ba409"
+  },
+  "front_learningprjct/src/context/UserContext.jsx": {
+    "mtime": 1773667390.286528,
+    "seen": 1791879863.1312842,
+    "ast_hash": "07d4a17ab429ea5cf525d8021b5ebc40",
+    "semantic_hash": "07d4a17ab429ea5cf525d8021b5ebc40"
+  },
+  "front_learningprjct/src/hooks/useCookieConsent.js": {
+    "mtime": 1770718548.5164025,
+    "seen": 1791879863.131285,
+    "ast_hash": "6d48328eeba19f76a988a77d45973edc",
+    "semantic_hash": "6d48328eeba19f76a988a77d45973edc"
+  },
+  "front_learningprjct/src/hooks/useMediaQuery.js": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.1312857,
+    "ast_hash": "4faafc115be3c02d37c58d321bae855b",
+    "semantic_hash": "4faafc115be3c02d37c58d321bae855b"
+  },
+  "front_learningprjct/src/hooks/useScene.js": {
+    "mtime": 1791878864.0447934,
+    "seen": 1791879863.1312866,
+    "ast_hash": "dad81731d7f229f71fe7768d0502492e",
+    "semantic_hash": "dad81731d7f229f71fe7768d0502492e"
+  },
+  "front_learningprjct/src/lib/motion.js": {
+    "mtime": 1791970622.0135164,
+    "seen": 1791971632.065976,
+    "ast_hash": "c0d267857e431404e1d34da8bca8a5ea",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/lib/smoothScroll.js": {
+    "mtime": 1791964773.4199018,
+    "seen": 1791971632.0659773,
+    "ast_hash": "f5be530b82360936afe20faac9a61921",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/main.jsx": {
+    "mtime": 1769082064.5831945,
+    "seen": 1791879863.1312888,
+    "ast_hash": "d89dd096fe573577104755dc55009840",
+    "semantic_hash": "d89dd096fe573577104755dc55009840"
+  },
+  "front_learningprjct/src/pages/Ajustes.jsx": {
+    "mtime": 1791878864.047643,
+    "seen": 1791879863.1312895,
+    "ast_hash": "853e6c0fcd0d78f9f5308ab6e4afe391",
+    "semantic_hash": "853e6c0fcd0d78f9f5308ab6e4afe391"
+  },
+  "front_learningprjct/src/pages/AvisoLegal.jsx": {
+    "mtime": 1791878864.047643,
+    "seen": 1791879863.1312902,
+    "ast_hash": "f0f0f030b8d85560352c3e9fbd0cce63",
+    "semantic_hash": "f0f0f030b8d85560352c3e9fbd0cce63"
+  },
+  "front_learningprjct/src/pages/Contacto.jsx": {
+    "mtime": 1792049805.9659662,
+    "seen": 1792052015.4426885,
+    "ast_hash": "df10855b012ad3d07aed69479d10feaa",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/pages/CorrecionesAdmin.jsx": {
+    "mtime": 1791878864.0486467,
+    "seen": 1791879863.1312914,
+    "ast_hash": "fb1186538221f74f35c3026977617941",
+    "semantic_hash": "fb1186538221f74f35c3026977617941"
+  },
+  "front_learningprjct/src/pages/CursoDetalle.jsx": {
+    "mtime": 1791878864.0496478,
+    "seen": 1791879863.1312919,
+    "ast_hash": "50ac64c12483e5738340aa32ea68f5e6",
+    "semantic_hash": "50ac64c12483e5738340aa32ea68f5e6"
+  },
+  "front_learningprjct/src/pages/CursoInscripcion.jsx": {
+    "mtime": 1791878864.050234,
+    "seen": 1791879863.1312926,
+    "ast_hash": "11e0d8171ad56b3d74581573552740ca",
+    "semantic_hash": "11e0d8171ad56b3d74581573552740ca"
+  },
+  "front_learningprjct/src/pages/Cursos.jsx": {
+    "mtime": 1791970622.0145156,
+    "seen": 1791971632.065989,
+    "ast_hash": "8fc8b7f31f90a12fef567dfcb484710d",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/pages/EntregaEjercicio.jsx": {
+    "mtime": 1791878864.0511897,
+    "seen": 1791879863.131294,
+    "ast_hash": "06691cbae67bec34f46212c2681028a1",
+    "semantic_hash": "06691cbae67bec34f46212c2681028a1"
+  },
+  "front_learningprjct/src/pages/EstructuraCursoPage.jsx": {
+    "mtime": 1791878864.0511897,
+    "seen": 1791879863.1312947,
+    "ast_hash": "73eb68c73375980857b375b5fef69242",
+    "semantic_hash": "73eb68c73375980857b375b5fef69242"
+  },
+  "front_learningprjct/src/pages/ForgotPassword.jsx": {
+    "mtime": 1791878864.0521908,
+    "seen": 1791879863.1312952,
+    "ast_hash": "d7cb634f58397d800d8873189bc46723",
+    "semantic_hash": "d7cb634f58397d800d8873189bc46723"
+  },
+  "front_learningprjct/src/pages/GuiaUsuario.jsx": {
+    "mtime": 1791878864.0521908,
+    "seen": 1791879863.131296,
+    "ast_hash": "afc4299ff68695542418914f9aae543c",
+    "semantic_hash": "afc4299ff68695542418914f9aae543c"
+  },
+  "front_learningprjct/src/pages/Home.jsx": {
+    "mtime": 1792051920.49075,
+    "seen": 1792052015.442696,
+    "ast_hash": "9c1b66ae3f910ad22e51aaa5f18f62ed",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/pages/Login.jsx": {
+    "mtime": 1791970622.0155149,
+    "seen": 1791971632.0659986,
+    "ast_hash": "05c1474a845d6bb871692a299083f43a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/pages/PoliticaCookies.jsx": {
+    "mtime": 1791878864.0541902,
+    "seen": 1791879863.131298,
+    "ast_hash": "0c1741132e49d4c39f0cfeb7243c2257",
+    "semantic_hash": "0c1741132e49d4c39f0cfeb7243c2257"
+  },
+  "front_learningprjct/src/pages/Privacidad.jsx": {
+    "mtime": 1791878864.0541902,
+    "seen": 1791879863.1312988,
+    "ast_hash": "38b810446cbf938989a9d3456caaff86",
+    "semantic_hash": "38b810446cbf938989a9d3456caaff86"
+  },
+  "front_learningprjct/src/pages/ResetPassword.jsx": {
+    "mtime": 1791878864.0541902,
+    "seen": 1791879863.1312993,
+    "ast_hash": "f697877ed326ee7a64cd2210f475fce0",
+    "semantic_hash": "f697877ed326ee7a64cd2210f475fce0"
+  },
+  "front_learningprjct/src/pages/Reviews.jsx": {
+    "mtime": 1792061470.0092719,
+    "seen": 1792061675.3200185,
+    "ast_hash": "2ae3832ad4fe46fa7f67a1a79176afb4",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/pages/SobreNosotros.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313007,
+    "ast_hash": "f3b851c18264f5db8cb94f84bb401241",
+    "semantic_hash": "f3b851c18264f5db8cb94f84bb401241"
+  },
+  "front_learningprjct/src/pages/TemaEstudio.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313014,
+    "ast_hash": "0d87e7176d7540ef0c0cce67ccb1f225",
+    "semantic_hash": "0d87e7176d7540ef0c0cce67ccb1f225"
+  },
+  "front_learningprjct/src/pages/TerminosUso.jsx": {
+    "mtime": 1791878864.0551913,
+    "seen": 1791879863.1313019,
+    "ast_hash": "cdc5c864264b614542984e3957f0c12c",
+    "semantic_hash": "cdc5c864264b614542984e3957f0c12c"
+  },
+  "front_learningprjct/vite.config.js": {
+    "mtime": 1772784104.770041,
+    "seen": 1791879863.1313026,
+    "ast_hash": "22680000d95eede81df5dd08bc94090b",
+    "semantic_hash": "22680000d95eede81df5dd08bc94090b"
+  },
+  "front_learningprjct/README.md": {
+    "mtime": 1768397609.4569368,
+    "seen": 1791879863.1313033,
+    "ast_hash": "8f88e53d72fef57027d43c68602558e5",
+    "semantic_hash": "8f88e53d72fef57027d43c68602558e5"
+  },
+  "front_learningprjct/index.html": {
+    "mtime": 1768916562.455882,
+    "seen": 1791879863.1313043,
+    "ast_hash": "f4fea024fdf0e19e728fd5bb33876e57",
+    "semantic_hash": "f4fea024fdf0e19e728fd5bb33876e57"
+  },
+  "front_learningprjct/public/vite.svg": {
+    "mtime": 1768397609.441937,
+    "seen": 1791879863.1313047,
+    "ast_hash": "8e3a10e157f75ada21ab742c022d5430",
+    "semantic_hash": "8e3a10e157f75ada21ab742c022d5430"
+  },
+  "front_learningprjct/src/assets/react.svg": {
+    "mtime": 1768397609.4569368,
+    "seen": 1791879863.1313055,
+    "ast_hash": "f0402b67b6ce880f65666bb49e841696",
+    "semantic_hash": "f0402b67b6ce880f65666bb49e841696"
+  },
+  "backend_learningprjct/package.json": {
+    "mtime": 1792052942.9761631,
+    "seen": 1792053289.6702383,
+    "ast_hash": "0577bbecf9b0fbbdd0e0baa21964cbf2",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/_addTema22TestFinal.js": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.0657203,
+    "ast_hash": "e76dce5cfd26b322de44c2f0b4af67ef",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/_fixCursoIdTema20.js": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.0657234,
+    "ast_hash": "ea7d0aef8b37c1c66bfb8acb491bbfad",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/_getTemaIds.js": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.065726,
+    "ast_hash": "3b9bae9b88d8479d3e70bd41632b9aad",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/_listTemasCurso.js": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.0657282,
+    "ast_hash": "e78fedbee18b3ffb1f0f3b388bd82508",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/consultarCursoDesarrolloWeb.js": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657299,
+    "ast_hash": "66608b377802a0e8d4e9c1542fd61d90",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/resetTestFinal.js": {
+    "mtime": 1773217436.1815267,
+    "seen": 1791971632.065731,
+    "ast_hash": "3809cfe318520d5581339ad49843e90b",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/upload-actividad.ps1": {
+    "mtime": 1773320491.7789633,
+    "seen": 1791971632.0657327,
+    "ast_hash": "225448a7564f8cb8e1c68887b909407b",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/upload-material.ps1": {
+    "mtime": 1773320491.7789633,
+    "seen": 1791971632.065734,
+    "ast_hash": "77692314c61ec1462db745f3164690cd",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/scripts/verificarUsuario.js": {
+    "mtime": 1773320491.7789633,
+    "seen": 1791971632.065735,
+    "ast_hash": "f4e5d5d04a2f4a8c908bb06f6b09d1a3",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/app.js": {
+    "mtime": 1773386177.2066076,
+    "seen": 1791971632.0657368,
+    "ast_hash": "708bfd70550912e11c934335117f8a56",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/config.js": {
+    "mtime": 1792052808.385446,
+    "seen": 1792053289.6702738,
+    "ast_hash": "a68f0959aaa9b155196b3e0e9912f374",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/config/cloudinary.js": {
+    "mtime": 1773048161.6643248,
+    "seen": 1791971632.065739,
+    "ast_hash": "8f34f284d756abef5db4b2208c43c1cc",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/contactController.js": {
+    "mtime": 1768832428.2979817,
+    "seen": 1791971632.0657406,
+    "ast_hash": "c719bd7f70e9790cab9cc1a07e3a4b07",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/courseController.js": {
+    "mtime": 1777377896.0493515,
+    "seen": 1791971632.065742,
+    "ast_hash": "9af1f167f9da3e437dd37d25f9ad93a4",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/ejercicioController.js": {
+    "mtime": 1773222225.3225582,
+    "seen": 1791971632.0657437,
+    "ast_hash": "d8f6b88b735ab41e870f65a4f52689ad",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/entregaEjercicioController.js": {
+    "mtime": 1773745671.2300189,
+    "seen": 1791971632.0657468,
+    "ast_hash": "9fd26cb9e11b35213aa0d237f7c00a15",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/pdfProxyController.js": {
+    "mtime": 1773050108.808956,
+    "seen": 1791971632.065748,
+    "ast_hash": "00096757b7efed5f9c1e018a0ea75e18",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/reviewController.js": {
+    "mtime": 1792061306.8450046,
+    "seen": 1792061675.3196008,
+    "ast_hash": "646f4a93d9a1eaa7bdd86360237b3221",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/testController.js": {
+    "mtime": 1792052808.3734896,
+    "seen": 1792053289.670291,
+    "ast_hash": "29e9b203b966c6d3f3f4e61764c1e3e8",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/controller/userController.js": {
+    "mtime": 1792052808.3844514,
+    "seen": 1792053289.6702924,
+    "ast_hash": "3f98cb7fb8d9d97b9843caadcee649e7",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-final.json": {
+    "mtime": 1779094768.684414,
+    "seen": 1791971632.065753,
+    "ast_hash": "efd13e79b536e8f18498a1e9b7bcef5f",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-tema1.json": {
+    "mtime": 1779090444.8255029,
+    "seen": 1791971632.0657542,
+    "ast_hash": "9304d6bcb1da6ab9eac3ae9c8a67ed83",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-tema2.json": {
+    "mtime": 1779091795.0683973,
+    "seen": 1791971632.0657554,
+    "ast_hash": "0e1ea4264b81ae9d2a893118f5f1598c",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-tema3.json": {
+    "mtime": 1779092521.4654348,
+    "seen": 1791971632.0657566,
+    "ast_hash": "d6705442c02d54172757cc46e75427ab",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-tema4.json": {
+    "mtime": 1779093476.1161008,
+    "seen": 1791971632.0657578,
+    "ast_hash": "589e7b5e0bbc5b30aef08b17f43aa558",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-tema5.json": {
+    "mtime": 1779093476.1161008,
+    "seen": 1791971632.065759,
+    "ast_hash": "514a38e8ef32b7f7a1ecf6d69e262b19",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-anfora-tema6.json": {
+    "mtime": 1779094768.6834075,
+    "seen": 1791971632.0657604,
+    "ast_hash": "1e9f37ba04ea3193456435c22f5f156c",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-final-certificacion-desarrollo-web.json": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.0657613,
+    "ast_hash": "a062a834a6a36b3d9b69cc0c62cb6340",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-final-certificacion.json": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0657625,
+    "ast_hash": "b397da908a142ac31051ef800682fb9d",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema1-introduccion.json": {
+    "mtime": 1775568508.517722,
+    "seen": 1791971632.0657635,
+    "ast_hash": "defc946b188944676369e6fb207ef398",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema10-automatizacion-python.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657647,
+    "ast_hash": "0c6c76259277c6514d2009f2cbe93a06",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema15-faq-desarrollo-web.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657659,
+    "ast_hash": "bb37253554b35e846364dc7525545b88",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema16-buenas-practicas.json": {
+    "mtime": 1780910781.0046,
+    "seen": 1791971632.0657668,
+    "ast_hash": "c10302b2c034d5cd68e179dff1c7f03b",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema17-git-github.json": {
+    "mtime": 1780910781.0046,
+    "seen": 1791971632.065768,
+    "ast_hash": "0a3ad18ad14e088cf3c664e69d2db36d",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema18-apis-rest.json": {
+    "mtime": 1780910781.0046,
+    "seen": 1791971632.0657692,
+    "ast_hash": "c1b061f6c8bd15489d9ac300eec4108e",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema19-react18-fundamentos.json": {
+    "mtime": 1780910781.0046,
+    "seen": 1791971632.0657701,
+    "ast_hash": "6e19a6514edb98e2a9ea2c8746a8fbd6",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema2-entradas-salidas.json": {
+    "mtime": 1775568508.517722,
+    "seen": 1791971632.0657716,
+    "ast_hash": "64fd8507bac2710c78b4ac8bbf14c6f4",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema2-html-semantico.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657725,
+    "ast_hash": "4c2fbe3ba6e9c9f1d9502c0237f8dec6",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema20-nodejs-fundamentos.json": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.0657737,
+    "ast_hash": "5fc202847ec1e81ab836862e8baa4a72",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema21-guia-prompts.json": {
+    "mtime": 1780910781.0056,
+    "seen": 1791971632.065775,
+    "ast_hash": "a86b6e2b829959868e60dc336cdee749",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema3-javascript-moderno.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657759,
+    "ast_hash": "a2e7055331f6ea066b23b78a0b5820d1",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema3-modelos-ensemble.json": {
+    "mtime": 1775568508.517722,
+    "seen": 1791971632.0657768,
+    "ast_hash": "1dfab46c1c6fc83fe4591b9d9de4b4d0",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema4-ejecucion-practica.json": {
+    "mtime": 1775568508.517722,
+    "seen": 1791971632.0657783,
+    "ast_hash": "ee980dbcaead8c563e6abf1a86222ee1",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema4-react-componentes-hooks.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657792,
+    "ast_hash": "ffdf5959bdf65307cabae9c42a3fc951",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema5-git-copilot-python.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657802,
+    "ast_hash": "5f8af87cd14b80fc90fd78f8798245fa",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/data/test-tema6-manual-alumnado.json": {
+    "mtime": 1780910781.0026011,
+    "seen": 1791971632.0657816,
+    "ast_hash": "6f902fad9b7c570c6190ffe0213075d4",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/index.js": {
+    "mtime": 1792052808.385446,
+    "seen": 1792053289.6703365,
+    "ast_hash": "da6d1c0691a9ab74bc0c7dd4cb527cba",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/loaders/express.js": {
+    "mtime": 1773386177.2056088,
+    "seen": 1791971632.0657837,
+    "ast_hash": "f1fc894269c26b49dd3c1f6765e665cd",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/loaders/mongoDB.js": {
+    "mtime": 1768482496.6065469,
+    "seen": 1791971632.0657852,
+    "ast_hash": "34f480785d3eae03db0272dda0d6dbbe",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/auth.js": {
+    "mtime": 1792052808.3624723,
+    "seen": 1792053289.670342,
+    "ast_hash": "3c1eda056a0f4650cb53b996f9ecd984",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/authorization.js": {
+    "mtime": 1792052808.3624723,
+    "seen": 1792053289.6703434,
+    "ast_hash": "fa1aa62233285fb31e036f1b18e20d4a",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/errorHandler.js": {
+    "mtime": 1768483009.9152348,
+    "seen": 1791971632.0657883,
+    "ast_hash": "37ce9defcb023afb2a902748f70fa79a",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/upload.js": {
+    "mtime": 1777377896.0493515,
+    "seen": 1791971632.0657892,
+    "ast_hash": "a2b07fc3de28f67c9ef445d7f6cd04ba",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/Course.js": {
+    "mtime": 1777378454.272676,
+    "seen": 1791971632.0657904,
+    "ast_hash": "db45300e57e7723031397afc6595c5b5",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/Ejercicio.js": {
+    "mtime": 1773222225.3225582,
+    "seen": 1791971632.0657918,
+    "ast_hash": "12ed04f0d9fa9898664f3d4492e2fa81",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/EntregaEjercicio.js": {
+    "mtime": 1773745671.247892,
+    "seen": 1791971632.0657928,
+    "ast_hash": "05cd004dd5186ffbf199a8594c975624",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/PasswordResetToken.js": {
+    "mtime": 1768820545.9009044,
+    "seen": 1791971632.065794,
+    "ast_hash": "8867fa16236893470b33a1b32d513ab2",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/Review.js": {
+    "mtime": 1792061282.097041,
+    "seen": 1792061675.3196967,
+    "ast_hash": "089406bff804c1a6f80df93b6870be59",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/Test.js": {
+    "mtime": 1779090444.8255029,
+    "seen": 1791971632.0657961,
+    "ast_hash": "c74624d50495ec1f4443eddaa10d33d5",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/User.js": {
+    "mtime": 1792061282.097041,
+    "seen": 1792061675.3197,
+    "ast_hash": "71fef5f08e3bfd148d93970053a3b090",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/models/UserProgress.js": {
+    "mtime": 1777286314.778991,
+    "seen": 1791971632.0657983,
+    "ast_hash": "c56245919b8e696bfc117316fe4df3e0",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/contact.routes.js": {
+    "mtime": 1791976871.0736966,
+    "seen": 1792052015.4425461,
+    "ast_hash": "f84aa8ff7334701a3f0f6109a77d918c",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/course.routes.js": {
+    "mtime": 1777377896.0493515,
+    "seen": 1791971632.0658007,
+    "ast_hash": "d4ab19dd138e7f7f5dc21bda6b03b67d",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/ejercicio.routes.js": {
+    "mtime": 1773222225.3225582,
+    "seen": 1791971632.0658016,
+    "ast_hash": "4fb243b0c7dafcfb331107f7ad9d73eb",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/entregaEjercicio.routes.js": {
+    "mtime": 1773930832.7853272,
+    "seen": 1791971632.065803,
+    "ast_hash": "c085f4683c8470347c7a8081f9d326b6",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/index.js": {
+    "mtime": 1773222225.3225582,
+    "seen": 1791971632.065804,
+    "ast_hash": "a4e784c4c06c72e3603dfe3e5a44cce8",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/review.routes.js": {
+    "mtime": 1792061308.1824837,
+    "seen": 1792061675.319714,
+    "ast_hash": "38a67f96f755792faa1c5fab937a050a",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/test.routes.js": {
+    "mtime": 1773051016.0123959,
+    "seen": 1791971632.0658064,
+    "ast_hash": "7be68f5b8c20997d40b0f0cec2e723cc",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/routes/user.routes.js": {
+    "mtime": 1777286314.7803502,
+    "seen": 1791971632.0658076,
+    "ast_hash": "b25ee5b24def895f9c9401661037e240",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/abrirCursoModelizacion.js": {
+    "mtime": 1775568508.5227218,
+    "seen": 1791971632.0658085,
+    "ast_hash": "3b8f2703e6de1a1fd520412d38e27c95",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/actualizarDescripcionTema2.js": {
+    "mtime": 1775566261.478135,
+    "seen": 1791971632.0658104,
+    "ast_hash": "85444c7abbaab6b6874bddc586aaa941",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/actualizarDuracionCurso.js": {
+    "mtime": 1775630070.2457745,
+    "seen": 1791971632.0658114,
+    "ast_hash": "6411c69a9d11aca46e691aea1a4cb0df",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/actualizarIDsCurso.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658126,
+    "ast_hash": "4608164a6d7a87c908ee3dfcec1ca27d",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/agregarEjercicioRothCCompleto.js": {
+    "mtime": 1775630070.1210675,
+    "seen": 1791971632.0658135,
+    "ast_hash": "9b7ea949e25269cd0da181c7a3bd54aa",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/agregarEjercicioSecuestroCarbono.js": {
+    "mtime": 1775568508.5167232,
+    "seen": 1791971632.0658147,
+    "ast_hash": "4185d603538e08af40833c76636f166f",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/agregarTemaFinal.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.065816,
+    "ast_hash": "21de742dc90c4f106e0155949a43d7f4",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarCursoCompletoModelizacionCarbono.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658169,
+    "ast_hash": "8c161b71bf9568313fa55ab359da1d22",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestAnforaTema1.js": {
+    "mtime": 1779090444.8255029,
+    "seen": 1791971632.065818,
+    "ast_hash": "e6a48455bb44a581f128d5402718228f",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestAnforaTema2.js": {
+    "mtime": 1779091795.0683973,
+    "seen": 1791971632.0658195,
+    "ast_hash": "cd0d87266abaa78434518723019f8cbd",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestAnforaTema3.js": {
+    "mtime": 1779092521.4654348,
+    "seen": 1791971632.0658207,
+    "ast_hash": "1e2880013fe62a01410cd6216ca4d3ba",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestAnforaTema4.js": {
+    "mtime": 1779093476.1161008,
+    "seen": 1791971632.0658216,
+    "ast_hash": "9991d3c2b03f4869584a0ca2aa0a0905",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestAnforaTema5.js": {
+    "mtime": 1779093476.117102,
+    "seen": 1791971632.065823,
+    "ast_hash": "c72e7b82b0cc77b60480c1c45a988527",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestAnforaTema6.js": {
+    "mtime": 1779094768.6834075,
+    "seen": 1791971632.065824,
+    "ast_hash": "7c04263c92ce2c9fc06f0fc466ef6d71",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestFinal.js": {
+    "mtime": 1773059262.9390812,
+    "seen": 1791971632.0658252,
+    "ast_hash": "c143d1f506e94a1a4a1c92a63dba0dfc",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestFinalAnfora.js": {
+    "mtime": 1779094768.684414,
+    "seen": 1791971632.0658264,
+    "ast_hash": "f3635a82306f07496ce280fe0d16dd27",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestTema1.js": {
+    "mtime": 1773051016.0134165,
+    "seen": 1791971632.0658276,
+    "ast_hash": "2e094c7d99b0e525351c189d2697df57",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestTema2.js": {
+    "mtime": 1773055899.6090438,
+    "seen": 1791971632.0658286,
+    "ast_hash": "f17e1e7348af2b510887223d5609f536",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestTema3.js": {
+    "mtime": 1773057172.6035383,
+    "seen": 1791971632.06583,
+    "ast_hash": "44f1da1f09a2d86a8e020b6af7941b61",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/cargarTestTema4.js": {
+    "mtime": 1773057708.4871287,
+    "seen": 1791971632.065831,
+    "ast_hash": "482892685dbfb43ed52b4b34d835ca0c",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/crearSuperAdmin.js": {
+    "mtime": 1773667390.2851155,
+    "seen": 1791971632.065832,
+    "ast_hash": "1b662c4b03eb72cdd970315cd40f071f",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/eliminarEjercicioSecuestroCarbono.js": {
+    "mtime": 1773662000.0810316,
+    "seen": 1791971632.0658333,
+    "ast_hash": "6105c0f1d8addc7405318f61ff41afae",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/limpiarEjerciciosDuplicados.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658343,
+    "ast_hash": "06b1131f3867376d2289553846a45394",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/limpiarTestsDuplicados.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658355,
+    "ast_hash": "7a022fa5685c8245ccde8c799a8f0ea8",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/limpiezaCompletaCurso.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658364,
+    "ast_hash": "23e5b784257f0fc8a620cf6265f4d83e",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/listarCursos.js": {
+    "mtime": 1775630070.2457745,
+    "seen": 1791971632.0658379,
+    "ast_hash": "f73e669e4a1743dc029693fa7a6760ca",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/listarTemasCurso.js": {
+    "mtime": 1775568508.5167232,
+    "seen": 1791971632.0658388,
+    "ast_hash": "24318d185952f6478e40628da37e7a8c",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/listarTestsCurso.js": {
+    "mtime": 1775630070.1210675,
+    "seen": 1791971632.0658402,
+    "ast_hash": "c8fd17ab96781b31f81b8f131e009ca9",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/recuperacionCompletaCurso.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658412,
+    "ast_hash": "f4783e20f2c12001be82b920298acec0",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/recuperarCursoModelizacionCarbono.js": {
+    "mtime": 1775630070.1210675,
+    "seen": 1791971632.0658422,
+    "ast_hash": "4eac5675bd57737f54d135ec16c6d6da",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/reorganizarCursoCompleto.js": {
+    "mtime": 1775630070.2457745,
+    "seen": 1791971632.065843,
+    "ast_hash": "45f805020a60d9fa038b0d9bbdd314e3",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/testEmailCursoCompletado.js": {
+    "mtime": 1779099473.5624342,
+    "seen": 1791971632.0658467,
+    "ast_hash": "368de8d43b92486ca5fbe7e971027bf5",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/verificarCursoModelizacionCarbono.js": {
+    "mtime": 1775568508.519722,
+    "seen": 1791971632.0658479,
+    "ast_hash": "a67a6249714024916aab5e0d639bd282",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/verificarRoleUsuario.js": {
+    "mtime": 1773667390.286528,
+    "seen": 1791971632.065849,
+    "ast_hash": "bdef0201246eab88e49adbe223332b25",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/scripts/verificarTestFinal.js": {
+    "mtime": 1775630070.1210675,
+    "seen": 1791971632.0658507,
+    "ast_hash": "b7a6100feae391a7980e9410649442a4",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/service/googleAuthService.js": {
+    "mtime": 1792052808.3844514,
+    "seen": 1792053289.6704345,
+    "ast_hash": "f7e004adb32d236e645bf4b6d11d1b6d",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/service/mailService.js": {
+    "mtime": 1791976871.0746965,
+    "seen": 1792052015.4425862,
+    "ast_hash": "cbe8355c5e524395b8e891e52952abfb",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/AuthDialog.jsx": {
+    "mtime": 1791978052.5257647,
+    "seen": 1792052015.442596,
+    "ast_hash": "c6efc3bfe185e2aa519dad84ec06a968",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/AuthDivider.jsx": {
+    "mtime": 1791970622.0054407,
+    "seen": 1791971632.0658772,
+    "ast_hash": "beb4d388d303397bfbee96875966b749",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/AuthTabs.jsx": {
+    "mtime": 1791970622.0064409,
+    "seen": 1791971632.06588,
+    "ast_hash": "180e0fe22c7339e2dc8b6a7587f3d486",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/AutoHeight.jsx": {
+    "mtime": 1791970622.0064409,
+    "seen": 1791971632.0658813,
+    "ast_hash": "f5cdadad130b059c80ec0a3e61dcba81",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/LazyAuthModal.jsx": {
+    "mtime": 1791970622.0074399,
+    "seen": 1791971632.065884,
+    "ast_hash": "3a8af0b27a2e09e7bae41ca980c625e8",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/PasswordField.jsx": {
+    "mtime": 1791970622.0074399,
+    "seen": 1791971632.065885,
+    "ast_hash": "07efaa201ab107bb8113ff905ce2122c",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/PasswordMatchHint.jsx": {
+    "mtime": 1791970622.0074399,
+    "seen": 1791971632.0658865,
+    "ast_hash": "b6b452d6c5cfc011df93ad20dff2899a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/SubmitButton.jsx": {
+    "mtime": 1792053978.0397167,
+    "seen": 1792054852.9243543,
+    "ast_hash": "1b41ad81f3e8ca1a912c3826c96216ff",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/TextField.jsx": {
+    "mtime": 1791970622.008441,
+    "seen": 1791971632.065889,
+    "ast_hash": "20f5e6b11bec4ae1a43704bb9436bdd7",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/loadAuthModal.js": {
+    "mtime": 1791970622.0094402,
+    "seen": 1791971632.06589,
+    "ast_hash": "88f205b3fe9f1865a72c120ffd70e857",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/loadAuthModal.test.js": {
+    "mtime": 1791970622.0094402,
+    "seen": 1791971632.065891,
+    "ast_hash": "0a19c3a9c13109cf8d63e50d8147caa9",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/tabIds.js": {
+    "mtime": 1791970622.0094402,
+    "seen": 1791971632.065892,
+    "ast_hash": "a5882d6992e33dad99e89a583176d927",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/useNativeValidation.js": {
+    "mtime": 1791970622.0094402,
+    "seen": 1791971632.0658934,
+    "ast_hash": "b09e9b51001ff8ba17fe3e4a97c43995",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/validation.js": {
+    "mtime": 1791976871.0746965,
+    "seen": 1792052015.4426086,
+    "ast_hash": "c2359f26be9bc58c5bc1730a47a7e931",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/auth/validation.test.js": {
+    "mtime": 1791970622.01044,
+    "seen": 1791971632.0658958,
+    "ast_hash": "cbc43ab1c828f664fcd31baceb70672c",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/Earth.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659149,
+    "ast_hash": "9c9c0200711fdd3e0cc0e64a98830c1a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/Extras.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.065916,
+    "ast_hash": "2776bbddffa551fabd616cc105cf0708",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/FloatingCards.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659173,
+    "ast_hash": "abc84ad643639187d708216a1543b6f0",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/GlobeCanvas.jsx": {
+    "mtime": 1791978030.2164776,
+    "seen": 1792052015.442631,
+    "ast_hash": "1e0e1cacdd3b02a443990fb564d2e753",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/GlobeStage.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659194,
+    "ast_hash": "5dae592cd367c06e28d3c2c5a0d46480",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/Orbits.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659208,
+    "ast_hash": "3e7b58b96197b8e1f60d5e92b3a2b33a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/config.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659218,
+    "ast_hash": "7a0cd520b7620b8c15e017d3619af833",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/geo.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.065923,
+    "ast_hash": "9c378a53c6b80474be72b7056576180f",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/journey/keyframes.js": {
+    "mtime": 1791970622.0114403,
+    "seen": 1791971632.0659242,
+    "ast_hash": "7a840956e4114c7d7f48bdc6df4f649b",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/journey/keyframes.test.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659251,
+    "ast_hash": "e724a78631e7d43caf782aabe5ebd3f6",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/journey/store.js": {
+    "mtime": 1791970622.0124402,
+    "seen": 1791971632.0659263,
+    "ast_hash": "edc1ce95122b02d5242faf6c11612da3",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/journey/store.test.js": {
+    "mtime": 1791970622.0124402,
+    "seen": 1791971632.0659275,
+    "ast_hash": "726a7bb380dff733f6e920bac4622c7a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/landMask.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659285,
+    "ast_hash": "1d6e3ba926f924ebc3816e2b4848f057",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/palette.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659297,
+    "ast_hash": "a41e464510000263294b531f94043867",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/satelliteParts.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659308,
+    "ast_hash": "315e04965d4546bce2c5a2b778638d78",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/scenes/DawnScene.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.065932,
+    "ast_hash": "a7f96dc2c31c0d362616be227c8cc141",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/scenes/DeepSpaceScene.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659332,
+    "ast_hash": "a63b5874c93897fed072b0b39f218cb3",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/scenes/OrbitScene.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659344,
+    "ast_hash": "4a9ac8423e5fa7fb930c3abfac66b047",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/scenes/usePrecompile.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659356,
+    "ast_hash": "91aa106f400281a23b3cd9e9125446a0",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/uniforms.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659368,
+    "ast_hash": "6618a18d20f6a07d196c6c3cade385c3",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/layout/Logo.jsx": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659428,
+    "ast_hash": "e3141136dc3cad81d63e4cd3d009d93b",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/layout/navigation.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659485,
+    "ast_hash": "850dfdc25d019687ff6aef24d2567781",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/hooks/useFocusTrap.js": {
+    "mtime": 1791964773.4096477,
+    "seen": 1791971632.0659716,
+    "ast_hash": "16f66c7a886e5c52d757625c2887ce27",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/public/upload-actividad.html": {
+    "mtime": 1773320491.7789633,
+    "seen": 1791971632.0660121,
+    "ast_hash": "dcaba0e8f26bdffe831a4b371e26d136",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/public/upload-material.html": {
+    "mtime": 1773320491.7789633,
+    "seen": 1791971632.0660133,
+    "ast_hash": "e6bbb66a52a0f244618dc4b7020f5455",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/docs/superpowers/plans/2026-10-13-inicio-fondo-viaje.md": {
+    "mtime": 1791964773.404046,
+    "seen": 1791971632.0660164,
+    "ast_hash": "39ff965fa01cfa13d714198ad8b2cef5",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/docs/superpowers/plans/2026-10-14-acceso.md": {
+    "mtime": 1791970622.0034416,
+    "seen": 1791971632.0660179,
+    "ast_hash": "6b2b2a793e7cc512789e8f867c41a124",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/docs/superpowers/specs/2026-10-14-acceso-design.md": {
+    "mtime": 1791970622.0044403,
+    "seen": 1791971632.0660188,
+    "ast_hash": "e0c6bc4a82a63a30e2e297a9a88f56f7",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/docs/boceto/inicio-escritorio-variante-a.png": {
+    "mtime": 1791964773.3636074,
+    "seen": 1791971632.066022,
+    "ast_hash": "c2247b59d88fa0a9208324928868bca2",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/docs/boceto/inicio-escritorio-variante-b.png": {
+    "mtime": 1791964773.3764517,
+    "seen": 1791971632.066023,
+    "ast_hash": "3c6d8747272d83dcd22276ee231d5856",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/docs/boceto/tokens-escena-3d.png": {
+    "mtime": 1791964773.3975375,
+    "seen": 1791971632.0660243,
+    "ast_hash": "9d2364eab5e19eb9b7af6df3798b937a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/public/inicio/globo.webp": {
+    "mtime": 1791964773.404046,
+    "seen": 1791971632.0660255,
+    "ast_hash": "48c6e7b92ae3ab6d36af34b2a228ff73",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/contactRateLimit.js": {
+    "mtime": 1792051654.2455282,
+    "seen": 1792052015.4425335,
+    "ast_hash": "7f135917aa21fcfdeb1229e701277a71",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/optionalAuth.js": {
+    "mtime": 1792052808.3624723,
+    "seen": 1792053289.6703484,
+    "ast_hash": "1fe7530121139ded8bab428d72a35654",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/middleware/rateLimit.js": {
+    "mtime": 1792051653.166615,
+    "seen": 1792052015.442536,
+    "ast_hash": "22a156c9d9b4c6166e677c02dd157d95",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/service/contactEmailTemplate.js": {
+    "mtime": 1791976871.0736966,
+    "seen": 1792052015.4425845,
+    "ast_hash": "0e5bd9e1561e32b301bc88580e9f544d",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/ContactBackdrop.jsx": {
+    "mtime": 1791976871.0746965,
+    "seen": 1792052015.4426112,
+    "ast_hash": "946030c893ace15aca2c0053a377b656",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/ContactChannel.jsx": {
+    "mtime": 1791976871.0761998,
+    "seen": 1792052015.4426122,
+    "ast_hash": "638f1ec2d067aad6d9c8e7b6d2be4eae",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/ContactChannels.jsx": {
+    "mtime": 1791976871.0761998,
+    "seen": 1792052015.442613,
+    "ast_hash": "40ec310d663af3edf9c4ff99c9ba94a7",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/ContactForm.jsx": {
+    "mtime": 1792051854.887007,
+    "seen": 1792052015.442614,
+    "ast_hash": "f0394d587f0bfa6ccbce6491e1c5b8d2",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/ContactHero.jsx": {
+    "mtime": 1791976871.077204,
+    "seen": 1792052015.4426146,
+    "ast_hash": "30f90c0d584a4bf5bcd6202a1b798682",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/LocationCard.jsx": {
+    "mtime": 1791976871.0782032,
+    "seen": 1792052015.4426153,
+    "ast_hash": "61ebe1f289fdcd852e01dfd3eb8c1c03",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/QuickAnswers.jsx": {
+    "mtime": 1791976871.0782032,
+    "seen": 1792052015.4426157,
+    "ast_hash": "c1ed23898461748ebffcc4f6247a3dad",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/SentSignal.jsx": {
+    "mtime": 1791976871.0782032,
+    "seen": 1792052015.4426165,
+    "ast_hash": "41f7fdb2dd90ef8abce55991ab408d83",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/SevillaMap.jsx": {
+    "mtime": 1791976871.0792036,
+    "seen": 1792052015.4426174,
+    "ast_hash": "0459737c1bbcd5f0cd27965e22362ddd",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/contact/contactInfo.js": {
+    "mtime": 1791976871.0792036,
+    "seen": 1792052015.442618,
+    "ast_hash": "5871193e6a30eed64df8ba5bf146538a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/globe/AuthGlobe.jsx": {
+    "mtime": 1791978039.9198794,
+    "seen": 1792052015.442627,
+    "ast_hash": "35a6f5ade84d6b1b5bc3c106557a0072",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewCard.jsx": {
+    "mtime": 1792061577.9425344,
+    "seen": 1792061675.3199198,
+    "ast_hash": "d9c15682724a569510e000a2479a4dc1",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewComposer.jsx": {
+    "mtime": 1792061453.434063,
+    "seen": 1792061675.3199213,
+    "ast_hash": "d3b3a9e208c9b9ad67de8fc2d430ecb3",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewInvite.jsx": {
+    "mtime": 1792050915.8637774,
+    "seen": 1792052015.4426563,
+    "ast_hash": "e292587ab6fa74f6104bcb0618a009b4",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewList.jsx": {
+    "mtime": 1792061470.0092719,
+    "seen": 1792061675.319924,
+    "ast_hash": "21c6620ffac098531617e9ee01446590",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewSent.jsx": {
+    "mtime": 1792051452.9459617,
+    "seen": 1792052015.4426575,
+    "ast_hash": "515bc0e8961bcb5e6d3d67099f49a1a8",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewsBackdrop.jsx": {
+    "mtime": 1792054500.7590663,
+    "seen": 1792054852.924465,
+    "ast_hash": "395e213c9b1e8cbc93dc112f941f2b92",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewsEmptyState.jsx": {
+    "mtime": 1792054154.741261,
+    "seen": 1792054852.9244666,
+    "ast_hash": "4606c8afeb23b8b8ab8e36665c683a46",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewsHero.jsx": {
+    "mtime": 1792054500.7600667,
+    "seen": 1792054852.9244683,
+    "ast_hash": "6036844262149de41a08223a73865b33",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewsSummary.jsx": {
+    "mtime": 1792054500.7610664,
+    "seen": 1792054852.9244695,
+    "ast_hash": "9e1672f0e9eeffad866376bcf69d1703",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewsVoiceprint.jsx": {
+    "mtime": 1792054394.559491,
+    "seen": 1792054852.924471,
+    "ast_hash": "432e6600161151a1f1b749735a08bea5",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/StarRating.jsx": {
+    "mtime": 1792050129.9988222,
+    "seen": 1792052015.442662,
+    "ast_hash": "27ba5344db36059bb02e06d806d3964a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/StarRatingInput.jsx": {
+    "mtime": 1792053960.100346,
+    "seen": 1792054852.924474,
+    "ast_hash": "e25721b818b629c001413c37d0301bed",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/reviewFormat.js": {
+    "mtime": 1792061438.61693,
+    "seen": 1792061675.319944,
+    "ast_hash": "7d5c81bc143e833d3d268602b817495b",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/reviewFormat.test.js": {
+    "mtime": 1792061438.61693,
+    "seen": 1792061675.319945,
+    "ast_hash": "82d1f8533167f6d82ccb9e9628a4b51d",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/reviewsCopy.js": {
+    "mtime": 1792061438.6159306,
+    "seen": 1792061675.3199468,
+    "ast_hash": "052dadc708ae2246b18a82611ed1aee4",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/ui/TextAreaField.jsx": {
+    "mtime": 1792051854.8860066,
+    "seen": 1792052015.442675,
+    "ast_hash": "a504bb00593847f2657cff4f296fee8e",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/hooks/usePageMeta.js": {
+    "mtime": 1792049804.7024887,
+    "seen": 1792052015.4426816,
+    "ast_hash": "53fb26b139a601558cd35324fc42e10a",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/lib/reviewsApi.js": {
+    "mtime": 1792061367.2707913,
+    "seen": 1792061675.3199866,
+    "ast_hash": "eef07977c6b8d83e1ee485e738768fa6",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/src/config/jwt.js": {
+    "mtime": 1792052807.0560255,
+    "seen": 1792053289.670278,
+    "ast_hash": "42250e40528af3880075d16ef0657b37",
+    "semantic_hash": ""
+  },
+  "backend_learningprjct/test/reviews.test.js": {
+    "mtime": 1792061343.4337997,
+    "seen": 1792061675.3197894,
+    "ast_hash": "18d45f13d3fa97a3d71939fc292b9859",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/OwnReview.jsx": {
+    "mtime": 1792061577.9415333,
+    "seen": 1792061675.3199184,
+    "ast_hash": "821c40b602ecb25e89827cf01f59c4a2",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/useReviewForm.js": {
+    "mtime": 1792061577.9425344,
+    "seen": 1792061675.3199499,
+    "ast_hash": "213de84ebb90294aba8bd58ac759f3f8",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/hooks/useReviews.js": {
+    "mtime": 1792061380.361466,
+    "seen": 1792061675.319982,
+    "ast_hash": "cf05e1e6ba60411539e93a3f8f3eed55",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewPreview.jsx": {
+    "mtime": 1792054175.087046,
+    "seen": 1792054852.9244597,
+    "ast_hash": "b4f3ac8b9c80459a61728e83920f3d90",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/ReviewStation.jsx": {
+    "mtime": 1792054175.0880394,
+    "seen": 1792054852.924463,
+    "ast_hash": "85cc6a44630566dd649ab33f40ffdd49",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/__fixtures__/demoReviews.js": {
+    "mtime": 1792054103.9838586,
+    "seen": 1792054852.9244764,
+    "ast_hash": "6fed5266fb6b7f21e0c35b3086a7026e",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/useDemoReviews.js": {
+    "mtime": 1792054105.050357,
+    "seen": 1792054852.924482,
+    "ast_hash": "591d0107f0d6da2ddea9c7af24f300bb",
+    "semantic_hash": ""
+  },
+  "front_learningprjct/src/components/reviews/OwnActions.jsx": {
+    "mtime": 1792061577.9415333,
+    "seen": 1792061675.3199165,
+    "ast_hash": "a26e35bcd5febe91c403a0cc7d84e150",
+    "semantic_hash": ""
+  }
+}
