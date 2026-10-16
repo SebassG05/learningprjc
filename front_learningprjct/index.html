@@ -32,7 +32,8 @@
       }, 'google_translate_element');
     }
   </script>
-  <script type="text/javascript"
+  <!-- async: ya no bloquea el arranque de la app. El widget se inicia solo con ?cb= (la función está definida arriba). -->
+  <script type="text/javascript" async
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script type="module" src="/src/main.jsx"></script>
