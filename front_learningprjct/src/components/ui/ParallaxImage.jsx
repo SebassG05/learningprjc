@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 // Imagen con parallax ligado al scroll: la foto se desplaza más despacio que su marco.
-const ParallaxImage = ({ src, alt = '', className = '', children, strength = 12 }) => {
+const ParallaxImage = ({ src, srcSet, sizes, alt = '', className = '', children, strength = 12 }) => {
   const ref = useRef(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -13,6 +13,8 @@ const ParallaxImage = ({ src, alt = '', className = '', children, strength = 12 
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
       <motion.img
         src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt}
         loading="lazy"
         decoding="async"
