@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 import { duration, ease } from '../lib/motion';
+import CourseCatalogFields from './admin/CourseCatalogFields';
+import { appendCatalogFields, catalogFieldsError, catalogFormValues } from './admin/courseCatalogForm';
 
 export default function AdminCursos() {
   const { showToast } = useToast();
@@ -40,6 +42,9 @@ export default function AdminCursos() {
     idiomasDisponibles: ['es'],
     isOpen: false
   });
+
+  // Área, nivel y profesor (componente aparte)
+  const [catalogo, setCatalogo] = useState(() => catalogFormValues());
 
   const [nuevaCategoria, setNuevaCategoria] = useState('');
   const [nuevoObjetivoGeneral, setNuevoObjetivoGeneral] = useState('');
@@ -94,6 +99,7 @@ export default function AdminCursos() {
       idiomasDisponibles: ['es'],
       isOpen: false
     });
+    setCatalogo(catalogFormValues());
     setNuevaCategoria('');
     setNuevoObjetivoGeneral('');
     setNuevoObjetivoGeneralEn('');
@@ -135,6 +141,7 @@ export default function AdminCursos() {
       idiomasDisponibles: curso.idiomasDisponibles || ['es'],
       isOpen: curso.isOpen || false
     });
+    setCatalogo(catalogFormValues(curso));
     setCursoCreado(curso);
     setFase(1);
     setMostrarFormulario(true);
@@ -253,6 +260,12 @@ export default function AdminCursos() {
       return;
     }
 
+    const errorCatalogo = catalogFieldsError(catalogo);
+    if (errorCatalogo) {
+      showToast(errorCatalogo, 'error');
+      return;
+    }
+
     try {
       setGuardando(true);
 
@@ -281,6 +294,7 @@ export default function AdminCursos() {
       formDataToSend.append('objetivosEspecificos', JSON.stringify(formData.objetivosEspecificos));
       formDataToSend.append('objetivosEspecificosEn', JSON.stringify(formData.objetivosEspecificosEn));
       formDataToSend.append('idiomasDisponibles', JSON.stringify(formData.idiomasDisponibles));
+      appendCatalogFields(formDataToSend, catalogo);
 
       // Agregar imagen SOLO si hay un archivo
       if (formData.imageFile) {
@@ -960,6 +974,9 @@ export default function AdminCursos() {
                   ))}
                 </div>
               </div>
+
+              {/* Área, nivel y profesor */}
+              <CourseCatalogFields value={catalogo} onChange={setCatalogo} onError={(m) => showToast(m, 'error')} />
 
               {/* Objetivos Generales - Español */}
               {formData.idiomasDisponibles.includes('es') && (
