@@ -57,11 +57,15 @@ export const readToken = () => {
 };
 
 // Áreas y niveles: una sola petición por carga, compartida entre listado, ficha y AdminCursos.
-// Si falla, se olvida la promesa para reintentar la próxima vez.
+// Si falla, no se reintenta en cada montaje: se espera un minuto antes de volver a pedirlo.
 let catalogPromise;
+let catalogFailedAt = 0;
+const CATALOG_RETRY_MS = 60_000;
 export function fetchCatalog() {
+  if (!catalogPromise && Date.now() - catalogFailedAt < CATALOG_RETRY_MS) return Promise.reject(new Error('catálogo no disponible'));
   catalogPromise ??= getJson(`${API_URL}/api/courses/areas`).catch((err) => {
     catalogPromise = undefined;
+    catalogFailedAt = Date.now();
     throw err;
   });
   return catalogPromise;

@@ -126,7 +126,7 @@ function Dialog({ mode = 'enroll', courseTitle, language, sending = false, onCon
         <header className="flex items-start gap-4 px-6 pb-4 pt-3 sm:px-8 sm:pt-8">
           <div className="min-w-0 flex-1">
             <p className="eyebrow text-ink-3">{TERMS_DIALOG.eyebrow[mode === 'reaccept' ? 'reaccept' : 'enroll']}</p>
-            <h2 id={titleId} className="mt-2 text-title-3 font-semibold text-ink sm:text-title-2">{terms?.title ?? TERMS_DIALOG.loading}</h2>
+            <h2 id={titleId} className="mt-2 text-title-3 font-semibold text-ink sm:text-title-2">{terms?.title ?? (state.status === 'error' ? TERMS_DIALOG.fallbackTitle : TERMS_DIALOG.loading)}</h2>
             {meta ? <p id={metaId} className="mt-2 text-footnote text-ink-3">{meta}</p> : null}
           </div>
           <button

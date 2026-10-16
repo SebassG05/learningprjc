@@ -124,7 +124,8 @@ export default function CourseHero({ course, title, description, lang, onLang, b
               width={1600}
               height={1000}
               alt={SHEET.coverAlt(title)}
-              fetchPriority={coverFirst ? 'high' : 'auto'}
+              // React 18 solo pasa el atributo en minúsculas (fetchPriority es de React 19)
+              {...{ fetchpriority: coverFirst ? 'high' : 'auto' }}
               loading={coverFirst ? 'eager' : 'lazy'}
               decoding="async"
               style={linked ? { scale } : undefined}

@@ -48,7 +48,8 @@ function CourseCard({ course, areaName, progress, eager = false, priority = fals
             height={500}
             alt=""
             loading={eager ? 'eager' : 'lazy'}
-            fetchPriority={priority ? 'high' : 'auto'}
+            // React 18 solo pasa el atributo en minúsculas (fetchPriority es de React 19); el spread evita el aviso de lint
+            {...{ fetchpriority: priority ? 'high' : 'auto' }}
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
           />
