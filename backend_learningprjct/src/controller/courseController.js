@@ -1,5 +1,20 @@
 import Course from '../models/Course.js';
 import cloudinary from '../config/cloudinary.js';
+import { COURSE_AREAS, COURSE_LEVELS } from '../config/courseCatalog.js';
+import { CatalogFieldError, catalogFieldsForCreate, parseCatalogFields } from './courseCatalogFields.js';
+
+// Portada y foto del profesor llegan como campos de archivo (upload.fields)
+const uploadedPath = (req, field) => req.files?.[field]?.[0]?.path || (req.file?.fieldname === field ? req.file.path : undefined);
+
+/**
+ * Áreas y niveles del catálogo (el front no tiene ninguno escrito)
+ * @route GET /api/courses/areas
+ * @access Public
+ */
+export const obtenerCatalogo = (req, res) => {
+  res.set('Cache-Control', 'public, max-age=300');
+  res.json({ areas: COURSE_AREAS, niveles: COURSE_LEVELS });
+};
 
 // ============= CRUD DE CURSOS COMPLETOS =============
 
@@ -155,8 +170,8 @@ export const crearCurso = async (req, res) => {
 
     // Si se subió una imagen
     let imagenUrl = null;
-    if (req.file) {
-      imagenUrl = req.file.path; // URL de Cloudinary
+    if (uploadedPath(req, 'image')) {
+      imagenUrl = uploadedPath(req, 'image'); // URL de Cloudinary
       console.log('✅ Imagen subida a Cloudinary:', imagenUrl);
     } else {
       console.log('ℹ️ No se subió imagen de portada');
@@ -186,6 +201,10 @@ export const crearCurso = async (req, res) => {
       temas: parseArray(temas)
     };
 
+    // Nivel, área y profesor (opcionales)
+    const { set: catalogo } = parseCatalogFields(req.body, { profesorFoto: uploadedPath(req, 'profesorFoto') });
+    Object.assign(datosNuevoCurso, catalogFieldsForCreate(catalogo));
+
     // Solo agregar campos de texto si tienen valor
     if (title && title.trim()) datosNuevoCurso.title = title.trim();
     if (titleEn && titleEn.trim()) datosNuevoCurso.titleEn = titleEn.trim();
@@ -210,6 +229,9 @@ export const crearCurso = async (req, res) => {
     console.log('============================================');
     res.status(201).json(nuevoCurso);
   } catch (err) {
+    if (err instanceof CatalogFieldError) {
+      return res.status(400).json({ error: 'Datos no válidos', mensaje: err.message });
+    }
     console.log('============================================');
     console.error('❌❌❌ ERROR AL CREAR CURSO ❌❌❌');
     console.error('Tipo de error:', err.name);
@@ -285,11 +307,16 @@ export const actualizarCurso = async (req, res) => {
     if (req.body.idiomasDisponibles) updateData.idiomasDisponibles = parseArray(req.body.idiomasDisponibles);
 
     // Si se subió una nueva imagen
-    if (req.file) {
-      updateData.image = req.file.path;
+    if (uploadedPath(req, 'image')) {
+      updateData.image = uploadedPath(req, 'image');
     } else if (req.body.image) {
       updateData.image = req.body.image;
     }
+
+    // Nivel, área y profesor: vacío = borrar
+    const { set, unset } = parseCatalogFields(req.body, { profesorFoto: uploadedPath(req, 'profesorFoto') });
+    Object.assign(updateData, set);
+    if (Object.keys(unset).length) updateData.$unset = unset;
 
     const course = await Course.findByIdAndUpdate(
       id,
@@ -303,6 +330,9 @@ export const actualizarCurso = async (req, res) => {
 
     res.json(course);
   } catch (err) {
+    if (err instanceof CatalogFieldError) {
+      return res.status(400).json({ error: 'Datos no válidos', mensaje: err.message });
+    }
     console.error('Error al actualizar el curso:', err);
     res.status(400).json({ error: 'Error al actualizar el curso', mensaje: err.message });
   }

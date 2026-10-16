@@ -94,14 +94,17 @@ const uploadFieldsWrapper = (fields) => {
 // Obtener todos los cursos (público)
 router.get('/', courseController.obtenerCursos);
 
+// Áreas y niveles del catálogo (público). Va antes de '/:id' para que «areas» no se lea como id
+router.get('/areas', courseController.obtenerCatalogo);
+
 // Obtener curso por id (público)
 router.get('/:id', courseController.obtenerCurso);
 
-// Crear curso (solo admin/superadmin) - con soporte para subir imagen
-router.post('/', autenticar, soloAdmin, uploadSingleWrapper('image'), courseController.crearCurso);
+// Crear curso (solo admin/superadmin) - con portada y foto del profesor opcionales
+router.post('/', autenticar, soloAdmin, uploadFieldsWrapper([{ name: 'image', maxCount: 1 }, { name: 'profesorFoto', maxCount: 1 }]), courseController.crearCurso);
 
-// Actualizar curso por id (solo admin/superadmin) - con soporte para actualizar imagen
-router.put('/:id', autenticar, soloAdmin, uploadSingleWrapper('image'), courseController.actualizarCurso);
+// Actualizar curso por id (solo admin/superadmin) - con portada y foto del profesor opcionales
+router.put('/:id', autenticar, soloAdmin, uploadFieldsWrapper([{ name: 'image', maxCount: 1 }, { name: 'profesorFoto', maxCount: 1 }]), courseController.actualizarCurso);
 
 // Eliminar curso (solo admin/superadmin)
 router.delete('/:id', autenticar, soloAdmin, courseController.eliminarCurso);

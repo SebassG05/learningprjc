@@ -1,4 +1,12 @@
 import mongoose from 'mongoose';
+import { AREA_SLUGS, COURSE_LEVELS, PROFESOR_LIMITS } from '../config/courseCatalog.js';
+
+// Profesor del curso (opcional): si falta, la ficha no muestra el bloque
+const profesorSchema = new mongoose.Schema({
+  nombre: { type: String, trim: true, maxlength: PROFESOR_LIMITS.nombre },
+  foto: { type: String }, // URL de Cloudinary
+  bio: { type: String, trim: true, maxlength: PROFESOR_LIMITS.bio }
+}, { _id: false });
 
 const materialSchema = new mongoose.Schema({
   tipo: { 
@@ -47,7 +55,10 @@ const courseSchema = new mongoose.Schema({
   description: { type: String }, // Descripción en español (opcional si descriptionEn existe)
   descriptionEn: { type: String }, // Descripción en inglés (opcional)
   duration: { type: String }, // Ej: "20 horas"
-  category: [{ type: String }],
+  category: [{ type: String }], // Etiquetas libres: chips secundarios en tarjeta y ficha
+  area: { type: String, enum: AREA_SLUGS }, // Área del catálogo (config/courseCatalog.js), opcional
+  nivel: { type: String, enum: COURSE_LEVELS }, // Opcional
+  profesor: { type: profesorSchema, default: undefined },
   objetivosGenerales: [{ type: String }], // Array de objetivos generales (español)
   objetivosGeneralesEn: [{ type: String }], // Array de objetivos generales (inglés)
   objetivosEspecificos: [{ type: String }], // Array de objetivos específicos (español)
