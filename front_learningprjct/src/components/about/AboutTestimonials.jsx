@@ -1,17 +1,21 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
-// Testimonios: citas estáticas (sin carrusel) con su idioma marcado y un enlace a las reseñas del campus.
+// Testimonios: citas estáticas (sin carrusel) con su origen y su idioma marcados y un enlace a las reseñas del campus.
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Reveal from '../ui/Reveal';
 import SplitText from '../ui/SplitText';
 import StarRating from '../reviews/StarRating';
-import { REVIEWS_LINK, TESTIMONIALS, TESTIMONIALS_LANG, TESTIMONIALS_TITLE, initialsOf } from './aboutCopy';
+import { REVIEWS_LINK, TESTIMONIALS, TESTIMONIALS_LANG, TESTIMONIALS_NOTE, TESTIMONIALS_TITLE, initialsOf } from './aboutCopy';
 
 export default function AboutTestimonials({ className = '' }) {
   return (
     <section className={className}>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <SplitText as="h2" className="block text-title-1 font-bold text-ink">{TESTIMONIALS_TITLE}</SplitText>
+        <div>
+          <SplitText as="h2" className="block text-title-1 font-bold text-ink">{TESTIMONIALS_TITLE}</SplitText>
+          {/* Sitúa las citas: son de clientes de la empresa, no reseñas de cursos */}
+          <p className="mt-4 max-w-[52ch] text-base text-gray-300">{TESTIMONIALS_NOTE}</p>
+        </div>
         <Link
           to={REVIEWS_LINK.to}
           className="group inline-flex items-center gap-2 self-start rounded-sm text-base font-semibold text-brand-300 underline-offset-4 hover:text-brand-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-300 sm:self-auto"

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
-// Cierre: salida clara (la acción «Comenzar ahora» de la home y los cursos) y el contacto de siempre,
-// sobre el horizonte con la luz de amanecer de la home, que enlaza con el pie.
+// Cierre: salida clara hacia un curso (la acción «Comenzar ahora» de la home y los cursos) y, como salida
+// secundaria, el contacto; sobre el horizonte con la luz de amanecer de la home, que enlaza con el pie.
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
@@ -21,17 +21,6 @@ export default function AboutClosing({ onStart, className = '' }) {
 
       <div className="mx-auto flex max-w-3xl flex-col items-center px-gutter pb-36 text-center sm:pb-44">
         <SplitText as="h2" className="block text-balance text-title-1 font-bold text-ink">{CLOSING.title}</SplitText>
-        <p className="mt-6 max-w-[52ch] text-pretty text-lg text-gray-200">
-          Escríbenos a{' '}
-          <a href={CLOSING.emailHref} target="_blank" rel="noopener noreferrer" title={CLOSING.emailTitle} className={link}>
-            {CLOSING.email}
-          </a>{' '}
-          o rellena nuestro{' '}
-          <Link to="/contacto" className={link}>
-            formulario de contacto
-          </Link>
-          .
-        </p>
         <div className="mt-10 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
           <Button size="lg" className="text-button-lg shadow-glow-lg" onClick={onStart} onPointerEnter={preloadAuthModal} onFocus={preloadAuthModal}>
             {CLOSING.start} <ArrowRight className="h-5 w-5" aria-hidden="true" />
@@ -40,6 +29,18 @@ export default function AboutClosing({ onStart, className = '' }) {
             {CLOSING.courses}
           </Button>
         </div>
+        {/* Salida secundaria: colaborar o resolver dudas */}
+        <p className="mt-12 max-w-[52ch] text-pretty text-base text-gray-300">
+          {CLOSING.contactLead} Escríbenos a{' '}
+          <a href={CLOSING.emailHref} className={link}>
+            {CLOSING.email}
+          </a>{' '}
+          o rellena nuestro{' '}
+          <Link to="/contacto" className={link}>
+            formulario de contacto
+          </Link>
+          .
+        </p>
       </div>
     </section>
   );

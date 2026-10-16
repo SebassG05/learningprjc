@@ -1,6 +1,7 @@
 // Textos de Sobre Nosotros. Misión, visión, valores, equipo y testimonios son los de la página
 // anterior; solo la introducción y la meta son nuevas (aprobadas el 2026-10-16).
 import { Accessibility, BadgeCheck, HeartHandshake, Lightbulb, ScanEye } from 'lucide-react';
+import { CAMPUS_EMAIL, CAMPUS_EMAIL_HREF } from '../../lib/site';
 
 export const PAGE_TITLE = 'Sobre nosotros · Evenor-Tech Campus';
 
@@ -45,8 +46,8 @@ export const VALUES = [
 export const TEAM_TITLE = 'Nuestro equipo';
 
 export const TEAM = [
-  { name: 'Maria Anaya Romero', role: 'CEO & Fundador', linkedin: 'https://www.linkedin.com/in/mar%C3%ADa-anaya-romero-95005727/' },
-  { name: 'Javier Bravo Garcia', role: 'Responsable en GIS, Teledetección y Medio Ambiente', linkedin: 'https://www.linkedin.com/in/javier-bravo-garc%C3%ADa-5158b720a/' },
+  { name: 'María Anaya Romero', role: 'CEO & Fundador', linkedin: 'https://www.linkedin.com/in/mar%C3%ADa-anaya-romero-95005727/' },
+  { name: 'Javier Bravo García', role: 'Responsable en GIS, Teledetección y Medio Ambiente', linkedin: 'https://www.linkedin.com/in/javier-bravo-garc%C3%ADa-5158b720a/' },
   { name: 'Francisco José Blanco-Velázquez', role: 'Project Manager', linkedin: 'https://www.linkedin.com/in/francisco-jos%C3%A9-blanco-vel%C3%A1zquez-19138b103/' },
   { name: 'Sebastián Gandía Gutiérrez', role: 'Desarrollador Full Stack', linkedin: 'https://www.linkedin.com/in/sebasti%C3%A1n-gand%C3%ADa-guti%C3%A8rrez-7880662b5/' },
   { name: 'Jesús Manuel Vázquez Herrera', role: 'Desarrollador Full Stack', linkedin: 'https://www.linkedin.com/in/jes%C3%BAs-manuel-v%C3%A1zquez-herrera-8191462a3/' },
@@ -54,6 +55,8 @@ export const TEAM = [
 
 export const TESTIMONIALS_TITLE = 'Testimonios';
 export const TESTIMONIALS_LANG = 'en';
+// De dónde vienen (no hay página de Evenor-Tech en Trustburn que enlazar: se buscó el 2026-10-16)
+export const TESTIMONIALS_NOTE = 'Opiniones de clientes de Evenor-Tech publicadas en Trustburn, en su idioma original (inglés).';
 export const REVIEWS_LINK = { to: '/reseñas', label: 'Lee las reseñas de alumnos del campus' };
 
 export const TESTIMONIALS = [
@@ -84,12 +87,13 @@ export const TESTIMONIALS = [
 ];
 
 export const CLOSING = {
-  title: '¿Quieres colaborar o tienes dudas?',
-  email: 'info@evenor-tech.com',
-  emailHref: 'https://outlook.live.com/mail/0/deeplink/compose?to=info@evenor-tech.com',
-  emailTitle: 'Abrir Outlook para escribir a info@evenor-tech.com',
+  title: 'Tu próximo curso empieza aquí.',
   start: 'Comenzar ahora',
   courses: 'Ver cursos',
+  // Colaborar o resolver dudas: salida secundaria hacia Contacto (texto de la página anterior)
+  contactLead: '¿Quieres colaborar o tienes dudas?',
+  email: CAMPUS_EMAIL,
+  emailHref: CAMPUS_EMAIL_HREF,
 };
 
 // Iniciales de un nombre: primera letra del primer y del último nombre
