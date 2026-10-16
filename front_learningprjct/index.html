@@ -9,6 +9,8 @@
 
   <!-- Rondana Black (titulares y logo) se pide ya, sin esperar al JS: es el LCP de casi todas las rutas.
        Misma URL que el @font-face de index.css; font-display sigue siendo swap. -->
+  <!-- Portadas de cursos y fotos: la conexión con Cloudinary se abre antes de necesitarla -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
   <link rel="preload" href="/Corporatives/Typography/Rondana%20Black.otf" as="font" type="font/otf" crossorigin />
 
   <!-- Configuración de idioma -->

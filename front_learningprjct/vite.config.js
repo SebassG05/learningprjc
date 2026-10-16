@@ -1,13 +1,20 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import routeModulePreload from './vite/routeModulePreload.js'
 
 export default defineConfig({
   base: '/',
   plugins: [
     react(),
+    // Entrada directa por URL a rutas con lazy(): su chunk baja en paralelo con el bundle principal
+    routeModulePreload([
+      [/^\/cursos\/?$/, 'src/pages/Cursos.jsx'],
+    ]),
     VitePWA({
       registerType: 'autoUpdate',
+      // El registro del service worker no bloquea el primer pintado (antes era un <script> síncrono en <head>)
+      injectRegister: 'script-defer',
       // ✅ AÑADIR: Estrategia de generación del SW
       strategies: 'generateSW', // Genera automáticamente el Service Worker
       // ✅ AÑADIR: Configuración del manifest para desarrollo

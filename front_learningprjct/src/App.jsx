@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import ScrollToTop from './components/layout/ScrollToTop';
-import React, { Suspense, lazy, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Layout from './components/layout/Layout';
 import Footer from './components/layout/Footer';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
@@ -10,7 +10,6 @@ import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import ReviewsPage from './pages/Reviews.jsx';
 import Ajustes from './pages/Ajustes.jsx';
-import Cursos from './pages/Cursos.jsx';
 import LoginPage from './pages/Login.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import GuiaUsuario from './pages/GuiaUsuario.jsx';
@@ -79,7 +78,13 @@ function AnimatedRoutes() {
           } />
           <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
           <Route path="/contacto" element={<PageTransition><Contacto /></PageTransition>} />
-          <Route path="/cursos" element={<PageTransition><Cursos /></PageTransition>} />
+          <Route path="/cursos" element={
+            <PageTransition>
+              <Suspense fallback={<RouteFallback fill />}>
+                <Cursos />
+              </Suspense>
+            </PageTransition>
+          } />
           <Route path="/reseñas" element={<PageTransition><ReviewsPage /></PageTransition>} />
           <Route path="/ajustes" element={<PageTransition><Ajustes /></PageTransition>} />
           <Route path="/sobre" element={
@@ -131,11 +136,19 @@ function AnimatedRoutes() {
 }
 
 // La página sale (rápida, acelerando) y la nueva entra; el pie viaja con la página para que no salte.
+// En la carga directa de una URL no hay transición que mostrar: animar la entrada desde opacidad 0
+// solo retrasaría el LCP. A partir de la primera navegación interna, las páginas entran animadas.
+let hasNavigated = false;
+
 function PageTransition({ children }) {
+  const [initial] = useState(() => (hasNavigated ? { opacity: 0, y: distance.page } : false));
+  useEffect(() => {
+    hasNavigated = true;
+  }, []);
   return (
     <motion.div
       className="flex min-h-[calc(100svh-4rem)] flex-col"
-      initial={{ opacity: 0, y: distance.page }}
+      initial={initial}
       animate={{ opacity: 1, y: 0, transition: { duration: duration.slow, ease: ease.outExpo } }}
       exit={{ opacity: 0, y: -8, transition: { duration: duration.fast, ease: ease.exit } }}
     >
@@ -180,6 +193,7 @@ function App() {
 
 const ResetPassword = lazy(() => import('./pages/ResetPassword.jsx'));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword.jsx'));
+const Cursos = lazy(() => import('./pages/Cursos.jsx'));
 const CursoDetalle = lazy(() => import('./pages/CursoDetalle.jsx'));
 const CursoInscripcion = lazy(() => import('./pages/CursoInscripcion.jsx'));
 const EstructuraCursoPage = lazy(() => import('./pages/EstructuraCursoPage.jsx'));
