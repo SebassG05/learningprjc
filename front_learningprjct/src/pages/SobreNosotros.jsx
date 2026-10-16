@@ -9,6 +9,7 @@ import AboutEssence from '../components/about/AboutEssence';
 import AboutTeam from '../components/about/AboutTeam';
 import AboutTestimonials from '../components/about/AboutTestimonials';
 import AboutClosing from '../components/about/AboutClosing';
+import AboutJsonLd from '../components/about/AboutJsonLd';
 import { PAGE_DESCRIPTION, PAGE_TITLE } from '../components/about/aboutCopy';
 import { useUser } from '../context/UserContext';
 import usePageMeta from '../hooks/usePageMeta';
@@ -30,6 +31,7 @@ export default function SobreNosotros() {
 
   return (
     <div className="relative isolate">
+      <AboutJsonLd />
       <AboutBackdrop />
       {showLogin && <AuthModal open={showLogin} onClose={() => setShowLogin(false)} />}
 
