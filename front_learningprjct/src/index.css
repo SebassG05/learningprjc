@@ -581,6 +581,29 @@
     }
 }
 
+/* Señal de scroll del hero: un hilo de luz y un punto que baja tres veces (solo transform) y se queda */
+.about-cue {
+    background: linear-gradient(180deg, color-mix(in oklab, var(--color-brand-300) 45%, transparent), transparent);
+}
+
+.about-cue-dot {
+    animation: about-cue 1.8s var(--ease-in-out-quart) 1.2s 3 backwards;
+}
+
+@keyframes about-cue {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(3rem);
+        opacity: 0;
+    }
+}
+
 /* Constelación de valores */
 .about-constellation-lines path {
     stroke: color-mix(in oklab, var(--color-brand-300) 45%, transparent);
@@ -654,7 +677,8 @@
     .about-drift,
     .about-rise,
     .about-light,
-    .about-horizon {
+    .about-horizon,
+    .about-cue-dot {
         animation: none;
     }
 
