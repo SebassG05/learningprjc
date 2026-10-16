@@ -47,13 +47,26 @@ Con `prefers-reduced-motion` no hay desplazamientos, escalados ni trazos dibujad
 - Sin dependencias nuevas, sin Canvas y sin `LazyMotion` (`motion` completo ya está en el bundle principal: no ahorraría bytes).
 - Medir «antes» y «después» igual: Lighthouse 12.8.2 en móvil y escritorio sobre `vite preview`, y fps en scroll con CPU 4× más lenta.
 
-## 6. Pendiente de decisión
+## 6. Cambios durante la implementación (con su motivo)
+
+- **El hero ocupa la primera pantalla** (`100svh` menos el header). Si el siguiente bloque asomaba, su entrada animada pasaba a ser el LCP (de 5,5 a 5,6 s en móvil).
+- **La libélula va entre Misión/Visión y Valores, no tras el `h2`.** En móvil asomaba en la primera pantalla y, al ser `lazy`, el LCP era la foto (5,6 s).
+- **La primera frase de Misión y Visión va en la fuente de texto (medium), no en Rondana.** Rondana se lee mal en frases largas (critique «después»).
+- **El `alt` de la foto describe la libélula.** Antes repetía el pie visible y el lector lo leía dos veces.
+- **Imagen:** `srcset` de Cloudinary con `f_auto,q_auto` (AVIF/WebP). `ParallaxImage` gana `srcSet`/`sizes` opcionales, y Cursos no cambia.
+
+## 7. Pendiente de decisión
 
 - Fotos del equipo (hoy son monogramas).
 - Testimonios propios del campus en español que sustituyan a los de Trustburn.
 - Cambiar el enlace de Outlook web por `mailto:`.
 - Un titular de cierre orientado a empezar un curso (hoy se mantiene «¿Quieres colaborar o tienes dudas?»).
-- `lazy()` de `/sobre` en `App.jsx`, `LazyMotion` global, `preload` de Rondana y paso a WOFF2, Google Translate con `async`, fundido de `PageTransition` (afecta al LCP de todas las rutas).
+- `preload` de `Rondana Black` en `index.html` y paso a WOFF2. **Es lo que queda para bajar el LCP móvil de 2,5 s:** la fuente no se pide hasta los 2,3 s (tras el JS) y el `h1` y el logo esperan a que llegue, a los 3,2 s.
+- `lazy()` de `/sobre` en `App.jsx`, `LazyMotion` global, Google Translate con `async`, fundido de `PageTransition` (afecta al LCP de todas las rutas).
+- El correo del cierre (info@evenor-tech.com) no coincide con el del footer (campusevenor@gmail.com).
+- Encuadrar los testimonios (por ejemplo, «Lo que dicen los clientes de Evenor-Tech (Trustburn, en inglés)»). La primera cita llega cortada con «…» desde el texto original.
+- Los nombres del equipo sin tilde («Maria», «Garcia») vienen así de los datos originales.
+- Una señal suave de scroll bajo la introducción, si el hero a pantalla completa parece vacío en pantallas altas.
 - Datos estructurados `EducationalOrganization`.
 - Extraer el horizonte a una pieza compartida con Contacto.
 - Header: el `aria-label` del logo no coincide con su texto visible (Lighthouse).
