@@ -2,16 +2,13 @@
 // La página solo compone escenas; los textos viven en components/courses/coursesCopy.js.
 // Los filtros van en la URL (?q=&area=&nivel=): «atrás» y los enlaces compartidos los conservan.
 import { useCallback, useDeferredValue, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import AuthModal from '../components/auth/LazyAuthModal';
-import { preloadAuthModal } from '../components/auth/loadAuthModal';
+import { useSearchParams } from 'react-router-dom';
 import CoursesIntro from '../components/courses/CoursesIntro';
 import CourseFilters from '../components/courses/CourseFilters';
 import CourseGrid from '../components/courses/CourseGrid';
-import LanguageDialog from '../components/courses/LanguageDialog';
 import useCourseCatalog from '../components/courses/useCourseCatalog';
 import { LIST_HEADING, PROVISIONAL } from '../components/courses/coursesCopy';
-import { buildSearchIndex, courseHours, filterCourses, isBilingual, saveLanguage, savedLanguage, topicCount } from '../components/courses/courseFormat';
+import { buildSearchIndex, courseHours, filterCourses, topicCount } from '../components/courses/courseFormat';
 import { useUser } from '../context/UserContext';
 import usePageMeta from '../hooks/usePageMeta';
 
@@ -27,7 +24,6 @@ const HALO = {
 
 export default function Cursos() {
   usePageMeta(PROVISIONAL.pageTitle, PROVISIONAL.pageDescription);
-  const navigate = useNavigate();
   const { user } = useUser();
   const { status, courses, catalog, progress, retry } = useCourseCatalog(user?._id ?? user?.id ?? user?.email ?? null);
 
@@ -74,30 +70,6 @@ export default function Cursos() {
   const size = page.key === filterKey ? page.size : PAGE_SIZE;
   const showMore = useCallback(() => setPage({ key: filterKey, size: size + PAGE_SIZE }), [filterKey, size]);
 
-  // Sin sesión se pide acceso; en cursos bilingües, el idioma antes de entrar (como hasta ahora).
-  // Cmd/Ctrl-clic abre la ficha en otra pestaña sin interceptar.
-  const [showLogin, setShowLogin] = useState(false);
-  const [langCourse, setLangCourse] = useState(null);
-  const handleOpen = useCallback(
-    (e, course) => {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-      if (!user) {
-        e.preventDefault();
-        setShowLogin(true);
-      } else if (isBilingual(course) && !savedLanguage(course._id)) {
-        e.preventDefault();
-        setLangCourse(course);
-      }
-    },
-    [user]
-  );
-  const chooseLanguage = (lang) => {
-    saveLanguage(langCourse._id, lang);
-    const id = langCourse._id;
-    setLangCourse(null);
-    navigate(`/curso/${id}/inscripcion`);
-  };
-
   const hasFilters = FILTER_KEYS.some((k) => filters[k]);
 
   return (
@@ -112,11 +84,8 @@ export default function Cursos() {
           <CourseFilters catalog={catalog} loading={status === 'loading'} filters={filters} onChange={updateFilters} count={visible.length} />
         ) : null}
 
-        <section
-          aria-labelledby="cursos-listado"
-          className="pb-16 pt-8 sm:pb-20 sm:pt-10"
-          onPointerEnter={user ? undefined : preloadAuthModal}
-        >
+        {/* La ficha es pública: la tarjeta lleva directa a ella (el idioma se elige allí) */}
+        <section aria-labelledby="cursos-listado" className="pb-16 pt-8 sm:pb-20 sm:pt-10">
           <h2 id="cursos-listado" className="sr-only">{LIST_HEADING}</h2>
           <CourseGrid
             status={status}
@@ -128,15 +97,11 @@ export default function Cursos() {
             hasFilters={hasFilters}
             onClear={clearFilters}
             onRetry={retry}
-            onOpen={handleOpen}
             hasMore={visible.length > size}
             onMore={showMore}
           />
         </section>
       </div>
-
-      {showLogin ? <AuthModal open={showLogin} onClose={() => setShowLogin(false)} /> : null}
-      <LanguageDialog open={Boolean(langCourse)} onSelect={chooseLanguage} onClose={() => setLangCourse(null)} />
     </div>
   );
 }

@@ -12,10 +12,11 @@ const IMG_WIDTHS = [400, 640, 800];
 const IMG_SIZES = '(min-width: 1536px) 22rem, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw';
 const MAX_TAGS = 3;
 
-// Tarjeta del listado. Todo el área es el enlace del título (::after), así el lector de pantalla
+// Tarjeta del listado: lleva a la ficha (o al aula, si ya está inscrito en un curso abierto).
+// Todo el área es el enlace del título (::after), así el lector de pantalla
 // anuncia un solo enlace con su nombre. Hover solo con puntero fino: sube 4 px, la imagen crece
 // un 3 % y el borde se ilumina con una capa que solo cambia de opacidad.
-function CourseCard({ course, areaName, progress, eager = false, priority = false, onOpen }) {
+function CourseCard({ course, areaName, progress, eager = false, priority = false }) {
   const { title, description } = courseText(course);
   const level = levelLabel(course.nivel);
   const tags = course.category || [];
@@ -24,11 +25,12 @@ function CourseCard({ course, areaName, progress, eager = false, priority = fals
   const done = progress?.status === 'completed';
 
   return (
+    // Sin whileTap: Framer añadiría tabindex="0" al artículo (una parada de teclado repetida).
+    // La pulsación va por CSS cuando se pulsa su enlace.
     <motion.article
       whileHover={{ y: -4 }}
-      whileTap={{ scale: 0.98 }}
       transition={spring.snappy}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-card"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-[scale] duration-150 ease-out has-[a:active]:scale-[0.98]"
     >
       {/* Brillo de borde y sombra elevada: capas fijas que solo cambian de opacidad */}
       <span
@@ -74,8 +76,7 @@ function CourseCard({ course, areaName, progress, eager = false, priority = fals
         {areaName ? <p className="eyebrow text-brand-300">{areaName}</p> : null}
         <h3 className="text-title-3 font-semibold text-ink">
           <Link
-            to={`/curso/${course._id}/inscripcion`}
-            onClick={(e) => onOpen?.(e, course)}
+            to={enrolled && course.isOpen ? `/curso/${course._id}` : `/curso/${course._id}/inscripcion`}
             className="outline-none after:absolute after:inset-0 after:z-20 after:rounded-3xl focus-visible:after:ring-2 focus-visible:after:ring-brand-400"
           >
             {title}

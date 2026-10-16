@@ -50,7 +50,7 @@ export default function CourseFilters({ catalog, loading = false, filters, onCha
         <div className="-mx-gutter flex min-w-0 flex-1 items-center gap-2 overflow-x-auto px-gutter [scrollbar-width:none] max-xl:[mask-image:linear-gradient(to_right,black_calc(100%-2.5rem),transparent)] md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
           {loading && areas.length === 0 ? (
             <div aria-hidden="true" className="flex shrink-0 gap-2">
-              {['w-16', 'w-40', 'w-32', 'w-36'].map((w) => <span key={w} className={`h-10 ${w} rounded-full bg-surface-2`} />)}
+              {['w-16', 'w-40', 'w-32', 'w-36'].map((w) => <span key={w} className={`h-11 ${w} rounded-full bg-surface-2`} />)}
             </div>
           ) : null}
           {areas.length > 0 ? (
@@ -63,7 +63,7 @@ export default function CourseFilters({ catalog, loading = false, filters, onCha
                     type="button"
                     aria-pressed={active}
                     onClick={() => onChange({ area: a.slug })}
-                    className={`relative isolate shrink-0 rounded-full px-4 py-2 text-callout font-medium ${
+                    className={`relative isolate min-h-11 shrink-0 rounded-full px-4 py-2 text-callout font-medium ${
                       active ? 'text-on-brand' : 'text-ink-2 ring-1 ring-inset ring-line hover:text-ink'
                     }`}
                   >
@@ -86,7 +86,7 @@ export default function CourseFilters({ catalog, loading = false, filters, onCha
                   id={levelId}
                   value={filters.nivel}
                   onChange={(e) => onChange({ nivel: e.target.value })}
-                  className="h-10 appearance-none rounded-full border border-line bg-surface-2 pl-4 pr-10 text-callout font-medium text-ink-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/40"
+                  className="h-11 appearance-none rounded-full border border-line bg-surface-2 pl-4 pr-10 text-callout font-medium text-ink-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/40"
                 >
                   <option value="">{FILTERS.allLevels}</option>
                   {levels.map((n) => (

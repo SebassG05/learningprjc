@@ -85,3 +85,45 @@ export function filterCourses(courses, index, { q, area, nivel }) {
       (!needle || (index.get(c._id) ?? '').includes(needle))
   );
 }
+
+// Primera frase (o las primeras) hasta ~360 caracteres: el resumen de la portada
+export function courseSummary(description, max = 360) {
+  const text = String(description ?? '').trim();
+  if (text.length <= max) return text;
+  // Corta tras «. » (con espacio): «Node.js» o «v1.2» no parten la frase
+  const sentences = text.split(/(?<=[.!?])\s+/).map((x) => `${x} `);
+  let out = '';
+  for (const s of sentences) {
+    if ((out + s).length > max) break;
+    out += s;
+  }
+  return (out || `${text.slice(0, max).replace(/\s+\S*$/, '')}…`).trim();
+}
+
+// «Dominar ANFORA: aprender a…» → { lead: 'Dominar ANFORA', rest: 'aprender a…' }
+export function splitObjective(text) {
+  const s = String(text ?? '').trim();
+  const i = s.indexOf(':');
+  if (i > 0 && i < 120 && i < s.length - 1) return { lead: s.slice(0, i).trim(), rest: s.slice(i + 1).trim() };
+  return { lead: s, rest: '' };
+}
+
+const pick = (lang, es, en) => (lang === 'en' && en?.length ? en : es?.length ? es : en ?? []);
+
+export const courseObjectives = (course, lang) => ({
+  general: pick(lang, course.objetivosGenerales, course.objetivosGeneralesEn),
+  specific: pick(lang, course.objetivosEspecificos, course.objetivosEspecificosEn),
+});
+
+export const sortedTopics = (course) =>
+  [...(course.temas ?? [])].sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0) || (a.numeroTema ?? 0) - (b.numeroTema ?? 0));
+
+export const topicText = (tema, lang) => ({
+  title: (lang === 'en' && tema.tituloEn) || tema.titulo || tema.tituloEn || '',
+  description: (lang === 'en' && tema.descripcionEn) || tema.descripcion || tema.descripcionEn || '',
+});
+
+export const resourceCount = (course) =>
+  (course.temas ?? []).reduce((n, t) => n + (t.materiales?.length ?? 0) + (t.actividadesOptativas?.length ?? 0), 0);
+
+export const isCourseId = (id) => /^[a-f0-9]{24}$/i.test(String(id ?? ''));

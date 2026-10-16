@@ -10,3 +10,6 @@ export const SOCIAL_URLS = {
   linkedin: 'https://www.linkedin.com/company/evenor-tech/',
   x: 'http://x.com/evenor_tech',
 };
+
+export const SITE_NAME = 'Evenor-Tech Campus';
+export const SITE_URL = 'https://campus.evenor-tech.com';

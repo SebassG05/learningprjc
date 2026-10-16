@@ -69,12 +69,49 @@ export const STATES = {
   more: 'Ver más cursos',
 };
 
-export const LANGUAGE_DIALOG = {
-  title: 'Selecciona el idioma',
-  lead: 'Este curso está disponible en español e inglés. ¿En qué idioma quieres seguirlo?',
-  es: { label: 'Español', hint: 'Continuar en español' },
-  en: { label: 'English', hint: 'Continue in English' },
-  cancel: 'Cancelar',
+export const LANGUAGE_NAMES = { es: 'ES', en: 'EN' };
+
+export const SHEET = {
+  breadcrumb: 'Cursos',
+  loading: 'Cargando el curso…',
+  notFoundTitle: 'No encontramos este curso',
+  notFoundLead: 'Puede que ya no esté publicado o que el enlace no sea correcto.',
+  errorTitle: 'No hemos podido cargar el curso',
+  backToList: 'Ver todos los cursos',
+  coverAlt: (title) => `Portada del curso ${title}`,
+  languageGroup: 'Idioma del curso',
+  seeSyllabus: 'Ver temario',
+  outcomesTitle: 'Qué aprenderás',
+  outcomesCount: (g, e) => [g && `${g} ${g === 1 ? 'objetivo general' : 'objetivos generales'}`, e && `${e} ${e === 1 ? 'específico' : 'específicos'}`].filter(Boolean).join(' y '),
+  specificToggle: (n, open) => (open ? 'Ocultar los objetivos específicos' : `Ver los ${n} objetivos específicos`),
+  specificTitle: 'Objetivos específicos',
+  syllabusTitle: 'Temario',
+  expandAll: 'Desplegar todo',
+  collapseAll: 'Plegar todo',
+  topicLabel: (n) => `Tema ${n}`,
+  noTopicDetail: 'El detalle de este tema estará disponible pronto.',
+  lockedMaterial: 'Disponible al inscribirte',
+  openInClassroom: 'Abrir en el aula',
+  materialFallback: (tipo) => ({ pdf: 'Documento PDF', video: 'Vídeo', enlace: 'Enlace', documento: 'Documento' }[tipo] ?? 'Material'),
+  optionalActivity: 'Actividad optativa',
+  factsTitle: 'Ficha técnica',
+  facts: { duration: 'Duración', level: 'Nivel', topics: 'Temas', resources: 'Recursos', languages: 'Idiomas', teacher: 'Profesorado' },
+  resources: (n) => `${n} ${n === 1 ? 'recurso' : 'recursos'}`,
+  languageNames: { es: 'Español', en: 'English' },
 };
 
-export const LANGUAGE_NAMES = { es: 'ES', en: 'EN' };
+export const MATERIAL_BADGE = { pdf: 'PDF', video: 'Vídeo', enlace: 'Enlace', documento: 'Doc' };
+
+// Botón principal según el estado del alumno con el curso
+export const ENROLL = {
+  enroll: 'Inscribirme',
+  reserve: 'Reservar plaza',
+  goToCourse: 'Ir al curso',
+  reserved: 'Plaza reservada',
+  sending: 'Un momento…',
+  reservedLead: 'Te avisaremos cuando el curso abra.',
+  comingSoon: 'Próximamente',
+  error: 'No se pudo completar la inscripción. Inténtalo de nuevo.',
+  done: 'Inscripción completada',
+};
+

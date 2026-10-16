@@ -54,7 +54,7 @@ function Message({ icon: Icon, title, lead, action }) {
   );
 }
 
-export default function CourseGrid({ status, courses, total, catalog, progress, query, hasFilters, onClear, onRetry, onOpen, hasMore, onMore }) {
+export default function CourseGrid({ status, courses, total, catalog, progress, query, hasFilters, onClear, onRetry, hasMore, onMore }) {
   if (status === 'loading') {
     return (
       <div role="status" aria-live="polite">
@@ -102,7 +102,6 @@ export default function CourseGrid({ status, courses, total, catalog, progress, 
               progress={progress.get(String(course._id))}
               eager={i < 3}
               priority={i === 0}
-              onOpen={onOpen}
             />
           </motion.li>
         ))}
