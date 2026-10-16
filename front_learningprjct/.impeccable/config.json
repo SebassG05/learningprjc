@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/courses/sheet/CourseHero.jsx"
+        ],
+        "createdAt": "2026-10-16T12:47:32.083Z",
+        "reason": "Claude: src dinámico de Cloudinary (cloudinaryUrl(course.image)), solo se renderiza si course.image existe"
+      }
+    ]
+  }
+}
