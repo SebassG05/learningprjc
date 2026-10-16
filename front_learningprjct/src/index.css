@@ -305,7 +305,7 @@
 }
 
 /* Planeta: el horizonte con luz de amanecer en el borde */
-.contact-planet {
+.horizon-planet {
     background:
         radial-gradient(40% 3% at 50% 0%, rgb(161 219 135 / 0.28), transparent),
         linear-gradient(180deg, color-mix(in oklab, var(--color-night-teal) 70%, var(--color-night)) 0%, var(--color-canvas) 5%);
@@ -316,7 +316,7 @@
 }
 
 /* Resplandor de la atmósfera sobre el horizonte (degradado, no una sombra enorme que se recorta) */
-.contact-atmosphere {
+.horizon-atmosphere {
     background: radial-gradient(50% 50% at 50% 50%, rgb(161 219 135 / 0.2), rgb(161 219 135 / 0.05) 55%, transparent 100%);
 }
 
@@ -627,21 +627,6 @@
         linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
         linear-gradient(140deg, color-mix(in oklab, var(--color-brand-200) 70%, transparent), transparent 55%, color-mix(in oklab, var(--color-dawn) 45%, transparent)) border-box;
     border: 1px solid transparent;
-}
-
-/* Horizonte del cierre: atmósfera y planeta con la luz de amanecer de la home */
-.about-dawn {
-    background: radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--color-brand) 22%, transparent), color-mix(in oklab, var(--color-dawn) 6%, transparent) 55%, transparent);
-}
-
-.about-planet {
-    background:
-        radial-gradient(40% 3% at 50% 0%, color-mix(in oklab, var(--color-brand) 30%, transparent), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--color-night-teal) 70%, var(--color-night)) 0%, var(--color-canvas) 5%);
-    box-shadow:
-        0 -4px 28px -6px color-mix(in oklab, var(--color-brand-200) 45%, transparent),
-        inset 0 1px 0 color-mix(in oklab, var(--color-brand-200) 75%, transparent),
-        inset 0 60px 120px -60px color-mix(in oklab, var(--color-brand) 25%, transparent);
 }
 
 /* El horizonte sube con el scroll al entrar (sin JS); sin soporte, queda quieto y compuesto */

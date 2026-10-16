@@ -4,6 +4,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
+import Horizon from '../ui/Horizon';
 import SplitText from '../ui/SplitText';
 import { preloadAuthModal } from '../auth/loadAuthModal';
 import { CLOSING } from './aboutCopy';
@@ -14,9 +15,7 @@ export default function AboutClosing({ onStart, className = '' }) {
   return (
     <section className={`relative isolate overflow-hidden ${className}`}>
       <div aria-hidden="true" className="about-horizon pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[22rem] sm:h-[26rem]">
-        <div className="about-dawn absolute left-1/2 top-[18%] h-[22rem] w-[150vw] -translate-x-1/2" />
-        <div className="about-planet absolute left-1/2 top-[52%] aspect-square w-[max(260vw,150rem)] -translate-x-1/2 rounded-full" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-b from-transparent to-canvas" />
+        <Horizon atmosphereClassName="top-[18%] h-[22rem] w-[150vw]" planetClassName="top-[52%] w-[max(260vw,150rem)]" fadeClassName="h-32" />
       </div>
 
       <div className="mx-auto flex max-w-3xl flex-col items-center px-gutter pb-36 text-center sm:pb-44">

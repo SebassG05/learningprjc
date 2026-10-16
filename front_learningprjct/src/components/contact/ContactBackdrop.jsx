@@ -4,6 +4,7 @@
 // los tipos de curso girando a su alrededor. Mismo universo que el globo de la home, sin WebGL (CSS + SVG).
 import { useReducedMotion } from 'framer-motion';
 import { BookOpen, CodeXml, GraduationCap, Lightbulb } from 'lucide-react';
+import Horizon from '../ui/Horizon';
 
 // Órbita decorativa alrededor del formulario (columna derecha): no cruza el texto de la izquierda
 const ORBIT = 'M 700 430 a 520 250 0 1 0 1040 0 a 520 250 0 1 0 -1040 0';
@@ -100,13 +101,14 @@ export default function ContactBackdrop() {
       <Orbit />
 
       {/* Horizonte: asoma al final de la página, por debajo de la ubicación */}
-      <div className="contact-atmosphere absolute left-1/2 top-[calc(100%-16rem-9rem)] h-[18rem] w-[140vw] -translate-x-1/2" />
-      <div className="contact-planet absolute left-1/2 top-[calc(100%-16rem)] aspect-square w-[max(240vw,150rem)] -translate-x-1/2 rounded-full">
+      {/* El pie arranca sobre el lienzo: el horizonte se funde con él */}
+      <Horizon
+        atmosphereClassName="top-[calc(100%-16rem-9rem)] h-[18rem] w-[140vw]"
+        planetClassName="top-[calc(100%-16rem)] w-[max(240vw,150rem)]"
+      >
         <Sevilla />
         <CampusRing animate={!reduce} />
-      </div>
-      {/* Funde el planeta con el pie, que arranca sobre el lienzo */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-canvas" />
+      </Horizon>
 
       <div className="contact-grain absolute inset-0" />
     </div>
