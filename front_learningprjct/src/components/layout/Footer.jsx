@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Linkedin, Instagram, Mail, X, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { CAMPUS_EMAIL, CAMPUS_EMAIL_HREF, SOCIAL_URLS } from '../../lib/site';
 
 const NEW_TAB = '(se abre en otra pestaña)';
 
@@ -23,15 +24,15 @@ const navGroups = [
 ];
 
 const contact = [
-  { href: 'mailto:campusevenor@gmail.com', label: 'campusevenor@gmail.com', Icon: Mail },
+  { href: CAMPUS_EMAIL_HREF, label: CAMPUS_EMAIL, Icon: Mail },
   { href: 'tel:+34954151096', label: '+34 954 151 096', Icon: Phone },
 ];
 
 const social = [
-  { href: 'https://www.instagram.com/evenortech/', label: 'Instagram', Icon: Instagram, external: true },
-  { href: 'https://www.linkedin.com/company/evenor-tech/', label: 'LinkedIn', Icon: Linkedin, external: true },
-  { href: 'http://x.com/evenor_tech', label: 'X', Icon: X, external: true },
-  { href: 'mailto:campusevenor@gmail.com', label: 'Email', Icon: Mail },
+  { href: SOCIAL_URLS.instagram, label: 'Instagram', Icon: Instagram, external: true },
+  { href: SOCIAL_URLS.linkedin, label: 'LinkedIn', Icon: Linkedin, external: true },
+  { href: SOCIAL_URLS.x, label: 'X', Icon: X, external: true },
+  { href: CAMPUS_EMAIL_HREF, label: 'Email', Icon: Mail },
 ];
 
 const legalLinks = [

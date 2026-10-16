@@ -1,9 +1,9 @@
-// Datos de la página de Contacto. Los valores y destinos son los de siempre: no cambiarlos aquí sin
-// decidirlo antes (el email del footer es otro: info@evenor-tech.com).
+// Datos de la página de Contacto. El correo sale de lib/site.js, compartido con el pie y Sobre Nosotros.
+import { CAMPUS_EMAIL, CAMPUS_EMAIL_HREF } from '../../lib/site';
 
 export const EMAIL = {
-  value: 'campusevenor@gmail.com',
-  href: 'mailto:campusevenor@gmail.com',
+  value: CAMPUS_EMAIL,
+  href: CAMPUS_EMAIL_HREF,
 };
 
 export const PHONE = {
