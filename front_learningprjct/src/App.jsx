@@ -10,7 +10,6 @@ import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import ReviewsPage from './pages/Reviews.jsx';
 import Ajustes from './pages/Ajustes.jsx';
-import SobreNosotros from './pages/SobreNosotros.jsx';
 import Cursos from './pages/Cursos.jsx';
 import LoginPage from './pages/Login.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
@@ -83,7 +82,13 @@ function AnimatedRoutes() {
           <Route path="/cursos" element={<PageTransition><Cursos /></PageTransition>} />
           <Route path="/reseñas" element={<PageTransition><ReviewsPage /></PageTransition>} />
           <Route path="/ajustes" element={<PageTransition><Ajustes /></PageTransition>} />
-          <Route path="/sobre" element={<PageTransition><SobreNosotros /></PageTransition>} />
+          <Route path="/sobre" element={
+            <PageTransition>
+              <Suspense fallback={<RouteFallback fill />}>
+                <SobreNosotros />
+              </Suspense>
+            </PageTransition>
+          } />
           <Route path="/curso/:id" element={
             <Suspense fallback={<RouteFallback />}>
               <PageTransition><CursoDetalle /></PageTransition>
@@ -141,9 +146,12 @@ function PageTransition({ children }) {
 }
 
 // Carga diferida de rutas: indicador discreto en lugar de texto plano
-function RouteFallback() {
+// Con `fill` reserva la primera pantalla (la ruta empieza con un hero a pantalla completa) y el pie
+// no sube y baja mientras llega el chunk.
+// eslint-disable-next-line react/prop-types -- el proyecto no usa PropTypes
+function RouteFallback({ fill = false }) {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-live="polite">
+    <div className={`flex items-center justify-center ${fill ? 'min-h-[calc(100svh-var(--spacing-header))]' : 'min-h-[60vh]'}`} role="status" aria-live="polite">
       <span className="h-8 w-8 animate-spin rounded-full border-2 border-line-strong border-t-brand-400" />
       <span className="sr-only">Cargando…</span>
     </div>
@@ -178,5 +186,6 @@ const EstructuraCursoPage = lazy(() => import('./pages/EstructuraCursoPage.jsx')
 const TemaEstudio = lazy(() => import('./pages/TemaEstudio.jsx'));
 const EntregaEjercicio = lazy(() => import('./pages/EntregaEjercicio.jsx'));
 const CorreccionesAdmin = lazy(() => import('./pages/CorrecionesAdmin.jsx'));
+const SobreNosotros = lazy(() => import('./pages/SobreNosotros.jsx'));
 
 export default App;
