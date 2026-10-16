@@ -1,16 +1,24 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import routeModulePreload from './vite/routeModulePreload.js'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  // VITE_API_URL del .env (process.env no lo trae en la config): lo usa la precarga de datos de la ficha
+  const env = loadEnv(mode, process.cwd(), '')
+  return {
   base: '/',
   plugins: [
     react(),
-    // Entrada directa por URL a rutas con lazy(): su chunk baja en paralelo con el bundle principal
-    routeModulePreload([
-      [/^\/cursos\/?$/, 'src/pages/Cursos.jsx'],
-    ]),
+    // Entrada directa por URL a rutas con lazy(): su chunk (y en la ficha, los datos del curso)
+    // bajan en paralelo con el bundle principal
+    routeModulePreload(
+      [
+        [/^\/cursos\/?$/, 'src/pages/Cursos.jsx'],
+        [/^\/curso\/([a-f0-9]{24})\/inscripcion\/?$/i, 'src/pages/CursoInscripcion.jsx', '/api/courses/$1'],
+      ],
+      { apiBase: env.VITE_API_URL || 'http://localhost:8547' }
+    ),
     VitePWA({
       registerType: 'autoUpdate',
       // El registro del service worker no bloquea el primer pintado (antes era un <script> síncrono en <head>)
@@ -76,4 +84,5 @@ export default defineConfig({
       }
     })
   ],
+}
 })
