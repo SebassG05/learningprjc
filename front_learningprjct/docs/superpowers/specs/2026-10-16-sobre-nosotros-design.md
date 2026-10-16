@@ -70,3 +70,21 @@ Con `prefers-reduced-motion` no hay desplazamientos, escalados ni trazos dibujad
 - Datos estructurados `EducationalOrganization`.
 - Extraer el horizonte a una pieza compartida con Contacto.
 - Header: el `aria-label` del logo no coincide con su texto visible (Lighthouse).
+
+## 8. Respuestas a los pendientes (2026-10-16)
+
+| Pendiente | Resultado |
+|---|---|
+| Fuente | `preload` de Rondana Black (.otf) en `index.html`, commit aparte. **Sin WOFF2:** la licencia de Sudtipos no está en el repo y la licencia web se vende aparte. |
+| Correo | `campusevenor@gmail.com` en `lib/site.js`, usado por el pie, Contacto, el cierre (`mailto:`) y el JSON-LD. |
+| Titular de cierre | «Tu próximo curso empieza aquí.» con «Comenzar ahora» y «Ver cursos»; colaborar o resolver dudas queda como línea secundaria hacia Contacto. |
+| Testimonios | La API de reseñas solo tiene una de prueba («efsffsefsefsfs»), así que se quedan los de Trustburn con una línea de origen. No hay página de Evenor-Tech en Trustburn que enlazar. |
+| Tildes del equipo | Venían de constantes del frontend: corregidas («María», «García»). |
+| `lazy()` de /sobre | Hecho, con un fallback que reserva la primera pantalla (CLS 0). **Coste medido:** en carga directa el LCP de /sobre pasa de 2,45 a 4,03 s (Lighthouse móvil). |
+| Google Translate | `async`; el widget se inicia y traduce (cookie `googtrans`). |
+| PageTransition | Propuesta, sin aplicar: animar solo `transform` (V1). Móvil: /sobre 85 → 94, home 78 → 96, Contacto 79 → 78. |
+| JSON-LD | `EducationalOrganization` solo en /sobre; validator.schema.org sin errores. El Rich Results Test no se pudo automatizar. |
+| Horizonte | `ui/Horizon.jsx`; Contacto idéntico píxel a píxel. |
+| Logo | Un espacio entre los spans: el texto visible queda contenido en el `aria-label`. |
+| Señal de scroll | Añadida (≥ md, 3 pasadas, quieta con reduced motion). |
+| LazyMotion global | Para una rama propia `perf/lazymotion`, con mediciones de todas las páginas. |
