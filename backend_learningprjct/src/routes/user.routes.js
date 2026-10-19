@@ -15,7 +15,8 @@ import {
   completeTest,
   getUserEnrollments,
   getCurrentUser,
-  getAdminCourseEnrollments
+  getAdminCourseEnrollments,
+  getAdminEnrollments
 } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
@@ -107,5 +108,8 @@ router.get('/enrollments', authenticateJWT, getUserEnrollments);
 
 // [Admin] Obtener usuarios inscritos en un curso
 router.get('/admin/courses/:courseId/enrollments', autenticar, soloAdmin, getAdminCourseEnrollments);
+
+// [Admin] Inscripciones de todos los cursos, filtradas y paginadas (pestaña Reservas)
+router.get('/admin/enrollments', autenticar, soloAdmin, getAdminEnrollments);
 
 export default router;

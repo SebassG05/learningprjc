@@ -2,38 +2,17 @@
 // La respuesta conserva la forma de populate(): userId/ejercicioId/cursoId son objetos o null.
 import mongoose from 'mongoose';
 import { ESTADOS_ENTREGA } from './correccionService.js';
+import { contarPor, entero, escapeRegex, fecha, fechaHasta, ListadoError, lookupUno, rangoFechas, texto } from './listQueryUtils.js';
+
+export { ListadoError };
 
 export const ORDENES = ['prioridad', 'recientes', 'antiguas', 'nota'];
 export const LIMIT_DEFAULT = 20;
 export const LIMIT_MAX = 100;
-const Q_MAX = 100;
 
 // Parámetros que activan el modo paginado. Sin ninguno, el endpoint responde como siempre.
 export const PARAMS_LISTADO = ['page', 'limit', 'estado', 'curso', 'q', 'desde', 'hasta', 'orden'];
 export const usaListado = (query = {}) => PARAMS_LISTADO.some((k) => query[k] !== undefined);
-
-export class ListadoError extends Error {
-  constructor(mensaje) {
-    super(mensaje);
-    this.status = 400;
-  }
-}
-
-const entero = (v, def, min, max) => {
-  if (v === undefined || v === '') return def;
-  const n = Number(v);
-  if (!Number.isInteger(n) || n < min) throw new ListadoError(`Valor no válido: ${v}`);
-  return Math.min(n, max);
-};
-
-const fecha = (v, nombre) => {
-  if (v === undefined || v === '') return undefined;
-  const d = new Date(v);
-  if (!Number.isFinite(d.getTime())) throw new ListadoError(`Fecha no válida en «${nombre}»`);
-  return d;
-};
-
-const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // Valida y normaliza la query string. Lanza ListadoError (400) ante valores inválidos.
 export function parseListado(query = {}) {
@@ -47,11 +26,8 @@ export function parseListado(query = {}) {
   if (!ORDENES.includes(orden)) throw new ListadoError('Orden no válido');
 
   const desde = fecha(query.desde, 'desde');
-  let hasta = fecha(query.hasta, 'hasta');
-  // «hasta» con solo el día incluye el día completo
-  if (hasta && /^\d{4}-\d{2}-\d{2}$/.test(query.hasta)) hasta = new Date(hasta.getTime() + 864e5 - 1);
-
-  const q = typeof query.q === 'string' ? query.q.trim().slice(0, Q_MAX) : '';
+  const hasta = fechaHasta(query.hasta, 'hasta');
+  const q = texto(query.q);
 
   return {
     estado,
@@ -64,23 +40,6 @@ export function parseListado(query = {}) {
     limit: entero(query.limit, LIMIT_DEFAULT, 1, LIMIT_MAX),
   };
 }
-
-// Equivale a populate(campo, campos): objeto o null si el documento ya no existe.
-// Forma let + pipeline (MongoDB ≥ 3.6): no depende de la versión del servidor.
-const lookupUno = (from, localField, as, campos) => [
-  {
-    $lookup: {
-      from,
-      let: { ref: `$${localField}` },
-      pipeline: [
-        { $match: { $expr: { $eq: ['$_id', '$$ref'] } } },
-        { $project: Object.fromEntries(campos.map((c) => [c, 1])) },
-      ],
-      as,
-    },
-  },
-  { $set: { [as]: { $ifNull: [{ $arrayElemAt: [`$${as}`, 0] }, null] } } },
-];
 
 const ORDEN_SORT = {
   // Lo pendiente primero (lo más antiguo arriba); lo ya corregido después (lo más reciente arriba)
@@ -95,13 +54,8 @@ const ORDEN_SORT = {
  * salvo el de estado: así las tarjetas dicen cuántas hay de cada uno para la búsqueda actual.
  */
 export function buildListadoPipeline(f, colecciones) {
-  const base = {};
+  const base = rangoFechas('fechaEntrega', f.desde, f.hasta);
   if (f.curso) base.cursoId = new mongoose.Types.ObjectId(f.curso);
-  if (f.desde || f.hasta) {
-    base.fechaEntrega = {};
-    if (f.desde) base.fechaEntrega.$gte = f.desde;
-    if (f.hasta) base.fechaEntrega.$lte = f.hasta;
-  }
 
   const pipeline = [
     { $match: base },
@@ -165,11 +119,7 @@ export function buildListadoPipeline(f, colecciones) {
 
 // Resultado del $facet → respuesta del endpoint
 export function formatListado([res = {}] = [], f) {
-  const stats = Object.fromEntries(ESTADOS_ENTREGA.map((e) => [e, 0]));
-  (res.stats ?? []).forEach(({ _id, n }) => {
-    if (_id in stats) stats[_id] = n;
-  });
-  stats.total = Object.values(stats).reduce((a, b) => a + b, 0);
+  const stats = contarPor(res.stats, ESTADOS_ENTREGA);
   const total = res.total?.[0]?.n ?? 0;
   return {
     entregas: res.entregas ?? [],

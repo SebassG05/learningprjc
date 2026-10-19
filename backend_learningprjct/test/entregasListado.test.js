@@ -132,7 +132,7 @@ describe('agregación real (MongoDB desechable)', { skip: !URI && 'sin MONGO_TES
   };
 
   before(async () => {
-    await mongoose.connect(URI);
+    await mongoose.connect(URI, { dbName: 'test_entregas_listado' }); // una base por archivo: node --test los ejecuta en paralelo
     await mongoose.connection.db.dropDatabase();
     const db = mongoose.connection.db;
     await db.collection(User.collection.name).insertMany([

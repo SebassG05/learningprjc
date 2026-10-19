@@ -10,6 +10,7 @@ import crypto from 'crypto';
 import PasswordResetToken from '../models/PasswordResetToken.js';
 import { sendPasswordResetEmail, sendCourseCompletionEmailToUser, sendCourseCompletionNotificationToAdmin } from '../service/mailService.js';
 import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT } from '../service/googleAuthService.js';
+import { buildInscripcionesPipeline, formatInscripciones, ListadoError, parseInscripciones } from '../service/inscripcionesQueryService.js';
 
 export const registerUser = async (req, res) => {
   const errors = validationResult(req);
@@ -578,6 +579,29 @@ export const getAdminCourseEnrollments = async (req, res) => {
   } catch (error) {
     console.error('Error en getAdminCourseEnrollments:', error);
     res.status(500).json({ error: 'Error al obtener inscripciones', details: error.message });
+  }
+};
+
+/**
+ * [Admin] Inscripciones de todos los cursos (pestaña Reservas): filtros, búsqueda, orden y paginación
+ * @route GET /api/users/admin/enrollments?curso=&estado=enrolled|completed&q=&desde=&hasta=&orden=&page=&limit=
+ * @access Admin
+ */
+export const getAdminEnrollments = async (req, res) => {
+  try {
+    let filtros;
+    try {
+      filtros = parseInscripciones(req.query);
+    } catch (err) {
+      if (err instanceof ListadoError) return res.status(err.status).json({ error: err.message });
+      throw err;
+    }
+    const colecciones = { users: User.collection.name, courses: Course.collection.name };
+    const resultado = await UserProgress.aggregate(buildInscripcionesPipeline(filtros, colecciones));
+    res.status(200).json(formatInscripciones(resultado, filtros));
+  } catch (error) {
+    console.error('Error en getAdminEnrollments:', error);
+    res.status(500).json({ error: 'Error al obtener inscripciones' });
   }
 };
 
