@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
 
+// Trampas activas, la última es la de arriba: con un diálogo encima de otro (p. ej. «¿descartar
+// cambios?» sobre un panel) solo la superior atiende Escape y Tab.
+const stack = [];
+
 // Mantiene el foco dentro de `ref` mientras `active`, cierra con Escape y, al cerrar,
 // devuelve el foco al elemento que lo tenía antes de abrir.
 export default function useFocusTrap(ref, active, onEscape) {
@@ -12,6 +16,8 @@ export default function useFocusTrap(ref, active, onEscape) {
   useEffect(() => {
     if (!active || !ref.current) return undefined;
     const root = ref.current;
+    const token = {};
+    stack.push(token);
     const previous = document.activeElement;
     const items = () => [...root.querySelectorAll(FOCUSABLE)].filter((el) => el.offsetParent !== null);
 
@@ -19,6 +25,7 @@ export default function useFocusTrap(ref, active, onEscape) {
     first?.focus({ preventScroll: true });
 
     const onKey = (e) => {
+      if (stack[stack.length - 1] !== token) return;
       if (e.key === 'Escape') {
         e.preventDefault();
         escapeRef.current?.();
@@ -41,7 +48,11 @@ export default function useFocusTrap(ref, active, onEscape) {
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
+      stack.splice(stack.indexOf(token), 1);
       if (previous instanceof HTMLElement) previous.focus({ preventScroll: true });
     };
   }, [ref, active]);
 }
+
+// ¿Hay algún diálogo con trampa de foco abierto? (los atajos de teclado globales se apagan)
+export const hasOpenFocusTrap = () => stack.length > 0;
