@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "test": "node --test src/components/globe/journey/keyframes.test.js src/components/reviews/reviewFormat.test.js src/components/admin/shared/adminShared.test.js src/components/admin/correcciones/submissionQuery.test.js src/components/admin/reservas/reservasQuery.test.js",
+    "test": "node --test src/components/globe/journey/keyframes.test.js src/components/reviews/reviewFormat.test.js src/components/admin/shared/adminShared.test.js src/components/admin/correcciones/submissionQuery.test.js src/components/admin/reservas/reservasQuery.test.js src/components/admin/progreso/progresoQuery.test.js",
     "preview": "vite preview"
   },
   "dependencies": {
