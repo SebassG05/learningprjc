@@ -58,8 +58,7 @@ export default function CorreccionesAdmin() {
     <div className="min-h-screen bg-canvas px-4 pb-24 pt-24 sm:px-6 md:pt-28">
       <div className="mx-auto max-w-7xl">
         <header className="mb-6 md:mb-8">
-          <p className="eyebrow text-ink-3">Panel de administración</p>
-          <h1 className="mt-2 text-title-1 font-bold text-ink">{meta.title}</h1>
+          <h1 className="text-title-1 font-bold text-ink">{meta.title}</h1>
           <p className="mt-2 max-w-2xl text-callout text-ink-2">{meta.description}</p>
         </header>
 

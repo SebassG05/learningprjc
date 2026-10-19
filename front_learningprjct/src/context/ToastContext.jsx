@@ -88,7 +88,7 @@ function ToastRegion({ toasts, onDismiss, onPause, onResume }) {
       // Cada aviso anuncia por sí mismo; el atributo hace que lockPage no vuelva inerte la región
       // (un «Deshacer» tiene que poder pulsarse aunque haya un panel modal abierto)
       aria-live="off"
-      className="pointer-events-none fixed inset-x-4 bottom-[max(1.5rem,env(safe-area-inset-bottom))] z-[9999] flex flex-col items-center gap-2 sm:inset-x-auto sm:right-6 sm:items-end"
+      className="toast-region pointer-events-none fixed inset-x-4 bottom-[max(1.5rem,env(safe-area-inset-bottom))] z-[9999] flex flex-col items-center gap-2 sm:inset-x-auto sm:right-6 sm:items-end"
     >
       <AnimatePresence initial={false}>
         {toasts.map((toast) => (

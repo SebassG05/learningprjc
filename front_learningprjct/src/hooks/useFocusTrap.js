@@ -7,11 +7,13 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), selec
 const stack = [];
 
 // Mantiene el foco dentro de `ref` mientras `active`, cierra con Escape y, al cerrar,
-// devuelve el foco al elemento que lo tenía antes de abrir.
-export default function useFocusTrap(ref, active, onEscape) {
-  // El callback va en un ref para no reiniciar la trampa (ni mover el foco) en cada render
+// devuelve el foco al elemento que lo tenía antes de abrir (o al que indique `getReturnFocus`).
+export default function useFocusTrap(ref, active, onEscape, getReturnFocus) {
+  // Los callbacks van en refs para no reiniciar la trampa (ni mover el foco) en cada render
   const escapeRef = useRef(onEscape);
   escapeRef.current = onEscape;
+  const returnRef = useRef(getReturnFocus);
+  returnRef.current = getReturnFocus;
 
   useEffect(() => {
     if (!active || !ref.current) return undefined;
@@ -49,7 +51,8 @@ export default function useFocusTrap(ref, active, onEscape) {
     return () => {
       document.removeEventListener('keydown', onKey);
       stack.splice(stack.indexOf(token), 1);
-      if (previous instanceof HTMLElement) previous.focus({ preventScroll: true });
+      const target = returnRef.current?.() ?? previous;
+      if (target instanceof HTMLElement && target.isConnected) target.focus({ preventScroll: true });
     };
   }, [ref, active]);
 }

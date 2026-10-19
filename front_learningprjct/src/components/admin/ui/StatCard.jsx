@@ -27,7 +27,7 @@ const StatCard = memo(function StatCard({ label, value, toneName = 'neutral', ac
         <span className={`h-2 w-2 shrink-0 rounded-full ${t.dot}`} aria-hidden="true" />
         {label}
       </span>
-      <span className={`font-display tabular-nums text-ink ${compact ? 'text-base' : 'text-3xl leading-none'}`}>
+      <span className={`font-semibold tabular-nums tracking-tight text-ink ${compact ? 'text-base' : 'text-[1.75rem] leading-none'}`}>
         {loading ? <span className="inline-block h-[1em] w-8 animate-pulse rounded bg-white/[0.08] motion-reduce:animate-none" aria-hidden="true" /> : value}
       </span>
     </motion.button>

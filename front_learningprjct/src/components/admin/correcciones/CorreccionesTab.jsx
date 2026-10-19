@@ -1,463 +1,245 @@
-// PROVISIONAL (fase 0): contenido anterior de la pestaña, movido tal cual desde CorrecionesAdmin.jsx.
-// Se rehace en la fase 1.
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import {
-  FileText, CheckCircle, XCircle, Clock,
-  Search, Filter, Eye, Save, Loader, AlertCircle, User,
-  Calendar, BookOpen
-} from 'lucide-react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AlertCircle, Inbox, PartyPopper, SearchX } from 'lucide-react';
+import Button from '../../ui/Button';
 import { useToast } from '../../../context/ToastContext';
+import useMediaQuery from '../../../hooks/useMediaQuery';
+import ConfirmDialog from '../ui/ConfirmDialog';
+import EmptyState from '../ui/EmptyState';
+import Skeleton from '../ui/Skeleton';
+import useAdminCourses from '../shared/useAdminCourses';
+import { studentName } from '../shared/adminFormat';
+import { statusInfo } from '../shared/submissionStatus';
+import SubmissionCards from './SubmissionCards';
+import SubmissionStats from './SubmissionStats';
+import SubmissionTable from './SubmissionTable';
+import SubmissionToolbar from './SubmissionToolbar';
+import useDeferredGrades from './useDeferredGrades';
+import useReviewShortcuts from './useReviewShortcuts';
+import useSubmissionFilters from './useSubmissionFilters';
+import useSubmissions from './useSubmissions';
+import { COPY } from './correccionesCopy';
 
+// El panel de corrección va en su propio chunk: se precarga en cuanto el navegador está libre
+const loadDrawer = () => import('./SubmissionDrawer');
+const SubmissionDrawer = lazy(loadDrawer);
+
+const focusSubmission = (id) => {
+  const el = document.querySelector(`[data-submission="${id}"]`);
+  return el?.matches('button') ? el : el?.querySelector('button');
+};
+
+function ListSkeleton() {
+  return (
+    <div aria-busy="true" aria-label="Cargando entregas" className="space-y-3">
+      {Array.from({ length: 6 }, (_, i) => <Skeleton key={i} className="h-[4.5rem] rounded-2xl" />)}
+    </div>
+  );
+}
+
+// Pestaña Correcciones: cifras que filtran, barra de filtros, lista y corrección en panel lateral.
 export default function CorreccionesTab() {
   const { showToast } = useToast();
+  const { filters, setFilters, clearFilters, active } = useSubmissionFilters();
+  const { items, stats, total, status, hasMore, loadMore, patch, reload } = useSubmissions(filters);
+  const { courses } = useAdminCourses();
+  const desktop = useMediaQuery('(min-width: 1024px)');
 
-  const [entregas, setEntregas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filtroEstado, setFiltroEstado] = useState('todos');
-  const [busqueda, setBusqueda] = useState('');
-  const [entregaSeleccionada, setEntregaSeleccionada] = useState(null);
-  const [calificacion, setCalificacion] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [guardando, setGuardando] = useState(false);
-  const [pdfModalOpen, setPdfModalOpen] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState('');
+  const [openId, setOpenId] = useState(null);
+  const [confirm, setConfirm] = useState(null); // acción pendiente de «¿descartar cambios?»
+  const dirtyRef = useRef(false);
+  const apiRef = useRef(null);
+  const lastIdRef = useRef(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
+  const index = useMemo(() => items.findIndex((x) => x._id === openId), [items, openId]);
+  const current = index >= 0 ? items[index] : null;
+  const hasNext = index >= 0 && (index < items.length - 1 || hasMore);
 
-  useEffect(() => {
-    cargarEntregas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- provisional (fase 0)
-  }, []);
-
-  const cargarEntregas = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${apiUrl}/api/entregas/admin/todas`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) throw new Error('Error al cargar entregas');
-      
-      const data = await response.json();
-      setEntregas(data.entregas || []);
-    } catch (error) {
-      console.error('Error al cargar entregas:', error);
-      showToast('Error al cargar las entregas', 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const abrirModal = (entrega) => {
-    setEntregaSeleccionada(entrega);
-    setCalificacion(entrega.calificacion || '');
-    setFeedback(entrega.feedbackProfesor || '');
-  };
-
-  const cerrarModal = () => {
-    setEntregaSeleccionada(null);
-    setCalificacion('');
-    setFeedback('');
-  };
-
-  const abrirPdfModal = (url) => {
-    setPdfUrl(url);
-    setPdfModalOpen(true);
-  };
-
-  const cerrarPdfModal = () => {
-    setPdfModalOpen(false);
-    setPdfUrl('');
-  };
-
-  const guardarCorreccion = async (nuevoEstado) => {
-    if (!entregaSeleccionada) return;
-
-    try {
-      setGuardando(true);
-      const token = localStorage.getItem('token');
-      
-      const response = await fetch(
-        `${apiUrl}/api/entregas/${entregaSeleccionada._id}/corregir`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            calificacion: calificacion ? parseFloat(calificacion) : undefined,
-            feedbackProfesor: feedback,
-            estado: nuevoEstado
-          })
-        }
-      );
-
-      if (!response.ok) throw new Error('Error al guardar corrección');
-
-      showToast('Corrección guardada exitosamente', 'success');
-      cerrarModal();
-      cargarEntregas(); // Recargar la lista
-    } catch (error) {
-      console.error('Error al guardar corrección:', error);
-      showToast('Error al guardar la corrección', 'error');
-    } finally {
-      setGuardando(false);
-    }
-  };
-
-  const entregasFiltradas = entregas.filter(entrega => {
-    const cumpleFiltro = filtroEstado === 'todos' || entrega.estado === filtroEstado;
-    const cumpleBusqueda = 
-      busqueda === '' ||
-      entrega.userId?.name?.toLowerCase().includes(busqueda.toLowerCase()) ||
-      entrega.userId?.email?.toLowerCase().includes(busqueda.toLowerCase()) ||
-      entrega.ejercicioId?.titulo?.toLowerCase().includes(busqueda.toLowerCase());
-    
-    return cumpleFiltro && cumpleBusqueda;
+  const { schedule } = useDeferredGrades({
+    apply: patch,
+    onError: (label) => showToast(COPY.toast.failed(label), 'error', 5000),
   });
 
-  const estadisticas = {
-    total: entregas.length,
-    enviado: entregas.filter(e => e.estado === 'enviado').length,
-    revisado: entregas.filter(e => e.estado === 'revisado').length,
-    aprobado: entregas.filter(e => e.estado === 'aprobado').length,
-    rechazado: entregas.filter(e => e.estado === 'rechazado').length,
-  };
+  // ---- Navegación (protegida si hay cambios sin guardar) ----
+  const guard = useCallback((action) => {
+    if (dirtyRef.current) setConfirm(() => action);
+    else action();
+  }, []);
 
-  const obtenerColorEstado = (estado) => {
-    const colores = {
-      'enviado': 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-      'revisado': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30',
-      'aprobado': 'bg-green-500/10 text-green-400 border-green-500/30',
-      'rechazado': 'bg-red-500/10 text-red-400 border-red-500/30',
-    };
-    return colores[estado] || 'bg-gray-500/10 text-gray-400 border-gray-500/30';
-  };
+  const open = useCallback((id) => {
+    lastIdRef.current = id;
+    dirtyRef.current = false;
+    setOpenId(id);
+  }, []);
 
-  const obtenerIconoEstado = (estado) => {
-    switch (estado) {
-      case 'enviado': return <Clock className="w-4 h-4" />;
-      case 'revisado': return <Eye className="w-4 h-4" />;
-      case 'aprobado': return <CheckCircle className="w-4 h-4" />;
-      case 'rechazado': return <XCircle className="w-4 h-4" />;
-      default: return <FileText className="w-4 h-4" />;
+  const close = useCallback(() => {
+    dirtyRef.current = false;
+    setOpenId(null);
+  }, []);
+
+  const goNext = useCallback(async () => {
+    if (index < 0) return;
+    if (index < items.length - 1) return open(items[index + 1]._id);
+    if (hasMore) {
+      const added = await loadMore();
+      if (added?.length) return open(added[0]._id);
     }
+    showToast(COPY.toast.end, 'info');
+    close();
+  }, [index, items, hasMore, loadMore, open, close, showToast]);
+
+  const goPrev = useCallback(() => {
+    if (index > 0) open(items[index - 1]._id);
+  }, [index, items, open]);
+
+  // ---- Guardar (diferido 6 s, con «Deshacer») ----
+  const onSave = useCallback(
+    (entrega, body, { next }) => {
+      const name = studentName(entrega.userId);
+      const undo = schedule(entrega._id, {
+        before: { estado: entrega.estado, calificacion: entrega.calificacion, feedbackProfesor: entrega.feedbackProfesor },
+        body,
+        label: name,
+      });
+      dirtyRef.current = false;
+      showToast(COPY.toast.saved(name, statusInfo(body.estado).label), 'success', 6000, {
+        action: {
+          label: COPY.toast.undo,
+          onClick: () => {
+            if (undo()) showToast(COPY.toast.undone, 'info');
+          },
+        },
+      });
+      if (next) goNext();
+      else close();
+    },
+    [schedule, showToast, goNext, close]
+  );
+
+  // ---- Atajos de teclado ----
+  const moveFocus = (delta) => {
+    const nodes = [...document.querySelectorAll('[data-submission]')];
+    const ids = nodes.map((n) => n.getAttribute('data-submission'));
+    const at = ids.indexOf(document.activeElement?.closest('[data-submission]')?.getAttribute('data-submission'));
+    const nextId = ids[Math.min(ids.length - 1, Math.max(0, at === -1 ? 0 : at + delta))];
+    focusSubmission(nextId)?.focus();
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center py-16">
-        <Loader className="w-10 h-10 text-green-500 animate-spin" />
-      </div>
+  useReviewShortcuts(!confirm, openId
+    ? {
+        onNext: () => guard(goNext),
+        onPrev: () => guard(goPrev),
+        onApprove: () => apiRef.current?.setEstado('aprobado'),
+        onReject: () => apiRef.current?.setEstado('rechazado'),
+        onSave: () => apiRef.current?.save(false),
+        onSaveNext: () => apiRef.current?.save(true),
+      }
+    : { onNext: () => moveFocus(1), onPrev: () => moveFocus(-1) });
+
+  // Si la entrega abierta deja de estar en la lista (otro filtro), se cierra el panel
+  useEffect(() => {
+    if (openId && status === 'ready' && index === -1) close();
+  }, [openId, status, index, close]);
+
+  const onDirtyChange = useCallback((d) => {
+    dirtyRef.current = d;
+  }, []);
+
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((cb) => setTimeout(cb, 1200));
+    const cancel = window.cancelIdleCallback ?? clearTimeout;
+    const h = idle(() => loadDrawer());
+    return () => cancel(h);
+  }, []);
+
+  // ---- Scroll infinito ----
+  const sentinel = useRef(null);
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!el || !hasMore) return undefined;
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && loadMore(), { rootMargin: '400px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasMore, loadMore]);
+
+  // ---- Contenido ----
+  const loading = status === 'loading';
+  const onlyPending = filters.estado === 'enviado' && !filters.q && !filters.curso && !filters.fecha;
+  let body;
+  if (status === 'error' && items.length === 0) {
+    body = (
+      <EmptyState tone="error" icon={AlertCircle} title={COPY.empty.error.title} description={COPY.empty.error.description} action={{ label: COPY.empty.error.action, onClick: reload }} />
+    );
+  } else if (loading) {
+    body = <ListSkeleton />;
+  } else if (items.length === 0) {
+    body = onlyPending ? (
+      <EmptyState icon={PartyPopper} title={COPY.empty.pending.title} description={COPY.empty.pending.description} />
+    ) : active ? (
+      <EmptyState icon={SearchX} title={COPY.empty.filtered.title} description={COPY.empty.filtered.description} action={{ label: COPY.empty.filtered.action, onClick: clearFilters }} />
+    ) : (
+      <EmptyState icon={Inbox} title={COPY.empty.none.title} description={COPY.empty.none.description} />
+    );
+  } else {
+    const List = desktop ? SubmissionTable : SubmissionCards;
+    body = (
+      <>
+        <List items={items} activeId={openId} onOpen={(id) => guard(() => open(id))} busy={status === 'refreshing'} />
+        {hasMore ? (
+          <div ref={sentinel} className="mt-4 flex justify-center">
+            <Button variant="secondary" onClick={loadMore} disabled={status === 'loadingMore'} aria-busy={status === 'loadingMore' || undefined}>
+              {status === 'loadingMore' ? COPY.loadingMore : COPY.loadMore}
+            </Button>
+          </div>
+        ) : null}
+      </>
     );
   }
 
   return (
-    <>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8"
-        >
-          <div className="bg-surface-2/40 border border-line rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Total</p>
-            <p className="text-2xl font-bold text-ink">{estadisticas.total}</p>
-          </div>
-          <div className="bg-blue-950/20 border border-blue-900/30 rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Enviados</p>
-            <p className="text-2xl font-bold text-blue-400">{estadisticas.enviado}</p>
-          </div>
-          <div className="bg-yellow-950/20 border border-yellow-900/30 rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Revisados</p>
-            <p className="text-2xl font-bold text-yellow-400">{estadisticas.revisado}</p>
-          </div>
-          <div className="bg-green-950/20 border border-line rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Aprobados</p>
-            <p className="text-2xl font-bold text-green-400">{estadisticas.aprobado}</p>
-          </div>
-          <div className="bg-red-950/20 border border-red-900/30 rounded-xl p-4">
-            <p className="text-gray-400 text-sm mb-1">Rechazados</p>
-            <p className="text-2xl font-bold text-red-400">{estadisticas.rechazado}</p>
-          </div>
-        </motion.div>
+    <div className="space-y-5 md:space-y-6">
+      <SubmissionStats stats={stats} estado={filters.estado} onChange={(estado) => setFilters({ estado })} loading={loading} />
+      <SubmissionToolbar
+        filters={filters}
+        onChange={setFilters}
+        onClear={clearFilters}
+        active={active}
+        courses={courses}
+        total={total}
+        showTotal={!loading && status !== 'error'}
+      />
+      <div aria-busy={loading || status === 'refreshing'}>{body}</div>
 
-        {/* Filtros y búsqueda */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-surface-2/40 border border-line rounded-xl p-6 mb-6"
-        >
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Búsqueda */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Buscar por alumno o ejercicio..."
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                className="w-full bg-canvas border border-line rounded-lg pl-12 pr-4 py-3 text-ink placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition-colors"
-              />
-            </div>
+      <Suspense fallback={null}>
+        <SubmissionDrawer
+          entrega={current}
+          index={index}
+          count={total}
+          hasNext={hasNext}
+          apiRef={apiRef}
+          onPrev={() => guard(goPrev)}
+          onNext={() => guard(goNext)}
+          onClose={() => guard(close)}
+          onSave={onSave}
+          onDirtyChange={onDirtyChange}
+          returnFocus={() => focusSubmission(lastIdRef.current)}
+        />
+      </Suspense>
 
-            {/* Filtro de estado */}
-            <div className="relative">
-              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <select
-                value={filtroEstado}
-                onChange={(e) => setFiltroEstado(e.target.value)}
-                className="bg-canvas border border-line rounded-lg pl-12 pr-10 py-3 text-ink focus:outline-none focus:border-green-500/50 transition-colors cursor-pointer appearance-none"
-              >
-                <option value="todos">Todos los estados</option>
-                <option value="enviado">Enviado</option>
-                <option value="revisado">Revisado</option>
-                <option value="aprobado">Aprobado</option>
-                <option value="rechazado">Rechazado</option>
-              </select>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Lista de entregas */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="space-y-4"
-        >
-          {entregasFiltradas.length === 0 ? (
-            <div className="bg-surface-2/40 border border-line rounded-xl p-12 text-center">
-              <AlertCircle className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg">
-                No se encontraron entregas{busqueda && ' que coincidan con tu búsqueda'}
-              </p>
-            </div>
-          ) : (
-            entregasFiltradas.map((entrega, index) => (
-              <motion.div
-                key={entrega._id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-surface-2/40 border border-line rounded-xl p-6 hover:border-green-700/50 transition-colors"
-              >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  {/* Información del ejercicio y estudiante */}
-                  <div className="flex-1">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="bg-green-900/30 rounded-lg p-2">
-                        <FileText className="w-5 h-5 text-green-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-ink mb-1">
-                          {entrega.ejercicioId?.titulo || 'Ejercicio sin título'}
-                        </h3>
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400">
-                          <span className="flex items-center gap-1">
-                            <User className="w-4 h-4" />
-                            {entrega.userId?.name || entrega.userId?.email || 'Usuario desconocido'}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            {new Date(entrega.fechaEntrega).toLocaleDateString('es-ES')}
-                          </span>
-                          {entrega.cursoId?.title && (
-                            <span className="flex items-center gap-1">
-                              <BookOpen className="w-4 h-4" />
-                              {entrega.cursoId.title}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Estado y calificación */}
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg border text-sm font-medium ${obtenerColorEstado(entrega.estado)}`}>
-                        {obtenerIconoEstado(entrega.estado)}
-                        {entrega.estado.charAt(0).toUpperCase() + entrega.estado.slice(1)}
-                      </span>
-                      {entrega.calificacion !== undefined && entrega.calificacion !== null && (
-                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/30 text-sm font-medium">
-                          Calificación: {entrega.calificacion}/10
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Acciones */}
-                  <div className="flex items-center gap-3">
-                    {entrega.archivoPdf?.url && (
-                      <button
-                        onClick={() => abrirPdfModal(`${apiUrl}${entrega.archivoPdf.url}`)}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] hover:bg-white/[0.1] text-ink rounded-full border border-line-strong transition-colors"
-                      >
-                        <Eye className="w-4 h-4" />
-                        Vista Previa
-                      </button>
-                    )}
-                    <button
-                      onClick={() => abrirModal(entrega)}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 hover:bg-green-600/30 text-green-400 rounded-lg border border-green-500/30 transition-colors"
-                    >
-                      <Save className="w-4 h-4" />
-                      Corregir
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))
-          )}
-        </motion.div>
-        {/* Modal de corrección */}
-        {entregaSeleccionada && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-canvas border border-line rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            >
-              <h2 className="text-2xl font-bold text-ink mb-6">Corregir Entrega</h2>
-
-              {/* Información del estudiante */}
-              <div className="bg-surface-2/40 border border-line rounded-xl p-4 mb-6">
-                <h3 className="text-lg font-semibold text-ink mb-3">Información del Estudiante</h3>
-                <div className="space-y-2 text-sm">
-                  <p className="text-gray-300">
-                    <span className="text-gray-500">Nombre:</span>{' '}
-                    {entregaSeleccionada.userId?.name || 'N/A'}
-                  </p>
-                  <p className="text-gray-300">
-                    <span className="text-gray-500">Email:</span>{' '}
-                    {entregaSeleccionada.userId?.email || 'N/A'}
-                  </p>
-                  <p className="text-gray-300">
-                    <span className="text-gray-500">Ejercicio:</span>{' '}
-                    {entregaSeleccionada.ejercicioId?.titulo || 'N/A'}
-                  </p>
-                  <p className="text-gray-300">
-                    <span className="text-gray-500">Fecha de entrega:</span>{' '}
-                    {new Date(entregaSeleccionada.fechaEntrega).toLocaleString('es-ES')}
-                  </p>
-                </div>
-              </div>
-
-              {/* Comentarios del estudiante */}
-              {entregaSeleccionada.comentarios && (
-                <div className="bg-surface-2/40 border border-line rounded-xl p-4 mb-6">
-                  <h3 className="text-lg font-semibold text-ink mb-3">Comentarios del Estudiante</h3>
-                  <p className="text-gray-300 text-sm whitespace-pre-wrap">{entregaSeleccionada.comentarios}</p>
-                </div>
-              )}
-
-              {/* Calificación */}
-              <div className="mb-6">
-                <label className="block text-ink font-semibold mb-2">
-                  Calificación (0-10)
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  max="10"
-                  step="0.5"
-                  value={calificacion}
-                  onChange={(e) => setCalificacion(e.target.value)}
-                  className="w-full bg-surface-2 border border-line rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-green-500/50 transition-colors"
-                  placeholder="Ej: 8.5"
-                />
-              </div>
-
-              {/* Feedback del profesor */}
-              <div className="mb-6">
-                <label className="block text-ink font-semibold mb-2">
-                  Feedback para el Estudiante
-                </label>
-                <textarea
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                  rows={6}
-                  maxLength={1000}
-                  className="w-full bg-surface-2 border border-line rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-green-500/50 transition-colors resize-none"
-                  placeholder="Escribe tu retroalimentación aquí..."
-                />
-                <p className="text-gray-500 text-sm mt-1">{feedback.length}/1000 caracteres</p>
-              </div>
-
-              {/* Botones de acción */}
-              <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={() => guardarCorreccion('aprobado')}
-                  disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
-                  Aprobar
-                </button>
-                <button
-                  onClick={() => guardarCorreccion('rechazado')}
-                  disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <XCircle className="w-5 h-5" />}
-                  Rechazar
-                </button>
-                <button
-                  onClick={() => guardarCorreccion('revisado')}
-                  disabled={guardando}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {guardando ? <Loader className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                  Marcar Revisado
-                </button>
-                <button
-                  onClick={cerrarModal}
-                  disabled={guardando}
-                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-ink rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-
-        {/* Modal de Vista Previa PDF */}
-        {pdfModalOpen && (
-          <div 
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
-            onClick={cerrarPdfModal}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-canvas border border-line rounded-2xl w-full max-w-6xl h-[90vh] overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between p-6 border-b border-line">
-                <h2 className="text-2xl font-bold text-ink">Vista Previa del PDF</h2>
-                <button
-                  onClick={cerrarPdfModal}
-                  className="p-2 hover:bg-green-900/20 rounded-lg transition-colors"
-                >
-                  <XCircle className="w-6 h-6 text-gray-400 hover:text-white" />
-                </button>
-              </div>
-              <div className="h-[calc(90vh-100px)]">
-                <iframe
-                  src={pdfUrl}
-                  className="w-full h-full"
-                  title="Vista Previa PDF"
-                />
-              </div>
-            </motion.div>
-          </div>
-        )}
-    </>
+      <ConfirmDialog
+        open={Boolean(confirm)}
+        title={COPY.discard.title}
+        description={COPY.discard.description(current ? studentName(current.userId) : '')}
+        confirmLabel={COPY.discard.confirm}
+        cancelLabel={COPY.discard.cancel}
+        destructive
+        onCancel={() => setConfirm(null)}
+        onConfirm={() => {
+          const action = confirm;
+          dirtyRef.current = false;
+          setConfirm(null);
+          action?.();
+        }}
+      />
+    </div>
   );
 }

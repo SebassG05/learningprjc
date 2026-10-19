@@ -6,6 +6,8 @@ export const PASS_MARK = 5;
 export const GRADE_MIN = 0;
 export const GRADE_MAX = 10;
 export const GRADE_STEP = 0.5;
+// Al segundo rechazo el backend bloquea la entrega (el alumno ya no puede reentregar)
+export const MAX_REJECTIONS = 2;
 
 // `tone` se traduce a clases en StatusBadge/GradeBadge (solo colores de la paleta: neutro, dawn, brand, danger).
 // «revisado» se muestra como «Requiere cambios» en todas partes (sin migrar datos).

@@ -14,13 +14,13 @@ export default function SelectField({ label, value, onChange, options, hideLabel
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`${inputClass} cursor-pointer appearance-none pr-11`}
+          className={`${inputClass} cursor-pointer appearance-none truncate pr-10 max-md:pl-3 max-md:text-sm`}
         >
           {options.map((o) => (
             <option key={o.value} value={o.value}>{o.label}</option>
           ))}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" aria-hidden="true" />
+        <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" aria-hidden="true" />
       </div>
     </div>
   );

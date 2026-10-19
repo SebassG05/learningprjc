@@ -11,19 +11,20 @@ import { focusRing } from './tones';
 
 // Curva tipo iOS para paneles que entran desde un borde
 const DRAWER_EASE = [0.32, 0.72, 0, 1];
-const WIDTH = { md: 'md:max-w-xl', lg: 'md:max-w-2xl xl:max-w-4xl' };
+const WIDTH = { md: 'md:max-w-xl', lg: 'md:max-w-2xl xl:max-w-5xl 2xl:max-w-6xl' };
 
 /**
  * Panel lateral (≥ 768 px) u hoja a pantalla completa (móvil) para trabajar sin salir de la página.
  * role=dialog + aria-modal, fondo inerte, foco atrapado y devuelto al cerrar, Escape cierra.
  * `onClose` se llama para cualquier intento de cierre (X, Escape, fondo, arrastre): el padre decide
- * (p. ej. pedir confirmación si hay cambios sin guardar).
+ * (p. ej. pedir confirmación si hay cambios sin guardar). `bare` deja al contenido su scroll y su pie;
+ * `returnFocus` elige dónde vuelve el foco al cerrar.
  */
 export default function Drawer({ open, ...props }) {
   return <AnimatePresence>{open ? <Panel key="drawer" {...props} /> : null}</AnimatePresence>;
 }
 
-function Panel({ title, subtitle, headerExtra, footer, children, onClose, size = 'md', closeLabel = 'Cerrar panel', bodyRef }) {
+function Panel({ title, subtitle, headerExtra, footer, children, onClose, size = 'md', closeLabel = 'Cerrar panel', bodyRef, bare = false, returnFocus }) {
   const side = useMediaQuery('(min-width: 768px)');
   const reduce = useReducedMotion();
   const ref = useRef(null);
@@ -31,8 +32,16 @@ function Panel({ title, subtitle, headerExtra, footer, children, onClose, size =
   const subtitleId = useId();
   const drag = useDragControls();
 
-  useEffect(() => lockPage(), []);
-  useFocusTrap(ref, true, onClose);
+  useEffect(() => {
+    const unlock = lockPage();
+    // Los avisos se apartan del pie del panel mientras está abierto (ver .toast-region en index.css)
+    document.documentElement.dataset.drawerOpen = '';
+    return () => {
+      delete document.documentElement.dataset.drawerOpen;
+      unlock();
+    };
+  }, []);
+  useFocusTrap(ref, true, onClose, returnFocus);
 
   const fade = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: duration.fast } };
   const motionProps = reduce
@@ -101,9 +110,14 @@ function Panel({ title, subtitle, headerExtra, footer, children, onClose, size =
           </button>
         </header>
 
-        <div ref={bodyRef} data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 md:px-6">
-          {children}
-        </div>
+        {bare ? (
+          // El contenido gestiona su propio scroll y pie (p. ej. un formulario que se reinicia por entrega)
+          <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+        ) : (
+          <div ref={bodyRef} data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 md:px-6">
+            {children}
+          </div>
+        )}
 
         {footer ? (
           <footer className="shrink-0 border-t border-line bg-surface px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 md:px-6">{footer}</footer>
