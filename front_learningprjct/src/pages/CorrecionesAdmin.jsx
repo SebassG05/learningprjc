@@ -13,7 +13,7 @@ const PANELS = {
   correcciones: lazy(() => import('../components/admin/correcciones/CorreccionesTab.jsx')),
   reservas: lazy(() => import('../components/admin/reservas/ReservasTab.jsx')),
   progreso: lazy(() => import('../components/admin/progreso/ProgresoTab.jsx')),
-  gestion: lazy(() => import('../components/AdminCursos.jsx')),
+  gestion: lazy(() => import('../components/admin/gestion-cursos/GestionCursosTab.jsx')),
 };
 
 const isAdmin = (user) => user?.role === 'admin' || user?.role === 'superadmin';

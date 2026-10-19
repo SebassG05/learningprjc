@@ -48,3 +48,18 @@ export { request as adminRequest };
 
 // Inscripciones de todos los cursos (pestaña Reservas): filtros, orden y paginación en servidor
 export const fetchAllEnrollments = (params, signal) => request('/api/users/admin/enrollments', { params, signal });
+
+// ---- Gestión de cursos ----
+export const createCourse = (formData) => request('/api/courses', { method: 'POST', body: formData });
+export const updateCourse = (id, formData) => request(`/api/courses/${id}`, { method: 'PUT', body: formData });
+export const deleteCourse = (id) => request(`/api/courses/${id}`, { method: 'DELETE' });
+
+export const addTopic = (courseId, body) => request(`/api/courses/${courseId}/temas`, { method: 'POST', body });
+export const updateTopic = (courseId, topicId, body) => request(`/api/courses/${courseId}/temas/${topicId}`, { method: 'PUT', body });
+export const deleteTopic = (courseId, topicId) => request(`/api/courses/${courseId}/temas/${topicId}`, { method: 'DELETE' });
+export const reorderTopics = (courseId, temaIds) => request(`/api/courses/${courseId}/temas/orden`, { method: 'PUT', body: { temaIds } });
+
+export const uploadMaterial = (courseId, topicId, formData) =>
+  request(`/api/courses/${courseId}/temas/${topicId}/materiales`, { method: 'POST', body: formData });
+export const deleteMaterial = (courseId, topicId, materialId) =>
+  request(`/api/courses/${courseId}/temas/${topicId}/materiales/${materialId}`, { method: 'DELETE' });

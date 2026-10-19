@@ -1,4 +1,4 @@
-// Campos de área, nivel y profesor en el formulario de AdminCursos: valores iniciales, envío y validación.
+// Campos de área, nivel y profesor en el formulario de Gestión de cursos: valores iniciales, envío y validación.
 
 // Valores del formulario a partir de un curso (o vacíos para uno nuevo)
 export const catalogFormValues = (curso) => ({

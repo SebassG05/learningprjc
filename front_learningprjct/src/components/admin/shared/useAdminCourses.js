@@ -48,5 +48,22 @@ export default function useAdminCourses() {
     });
   }, []);
 
-  return { courses, status, reload: () => run(true), update };
+  // Curso creado o guardado desde Gestión: se sustituye (o se añade al principio)
+  const upsert = useCallback((course) => {
+    setCourses((list) => {
+      const next = list.some((c) => c._id === course._id) ? list.map((c) => (c._id === course._id ? course : c)) : [course, ...list];
+      cache = next;
+      return next;
+    });
+  }, []);
+
+  const removeLocal = useCallback((id) => {
+    setCourses((list) => {
+      const next = list.filter((c) => c._id !== id);
+      cache = next;
+      return next;
+    });
+  }, []);
+
+  return { courses, status, reload: () => run(true), update, upsert, removeLocal };
 }
