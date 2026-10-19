@@ -4,6 +4,10 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { sendExerciseCorrectionEmail } from '../service/mailService.js';
 import { aplicarCorreccion, CorreccionError, debeNotificar, marcarNotificado } from '../service/correccionService.js';
+import { buildListadoPipeline, formatListado, ListadoError, parseListado, usaListado } from '../service/entregasQueryService.js';
+import User from '../models/User.js';
+import Ejercicio from '../models/Ejercicio.js';
+import Course from '../models/Course.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -204,8 +208,27 @@ export const eliminarEntrega = async (req, res) => {
 };
 
 // ADMIN: Obtener todas las entregas (para corrección)
+// Sin parámetros responde como siempre ({ entregas }). Con page/limit/estado/curso/q/desde/hasta/orden
+// filtra, ordena y pagina en servidor y añade total, page, limit, pages y stats.
 export const obtenerTodasLasEntregas = async (req, res) => {
   try {
+    if (usaListado(req.query)) {
+      let filtros;
+      try {
+        filtros = parseListado(req.query);
+      } catch (err) {
+        if (err instanceof ListadoError) return res.status(err.status).json({ error: err.message });
+        throw err;
+      }
+      const colecciones = {
+        users: User.collection.name,
+        ejercicios: Ejercicio.collection.name,
+        courses: Course.collection.name,
+      };
+      const resultado = await EntregaEjercicio.aggregate(buildListadoPipeline(filtros, colecciones));
+      return res.json(formatListado(resultado, filtros));
+    }
+
     const entregas = await EntregaEjercicio.find()
       .populate('ejercicioId', 'titulo tipo dificultad')
       .populate('userId', 'name email')
