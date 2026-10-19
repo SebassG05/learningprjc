@@ -50,6 +50,10 @@ EntregaEjercicio.findById = () =>
   chain((populated) => (populated && entrega ? { ...entrega.toObject(), userId: { _id: ANA, name: 'Ana', email: 'ana@x.com' } } : entrega));
 EntregaEjercicio.find = () => chain(() => [entrega]);
 EntregaEjercicio.prototype.save = async function () { return this; };
+// Resumen de entregas por alumno (pestaña Progreso): sin entregas en este curso
+EntregaEjercicio.aggregate = async () => [];
+const { default: Ejercicio } = await import('../src/models/Ejercicio.js');
+Ejercicio.countDocuments = async () => 0;
 UserProgress.find = () => chain(() => [
   { userId: { _id: ANA, name: 'Ana', email: 'ana@x.com' }, enrolledAt: new Date(), progress: 40, status: 'enrolled', completedTests: [] },
 ]);
