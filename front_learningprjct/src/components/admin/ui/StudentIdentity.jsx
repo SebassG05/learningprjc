@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { memo } from 'react';
-import Avatar from '../ui/Avatar';
-import { DELETED_STUDENT, studentName } from '../shared/adminFormat';
+import Avatar from './Avatar';
+import { studentName } from '../shared/adminFormat';
 
 // Avatar + nombre + email. Si la cuenta ya no existe: «Alumno eliminado» y una explicación breve.
 const StudentIdentity = memo(function StudentIdentity({ user, size = 'md', hideEmail = false }) {
@@ -18,7 +18,6 @@ const StudentIdentity = memo(function StudentIdentity({ user, size = 'md', hideE
           </span>
         )}
       </span>
-      {deleted ? <span className="sr-only">{DELETED_STUDENT}</span> : null}
     </span>
   );
 });

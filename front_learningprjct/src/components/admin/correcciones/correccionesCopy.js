@@ -2,11 +2,11 @@
 import { MAX_REJECTIONS, PASS_MARK } from '../shared/submissionStatus.js';
 
 export const STAT_FILTERS = [
-  { estado: '', label: 'Todas', tone: 'neutral', key: 'total' },
-  { estado: 'enviado', label: 'Pendientes', tone: 'neutral', key: 'enviado' },
-  { estado: 'revisado', label: 'Requieren cambios', tone: 'dawn', key: 'revisado' },
-  { estado: 'aprobado', label: 'Aprobadas', tone: 'brand', key: 'aprobado' },
-  { estado: 'rechazado', label: 'Rechazadas', tone: 'danger', key: 'rechazado' },
+  { value: '', label: 'Todas', tone: 'neutral', statKey: 'total' },
+  { value: 'enviado', label: 'Pendientes', tone: 'neutral', statKey: 'enviado' },
+  { value: 'revisado', label: 'Requieren cambios', tone: 'dawn', statKey: 'revisado' },
+  { value: 'aprobado', label: 'Aprobadas', tone: 'brand', statKey: 'aprobado' },
+  { value: 'rechazado', label: 'Rechazadas', tone: 'danger', statKey: 'rechazado' },
 ];
 
 export const COPY = {

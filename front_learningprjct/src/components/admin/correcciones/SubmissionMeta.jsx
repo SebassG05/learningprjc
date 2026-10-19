@@ -4,7 +4,7 @@ import { Lock } from 'lucide-react';
 import RelativeTime from '../ui/RelativeTime';
 import StatusBadge from '../ui/StatusBadge';
 import { absoluteDate } from '../shared/adminFormat';
-import StudentIdentity from './StudentIdentity';
+import StudentIdentity from '../ui/StudentIdentity';
 import { COPY } from './correccionesCopy';
 
 // Quién entregó, cuándo, en qué estado está y lo que escribió el alumno

@@ -45,3 +45,6 @@ export const fetchEnrollments = (courseId, signal) => request(`/api/users/admin/
 export const toggleCourseOpen = (courseId) => request(`/api/courses/${courseId}/toggle-open`, { method: 'PUT' });
 
 export { request as adminRequest };
+
+// Inscripciones de todos los cursos (pestaña Reservas): filtros, orden y paginación en servidor
+export const fetchAllEnrollments = (params, signal) => request('/api/users/admin/enrollments', { params, signal });

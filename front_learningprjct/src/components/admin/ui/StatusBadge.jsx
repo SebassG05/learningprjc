@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { CheckCircle2, Circle, Clock, PenLine, XCircle } from 'lucide-react';
 import { statusInfo } from '../shared/submissionStatus';
-import { tone } from './tones';
+import Badge from './Badge';
 
 const ICON = { enviado: Clock, revisado: PenLine, aprobado: CheckCircle2, rechazado: XCircle };
 
@@ -12,14 +12,14 @@ const ICON = { enviado: Clock, revisado: PenLine, aprobado: CheckCircle2, rechaz
  */
 const StatusBadge = memo(function StatusBadge({ estado, audience = 'admin', size = 'md', className = '' }) {
   const info = statusInfo(estado);
-  const Icon = ICON[estado] ?? Circle;
-  const t = tone(info.tone);
-  const pad = size === 'sm' ? 'h-6 px-2 text-xs gap-1' : 'h-7 px-2.5 text-xs gap-1.5';
   return (
-    <span className={`inline-flex shrink-0 items-center rounded-full border font-semibold whitespace-nowrap ${pad} ${t.badge} ${className}`}>
-      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-      {audience === 'student' ? info.studentLabel : info.label}
-    </span>
+    <Badge
+      icon={ICON[estado] ?? Circle}
+      label={audience === 'student' ? info.studentLabel : info.label}
+      toneName={info.tone}
+      size={size}
+      className={className}
+    />
   );
 });
 

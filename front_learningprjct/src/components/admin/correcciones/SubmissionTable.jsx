@@ -7,7 +7,7 @@ import StatusBadge from '../ui/StatusBadge';
 import { focusRing } from '../ui/tones';
 import { courseName, exerciseName } from '../shared/adminFormat';
 import { isPending, primaryActionLabel } from '../shared/submissionStatus';
-import StudentIdentity from './StudentIdentity';
+import StudentIdentity from '../ui/StudentIdentity';
 import { COPY } from './correccionesCopy';
 
 const Row = memo(function Row({ entrega, active, onOpen }) {

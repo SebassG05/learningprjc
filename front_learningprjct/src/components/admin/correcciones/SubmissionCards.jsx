@@ -8,7 +8,7 @@ import StatusBadge from '../ui/StatusBadge';
 import { focusRing } from '../ui/tones';
 import { courseName, exerciseName } from '../shared/adminFormat';
 import { primaryActionLabel } from '../shared/submissionStatus';
-import StudentIdentity from './StudentIdentity';
+import StudentIdentity from '../ui/StudentIdentity';
 
 const Card = memo(function Card({ entrega, active, onOpen }) {
   return (
@@ -45,7 +45,7 @@ const Card = memo(function Card({ entrega, active, onOpen }) {
 // Tarjetas compactas para móvil y tableta (< 1024 px). Toda la tarjeta es el objetivo táctil.
 const SubmissionCards = memo(function SubmissionCards({ items, activeId, onOpen, busy }) {
   return (
-    <ul className={`grid gap-3 transition-opacity duration-200 md:grid-cols-2 ${busy ? 'opacity-60' : ''}`} aria-label="Entregas">
+    <ul className={`grid grid-cols-1 gap-3 transition-opacity duration-200 md:grid-cols-2 ${busy ? 'opacity-60' : ''}`} aria-label="Entregas">
       {items.map((e) => (
         <Card key={e._id} entrega={e} active={e._id === activeId} onOpen={onOpen} />
       ))}

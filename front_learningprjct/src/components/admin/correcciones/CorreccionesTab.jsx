@@ -1,23 +1,23 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AlertCircle, Inbox, PartyPopper, SearchX } from 'lucide-react';
-import Button from '../../ui/Button';
 import { useToast } from '../../../context/ToastContext';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import EmptyState from '../ui/EmptyState';
+import LoadMore from '../ui/LoadMore';
 import Skeleton from '../ui/Skeleton';
+import StatFilters from '../ui/StatFilters';
 import useAdminCourses from '../shared/useAdminCourses';
 import { studentName } from '../shared/adminFormat';
 import { statusInfo } from '../shared/submissionStatus';
 import SubmissionCards from './SubmissionCards';
-import SubmissionStats from './SubmissionStats';
 import SubmissionTable from './SubmissionTable';
 import SubmissionToolbar from './SubmissionToolbar';
 import useDeferredGrades from './useDeferredGrades';
 import useReviewShortcuts from './useReviewShortcuts';
 import useSubmissionFilters from './useSubmissionFilters';
 import useSubmissions from './useSubmissions';
-import { COPY } from './correccionesCopy';
+import { COPY, STAT_FILTERS } from './correccionesCopy';
 
 // El panel de corrección va en su propio chunk: se precarga en cuanto el navegador está libre
 const loadDrawer = () => import('./SubmissionDrawer');
@@ -151,16 +151,6 @@ export default function CorreccionesTab() {
     return () => cancel(h);
   }, []);
 
-  // ---- Scroll infinito ----
-  const sentinel = useRef(null);
-  useEffect(() => {
-    const el = sentinel.current;
-    if (!el || !hasMore) return undefined;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && loadMore(), { rootMargin: '400px 0px' });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [hasMore, loadMore]);
-
   // ---- Contenido ----
   const loading = status === 'loading';
   const onlyPending = filters.estado === 'enviado' && !filters.q && !filters.curso && !filters.fecha;
@@ -184,20 +174,21 @@ export default function CorreccionesTab() {
     body = (
       <>
         <List items={items} activeId={openId} onOpen={(id) => guard(() => open(id))} busy={status === 'refreshing'} />
-        {hasMore ? (
-          <div ref={sentinel} className="mt-4 flex justify-center">
-            <Button variant="secondary" onClick={loadMore} disabled={status === 'loadingMore'} aria-busy={status === 'loadingMore' || undefined}>
-              {status === 'loadingMore' ? COPY.loadingMore : COPY.loadMore}
-            </Button>
-          </div>
-        ) : null}
+        <LoadMore hasMore={hasMore} loading={status === 'loadingMore'} onLoad={loadMore} label={COPY.loadMore} loadingLabel={COPY.loadingMore} />
       </>
     );
   }
 
   return (
     <div className="space-y-5 md:space-y-6">
-      <SubmissionStats stats={stats} estado={filters.estado} onChange={(estado) => setFilters({ estado })} loading={loading} />
+      <StatFilters
+        items={STAT_FILTERS}
+        stats={stats}
+        value={filters.estado}
+        onChange={(estado) => setFilters({ estado })}
+        loading={loading}
+        label={COPY.statsLabel}
+      />
       <SubmissionToolbar
         filters={filters}
         onChange={setFilters}
