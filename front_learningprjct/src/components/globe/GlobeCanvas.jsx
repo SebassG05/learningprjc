@@ -206,6 +206,25 @@ function LowEndGuard({ active, onLow }) {
   return null;
 }
 
+// Compila todos los shaders antes del primer frame sin bloquear el hilo principal (compileAsync con
+// KHR_parallel_shader_compile). Mientras tanto el bucle está parado y el lienzo sigue a opacidad 0;
+// al terminar, el primer dibujado ya no espera al compilador del driver (era el tirón al montar)
+function Warmup({ onDone }) {
+  const { gl, scene, camera, invalidate } = useThree();
+  const done = useRef(onDone);
+  done.current = onDone;
+  useEffect(() => {
+    let alive = true;
+    gl.compileAsync(scene, camera).then(() => {
+      if (!alive) return;
+      done.current();
+      invalidate();
+    });
+    return () => { alive = false; };
+  }, [gl, scene, camera, invalidate]);
+  return null;
+}
+
 // Monta cada escena cuando su sección se acerca a la pantalla y la conserva (se compila una sola vez)
 function useNearSections() {
   const [near, setNear] = useState({ faq: false, reviews: false, cta: false });
@@ -247,6 +266,11 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
   const still = !animate || lowEnd;
   const moonMaterial = useRef();
   const onLow = useCallback(() => setLowEnd(true), []);
+  const [compiled, setCompiled] = useState(false);
+  const onCompiled = () => {
+    setCompiled(true);
+    onReady?.();
+  };
 
   return (
     <Canvas
@@ -254,10 +278,9 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
       linear
       dpr={dpr}
       resize={{ offsetSize: true, scroll: false }}
-      frameloop={still ? 'demand' : running ? 'always' : 'never'}
+      frameloop={!compiled ? 'never' : still ? 'demand' : running ? 'always' : 'never'}
       camera={{ fov: 30, position: [0, 0, 6], near: 0.1, far: 40 }}
       gl={{ antialias: true, alpha: true, stencil: false, powerPreference: 'high-performance' }}
-      onCreated={() => onReady?.()}
       style={{ pointerEvents: 'none' }}
       aria-hidden="true"
     >
@@ -293,6 +316,8 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
       >
         {cfg.moon && <Moon palette={palette} animate={!still} materialRef={moonMaterial} />}
       </Director>
+
+      <Warmup onDone={onCompiled} />
 
       {near.faq && <DeepSpaceScene palette={palette} quality={quality} />}
       {near.reviews && <OrbitScene palette={palette} quality={quality} />}

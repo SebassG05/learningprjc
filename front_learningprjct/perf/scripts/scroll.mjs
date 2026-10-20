@@ -45,12 +45,14 @@ try {
       let retries = 0;
       for (let i = 0; i < RUNS; i += 1) {
         const b = await launch(cell.gpu);
-        // Equipo de medición ocupado: se espera y se repite (máx. 5 reintentos por celda)
+        // Equipo de medición ocupado: se espera y se repite (máx. 12 reintentos por celda). Si no se
+        // libera, la ejecución no se mide: una cifra tomada con la máquina ocupada no es comparable
         const env = cell.gpu === 'soft' ? null : await envFps(b, cell);
-        if (env !== null && env < 59 && retries < 5) {
+        if (env !== null && env < 59) {
+          if (retries >= 12) throw new Error(`entorno ocupado de forma sostenida (${env} fps en página vacía): medición abortada`);
           retries += 1; i -= 1;
           console.log(`  entorno ocupado (${env} fps en página vacía): reintento ${retries}`);
-          await new Promise((r) => setTimeout(r, 10_000));
+          await new Promise((r) => setTimeout(r, 15_000));
           continue;
         }
         const r = { ...(await measureRoute(b, { ...cell, route, css: CSS })), envFps: env };
