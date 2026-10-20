@@ -43,6 +43,7 @@ function instrument() {
       duration: e.duration,
       blocking: e.blockingDuration,
       styleLayout: e.styleAndLayoutStart ? e.startTime + e.duration - e.styleAndLayoutStart : 0,
+      render: e.renderStart ? e.startTime + e.duration - e.renderStart : 0,
       scripts: (e.scripts || []).map((s) => ({ src: (s.sourceURL || '').split('/').pop(), pos: s.sourceCharPosition, fn: s.sourceFunctionName, inv: s.invoker, dur: s.duration, forced: s.forcedStyleAndLayoutDuration })),
     });
   });

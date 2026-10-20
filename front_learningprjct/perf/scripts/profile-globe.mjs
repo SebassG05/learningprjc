@@ -7,6 +7,7 @@ import { chromium } from '@playwright/test';
 import sourceMap from 'source-map-js';
 import { launchOptions } from '../../tests/perf/lib/profiles.mjs';
 import { openPage } from '../../tests/perf/lib/measure.mjs';
+import { startRecording, stopRecording } from '../../tests/perf/lib/page.mjs';
 
 const DIST = process.argv[2];
 const DEVICE = process.argv[3] || 'movil';
@@ -15,6 +16,7 @@ const { page, cdp, context } = await openPage(b, { device: DEVICE, cpu: 6, netwo
 await page.waitForTimeout(3000);
 await cdp.send('Profiler.enable');
 await cdp.send('Profiler.setSamplingInterval', { interval: 200 });
+await startRecording(page);
 await cdp.send('Profiler.start');
 if (DEVICE === 'movil') {
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 600 }] });
@@ -23,6 +25,12 @@ if (DEVICE === 'movil') {
 await page.waitForSelector('canvas', { timeout: 30_000 });
 await page.waitForTimeout(4000);
 const { profile } = await cdp.send('Profiler.stop');
+const perf = await stopRecording(page);
+console.log('LoAF (duración = script + estilo/layout + render):');
+perf.loaf.forEach((l) => {
+  const script = l.scripts.reduce((a, x) => a + x.dur, 0);
+  console.log(`  ${Math.round(l.duration)} ms  script ${Math.round(script)}  estilo/layout ${Math.round(l.styleLayout)}  render ${Math.round(l.render)}  | ${l.scripts.map((x) => `${x.fn || x.inv}@${x.pos}:${Math.round(x.dur)}`).join(' ')}`);
+});
 await context.close();
 await b.close();
 

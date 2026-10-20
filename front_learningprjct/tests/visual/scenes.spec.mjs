@@ -16,9 +16,9 @@ const START = new Date('2026-10-20T10:00:00Z');
 
 // Deja correr el reloj falso a pasos (los observadores y cargas reales se intercalan)
 async function settle(page, ms = 3000) {
-  for (let t = 0; t < ms; t += 500) {
-    await page.clock.runFor(500);
-    await page.waitForTimeout(40);
+  for (let t = 0; t < ms; t += 250) {
+    await page.clock.runFor(Math.min(250, ms - t));
+    await page.waitForTimeout(25);
   }
 }
 
@@ -74,12 +74,29 @@ async function waitForGlobe(page, { touch }) {
 // performance.now() (reloj falso), pero la línea de tiempo del documento sigue el tiempo real: su
 // progreso dependería de cuánto tiempo real haya pasado. Se llevan a su estado final (el mismo que
 // ve el usuario al terminar) y se deja un paso de reloj para que framer aplique sus valores finales
+// Varias rondas con un presupuesto de reloj FIJO (4 × 250 ms): al avanzar pueden arrancar otras
+// animaciones (p. ej. al llegar los datos de la API), pero el tiempo total no depende de cuántas haya
 async function finishAnimations(page) {
-  await page.evaluate(() => document.getAnimations().forEach((a) => {
-    const end = a.effect?.getComputedTiming?.().endTime;
-    if (a.playState === 'running' && Number.isFinite(end)) a.finish();
-  }));
-  await settle(page, 500);
+  for (let i = 0; i < 4; i += 1) {
+    await page.evaluate(() => document.getAnimations().forEach((a) => {
+      const end = a.effect?.getComputedTiming?.().endTime;
+      if (a.playState === 'running' && Number.isFinite(end)) a.finish();
+    }));
+    await settle(page, 250);
+  }
+}
+
+// El globo empieza a dibujar cuando termina de compilar sus shaders (compileAsync). Con
+// KHR_parallel_shader_compile ese instante depende del tiempo real de la GPU; sin la extensión,
+// three da los programas por listos en el primer tic (10 ms del reloj falso). Solo en el test
+function hideParallelCompile() {
+  for (const C of [window.WebGLRenderingContext, window.WebGL2RenderingContext]) {
+    if (!C) continue;
+    const get = C.prototype.getExtension;
+    C.prototype.getExtension = function getExtension(name) {
+      return name === 'KHR_parallel_shader_compile' ? null : get.call(this, name);
+    };
+  }
 }
 
 // Puntos de control de la home a partir de sus secciones (las fijadas se capturan a mitad de escena)
@@ -114,6 +131,7 @@ for (const w of WIDTHS) {
 
     test(`home: escenas @${w.name}`, async ({ page, context }) => {
       await preparePage(context);
+      await context.addInitScript(hideParallelCompile);
       await open(page, '/', w);
       await waitForGlobe(page, w);
       await prime(page);
