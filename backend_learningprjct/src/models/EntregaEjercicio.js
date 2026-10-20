@@ -53,6 +53,12 @@ const entregaEjercicioSchema = new mongoose.Schema({
   bloqueado: {
     type: Boolean,
     default: false
+  },
+  // Último estado y nota que se comunicaron al alumno por email (evita correos duplicados)
+  notificado: {
+    estado: String,
+    calificacion: Number,
+    fecha: Date
   }
 }, {
   timestamps: true

@@ -15,9 +15,11 @@ import {
   completeTest,
   getUserEnrollments,
   getCurrentUser,
-  getAdminCourseEnrollments
+  getAdminCourseEnrollments,
+  getAdminEnrollments
 } from '../controller/userController.js';
 import { authenticateJWT } from '../middleware/auth.js';
+import { autenticar, soloAdmin } from '../middleware/authorization.js';
 import createRateLimit from '../middleware/rateLimit.js';
 
 // Inscribirse guarda la aceptación de los términos (una prueba): pocas por minuto y por IP
@@ -105,6 +107,9 @@ router.post('/enrollment/:courseId/test/:temaId/complete', authenticateJWT, comp
 router.get('/enrollments', authenticateJWT, getUserEnrollments);
 
 // [Admin] Obtener usuarios inscritos en un curso
-router.get('/admin/courses/:courseId/enrollments', authenticateJWT, getAdminCourseEnrollments);
+router.get('/admin/courses/:courseId/enrollments', autenticar, soloAdmin, getAdminCourseEnrollments);
+
+// [Admin] Inscripciones de todos los cursos, filtradas y paginadas (pestaña Reservas)
+router.get('/admin/enrollments', autenticar, soloAdmin, getAdminEnrollments);
 
 export default router;

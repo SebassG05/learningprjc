@@ -3,6 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { sendExerciseCorrectionEmail } from '../service/mailService.js';
+import { aplicarCorreccion, CorreccionError, debeNotificar, marcarNotificado } from '../service/correccionService.js';
+import { buildListadoPipeline, formatListado, ListadoError, parseListado, usaListado } from '../service/entregasQueryService.js';
+import User from '../models/User.js';
+import Ejercicio from '../models/Ejercicio.js';
+import Course from '../models/Course.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -108,6 +113,8 @@ export const entregarEjercicio = async (req, res) => {
       entregaExistente.comentarios = comentarios;
       entregaExistente.estado = 'enviado';
       entregaExistente.fechaEntrega = new Date();
+      // Es una entrega nueva: su corrección se volverá a notificar aunque repita estado y nota
+      entregaExistente.notificado = undefined;
 
       await entregaExistente.save();
 
@@ -201,12 +208,31 @@ export const eliminarEntrega = async (req, res) => {
 };
 
 // ADMIN: Obtener todas las entregas (para corrección)
+// Sin parámetros responde como siempre ({ entregas }). Con page/limit/estado/curso/q/desde/hasta/orden
+// filtra, ordena y pagina en servidor y añade total, page, limit, pages y stats.
 export const obtenerTodasLasEntregas = async (req, res) => {
   try {
+    if (usaListado(req.query)) {
+      let filtros;
+      try {
+        filtros = parseListado(req.query);
+      } catch (err) {
+        if (err instanceof ListadoError) return res.status(err.status).json({ error: err.message });
+        throw err;
+      }
+      const colecciones = {
+        users: User.collection.name,
+        ejercicios: Ejercicio.collection.name,
+        courses: Course.collection.name,
+      };
+      const resultado = await EntregaEjercicio.aggregate(buildListadoPipeline(filtros, colecciones));
+      return res.json(formatListado(resultado, filtros));
+    }
+
     const entregas = await EntregaEjercicio.find()
       .populate('ejercicioId', 'titulo tipo dificultad')
       .populate('userId', 'name email')
-      .populate('cursoId', 'titulo')
+      .populate('cursoId', 'title titleEn')
       .sort({ fechaEntrega: -1 });
 
     res.json({ entregas });
@@ -220,7 +246,6 @@ export const obtenerTodasLasEntregas = async (req, res) => {
 export const corregirEntrega = async (req, res) => {
   try {
     const { id } = req.params;
-    const { calificacion, feedbackProfesor, estado } = req.body;
 
     const entrega = await EntregaEjercicio.findById(id);
 
@@ -228,54 +253,36 @@ export const corregirEntrega = async (req, res) => {
       return res.status(404).json({ error: 'Entrega no encontrada' });
     }
 
-    // Actualizar campos
-    if (calificacion !== undefined) {
-      if (calificacion < 0 || calificacion > 10) {
-        return res.status(400).json({ error: 'La calificación debe estar entre 0 y 10' });
-      }
-      entrega.calificacion = calificacion;
+    try {
+      aplicarCorreccion(entrega, req.body);
+    } catch (err) {
+      if (err instanceof CorreccionError) return res.status(err.status).json({ error: err.message });
+      throw err;
     }
-
-    if (feedbackProfesor !== undefined) {
-      entrega.feedbackProfesor = feedbackProfesor;
-    }
-
-    if (estado) {
-      const estadosValidos = ['enviado', 'revisado', 'aprobado', 'rechazado'];
-      if (!estadosValidos.includes(estado)) {
-        return res.status(400).json({ error: 'Estado no válido' });
-      }
-      // Si se rechaza, incrementar intentos y bloquear al 2º rechazo
-      if (estado === 'rechazado') {
-        entrega.intentos = (entrega.intentos || 0) + 1;
-        if (entrega.intentos >= 2) {
-          entrega.bloqueado = true;
-        }
-      }
-      entrega.estado = estado;
-    }
-
-    entrega.fechaRevision = new Date();
 
     await entrega.save();
 
-    // Notificar al estudiante por correo
-    try {
-      const entregaPopulada = await EntregaEjercicio.findById(entrega._id)
-        .populate('userId', 'name email')
-        .populate('ejercicioId', 'titulo');
-      if (entregaPopulada?.userId?.email) {
-        await sendExerciseCorrectionEmail({
-          userName: entregaPopulada.userId.name,
-          userEmail: entregaPopulada.userId.email,
-          ejercicioTitulo: entregaPopulada.ejercicioId?.titulo || 'Ejercicio',
-          calificacion: entregaPopulada.calificacion,
-          feedbackProfesor: entregaPopulada.feedbackProfesor,
-          estado: entregaPopulada.estado
-        });
+    // Notificar al estudiante por correo (solo si cambió el estado o la nota desde el último aviso)
+    if (debeNotificar(entrega)) {
+      try {
+        const entregaPopulada = await EntregaEjercicio.findById(entrega._id)
+          .populate('userId', 'name email')
+          .populate('ejercicioId', 'titulo');
+        if (entregaPopulada?.userId?.email) {
+          await sendExerciseCorrectionEmail({
+            userName: entregaPopulada.userId.name,
+            userEmail: entregaPopulada.userId.email,
+            ejercicioTitulo: entregaPopulada.ejercicioId?.titulo || 'Ejercicio',
+            calificacion: entregaPopulada.calificacion,
+            feedbackProfesor: entregaPopulada.feedbackProfesor,
+            estado: entregaPopulada.estado
+          });
+          marcarNotificado(entrega);
+          await entrega.save();
+        }
+      } catch (emailError) {
+        console.error('Error al enviar email de corrección:', emailError);
       }
-    } catch (emailError) {
-      console.error('Error al enviar email de corrección:', emailError);
     }
 
     res.json({

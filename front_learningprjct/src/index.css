@@ -1010,3 +1010,65 @@ body.loading {
   scrollbar-width: thin;
   scrollbar-color: rgba(161, 219, 135, 0.3) rgba(26, 26, 26, 0.5);
 }
+/* Deslizador de nota del panel de correcciones: pista neutra, tramo recorrido en la marca */
+.grade-range {
+  --grade-track: var(--color-surface-3);
+}
+.grade-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--color-brand-400) var(--grade-pct, 0%), var(--grade-track) var(--grade-pct, 0%));
+}
+.grade-range::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--grade-track);
+}
+.grade-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--color-brand-400);
+}
+.grade-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -8px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.45);
+  transition: transform 150ms var(--ease-out-expo);
+}
+.grade-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.45);
+}
+.grade-range:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+@media (prefers-reduced-motion: reduce) {
+  .grade-range::-webkit-slider-thumb {
+    transition: none;
+  }
+}
+
+/* Con un panel lateral abierto (correcciones), los avisos no tapan sus botones:
+   arriba en móvil (la hoja ocupa la pantalla) y a la izquierda desde 768 px (el panel está a la derecha) */
+html[data-drawer-open] .toast-region {
+  top: max(1rem, env(safe-area-inset-top));
+  bottom: auto;
+}
+@media (min-width: 768px) {
+  html[data-drawer-open] .toast-region {
+    top: auto;
+    bottom: max(1.5rem, env(safe-area-inset-bottom));
+    left: 1.5rem;
+    right: auto;
+    align-items: flex-start;
+  }
+}

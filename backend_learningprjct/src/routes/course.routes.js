@@ -117,6 +117,9 @@ router.put('/:id/toggle-open', autenticar, soloAdmin, courseController.toggleCou
 // Agregar un tema al curso (solo admin)
 router.post('/:id/temas', autenticar, soloAdmin, courseController.agregarTema);
 
+// Reordenar los temas (solo admin). Va antes de '/:id/temas/:temaId' para que «orden» no se lea como id
+router.put('/:id/temas/orden', autenticar, soloAdmin, express.json(), courseController.reordenarTemas);
+
 // Actualizar un tema (solo admin)
 router.put('/:id/temas/:temaId', autenticar, soloAdmin, courseController.actualizarTema);
 

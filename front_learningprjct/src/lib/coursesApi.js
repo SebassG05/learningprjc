@@ -56,7 +56,7 @@ export const readToken = () => {
   }
 };
 
-// Áreas y niveles: una sola petición por carga, compartida entre listado, ficha y AdminCursos.
+// Áreas y niveles: una sola petición por carga, compartida entre listado, ficha y Gestión de cursos.
 // Si falla, no se reintenta en cada montaje: se espera un minuto antes de volver a pedirlo.
 let catalogPromise;
 let catalogFailedAt = 0;

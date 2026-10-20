@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import User from '../models/User.js';
 import { signToken } from '../config/jwt.js';
 import { hasAcceptedCurrentTerms, isValidAcceptance, recordAcceptance, termsRequired } from '../service/termsService.js';
@@ -10,6 +11,8 @@ import crypto from 'crypto';
 import PasswordResetToken from '../models/PasswordResetToken.js';
 import { sendPasswordResetEmail, sendCourseCompletionEmailToUser, sendCourseCompletionNotificationToAdmin } from '../service/mailService.js';
 import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT } from '../service/googleAuthService.js';
+import { resumenCurso, resumenVacio } from '../service/progresoService.js';
+import { buildInscripcionesPipeline, formatInscripciones, ListadoError, parseInscripciones } from '../service/inscripcionesQueryService.js';
 
 export const registerUser = async (req, res) => {
   const errors = validationResult(req);
@@ -559,10 +562,15 @@ export const getUserEnrollments = async (req, res) => {
 export const getAdminCourseEnrollments = async (req, res) => {
   try {
     const { courseId } = req.params;
-    const enrollments = await UserProgress.find({ courseId })
-      .populate('userId', 'name email')
-      .sort({ enrolledAt: -1 });
+    if (!mongoose.isValidObjectId(courseId)) {
+      return res.status(400).json({ error: 'Curso no válido' });
+    }
+    const [enrollments, resumen] = await Promise.all([
+      UserProgress.find({ courseId }).populate('userId', 'name email').sort({ enrolledAt: -1 }),
+      resumenCurso(courseId),
+    ]);
 
+    // Campos de siempre + `entregas` por alumno y `curso.ejercicios` (añadidos para la pestaña Progreso)
     const result = enrollments.map(e => ({
       userId: e.userId?._id,
       name: e.userId?.name || 'N/A',
@@ -571,13 +579,37 @@ export const getAdminCourseEnrollments = async (req, res) => {
       progress: e.progress,
       status: e.status,
       completedTests: e.completedTests || [],
-      completedMaterialsCount: (e.completedMaterials || []).length
+      completedMaterialsCount: (e.completedMaterials || []).length,
+      entregas: (e.userId?._id && resumen.porAlumno.get(String(e.userId._id))) || resumenVacio()
     }));
 
-    res.status(200).json({ enrollments: result, total: result.length });
+    res.status(200).json({ enrollments: result, total: result.length, curso: { ejercicios: resumen.ejercicios } });
   } catch (error) {
     console.error('Error en getAdminCourseEnrollments:', error);
     res.status(500).json({ error: 'Error al obtener inscripciones', details: error.message });
+  }
+};
+
+/**
+ * [Admin] Inscripciones de todos los cursos (pestaña Reservas): filtros, búsqueda, orden y paginación
+ * @route GET /api/users/admin/enrollments?curso=&estado=enrolled|completed&q=&desde=&hasta=&orden=&page=&limit=
+ * @access Admin
+ */
+export const getAdminEnrollments = async (req, res) => {
+  try {
+    let filtros;
+    try {
+      filtros = parseInscripciones(req.query);
+    } catch (err) {
+      if (err instanceof ListadoError) return res.status(err.status).json({ error: err.message });
+      throw err;
+    }
+    const colecciones = { users: User.collection.name, courses: Course.collection.name };
+    const resultado = await UserProgress.aggregate(buildInscripcionesPipeline(filtros, colecciones));
+    res.status(200).json(formatInscripciones(resultado, filtros));
+  } catch (error) {
+    console.error('Error en getAdminEnrollments:', error);
+    res.status(500).json({ error: 'Error al obtener inscripciones' });
   }
 };
 

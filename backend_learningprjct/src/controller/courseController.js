@@ -2,6 +2,7 @@ import Course from '../models/Course.js';
 import cloudinary from '../config/cloudinary.js';
 import { COURSE_AREAS, COURSE_LEVELS } from '../config/courseCatalog.js';
 import { CatalogFieldError, catalogFieldsForCreate, parseCatalogFields } from './courseCatalogFields.js';
+import { editarTema, renumerar, reordenar, siguienteNumero, TemasError } from '../service/temasService.js';
 
 // Portada y foto del profesor llegan como campos de archivo (upload.fields)
 const uploadedPath = (req, field) => req.files?.[field]?.[0]?.path || (req.file?.fieldname === field ? req.file.path : undefined);
@@ -433,23 +434,27 @@ export const agregarTema = async (req, res) => {
       course.temas = [];
     }
 
-    // Calcular el siguiente número de tema si no se proporciona
-    const siguienteNumero = numeroTema || (course.temas.length + 1);
-    
+    // Sin número, el siguiente libre (antes era «cantidad + 1», que chocaba tras borrar un tema)
+    const numero = numeroTema ? parseInt(numeroTema) : siguienteNumero(course.temas);
+
     // Verificar que no exista ya un tema con ese número
-    const temaExistente = course.temas.find(t => t.numeroTema === parseInt(siguienteNumero));
+    const temaExistente = course.temas.find(t => t.numeroTema === numero);
     if (temaExistente) {
       return res.status(400).json({ 
         error: 'Ya existe un tema con ese número',
-        mensaje: `El curso ya tiene un tema número ${siguienteNumero}. Usa otro número o actualiza el tema existente.`
+        mensaje: `El curso ya tiene un tema número ${numero}. Usa otro número o actualiza el tema existente.`
       });
+    }
+
+    if (!(titulo && titulo.trim()) && !(tituloEn && tituloEn.trim())) {
+      return res.status(400).json({ error: 'Datos incompletos', mensaje: 'El tema necesita un título en español o en inglés' });
     }
 
     // Preparar datos del tema - solo incluir campos con valor
     const nuevoTema = {
-      numeroTema: parseInt(siguienteNumero),
+      numeroTema: numero,
       materiales: [],
-      orden: orden || course.temas.length
+      orden: orden || numero
     };
 
     if (titulo && titulo.trim()) nuevoTema.titulo = titulo.trim();
@@ -587,10 +592,34 @@ export const eliminarMaterial = async (req, res) => {
 };
 
 // Actualizar un tema
+/**
+ * Reordenar los temas de un curso (y renumerarlos 1..N)
+ * @route PUT /api/courses/:id/temas/orden  { temaIds: [id, …] }
+ * @access Admin
+ */
+export const reordenarTemas = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).json({ error: 'Curso no encontrado' });
+    }
+    try {
+      course.temas = reordenar(course.temas, req.body?.temaIds);
+    } catch (e) {
+      if (e instanceof TemasError) return res.status(e.status).json({ error: e.message, mensaje: e.message });
+      throw e;
+    }
+    await course.save();
+    res.json(course);
+  } catch (err) {
+    console.error('Error al reordenar temas:', err);
+    res.status(500).json({ error: 'Error al reordenar temas' });
+  }
+};
+
 export const actualizarTema = async (req, res) => {
   try {
     const { id, temaId } = req.params;
-    const { titulo, descripcion } = req.body;
 
     const course = await Course.findById(id);
     if (!course) {
@@ -606,8 +635,13 @@ export const actualizarTema = async (req, res) => {
       return res.status(404).json({ error: 'Tema no encontrado' });
     }
 
-    if (titulo) tema.titulo = titulo;
-    if (descripcion) tema.descripcion = descripcion;
+    // Títulos y descripciones en los dos idiomas; cadena vacía = borrar (queda al menos un título)
+    try {
+      editarTema(tema, req.body);
+    } catch (e) {
+      if (e instanceof TemasError) return res.status(e.status).json({ error: e.message, mensaje: e.message });
+      throw e;
+    }
 
     await course.save();
     res.json(course);
@@ -669,6 +703,8 @@ export const eliminarTema = async (req, res) => {
     }
 
     course.temas.pull(temaId);
+    // Numeración continua: sin huecos en el «Tema N» que ven los alumnos
+    renumerar(course.temas);
     await course.save();
     res.json(course);
   } catch (err) {

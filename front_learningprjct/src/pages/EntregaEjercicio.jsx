@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import StatusBadge from '../components/admin/ui/StatusBadge';
 import { 
   Upload, FileText, X, CheckCircle, AlertCircle, 
   ArrowLeft, Send, Loader, Download, Trash2 
@@ -259,15 +260,9 @@ export default function EntregaEjercicio() {
                 <div className="space-y-2 text-sm text-gray-300">
                   <p><span className="font-semibold">Archivo:</span> {entregaExistente.archivoPdf.nombreOriginal}</p>
                   <p><span className="font-semibold">Fecha de entrega:</span> {new Date(entregaExistente.fechaEntrega).toLocaleString('es-ES')}</p>
-                  <p><span className="font-semibold">Estado:</span> 
-                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
-                      entregaExistente.estado === 'aprobado' ? 'bg-green-500/20 text-green-400' :
-                      entregaExistente.estado === 'rechazado' ? 'bg-red-500/20 text-red-400' :
-                      entregaExistente.estado === 'revisado' ? 'bg-blue-500/20 text-blue-400' :
-                      'bg-yellow-500/20 text-yellow-400'
-                    }`}>
-                      {entregaExistente.estado.charAt(0).toUpperCase() + entregaExistente.estado.slice(1)}
-                    </span>
+                  <p className="flex items-center gap-2"><span className="font-semibold">Estado:</span>
+                    {/* Mismas etiquetas y colores que el panel de correcciones («revisado» = «Requiere cambios») */}
+                    <StatusBadge estado={entregaExistente.estado} audience="student" size="sm" />
                   </p>
                 </div>
                 <div className="flex gap-3 mt-4">

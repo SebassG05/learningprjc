@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import { buildContactEmail, singleLine } from './contactEmailTemplate.js';
+import { etiquetaEstado } from './correccionService.js';
 
 dotenv.config();
 
@@ -202,9 +203,10 @@ export const sendCourseCompletionNotificationToAdmin = async (userName, userEmai
 };
 
 export const sendExerciseCorrectionEmail = async ({ userName, userEmail, ejercicioTitulo, calificacion, feedbackProfesor, estado }) => {
-  const estadoLabel = estado === 'aprobado' ? 'Aprobado' : estado === 'rechazado' ? 'Rechazado' : 'Revisado';
-  const estadoColor = estado === 'aprobado' ? '#22c55e' : estado === 'rechazado' ? '#ef4444' : '#eab308';
-  const estadoEmoji = estado === 'aprobado' ? '✅' : estado === 'rechazado' ? '❌' : '🔍';
+  // «revisado» se comunica como «Requiere cambios» (ámbar legible sobre blanco)
+  const estadoLabel = etiquetaEstado(estado);
+  const estadoColor = estado === 'aprobado' ? '#22c55e' : estado === 'rechazado' ? '#ef4444' : '#b45309';
+  const estadoEmoji = estado === 'aprobado' ? '✅' : estado === 'rechazado' ? '❌' : '✏️';
 
   const mailOptions = {
     from: `Campus Evenor <${process.env.EMAIL_USER}>`,
