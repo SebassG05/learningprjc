@@ -8,7 +8,7 @@ import LoadMore from '../ui/LoadMore';
 import Skeleton from '../ui/Skeleton';
 import StatFilters from '../ui/StatFilters';
 import useAdminCourses from '../shared/useAdminCourses';
-import { studentName } from '../shared/adminFormat';
+import { courseName, studentName } from '../shared/adminFormat';
 import { statusInfo } from '../shared/submissionStatus';
 import SubmissionCards from './SubmissionCards';
 import SubmissionTable from './SubmissionTable';
@@ -40,8 +40,20 @@ function ListSkeleton() {
 export default function CorreccionesTab() {
   const { showToast } = useToast();
   const { filters, setFilters, clearFilters, active } = useSubmissionFilters();
-  const { items, stats, total, status, hasMore, loadMore, patch, reload } = useSubmissions(filters);
   const { courses } = useAdminCourses();
+  // El backend anterior no devuelve el título del curso: se completa con la lista de cursos
+  const coursesById = useMemo(() => new Map(courses.map((c) => [String(c._id), c])), [courses]);
+  const courseTitle = useCallback((e) => courseName(coursesById.get(String(e.cursoId?._id ?? e.cursoId))), [coursesById]);
+  const { items: rawItems, stats, total, status, hasMore, loadMore, patch, reload } = useSubmissions(filters, courseTitle);
+  const items = useMemo(
+    () =>
+      rawItems.map((e) => {
+        if (!e.cursoId || e.cursoId.title || e.cursoId.titleEn) return e;
+        const c = coursesById.get(String(e.cursoId._id ?? e.cursoId));
+        return c ? { ...e, cursoId: { _id: c._id, title: c.title, titleEn: c.titleEn } } : e;
+      }),
+    [rawItems, coursesById]
+  );
   const desktop = useMediaQuery('(min-width: 1024px)');
 
   const [openId, setOpenId] = useState(null);

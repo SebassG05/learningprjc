@@ -62,6 +62,7 @@ export const COPY = {
     drag: (t) => `Arrastrar «${t}» para cambiar su posición`,
     moved: (t, pos) => `«${t}» ahora es el tema ${pos}`,
     reorderFailed: 'No se ha podido guardar el nuevo orden. Se ha restaurado el anterior.',
+    reorderUnavailable: 'El servidor todavía no permite reordenar temas: hay que desplegar la versión nueva del backend.',
     expand: (t) => `Editar «${t}»`,
     titleEs: 'Título (español)',
     titleEn: 'Título (inglés)',

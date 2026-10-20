@@ -44,7 +44,8 @@ export default function TopicsEditor({ course, onCourseChange }) {
 
   const commit = async (order, moved) => {
     const ok = await t.commitOrder(order);
-    if (!ok) showToast(COPY.topics.reorderFailed, 'error', 5000);
+    if (ok === 'missing') showToast(COPY.topics.reorderUnavailable, 'error', 6000);
+    else if (!ok) showToast(COPY.topics.reorderFailed, 'error', 5000);
     else if (moved) setAnnounce(COPY.topics.moved(topicLabel(moved), order.indexOf(moved) + 1));
   };
 

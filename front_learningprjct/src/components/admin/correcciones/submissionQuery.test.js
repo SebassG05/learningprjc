@@ -29,3 +29,25 @@ test('parámetros de la API: página, tamaño y fecha desde el preset', () => {
   assert.equal(p.desde, '2026-10-12T12:00:00.000Z');
   assert.equal(p.q, undefined);
 });
+
+test('backend anterior: filtra, cuenta, ordena por prioridad y pagina en el navegador', async () => {
+  const { legacyPage } = await import('./submissionQuery.js');
+  const d = (n) => new Date(Date.UTC(2026, 9, n)).toISOString();
+  const all = [
+    { _id: 'a', estado: 'aprobado', calificacion: 8, fechaEntrega: d(5), userId: { name: 'Lucía' }, cursoId: { _id: 'c1' } },
+    { _id: 'b', estado: 'enviado', fechaEntrega: d(3), userId: { name: 'Pablo' }, cursoId: { _id: 'c1' } },
+    { _id: 'c', estado: 'enviado', fechaEntrega: d(1), userId: null, cursoId: { _id: 'c2' } },
+    { _id: 'd', estado: 'rechazado', calificacion: 3, fechaEntrega: d(4), userId: { name: 'lucia' }, cursoId: { _id: 'c2' } },
+  ];
+  const f = { q: '', estado: '', curso: '', fecha: '', orden: 'prioridad' };
+  const r = legacyPage(all, f, 1);
+  assert.deepEqual(r.items.map((x) => x._id), ['c', 'b', 'a', 'd']);
+  assert.deepEqual(r.stats, { enviado: 2, revisado: 0, aprobado: 1, rechazado: 1, total: 4 });
+  assert.equal(r.pages, 1);
+  const s = legacyPage(all, { ...f, q: 'LUCIA', estado: 'aprobado' }, 1);
+  assert.equal(s.total, 1);
+  assert.equal(s.stats.total, 2);
+  assert.equal(legacyPage(all, { ...f, curso: 'c2' }, 1).total, 2);
+  // El título del curso que no llega (populate antiguo) se busca con el resolvedor
+  assert.equal(legacyPage(all, { ...f, q: 'carbono' }, 1, (e) => (e.cursoId._id === 'c2' ? 'Carbono' : '')).total, 2);
+});

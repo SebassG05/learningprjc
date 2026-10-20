@@ -46,9 +46,10 @@ export default function useTopics(course, onCourseChange) {
       try {
         apply(await reorderTopics(id, temas.map((t) => t._id)));
         return true;
-      } catch {
+      } catch (err) {
         setCurrent((c) => ({ ...c, temas: before }));
-        return false;
+        // 404: el servidor aún no tiene el endpoint de reordenar (backend anterior)
+        return err?.status === 404 ? 'missing' : false;
       }
     },
     [id, apply]

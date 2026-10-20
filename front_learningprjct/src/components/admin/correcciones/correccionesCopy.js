@@ -17,7 +17,7 @@ export const COPY = {
   allCourses: 'Todos los cursos',
   dateLabel: 'Fecha de entrega',
   sortLabel: 'Ordenar',
-  results: (n) => (n === 1 ? '1 entrega' : `${n.toLocaleString('es-ES')} entregas`),
+  results: (n = 0) => (n === 1 ? '1 entrega' : `${Number(n || 0).toLocaleString('es-ES')} entregas`),
   loadMore: 'Cargar más',
   loadingMore: 'Cargando…',
   columns: { student: 'Alumno', exercise: 'Ejercicio y curso', course: 'Curso', date: 'Entregada', status: 'Estado', grade: 'Nota', action: 'Acción' },

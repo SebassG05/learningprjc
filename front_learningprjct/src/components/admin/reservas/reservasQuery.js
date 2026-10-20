@@ -91,3 +91,45 @@ export function groupByDay(items) {
   });
   return map;
 }
+
+// ---- Compatibilidad con el backend anterior ----
+// Sin /api/users/admin/enrollments (404), la lista se arma con el endpoint por curso y se filtra,
+// ordena y pagina aquí con las mismas reglas que el servidor nuevo.
+export function legacyRows(perCourse) {
+  return perCourse.flatMap(({ course, enrollments }) =>
+    (enrollments ?? []).map((e) => ({
+      _id: `${e.userId ?? 'sin-alumno'}-${course._id}-${e.enrolledAt}`,
+      userId: e.userId ? { _id: e.userId, name: e.name !== 'N/A' ? e.name : '', email: e.email !== 'N/A' ? e.email : '' } : null,
+      courseId: { _id: course._id, title: course.title, titleEn: course.titleEn },
+      status: e.status ?? 'enrolled',
+      progress: e.progress ?? 0,
+      enrolledAt: e.enrolledAt,
+    }))
+  );
+}
+
+const fold = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+// `range` = { desde, hasta } (ISO) para el calendario; si no, el preset de fecha de los filtros
+export function legacyEnrollmentPage(all, f, page, { range, limit = PAGE_SIZE, now = Date.now() } = {}) {
+  const desde = range?.desde ?? presetSince(f.fecha, now);
+  const hasta = range?.hasta;
+  const q = fold(f.q.trim());
+  const base = all.filter((x) => {
+    if (f.curso && x.courseId?._id !== f.curso) return false;
+    if (desde && x.enrolledAt < desde) return false;
+    if (hasta && x.enrolledAt > hasta) return false;
+    return !q || [x.userId?.name, x.userId?.email, x.courseId?.title, x.courseId?.titleEn].some((v) => fold(v).includes(q));
+  });
+  const stats = { enrolled: 0, completed: 0 };
+  base.forEach((x) => {
+    if (x.status in stats) stats[x.status] += 1;
+  });
+  stats.total = base.length;
+  const list = f.estado ? base.filter((x) => x.status === f.estado) : base;
+  const t = (x) => new Date(x.enrolledAt).getTime() || 0;
+  const orden = range ? 'antiguas' : f.orden;
+  const cmp = { recientes: (a, b) => t(b) - t(a), antiguas: (a, b) => t(a) - t(b), progreso: (a, b) => b.progress - a.progress || t(b) - t(a) }[orden];
+  const sorted = [...list].sort(cmp);
+  return { items: sorted.slice((page - 1) * limit, page * limit), stats, total: sorted.length, page, pages: Math.max(1, Math.ceil(sorted.length / limit)) };
+}

@@ -106,3 +106,26 @@ export function filterAndSort(rows, { q, orden }) {
 
 // Alumno con la forma que espera StudentIdentity (null si la cuenta ya no existe)
 export const rowUser = (r) => (r.userId ? { name: r.name !== 'N/A' ? r.name : '', email: r.email } : null);
+
+// ---- Compatibilidad con el backend anterior ----
+// Sin el resumen por alumno en las inscripciones, se calcula con todas las entregas (mismas reglas
+// que service/progresoService.js: la media ignora las entregas sin nota).
+export function summarizeSubmissions(entregas, courseId) {
+  const map = new Map();
+  entregas.forEach((e) => {
+    if (String(e.cursoId?._id ?? e.cursoId) !== String(courseId)) return;
+    const uid = e.userId?._id ?? e.userId;
+    if (!uid) return;
+    const s = map.get(String(uid)) ?? { total: 0, pendientes: 0, aprobadas: 0, notas: [] };
+    s.total += 1;
+    if (e.estado === 'enviado') s.pendientes += 1;
+    if (e.estado === 'aprobado') s.aprobadas += 1;
+    if (typeof e.calificacion === 'number') s.notas.push(e.calificacion);
+    map.set(String(uid), s);
+  });
+  const out = new Map();
+  map.forEach(({ notas, ...s }, uid) => {
+    out.set(uid, { ...s, media: notas.length ? Math.round((notas.reduce((a, b) => a + b, 0) / notas.length) * 100) / 100 : null, ultima: null });
+  });
+  return out;
+}

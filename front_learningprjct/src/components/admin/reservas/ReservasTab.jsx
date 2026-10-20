@@ -30,8 +30,8 @@ export default function ReservasTab() {
   const calendar = filters.vista === 'calendario';
   const first = useMemo(() => parseMonth(filters.mes), [filters.mes]);
 
-  const list = useEnrollments(filters, !calendar);
-  const month = useEnrollmentMonth(filters, first, calendar);
+  const list = useEnrollments(filters, !calendar, courses);
+  const month = useEnrollmentMonth(filters, first, calendar, courses);
   const source = calendar ? month : list;
   const loading = source.status === 'loading';
 

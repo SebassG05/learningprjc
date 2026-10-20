@@ -5,7 +5,7 @@ export const COPY = {
   searchLabel: 'Buscar alumnos',
   searchPlaceholder: 'Nombre o email',
   sortLabel: 'Ordenar',
-  results: (n) => (n === 1 ? '1 alumno' : `${n.toLocaleString('es-ES')} alumnos`),
+  results: (n = 0) => (n === 1 ? '1 alumno' : `${Number(n || 0).toLocaleString('es-ES')} alumnos`),
 
   summary: {
     label: 'Resumen del curso',

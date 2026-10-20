@@ -48,3 +48,16 @@ test('el curso y el orden no cuentan como filtro activo', () => {
   assert.equal(progresoFilters.hasActive({ curso: 'a'.repeat(24), q: '', orden: 'nota' }), false);
   assert.equal(progresoFilters.hasActive({ curso: '', q: 'x', orden: 'progreso' }), true);
 });
+
+test('backend anterior: resumen de entregas por alumno calculado aquí', async () => {
+  const { summarizeSubmissions } = await import('./progresoQuery.js');
+  const m = summarizeSubmissions([
+    { userId: { _id: 'u1' }, cursoId: { _id: 'c1' }, estado: 'aprobado', calificacion: 8 },
+    { userId: { _id: 'u1' }, cursoId: { _id: 'c1' }, estado: 'rechazado', calificacion: 4 },
+    { userId: { _id: 'u1' }, cursoId: { _id: 'c1' }, estado: 'enviado' },
+    { userId: { _id: 'u1' }, cursoId: { _id: 'c2' }, estado: 'aprobado', calificacion: 10 },
+    { userId: null, cursoId: { _id: 'c1' }, estado: 'enviado' },
+  ], 'c1');
+  assert.deepEqual(m.get('u1'), { total: 3, pendientes: 1, aprobadas: 1, media: 6, ultima: null });
+  assert.equal(m.size, 1);
+});

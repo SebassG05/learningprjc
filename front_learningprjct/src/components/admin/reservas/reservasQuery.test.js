@@ -54,3 +54,27 @@ test('agrupación por día local', () => {
   assert.equal(g[dayKey(c)].length, 1);
   assert.equal(Object.keys(g).length, 2);
 });
+
+test('backend anterior: filas desde el endpoint por curso y página calculada aquí', async () => {
+  const { legacyRows, legacyEnrollmentPage } = await import('./reservasQuery.js');
+  const rows = legacyRows([
+    { course: { _id: 'c1', title: 'ANFORA' }, enrollments: [
+      { userId: 'u1', name: 'Lucía', email: 'l@x.es', enrolledAt: '2026-10-05T10:00:00.000Z', progress: 100, status: 'completed' },
+      { userId: null, name: 'N/A', email: 'N/A', enrolledAt: '2026-10-07T10:00:00.000Z', progress: 10, status: 'enrolled' },
+    ] },
+    { course: { _id: 'c2', title: 'Carbono' }, enrollments: [
+      { userId: 'u2', name: 'Pablo', email: 'p@x.es', enrolledAt: '2026-09-20T10:00:00.000Z', progress: 40, status: 'enrolled' },
+    ] },
+  ]);
+  assert.equal(rows.length, 3);
+  assert.equal(rows[1].userId, null);
+  assert.equal(rows[0].courseId.title, 'ANFORA');
+  const f = { ...reservasFilters.defaults };
+  const r = legacyEnrollmentPage(rows, f, 1);
+  assert.deepEqual(r.items.map((x) => x.progress), [10, 100, 40]);
+  assert.deepEqual(r.stats, { enrolled: 2, completed: 1, total: 3 });
+  assert.equal(legacyEnrollmentPage(rows, { ...f, estado: 'completed' }, 1).total, 1);
+  assert.equal(legacyEnrollmentPage(rows, { ...f, q: 'carbono' }, 1).total, 1);
+  const oct = legacyEnrollmentPage(rows, f, 1, { range: { desde: '2026-10-01T00:00:00.000Z', hasta: '2026-10-31T23:59:59.999Z' }, limit: 500 });
+  assert.deepEqual(oct.items.map((x) => x.progress), [100, 10]);
+});
