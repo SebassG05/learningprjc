@@ -836,6 +836,13 @@ html {
     margin-top: 0 !important;
 }
 
+/* El script de Google Translate pone style="height: 100%" en <html>. Con Lenis, <html> debe
+   crecer con el contenido: su ResizeObserver recalcula el límite del scroll; si no, la rueda
+   se queda en el límite de la página anterior al navegar. */
+html.lenis {
+    height: auto !important;
+}
+
 /* Ocultar el elemento de traducción por defecto */
 #google_translate_element_hidden {
     display: none !important;
