@@ -1,0 +1,13 @@
+{
+  "_nota": "Umbrales provisionales = baseline del 20/10/2026 con margen. Se endurecen con los valores tras la optimización (perf/REPORT.md).",
+  "scroll": [
+    { "route": "/", "device": "portatil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 55, "over50": 1, "cls": 0.1, "lcpMs": 2500, "inpMs": 200 } },
+    { "route": "/", "device": "portatil", "cpu": 6, "network": "fast-3g", "max": { "fpsP5Min": 55, "over50": 1, "cls": 0.1, "inpMs": 200 } },
+    { "route": "/", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 29, "over50": 3, "cls": 0.1, "lcpMs": 2500, "inpMs": 200 } },
+    { "route": "/", "device": "movil", "cpu": 6, "network": "fast-3g", "max": { "over50": 3, "cls": 0.1, "inpMs": 200 } },
+    { "route": "/sobre", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 29, "over50": 3, "cls": 0.15 } },
+    { "route": "/contacto", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 50, "over50": 1, "cls": 0.1 } },
+    { "route": "/reseñas", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 29, "over50": 1, "cls": 0.15 } }
+  ],
+  "bundles": { "initialJsGzipKB": 180, "initialCssGzipKB": 28, "globeJsGzipKB": 235 }
+}

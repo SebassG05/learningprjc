@@ -1,0 +1,399 @@
+[
+  {
+    "device": "portatil",
+    "cpu": 1,
+    "network": "none",
+    "route": "/",
+    "pageHeight": 5110,
+    "lcpMs": 188,
+    "lcpElement": "p.mt-6.max-w-[56ch].text-lg",
+    "cls": 0,
+    "inpMs": 72,
+    "frames": 290,
+    "seconds": 13.37,
+    "fpsMean": 23,
+    "fpsP5": 12,
+    "frameP95ms": 83.3,
+    "frameMaxMs": 116.7,
+    "over16": 226,
+    "over50": 87,
+    "droppedPct": 76.2,
+    "loafCount": 85,
+    "loafBlockingMs": 134,
+    "longTasks": 8,
+    "longTaskMs": 583,
+    "frameP99ms": 100,
+    "trace": {
+      "traceSeconds": 13.44,
+      "mainBusyMs": 3149,
+      "mainBusyPct": 23.4,
+      "scriptMs": 1168,
+      "layouts": 43,
+      "layoutMs": 48,
+      "layoutsPerSec": 3.8,
+      "styleRecalcs": 451,
+      "styleMs": 70,
+      "styleRecalcsPerSec": 33.3,
+      "forcedLayouts": 30,
+      "forcedStyles": 357,
+      "forcedMs": 69,
+      "paints": 641,
+      "paintMs": 308,
+      "gcMs": 123,
+      "gpuBusyPct": 99.3,
+      "vizBusyPct": 2,
+      "forcedBy": [
+        {
+          "fn": "index-DmUr-j-p.js:?:60",
+          "count": 275,
+          "ms": 67
+        },
+        {
+          "fn": ":tick:14",
+          "count": 109,
+          "ms": 12
+        },
+        {
+          "fn": "GlobeCanvas-CCzz1Rqh.js:a:3870",
+          "count": 7,
+          "ms": 0
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Campus.",
+        "frames": 27,
+        "over16": 27,
+        "over50": 24,
+        "worstMs": 83,
+        "droppedPct": 100
+      },
+      {
+        "section": "¿Cómo funciona el proceso?",
+        "frames": 96,
+        "over16": 95,
+        "over50": 35,
+        "worstMs": 100,
+        "droppedPct": 99
+      },
+      {
+        "section": "Preguntas frecuentesPreguntas fr",
+        "frames": 35,
+        "over16": 28,
+        "over50": 3,
+        "worstMs": 150,
+        "droppedPct": 80
+      },
+      {
+        "section": "¿Qué opinan nuestros estudiantes",
+        "frames": 35,
+        "over16": 30,
+        "over50": 4,
+        "worstMs": 83,
+        "droppedPct": 85.7
+      },
+      {
+        "section": "¿Listo para encontrar tu próxima",
+        "frames": 40,
+        "over16": 28,
+        "over50": 12,
+        "worstMs": 100,
+        "droppedPct": 70
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 76,
+        "over16": 18,
+        "over50": 9,
+        "worstMs": 117,
+        "droppedPct": 23.7
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "GlobeCanvas-CCzz1Rqh.js · a",
+        "dur": 392,
+        "forced": 0,
+        "count": 10
+      },
+      {
+        "key": "GlobeCanvas-CCzz1Rqh.js · W",
+        "dur": 50,
+        "forced": 0,
+        "count": 2
+      },
+      {
+        "key": " · DOMWindow.onmousemove",
+        "dur": 36,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": " · PerformanceObserverCallback",
+        "dur": 12,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "index-DmUr-j-p.js · k",
+        "dur": 7,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "index-DmUr-j-p.js · FrameRequestCallback",
+        "dur": 6,
+        "forced": 0,
+        "count": 1
+      }
+    ],
+    "errors": [],
+    "runs": 5,
+    "samples": [
+      {
+        "fpsMean": 29.5,
+        "fpsP5": 15,
+        "over16": 222,
+        "over50": 20,
+        "lcpMs": 692,
+        "inpMs": 120
+      },
+      {
+        "fpsMean": 31.6,
+        "fpsP5": 20,
+        "over16": 221,
+        "over50": 9,
+        "lcpMs": 156,
+        "inpMs": 112
+      },
+      {
+        "fpsMean": 19,
+        "fpsP5": 12,
+        "over16": 236,
+        "over50": 107,
+        "lcpMs": 156,
+        "inpMs": 64
+      },
+      {
+        "fpsMean": 23,
+        "fpsP5": 12,
+        "over16": 229,
+        "over50": 87,
+        "lcpMs": 188,
+        "inpMs": 72
+      },
+      {
+        "fpsMean": 22.9,
+        "fpsP5": 12,
+        "over16": 226,
+        "over50": 87,
+        "lcpMs": 200,
+        "inpMs": 72
+      }
+    ],
+    "gpu": "soft"
+  },
+  {
+    "device": "movil",
+    "cpu": 1,
+    "network": "none",
+    "route": "/",
+    "pageHeight": 5745,
+    "lcpMs": 132,
+    "lcpElement": "p.mt-6.max-w-[56ch].text-lg",
+    "cls": 0,
+    "inpMs": 128,
+    "frames": 679,
+    "seconds": 19.07,
+    "fpsMean": 35.1,
+    "fpsP5": 15,
+    "frameP95ms": 66.6,
+    "frameMaxMs": 150.1,
+    "over16": 338,
+    "over50": 57,
+    "droppedPct": 50.4,
+    "loafCount": 78,
+    "loafBlockingMs": 59,
+    "longTasks": 5,
+    "longTaskMs": 304,
+    "frameP99ms": 83.4,
+    "trace": {
+      "traceSeconds": 19.55,
+      "mainBusyMs": 2408,
+      "mainBusyPct": 12.3,
+      "scriptMs": 1347,
+      "layouts": 35,
+      "layoutMs": 8,
+      "layoutsPerSec": 1.7,
+      "styleRecalcs": 650,
+      "styleMs": 61,
+      "styleRecalcsPerSec": 33.3,
+      "forcedLayouts": 14,
+      "forcedStyles": 406,
+      "forcedMs": 36,
+      "paints": 246,
+      "paintMs": 17,
+      "gcMs": 13,
+      "gpuBusyPct": 89.5,
+      "vizBusyPct": 3.3,
+      "forcedBy": [
+        {
+          "fn": ":tick:14",
+          "count": 281,
+          "ms": 17
+        },
+        {
+          "fn": "GlobeCanvas-CCzz1Rqh.js:a:3870",
+          "count": 131,
+          "ms": 16
+        },
+        {
+          "fn": "index-DmUr-j-p.js:k:52",
+          "count": 7,
+          "ms": 0
+        },
+        {
+          "fn": "index-DmUr-j-p.js:we:26",
+          "count": 1,
+          "ms": 0
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Campus.",
+        "frames": 47,
+        "over16": 29,
+        "over50": 6,
+        "worstMs": 150,
+        "droppedPct": 61.7
+      },
+      {
+        "section": "¿Qué puedes esperar de los curso",
+        "frames": 91,
+        "over16": 54,
+        "over50": 17,
+        "worstMs": 100,
+        "droppedPct": 59.3
+      },
+      {
+        "section": "¿Cómo funciona el proceso?¿Cómo ",
+        "frames": 106,
+        "over16": 48,
+        "over50": 10,
+        "worstMs": 83,
+        "droppedPct": 45.3
+      },
+      {
+        "section": "Preguntas frecuentesPreguntas fr",
+        "frames": 103,
+        "over16": 28,
+        "over50": 5,
+        "worstMs": 72,
+        "droppedPct": 27.2
+      },
+      {
+        "section": "¿Qué opinan nuestros estudiantes",
+        "frames": 74,
+        "over16": 32,
+        "over50": 1,
+        "worstMs": 50,
+        "droppedPct": 43.2
+      },
+      {
+        "section": "¿Listo para encontrar tu próxima",
+        "frames": 95,
+        "over16": 30,
+        "over50": 5,
+        "worstMs": 67,
+        "droppedPct": 31.6
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 154,
+        "over16": 117,
+        "over50": 13,
+        "worstMs": 68,
+        "droppedPct": 76
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "GlobeCanvas-CCzz1Rqh.js · a",
+        "dur": 423,
+        "forced": 0,
+        "count": 10
+      },
+      {
+        "key": "index-DmUr-j-p.js · k",
+        "dur": 152,
+        "forced": 0,
+        "count": 4
+      },
+      {
+        "key": "index-DmUr-j-p.js · O1",
+        "dur": 31,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "GlobeCanvas-CCzz1Rqh.js · W",
+        "dur": 22,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "index-DmUr-j-p.js · we",
+        "dur": 16,
+        "forced": 0,
+        "count": 1
+      }
+    ],
+    "errors": [],
+    "runs": 5,
+    "samples": [
+      {
+        "fpsMean": 27.4,
+        "fpsP5": 12,
+        "over16": 484,
+        "over50": 122,
+        "lcpMs": 164,
+        "inpMs": 160
+      },
+      {
+        "fpsMean": 39.8,
+        "fpsP5": 15.9,
+        "over16": 235,
+        "over50": 40,
+        "lcpMs": 128,
+        "inpMs": 128
+      },
+      {
+        "fpsMean": 39.1,
+        "fpsP5": 16.6,
+        "over16": 252,
+        "over50": 42,
+        "lcpMs": 128,
+        "inpMs": 120
+      },
+      {
+        "fpsMean": 28,
+        "fpsP5": 12,
+        "over16": 447,
+        "over50": 111,
+        "lcpMs": 132,
+        "inpMs": 136
+      },
+      {
+        "fpsMean": 35.1,
+        "fpsP5": 15,
+        "over16": 338,
+        "over50": 57,
+        "lcpMs": 144,
+        "inpMs": 128
+      }
+    ],
+    "gpu": "soft"
+  }
+]

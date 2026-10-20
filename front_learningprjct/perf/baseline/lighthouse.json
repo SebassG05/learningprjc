@@ -1,0 +1,382 @@
+[
+  {
+    "route": "/",
+    "form": "mobile",
+    "runs": 3,
+    "score": 96,
+    "fcpMs": 1891,
+    "lcpMs": 2501,
+    "tbtMs": 67,
+    "cls": 0,
+    "siMs": 2156,
+    "totalKB": 478,
+    "jsKB": 386,
+    "cssKB": 31,
+    "fontKB": 21,
+    "imgKB": 5,
+    "thirdPartyKB": 249,
+    "lcpElement": "<p class=\"mt-6 max-w-[56ch] text-lg text-balance sm:text-xl\" style=\"transform: none;\">",
+    "mainThreadMs": 1940,
+    "bootupMs": 348,
+    "unusedJsKB": 228,
+    "samples": [
+      {
+        "score": 96,
+        "lcpMs": 2501,
+        "tbtMs": 67
+      },
+      {
+        "score": 96,
+        "lcpMs": 2507,
+        "tbtMs": 70
+      },
+      {
+        "score": 96,
+        "lcpMs": 2459,
+        "tbtMs": 66
+      }
+    ]
+  },
+  {
+    "route": "/",
+    "form": "desktop",
+    "runs": 3,
+    "score": 100,
+    "fcpMs": 405,
+    "lcpMs": 620,
+    "tbtMs": 7,
+    "cls": 0,
+    "siMs": 905,
+    "totalKB": 707,
+    "jsKB": 615,
+    "cssKB": 31,
+    "fontKB": 21,
+    "imgKB": 5,
+    "thirdPartyKB": 249,
+    "lcpElement": "<p class=\"mt-6 max-w-[56ch] text-lg text-balance sm:text-xl\" style=\"transform: none;\">",
+    "mainThreadMs": 886,
+    "bootupMs": 480,
+    "unusedJsKB": 334,
+    "samples": [
+      {
+        "score": 100,
+        "lcpMs": 618,
+        "tbtMs": 7
+      },
+      {
+        "score": 98,
+        "lcpMs": 1130,
+        "tbtMs": 5
+      },
+      {
+        "score": 100,
+        "lcpMs": 620,
+        "tbtMs": 7
+      }
+    ]
+  },
+  {
+    "route": "/cursos",
+    "form": "mobile",
+    "runs": 3,
+    "score": 94,
+    "fcpMs": 2205,
+    "lcpMs": 2759,
+    "tbtMs": 35,
+    "cls": 0,
+    "siMs": 2298,
+    "totalKB": 677,
+    "jsKB": 399,
+    "cssKB": 31,
+    "fontKB": 42,
+    "imgKB": 130,
+    "thirdPartyKB": 249,
+    "lcpElement": "<p class=\"mt-6 max-w-2xl text-lg text-ink-2\">",
+    "mainThreadMs": 1562,
+    "bootupMs": 311,
+    "unusedJsKB": 232,
+    "samples": [
+      {
+        "score": 84,
+        "lcpMs": 4149,
+        "tbtMs": 30
+      },
+      {
+        "score": 94,
+        "lcpMs": 2735,
+        "tbtMs": 35
+      },
+      {
+        "score": 94,
+        "lcpMs": 2759,
+        "tbtMs": 36
+      }
+    ]
+  },
+  {
+    "route": "/cursos",
+    "form": "desktop",
+    "runs": 3,
+    "score": 100,
+    "fcpMs": 487,
+    "lcpMs": 621,
+    "tbtMs": 0,
+    "cls": 0,
+    "siMs": 689,
+    "totalKB": 677,
+    "jsKB": 399,
+    "cssKB": 31,
+    "fontKB": 42,
+    "imgKB": 130,
+    "thirdPartyKB": 249,
+    "lcpElement": "<h1 id=\"cursos-titulo\" class=\"mt-4 text-display font-bold text-ink\">",
+    "mainThreadMs": 422,
+    "bootupMs": 71,
+    "unusedJsKB": 228,
+    "samples": [
+      {
+        "score": 100,
+        "lcpMs": 621,
+        "tbtMs": 0
+      },
+      {
+        "score": 98,
+        "lcpMs": 1175,
+        "tbtMs": 0
+      },
+      {
+        "score": 100,
+        "lcpMs": 578,
+        "tbtMs": 0
+      }
+    ]
+  },
+  {
+    "route": "/sobre",
+    "form": "mobile",
+    "runs": 3,
+    "score": 94,
+    "fcpMs": 1928,
+    "lcpMs": 2831,
+    "tbtMs": 18,
+    "cls": 0,
+    "siMs": 2199,
+    "totalKB": 514,
+    "jsKB": 394,
+    "cssKB": 31,
+    "fontKB": 21,
+    "imgKB": 36,
+    "thirdPartyKB": 280,
+    "lcpElement": "<p class=\"about-rise about-rise-late mt-8 max-w-[56ch] text-pretty text-lg text-gray…\">",
+    "mainThreadMs": 1434,
+    "bootupMs": 254,
+    "unusedJsKB": 238,
+    "samples": [
+      {
+        "score": 86,
+        "lcpMs": 3930,
+        "tbtMs": 44
+      },
+      {
+        "score": 95,
+        "lcpMs": 2756,
+        "tbtMs": 17
+      },
+      {
+        "score": 94,
+        "lcpMs": 2831,
+        "tbtMs": 18
+      }
+    ]
+  },
+  {
+    "route": "/sobre",
+    "form": "desktop",
+    "runs": 3,
+    "score": 97,
+    "fcpMs": 432,
+    "lcpMs": 1286,
+    "tbtMs": 0,
+    "cls": 0,
+    "siMs": 673,
+    "totalKB": 539,
+    "jsKB": 394,
+    "cssKB": 31,
+    "fontKB": 21,
+    "imgKB": 61,
+    "thirdPartyKB": 305,
+    "lcpElement": "<h1 class=\"about-rise max-w-[12ch] text-balance text-display font-bold text-ink\">",
+    "mainThreadMs": 420,
+    "bootupMs": 57,
+    "unusedJsKB": 235,
+    "samples": [
+      {
+        "score": 97,
+        "lcpMs": 1286,
+        "tbtMs": 0
+      },
+      {
+        "score": 97,
+        "lcpMs": 1315,
+        "tbtMs": 0
+      },
+      {
+        "score": 97,
+        "lcpMs": 1277,
+        "tbtMs": 0
+      }
+    ]
+  },
+  {
+    "route": "/contacto",
+    "form": "mobile",
+    "runs": 3,
+    "score": 79,
+    "fcpMs": 1906,
+    "lcpMs": 5188,
+    "tbtMs": 121,
+    "cls": 0,
+    "siMs": 1906,
+    "totalKB": 476,
+    "jsKB": 386,
+    "cssKB": 31,
+    "fontKB": 21,
+    "imgKB": 5,
+    "thirdPartyKB": 249,
+    "lcpElement": "<p class=\"mt-6 max-w-lg text-lg text-ink-2\">",
+    "mainThreadMs": 3862,
+    "bootupMs": 325,
+    "unusedJsKB": 231,
+    "samples": [
+      {
+        "score": 79,
+        "lcpMs": 5188,
+        "tbtMs": 118
+      },
+      {
+        "score": 79,
+        "lcpMs": 5148,
+        "tbtMs": 123
+      },
+      {
+        "score": 79,
+        "lcpMs": 5195,
+        "tbtMs": 121
+      }
+    ]
+  },
+  {
+    "route": "/contacto",
+    "form": "desktop",
+    "runs": 3,
+    "score": 96,
+    "fcpMs": 435,
+    "lcpMs": 1368,
+    "tbtMs": 0,
+    "cls": 0,
+    "siMs": 767,
+    "totalKB": 476,
+    "jsKB": 386,
+    "cssKB": 31,
+    "fontKB": 21,
+    "imgKB": 5,
+    "thirdPartyKB": 249,
+    "lcpElement": "<p class=\"mt-6 max-w-lg text-lg text-ink-2\">",
+    "mainThreadMs": 1054,
+    "bootupMs": 67,
+    "unusedJsKB": 226,
+    "samples": [
+      {
+        "score": 96,
+        "lcpMs": 1346,
+        "tbtMs": 0
+      },
+      {
+        "score": 96,
+        "lcpMs": 1409,
+        "tbtMs": 0
+      },
+      {
+        "score": 96,
+        "lcpMs": 1368,
+        "tbtMs": 0
+      }
+    ]
+  },
+  {
+    "route": "/reseñas",
+    "form": "mobile",
+    "runs": 3,
+    "score": 78,
+    "fcpMs": 2028,
+    "lcpMs": 5416,
+    "tbtMs": 61,
+    "cls": 0.003,
+    "siMs": 2320,
+    "totalKB": 498,
+    "jsKB": 386,
+    "cssKB": 31,
+    "fontKB": 42,
+    "imgKB": 5,
+    "thirdPartyKB": 249,
+    "lcpElement": "<h1 class=\"mt-5 block max-w-[16ch] text-contact font-bold text-ink\">",
+    "mainThreadMs": 1970,
+    "bootupMs": 423,
+    "unusedJsKB": 234,
+    "samples": [
+      {
+        "score": 78,
+        "lcpMs": 5416,
+        "tbtMs": 61
+      },
+      {
+        "score": 78,
+        "lcpMs": 5398,
+        "tbtMs": 61
+      },
+      {
+        "score": 78,
+        "lcpMs": 5552,
+        "tbtMs": 63
+      }
+    ]
+  },
+  {
+    "route": "/reseñas",
+    "form": "desktop",
+    "runs": 3,
+    "score": 96,
+    "fcpMs": 537,
+    "lcpMs": 1378,
+    "tbtMs": 0,
+    "cls": 0.016,
+    "siMs": 728,
+    "totalKB": 498,
+    "jsKB": 386,
+    "cssKB": 31,
+    "fontKB": 42,
+    "imgKB": 5,
+    "thirdPartyKB": 249,
+    "lcpElement": "<h1 class=\"mt-5 block max-w-[16ch] text-contact font-bold text-ink\">",
+    "mainThreadMs": 646,
+    "bootupMs": 108,
+    "unusedJsKB": 229,
+    "samples": [
+      {
+        "score": 96,
+        "lcpMs": 1375,
+        "tbtMs": 0
+      },
+      {
+        "score": 96,
+        "lcpMs": 1378,
+        "tbtMs": 0
+      },
+      {
+        "score": 96,
+        "lcpMs": 1388,
+        "tbtMs": 0
+      }
+    ]
+  }
+]

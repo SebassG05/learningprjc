@@ -1,0 +1,579 @@
+{
+  "initial": {
+    "js": {
+      "rawKB": 569.9,
+      "gzipKB": 174,
+      "brotliKB": 148.6
+    },
+    "css": {
+      "rawKB": 173.5,
+      "gzipKB": 26.2,
+      "brotliKB": 20.4
+    },
+    "files": [
+      "assets/index-DmUr-j-p.js",
+      "assets/index-d1IO0T8P.css"
+    ]
+  },
+  "lazy": [
+    {
+      "chunk": "src/components/globe/GlobeCanvas.jsx",
+      "js": {
+        "rawKB": 841.4,
+        "gzipKB": 227.6,
+        "brotliKB": 187
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/GlobeCanvas-CCzz1Rqh.js"
+      ]
+    },
+    {
+      "chunk": "src/components/admin/gestion-cursos/CourseEditor.jsx",
+      "js": {
+        "rawKB": 79.8,
+        "gzipKB": 31.7,
+        "brotliKB": 28.1
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/CourseEditor-BG1P9tR3.js",
+        "assets/useUrlFilters-CM8UiCMk.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/Drawer-DWH92Snm.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/use-drag-controls-B2K5EIr6.js",
+        "assets/SegmentedControl-DNroh8Tv.js",
+        "assets/courseFormat-DTCCZiGR.js",
+        "assets/coursesCopy-CYsE56KS.js",
+        "assets/SelectField-DAVIpVQy.js",
+        "assets/GestionCursosTab-C1RUPwv0.js",
+        "assets/ConfirmDialog-D8s7vrTN.js",
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/search-x-B0jm-KNe.js",
+        "assets/loader-BkKTu0xR.js",
+        "assets/Badge-B_Gfwdl3.js",
+        "assets/file-up-DwoGErxp.js"
+      ]
+    },
+    {
+      "chunk": "src/components/admin/correcciones/SubmissionDrawer.jsx",
+      "js": {
+        "rawKB": 69.2,
+        "gzipKB": 29.8,
+        "brotliKB": 26.5
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/SubmissionDrawer-qEgqTnbu.js",
+        "assets/Drawer-DWH92Snm.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/use-drag-controls-B2K5EIr6.js",
+        "assets/useUrlFilters-CM8UiCMk.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/submissionStatus-DFGfn5A2.js",
+        "assets/CorreccionesTab-Ur7RfplV.js",
+        "assets/ConfirmDialog-D8s7vrTN.js",
+        "assets/usePagedList-CgSgDon1.js",
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/GradeBadge-CyeRjJu9.js",
+        "assets/StatusBadge-CiMkbKco.js",
+        "assets/Badge-B_Gfwdl3.js",
+        "assets/StudentIdentity-XApSB4kN.js",
+        "assets/SelectField-DAVIpVQy.js",
+        "assets/search-x-B0jm-KNe.js",
+        "assets/external-link-XpX9CmWp.js"
+      ]
+    },
+    {
+      "chunk": "_CorreccionesTab-Ur7RfplV.js",
+      "js": {
+        "rawKB": 47.8,
+        "gzipKB": 21.8,
+        "brotliKB": 19.4
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/CorreccionesTab-Ur7RfplV.js",
+        "assets/ConfirmDialog-D8s7vrTN.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/useUrlFilters-CM8UiCMk.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/usePagedList-CgSgDon1.js",
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/submissionStatus-DFGfn5A2.js",
+        "assets/GradeBadge-CyeRjJu9.js",
+        "assets/StatusBadge-CiMkbKco.js",
+        "assets/Badge-B_Gfwdl3.js",
+        "assets/StudentIdentity-XApSB4kN.js",
+        "assets/SelectField-DAVIpVQy.js",
+        "assets/search-x-B0jm-KNe.js"
+      ]
+    },
+    {
+      "chunk": "src/components/admin/reservas/ReservasTab.jsx",
+      "js": {
+        "rawKB": 46.9,
+        "gzipKB": 20.4,
+        "brotliKB": 18.2
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/ReservasTab-CFBK3JiX.js",
+        "assets/useUrlFilters-CM8UiCMk.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/usePagedList-CgSgDon1.js",
+        "assets/SegmentedControl-DNroh8Tv.js",
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/StudentIdentity-XApSB4kN.js",
+        "assets/Badge-B_Gfwdl3.js",
+        "assets/chevron-left-Cx-UnxBT.js",
+        "assets/ProgressBar-Du-wScfg.js",
+        "assets/SelectField-DAVIpVQy.js",
+        "assets/search-x-B0jm-KNe.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/CursoDetalle.jsx",
+      "js": {
+        "rawKB": 58.1,
+        "gzipKB": 18.2,
+        "brotliKB": 16
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/CursoDetalle-SfErTJFg.js",
+        "assets/external-link-XpX9CmWp.js",
+        "assets/clipboard-check-Dn3J9stB.js",
+        "assets/trophy-BbMPC8FW.js",
+        "assets/file-up-DwoGErxp.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/TermsDialog-CK5fF88R.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/coursesCopy-CYsE56KS.js",
+        "assets/use-drag-controls-B2K5EIr6.js",
+        "assets/loader-BkKTu0xR.js"
+      ]
+    },
+    {
+      "chunk": "src/components/admin/progreso/ProgresoTab.jsx",
+      "js": {
+        "rawKB": 40.7,
+        "gzipKB": 17.3,
+        "brotliKB": 15.5
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/ProgresoTab-B_7rmv4m.js",
+        "assets/useUrlFilters-CM8UiCMk.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/SelectField-DAVIpVQy.js",
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/submissionStatus-DFGfn5A2.js",
+        "assets/GradeBadge-CyeRjJu9.js",
+        "assets/ProgressBar-Du-wScfg.js",
+        "assets/StudentIdentity-XApSB4kN.js",
+        "assets/Badge-B_Gfwdl3.js",
+        "assets/search-x-B0jm-KNe.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/CursoInscripcion.jsx",
+      "js": {
+        "rawKB": 42.6,
+        "gzipKB": 16.9,
+        "brotliKB": 15
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/CursoInscripcion-BZPuyDNJ.js",
+        "assets/cloudinary-CsAQAnpA.js",
+        "assets/coursesCopy-CYsE56KS.js",
+        "assets/courseFormat-DTCCZiGR.js",
+        "assets/loader-BkKTu0xR.js",
+        "assets/TermsDialog-CK5fF88R.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/use-drag-controls-B2K5EIr6.js",
+        "assets/search-x-B0jm-KNe.js"
+      ]
+    },
+    {
+      "chunk": "_GestionCursosTab-C1RUPwv0.js",
+      "js": {
+        "rawKB": 29.5,
+        "gzipKB": 13.3,
+        "brotliKB": 11.8
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/GestionCursosTab-C1RUPwv0.js",
+        "assets/useUrlFilters-CM8UiCMk.js",
+        "assets/coursesApi-uDMPHpsq.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/ConfirmDialog-D8s7vrTN.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/search-x-B0jm-KNe.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/Cursos.jsx",
+      "js": {
+        "rawKB": 24.9,
+        "gzipKB": 10.2,
+        "brotliKB": 9.1
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/Cursos-B67-NzOw.js",
+        "assets/coursesCopy-CYsE56KS.js",
+        "assets/courseFormat-DTCCZiGR.js",
+        "assets/cloudinary-CsAQAnpA.js",
+        "assets/search-x-B0jm-KNe.js",
+        "assets/coursesApi-uDMPHpsq.js"
+      ]
+    },
+    {
+      "chunk": "src/components/auth/AuthModal.jsx",
+      "js": {
+        "rawKB": 20.4,
+        "gzipKB": 7.6,
+        "brotliKB": 6.8
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/AuthModal-CPnCbHOk.js",
+        "assets/modalLock-B0DAz05A.js",
+        "assets/use-drag-controls-B2K5EIr6.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/SobreNosotros.jsx",
+      "js": {
+        "rawKB": 19.1,
+        "gzipKB": 7,
+        "brotliKB": 6.1
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/SobreNosotros-8ZiIieYP.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/TemaEstudio.jsx",
+      "js": {
+        "rawKB": 22.2,
+        "gzipKB": 6.5,
+        "brotliKB": 5.7
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/TemaEstudio-Berc7ul5.js",
+        "assets/chevron-left-Cx-UnxBT.js",
+        "assets/clipboard-check-Dn3J9stB.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/EntregaEjercicio.jsx",
+      "js": {
+        "rawKB": 13.7,
+        "gzipKB": 5.8,
+        "brotliKB": 5.1
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/EntregaEjercicio-CGjvcFE-.js",
+        "assets/StatusBadge-CiMkbKco.js",
+        "assets/submissionStatus-DFGfn5A2.js",
+        "assets/Badge-B_Gfwdl3.js",
+        "assets/tones-CkK0ysMH.js",
+        "assets/loader-BkKTu0xR.js",
+        "assets/arrow-left-CK1DuLEe.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/EstructuraCursoPage.jsx",
+      "js": {
+        "rawKB": 16.5,
+        "gzipKB": 5.3,
+        "brotliKB": 4.6
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/EstructuraCursoPage-FKlwa21r.js",
+        "assets/trophy-BbMPC8FW.js",
+        "assets/arrow-left-CK1DuLEe.js"
+      ]
+    },
+    {
+      "chunk": "_CorrecionesAdmin-COvi-38i.js",
+      "js": {
+        "rawKB": 6.7,
+        "gzipKB": 3.1,
+        "brotliKB": 2.8
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/CorrecionesAdmin-COvi-38i.js",
+        "assets/tones-CkK0ysMH.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/ResetPassword.jsx",
+      "js": {
+        "rawKB": 6,
+        "gzipKB": 2.3,
+        "brotliKB": 2
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/ResetPassword-Bulv_JwW.js"
+      ]
+    },
+    {
+      "chunk": "src/pages/ForgotPassword.jsx",
+      "js": {
+        "rawKB": 1.9,
+        "gzipKB": 1,
+        "brotliKB": 0.8
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/ForgotPassword-Ci-hg9FD.js"
+      ]
+    },
+    {
+      "chunk": "src/components/globe/AuthGlobe.jsx",
+      "js": {
+        "rawKB": 1.5,
+        "gzipKB": 0.9,
+        "brotliKB": 0.7
+      },
+      "css": {
+        "rawKB": 0,
+        "gzipKB": 0,
+        "brotliKB": 0
+      },
+      "files": [
+        "assets/AuthGlobe-Ciswv3Ep.js"
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "file": "assets/GlobeCanvas-CCzz1Rqh.js",
+      "src": "src/components/globe/GlobeCanvas.jsx",
+      "rawKB": 841.4,
+      "gzipKB": 227.6,
+      "brotliKB": 187
+    },
+    {
+      "file": "assets/index-DmUr-j-p.js",
+      "src": "index.html",
+      "rawKB": 569.9,
+      "gzipKB": 174,
+      "brotliKB": 148.6
+    },
+    {
+      "file": "assets/CourseEditor-BG1P9tR3.js",
+      "src": "src/components/admin/gestion-cursos/CourseEditor.jsx",
+      "rawKB": 35.9,
+      "gzipKB": 11.1,
+      "brotliKB": 9.9
+    },
+    {
+      "file": "assets/CursoDetalle-SfErTJFg.js",
+      "src": "src/pages/CursoDetalle.jsx",
+      "rawKB": 41.4,
+      "gzipKB": 10.4,
+      "brotliKB": 9.1
+    },
+    {
+      "file": "assets/CursoInscripcion-BZPuyDNJ.js",
+      "src": "src/pages/CursoInscripcion.jsx",
+      "rawKB": 24.5,
+      "gzipKB": 8.4,
+      "brotliKB": 7.5
+    },
+    {
+      "file": "assets/CorreccionesTab-Ur7RfplV.js",
+      "src": "CorreccionesTab",
+      "rawKB": 19.5,
+      "gzipKB": 7.8,
+      "brotliKB": 6.9
+    },
+    {
+      "file": "assets/ReservasTab-CFBK3JiX.js",
+      "src": "src/components/admin/reservas/ReservasTab.jsx",
+      "rawKB": 21.1,
+      "gzipKB": 7.5,
+      "brotliKB": 6.9
+    },
+    {
+      "file": "assets/AuthModal-CPnCbHOk.js",
+      "src": "src/components/auth/AuthModal.jsx",
+      "rawKB": 19.4,
+      "gzipKB": 7.1,
+      "brotliKB": 6.3
+    },
+    {
+      "file": "assets/SobreNosotros-8ZiIieYP.js",
+      "src": "src/pages/SobreNosotros.jsx",
+      "rawKB": 19.1,
+      "gzipKB": 7,
+      "brotliKB": 6.1
+    },
+    {
+      "file": "assets/ProgresoTab-B_7rmv4m.js",
+      "src": "src/components/admin/progreso/ProgresoTab.jsx",
+      "rawKB": 18.3,
+      "gzipKB": 6.5,
+      "brotliKB": 5.9
+    },
+    {
+      "file": "assets/SubmissionDrawer-qEgqTnbu.js",
+      "src": "src/components/admin/correcciones/SubmissionDrawer.jsx",
+      "rawKB": 17.2,
+      "gzipKB": 5.9,
+      "brotliKB": 5.3
+    },
+    {
+      "file": "assets/TemaEstudio-Berc7ul5.js",
+      "src": "src/pages/TemaEstudio.jsx",
+      "rawKB": 21.5,
+      "gzipKB": 5.9,
+      "brotliKB": 5.3
+    },
+    {
+      "file": "assets/Cursos-B67-NzOw.js",
+      "src": "src/pages/Cursos.jsx",
+      "rawKB": 14.5,
+      "gzipKB": 5.1,
+      "brotliKB": 4.6
+    },
+    {
+      "file": "assets/EstructuraCursoPage-FKlwa21r.js",
+      "src": "src/pages/EstructuraCursoPage.jsx",
+      "rawKB": 15.6,
+      "gzipKB": 4.7,
+      "brotliKB": 4
+    },
+    {
+      "file": "assets/GestionCursosTab-C1RUPwv0.js",
+      "src": "GestionCursosTab",
+      "rawKB": 10.9,
+      "gzipKB": 4.5,
+      "brotliKB": 4
+    }
+  ],
+  "assets": [
+    {
+      "file": "inicio/globo.webp",
+      "kind": "imagen",
+      "KB": 43.8
+    },
+    {
+      "file": "Corporatives/Typography/Rondana Black.otf",
+      "kind": "fuente",
+      "KB": 20.8
+    },
+    {
+      "file": "Corporatives/Typography/Rondana Ultra Light.otf",
+      "kind": "fuente",
+      "KB": 20.6
+    },
+    {
+      "file": "Corporatives/Typography/Rondana Light.otf",
+      "kind": "fuente",
+      "KB": 20.3
+    },
+    {
+      "file": "Corporatives/Typography/Rondana Regular.otf",
+      "kind": "fuente",
+      "KB": 20.2
+    },
+    {
+      "file": "vite.svg",
+      "kind": "imagen",
+      "KB": 1.5
+    }
+  ]
+}
