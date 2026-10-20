@@ -6,16 +6,21 @@ import Footer from './components/layout/Footer';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import { distance, duration, ease } from './lib/motion';
 import { glideToHash, jumpTo, startSmoothScroll, stopSmoothScroll } from './lib/smoothScroll';
+import { lazyRoute, preloadAllWhenIdle, preloadOnIntent, routePending } from './lib/lazyRoute';
 import Home from './pages/Home';
-import Contacto from './pages/Contacto';
-import ReviewsPage from './pages/Reviews.jsx';
-import Ajustes from './pages/Ajustes.jsx';
-import LoginPage from './pages/Login.jsx';
-import PoliticaCookies from './pages/PoliticaCookies.jsx';
-import GuiaUsuario from './pages/GuiaUsuario.jsx';
-import Privacidad from './pages/Privacidad.jsx';
-import TerminosUso from './pages/TerminosUso.jsx';
-import AvisoLegal from './pages/AvisoLegal.jsx';
+
+// Fuera del bundle inicial (la home no las necesita). Se pintan sin estado intermedio: ver lib/lazyRoute.js.
+// Si al navegar el chunk aún no ha llegado, AnimatedRoutes suspende la navegación (ver allí) y la
+// página actual sigue en pantalla hasta que llega; luego, la transición de siempre
+const Contacto = lazyRoute(/^\/contacto\/?$/, () => import('./pages/Contacto'));
+const ReviewsPage = lazyRoute(/^\/reseñas\/?$/, () => import('./pages/Reviews.jsx'));
+const Ajustes = lazyRoute(/^\/ajustes\/?$/, () => import('./pages/Ajustes.jsx'));
+const LoginPage = lazyRoute(/^\/login\/?$/, () => import('./pages/Login.jsx'));
+const PoliticaCookies = lazyRoute(/^\/(politica-)?cookies\/?$/, () => import('./pages/PoliticaCookies.jsx'));
+const GuiaUsuario = lazyRoute(/^\/guia-usuario\/?$/, () => import('./pages/GuiaUsuario.jsx'));
+const Privacidad = lazyRoute(/^\/privacidad\/?$/, () => import('./pages/Privacidad.jsx'));
+const TerminosUso = lazyRoute(/^\/terminos\/?$/, () => import('./pages/TerminosUso.jsx'));
+const AvisoLegal = lazyRoute(/^\/aviso-legal\/?$/, () => import('./pages/AvisoLegal.jsx'));
 
 // Posiciones de scroll por entrada del historial, para restaurarlas al volver atrás
 const scrollPositions = new Map();
@@ -42,6 +47,12 @@ function AnimatedRoutes() {
   const location = useLocation();
   const navigationType = useNavigationType();
   const target = useRef(null);
+
+  // Ruta de destino en un chunk que aún no ha llegado: se suspende aquí, dentro de la transición de
+  // la navegación, y React mantiene la página actual en pantalla hasta que llega (AnimatePresence
+  // monta la página nueva fuera de esa transición: si suspendiera ella, se vería el hueco vacío)
+  const pending = routePending(decodeURIComponent(location.pathname));
+  if (pending) throw pending;
 
   // Guarda la posición de la entrada que se abandona (la página saliente sigue montada)
   useLayoutEffect(() => {
@@ -176,6 +187,8 @@ function App() {
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
     startSmoothScroll();
+    preloadAllWhenIdle();
+    preloadOnIntent();
     return stopSmoothScroll;
   }, []);
 
@@ -184,7 +197,9 @@ function App() {
       <Router>
         <ScrollToTop />
         <Layout>
-          <AnimatedRoutes />
+          <Suspense fallback={null}>
+            <AnimatedRoutes />
+          </Suspense>
         </Layout>
       </Router>
     </MotionConfig>
