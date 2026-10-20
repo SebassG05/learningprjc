@@ -1,0 +1,788 @@
+[
+ {
+  "_id": "6a196249d733b54cd47d6e0a",
+  "title": "Desarrollo de Aplicaciones Web y Análisis de Datos con IA Aplicada.",
+  "image": "__API__/fixtures/img/curso-1.jpg",
+  "description": "Este curso de Desarrollo Web Moderno, Node.js, React e IA Aplicada de 30 horas de duración está diseñado para profesionales que buscan crear aplicaciones desde cero y automatizar tareas mediante una metodología eminentemente práctica (Learning by Doing). Basado en casos reales de proyectos europeos (como FEDER o Copernicus) , dominarás el stack tecnológico más demandado: bases estructurales con HTML5, CSS3 y JavaScript ES6+, interfaces interactivas con React 18 y APIs REST robustas con Node.js y Express. Como gran valor diferencial, aprenderás a gestionar código de forma colaborativa con Git/GitHub y descubrirás cómo multiplicar tu productividad integrando Inteligencia Artificial generativa (ChatGPT, Claude, GitHub Copilot) junto con scripts de Python para el análisis de datos y la automatización de procesos , culminando tu formación con la entrega de un proyecto web funcional listo para tu portafolio profesional.",
+  "duration": "30",
+  "category": [
+   "VSCode",
+   "React",
+   "Nodejs",
+   "IA"
+  ],
+  "objetivosGenerales": [
+   "Desarrollar aplicaciones web modernas y funcionales: Capacitarse en la creación de interfaces web semánticas, accesibles y adaptables (responsive) utilizando HTML5, CSS3 y JavaScript ES6+ , así como en la construcción de servidores y APIs REST mediante Node.js y Express.js.",
+   "Construir interfaces interactivas con React 18: Aprender a diseñar Single Page Applications (SPAs) estructuradas en componentes reutilizables, dominando la gestión del estado mediante hooks (como useState y useEffect) y consumiendo datos dinámicos desde APIs externas.",
+   "Dominar el control de versiones con Git y GitHub: Implementar un flujo de trabajo profesional y colaborativo, gestionando repositorios locales y remotos, ramas (branches) y pull requests para asegurar un historial de código limpio y un trabajo en equipo sin fricciones.",
+   "Integrar herramientas de Inteligencia Artificial y automatización: Utilizar asistentes generativos (como GitHub Copilot o ChatGPT) mediante técnicas avanzadas de prompt engineering para multiplicar la productividad técnica , y crear scripts en Python orientados a automatizar tareas repetitivas, procesar datos y generar informes."
+  ],
+  "objetivosGeneralesEn": [],
+  "objetivosEspecificos": [
+   "Configurar un entorno de desarrollo profesional: Instalar y optimizar Visual Studio Code con sus extensiones de productividad clave y aprender a navegar y ejecutar comandos de forma fluida desde la terminal.",
+   "Construir interfaces web semánticas y responsive: Crear estructuras válidas y accesibles utilizando HTML5 y aplicar diseños adaptables a cualquier dispositivo mediante CSS3, empleando técnicas modernas como Flexbox y CSS Grid.",
+   "Programar lógica interactiva con JavaScript ES6+: Dominar la sintaxis moderna del lenguaje, manipular el DOM de forma eficiente y gestionar peticiones asíncronas a servidores mediante el uso de Promesas y async/await.",
+   "Desarrollar APIs RESTful con Node.js y Express: Diseñar y programar servidores HTTP capaces de realizar operaciones CRUD, implementando middlewares, gestión de rutas y un manejo centralizado de errores para aplicaciones seguras.",
+   "Diseñar Single Page Applications (SPAs) con React 18: Construir interfaces dinámicas basadas en componentes reutilizables, conectándolas con APIs externas y gestionando el estado y los efectos secundarios a través de hooks como useState y useEffect.",
+   "Implantar el control de versiones con Git y GitHub: Ejecutar el flujo de trabajo profesional desde la línea de comandos, gestionando repositorios, ramas (branches) y revisiones de código mediante Pull Requests para la colaboración en equipo.",
+   "Aprovechar la Inteligencia Artificial y la automatización: Integrar GitHub Copilot como asistente en el editor, aplicar metodologías avanzadas de prompt engineering para generar o revisar código y desarrollar scripts en Python enfocados a la automatización y el análisis de datos."
+  ],
+  "objetivosEspecificosEn": [],
+  "idiomasDisponibles": [
+   "es"
+  ],
+  "temas": [
+   {
+    "numeroTema": 1,
+    "titulo": "Estructura del Curso",
+    "descripcion": "Este tema es el punto de partida esencial de tu aprendizaje, enfocado en la configuración de un entorno de desarrollo profesional utilizando Visual Studio Code y el manejo básico de la terminal. Además, sentarás las bases estructurales de cualquier aplicación web aprendiendo a escribir código HTML5 semántico, lo que te permitirá crear páginas web accesibles y optimizadas para buscadores (SEO) desde tu primer proyecto.",
+    "orden": 1,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780049369/learning-platform/materiales/00_estructura_curso-1780049368852-144308903",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a1965dad733b54cd47d6f9e"
+     }
+    ],
+    "completado": false,
+    "_id": "6a1965bcd733b54cd47d6f98",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 2,
+    "titulo": "Programa Académico",
+    "descripcion": "Este tema es la puerta de entrada a tu formación práctica, donde aprenderás a configurar un entorno de trabajo profesional dominando Visual Studio Code y la terminal de comandos. A partir de ahí, sentarás las bases de la web creando tu primer proyecto con HTML5 semántico, aplicando desde el minuto uno estándares de accesibilidad y optimización básica para buscadores (SEO).",
+    "orden": 1,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780049541/learning-platform/materiales/01_programa_academico-1780049540882-796085777",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196686d733b54cd47d70a2"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196677d733b54cd47d709a",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 3,
+    "titulo": "Guía Docente",
+    "descripcion": "Este tema es la brújula metodológica exclusiva para los docentes del curso, diseñada para estructurar la enseñanza módulo a módulo de manera efectiva. En él se detallan los guiones de cada sesión, las pautas de evaluación y las estrategias pedagógicas necesarias para gestionar el aula y guiar a los alumnos en la resolución de problemas técnicos reales.",
+    "orden": 3,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780049642/learning-platform/materiales/02_guia_docente-1780049641625-900571351",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a1966ead733b54cd47d70f0"
+     }
+    ],
+    "completado": false,
+    "_id": "6a1966dcd733b54cd47d70e6",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 4,
+    "titulo": "Temario Módulos",
+    "descripcion": "Este tema es la columna vertebral de tu aprendizaje, donde se detalla paso a paso todo lo que vas a aprender. Aquí encontrarás el desglose completo del temario , desde la configuración inicial del entorno y las bases del desarrollo frontend (HTML, CSS y JavaScript) , hasta el backend con Node.js y la creación de interfaces avanzadas con React. Todo el contenido está diseñado para que lo puedas aplicar de inmediato en proyectos reales.",
+    "orden": 4,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780049740/learning-platform/materiales/03_temario_modulos-1780049739421-148842578",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a19674cd733b54cd47d711c"
+     }
+    ],
+    "completado": false,
+    "_id": "6a19673ed733b54cd47d7110",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 5,
+    "titulo": "Presentaciones",
+    "descripcion": "Este tema es el guión visual y estructurado de las diapositivas que acompañarán cada sesión del curso. Proporciona al formador una secuencia clara de pantallas con ideas principales, demostraciones de código en vivo y dinámicas interactivas , diseñadas para utilizarse directamente o adaptarse al ritmo del grupo asegurando una presentación efectiva de principio a fin.",
+    "orden": 5,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780049846/learning-platform/materiales/04_presentacion_diapositivas-1780049845349-982425002",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a1967b6d733b54cd47d7137"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196792d733b54cd47d7129",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 6,
+    "titulo": "Manual Alumnado",
+    "descripcion": "Este tema es tu compañero inseparable durante toda la formación, diseñado como un manual personal de consulta rápida y supervivencia técnica. En él encontrarás resúmenes prácticos de cada tecnología, un glosario de términos, referencias de comandos y espacios para tus propias notas, garantizando que siempre tengas a mano la ayuda necesaria para avanzar y superar cualquier bloqueo.",
+    "orden": 6,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780049951/learning-platform/materiales/05_manual_alumno-1780049950899-389887898",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196820d733b54cd47d7193"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196813d733b54cd47d7183",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 7,
+    "titulo": "Ejercicios Prácticos",
+    "descripcion": "Este tema es el corazón práctico de la formación, donde consolidarás todo lo aprendido mediante seis ejercicios guiados basados en situaciones reales de empresa. Siguiendo la filosofía de \"aprender haciendo\" , construirás paso a paso desde el diseño visual de una página web hasta su programación completa y conexión de datos.",
+    "orden": 7,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050055/learning-platform/materiales/06_ejercicios_practicos-1780050054611-281579353",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196887d733b54cd47d71b6"
+     }
+    ],
+    "completado": false,
+    "_id": "6a19687bd733b54cd47d71a4",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 8,
+    "titulo": "Casos Reales",
+    "descripcion": "Este tema es el puente entre el aula y el mundo real. Aquí abandonarás la teoría abstracta para enfrentarte a cinco casos de estudio basados en proyectos empresariales auténticos (consultoras, ONGs, administración pública). Analizarás cómo se estructuran las soluciones reales, aprendiendo a tomar decisiones de arquitectura técnica y a resolver problemas con las mismas restricciones y exigencias del mercado laboral actual.",
+    "orden": 8,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780051473/learning-platform/materiales/07_casos_reales_empresa-1780051472158-106327432",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196e11d733b54cd47d7925"
+     }
+    ],
+    "completado": false,
+    "_id": "6a1968c5d733b54cd47d71c9",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 9,
+    "titulo": "Prácticas con IA",
+    "descripcion": "Este tema es tu manual definitivo para multiplicar tu productividad técnica integrando la Inteligencia Artificial (GitHub Copilot, ChatGPT, Claude) en tu flujo de trabajo diario. Aprenderás a dominar el arte del prompt engineering para generar, refactorizar y documentar código , pero, sobre todo, desarrollarás el criterio necesario para evaluar críticamente las sugerencias de la IA, asegurando que tu código final sea seguro, eficiente y listo para producción.",
+    "orden": 9,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050225/learning-platform/materiales/08_practicas_ia_desarrollo-1780050224419-705196113",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196931d733b54cd47d7208"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196925d733b54cd47d71f2",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 10,
+    "titulo": "Automatización con Python",
+    "descripcion": "Este tema es tu llave maestra para multiplicar tu eficiencia eliminando el trabajo manual repetitivo. Aprenderás a crear scripts en Python que gestionan archivos, procesan datos masivos con Pandas, interactúan con APIs y generan reportes automáticos en PDF, ahorrándote cientos de horas en tu día a día profesional.",
+    "orden": 10,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050338/learning-platform/materiales/09_practicas_automatizacion_python-1780050337653-757125888",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a1969a2d733b54cd47d7237"
+     }
+    ],
+    "completado": false,
+    "_id": "6a19698ed733b54cd47d721f",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 11,
+    "titulo": "Proyecto Final",
+    "descripcion": "Este tema es el momento de integrar todo lo aprendido en el curso para construir una aplicación web completa y un Producto Mínimo Viable (MVP) real aplicable a tu entorno laboral. Lejos de ser un examen teórico, este desafío final te permitirá combinar Node.js, React, APIs y herramientas de IA para crear una solución funcional que servirá como la demostración definitiva de tu nueva competencia profesional.",
+    "orden": 11,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050400/learning-platform/materiales/10_proyecto_final-1780050400000-134695571",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a1969e1d733b54cd47d726a"
+     }
+    ],
+    "completado": false,
+    "_id": "6a1969d0d733b54cd47d7250",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 12,
+    "titulo": "Rúbrica de Evaluación",
+    "descripcion": "Este tema es tu mapa del tesoro para superar la formación con éxito. Detalla de forma transparente y estructurada cómo se medirá tu aprendizaje a través de ejercicios prácticos y del proyecto final, especificando los criterios de evaluación, los porcentajes de calificación y los requisitos imprescindibles, como la asistencia mínima, para que sepas exactamente qué se espera de ti en cada fase del curso.",
+    "orden": 12,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050456/learning-platform/materiales/11_rubrica_evaluacion-1780050455982-685545599",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196a19d733b54cd47d72a1"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196a0cd733b54cd47d7285",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 13,
+    "titulo": "Recursos y Enlaces",
+    "descripcion": "Este tema es tu biblioteca de referencia profesional, donde encontrarás una selección curada de la mejor documentación oficial, herramientas de desarrollo y plataformas de aprendizaje continuo. Además, agrupa las comunidades, foros y asistentes de inteligencia artificial más utilizados en el sector para que sepas exactamente dónde acudir a resolver dudas técnicas y puedas seguir creciendo de forma autónoma mucho después de finalizar la formación.",
+    "orden": 13,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050506/learning-platform/materiales/12_recursos_enlaces-1780050506113-548698664",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196a4bd733b54cd47d72dc"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196a3ed733b54cd47d72be",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 14,
+    "titulo": "Checklist de Instalación",
+    "descripcion": "Este tema es tu guía paso a paso para preparar tu entorno de trabajo antes de escribir tu primera línea de código. Contiene un checklist detallado para instalar y verificar Visual Studio Code, Node.js, Git y Python, configurar las extensiones esenciales y crear tus cuentas en plataformas clave, asegurando que empieces el curso sin contratiempos técnicos.",
+    "orden": 14,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050565/learning-platform/materiales/13_checklist_instalacion-1780050564633-514304355",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196a85d733b54cd47d731b"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196a75d733b54cd47d72fb",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 15,
+    "titulo": "FAQ — Preguntas Frecuentes",
+    "descripcion": "Este tema es tu salvavidas para los momentos de bloqueo, ya que recopila las dudas técnicas más frecuentes sobre herramientas, lenguajes e Inteligencia Artificial que han surgido en ediciones anteriores. Más allá del código, te ayudará a cultivar la mentalidad de aprendizaje adecuada: descubrirás cómo interpretar correctamente los errores de la consola, entenderás por qué no necesitas memorizar toda la sintaxis y aprenderás a lidiar con la frustración y el síndrome del impostor para ganar autonomía.",
+    "orden": 15,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050616/learning-platform/materiales/14_faq_principiantes-1780050615557-545912804",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196ab8d733b54cd47d735e"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196aaad733b54cd47d733c",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 16,
+    "titulo": "Buenas Prácticas de Desarrollo",
+    "descripcion": "Este tema es el sello de calidad que transformará tu código de aficionado a profesional. Aprenderás las convenciones fundamentales que exige la industria, dominando desde la estructura de proyectos y la escritura de código limpio y seguro para evitar vulnerabilidades, hasta la accesibilidad web y la documentación, garantizando que tus aplicaciones sean escalables y fáciles de mantener por cualquier equipo.",
+    "orden": 17,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050785/learning-platform/materiales/15_buenas_practicas-1780050785188-833438931",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196b62d733b54cd47d7410"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196b58d733b54cd47d73ec",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 17,
+    "titulo": "Tutorial Git y GitHub",
+    "descripcion": "Este tema es tu seguro de vida para cualquier proyecto profesional. Más allá de enseñarte una lista de comandos, aprenderás el modelo mental de Git para gestionar el historial de tu código de forma segura: desde entender qué son las ramas o cómo funcionan los commits semánticos, hasta dominar los flujos de colaboración en GitHub mediante Pull Requests y resolver conflictos sin perder el trabajo de tu equipo.",
+    "orden": 17,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050826/learning-platform/materiales/16_tutorial_git_github-1780050825793-831921594",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196b8bd733b54cd47d745b"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196b82d733b54cd47d7435",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 18,
+    "titulo": "Introducción a las APIs REST",
+    "descripcion": "Este tema es el núcleo de la comunicación en la web moderna, indispensable para conectar tus aplicaciones con el mundo exterior. Aprenderás a fondo el protocolo HTTP, los principios REST y el formato JSON , descubriendo cómo consumir datos asíncronos con fetch y cómo construir, documentar y asegurar tus propias APIs utilizando Node.js, Express y tokens JWT.",
+    "orden": 18,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050900/learning-platform/materiales/17_introduccion_apis-1780050899623-92183243",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196bd5d733b54cd47d74ad"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196bc8d733b54cd47d7485",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 19,
+    "titulo": "Introducción a React 18",
+    "descripcion": "Este tema es la clave para crear interfaces web modernas e interactivas tal como lo hacen los gigantes tecnológicos. Descubrirás por qué React revolucionó el desarrollo web pasando del paradigma imperativo al declarativo, aprendiendo a dividir tu interfaz en componentes reutilizables, escribir código con JSX y dominar el uso de hooks (como useState y useEffect) para gestionar el estado y conectar tus aplicaciones con el mundo exterior",
+    "orden": 19,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780050961/learning-platform/materiales/18_introduccion_react-1780050960439-282281225",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196c11d733b54cd47d7500"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196bffd733b54cd47d74d6",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 20,
+    "titulo": "Introducción a Node.js",
+    "descripcion": "Este tema es tu inmersión profunda en el backend con Node.js y Express. Descubrirás por qué la arquitectura asíncrona y no bloqueante de Node.js lo convierte en el motor preferido por las grandes empresas tecnológicas. Aprenderás a dominar el Event Loop, el gestor de paquetes npm, la manipulación de archivos y la creación de servidores robustos con Express, aplicando middlewares y estrictas medidas de seguridad (OWASP) para desarrollar APIs preparadas para producción.",
+    "orden": 20,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780051012/learning-platform/materiales/19_introduccion_nodejs-1780051011954-600049946",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196c45d733b54cd47d7557"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196c3dd733b54cd47d752b",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 21,
+    "titulo": "Guía de Prompts",
+    "descripcion": "Este tema es tu manual avanzado de prompt engineering para colaborar eficazmente con asistentes de inteligencia artificial como GitHub Copilot, ChatGPT y Claude. Dominarás el framework CISAR y utilizarás decenas de plantillas probadas para generar código, redactar tests, refactorizar arquitecturas y depurar errores , multiplicando tu productividad sin descuidar la seguridad ni la calidad del resultado final.",
+    "orden": 21,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1780051126/learning-platform/materiales/20_guia_prompts_desarrolladores-1780051125466-656195457",
+      "archivoEn": null,
+      "idioma": "es",
+      "orden": 0,
+      "_id": "6a196cb6d733b54cd47d75b2"
+     }
+    ],
+    "completado": false,
+    "_id": "6a196caed733b54cd47d7584",
+    "actividadesOptativas": []
+   }
+  ],
+  "isOpen": true,
+  "createdAt": "2026-05-29T09:54:17.489Z",
+  "updatedAt": "2026-08-14T07:28:03.698Z",
+  "__v": 46
+ },
+ {
+  "_id": "69f0add541d0097e2baad5c7",
+  "title": "ANFORA: Gestión de la Huella Hídrica",
+  "titleEn": "ANFORA: Water Footprint Management",
+  "image": "__API__/fixtures/img/curso-2.jpg",
+  "description": "Curso e-learning orientado a la gestión y reducción de la huella hídrica mediante la plataforma ANFORA, enfocado en el cálculo del consumo de agua en alimentos y recetas, la planificación de menús sostenibles, el uso de datos regionales y globales, y la optimización de dietas para la sostenibilidad rural.",
+  "descriptionEn": "E-learning course focused on managing and reducing the water footprint using the ANFORA platform, concentrating on calculating water consumption in food and recipes, planning sustainable menus, using regional and global data, and optimizing diets for rural sustainability.",
+  "duration": "18",
+  "category": [
+   "footprint",
+   "soilwater",
+   "water"
+  ],
+  "objetivosGenerales": [
+   "Comprender el concepto y cálculo de la huella hídrica (HH): Entender qué es la huella hídrica, sus tres componentes (azul, verde y gris) y su importancia vital como indicador de sostenibilidad en la agricultura y la alimentación.",
+   "Dominar la plataforma ANFORA: Aprender a utilizar todas las funcionalidades de la herramienta, incluyendo el registro, la navegación, la calculadora de huella hídrica, el explorador de productos y la gestión de recetas.",
+   "Analizar el impacto hídrico de dietas y recetas: Evaluar la huella hídrica acumulada de dietas mediante la planificación de menús semanales y aprender a interpretar los resultados para tomar decisiones más sostenibles.",
+   "Aplicar estrategias de reducción de consumo de agua: Desarrollar habilidades prácticas para sustituir ingredientes de alta huella hídrica por alternativas más eficientes y priorizar productos locales, con el objetivo de reducir entre un 10% y un 15% la huella hídrica personal o profesional."
+  ],
+  "objetivosGeneralesEn": [
+   "Understanding the concept and calculation of the water footprint (WF): Understanding what the water footprint is, its three components (blue, green, and grey), and its vital importance as a sustainability indicator in agriculture and food.",
+   "Mastering the ANFORA platform: Learning to use all the tool's functionalities, including registration, navigation, the water footprint calculator, the product explorer, and recipe management.",
+   "Analyzing the water impact of diets and recipes: Evaluating the cumulative water footprint of diets by planning weekly menus and learning to interpret the results to make more sustainable decisions.",
+   "Applying water consumption reduction strategies: Developing practical skills to substitute high water footprint ingredients with more efficient alternatives and prioritizing local products, with the goal of reducing personal or professional water footprints by 10% to 15%."
+  ],
+  "objetivosEspecificos": [
+   "Dominar el acceso y uso de la plataforma ANFORA: Aprender a registrarse, navegar por la interfaz (adaptable a escritorio y móvil) e instalar la aplicación como una PWA para mejorar la experiencia de usuario.",
+   "Utilizar la calculadora de huella hídrica: Aplicar los 4 pasos guiados (información, ingredientes, revisión y resultados) para calcular la huella hídrica de recetas de forma precisa.",
+   "Analizar el impacto hídrico mediante el Explorador de Productos: Aprender a buscar, filtrar y comparar más de 74 productos utilizando datos científicos de cuatro fuentes distintas (Global, Andalucía, IA y Custom).",
+   "Gestionar y exportar datos: Desarrollar la capacidad de guardar recetas, crear menús semanales y exportar los resultados en formatos profesionales (PDF, CSV, JSON) para su análisis o presentación.",
+   "Evaluar la sostenibilidad de la dieta: Analizar métricas de impacto hídrico (agua azul, verde y gris) y aplicar estrategias prácticas, como la sustitución de proteínas animales por legumbres, para optimizar la eficiencia hídrica del menú.",
+   "Participar activamente en la validación del proyecto: Aplicar los conocimientos adquiridos en ejercicios prácticos y colaborar en la mejora de la plataforma mediante la cumplimentación de encuestas sobre necesidades, hábitos y percepciones del usuario."
+  ],
+  "objetivosEspecificosEn": [
+   "Master accessing and using the ANFORA platform: Learn how to register, navigate the interface (responsive to desktop and mobile), and install the application as a PWA to enhance the user experience.",
+   "Use the water footprint calculator: Apply the four guided steps (information, ingredients, review, and results) to accurately calculate the water footprint of recipes.",
+   "Analyze water impact using the Product Explorer: Learn how to search, filter, and compare over 74 products using scientific data from four different sources (Global, Andalusia, IA, and Custom).",
+   "Manage and export data: Develop the ability to save recipes, create weekly menus, and export the results in professional formats (PDF, CSV, JSON) for analysis or presentation.",
+   "Evaluate dietary sustainability: Analyze water impact metrics (blue, green, and grey water) and apply practical strategies, such as replacing animal protein with legumes, to optimize menu water efficiency.",
+   "Actively participate in the validation of the project: Apply the knowledge acquired in practical exercises and collaborate in the improvement of the platform by completing surveys on user needs, habits and perceptions."
+  ],
+  "idiomasDisponibles": [
+   "es",
+   "en"
+  ],
+  "temas": [
+   {
+    "numeroTema": 1,
+    "titulo": "Tema 01: Introducción a ANFORA y la Huella Hídrica",
+    "tituloEn": "Topic 01: Introduction to ANFORA and the Water Footprint",
+    "descripcion": "Presenta la plataforma como una herramienta web para calcular y reducir la huella hídrica (HH) de alimentos y recetas. Define la HH mediante sus tres componentes: agua azul (riego), verde (lluvia) y gris (contaminación para dilución). Además, explica las cuatro fuentes de datos (Global, Andalucía, IA y Custom) y la clasificación de productos en cuatro niveles de impacto.",
+    "descripcionEn": "The platform is presented as a web-based tool for calculating and reducing the water footprint (WF) of food and recipes. It defines the WF using its three components: blue water (irrigation), green water (rain), and grey water (pollution for dilution). Furthermore, it explains the four data sources (Global, Andalusia, IA, and Custom) and the classification of products into four impact levels.",
+    "orden": 1,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382011/learning-platform/materiales/Tema_01_Introduccion_ANFORA_Huella_Hidrica-1777382010816-65785600",
+      "archivoEn": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382011/learning-platform/materiales/Unit_01_Introduction_ANFORA_Water_Footprint_EN-1777382010816-49418204",
+      "idioma": "both",
+      "orden": 0,
+      "_id": "69f0b27b41d0097e2baad7ff"
+     }
+    ],
+    "completado": false,
+    "_id": "69f0b26f41d0097e2baad7f9",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 2,
+    "titulo": "Tema 02: Registro, Acceso y Navegación",
+    "tituloEn": "Topic 02: Registration, Access and Navigation",
+    "descripcion": "Detalla cómo acceder a la plataforma a través del navegador o instalándola como una Progressive Web App (PWA) para mayor eficiencia. Explica el proceso de registro gratuito para desbloquear funcionalidades avanzadas (como guardar recetas y menús) y las medidas de seguridad aplicadas, como el cifrado de contraseñas.",
+    "descripcionEn": "It details how to access the platform through a web browser or by installing it as a Progressive Web App (PWA) for greater efficiency. It explains the free registration process to unlock advanced features (such as saving recipes and menus) and the security measures in place, such as password encryption.",
+    "orden": 2,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382068/learning-platform/materiales/Tema_02_Primeros_Pasos_Registro_Navegacion-1777382068079-277949018",
+      "archivoEn": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382068/learning-platform/materiales/Unit_02_Registration_Access_Navigation_EN-1777382068079-946658459",
+      "idioma": "both",
+      "orden": 0,
+      "_id": "69f0b2b441d0097e2baad80e"
+     }
+    ],
+    "completado": false,
+    "_id": "69f0b2a441d0097e2baad806",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 3,
+    "titulo": "Tema 03: La Calculadora de Huella Hídrica",
+    "tituloEn": "Topic 03: The Water Footprint Calculator",
+    "descripcion": "Describe la herramienta central de ANFORA, que guía al usuario en 4 pasos: información de la receta, ingredientes, revisión y resultados. Explica cómo la plataforma calcula la HH total y por porción, desglosada por ingrediente y tipo de agua, permitiendo además exportar los resultados en formatos como PDF, CSV y JSON.",
+    "descripcionEn": "Describe ANFORA's core tool, which guides the user through four steps: recipe information, ingredients, review, and results. Explain how the platform calculates the total and per-serving human food intake (HH), broken down by ingredient and water type, and allows users to export the results in formats such as PDF, CSV, and JSON.",
+    "orden": 3,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382122/learning-platform/materiales/Tema_03_Calculadora_Huella_Hidrica-1777382121564-356878272",
+      "archivoEn": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382122/learning-platform/materiales/Unit_03_Water_Footprint_Calculator_EN-1777382121564-599848770",
+      "idioma": "both",
+      "orden": 0,
+      "_id": "69f0b2ea41d0097e2baad821"
+     }
+    ],
+    "completado": false,
+    "_id": "69f0b2dc41d0097e2baad817",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 4,
+    "titulo": "Tema 04: Explorador de Productos y Gestión de Recetas",
+    "tituloEn": "Topic 04: Product Explorer and Recipe Management",
+    "descripcion": "Explora la base de datos de más de 74 productos organizados en 11 categorías, los cuales pueden filtrarse y compararse. Enseña cómo gestionar el historial personal en \"Mis Recetas\" y destaca estrategias para reducir la HH, como sustituir ingredientes de alto impacto por alternativas más sostenibles.",
+    "descripcionEn": "Explore a database of over 74 products organized into 11 categories, which can be filtered and compared. Learn how to manage your personal history in \"My Recipes\" and discover strategies for reducing human food intake, such as replacing high-impact ingredients with more sustainable alternatives.",
+    "orden": 4,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382188/learning-platform/materiales/Unit_04_Product_Explorer_Recipe_Management_EN-1777382187971-512398751",
+      "archivoEn": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382188/learning-platform/materiales/Unit_04_Product_Explorer_Recipe_Management_EN-1777382187971-719959931",
+      "idioma": "both",
+      "orden": 0,
+      "_id": "69f0b32d41d0097e2baad838"
+     }
+    ],
+    "completado": false,
+    "_id": "69f0b32241d0097e2baad82c",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 5,
+    "titulo": "Tema 05: Menús Semanales y Estadísticas",
+    "tituloEn": "Topic 05: Weekly Menus and Statistics",
+    "descripcion": "Explica la función de planificación semanal (7 días x 3 comidas) para evaluar el impacto acumulado de la dieta. Describe cómo la plataforma genera un dashboard de métricas personales y propone estrategias concretas para alcanzar el objetivo del proyecto: reducir entre un 10% y 15% la huella hídrica del usuario.",
+    "descripcionEn": "Explica la función de planificación semanal (7 días x 3 comidas) para evaluar el impacto acumulado de la dieta. Describe cómo la plataforma genera un dashboard de métricas personales y propone estrategias concretas para alcanzar el objetivo del proyecto: reducir entre un 10% y 15% la huella hídrica del usuario.",
+    "orden": 5,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382234/learning-platform/materiales/Tema_05_Menus_Semanales_Estadisticas-1777382233935-791622274",
+      "archivoEn": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382234/learning-platform/materiales/Unit_05_Weekly_Menus_Statistics_EN-1777382233935-244156992",
+      "idioma": "both",
+      "orden": 0,
+      "_id": "69f0b35b41d0097e2baad853"
+     }
+    ],
+    "completado": false,
+    "_id": "69f0b34741d0097e2baad845",
+    "actividadesOptativas": []
+   },
+   {
+    "numeroTema": 6,
+    "titulo": "Tema 06: Ejercicio Práctico y Encuesta",
+    "tituloEn": "Topic 06: Practical Exercise and Survey",
+    "descripcion": "Propone un ejercicio práctico donde el usuario debe comparar un menú habitual con uno más sostenible, aplicando los conocimientos adquiridos. Asimismo, incluye la encuesta de validación del proyecto ANFORA para recopilar necesidades, hábitos y expectativas de los usuarios rurales, garantizando el anonimato y la protección de datos conforme al RGPD.",
+    "descripcionEn": "It proposes a practical exercise where the user must compare a typical menu with a more sustainable one, applying the knowledge acquired. It also includes the ANFORA project validation survey to gather information on the needs, habits, and expectations of rural users, guaranteeing anonymity and data protection in accordance with the GDPR.",
+    "orden": 6,
+    "materiales": [
+     {
+      "tipo": "pdf",
+      "titulo": "Material 1",
+      "descripcion": "",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382277/learning-platform/materiales/Tema_06_Ejercicio_Practico_y_Encuesta-1777382276941-978972680",
+      "archivoEn": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1777382277/learning-platform/materiales/Unit_06_Practical_Exercise_Survey_EN-1777382276941-461504662",
+      "idioma": "both",
+      "orden": 0,
+      "_id": "69f0b38541d0097e2baad872"
+     }
+    ],
+    "completado": false,
+    "_id": "69f0b37941d0097e2baad862",
+    "actividadesOptativas": []
+   }
+  ],
+  "isOpen": true,
+  "createdAt": "2026-04-28T12:53:41.289Z",
+  "updatedAt": "2026-05-19T12:11:42.320Z",
+  "__v": 24
+ },
+ {
+  "_id": "69d50406663e8648d7ee1f08",
+  "title": "Modelización Dinámica de Carbono",
+  "image": "__API__/fixtures/img/curso-3.jpg",
+  "description": "Curso e-learning orientado a la modelización del carbono orgánico del suelo mediante modelos compartimentales y enfoque multi-model ensemble, aplicado a la evaluación de stocks de SOC y flujos de CO₂ bajo distintos escenarios climáticos y de manejo.",
+  "duration": "18 horas",
+  "category": [
+   "Ciencia del Suelo",
+   "Modelización",
+   "Cambio Climático",
+   "Agricultura Sostenible"
+  ],
+  "objetivosGenerales": [
+   "Comprender el funcionamiento interno de los modelos de carbono del suelo.",
+   "Interpretar la dinámica temporal del carbono orgánico del suelo (SOC).",
+   "Analizar las diferencias entre modelos bajo un mismo escenario ambiental para obtener estimaciones más robustas.",
+   "Aprender los fundamentos teóricos de la dinámica del carbono y su aplicación práctica en modelización avanzada y sistemas socio-ecológicos."
+  ],
+  "objetivosEspecificos": [
+   "Desarrollar competencias en modelización ambiental reproducible y manejo de datos climáticos y edáficos.",
+   "Realizar un análisis crítico de resultados multimodelo.",
+   "Familiarizarse con herramientas computacionales de investigación real, específicamente la ejecución de scripts en el lenguaje de programación R.",
+   "Dominar la estructuración modular del código y la gestión de datos de entrada (\"forcing data\").",
+   "Interpretar outputs gráficos y numéricos, como las trayectorias de stocks de SOC y los flujos de mineralización de CO2.",
+   "Aprender el flujo estándar de modelización, incluyendo la preparación de datos, la fase de spin-up para estabilización y la simulación prospectiva."
+  ],
+  "temas": [
+   {
+    "orden": 0,
+    "numeroTema": 1,
+    "titulo": "Introducción: Modelización de la dinámica del carbono orgánico del suelo",
+    "descripcion": "Módulo introductorio que presenta los conceptos fundamentales del carbono orgánico del suelo (SOC), su papel en el ciclo biogeoquímico global y el contexto del cambio climático. Se exploran los enfoques de modelización compartimental y el enfoque multi-model ensemble como metodología robusta para proyectar la dinámica del carbono.",
+    "materiales": [
+     {
+      "idioma": "es",
+      "tipo": "pdf",
+      "titulo": "Introducción: Modelización de la Dinámica del Carbono Orgánico del Suelo mediante Modelos Compartimentales y Multi-Model Ensemble",
+      "descripcion": "Material introductorio que establece las bases conceptuales del curso, explica la relevancia de la modelización del carbono en el contexto actual de cambio climático y presenta los principales enfoques metodológicos que se desarrollarán a lo largo del curso.",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1773049865/learning-platform/materiales/IntroducciA_n__ModelizaciA_n_de_la_dinA_mica_del_carbono_orgA_nico_del_suelo_mediante_modelos_compartimentales_y_multi-model_ensemble__2_-1773049864756-378782325",
+      "orden": 1,
+      "_id": "69d5f26894dace2e10adae39"
+     }
+    ],
+    "actividadesOptativas": [],
+    "completado": false,
+    "_id": "69d5f26894dace2e10adae38"
+   },
+   {
+    "orden": 0,
+    "numeroTema": 2,
+    "titulo": "Dinámica del carbono del suelo: procesos y mecanismos fundamentales",
+    "descripcion": "Estudio en profundidad de los procesos biogeoquímicos que controlan la dinámica del carbono en el suelo: descomposición de materia orgánica, estabilización física y química, mineralización, humificación y los factores ambientales (temperatura, humedad, textura) que regulan las entradas y salidas de carbono al sistema.",
+    "materiales": [
+     {
+      "idioma": "es",
+      "tipo": "pdf",
+      "titulo": "Dinámica del Carbono del Suelo: Procesos y Mecanismos Fundamentales",
+      "descripcion": "Material técnico que profundiza en los mecanismos físicos, químicos y biológicos que gobiernan el ciclo del carbono en el suelo. Incluye teorías de descomposición, formación de materia orgánica estable, y la influencia de factores como temperatura, humedad, textura del suelo y tipo de vegetación.",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1773054595/learning-platform/materiales/DinA_mica_del_carbono_del_suelo__procesos_y_mecanismos_fundamentales-1773054595093-981863636",
+      "orden": 1,
+      "_id": "69d5f26894dace2e10adae3b"
+     }
+    ],
+    "actividadesOptativas": [],
+    "completado": false,
+    "_id": "69d5f26894dace2e10adae3a"
+   },
+   {
+    "orden": 0,
+    "numeroTema": 3,
+    "titulo": "Modelos basados en procesos incluidos en el ensemble",
+    "descripcion": "Presentación detallada de los principales modelos compartimentales de carbono del suelo incluidos en el ensemble: RothC, ICBM, Century, Yasso07, AMG y SG. Se analiza su estructura matemática, supuestos subyacentes, parametrización y cómo el enfoque multi-model ensemble integra sus predicciones para obtener estimaciones más robustas.",
+    "materiales": [
+     {
+      "idioma": "es",
+      "tipo": "pdf",
+      "titulo": "Modelos Basados en Procesos Incluidos en el Ensemble",
+      "descripcion": "Documentación técnica de los modelos compartimentales más utilizados a nivel internacional. Cada modelo se describe en términos de su estructura de compartimentos, ecuaciones diferenciales, parámetros clave, requisitos de entrada y aplicaciones típicas en investigación y consultoría.",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1773056219/learning-platform/materiales/Modelos_basados_en_procesos_incluidos_en_el_ensemble-1773056219042-352247372",
+      "orden": 1,
+      "_id": "69d5f26894dace2e10adae3d"
+     }
+    ],
+    "actividadesOptativas": [],
+    "completado": false,
+    "_id": "69d5f26894dace2e10adae3c"
+   },
+   {
+    "orden": 0,
+    "numeroTema": 4,
+    "titulo": "Ejecución y práctica con el modelo",
+    "descripcion": "Componente práctico donde se aprende a configurar y ejecutar el ensemble de modelos en R con el paquete SoilR, parametrizar con datos reales (forzamientos climáticos y edáficos), interpretar salidas gráficas y numéricas de stocks de SOC y flujos de CO₂, y reproducir el flujo completo de modelización científica, incluyendo la fase de spin-up y la simulación prospectiva.",
+    "materiales": [
+     {
+      "idioma": "es",
+      "tipo": "pdf",
+      "titulo": "Ejecución y Práctica con el Modelo",
+      "descripcion": "Guía práctica paso a paso para configurar y ejecutar simulaciones del ensemble de modelos de carbono en R. Incluye instrucciones de instalación de paquetes, configuración de rutas, carga de forzamientos climáticos, ejecución del spin-up, simulación prospectiva e interpretación de resultados gráficos y numéricos.",
+      "archivo": "https://res.cloudinary.com/dgbmy60sc/raw/upload/v1773057387/learning-platform/materiales/EjecuciA_n_y_prA_ctica_con_el_modelo-1773057386437-208442993",
+      "orden": 1,
+      "_id": "69d5f26894dace2e10adae3f"
+     }
+    ],
+    "actividadesOptativas": [],
+    "completado": false,
+    "_id": "69d5f26894dace2e10adae3e"
+   }
+  ],
+  "isOpen": true,
+  "createdAt": "2026-04-07T13:17:58.076Z",
+  "updatedAt": "2026-06-16T12:21:09.814Z",
+  "__v": 1,
+  "idiomasDisponibles": [],
+  "objetivosEspecificosEn": [],
+  "objetivosGeneralesEn": []
+ }
+]
