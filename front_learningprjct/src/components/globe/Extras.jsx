@@ -66,8 +66,11 @@ export function Signals({ palette, count, animate }) {
       return { pos, quat, offset: i * 0.29 };
     });
   }, [count]);
-  const coreMat = useMemo(() => new MeshBasicMaterial({ color: palette.ink, transparent: true, opacity: 0.9, side: DoubleSide, depthWrite: false }), [palette]);
-  const ringMats = useMemo(() => nodes.map(() => new MeshBasicMaterial({ color: palette.brand200, transparent: true, side: DoubleSide, depthWrite: false })), [nodes, palette]);
+  // forceSinglePass: three dibuja los materiales transparentes de doble cara en dos pasadas (trasera y
+  // delantera) y marca needsUpdate en cada una, así que recalculaba su programa en cada frame. En un
+  // anillo plano cada píxel lo cubre una sola cara: una pasada da exactamente los mismos píxeles
+  const coreMat = useMemo(() => new MeshBasicMaterial({ color: palette.ink, transparent: true, opacity: 0.9, side: DoubleSide, forceSinglePass: true, depthWrite: false }), [palette]);
+  const ringMats = useMemo(() => nodes.map(() => new MeshBasicMaterial({ color: palette.brand200, transparent: true, side: DoubleSide, forceSinglePass: true, depthWrite: false })), [nodes, palette]);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;

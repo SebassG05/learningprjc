@@ -132,6 +132,8 @@ export async function openPage(browser, opts) {
   const dev = DEVICES[device];
   const context = await browser.newContext({ ...dev.context, serviceWorkers: 'block', reducedMotion: 'no-preference' });
   await preparePage(context);
+  // Solo diagnóstico: bloquear recursos (p. ej. el chunk del globo) para medir la página sin ellos
+  if (opts.block) await context.route(new RegExp(opts.block), (r) => r.abort());
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));

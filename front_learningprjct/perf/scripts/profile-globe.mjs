@@ -6,28 +6,43 @@ import path from 'node:path';
 import { chromium } from '@playwright/test';
 import sourceMap from 'source-map-js';
 import { launchOptions } from '../../tests/perf/lib/profiles.mjs';
-import { openPage } from '../../tests/perf/lib/measure.mjs';
+import { openPage, scrollJourney } from '../../tests/perf/lib/measure.mjs';
 import { startRecording, stopRecording } from '../../tests/perf/lib/page.mjs';
 
 const DIST = process.argv[2];
 const DEVICE = process.argv[3] || 'movil';
+// 'montaje' (por defecto): desde el primer gesto. 'scroll': con el globo ya montado, durante un recorrido
+const MODE = process.argv[4] || 'montaje';
+const CPU = Number(process.argv[5] || (MODE === 'scroll' ? 4 : 6));
 const b = await chromium.launch(launchOptions());
-const { page, cdp, context } = await openPage(b, { device: DEVICE, cpu: 6, network: 'none' });
+const { page, cdp, context, dev } = await openPage(b, { device: DEVICE, cpu: CPU, network: 'none', block: process.env.BLOCK || undefined });
 await page.waitForTimeout(3000);
 await cdp.send('Profiler.enable');
 await cdp.send('Profiler.setSamplingInterval', { interval: 200 });
+if (MODE === 'scroll') {
+  if (DEVICE === 'movil') {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 600 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  }
+  if (!process.env.BLOCK) await page.waitForSelector('canvas', { timeout: 30_000 });
+  await page.waitForTimeout(3000);
+}
 await startRecording(page);
 await cdp.send('Profiler.start');
-if (DEVICE === 'movil') {
-  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 600 }] });
-  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+if (MODE === 'scroll') {
+  await scrollJourney(page, cdp, { touch: dev.touch, direction: 'down' });
+} else {
+  if (DEVICE === 'movil') {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 600 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  }
+  await page.waitForSelector('canvas', { timeout: 30_000 });
+  await page.waitForTimeout(4000);
 }
-await page.waitForSelector('canvas', { timeout: 30_000 });
-await page.waitForTimeout(4000);
 const { profile } = await cdp.send('Profiler.stop');
 const perf = await stopRecording(page);
 console.log('LoAF (duración = script + estilo/layout + render):');
-perf.loaf.forEach((l) => {
+if (MODE !== 'scroll') perf.loaf.forEach((l) => {
   const script = l.scripts.reduce((a, x) => a + x.dur, 0);
   console.log(`  ${Math.round(l.duration)} ms  script ${Math.round(script)}  estilo/layout ${Math.round(l.styleLayout)}  render ${Math.round(l.render)}  | ${l.scripts.map((x) => `${x.fn || x.inv}@${x.pos}:${Math.round(x.dur)}`).join(' ')}`);
 });
@@ -55,6 +70,30 @@ for (const n of profile.nodes) {
   }
   agg.set(key, (agg.get(key) || 0) + ms);
 }
+// Cadena de llamadas hasta una función (CALLERS=nombre): quién la invoca y cuánto pesa cada camino
+if (process.env.CALLERS) {
+  const byId = new Map(profile.nodes.map((n) => [n.id, n]));
+  const parent = new Map();
+  profile.nodes.forEach((n) => (n.children || []).forEach((c) => parent.set(c, n.id)));
+  const name = (n) => {
+    const cf = n.callFrame;
+    if (!cf.url?.startsWith('http')) return cf.functionName || '(nativo)';
+    const p = consumer(cf.url)?.originalPositionFor({ line: cf.lineNumber + 1, column: cf.columnNumber });
+    return p?.source ? `${p.source.split('node_modules/').pop().split('front_learningprjct/').pop()}:${p.line} ${p.name || cf.functionName || ''}` : cf.functionName;
+  };
+  const incl = new Map();
+  const inclusive = (id) => { if (incl.has(id)) return incl.get(id); const n = byId.get(id); const v = (dt.get(id) || 0) / 1000 + (n.children || []).reduce((a, c) => a + inclusive(c), 0); incl.set(id, v); return v; };
+  const paths = new Map();
+  for (const n of profile.nodes) {
+    if (!name(n).includes(process.env.CALLERS)) continue;
+    const chain = [];
+    let id = parent.get(n.id);
+    for (let k = 0; id && k < 7; k += 1) { chain.push(name(byId.get(id)).replace(/^.*\//, '')); id = parent.get(id); }
+    const key = chain.join(' ← ');
+    paths.set(key, (paths.get(key) || 0) + inclusive(n.id));
+  }
+  [...paths.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).forEach(([k, v]) => console.log(`${v.toFixed(1).padStart(7)} ms  ${k}`));
+}
 const total = [...agg.values()].reduce((a, b) => a + b, 0);
 console.log(`total muestreado ${total.toFixed(0)} ms`);
-[...agg.entries()].sort((a, b) => b[1] - a[1]).slice(0, 25).forEach(([k, v]) => console.log(v.toFixed(1).padStart(8), 'ms', k));
+[...agg.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30).forEach(([k, v]) => console.log(v.toFixed(1).padStart(8), 'ms', k));

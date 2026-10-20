@@ -38,17 +38,24 @@ for (const e of trace) {
 const frames = spans.filter((s) => s.name === 'PipelineReporter');
 const stages = spans.filter((s) => s.name !== 'PipelineReporter');
 const states = {};
-frames.forEach((f) => { const st = f.args?.chrome_frame_reporter?.state ?? '?'; states[st] = (states[st] || 0) + 1; });
+const rep = (f) => f.args?.frame_reporter ?? f.args?.chrome_frame_reporter ?? {};
+frames.forEach((f) => { const st = `${rep(f).state ?? '?'}${rep(f).affects_smoothness ? ' (afecta)' : ''}`; states[st] = (states[st] || 0) + 1; });
 console.log(`${ROUTE} ${DEVICE} cpu${CPU}: ${frames.length} frames en la traza`, states);
 
-const slow = frames.filter((f) => f.dur > 18 || /DROPPED|PARTIAL/.test(f.args?.chrome_frame_reporter?.state ?? ''));
+// Frames que se pierden de verdad: descartados o presentados sin el contenido del hilo principal
+const slow = frames.filter((f) => /DROPPED|PARTIAL/.test(rep(f).state ?? ''));
+const ok = frames.filter((f) => /PRESENTED_ALL/.test(rep(f).state ?? ''));
 const agg = {};
 for (const f of slow) {
   const mine = stages.filter((s) => s.id === f.id && s.ts >= f.ts && s.ts <= f.ts + f.dur * 1000);
   mine.forEach((s) => { agg[s.name] = (agg[s.name] || 0) + s.dur; });
 }
-console.log(`frames lentos o descartados: ${slow.length}. Tiempo por etapa (suma, ms):`);
-Object.entries(agg).sort((a, b) => b[1] - a[1]).slice(0, 12).forEach(([k, v]) => console.log(`  ${v.toFixed(0).padStart(7)}  ${k}`));
+const aggOk = {};
+for (const f of ok) {
+  stages.filter((s) => s.id === f.id && s.ts >= f.ts && s.ts <= f.ts + f.dur * 1000).forEach((s) => { aggOk[s.name] = (aggOk[s.name] || 0) + s.dur; });
+}
+console.log(`frames perdidos: ${slow.length}. Media por etapa (ms) en perdidos vs presentados enteros (${ok.length}):`);
+Object.entries(agg).sort((a, b) => b[1] - a[1]).slice(0, 12).forEach(([k, v]) => console.log(`  ${(v / Math.max(1, slow.length)).toFixed(1).padStart(7)} vs ${((aggOk[k] || 0) / Math.max(1, ok.length)).toFixed(1).padStart(6)}  ${k}`));
 const reasons = {};
-slow.forEach((f) => { const r = f.args?.chrome_frame_reporter?.frame_drop_reason ?? f.args?.chrome_frame_reporter?.scroll_state ?? '?'; reasons[r] = (reasons[r] || 0) + 1; });
+slow.forEach((f) => { const r = rep(f); const k = [r.frame_drop_reason, r.scroll_state, r.has_missing_content && 'falta contenido', r.checkerboarded_needs_raster && 'checkerboard'].filter(Boolean).join(' · ') || '?'; reasons[k] = (reasons[k] || 0) + 1; });
 console.log('motivos:', reasons);

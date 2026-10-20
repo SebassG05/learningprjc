@@ -19,6 +19,7 @@ const GPU = arg('gpu', '');
 const MEMORY = Number(arg('memory', 0));
 // Diagnóstico: CSS inyectado tras la carga (aísla el coste de una capa; nunca para el baseline)
 const CSS = arg('css', '');
+const BLOCK = arg('block', '');
 
 const median = (xs) => { const s = [...xs].sort((a, b) => a - b); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 
@@ -55,7 +56,7 @@ try {
           await new Promise((r) => setTimeout(r, 15_000));
           continue;
         }
-        const r = { ...(await measureRoute(b, { ...cell, route, css: CSS })), envFps: env };
+        const r = { ...(await measureRoute(b, { ...cell, route, css: CSS, block: BLOCK || undefined })), envFps: env };
         console.log(`${route} ${cell.device} cpu${cell.cpu} ${cell.network}${cell.gpu ? ' gpu-' + cell.gpu : ''} #${i + 1} (entorno ${r.envFps}): fps ${r.fpsMean} p5 ${r.fpsP5} >16.7:${r.over16} >50:${r.over50} LoAF ${r.loafCount} main ${r.trace.mainBusyPct}% gpu ${r.trace.gpuBusyPct}% LCP ${r.lcpMs} INP ${r.inpMs} errs ${r.errors.length}`);
         runs.push(r);
       }
