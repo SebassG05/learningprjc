@@ -94,6 +94,16 @@ if (process.env.CALLERS) {
   }
   [...paths.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).forEach(([k, v]) => console.log(`${v.toFixed(1).padStart(7)} ms  ${k}`));
 }
+// GROUP=1: tiempo propio agrupado por origen (paquete o carpeta de src)
+if (process.env.GROUP) {
+  const groups = new Map();
+  for (const [k, v] of agg) {
+    const g = k.startsWith('(') ? k : k.startsWith('src/') ? k.split(':')[0] : k.split('/')[0].startsWith('@') ? k.split('/').slice(0, 2).join('/') : k.split('/')[0].split(':')[0];
+    groups.set(g, (groups.get(g) || 0) + v);
+  }
+  console.log('por origen:');
+  [...groups.entries()].sort((a, b) => b[1] - a[1]).slice(0, 16).forEach(([k, v]) => console.log(`  ${v.toFixed(0).padStart(6)} ms  ${k}`));
+}
 const total = [...agg.values()].reduce((a, b) => a + b, 0);
 console.log(`total muestreado ${total.toFixed(0)} ms`);
 [...agg.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30).forEach(([k, v]) => console.log(v.toFixed(1).padStart(8), 'ms', k));

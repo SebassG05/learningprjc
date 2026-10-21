@@ -54,7 +54,8 @@ for (const route of ROUTES) {
         runs.push({ ...s, html: res.report });
         console.log(`${route} ${form} #${i + 1}: score ${s.score} LCP ${s.lcpMs} TBT ${s.tbtMs} CLS ${s.cls} SI ${s.siMs} ${s.totalKB} KB`);
       } finally {
-        await chrome.kill();
+        // En Windows a veces no deja terminar un proceso hijo de Chrome: no debe tumbar la medición
+        await chrome.kill().catch((err) => console.warn(`aviso: ${err.message.split('\n')[0]}`));
       }
     }
     const pick = [...runs].sort((a, b) => a.score - b.score)[runs.length >> 1];

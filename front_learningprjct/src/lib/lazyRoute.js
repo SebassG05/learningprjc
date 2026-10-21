@@ -45,16 +45,36 @@ export function preloadPath(pathname) {
   return route ? route.preload().catch(() => {}) : Promise.resolve();
 }
 
-// Precarga todas cuando el navegador está ocioso tras la carga (no compite con la primera pintura)
+// Precarga todas tras la carga, con la primera interacción del usuario o a los 5 s (lo que llegue
+// antes) y en un momento ocioso. Justo tras el evento load competiría con la pintura del LCP: en
+// escritorio, donde el LCP llega muy pronto, lo retrasaba ~0,5 s
+const INTERACTION = ['pointermove', 'pointerdown', 'scroll', 'wheel', 'touchstart', 'keydown'];
 export function preloadAllWhenIdle() {
   if (idleArmed) return;
   idleArmed = true;
+  let started = false;
+  let timer;
   const run = () => {
-    const idle = window.requestIdleCallback ?? ((fn) => setTimeout(fn, 1500));
-    idle(() => registry.forEach((r) => r.preload().catch(() => {})), { timeout: 4000 });
+    if (started) return;
+    started = true;
+    clearTimeout(timer);
+    INTERACTION.forEach((type) => window.removeEventListener(type, run));
+    // De una en una, cada una en su propio momento ocioso: así su descarga y evaluación nunca se
+    // juntan en una ráfaga que compita con lo que el usuario esté haciendo
+    const idle = window.requestIdleCallback ?? ((fn) => setTimeout(fn, 200));
+    const queue = [...registry];
+    const next = () => {
+      const route = queue.shift();
+      if (route) route.preload().catch(() => {}).finally(() => idle(next, { timeout: 2000 }));
+    };
+    idle(next, { timeout: 2000 });
   };
-  if (document.readyState === 'complete') run();
-  else window.addEventListener('load', run, { once: true });
+  const arm = () => {
+    timer = setTimeout(run, 5000);
+    INTERACTION.forEach((type) => window.addEventListener(type, run, { once: true, passive: true }));
+  };
+  if (document.readyState === 'complete') arm();
+  else window.addEventListener('load', arm, { once: true });
 }
 
 // Intención de navegar: un solo listener delegado para todos los enlaces internos
