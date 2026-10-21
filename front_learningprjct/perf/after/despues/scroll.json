@@ -1,0 +1,2017 @@
+[
+  {
+    "device": "movil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/",
+    "pageHeight": 5745,
+    "lcpMs": 1872,
+    "lcpElement": "p.mt-6.max-w-[56ch].text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": 104,
+    "frames": 770,
+    "seconds": 16.03,
+    "fpsMean": 47.8,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 216.7,
+    "over16": 163,
+    "over50": 6,
+    "droppedPct": 21,
+    "loafCount": 5,
+    "loafBlockingMs": 231,
+    "longTasks": 3,
+    "longTaskMs": 347,
+    "frameP99ms": 50,
+    "trace": {
+      "traceSeconds": 16.07,
+      "mainBusyMs": 5256,
+      "mainBusyPct": 32.7,
+      "scriptMs": 2804,
+      "layouts": 32,
+      "layoutMs": 26,
+      "layoutsPerSec": 2,
+      "styleRecalcs": 624,
+      "styleMs": 337,
+      "styleRecalcsPerSec": 38.3,
+      "forcedLayouts": 11,
+      "forcedStyles": 321,
+      "forcedMs": 151,
+      "paints": 270,
+      "paintMs": 81,
+      "gcMs": 34,
+      "gpuBusyPct": 10.4,
+      "vizBusyPct": 5.1,
+      "forcedBy": [
+        {
+          "fn": "GlobeCanvas-KlnGQQKm.js:a:3870:23198",
+          "count": 260,
+          "ms": 139
+        },
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 71,
+          "ms": 22
+        },
+        {
+          "fn": "index-NB3lbjiF.js:Ie:26:1942",
+          "count": 1,
+          "ms": 0
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Campus.",
+        "frames": 56,
+        "over16": 19,
+        "over50": 3,
+        "worstMs": 83,
+        "droppedPct": 26.2
+      },
+      {
+        "section": "¿Qué puedes esperar de los cursos?",
+        "frames": 103,
+        "over16": 35,
+        "over50": 5,
+        "worstMs": 217,
+        "droppedPct": 34
+      },
+      {
+        "section": "¿Cómo funciona el proceso?",
+        "frames": 137,
+        "over16": 33,
+        "over50": 1,
+        "worstMs": 67,
+        "droppedPct": 24.1
+      },
+      {
+        "section": "Preguntas frecuentes",
+        "frames": 109,
+        "over16": 30,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 27.5
+      },
+      {
+        "section": "¿Qué opinan nuestros estudiantes?",
+        "frames": 79,
+        "over16": 22,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 21.7
+      },
+      {
+        "section": "¿Listo para encontrar tu próxima oportun",
+        "frames": 107,
+        "over16": 18,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 16.8
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 185,
+        "over16": 6,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 3.2
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · W @693079",
+        "dur": 186,
+        "forced": 0,
+        "count": 2
+      },
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · a @810537",
+        "dur": 89,
+        "forced": 2,
+        "count": 1
+      },
+      {
+        "key": "index-NB3lbjiF.js · Ie @13401",
+        "dur": 85,
+        "forced": 1,
+        "count": 3
+      },
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · http://localhost:4173/assets/GlobeCanvas-KlnGQQKm.js @0",
+        "dur": 22,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · Ee @443759",
+        "dur": 11,
+        "forced": 0,
+        "count": 1
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 47.8,
+        "fpsP5": 29.9,
+        "over16": 163,
+        "over50": 9,
+        "lcpMs": 1888,
+        "inpMs": 104
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/",
+    "pageHeight": 5745,
+    "lcpMs": 2856,
+    "lcpElement": "p.mt-6.max-w-[56ch].text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": 136,
+    "frames": 735,
+    "seconds": 16.35,
+    "fpsMean": 45,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 250,
+    "over16": 208,
+    "over50": 6,
+    "droppedPct": 28.3,
+    "loafCount": 4,
+    "loafBlockingMs": 255,
+    "longTasks": 3,
+    "longTaskMs": 448,
+    "frameP99ms": 50,
+    "trace": {
+      "traceSeconds": 16.39,
+      "mainBusyMs": 7193,
+      "mainBusyPct": 43.9,
+      "scriptMs": 3824,
+      "layouts": 34,
+      "layoutMs": 47,
+      "layoutsPerSec": 2.1,
+      "styleRecalcs": 551,
+      "styleMs": 461,
+      "styleRecalcsPerSec": 33.6,
+      "forcedLayouts": 10,
+      "forcedStyles": 284,
+      "forcedMs": 194,
+      "paints": 287,
+      "paintMs": 143,
+      "gcMs": 47,
+      "gpuBusyPct": 7.7,
+      "vizBusyPct": 5,
+      "forcedBy": [
+        {
+          "fn": "GlobeCanvas-KlnGQQKm.js:a:3870:23198",
+          "count": 211,
+          "ms": 162
+        },
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 74,
+          "ms": 29
+        },
+        {
+          "fn": "index-NB3lbjiF.js:Ie:26:1942",
+          "count": 1,
+          "ms": 2
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Campus.",
+        "frames": 59,
+        "over16": 15,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 25.4
+      },
+      {
+        "section": "¿Qué puedes esperar de los cursos?",
+        "frames": 96,
+        "over16": 48,
+        "over50": 5,
+        "worstMs": 250,
+        "droppedPct": 50
+      },
+      {
+        "section": "¿Cómo funciona el proceso?",
+        "frames": 131,
+        "over16": 40,
+        "over50": 1,
+        "worstMs": 83,
+        "droppedPct": 32.8
+      },
+      {
+        "section": "Preguntas frecuentes",
+        "frames": 93,
+        "over16": 42,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 35.6
+      },
+      {
+        "section": "¿Qué opinan nuestros estudiantes?",
+        "frames": 75,
+        "over16": 32,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 33.8
+      },
+      {
+        "section": "¿Listo para encontrar tu próxima oportun",
+        "frames": 98,
+        "over16": 29,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 25.7
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 183,
+        "over16": 8,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 3.9
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · W @693079",
+        "dur": 257,
+        "forced": 0,
+        "count": 4
+      },
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · a @810537",
+        "dur": 139,
+        "forced": 10,
+        "count": 3
+      },
+      {
+        "key": "index-NB3lbjiF.js · Ie @13401",
+        "dur": 68,
+        "forced": 0,
+        "count": 2
+      },
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · http://localhost:4173/assets/GlobeCanvas-KlnGQQKm.js @0",
+        "dur": 59,
+        "forced": 0,
+        "count": 1
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 45,
+        "fpsP5": 29.9,
+        "over16": 214,
+        "over50": 6,
+        "lcpMs": 2836,
+        "inpMs": 136
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/",
+    "pageHeight": 5110,
+    "lcpMs": 1836,
+    "lcpElement": "p.mt-6.max-w-[56ch].text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": 80,
+    "frames": 456,
+    "seconds": 7.67,
+    "fpsMean": 59.6,
+    "fpsP5": 59.5,
+    "frameP95ms": 16.8,
+    "frameMaxMs": 33.4,
+    "over16": 3,
+    "over50": 0,
+    "droppedPct": 0.7,
+    "loafCount": 0,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 16.9,
+    "trace": {
+      "traceSeconds": 7.68,
+      "mainBusyMs": 5292,
+      "mainBusyPct": 69.4,
+      "scriptMs": 2880,
+      "layouts": 44,
+      "layoutMs": 41,
+      "layoutsPerSec": 5.7,
+      "styleRecalcs": 740,
+      "styleMs": 389,
+      "styleRecalcsPerSec": 97.1,
+      "forcedLayouts": 31,
+      "forcedStyles": 643,
+      "forcedMs": 383,
+      "paints": 912,
+      "paintMs": 376,
+      "gcMs": 18,
+      "gpuBusyPct": 14.2,
+      "vizBusyPct": 5.5,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 427,
+          "ms": 293
+        },
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 202,
+          "ms": 80
+        },
+        {
+          "fn": "GlobeCanvas-KlnGQQKm.js:a:3870:23198",
+          "count": 44,
+          "ms": 10
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Campus.",
+        "frames": 52,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "¿Cómo funciona el proceso?",
+        "frames": 137,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 0.7
+      },
+      {
+        "section": "Preguntas frecuentes",
+        "frames": 48,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "¿Qué opinan nuestros estudiantes?",
+        "frames": 49,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "¿Listo para encontrar tu próxima oportun",
+        "frames": 63,
+        "over16": 2,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 3.2
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 104,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 59.6,
+        "fpsP5": 59.5,
+        "over16": 3,
+        "over50": 0,
+        "lcpMs": 1836,
+        "inpMs": 104
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/",
+    "pageHeight": 5110,
+    "lcpMs": 2940,
+    "lcpElement": "p.mt-6.max-w-[56ch].text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": 88,
+    "frames": 429,
+    "seconds": 8.1,
+    "fpsMean": 53.3,
+    "fpsP5": 30,
+    "frameP95ms": 33.3,
+    "frameMaxMs": 83.3,
+    "over16": 43,
+    "over50": 2,
+    "droppedPct": 10,
+    "loafCount": 1,
+    "loafBlockingMs": 3,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.5,
+    "trace": {
+      "traceSeconds": 8.13,
+      "mainBusyMs": 6962,
+      "mainBusyPct": 83.6,
+      "scriptMs": 3738,
+      "layouts": 42,
+      "layoutMs": 49,
+      "layoutsPerSec": 5.2,
+      "styleRecalcs": 689,
+      "styleMs": 502,
+      "styleRecalcsPerSec": 83.9,
+      "forcedLayouts": 31,
+      "forcedStyles": 589,
+      "forcedMs": 495,
+      "paints": 873,
+      "paintMs": 504,
+      "gcMs": 28,
+      "gpuBusyPct": 11.5,
+      "vizBusyPct": 5.1,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 404,
+          "ms": 368
+        },
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 172,
+          "ms": 105
+        },
+        {
+          "fn": "GlobeCanvas-KlnGQQKm.js:a:3870:23198",
+          "count": 32,
+          "ms": 10
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Campus.",
+        "frames": 45,
+        "over16": 2,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 9.4
+      },
+      {
+        "section": "¿Cómo funciona el proceso?",
+        "frames": 133,
+        "over16": 12,
+        "over50": 2,
+        "worstMs": 83,
+        "droppedPct": 9.6
+      },
+      {
+        "section": "Preguntas frecuentes",
+        "frames": 39,
+        "over16": 8,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 20.5
+      },
+      {
+        "section": "¿Qué opinan nuestros estudiantes?",
+        "frames": 55,
+        "over16": 5,
+        "over50": 3,
+        "worstMs": 34,
+        "droppedPct": 9.1
+      },
+      {
+        "section": "¿Listo para encontrar tu próxima oportun",
+        "frames": 50,
+        "over16": 14,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 23.5
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 107,
+        "over16": 2,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 1.9
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · W @693079",
+        "dur": 58,
+        "forced": 0,
+        "count": 2
+      },
+      {
+        "key": "GlobeCanvas-KlnGQQKm.js · a @810537",
+        "dur": 20,
+        "forced": 0,
+        "count": 2
+      },
+      {
+        "key": "index-NB3lbjiF.js · j @186687",
+        "dur": 16,
+        "forced": 1,
+        "count": 2
+      },
+      {
+        "key": "index-NB3lbjiF.js · LC @306088",
+        "dur": 10,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "index-NB3lbjiF.js · FrameRequestCallback @324258",
+        "dur": 7,
+        "forced": 6,
+        "count": 1
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 53,
+        "fpsP5": 30,
+        "over16": 43,
+        "over50": 5,
+        "lcpMs": 2940,
+        "inpMs": 80
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/sobre",
+    "pageHeight": 6206,
+    "lcpMs": 2040,
+    "lcpElement": "p.about-rise.about-rise-late.mt-8",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 625,
+    "seconds": 11.57,
+    "fpsMean": 53.8,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 83.3,
+    "over16": 67,
+    "over50": 1,
+    "droppedPct": 10.7,
+    "loafCount": 1,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.4,
+    "trace": {
+      "traceSeconds": 11.59,
+      "mainBusyMs": 2266,
+      "mainBusyPct": 20,
+      "scriptMs": 623,
+      "layouts": 21,
+      "layoutMs": 13,
+      "layoutsPerSec": 1.8,
+      "styleRecalcs": 333,
+      "styleMs": 263,
+      "styleRecalcsPerSec": 30,
+      "forcedLayouts": 0,
+      "forcedStyles": 74,
+      "forcedMs": 23,
+      "paints": 252,
+      "paintMs": 84,
+      "gcMs": 6,
+      "gpuBusyPct": 5.9,
+      "vizBusyPct": 3.2,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 68,
+          "ms": 18
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Misión, Visión y Valores",
+        "frames": 175,
+        "over16": 25,
+        "over50": 1,
+        "worstMs": 83,
+        "droppedPct": 12
+      },
+      {
+        "section": "Nuestro equipo",
+        "frames": 70,
+        "over16": 8,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 11.3
+      },
+      {
+        "section": "Testimonios",
+        "frames": 115,
+        "over16": 11,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 9.6
+      },
+      {
+        "section": "Tu próximo curso empieza aquí.",
+        "frames": 49,
+        "over16": 4,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 14
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 216,
+        "over16": 19,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 9
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 53.8,
+        "fpsP5": 29.9,
+        "over16": 67,
+        "over50": 1,
+        "lcpMs": 2004,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/sobre",
+    "pageHeight": 6206,
+    "lcpMs": 3556,
+    "lcpElement": "p.about-rise.about-rise-late.mt-8",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 625,
+    "seconds": 11.7,
+    "fpsMean": 52.7,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 50,
+    "over16": 87,
+    "over50": 0,
+    "droppedPct": 13.9,
+    "loafCount": 1,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.4,
+    "trace": {
+      "traceSeconds": 11.72,
+      "mainBusyMs": 3004,
+      "mainBusyPct": 25.6,
+      "scriptMs": 809,
+      "layouts": 20,
+      "layoutMs": 13,
+      "layoutsPerSec": 1.7,
+      "styleRecalcs": 340,
+      "styleMs": 323,
+      "styleRecalcsPerSec": 29.2,
+      "forcedLayouts": 0,
+      "forcedStyles": 76,
+      "forcedMs": 29,
+      "paints": 242,
+      "paintMs": 108,
+      "gcMs": 6,
+      "gpuBusyPct": 4,
+      "vizBusyPct": 3,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 73,
+          "ms": 29
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Misión, Visión y Valores",
+        "frames": 176,
+        "over16": 27,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 14
+      },
+      {
+        "section": "Nuestro equipo",
+        "frames": 67,
+        "over16": 12,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 12.3
+      },
+      {
+        "section": "Testimonios",
+        "frames": 119,
+        "over16": 20,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 13.8
+      },
+      {
+        "section": "Tu próximo curso empieza aquí.",
+        "frames": 40,
+        "over16": 3,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 10
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 226,
+        "over16": 25,
+        "over50": 1,
+        "worstMs": 50,
+        "droppedPct": 13.9
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "index-NB3lbjiF.js · j @186687",
+        "dur": 29,
+        "forced": 0,
+        "count": 1
+      },
+      {
+        "key": "index-NB3lbjiF.js · LC @306088",
+        "dur": 15,
+        "forced": 0,
+        "count": 1
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 52.7,
+        "fpsP5": 29.9,
+        "over16": 87,
+        "over50": 1,
+        "lcpMs": 3552,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/sobre",
+    "pageHeight": 4425,
+    "lcpMs": 2068,
+    "lcpElement": "h1.about-rise.max-w-[12ch].text-balance",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 400,
+    "seconds": 6.67,
+    "fpsMean": 60,
+    "fpsP5": 59.5,
+    "frameP95ms": 16.8,
+    "frameMaxMs": 16.9,
+    "over16": 0,
+    "over50": 0,
+    "droppedPct": 0,
+    "loafCount": 0,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 16.8,
+    "trace": {
+      "traceSeconds": 6.68,
+      "mainBusyMs": 3045,
+      "mainBusyPct": 45.6,
+      "scriptMs": 1039,
+      "layouts": 157,
+      "layoutMs": 35,
+      "layoutsPerSec": 23.6,
+      "styleRecalcs": 618,
+      "styleMs": 508,
+      "styleRecalcsPerSec": 91.3,
+      "forcedLayouts": 58,
+      "forcedStyles": 306,
+      "forcedMs": 195,
+      "paints": 530,
+      "paintMs": 203,
+      "gcMs": 8,
+      "gpuBusyPct": 10.7,
+      "vizBusyPct": 4.2,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 364,
+          "ms": 195
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Misión, Visión y Valores",
+        "frames": 125,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Nuestro equipo",
+        "frames": 24,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Testimonios",
+        "frames": 44,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Tu próximo curso empieza aquí.",
+        "frames": 36,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 174,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 59.9,
+        "fpsP5": 59.5,
+        "over16": 1,
+        "over50": 0,
+        "lcpMs": 2068,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/sobre",
+    "pageHeight": 4425,
+    "lcpMs": 3508,
+    "lcpElement": "h1.about-rise.max-w-[12ch].text-balance",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 412,
+    "seconds": 6.95,
+    "fpsMean": 59.3,
+    "fpsP5": 59.5,
+    "frameP95ms": 16.8,
+    "frameMaxMs": 50,
+    "over16": 5,
+    "over50": 0,
+    "droppedPct": 1.3,
+    "loafCount": 0,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.3,
+    "trace": {
+      "traceSeconds": 6.97,
+      "mainBusyMs": 3915,
+      "mainBusyPct": 57.1,
+      "scriptMs": 1297,
+      "layouts": 151,
+      "layoutMs": 37,
+      "layoutsPerSec": 21.7,
+      "styleRecalcs": 633,
+      "styleMs": 635,
+      "styleRecalcsPerSec": 89.9,
+      "forcedLayouts": 55,
+      "forcedStyles": 314,
+      "forcedMs": 238,
+      "paints": 513,
+      "paintMs": 253,
+      "gcMs": 12,
+      "gpuBusyPct": 9.8,
+      "vizBusyPct": 4.2,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 380,
+          "ms": 273
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Misión, Visión y Valores",
+        "frames": 133,
+        "over16": 6,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 1.7
+      },
+      {
+        "section": "Nuestro equipo",
+        "frames": 28,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 3.6
+      },
+      {
+        "section": "Testimonios",
+        "frames": 49,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Tu próximo curso empieza aquí.",
+        "frames": 35,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 2.9
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 182,
+        "over16": 3,
+        "over50": 1,
+        "worstMs": 33,
+        "droppedPct": 1.6
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 58.4,
+        "fpsP5": 59.5,
+        "over16": 11,
+        "over50": 1,
+        "lcpMs": 3520,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/contacto",
+    "pageHeight": 3196,
+    "lcpMs": 2808,
+    "lcpElement": "p.mt-6.max-w-lg.text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 405,
+    "seconds": 7.28,
+    "fpsMean": 54.9,
+    "fpsP5": 30,
+    "frameP95ms": 33.3,
+    "frameMaxMs": 66.8,
+    "over16": 35,
+    "over50": 1,
+    "droppedPct": 8.8,
+    "loafCount": 1,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.4,
+    "trace": {
+      "traceSeconds": 7.32,
+      "mainBusyMs": 3812,
+      "mainBusyPct": 52.1,
+      "scriptMs": 401,
+      "layouts": 409,
+      "layoutMs": 343,
+      "layoutsPerSec": 55.1,
+      "styleRecalcs": 413,
+      "styleMs": 214,
+      "styleRecalcsPerSec": 55.8,
+      "forcedLayouts": 102,
+      "forcedStyles": 102,
+      "forcedMs": 153,
+      "paints": 823,
+      "paintMs": 2041,
+      "gcMs": 4,
+      "gpuBusyPct": 7.1,
+      "vizBusyPct": 3.9,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 204,
+          "ms": 153
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Contacto directo",
+        "frames": 16,
+        "over16": 2,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 13.3
+      },
+      {
+        "section": "Escríbenos",
+        "frames": 134,
+        "over16": 19,
+        "over50": 1,
+        "worstMs": 67,
+        "droppedPct": 14.2
+      },
+      {
+        "section": "Quizá ya tengas la respuesta",
+        "frames": 16,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 6.3
+      },
+      {
+        "section": "Dónde estamos",
+        "frames": 44,
+        "over16": 4,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 9.1
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 190,
+        "over16": 9,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 4.7
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 54.9,
+        "fpsP5": 30,
+        "over16": 35,
+        "over50": 1,
+        "lcpMs": 2808,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/contacto",
+    "pageHeight": 3196,
+    "lcpMs": 4488,
+    "lcpElement": "p.mt-6.max-w-lg.text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 414,
+    "seconds": 8.4,
+    "fpsMean": 49.3,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 50,
+    "over16": 87,
+    "over50": 0,
+    "droppedPct": 21,
+    "loafCount": 0,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.5,
+    "trace": {
+      "traceSeconds": 8.43,
+      "mainBusyMs": 5062,
+      "mainBusyPct": 60,
+      "scriptMs": 501,
+      "layouts": 418,
+      "layoutMs": 434,
+      "layoutsPerSec": 49.6,
+      "styleRecalcs": 422,
+      "styleMs": 286,
+      "styleRecalcsPerSec": 50,
+      "forcedLayouts": 98,
+      "forcedStyles": 98,
+      "forcedMs": 167,
+      "paints": 840,
+      "paintMs": 2719,
+      "gcMs": 4,
+      "gpuBusyPct": 4.8,
+      "vizBusyPct": 3.7,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 196,
+          "ms": 167
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Contacto directo",
+        "frames": 14,
+        "over16": 4,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 38.9
+      },
+      {
+        "section": "Escríbenos",
+        "frames": 124,
+        "over16": 35,
+        "over50": 1,
+        "worstMs": 50,
+        "droppedPct": 28.2
+      },
+      {
+        "section": "Quizá ya tengas la respuesta",
+        "frames": 14,
+        "over16": 3,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 20
+      },
+      {
+        "section": "Dónde estamos",
+        "frames": 37,
+        "over16": 6,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 16.2
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 225,
+        "over16": 39,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 15.3
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 49.3,
+        "fpsP5": 29.9,
+        "over16": 87,
+        "over50": 1,
+        "lcpMs": 4404,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/contacto",
+    "pageHeight": 1562,
+    "lcpMs": 2808,
+    "lcpElement": "p.mt-6.max-w-lg.text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 216,
+    "seconds": 3.83,
+    "fpsMean": 54.8,
+    "fpsP5": 30,
+    "frameP95ms": 33.3,
+    "frameMaxMs": 33.4,
+    "over16": 20,
+    "over50": 0,
+    "droppedPct": 9.5,
+    "loafCount": 0,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.4,
+    "trace": {
+      "traceSeconds": 3.86,
+      "mainBusyMs": 3455,
+      "mainBusyPct": 89,
+      "scriptMs": 543,
+      "layouts": 220,
+      "layoutMs": 191,
+      "layoutsPerSec": 55.4,
+      "styleRecalcs": 245,
+      "styleMs": 146,
+      "styleRecalcsPerSec": 62.6,
+      "forcedLayouts": 157,
+      "forcedStyles": 158,
+      "forcedMs": 238,
+      "paints": 482,
+      "paintMs": 2115,
+      "gcMs": 10,
+      "gpuBusyPct": 9.2,
+      "vizBusyPct": 5.9,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 307,
+          "ms": 236
+        },
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 2,
+          "ms": 1
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Escríbenos",
+        "frames": 45,
+        "over16": 20,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 32
+      },
+      {
+        "section": "Dónde estamos",
+        "frames": 13,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 7.7
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 158,
+        "over16": 4,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 1.4
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 53.6,
+        "fpsP5": 30,
+        "over16": 25,
+        "over50": 0,
+        "lcpMs": 2808,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/contacto",
+    "pageHeight": 1562,
+    "lcpMs": 4440,
+    "lcpElement": "p.mt-6.max-w-lg.text-lg",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 193,
+    "seconds": 4.05,
+    "fpsMean": 47.2,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 50,
+    "over16": 50,
+    "over50": 0,
+    "droppedPct": 26.2,
+    "loafCount": 0,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 50,
+    "trace": {
+      "traceSeconds": 4.08,
+      "mainBusyMs": 4012,
+      "mainBusyPct": 96.7,
+      "scriptMs": 617,
+      "layouts": 197,
+      "layoutMs": 210,
+      "layoutsPerSec": 47.8,
+      "styleRecalcs": 219,
+      "styleMs": 181,
+      "styleRecalcsPerSec": 53.2,
+      "forcedLayouts": 138,
+      "forcedStyles": 139,
+      "forcedMs": 265,
+      "paints": 435,
+      "paintMs": 2573,
+      "gcMs": 13,
+      "gpuBusyPct": 8.4,
+      "vizBusyPct": 5.7,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 275,
+          "ms": 263
+        },
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 2,
+          "ms": 2
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Escríbenos",
+        "frames": 45,
+        "over16": 35,
+        "over50": 1,
+        "worstMs": 50,
+        "droppedPct": 52.4
+      },
+      {
+        "section": "Dónde estamos",
+        "frames": 16,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 6.3
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 132,
+        "over16": 18,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 13.6
+      }
+    ],
+    "loafTop": [],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 46,
+        "fpsP5": 29.9,
+        "over16": 54,
+        "over50": 1,
+        "lcpMs": 4504,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/reseñas",
+    "pageHeight": 2606,
+    "lcpMs": 2712,
+    "lcpElement": "h1.mt-5.block.max-w-[16ch]",
+    "cls": 0,
+    "shifts": [],
+    "inpMs": null,
+    "frames": 361,
+    "seconds": 6.28,
+    "fpsMean": 54.3,
+    "fpsP5": 30,
+    "frameP95ms": 33.3,
+    "frameMaxMs": 50,
+    "over16": 37,
+    "over50": 0,
+    "droppedPct": 10,
+    "loafCount": 1,
+    "loafBlockingMs": 0,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.4,
+    "trace": {
+      "traceSeconds": 6.32,
+      "mainBusyMs": 1331,
+      "mainBusyPct": 19.9,
+      "scriptMs": 428,
+      "layouts": 7,
+      "layoutMs": 4,
+      "layoutsPerSec": 1.1,
+      "styleRecalcs": 258,
+      "styleMs": 125,
+      "styleRecalcsPerSec": 40.7,
+      "forcedLayouts": 0,
+      "forcedStyles": 58,
+      "forcedMs": 27,
+      "paints": 165,
+      "paintMs": 49,
+      "gcMs": 5,
+      "gpuBusyPct": 8.1,
+      "vizBusyPct": 5.2,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 57,
+          "ms": 27
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Valoración de los alumnos",
+        "frames": 18,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Lo que cuentan los alumnos",
+        "frames": 141,
+        "over16": 31,
+        "over50": 1,
+        "worstMs": 50,
+        "droppedPct": 17.6
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 172,
+        "over16": 12,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 5.7
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "index-NB3lbjiF.js · Ie @13401",
+        "dur": 58,
+        "forced": 4,
+        "count": 2
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 52.7,
+        "fpsP5": 30,
+        "over16": 43,
+        "over50": 1,
+        "lcpMs": 2704,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "movil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/reseñas",
+    "pageHeight": 2606,
+    "lcpMs": 4256,
+    "lcpElement": "h1.mt-5.block.max-w-[16ch]",
+    "cls": 0.1,
+    "shifts": [
+      {
+        "at": 4182,
+        "value": 0.092,
+        "y": 0,
+        "sources": [
+          {
+            "node": "div.pointer-events-none.absolute.inset-0.overflow-hidden",
+            "from": [
+              468,
+              297
+            ],
+            "to": [
+              669,
+              154
+            ]
+          }
+        ]
+      }
+    ],
+    "inpMs": null,
+    "frames": 362,
+    "seconds": 6.53,
+    "fpsMean": 52.2,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 66.6,
+    "over16": 48,
+    "over50": 1,
+    "droppedPct": 13.3,
+    "loafCount": 2,
+    "loafBlockingMs": 1,
+    "longTasks": 0,
+    "longTaskMs": 0,
+    "frameP99ms": 33.5,
+    "trace": {
+      "traceSeconds": 6.55,
+      "mainBusyMs": 1809,
+      "mainBusyPct": 25.9,
+      "scriptMs": 613,
+      "layouts": 7,
+      "layoutMs": 5,
+      "layoutsPerSec": 1.1,
+      "styleRecalcs": 250,
+      "styleMs": 166,
+      "styleRecalcsPerSec": 38.1,
+      "forcedLayouts": 0,
+      "forcedStyles": 55,
+      "forcedMs": 32,
+      "paints": 163,
+      "paintMs": 74,
+      "gcMs": 7,
+      "gpuBusyPct": 7.3,
+      "vizBusyPct": 5.3,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 55,
+          "ms": 32
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Valoración de los alumnos",
+        "frames": 21,
+        "over16": 2,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Lo que cuentan los alumnos",
+        "frames": 142,
+        "over16": 40,
+        "over50": 1,
+        "worstMs": 67,
+        "droppedPct": 26.1
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 167,
+        "over16": 16,
+        "over50": 0,
+        "worstMs": 34,
+        "droppedPct": 5.8
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "index-NB3lbjiF.js · Ie @13401",
+        "dur": 103,
+        "forced": 7,
+        "count": 3
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 50.5,
+        "fpsP5": 29.9,
+        "over16": 58,
+        "over50": 1,
+        "lcpMs": 4256,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 4,
+    "network": "slow-4g",
+    "route": "/reseñas",
+    "pageHeight": 1554,
+    "lcpMs": 2756,
+    "lcpElement": "h1.mt-5.block.max-w-[16ch]",
+    "cls": 0.01,
+    "shifts": [
+      {
+        "at": 2376,
+        "value": 0.0014,
+        "y": 0,
+        "sources": [
+          {
+            "node": "div.mt-20.grid.grid-cols-1.gap-12",
+            "from": [
+              740,
+              28
+            ],
+            "to": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "at": 2493,
+        "value": 0.0013,
+        "y": 0,
+        "sources": [
+          {
+            "node": "ul.flex.flex-col.gap-2.5",
+            "from": [
+              542,
+              150
+            ],
+            "to": [
+              542,
+              150
+            ]
+          },
+          {
+            "node": "div.flex.flex-col.gap-1.5.pb-2",
+            "from": [
+              632,
+              60
+            ],
+            "to": [
+              632,
+              60
+            ]
+          }
+        ]
+      }
+    ],
+    "inpMs": null,
+    "frames": 213,
+    "seconds": 3.87,
+    "fpsMean": 55.1,
+    "fpsP5": 30.1,
+    "frameP95ms": 33.2,
+    "frameMaxMs": 66.8,
+    "over16": 11,
+    "over50": 2,
+    "droppedPct": 5.2,
+    "loafCount": 2,
+    "loafBlockingMs": 37,
+    "longTasks": 1,
+    "longTaskMs": 56,
+    "frameP99ms": 50,
+    "trace": {
+      "traceSeconds": 3.91,
+      "mainBusyMs": 2378,
+      "mainBusyPct": 60.9,
+      "scriptMs": 1056,
+      "layouts": 230,
+      "layoutMs": 163,
+      "layoutsPerSec": 58.9,
+      "styleRecalcs": 343,
+      "styleMs": 338,
+      "styleRecalcsPerSec": 87.8,
+      "forcedLayouts": 166,
+      "forcedStyles": 276,
+      "forcedMs": 441,
+      "paints": 533,
+      "paintMs": 168,
+      "gcMs": 5,
+      "gpuBusyPct": 17.8,
+      "vizBusyPct": 7.7,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 128,
+          "ms": 283
+        },
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 329,
+          "ms": 226
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Valoración de los alumnos",
+        "frames": 11,
+        "over16": 0,
+        "over50": 0,
+        "worstMs": 17,
+        "droppedPct": 0
+      },
+      {
+        "section": "Lo que cuentan los alumnos",
+        "frames": 57,
+        "over16": 11,
+        "over50": 2,
+        "worstMs": 67,
+        "droppedPct": 16.9
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 152,
+        "over16": 1,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 0.7
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "index-NB3lbjiF.js · Ie @13401",
+        "dur": 117,
+        "forced": 39,
+        "count": 2
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 55,
+        "fpsP5": 30.1,
+        "over16": 12,
+        "over50": 2,
+        "lcpMs": 2756,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  },
+  {
+    "device": "portatil",
+    "cpu": 6,
+    "network": "fast-3g",
+    "route": "/reseñas",
+    "pageHeight": 1554,
+    "lcpMs": 4372,
+    "lcpElement": "h1.mt-5.block.max-w-[16ch]",
+    "cls": 0.01,
+    "shifts": [
+      {
+        "at": 4302,
+        "value": 0.0014,
+        "y": 0,
+        "sources": [
+          {
+            "node": "div.mt-20.grid.grid-cols-1.gap-12",
+            "from": [
+              740,
+              28
+            ],
+            "to": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "at": 4454,
+        "value": 0.0017,
+        "y": 0,
+        "sources": [
+          {
+            "node": "ul.flex.flex-col.gap-2.5",
+            "from": [
+              542,
+              150
+            ],
+            "to": [
+              542,
+              150
+            ]
+          },
+          {
+            "node": "div.flex.flex-col.gap-1.5.pb-2",
+            "from": [
+              632,
+              60
+            ],
+            "to": [
+              632,
+              60
+            ]
+          }
+        ]
+      }
+    ],
+    "inpMs": null,
+    "frames": 215,
+    "seconds": 4.18,
+    "fpsMean": 51.3,
+    "fpsP5": 29.9,
+    "frameP95ms": 33.4,
+    "frameMaxMs": 83.4,
+    "over16": 21,
+    "over50": 5,
+    "droppedPct": 9.4,
+    "loafCount": 5,
+    "loafBlockingMs": 65,
+    "longTasks": 2,
+    "longTaskMs": 176,
+    "frameP99ms": 66.7,
+    "trace": {
+      "traceSeconds": 4.22,
+      "mainBusyMs": 3145,
+      "mainBusyPct": 74.6,
+      "scriptMs": 1344,
+      "layouts": 231,
+      "layoutMs": 213,
+      "layoutsPerSec": 54.7,
+      "styleRecalcs": 347,
+      "styleMs": 414,
+      "styleRecalcsPerSec": 82.5,
+      "forcedLayouts": 169,
+      "forcedStyles": 282,
+      "forcedMs": 556,
+      "paints": 541,
+      "paintMs": 203,
+      "gcMs": 13,
+      "gpuBusyPct": 15.4,
+      "vizBusyPct": 8.1,
+      "forcedBy": [
+        {
+          "fn": "index-NB3lbjiF.js:j:52:26053",
+          "count": 139,
+          "ms": 363
+        },
+        {
+          "fn": "index-NB3lbjiF.js:?:60:46305",
+          "count": 335,
+          "ms": 249
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section": "Valoración de los alumnos",
+        "frames": 9,
+        "over16": 2,
+        "over50": 0,
+        "worstMs": 33,
+        "droppedPct": 22.2
+      },
+      {
+        "section": "Lo que cuentan los alumnos",
+        "frames": 64,
+        "over16": 14,
+        "over50": 4,
+        "worstMs": 83,
+        "droppedPct": 21.9
+      },
+      {
+        "section": "(fuera de secciones)",
+        "frames": 150,
+        "over16": 5,
+        "over50": 0,
+        "worstMs": 50,
+        "droppedPct": 3.3
+      }
+    ],
+    "loafTop": [
+      {
+        "key": "index-NB3lbjiF.js · Ie @13401",
+        "dur": 261,
+        "forced": 93,
+        "count": 4
+      }
+    ],
+    "errors": [],
+    "envFps": 60,
+    "runs": 3,
+    "samples": [
+      {
+        "fpsMean": 51.3,
+        "fpsP5": 29.9,
+        "over16": 21,
+        "over50": 4,
+        "lcpMs": 4372,
+        "inpMs": null
+      }
+    ],
+    "gpu": "real"
+  }
+]

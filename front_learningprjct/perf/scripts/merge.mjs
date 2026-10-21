@@ -17,8 +17,9 @@ function mergeCells(rows, keyOf) {
     const num = (o, k) => typeof o[k] === 'number';
     // Representante: la ejecución mediana en el primer campo numérico relevante (para listas y textos)
     const rep = [...rs].sort((a, b) => (a.fpsP5 ?? a.score ?? 0) - (b.fpsP5 ?? b.score ?? 0))[rs.length >> 1];
-    const out = { ...rep, runs: rs.length };
+    const out = { ...rep };
     Object.keys(rep).forEach((k) => { if (num(rep, k)) out[k] = +median(rs.map((r) => r[k])).toFixed(3); });
+    out.runs = rs.reduce((a, r) => a + (r.runs || 1), 0);
     if (rep.trace) {
       out.trace = { ...rep.trace };
       Object.keys(rep.trace).forEach((k) => { if (num(rep.trace, k)) out.trace[k] = +median(rs.map((r) => r.trace[k])).toFixed(2); });

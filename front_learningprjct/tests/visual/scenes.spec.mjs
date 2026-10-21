@@ -27,6 +27,10 @@ async function open(page, url, { touch }) {
   await page.clock.install({ time: START });
   await page.clock.pauseAt(new Date(START.getTime() + 1000));
   await page.goto(url, { waitUntil: 'load' });
+  // Los datos de la API (300 ms reales en el mock) deben estar antes de mover el reloj falso: si
+  // llegan durante settle, las entradas que disparan arrancan en un instante falso distinto según
+  // la carga de la máquina (fallos intermitentes en /reseñas)
+  await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.fonts.ready);
   await settle(page, 2000);
 }
@@ -76,14 +80,22 @@ async function waitForGlobe(page, { touch }) {
 // ve el usuario al terminar) y se deja un paso de reloj para que framer aplique sus valores finales
 // Varias rondas con un presupuesto de reloj FIJO (4 × 250 ms): al avanzar pueden arrancar otras
 // animaciones (p. ej. al llegar los datos de la API), pero el tiempo total no depende de cuántas haya
+// Una última pasada SIN avanzar el reloj termina las que arrancaron en la última ronda (p. ej. un
+// elemento de un Reveal escalonado), sin cambiar el tiempo total del que dependen las referencias
 async function finishAnimations(page) {
+  const finish = () => page.evaluate(() => document.getAnimations().forEach((a) => {
+    const end = a.effect?.getComputedTiming?.().endTime;
+    if (a.playState === 'running' && Number.isFinite(end)) a.finish();
+  }));
   for (let i = 0; i < 4; i += 1) {
-    await page.evaluate(() => document.getAnimations().forEach((a) => {
-      const end = a.effect?.getComputedTiming?.().endTime;
-      if (a.playState === 'running' && Number.isFinite(end)) a.finish();
-    }));
+    await finish();
     await settle(page, 250);
   }
+  await finish();
+  // Sin hover ni foco accidentales sobre lo que se captura
+  await page.mouse.move(0, 0);
+  await page.evaluate(() => document.activeElement?.blur?.());
+  await page.waitForTimeout(50);
 }
 
 // El globo empieza a dibujar cuando termina de compilar sus shaders (compileAsync). Con

@@ -87,6 +87,17 @@ if (mem) {
     })));
 }
 
+const mount = load(DIR, 'mount.json');
+const mount2 = CMP ? load(CMP, 'mount.json') : null;
+if (mount) {
+  out.push('\n### Montaje del globo 3D (primera visita: caché de shaders en frío; 5 s desde que se dispara)\n');
+  out.push(table(['Perfil', 'Peor frame (ms)', 'Frames > 50 ms', 'LoAF (ms)', 'Bloqueo (ms)'],
+    mount.map((m) => {
+      const b = mount2?.find((x) => x.device === m.device && x.cpu === m.cpu);
+      return [`${m.device === 'movil' ? 'Móvil' : 'Portátil'} · CPU ${m.cpu}x`, cell(m.maxFrameMs, b?.maxFrameMs), cell(m.over50, b?.over50, 1), cell(m.loafMs, b?.loafMs), cell(m.blockingMs, b?.blockingMs)];
+    })));
+}
+
 const bun = load(DIR, 'bundles.json');
 const bun2 = CMP ? load(CMP, 'bundles.json') : null;
 if (bun) {

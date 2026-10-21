@@ -17,6 +17,7 @@ test.afterAll(async () => { await browser?.close(); });
 
 for (const c of budgets.scroll) {
   test(`scroll ${c.route} · ${c.device} · CPU ${c.cpu}x`, async () => {
+    test.setTimeout(600_000);
     const runs = [];
     for (let i = 0, tries = 0; i < RUNS; i += 1) {
       const env = await envFps(browser, c);
@@ -37,6 +38,18 @@ for (const c of budgets.scroll) {
     if (max.inpMs != null && report.inpMs != null) expect(report.inpMs, 'INP (ms)').toBeLessThanOrEqual(max.inpMs);
   });
 }
+
+test('montaje del globo sin tirón (caché de shaders en frío)', async () => {
+  test.setTimeout(900_000);
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync('node', ['perf/scripts/mount.mjs', '--runs', String(RUNS), '--out', 'perf/runs/budget-mount'], { encoding: 'utf8', shell: true });
+  expect(r.status, r.stderr).toBe(0);
+  const cells = JSON.parse(fs.readFileSync('perf/runs/budget-mount/mount.json', 'utf8'));
+  for (const c of cells) {
+    const max = budgets.mount[`${c.device}-${c.cpu}`];
+    if (max != null) expect(c.maxFrameMs, `peor frame al montar · ${c.device} CPU ${c.cpu}x`).toBeLessThanOrEqual(max);
+  }
+});
 
 test('tamaño de bundles', async () => {
   const { spawnSync } = await import('node:child_process');
