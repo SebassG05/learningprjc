@@ -8,7 +8,13 @@
     "build": "vite build",
     "lint": "eslint .",
     "test": "node --test src/components/globe/journey/keyframes.test.js src/components/reviews/reviewFormat.test.js src/components/admin/shared/adminShared.test.js src/components/admin/correcciones/submissionQuery.test.js src/components/admin/reservas/reservasQuery.test.js src/components/admin/progreso/progresoQuery.test.js src/components/admin/gestion-cursos/courseFormModel.test.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "perf:build": "node perf/scripts/build.mjs",
+    "perf:serve": "node perf/scripts/serve.mjs",
+    "perf:measure": "node perf/scripts/scroll.mjs --out perf/runs/latest --gpu real --routes /,/sobre,/contacto,/reseñas && node perf/scripts/lighthouse.mjs --out perf/runs/latest && node perf/scripts/bundles.mjs --out perf/runs/latest",
+    "perf:lhci": "lhci autorun",
+    "test:perf": "npm run perf:build && playwright test --project=perf",
+    "test:visual": "npm run perf:build && playwright test --project=visual"
   },
   "dependencies": {
     "@react-oauth/google": "^0.13.4",
@@ -24,6 +30,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
@@ -34,6 +42,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "lighthouse": "^12.8.2",
     "postcss": "^8.5.6",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",

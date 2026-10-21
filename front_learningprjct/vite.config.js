@@ -16,6 +16,16 @@ export default defineConfig(({ mode }) => {
       [
         [/^\/cursos\/?$/, 'src/pages/Cursos.jsx'],
         [/^\/curso\/([a-f0-9]{24})\/inscripcion\/?$/i, 'src/pages/CursoInscripcion.jsx', '/api/courses/$1'],
+        // Páginas fuera del bundle inicial (lib/lazyRoute.js): el primer render espera a su chunk
+        [/^\/contacto\/?$/, 'src/pages/Contacto.jsx'],
+        [/^\/rese(ñ|%C3%B1)as\/?$/i, 'src/pages/Reviews.jsx'],
+        [/^\/ajustes\/?$/, 'src/pages/Ajustes.jsx'],
+        [/^\/login\/?$/, 'src/pages/Login.jsx'],
+        [/^\/(politica-)?cookies\/?$/, 'src/pages/PoliticaCookies.jsx'],
+        [/^\/guia-usuario\/?$/, 'src/pages/GuiaUsuario.jsx'],
+        [/^\/privacidad\/?$/, 'src/pages/Privacidad.jsx'],
+        [/^\/terminos\/?$/, 'src/pages/TerminosUso.jsx'],
+        [/^\/aviso-legal\/?$/, 'src/pages/AvisoLegal.jsx'],
       ],
       { apiBase: env.VITE_API_URL || 'http://localhost:8547' }
     ),

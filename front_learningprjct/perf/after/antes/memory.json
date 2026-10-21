@@ -1,0 +1,46 @@
+[
+  {
+    "device": "portatil",
+    "cpu": 4,
+    "seconds": 240,
+    "passes": 33,
+    "start": {
+      "heapMB": 10.82,
+      "nodes": 757,
+      "listeners": 259,
+      "documents": 5
+    },
+    "end": {
+      "heapMB": 10.92,
+      "nodes": 760,
+      "listeners": 260,
+      "documents": 5
+    },
+    "heapGrowthMB": 0.1,
+    "nodeGrowth": 3,
+    "listenerGrowth": 1,
+    "errors": []
+  },
+  {
+    "device": "movil",
+    "cpu": 4,
+    "seconds": 120,
+    "passes": 10,
+    "start": {
+      "heapMB": 8.96,
+      "nodes": 694,
+      "listeners": 223,
+      "documents": 3
+    },
+    "end": {
+      "heapMB": 9.23,
+      "nodes": 694,
+      "listeners": 223,
+      "documents": 3
+    },
+    "heapGrowthMB": 0.27,
+    "nodeGrowth": 0,
+    "listenerGrowth": 0,
+    "errors": []
+  }
+]

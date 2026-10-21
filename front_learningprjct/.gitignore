@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Rendimiento: build de pruebas y resultados efímeros
+dist-perf
+test-results
+playwright-report
+.lighthouseci
+perf/runs

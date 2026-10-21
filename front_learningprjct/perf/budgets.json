@@ -1,0 +1,14 @@
+{
+  "_nota": "Umbrales tras la optimización del 20-21/10/2026 (perf/REPORT.md), con margen para la variación entre ejecuciones y la carga del equipo (observada en la sesión: fps medio del móvil 4x entre 44 y 53, frames > 50 ms del portátil 6x entre 0 y 4). El móvil emulado (CPU 4x, scroll táctil del compositor) tiene un p5 de ~30 fps también en la versión original y sin el globo: su presupuesto vigila que no empeore, no promete 60.",
+  "scroll": [
+    { "route": "/", "device": "portatil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 55, "fpsMeanMin": 57, "over50": 1, "cls": 0.02, "lcpMs": 2500, "inpMs": 200 } },
+    { "route": "/", "device": "portatil", "cpu": 6, "network": "fast-3g", "max": { "fpsMeanMin": 47, "over50": 6, "cls": 0.02, "inpMs": 200 } },
+    { "route": "/", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 28, "fpsMeanMin": 42, "over50": 8, "cls": 0.02, "lcpMs": 2500, "inpMs": 200 } },
+    { "route": "/sobre", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsMeanMin": 50, "over50": 3, "cls": 0.02, "lcpMs": 2500 } },
+    { "route": "/sobre", "device": "portatil", "cpu": 4, "network": "slow-4g", "max": { "fpsP5Min": 55, "over50": 1, "cls": 0.02, "lcpMs": 2500 } },
+    { "route": "/contacto", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsMeanMin": 50, "over50": 2, "cls": 0.02 } },
+    { "route": "/reseñas", "device": "movil", "cpu": 4, "network": "slow-4g", "max": { "fpsMeanMin": 50, "over50": 2, "cls": 0.12 } }
+  ],
+  "mount": { "_nota": "Peor frame al montar el globo con la caché de shaders en frío (primera visita), mediana", "movil-4": 300, "movil-6": 380, "portatil-6": 350 },
+  "bundles": { "initialJsGzipKB": 140, "initialCssGzipKB": 28, "globeJsGzipKB": 235 }
+}
