@@ -667,10 +667,13 @@
     }
 }
 
-/* Secciones bajo el pliegue: el navegador no las pinta hasta acercarse */
+/* Secciones bajo el pliegue de Sobre Nosotros. Antes llevaban content-visibility:auto, pero al pintarse
+   por primera vez cambiaban la altura de la página (estimación de 56rem frente a la real) y la luz de
+   fondo (.about-sky-mid, al 38 % de esa altura) saltaba ~145 px durante el scroll (CLS 0,08–0,13).
+   Se conserva la contención que content-visibility:auto aplica a una sección en pantalla (layout,
+   style, paint): el layout final es idéntico, solo desaparece el salto */
 .about-deferred {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 56rem;
+    contain: layout style paint;
 }
 
 @media (prefers-reduced-motion: reduce) {
