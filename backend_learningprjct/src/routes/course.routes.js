@@ -7,6 +7,7 @@ import { autenticar, soloAdmin } from '../middleware/authorization.js';
 import { optionalAuth } from '../middleware/optionalAuth.js';
 import { obtenerVideoCurso } from '../controller/courseVideoController.js';
 import { servirMaterial } from '../controller/materialController.js';
+import { cambiarModoAcceso } from '../controller/cohortAdminController.js';
 import { fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
 const router = express.Router();
@@ -121,6 +122,9 @@ router.delete('/:id', autenticar, soloAdmin, courseController.eliminarCurso);
 
 // Abrir / cerrar curso (admin)
 router.put('/:id/toggle-open', autenticar, soloAdmin, courseController.toggleCourseOpen);
+
+// Público o privado (por cohortes)
+router.put('/:id/access', autenticar, soloAdmin, express.json(), cambiarModoAcceso);
 
 // ============= RUTAS PARA TEMAS =============
 
