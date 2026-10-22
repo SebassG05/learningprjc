@@ -16,6 +16,15 @@ export function accessView(course) {
 }
 
 /**
+ * ¿Está abierto el curso para quien lo mira? Público: el interruptor de siempre (isOpen).
+ * Privado: lo abren las fechas de su cohorte (acceso completo o de solo lectura); isOpen no cuenta.
+ */
+export function courseIsOpen(course) {
+  if (course?.accessMode !== 'private') return Boolean(course?.isOpen);
+  return course.access?.level === 'full' || course.access?.level === 'readonly';
+}
+
+/**
  * Estado del botón principal: el de siempre (enroll/reserve/enrolled/reserved) o uno de curso privado.
  * interest / interested · cohort-reserved · closed · checking
  */

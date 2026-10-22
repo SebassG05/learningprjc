@@ -4,6 +4,7 @@
 //   admin                                   → full     (admin)
 //   curso público (o sin accessMode)        → full     (public)  · inscripción e isOpen se siguen
 //                                                                   comprobando en cada controlador
+//   (en un curso privado isOpen no cuenta: lo abren las fechas de la cohorte)
 //   privado, sin sesión                     → denied   (anonymous)
 //   privado, sin membresía activa           → denied   (not-member)
 //   miembro activo, antes de startsAt       → denied   (reserved)

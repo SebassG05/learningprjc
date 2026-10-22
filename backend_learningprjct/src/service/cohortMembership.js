@@ -35,7 +35,7 @@ export async function claimPendingMemberships(user, { verified = false, now = ne
     return { activated: modifiedCount, emailed: 0 };
   }
 
-  const cohorts = await Cohort.find(pendingFilter(email, user._id)).select('name course').lean();
+  const cohorts = await Cohort.find(pendingFilter(email, user._id)).select('name course startsAt').lean();
   let emailed = 0;
   for (const cohort of cohorts) {
     // Como mucho un enlace por cohorte y día, aunque entre muchas veces
@@ -44,7 +44,7 @@ export async function claimPendingMemberships(user, { verified = false, now = ne
     const expiresAt = new Date(now.getTime() + CLAIM_LINK_TTL_DAYS * DAY_MS);
     const { url } = await createInvite({ cohortId: cohort._id, email, maxUses: 1, expiresAt });
     const course = await Course.findById(cohort.course).select('title titleEn').lean();
-    await sendCohortInviteEmail({ to: email, url, courseTitle: course?.title || course?.titleEn, cohortName: cohort.name, expiresAt, reason: 'claim' });
+    await sendCohortInviteEmail({ to: email, url, courseTitle: course?.title || course?.titleEn, cohortName: cohort.name, startsAt: cohort.startsAt, expiresAt, reason: 'claim' });
     emailed += 1;
   }
   return { activated: 0, emailed };

@@ -176,7 +176,7 @@ async function sendMemberInvite(cohort, email, adminId) {
   const expiresAt = new Date(Date.now() + MEMBER_INVITE_TTL_DAYS * 24 * 60 * 60 * 1000);
   const { url } = await createInvite({ cohortId: cohort._id, createdBy: adminId, email, maxUses: 1, expiresAt });
   const course = await Course.findById(cohort.course).select('title titleEn').lean();
-  await sendCohortInviteEmail({ to: email, url, courseTitle: course?.title || course?.titleEn, cohortName: cohort.name, expiresAt });
+  await sendCohortInviteEmail({ to: email, url, courseTitle: course?.title || course?.titleEn, cohortName: cohort.name, startsAt: cohort.startsAt, expiresAt });
 }
 
 /**
@@ -293,6 +293,7 @@ export const crearInvitacion = async (req, res, next) => {
           url: created.url,
           courseTitle: course?.title || course?.titleEn,
           cohortName: cohort.name,
+          startsAt: cohort.startsAt,
           expiresAt: created.invite.expiresAt,
         });
         emailed = true;

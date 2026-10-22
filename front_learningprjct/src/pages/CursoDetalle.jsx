@@ -8,7 +8,7 @@ import EjercicioOptativo from '../components/curso/EjercicioOptativo';
 import TermsGate from '../components/courses/TermsGate';
 import { authFetch } from '../lib/courseFiles';
 import { PRIVATE } from '../components/courses/coursesCopy';
-import { formatCohortDate } from '../components/courses/sheet/privateAccess';
+import { courseIsOpen, formatCohortDate } from '../components/courses/sheet/privateAccess';
 import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { duration, ease, spring } from '../lib/motion';
@@ -449,7 +449,7 @@ export default function CursoDetalle() {
         )}
 
         {/* Banner apertura próximamente */}
-        {!curso.isOpen && (
+        {!courseIsOpen(curso) && (
           <div className="flex items-center gap-3 bg-amber-500/10 border border-amber-500/30 rounded-2xl px-6 py-4 mb-10">
             <Clock className="w-6 h-6 text-amber-400 flex-shrink-0" />
             <div>

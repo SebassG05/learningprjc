@@ -15,7 +15,7 @@ import CourseJsonLd from '../components/courses/sheet/CourseJsonLd';
 import StickyEnrollBar from '../components/courses/sheet/StickyEnrollBar';
 import TermsDialog from '../components/courses/sheet/TermsDialog';
 import PrivateAccessNotice from '../components/courses/sheet/PrivateAccessNotice';
-import { accessView } from '../components/courses/sheet/privateAccess';
+import { accessView, courseIsOpen } from '../components/courses/sheet/privateAccess';
 import { SheetMessage, SheetSkeleton } from '../components/courses/sheet/SheetStates';
 import useCourseSheet from '../components/courses/sheet/useCourseSheet';
 import useEnrollAction from '../components/courses/sheet/useEnrollAction';
@@ -128,7 +128,7 @@ export default function CursoInscripcion() {
       <CourseOutcomes description={description} objectives={objectives} lang={lang} />
       <CourseSyllabus course={course} lang={lang} enrolled={enrolled} />
       <CourseFacts course={course} />
-      <CourseClosing ref={closingCta} cta={cta} comingSoon={!course.isOpen} lead={PRIVATE.closingLead[access.view]} />
+      <CourseClosing ref={closingCta} cta={cta} comingSoon={!courseIsOpen(course)} lead={PRIVATE.closingLead[access.view]} />
 
       <StickyEnrollBar watch={watch} meta={courseMeta(course)} cta={cta} />
       <AuthModal
@@ -142,7 +142,7 @@ export default function CursoInscripcion() {
       <TermsDialog
         key={enroll.terms.key}
         open={enroll.terms.open}
-        mode={course.isOpen ? 'enroll' : 'reserve'}
+        mode={courseIsOpen(course) ? 'enroll' : 'reserve'}
         courseTitle={title}
         language={isBilingual(course) ? lang : null}
         sending={enroll.sending}

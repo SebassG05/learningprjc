@@ -49,6 +49,7 @@ export const FILTERS = {
 
 export const CARD = {
   comingSoon: 'Próximamente',
+  private: 'Por invitación',
   view: 'Ver curso',
   resume: 'Continuar',
   progress: 'Tu progreso',

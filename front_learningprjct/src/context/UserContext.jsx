@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { sessionCheckResult } from '../lib/session';
 
 const UserContext = createContext(null);
 
@@ -12,42 +13,45 @@ export function UserProvider({ children }) {
     const userData = localStorage.getItem('user');
     
     if (token && userData) {
+      // Sesión rota de antes (token «undefined»): fuera sin preguntar al servidor
+      if (sessionCheckResult(null, token) === 'expired') {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setLoading(false);
+        return;
+      }
+
       // Primero cargar datos del localStorage (para evitar flash)
       try {
         setUser(JSON.parse(userData));
       } catch {
         setUser(null);
       }
-      
-      // Luego actualizar con datos frescos del backend
+
+      // Luego confirmar con el backend: si el token ya no vale (401), se cierra la sesión; si es un
+      // error de red, se conserva
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
-      console.log('🔄 Obteniendo datos del usuario desde:', `${apiUrl}/api/users/me`);
-      
       fetch(`${apiUrl}/api/users/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
-        .then(res => {
-          console.log('📡 Respuesta del servidor:', res.status);
-          if (!res.ok) {
-            throw new Error('Token inválido');
+        .then(async (res) => {
+          const result = sessionCheckResult(res, token);
+          if (result === 'expired') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            setUser(null);
+          } else if (result === 'valid') {
+            const data = await res.json();
+            setUser(data.user);
+            localStorage.setItem('user', JSON.stringify(data.user));
           }
-          return res.json();
-        })
-        .then(data => {
-          console.log('✅ Datos recibidos del backend:', data);
-          console.log('👤 Usuario actualizado:', data.user);
-          console.log('🎭 Role del usuario:', data.user?.role);
-          
-          // Actualizar con datos frescos que incluyen el role
-          setUser(data.user);
-          localStorage.setItem('user', JSON.stringify(data.user));
           setLoading(false);
         })
         .catch(err => {
           console.error('❌ Error al obtener datos del usuario:', err);
-          // No limpiar si es solo un error de red - mantener sesión offline
+          // Error de red: se mantiene la sesión guardada
           setLoading(false);
         });
     } else {

@@ -3,7 +3,7 @@
 // de Sevilla al pie. HTML de email: tablas, estilos en línea y colores sólidos (sin variables CSS ni
 // fuentes externas) para que se vea igual en Gmail, Outlook y Apple Mail.
 
-const C = {
+export const C = {
   night: '#0b1311',
   card: '#141816',
   cardLine: '#232b27',
@@ -18,8 +18,8 @@ const C = {
   teal: '#0e2a2d',
 };
 
-const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
-const MONO = "'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace";
+export const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
+export const MONO = "'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace";
 
 // Escapa el texto del usuario antes de meterlo en el HTML (evita HTML o enlaces inyectados)
 export const escapeHtml = (value) =>

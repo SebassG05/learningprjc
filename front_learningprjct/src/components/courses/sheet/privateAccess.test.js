@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { accessView, ctaState, formatCohortDate } from './privateAccess.js';
+import { accessView, courseIsOpen, ctaState, formatCohortDate } from './privateAccess.js';
 
 const priv = (access) => ({ accessMode: 'private', ...(access && { access }) });
 const START = '2026-11-30T00:00:00.000Z';
@@ -57,6 +57,20 @@ describe('ctaState', () => {
   });
   test('comprobando → checking', () => {
     assert.equal(ctaState({ view: 'checking' }, 'enroll'), 'checking');
+  });
+});
+
+describe('courseIsOpen', () => {
+  test('curso público: el interruptor de siempre', () => {
+    assert.equal(courseIsOpen({ isOpen: true }), true);
+    assert.equal(courseIsOpen({ accessMode: 'public', isOpen: false }), false);
+  });
+  test('curso privado: lo abren las fechas de la cohorte, no isOpen', () => {
+    assert.equal(courseIsOpen(priv({ level: 'full', reason: 'member' }), false), true);
+    assert.equal(courseIsOpen({ ...priv({ level: 'full', reason: 'member' }), isOpen: false }), true);
+    assert.equal(courseIsOpen({ ...priv({ level: 'readonly', reason: 'ended' }), isOpen: false }), true);
+    assert.equal(courseIsOpen({ ...priv({ level: 'denied', reason: 'reserved' }), isOpen: true }), false);
+    assert.equal(courseIsOpen({ ...priv(), isOpen: true }), false); // sin access (listado): no se promete nada
   });
 });
 

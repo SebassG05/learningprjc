@@ -4,7 +4,7 @@ import { enrollInCourse, invalidateTerms, readToken, registerInterest } from '..
 import { useToast } from '../../../context/ToastContext';
 import { ENROLL, PRIVATE } from '../coursesCopy';
 import { saveLanguage } from '../courseFormat';
-import { ctaState, INERT_CTA } from './privateAccess';
+import { courseIsOpen, ctaState, INERT_CTA } from './privateAccess';
 
 /**
  * Lo que hace el botón principal de la ficha según el alumno y el curso:
@@ -28,7 +28,8 @@ export default function useEnrollAction({ course, user, enrollment, language, ma
   const [termsKey, setTermsKey] = useState(0);
 
   const id = course?._id;
-  const open = Boolean(course?.isOpen);
+  // Público: isOpen. Privado: las fechas de la cohorte (ver courseIsOpen)
+  const open = courseIsOpen(course);
   const enrolled = Boolean(enrollment.data?.enrolled);
   const baseState = enrolled ? (open ? 'enrolled' : 'reserved') : open ? 'enroll' : 'reserve';
   const [interest, setInterest] = useState({ done: false, sending: false });

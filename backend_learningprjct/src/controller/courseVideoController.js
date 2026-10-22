@@ -27,9 +27,10 @@ export const obtenerVideoCurso = async (req, res) => {
     ]);
     if (!course) return res.status(404).json({ error: 'Curso no encontrado' });
 
-    // En un curso privado, además, hay que tener acceso de lectura (cohorte en fechas o solo lectura)
-    const canRead = !isPrivate(course) || allows((await accessFor(req.user, course)).level, 'read');
-    const mode = enrolled && course.isOpen === true && canRead ? 'full' : 'preview';
+    // Curso público: abierto según el interruptor isOpen. Curso privado: lo abren las fechas de la
+    // cohorte (acceso de lectura), el interruptor no cuenta
+    const open = isPrivate(course) ? allows((await accessFor(req.user, course)).level, 'read') : course.isOpen === true;
+    const mode = enrolled && open ? 'full' : 'preview';
     const { src, poster } = videoUrls(video, mode, videoType());
     res.json({ mode, src, poster });
   } catch (err) {

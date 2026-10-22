@@ -166,6 +166,24 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(r.body.mode, 'preview');
     });
 
+    test('privado: en fechas manda la cohorte, no el interruptor abierto/cerrado (isOpen=false) → full', async () => {
+      const course = await Course.create({ _id: CARBONO, title: 'Carbono', description: 'd', accessMode: 'private', isOpen: false });
+      const ana = await fx.createUser();
+      await fx.createCohort(course, { members: [ana] });
+      await UserProgress.create({ userId: ana._id, courseId: course._id });
+      const r = await api.call('GET', `/api/courses/${CARBONO}/video`, { headers: fx.authHeader(ana) });
+      assert.equal(r.body.mode, 'full');
+    });
+
+    test('privado: plaza reservada (antes de fechas) → preview aunque esté inscrito', async () => {
+      const course = await Course.create({ _id: CARBONO, title: 'Carbono', description: 'd', accessMode: 'private', isOpen: true });
+      const ana = await fx.createUser();
+      await fx.createCohort(course, { window: 'future', members: [ana] });
+      await UserProgress.create({ userId: ana._id, courseId: course._id });
+      const r = await api.call('GET', `/api/courses/${CARBONO}/video`, { headers: fx.authHeader(ana) });
+      assert.equal(r.body.mode, 'preview');
+    });
+
     test('privado: miembro inscrito y curso abierto → full', async () => {
       const course = await Course.create({ _id: CARBONO, title: 'Carbono', description: 'd', accessMode: 'private', isOpen: true });
       const ana = await fx.createUser();

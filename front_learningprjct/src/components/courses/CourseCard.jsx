@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Clock } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Lock } from 'lucide-react';
 import { cloudinarySrcSet, cloudinaryUrl } from '../../lib/cloudinary';
 import { spring } from '../../lib/motion';
 import { CARD } from './coursesCopy';
@@ -64,7 +64,12 @@ function CourseCard({ course, areaName, progress, eager = false, priority = fals
               {level}
             </span>
           ) : null}
-          {!course.isOpen ? (
+          {course.accessMode === 'private' ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-canvas/70 px-3 py-1 text-footnote font-semibold text-dawn ring-1 ring-inset ring-line-strong">
+              <Lock className="h-3 w-3" aria-hidden="true" />
+              {CARD.private}
+            </span>
+          ) : !course.isOpen ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-canvas/70 px-3 py-1 text-footnote font-semibold text-dawn ring-1 ring-inset ring-line-strong">
               <Clock className="h-3 w-3" aria-hidden="true" />
               {CARD.comingSoon}
@@ -77,7 +82,8 @@ function CourseCard({ course, areaName, progress, eager = false, priority = fals
         {areaName ? <p className="eyebrow text-brand-300">{areaName}</p> : null}
         <h3 className="text-title-3 font-semibold text-ink">
           <Link
-            to={enrolled && course.isOpen ? `/curso/${course._id}` : `/curso/${course._id}/inscripcion`}
+            // Privado: siempre a la ficha, que sabe si su cohorte ya ha empezado y lleva al aula
+            to={enrolled && course.isOpen && course.accessMode !== 'private' ? `/curso/${course._id}` : `/curso/${course._id}/inscripcion`}
             className="outline-none after:absolute after:inset-0 after:z-20 after:rounded-3xl focus-visible:after:ring-2 focus-visible:after:ring-brand-400"
           >
             {title}
