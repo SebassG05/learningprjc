@@ -16,7 +16,7 @@ const { COURSE_VIDEOS, videoFor } = await import('../src/config/courseVideos.js'
 const { videoUrls } = await import('../src/service/courseVideoService.js');
 const { default: courseRoutes } = await import('../src/routes/course.routes.js');
 
-const CARBONO = '69d50335b1e80c0e37ab562a';
+const CARBONO = '69d50406663e8648d7ee1f08';
 const SIN_VIDEO = '64b0000000000000000000aa';
 const VIDEO = { publicId: 'Carbono_modelos_con_intro_pyzhch', version: 1792652270 };
 
