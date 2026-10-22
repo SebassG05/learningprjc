@@ -70,6 +70,10 @@ const courseSchema = new mongoose.Schema({
   }], // Idiomas en los que está disponible el curso
   temas: [temaSchema], // Array de temas del curso
   isOpen: { type: Boolean, default: false }, // Si el curso está abierto para acceder al contenido
+  // 'private': solo miembros activos de alguna de sus cohortes (y admins) acceden al contenido.
+  // La regla vive en service/courseAccess.js; los cursos sin el campo se tratan como públicos.
+  accessMode: { type: String, enum: ['public', 'private'], default: 'public' },
+  cohorts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cohort' }],
 }, { timestamps: true });
 
 // Validación personalizada: al menos uno de los títulos debe existir
