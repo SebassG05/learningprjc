@@ -1,5 +1,5 @@
 // Pestañas del panel de administración: clave en la URL (?tab=), etiqueta y texto de cabecera.
-import { BarChart3, FileCheck2, Settings2, Users } from 'lucide-react';
+import { BarChart3, FileCheck2, KeyRound, Settings2, Users } from 'lucide-react';
 
 export const ADMIN_TABS = [
   {
@@ -22,6 +22,13 @@ export const ADMIN_TABS = [
     icon: BarChart3,
     title: 'Progreso del curso',
     description: 'Avance, entregas y nota media de cada alumno.',
+  },
+  {
+    key: 'accesos',
+    label: 'Accesos',
+    icon: KeyRound,
+    title: 'Accesos',
+    description: 'Cursos privados: cohortes, miembros y enlaces de invitación.',
   },
   {
     key: 'gestion',

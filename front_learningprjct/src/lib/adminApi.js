@@ -63,3 +63,17 @@ export const uploadMaterial = (courseId, topicId, formData) =>
   request(`/api/courses/${courseId}/temas/${topicId}/materiales`, { method: 'POST', body: formData });
 export const deleteMaterial = (courseId, topicId, materialId) =>
   request(`/api/courses/${courseId}/temas/${topicId}/materiales/${materialId}`, { method: 'DELETE' });
+
+// ---- Accesos: cursos privados por cohortes ----
+export const setCourseAccess = (courseId, accessMode) => request(`/api/courses/${courseId}/access`, { method: 'PUT', body: { accessMode } });
+export const fetchCohorts = (courseId, signal) => request('/api/cohorts', { params: { course: courseId }, signal });
+export const createCohort = (body) => request('/api/cohorts', { method: 'POST', body });
+export const updateCohort = (id, body) => request(`/api/cohorts/${id}`, { method: 'PUT', body });
+export const deleteCohort = (id, { force = false } = {}) => request(`/api/cohorts/${id}`, { method: 'DELETE', params: force ? { force: 1 } : undefined });
+export const addCohortMembers = (id, emails, sendEmail) => request(`/api/cohorts/${id}/members`, { method: 'POST', body: { emails, sendEmail } });
+export const removeCohortMember = (id, memberId) => request(`/api/cohorts/${id}/members/${memberId}`, { method: 'DELETE' });
+export const fetchCohortInvites = (id, signal) => request(`/api/cohorts/${id}/invites`, { signal });
+// La respuesta trae `url` (con el token) una única vez: no se puede volver a consultar
+export const createCohortInvite = (id, body) => request(`/api/cohorts/${id}/invites`, { method: 'POST', body });
+export const revokeCohortInvite = (id, inviteId) => request(`/api/cohorts/${id}/invites/${inviteId}/revoke`, { method: 'POST' });
+export const fetchCourseInterest = (courseId, signal) => request(`/api/courses/${courseId}/interes`, { signal });
