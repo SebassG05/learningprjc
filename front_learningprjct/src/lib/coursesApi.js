@@ -12,27 +12,47 @@ export class ApiError extends Error {
 
 const getJson = async (url, init) => {
   const res = await fetch(url, init);
-  if (!res.ok) throw new ApiError(`HTTP ${res.status} en ${url}`, res.status);
+  if (!res.ok) throw new ApiError(`HTTP ${res.status} en ${url}`, res.status, await res.json().catch(() => null));
   return res.json();
 };
 
-// Lo que ya llegó del listado sirve para pintar la ficha al instante (luego se revalida)
+// Lo que ya llegó del listado sirve para pintar la ficha al instante (luego se revalida).
+// Los cursos privados no se guardan: su contenido depende de quién los pide (sesión y cohorte).
 const courseCache = new Map();
 const remember = (course) => {
-  if (course?._id) courseCache.set(String(course._id), course);
+  if (course?._id && course.accessMode !== 'private') courseCache.set(String(course._id), course);
   return course;
 };
 export const peekCourse = (id) => courseCache.get(String(id)) ?? null;
 
+// Con sesión se manda el token: a un admin el backend le devuelve los cursos privados completos
 export const fetchCourses = async (signal) => {
-  const list = await getJson(`${API_URL}/api/courses`, { signal });
+  const list = await getJson(`${API_URL}/api/courses`, { signal, headers: sessionHeaders() });
   if (Array.isArray(list)) list.forEach(remember);
   return list;
 };
 
-export const fetchCourse = async (id, signal) => remember(await getJson(`${API_URL}/api/courses/${id}`, { signal }));
+// En un curso privado el backend responde según la sesión (`access`): siempre con token si lo hay
+export const fetchCourse = async (id, signal) =>
+  remember(await getJson(`${API_URL}/api/courses/${id}`, { signal, headers: sessionHeaders() }));
 
 const authHeaders = (token) => ({ Authorization: `Bearer ${token}` });
+function sessionHeaders() {
+  const token = readToken();
+  return token ? authHeaders(token) : {};
+}
+
+// «Avísame de la próxima edición» (cursos privados). Con sesión el backend usa el email de la cuenta.
+export async function registerInterest(id, email) {
+  const res = await fetch(`${API_URL}/api/courses/${id}/interes`, {
+    method: 'POST',
+    headers: { ...sessionHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(email ? { email } : {}),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new ApiError(data.error || `HTTP ${res.status}`, res.status, data);
+  return data;
+}
 
 export const fetchEnrollmentStatus = (id, token, signal) =>
   getJson(`${API_URL}/api/users/enrollment/${id}`, { signal, headers: authHeaders(token) });

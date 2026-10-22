@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { enrollInCourse, invalidateTerms, readToken } from '../../../lib/coursesApi';
+import { enrollInCourse, invalidateTerms, readToken, registerInterest } from '../../../lib/coursesApi';
 import { useToast } from '../../../context/ToastContext';
-import { ENROLL } from '../coursesCopy';
+import { ENROLL, PRIVATE } from '../coursesCopy';
 import { saveLanguage } from '../courseFormat';
+import { ctaState, INERT_CTA } from './privateAccess';
 
 /**
  * Lo que hace el botón principal de la ficha según el alumno y el curso:
@@ -11,9 +12,12 @@ import { saveLanguage } from '../courseFormat';
  *                       y se inscribe al confirmarlos (el backend rechaza sin aceptación válida)
  *   enrolled          → lleva al aula
  *   reserved          → curso aún cerrado y plaza ya reservada: no hace nada
+ * Cursos privados (access = accessView(course)):
+ *   interest          → «Avísame de la próxima edición»: con sesión se apunta; sin ella, onAskEmail()
+ *   cohort-reserved / closed / interested / checking → estados, no acciones
  * El idioma elegido en la ficha viaja en la inscripción (antes no se enviaba y todos quedaban en español).
  */
-export default function useEnrollAction({ course, user, enrollment, language, markEnrolled }) {
+export default function useEnrollAction({ course, user, enrollment, language, markEnrolled, access = { view: 'open' }, onAskEmail }) {
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [sending, setSending] = useState(false);
@@ -26,7 +30,24 @@ export default function useEnrollAction({ course, user, enrollment, language, ma
   const id = course?._id;
   const open = Boolean(course?.isOpen);
   const enrolled = Boolean(enrollment.data?.enrolled);
-  const state = enrolled ? (open ? 'enrolled' : 'reserved') : open ? 'enroll' : 'reserve';
+  const baseState = enrolled ? (open ? 'enrolled' : 'reserved') : open ? 'enroll' : 'reserve';
+  const [interest, setInterest] = useState({ done: false, sending: false });
+  const state = ctaState(access, baseState, { interested: interest.done });
+
+  const sendInterest = useCallback(async (email) => {
+    setInterest((i) => ({ ...i, sending: true }));
+    try {
+      await registerInterest(id, email);
+      setInterest({ done: true, sending: false });
+      showToast(PRIVATE.done, 'success');
+      return true;
+    } catch (err) {
+      setInterest({ done: false, sending: false });
+      const message = err.status === 400 ? PRIVATE.invalidEmail : err.status === 429 && err.message ? err.message : PRIVATE.error;
+      showToast(message, 'error');
+      return false;
+    }
+  }, [id, showToast]);
 
   const submit = useCallback(async (termsVersion) => {
     const token = readToken();
@@ -63,7 +84,12 @@ export default function useEnrollAction({ course, user, enrollment, language, ma
   }, [id, language, markEnrolled, navigate, open, showToast]);
 
   const act = useCallback(() => {
-    if (sending || state === 'reserved') return;
+    if (sending || interest.sending || INERT_CTA.has(state)) return;
+    if (state === 'interest') {
+      if (user) sendInterest();
+      else onAskEmail?.();
+      return;
+    }
     if (state === 'enrolled') {
       navigate(`/curso/${id}`);
       return;
@@ -74,7 +100,7 @@ export default function useEnrollAction({ course, user, enrollment, language, ma
       return;
     }
     setTermsOpen(true);
-  }, [id, navigate, sending, state, user]);
+  }, [id, interest.sending, navigate, onAskEmail, sendInterest, sending, state, user]);
 
   // Pidió inscribirse sin sesión: al entrar, se sigue en cuanto sabemos si ya estaba inscrito
   useEffect(() => {
@@ -91,8 +117,9 @@ export default function useEnrollAction({ course, user, enrollment, language, ma
 
   return {
     state,
-    sending,
+    sending: sending || interest.sending,
     act,
+    interest: { done: interest.done, sending: interest.sending, submit: sendInterest },
     login: { open: loginOpen, close: closeLogin },
     terms: { open: termsOpen, key: termsKey, close: () => setTermsOpen(false), confirm: submit },
   };

@@ -117,6 +117,37 @@ export const ENROLL = {
 };
 
 
+// Cursos privados (acceso por cohortes)
+export const PRIVATE = {
+  badge: 'Curso privado – acceso por invitación',
+  cta: {
+    interest: 'Avísame de la próxima edición',
+    interested: 'Te avisaremos',
+    'cohort-reserved': 'Plaza reservada',
+    closed: 'Edición cerrada',
+    checking: 'Un momento…',
+  },
+  lead: {
+    'invite-only': 'Esta edición es solo para personas invitadas. Déjanos tu email y te avisamos cuando abramos la siguiente.',
+    ended: 'Esta edición ha terminado. Déjanos tu email y te avisamos cuando abramos la siguiente.',
+    reserved: (date) => `Tienes plaza en este curso. Empieza el ${date}: entonces podrás entrar y ver el contenido.`,
+    readonly: (date) => `Esta edición terminó${date ? ` el ${date}` : ''}. Puedes repasar el contenido, pero ya no se admiten entregas.`,
+  },
+  login: '¿Tienes invitación? Inicia sesión',
+  loginHint: 'Usa el email al que te llegó la invitación.',
+  emailLabel: 'Tu email',
+  emailPlaceholder: 'nombre@empresa.com',
+  submit: 'Avisarme',
+  sending: 'Enviando…',
+  done: 'Hecho: te escribiremos cuando abramos la próxima edición.',
+  invalidEmail: 'Escribe un email válido.',
+  error: 'No se pudo guardar. Inténtalo de nuevo en un momento.',
+  closingLead: {
+    'invite-only': 'Este curso se imparte por ediciones cerradas. Si quieres participar en la próxima, te avisamos.',
+    ended: 'Esta edición ha terminado. Si quieres participar en la próxima, te avisamos.',
+  },
+};
+
 export const VIDEO = {
   previewEyebrow: 'Avance · 30 s',
   previewTitle: 'Un primer vistazo al curso',

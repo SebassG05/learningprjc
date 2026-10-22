@@ -47,7 +47,8 @@ export default function useCourseSheet(id, userId) {
       alive = false;
       ctrl.abort();
     };
-  }, [id, attempt]);
+    // userId: al entrar o salir se vuelve a pedir (en un curso privado cambia lo que se ve)
+  }, [id, attempt, userId]);
 
   // El catálogo solo da el nombre del área (miga de pan): se pide tras el primer pintado de la ficha,
   // para no competir con la petición del curso ni con el LCP

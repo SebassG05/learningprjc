@@ -1,7 +1,7 @@
 // Ficha pública de un curso, por escenas: portada → qué aprenderás → temario → ficha técnica → cierre.
 // Sin sesión se puede ver entera; «Inscribirme» pide acceso y continúa al entrar.
 // Las piezas viven en components/courses/sheet y los textos en components/courses/coursesCopy.js.
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AuthModal from '../components/auth/LazyAuthModal';
 import CourseHero from '../components/courses/sheet/CourseHero';
@@ -14,10 +14,12 @@ import CourseClosing from '../components/courses/sheet/CourseClosing';
 import CourseJsonLd from '../components/courses/sheet/CourseJsonLd';
 import StickyEnrollBar from '../components/courses/sheet/StickyEnrollBar';
 import TermsDialog from '../components/courses/sheet/TermsDialog';
+import PrivateAccessNotice from '../components/courses/sheet/PrivateAccessNotice';
+import { accessView } from '../components/courses/sheet/privateAccess';
 import { SheetMessage, SheetSkeleton } from '../components/courses/sheet/SheetStates';
 import useCourseSheet from '../components/courses/sheet/useCourseSheet';
 import useEnrollAction from '../components/courses/sheet/useEnrollAction';
-import { PROVISIONAL } from '../components/courses/coursesCopy';
+import { PRIVATE, PROVISIONAL } from '../components/courses/coursesCopy';
 import {
   areaLabel,
   courseLanguages,
@@ -64,7 +66,17 @@ export default function CursoInscripcion() {
   // El vídeo se pide ya, con el token, en paralelo a la inscripción: el backend decide preview o completo
   const video = useCourseVideo(id, userId, Boolean(enrollment.data?.enrolled));
 
-  const enroll = useEnrollAction({ course, user, enrollment, language: lang, markEnrolled });
+  // Curso privado: lo que el backend dice de esta sesión (invitación, plaza reservada, solo lectura…)
+  const access = useMemo(() => accessView(course), [course]);
+  const emailRef = useRef(null);
+  // «Avísame» sin sesión desde la barra fija o el cierre: lleva al campo de email de la portada
+  const askEmail = useCallback(() => {
+    emailRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    emailRef.current?.focus({ preventScroll: true });
+  }, []);
+  const [loginForAccess, setLoginForAccess] = useState(false);
+
+  const enroll = useEnrollAction({ course, user, enrollment, language: lang, markEnrolled, access, onAskEmail: askEmail });
   // Mientras no se sabe si ya está inscrito, el botón no promete una acción equivocada
   const checking = Boolean(user) && enrollment.status === 'loading';
   const cta = { state: enroll.state, sending: enroll.sending || checking, onClick: enroll.act };
@@ -102,15 +114,31 @@ export default function CursoInscripcion() {
         areaName={areaLabel(catalog, course.area)}
         cta={cta}
         ctaRef={heroCta}
+        notice={
+          <PrivateAccessNotice
+            ref={emailRef}
+            access={access}
+            signedIn={Boolean(user)}
+            interest={enroll.interest}
+            onLogin={() => setLoginForAccess(true)}
+          />
+        }
       />
       <CourseVideo state={video} courseId={id} title={title} cta={cta} />
       <CourseOutcomes description={description} objectives={objectives} lang={lang} />
       <CourseSyllabus course={course} lang={lang} enrolled={enrolled} />
       <CourseFacts course={course} />
-      <CourseClosing ref={closingCta} cta={cta} comingSoon={!course.isOpen} />
+      <CourseClosing ref={closingCta} cta={cta} comingSoon={!course.isOpen} lead={PRIVATE.closingLead[access.view]} />
 
       <StickyEnrollBar watch={watch} meta={courseMeta(course)} cta={cta} />
-      <AuthModal open={enroll.login.open} onClose={enroll.login.close} redirectTo={null} />
+      <AuthModal
+        open={enroll.login.open || loginForAccess}
+        onClose={() => {
+          enroll.login.close();
+          setLoginForAccess(false);
+        }}
+        redirectTo={null}
+      />
       <TermsDialog
         key={enroll.terms.key}
         open={enroll.terms.open}

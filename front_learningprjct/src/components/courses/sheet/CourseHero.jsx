@@ -2,13 +2,13 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { BookOpen, Clock } from 'lucide-react';
+import { BookOpen, Clock, Lock } from 'lucide-react';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import { useScenesEnabled } from '../../../hooks/useScene';
 import { glideToHash } from '../../../lib/smoothScroll';
 import { cloudinarySrcSet, cloudinaryUrl } from '../../../lib/cloudinary';
 import { ease } from '../../../lib/motion';
-import { ENROLL, SHEET } from '../coursesCopy';
+import { ENROLL, PRIVATE, SHEET } from '../coursesCopy';
 import { courseHours, courseLanguages, courseSummary, formatHours, levelLabel, topicCount } from '../courseFormat';
 import { STATS } from '../coursesCopy';
 import EnrollButton from './EnrollButton';
@@ -34,7 +34,8 @@ function Pill({ children, tone = 'ink' }) {
 // Escena 1 · Portada. En lg+ la imagen ocupa el fondo y, al bajar, crece un 6 % y el velo se cierra
 // (solo transform/opacity y solo con puntero fino). En móvil el texto llena la primera pantalla y la
 // portada va debajo (también en tablet, sin anchura para texto e imagen a la vez): si asomara arriba, la imagen (que llega tras el JS y la API) sería el LCP.
-export default function CourseHero({ course, title, description, lang, onLang, bilingual, areaName, cta, ctaRef }) {
+// `notice`: aviso de curso privado bajo el botón (acceso por invitación, plaza reservada, solo lectura)
+export default function CourseHero({ course, title, description, lang, onLang, bilingual, areaName, cta, ctaRef, notice = null }) {
   const ref = useRef(null);
   const scenes = useScenesEnabled();
   const fine = useMediaQuery('(pointer: fine)');
@@ -78,7 +79,13 @@ export default function CourseHero({ course, title, description, lang, onLang, b
         {description ? <p lang={lang} className="mt-6 max-w-2xl text-lg text-ink-2">{courseSummary(description)}</p> : null}
 
         <ul className="mt-8 flex flex-wrap gap-2" aria-label="Datos del curso">
-          {!course.isOpen ? (
+          {course.accessMode === 'private' ? (
+            <Pill tone="dawn">
+              <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+              {PRIVATE.badge}
+            </Pill>
+          ) : null}
+          {!course.isOpen && course.accessMode !== 'private' ? (
             <Pill tone="dawn">
               <Clock className="h-3.5 w-3.5" aria-hidden="true" />
               {ENROLL.comingSoon}
@@ -106,6 +113,7 @@ export default function CourseHero({ course, title, description, lang, onLang, b
           ) : null}
           {bilingual ? <LanguageToggle value={lang} onChange={onLang} /> : null}
         </div>
+        {notice}
       </div>
 
       {/* Portada: un único <img>. Fondo en lg+, tarjeta bajo el texto en móvil y tablet */}

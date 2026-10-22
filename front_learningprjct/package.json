@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "test": "node --test src/components/globe/journey/keyframes.test.js src/components/reviews/reviewFormat.test.js src/components/admin/shared/adminShared.test.js src/components/admin/correcciones/submissionQuery.test.js src/components/admin/reservas/reservasQuery.test.js src/components/admin/progreso/progresoQuery.test.js src/components/admin/gestion-cursos/courseFormModel.test.js src/components/courses/sheet/videoResume.test.js",
+    "test": "node --test src/components/globe/journey/keyframes.test.js src/components/reviews/reviewFormat.test.js src/components/admin/shared/adminShared.test.js src/components/admin/correcciones/submissionQuery.test.js src/components/admin/reservas/reservasQuery.test.js src/components/admin/progreso/progresoQuery.test.js src/components/admin/gestion-cursos/courseFormModel.test.js src/components/courses/sheet/videoResume.test.js src/components/courses/sheet/privateAccess.test.js",
     "preview": "vite preview",
     "perf:build": "node perf/scripts/build.mjs",
     "perf:serve": "node perf/scripts/serve.mjs",

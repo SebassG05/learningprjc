@@ -10,14 +10,15 @@ const HALO = {
 };
 
 // Escena 5 · Cierre: una última invitación (o el camino al aula si ya está inscrito)
-const CourseClosing = forwardRef(function CourseClosing({ cta, comingSoon }, ref) {
+// `lead`: texto propio (cursos privados); si no, el de siempre según esté abierto o no
+const CourseClosing = forwardRef(function CourseClosing({ cta, comingSoon, lead }, ref) {
   const { closingTitle, closingLead, comingSoonLead } = PROVISIONAL.sheet;
   return (
     <section aria-labelledby="curso-cierre" className="relative isolate overflow-hidden border-t border-line">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={HALO} />
       <Reveal className="mx-auto flex w-full max-w-site flex-col items-center px-gutter py-28 text-center lg:py-40">
         <h2 id="curso-cierre" className="max-w-3xl text-title-1 font-bold text-ink">{closingTitle}</h2>
-        <p className="mt-5 max-w-xl text-lg text-ink-2">{comingSoon ? comingSoonLead : closingLead}</p>
+        <p className="mt-5 max-w-xl text-lg text-ink-2">{lead ?? (comingSoon ? comingSoonLead : closingLead)}</p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <EnrollButton ref={ref} {...cta} />
           <Link to="/cursos" className="inline-flex h-14 items-center rounded-full px-6 font-semibold text-ink-2 hover:bg-white/[0.06] hover:text-ink">
