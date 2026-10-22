@@ -1,7 +1,10 @@
+import mongoose from 'mongoose';
 import Course from '../models/Course.js';
 import cloudinary from '../config/cloudinary.js';
 import { COURSE_AREAS, COURSE_LEVELS } from '../config/courseCatalog.js';
 import { CatalogFieldError, catalogFieldsForCreate, parseCatalogFields } from './courseCatalogFields.js';
+import { accessFor, allows, isAdminViewer, isPrivate, loadViewer, publicAccess, redactCourse } from '../service/courseAccess.js';
+import { noSharedCache } from '../middleware/courseAccess.js';
 import { editarTema, renumerar, reordenar, siguienteNumero, TemasError } from '../service/temasService.js';
 
 // Portada y foto del profesor llegan como campos de archivo (upload.fields)
@@ -27,7 +30,13 @@ export const obtenerCatalogo = (req, res) => {
 export const obtenerCursos = async (req, res) => {
   try {
     const courses = await Course.find().sort({ createdAt: -1 });
-    res.json(courses);
+    if (!courses.some(isPrivate)) return res.json(courses);
+
+    // Los privados salen sin URLs de materiales (el contenido solo se sirve en la ficha, con acceso).
+    // Los admins los reciben completos: el editor de cursos usa este mismo listado.
+    noSharedCache(res);
+    if (isAdminViewer(await loadViewer(req.user))) return res.json(courses);
+    res.json(courses.map((c) => (isPrivate(c) ? redactCourse(c.toJSON()) : c)));
   } catch (err) {
     console.error('Error al obtener cursos:', err);
     res.status(500).json({ error: 'Error al obtener cursos', mensaje: err.message });
@@ -41,11 +50,18 @@ export const obtenerCursos = async (req, res) => {
  */
 export const obtenerCurso = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const course = mongoose.isValidObjectId(req.params.id) ? await Course.findById(req.params.id) : null;
     if (!course) {
       return res.status(404).json({ error: 'Curso no encontrado' });
     }
-    res.json(course);
+    if (!isPrivate(course)) return res.json(course);
+
+    // Curso privado: la ficha se ve siempre; los materiales solo con acceso. `access` le dice al front
+    // qué pintar (invitación, plaza reservada, solo lectura…).
+    noSharedCache(res);
+    const access = await accessFor(req.user, course);
+    const body = allows(access.level, 'read') ? course.toJSON() : redactCourse(course.toJSON());
+    res.json({ ...body, access: publicAccess(access) });
   } catch (err) {
     console.error('Error al obtener el curso:', err);
     res.status(500).json({ error: 'Error al obtener el curso', mensaje: err.message });

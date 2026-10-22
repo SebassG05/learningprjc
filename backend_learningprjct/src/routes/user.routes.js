@@ -21,6 +21,7 @@ import {
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
 import createRateLimit from '../middleware/rateLimit.js';
+import { fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
 // Inscribirse guarda la aceptación de los términos (una prueba): pocas por minuto y por IP
 const enrollRateLimit = createRateLimit({
@@ -86,7 +87,7 @@ router.get('/me', authenticateJWT, getCurrentUser);
 // ============= RUTAS DE INSCRIPCIÓN A CURSOS =============
 
 // Inscribirse a un curso
-router.post('/enroll/:courseId', enrollRateLimit, authenticateJWT, enrollInCourse);
+router.post('/enroll/:courseId', enrollRateLimit, authenticateJWT, requireCourseAccess('write', fromParam('courseId')), enrollInCourse);
 
 // Verificar estado de inscripción
 router.get('/enrollment/:courseId', authenticateJWT, getEnrollmentStatus);

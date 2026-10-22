@@ -25,7 +25,9 @@ let enrollments;
 const same = (a, b) => String(a) === String(b);
 const match = (r, f) => same(r.userId, f.userId) && same(r.courseId, f.courseId) && r.termsVersion === f.termsVersion;
 
-Course.findById = async (id) => (same(id, CURSO) ? { _id: CURSO, isOpen: true, idiomasDisponibles: ['es', 'en'] } : null);
+// Imita una consulta de Mongoose: se puede esperar directamente o encadenar .select().lean()
+const query = (value) => ({ select: () => query(value), lean: async () => value, then: (ok, ko) => Promise.resolve(value).then(ok, ko) });
+Course.findById = (id) => query(same(id, CURSO) ? { _id: CURSO, isOpen: true, idiomasDisponibles: ['es', 'en'] } : null);
 Course.exists = async ({ _id }) => (same(_id, CURSO) ? { _id } : null);
 UserProgress.findOne = async ({ userId, courseId }) => enrollments.find((e) => same(e.userId, userId) && same(e.courseId, courseId)) ?? null;
 UserProgress.prototype.save = async function () {

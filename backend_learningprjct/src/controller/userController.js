@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import User from '../models/User.js';
 import { signToken } from '../config/jwt.js';
+import { accessFor, allows, isPrivate, redactCourse } from '../service/courseAccess.js';
 import { hasAcceptedCurrentTerms, isValidAcceptance, recordAcceptance, termsRequired } from '../service/termsService.js';
 import UserProgress from '../models/UserProgress.js';
 import Course from '../models/Course.js';
@@ -545,8 +546,16 @@ export const getUserEnrollments = async (req, res) => {
 
     const enrollments = await UserProgress.find({ userId }).populate('courseId');
 
+    // Cursos privados a los que ya no (o aún no) tiene acceso: sin URLs de materiales
+    const safe = await Promise.all(enrollments.map(async (enrollment) => {
+      const course = enrollment.courseId;
+      if (!course || !isPrivate(course)) return enrollment;
+      if (allows((await accessFor(req.user, course)).level, 'read')) return enrollment;
+      return { ...enrollment.toJSON(), courseId: redactCourse(course.toJSON()) };
+    }));
+
     res.status(200).json({
-      enrollments
+      enrollments: safe
     });
   } catch (error) {
     console.error('Error en getUserEnrollments:', error);

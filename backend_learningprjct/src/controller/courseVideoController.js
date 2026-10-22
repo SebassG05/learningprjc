@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Course from '../models/Course.js';
 import UserProgress from '../models/UserProgress.js';
+import { accessFor, allows, isPrivate } from '../service/courseAccess.js';
 import { videoFor } from '../config/courseVideos.js';
 import { videoType, videoUrls } from '../service/courseVideoService.js';
 
@@ -21,12 +22,14 @@ export const obtenerVideoCurso = async (req, res) => {
 
     const userId = req.user?.id;
     const [course, enrolled] = await Promise.all([
-      Course.findById(id).select('isOpen').lean(),
+      Course.findById(id).select('isOpen accessMode').lean(),
       userId && mongoose.isValidObjectId(userId) ? UserProgress.exists({ userId, courseId: id }) : null,
     ]);
     if (!course) return res.status(404).json({ error: 'Curso no encontrado' });
 
-    const mode = enrolled && course.isOpen === true ? 'full' : 'preview';
+    // En un curso privado, además, hay que tener acceso de lectura (cohorte en fechas o solo lectura)
+    const canRead = !isPrivate(course) || allows((await accessFor(req.user, course)).level, 'read');
+    const mode = enrolled && course.isOpen === true && canRead ? 'full' : 'preview';
     const { src, poster } = videoUrls(video, mode, videoType());
     res.json({ mode, src, poster });
   } catch (err) {

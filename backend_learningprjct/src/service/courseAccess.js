@@ -11,6 +11,10 @@
 //   miembro activo, now ≥ endsAt            → readonly (ended)  si afterEnd = 'readonly'
 //                                             denied   (revoked) si afterEnd = 'revoke'
 // Con varias cohortes gana la mejor.
+import mongoose from 'mongoose';
+import Course from '../models/Course.js';
+import Cohort from '../models/Cohort.js';
+import User from '../models/User.js';
 
 const ADMIN_ROLES = new Set(['admin', 'superadmin']);
 
@@ -49,6 +53,60 @@ export function resolveAccess({ user, course, cohorts = [], now = new Date() }) 
   }
   return best ?? { level: 'denied', reason: 'not-member' };
 }
+
+// ============= Carga desde la base de datos =============
+
+// Quién pide, con su rol. req.user puede ser el payload del JWT ({ id, email }) o un User completo
+// (middleware autenticar). El JWT no lleva el rol, así que se lee; un usuario desactivado o borrado
+// se trata como anónimo.
+export async function loadViewer(reqUser) {
+  const id = reqUser?.id ?? reqUser?._id;
+  if (!id || !mongoose.isValidObjectId(id)) return null;
+  const user = await User.findById(id).select('role activo').lean();
+  if (!user || user.activo === false) return null;
+  return { id: String(user._id), role: user.role };
+}
+
+export const isAdminViewer = (viewer) => Boolean(viewer && ADMIN_ROLES.has(viewer.role));
+
+// Solo las cohortes del curso en las que el usuario es miembro activo, y de ellas solo su fila
+const activeCohortsOf = (courseId, userId) => {
+  const mine = { user: userId, status: 'active' };
+  return Cohort.find(
+    { course: courseId, members: { $elemMatch: mine } },
+    { course: 1, startsAt: 1, endsAt: 1, afterEnd: 1, members: { $elemMatch: mine } },
+  ).lean();
+};
+
+/**
+ * Acceso a un curso ya cargado (necesita _id y accessMode). Los públicos no tocan la base de datos.
+ * @returns {Promise<{ level, reason, startsAt?, endsAt? }>}
+ */
+export async function accessFor(reqUser, course, now = new Date()) {
+  if (!isPrivate(course)) return { level: 'full', reason: 'public' };
+  const viewer = await loadViewer(reqUser);
+  const cohorts = viewer && !isAdminViewer(viewer) ? await activeCohortsOf(course._id, viewer.id) : [];
+  return resolveAccess({ user: viewer, course, cohorts, now });
+}
+
+/**
+ * Carga el curso por id y resuelve el acceso. null si el id no es válido o el curso no existe.
+ * @returns {Promise<null | { level, reason, startsAt?, endsAt?, course }>}
+ */
+export async function canAccessCourse(reqUser, courseId, now = new Date()) {
+  if (!courseId || !mongoose.isValidObjectId(courseId)) return null;
+  const course = await Course.findById(courseId).select('accessMode isOpen').lean();
+  if (!course) return null;
+  return { ...(await accessFor(reqUser, course, now)), course };
+}
+
+// Lo que se cuenta al cliente (el front pinta «Plaza reservada», «solo lectura»…)
+export const publicAccess = ({ level, reason, startsAt, endsAt }) => ({
+  level,
+  reason,
+  ...(startsAt && { startsAt }),
+  ...(endsAt && { endsAt }),
+});
 
 // 'read': ver contenido, progreso, tests autocorregidos. 'write': inscribirse, entregar, borrar entregas.
 const ALLOWED = { read: new Set(['full', 'readonly']), write: new Set(['full']) };

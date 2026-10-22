@@ -94,13 +94,13 @@ const uploadFieldsWrapper = (fields) => {
 // ============= CRUD DE CURSOS COMPLETOS =============
 
 // Obtener todos los cursos (público)
-router.get('/', courseController.obtenerCursos);
+router.get('/', optionalAuth, courseController.obtenerCursos);
 
 // Áreas y niveles del catálogo (público). Va antes de '/:id' para que «areas» no se lea como id
 router.get('/areas', courseController.obtenerCatalogo);
 
 // Obtener curso por id (público)
-router.get('/:id', courseController.obtenerCurso);
+router.get('/:id', optionalAuth, courseController.obtenerCurso);
 
 // Vídeo del curso: preview o completo según la inscripción de quien lo pide (público, personalizado)
 router.get('/:id/video', optionalAuth, obtenerVideoCurso);
