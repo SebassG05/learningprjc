@@ -8,6 +8,7 @@ import ejercicioRoutes from './ejercicio.routes.js';
 import entregaEjercicioRoutes from './entregaEjercicio.routes.js';
 import termsRoutes from './terms.routes.js';
 import { proxyPdf } from '../controller/pdfProxyController.js';
+import { optionalAuth } from '../middleware/optionalAuth.js';
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.use('/entregas', entregaEjercicioRoutes);
 router.use('/terms', termsRoutes);
 
 // Ruta proxy para PDFs de Cloudinary
-router.get('/pdf-proxy', proxyPdf);
+router.get('/pdf-proxy', optionalAuth, proxyPdf);
 
 router.get('/', (req, res) => {
   res.json({ message: 'API rutas funcionando correctamente' });

@@ -37,6 +37,10 @@ const configureExpress = (app) => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
+    // Los PDFs de las entregas NO son estáticos: se piden a GET /api/entregas/:id/archivo, que comprueba
+    // que quien pide es el autor (con acceso al curso) o un admin
+    app.use('/ejercicios', (req, res) => res.status(404).json({ error: 'No encontrado' }));
+
     // Servir archivos estáticos desde la carpeta 'public'
     app.use(express.static('public'));
 

@@ -26,18 +26,20 @@ export const noSharedCache = (res) => {
   res.vary('Authorization');
 };
 
+// 401 si falta sesión, 403 en el resto; `access` le dice al front qué pintar
+export const denyAccess = (res, access) =>
+  res.status(access.reason === 'anonymous' ? 401 : 403).json({
+    error: DENIED_MESSAGES[access.reason] ?? 'No tienes acceso a este curso',
+    access: publicAccess(access),
+  });
+
 export const requireCourseAccess = (action, courseIdFrom) => async (req, res, next) => {
   try {
     const access = await canAccessCourse(req.user, await courseIdFrom(req));
     if (!access) return res.status(404).json({ error: 'Curso no encontrado' });
     if (isPrivate(access.course)) noSharedCache(res);
 
-    if (!allows(access.level, action)) {
-      return res.status(access.reason === 'anonymous' ? 401 : 403).json({
-        error: DENIED_MESSAGES[access.reason] ?? 'No tienes acceso a este curso',
-        access: publicAccess(access),
-      });
-    }
+    if (!allows(access.level, action)) return denyAccess(res, access);
     req.courseAccess = access;
     return next();
   } catch (err) {
@@ -58,7 +60,10 @@ export const courseIdFromEntrega = (param = 'entregaId') => async (req) => {
   const id = req.params[param];
   if (!mongoose.isValidObjectId(id)) return null;
   const entrega = await EntregaEjercicio.findById(id).select('ejercicioId cursoId').lean();
-  if (!entrega) return null;
+  return entrega ? courseIdOfEntrega(entrega) : null;
+};
+
+export async function courseIdOfEntrega(entrega) {
   const ejercicio = await Ejercicio.findById(entrega.ejercicioId).select('cursoId').lean();
   return ejercicio?.cursoId ?? entrega.cursoId ?? null;
-};
+}

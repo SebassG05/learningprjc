@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import EntregaEjercicio from '../models/EntregaEjercicio.js';
 import path from 'path';
 import fs from 'fs';
@@ -8,6 +9,9 @@ import { buildListadoPipeline, formatListado, ListadoError, parseListado, usaLis
 import User from '../models/User.js';
 import Ejercicio from '../models/Ejercicio.js';
 import Course from '../models/Course.js';
+import { allows, canAccessCourse } from '../service/courseAccess.js';
+import { courseIdOfEntrega, denyAccess } from '../middleware/courseAccess.js';
+import { sendSubmissionFile, submissionFilePath } from '../service/materialFiles.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -98,8 +102,8 @@ export const entregarEjercicio = async (req, res) => {
         return res.status(403).json({ error: 'Este ejercicio está bloqueado. Has agotado los intentos disponibles.' });
       }
       // Eliminar el archivo anterior
-      if (entregaExistente.archivoPdf?.filePath) {
-        const oldFilePath = path.join(__dirname, '../../public', entregaExistente.archivoPdf.filePath);
+      const oldFilePath = submissionFilePath(entregaExistente);
+      if (oldFilePath) {
         if (fs.existsSync(oldFilePath)) {
           fs.unlinkSync(oldFilePath);
           console.log('🗑️ Archivo anterior eliminado');
@@ -193,8 +197,8 @@ export const eliminarEntrega = async (req, res) => {
     }
 
     // Eliminar archivo del servidor
-    if (entrega.archivoPdf?.filePath) {
-      const filePath = path.join(__dirname, '../../public', entrega.archivoPdf.filePath);
+    const filePath = submissionFilePath(entrega);
+    if (filePath) {
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
@@ -206,6 +210,34 @@ export const eliminarEntrega = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar entrega:', error);
     res.status(500).json({ error: 'Error al eliminar entrega' });
+  }
+};
+
+/**
+ * PDF de una entrega. Su autor lo ve si tiene acceso de lectura al curso; un admin, siempre.
+ * A cualquier otro se le responde 404 (no se confirma que la entrega exista).
+ * @route GET /api/entregas/:entregaId/archivo
+ */
+export const servirArchivoEntrega = async (req, res, next) => {
+  try {
+    const { entregaId } = req.params;
+    const entrega = mongoose.isValidObjectId(entregaId) ? await EntregaEjercicio.findById(entregaId).lean() : null;
+    const isAdmin = req.user.esAdmin();
+    if (!entrega || (!isAdmin && String(entrega.userId) !== String(req.user._id))) {
+      return res.status(404).json({ error: 'Entrega no encontrada' });
+    }
+
+    if (!isAdmin) {
+      const access = await canAccessCourse(req.user, await courseIdOfEntrega(entrega));
+      if (!access) return res.status(404).json({ error: 'Entrega no encontrada' });
+      if (!allows(access.level, 'read')) return denyAccess(res, access);
+    }
+
+    const filePath = submissionFilePath(entrega);
+    if (!filePath || !fs.existsSync(filePath)) return res.status(404).json({ error: 'Archivo no encontrado' });
+    return sendSubmissionFile(res, entrega, filePath);
+  } catch (err) {
+    return next(err);
   }
 };
 

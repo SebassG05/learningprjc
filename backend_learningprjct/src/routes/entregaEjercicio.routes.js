@@ -6,7 +6,8 @@ import {
   obtenerEntregasUsuarioCurso,
   eliminarEntrega,
   obtenerTodasLasEntregas,
-  corregirEntrega
+  corregirEntrega,
+  servirArchivoEntrega
 } from '../controller/entregaEjercicioController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
@@ -34,6 +35,8 @@ const upload = multer({
 router.get('/ejercicio/:ejercicioId/usuario', authenticateJWT, requireCourseAccess('read', courseIdFromEjercicio()), obtenerEntregaUsuario);
 router.post('/ejercicio/:ejercicioId', authenticateJWT, requireCourseAccess('write', courseIdFromEjercicio()), upload.single('archivoPdf'), entregarEjercicio);
 router.get('/curso/:cursoId/usuario', authenticateJWT, requireCourseAccess('read', fromParam('cursoId')), obtenerEntregasUsuarioCurso);
+// PDF de una entrega: su autor (con acceso al curso) o un admin
+router.get('/:entregaId/archivo', autenticar, servirArchivoEntrega);
 router.delete('/:entregaId', authenticateJWT, requireCourseAccess('write', courseIdFromEntrega()), eliminarEntrega);
 
 // Rutas de administración (requieren rol admin o superadmin)
