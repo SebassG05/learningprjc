@@ -9,7 +9,7 @@ const cohortInviteSchema = new mongoose.Schema({
   expiresAt: { type: Date, required: true },
   maxUses: { type: Number, default: 1, min: 1, max: 10000 },
   uses: { type: Number, default: 0, min: 0 },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }, // null = enviada por el sistema
   revokedAt: { type: Date }
 }, { timestamps: true });
 
