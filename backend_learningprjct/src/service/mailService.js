@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
-import { buildContactEmail, singleLine } from './contactEmailTemplate.js';
+import { buildContactEmail, escapeHtml, singleLine } from './contactEmailTemplate.js';
 import { etiquetaEstado } from './correccionService.js';
 
 dotenv.config();
@@ -255,4 +255,38 @@ export const sendExerciseCorrectionEmail = async ({ userName, userEmail, ejercic
     `
   };
   await transporter.sendMail(mailOptions);
+};
+// Invitación a la cohorte de un curso privado. `reason`: 'invite' (la manda el admin) o 'claim'
+// (tenía plaza por email y ha entrado con contraseña: el enlace demuestra que el email es suyo).
+export const sendCohortInviteEmail = async ({ to, url, courseTitle, cohortName, expiresAt, reason = 'invite' }) => {
+  const course = escapeHtml(singleLine(courseTitle) || 'el curso');
+  const cohort = escapeHtml(singleLine(cohortName));
+  const caduca = expiresAt
+    ? new Date(expiresAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Madrid' })
+    : null;
+  const intro = reason === 'claim'
+    ? `Tienes una plaza reservada en <strong>${course}</strong>${cohort ? ` (${cohort})` : ''}. Para activarla con tu cuenta, confirma que este email es tuyo:`
+    : `Te han invitado a <strong>${course}</strong>${cohort ? ` (${cohort})` : ''}, un curso privado del Campus Evenor. Acepta la invitación para reservar tu plaza:`;
+
+  await transporter.sendMail({
+    from: `Campus Evenor <${process.env.EMAIL_USER}>`,
+    to,
+    subject: reason === 'claim' ? `Activa tu plaza en ${singleLine(courseTitle)}` : `Invitación: ${singleLine(courseTitle)}`,
+    html: `
+      <div style="font-family: 'Rondana', Arial, sans-serif; background: #f0f9ea; padding: 32px; color: #333333;">
+        <div style="max-width: 480px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(161,219,135,0.10); padding: 32px; border: 1px solid #a1db87;">
+          <h2 style="color: #5aa833; margin-bottom: 16px; font-family: 'Rondana', Arial, sans-serif;">${reason === 'claim' ? 'Activa tu plaza' : 'Tienes una invitación'}</h2>
+          <p style="color: #595959;">Hola,</p>
+          <p style="color: #595959;">${intro}</p>
+          <div style="text-align: center; margin: 24px 0;">
+            <a href="${escapeHtml(url)}" style="display: inline-block; background: #a1db87; color: #333333; text-decoration: none; font-weight: 600; padding: 12px 32px; border-radius: 6px; font-size: 16px; border: 2px solid #5aa833;">${reason === 'claim' ? 'Activar mi plaza' : 'Aceptar invitación'}</a>
+          </div>
+          ${caduca ? `<p style="color: #595959; font-size: 14px;">El enlace caduca el ${caduca}. Es personal: no lo compartas.</p>` : ''}
+          <p style="color: #595959; font-size: 14px;">Si no esperabas este correo, puedes ignorarlo.</p>
+          <hr style="margin: 32px 0; border: none; border-top: 1px solid #a1db87;">
+          <p style="font-size: 13px; color: #a1db87; text-align: center; font-family: 'Rondana', Arial, sans-serif;">Campus Evenor &copy; 2026</p>
+        </div>
+      </div>
+    `,
+  });
 };

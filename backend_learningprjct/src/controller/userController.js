@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../models/User.js';
 import { signToken } from '../config/jwt.js';
 import { accessFor, allows, isPrivate, redactCourse } from '../service/courseAccess.js';
+import { claimPendingMembershipsSafely, claimSummary } from '../service/cohortMembership.js';
 import { hasAcceptedCurrentTerms, isValidAcceptance, recordAcceptance, termsRequired } from '../service/termsService.js';
 import UserProgress from '../models/UserProgress.js';
 import Course from '../models/Course.js';
@@ -26,10 +27,11 @@ export const registerUser = async (req, res) => {
     if (existingUser) {
       return res.status(409).json({ error: 'El email ya está registrado.' });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
+    // La contraseña la hashea el modelo (pre('save')); hashearla también aquí impedía iniciar sesión
+    const user = new User({ name, email, password });
     await user.save();
-    res.status(201).json({ message: 'Usuario registrado correctamente', user: { id: user._id, name: user.name, email: user.email } });
+    const claim = await claimPendingMembershipsSafely(user, { verified: false });
+    res.status(201).json({ message: 'Usuario registrado correctamente', user: { id: user._id, name: user.name, email: user.email }, ...claimSummary(claim) });
   } catch (err) {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
   }
@@ -55,9 +57,13 @@ export const loginUser = async (req, res) => {
     // Actualizar lastLogin
     user.lastLogin = new Date();
     await user.save();
-    
+
+    // Email sin verificar: si tiene plazas pendientes se le manda el enlace para activarlas
+    const claim = await claimPendingMembershipsSafely(user, { verified: false });
+
     res.json({
       message: 'Inicio de sesión exitoso',
+      ...claimSummary(claim),
       token,
       user: { 
         id: user._id, 
@@ -169,10 +175,14 @@ export const googleLogin = async (req, res, next) => {
     // 4. Actualizar lastLogin
     user.lastLogin = new Date();
     await user.save();
+
+    // 5. Plazas pendientes por email: Google garantiza el email solo si viene verificado
+    const claim = await claimPendingMembershipsSafely(user, { verified: googlePayload.email_verified === true });
     
     // 5. Responder con datos de usuario y token
     return res.status(200).json({
       message: 'Inicio de sesión con Google exitoso',
+      ...claimSummary(claim),
       token,
       user: { 
         id: user._id, 
