@@ -94,29 +94,30 @@ export async function redeemInvite({ token, user, now = new Date() }) {
   const email = normalizeEmail(user.email);
   const result = (status) => ({ status, courseId: String(cohort.course) });
 
+  const isMember = () => Cohort.exists({ _id: cohort._id, 'members.user': userId });
+
   // Ya es miembro: no se duplica ni se gasta uso (aunque la invitación ya no sirva)
-  if (await Cohort.exists({ _id: cohort._id, 'members.user': userId })) return result('already-member');
+  if (await isMember()) return result('already-member');
 
+  // Una invitación que ya no sirve no sirve para nada: ni para entrar ni para activar plazas
   const reason = unusableReason(invite, now);
-  if (reason === 'revoked' || reason === 'expired') throw new InviteError(reason);
+  if (reason) throw new InviteError(reason);
 
-  // Tenía plaza pendiente con su email: se activa sin gastar uso
-  if (await activatePending(cohort._id, email, userId)) return result('joined');
-
-  // Gastar un uso, atómicamente
+  // Gastar un uso, atómicamente (siempre: también al ocupar una plaza pendiente)
   const consumed = await CohortInvite.findOneAndUpdate(
     { _id: invite._id, revokedAt: null, expiresAt: { $gt: now }, $expr: { $lt: ['$uses', '$maxUses'] } },
     { $inc: { uses: 1 } },
   );
   if (!consumed) {
+    // Un canje simultáneo del mismo usuario pudo gastar el último uso: entonces ya es miembro
+    if (await isMember()) return result('already-member');
     const fresh = await CohortInvite.findById(invite._id).lean();
     throw new InviteError((fresh && unusableReason(fresh, now)) || 'exhausted');
   }
 
-  // Invitación nominativa a un email con plaza pendiente: quien la canjea ocupa esa plaza
-  if (invite.email && invite.email !== email && (await activatePending(cohort._id, invite.email, userId))) {
-    return result('joined');
-  }
+  // Solo una invitación nominativa ocupa la plaza pendiente de su email: el enlace llegó a ese email.
+  // La coincidencia con el email de la cuenta no basta (con contraseña no está verificado).
+  if (invite.email && (await activatePending(cohort._id, invite.email, userId))) return result('joined');
 
   const { modifiedCount } = await Cohort.updateOne(
     { _id: cohort._id, 'members.user': { $ne: userId } },

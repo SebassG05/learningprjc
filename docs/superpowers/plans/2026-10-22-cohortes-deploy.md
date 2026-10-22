@@ -72,6 +72,8 @@ Backend y front van **juntos**: el backend nuevo deja de servir `/ejercicios/*.p
    - [ ] Con una cuenta miembro (o admin), abre un PDF de un tema en el aula: debe verse (la pasarela firma la descarga).
    - [ ] La URL antigua de ese PDF (copiada antes del paso 7) debe dar 401/404 en Cloudinary.
    - [ ] Si algún archivo sale con `✗`, vuelve a ejecutar `--apply` (es idempotente) o revisa ese public_id en Cloudinary.
+   - Los PDFs que se suban después a un curso privado ya se suben como `authenticated`. Si más adelante otro curso pasa a privado, sus PDFs anteriores siguen públicos: `node src/scripts/moverMaterialesAAuthenticated.js --course=<id> --apply`.
+   - [ ] Antes del paso 7, consulta de solo lectura en producción: materiales cuya URL no empiece por `https://res.cloudinary.com/<CLOUDINARY_CLOUD_NAME>/` (otra cuenta o `http:`). Esos no pasan por la pasarela y en el aula se abrirían como descarga en vez de verse.
 
 ## Post-deploy
 

@@ -92,17 +92,46 @@ describe('invitaciones a cohortes', () => {
       assert.equal((await CohortInvite.findById(inv._id)).uses, 1);
     });
 
-    test('ya era miembro pendiente por su email: pasa a activo sin gastar uso', async () => {
+    test('invitación nominativa a su email pendiente: ocupa esa plaza y gasta el uso', async () => {
       const ana = await fx.createUser({ email: 'ana@x.es' });
       await Cohort.updateOne({ _id: cohort._id }, { $push: { members: { email: 'ana@x.es', status: 'pending', user: null, source: 'email' } } });
-      const { token, invite: inv } = await invite();
+      const { token, invite: inv } = await invite({ email: 'ana@x.es' });
       const r = await redeemInvite({ token, user: ana });
       assert.equal(r.status, 'joined');
       const ms = await members();
       assert.equal(ms.length, 1);
       assert.equal(ms[0].status, 'active');
       assert.equal(String(ms[0].user), String(ana._id));
-      assert.equal((await CohortInvite.findById(inv._id)).uses, 0);
+      assert.equal((await CohortInvite.findById(inv._id)).uses, 1);
+    });
+
+    test('un enlace individual (1 uso) no deja entrar a dos personas aunque lo reenvíen', async () => {
+      await Cohort.updateOne({ _id: cohort._id }, { $push: { members: { email: 'victima@x.es', status: 'pending', user: null, source: 'email' } } });
+      const { token } = await invite({ email: 'victima@x.es' });
+      await redeemInvite({ token, user: await fx.createUser({ email: 'victima@x.es' }) });
+      await rejects(redeemInvite({ token, user: await fx.createUser({ email: 'otra@x.es' }) }), 'exhausted');
+      assert.equal((await members()).filter((m) => m.status === 'active').length, 1);
+    });
+
+    test('un enlace agotado no sirve para quedarse la plaza pendiente de otro registrándose con su email', async () => {
+      await Cohort.updateOne({ _id: cohort._id }, { $push: { members: { email: 'victima@x.es', status: 'pending', user: null, source: 'email' } } });
+      const { token } = await invite();
+      await redeemInvite({ token, user: await fx.createUser() });
+      const impostor = await fx.createUser({ email: 'victima@x.es' }); // registro con contraseña: email sin verificar
+      await rejects(redeemInvite({ token, user: impostor }), 'exhausted');
+      const seat = (await members()).find((m) => m.email === 'victima@x.es');
+      assert.equal(seat.status, 'pending');
+      assert.equal(seat.user, null);
+    });
+
+    test('un enlace genérico no ocupa la plaza pendiente que coincide con el email de la cuenta (no está verificado)', async () => {
+      await Cohort.updateOne({ _id: cohort._id }, { $push: { members: { email: 'victima@x.es', status: 'pending', user: null, source: 'email' } } });
+      const { token } = await invite({ maxUses: 5 });
+      const impostor = await fx.createUser({ email: 'victima@x.es' });
+      assert.equal((await redeemInvite({ token, user: impostor })).status, 'joined');
+      const seat = (await members()).find((m) => m.status === 'pending');
+      assert.equal(seat.email, 'victima@x.es');
+      assert.equal(seat.user, null);
     });
 
     test('invitación a un email pendiente canjeada por otra cuenta: ocupa esa plaza, no crea otra', async () => {

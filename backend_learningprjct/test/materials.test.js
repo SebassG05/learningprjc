@@ -36,8 +36,8 @@ describe('archivos de curso', () => {
     const base = `http://127.0.0.1:${server.address().port}`;
     api = {
       close: () => new Promise((r) => server.close(r)),
-      get: async (p, headers = {}) => {
-        const res = await fetch(base + p, { headers, redirect: 'manual' });
+      get: async (p, headers = {}, signal = AbortSignal.timeout(10000)) => {
+        const res = await fetch(base + p, { headers, redirect: 'manual', signal });
         return { status: res.status, headers: res.headers, buf: Buffer.from(await res.arrayBuffer()) };
       },
       del: async (p, headers = {}) => {
@@ -166,6 +166,32 @@ describe('archivos de curso', () => {
       }
     });
 
+    test('si Cloudinary corta la descarga a mitad, el servidor sigue vivo', async () => {
+      const { course, ana, material } = await setup();
+      // En producción una excepción no capturada tumba el proceso; aquí se recoge para comprobar que no la hay
+      const crashes = [];
+      const onCrash = (err) => crashes.push(String(err));
+      process.on('uncaughtException', onCrash);
+      const ok = deps.fetch;
+      deps.fetch = async () => new Response(new ReadableStream({
+        start(controller) {
+          controller.enqueue(new Uint8Array([37, 80, 68, 70]));
+          setTimeout(() => controller.error(new Error('ECONNRESET')), 20);
+        },
+      }), { status: 200 });
+      try {
+        // La respuesta se corta: el cliente recibe un error o un cuerpo incompleto, pero no se queda colgado
+        await api.get(materialPath(course, material._id), { ...fx.authHeader(ana) }, AbortSignal.timeout(3000)).catch(() => null);
+      } finally {
+        deps.fetch = ok;
+      }
+      await new Promise((r) => setTimeout(r, 100));
+      process.off('uncaughtException', onCrash);
+      assert.deepEqual(crashes, []);
+      const after = await api.get(materialPath(course, material._id), fx.authHeader(ana));
+      assert.equal(after.status, 200);
+    });
+
     test('curso público → sin sesión también 200', async () => {
       const { course, material } = await setup('public');
       const r = await api.get(materialPath(course, material._id));
@@ -195,6 +221,32 @@ describe('archivos de curso', () => {
     test('la versión en inglés de un material privado también está protegida', async () => {
       await setup();
       assert.equal((await api.get(proxy(fx.MATERIAL_URL_EN))).status, 401);
+    });
+
+    test('nunca firma: una URL «authenticated» (exacta o retocada) → 400 y no se pide nada', async () => {
+      const { course } = await setup();
+      await Course.updateOne({ _id: course._id }, { $set: { 'temas.0.materiales.0.archivo': AUTH_URL } });
+      const variants = [AUTH_URL, `${AUTH_URL}?x=1`, AUTH_URL.replace('/v1/', '/'), AUTH_URL.replace('/v1/', '/v2/')];
+      for (const url of variants) {
+        assert.equal((await api.get(proxy(url))).status, 400, url);
+      }
+      assert.deepEqual(fetched, []);
+    });
+
+    test('una variante de la URL de un material privado sigue protegida (se busca por public_id)', async () => {
+      const { luis } = await setup();
+      for (const url of [`${fx.MATERIAL_URL}?x=1`, fx.MATERIAL_URL.replace('/v1/', '/'), fx.MATERIAL_URL.replace('/v1/', '/v7/')]) {
+        assert.equal((await api.get(proxy(url))).status, 401, url);
+        assert.equal((await api.get(proxy(url), fx.authHeader(luis))).status, 403, url);
+      }
+      assert.deepEqual(fetched, []);
+    });
+
+    test('un archivo de nuestra cuenta que no es material de ningún curso → 404 (no es un proxy abierto)', async () => {
+      await setup('public');
+      const r = await api.get(proxy('https://res.cloudinary.com/demo-cloud/raw/upload/v1/otra-carpeta/secreto.pdf'));
+      assert.equal(r.status, 404);
+      assert.deepEqual(fetched, []);
     });
 
     test('material de curso público: igual que antes, sin sesión 200', async () => {

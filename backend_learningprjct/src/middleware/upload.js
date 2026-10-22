@@ -1,6 +1,8 @@
 import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import mongoose from 'mongoose';
 import cloudinary from '../config/cloudinary.js';
+import Course from '../models/Course.js';
 
 // Helper para generar nombres únicos
 const generateUniqueFilename = (originalname) => {
@@ -14,10 +16,15 @@ const generateUniqueFilename = (originalname) => {
   return `${name}-${uniqueSuffix}`;
 };
 
+// Materiales de un curso privado: «authenticated» (sin URL pública; los sirve la pasarela del backend)
+async function isPrivateCourse(courseId) {
+  if (!mongoose.isValidObjectId(courseId)) return false;
+  const course = await Course.findById(courseId).select('accessMode').lean();
+  return course?.accessMode === 'private';
+}
+
 // Configuración dinámica que detecta el tipo de archivo según el fieldname
-const storageDinamico = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: async (req, file) => {
+export async function uploadParams(req, file) {
     try {
       console.log('🚀 [UPLOAD MIDDLEWARE] Iniciando subida:', {
         fieldname: file.fieldname,
@@ -54,7 +61,8 @@ const storageDinamico = new CloudinaryStorage({
           folder: 'learning-platform/materiales',
           resource_type: 'raw',
           public_id: generateUniqueFilename(file.originalname),
-          allowed_formats: ['pdf', 'doc', 'docx', 'ppt', 'pptx']
+          allowed_formats: ['pdf', 'doc', 'docx', 'ppt', 'pptx'],
+          ...((await isPrivateCourse(req.params?.id)) && { type: 'authenticated' })
         };
         console.log('📄 [UPLOAD MIDDLEWARE] Configuración para documento:', config);
         return config;
@@ -63,7 +71,11 @@ const storageDinamico = new CloudinaryStorage({
       console.error('💥 [UPLOAD MIDDLEWARE] ERROR en params:', error);
       throw error;
     }
-  }
+}
+
+const storageDinamico = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: uploadParams,
 });
 
 // Filtro dinámico que detecta según el fieldname

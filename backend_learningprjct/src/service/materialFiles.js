@@ -6,6 +6,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Readable } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 import cloudinary from '../config/cloudinary.js';
 
 // Sustituible en los tests (no salen a la red)
@@ -70,9 +71,23 @@ const privateHeaders = (res, filename, contentType) => {
   res.set('Content-Disposition', `inline; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(filename)}`);
 };
 
-// Descarga de Cloudinary y reenvía al cliente. Si Cloudinary falla, 502 sin detalles.
-export async function pipeFromCloudinary(res, storedUrl, filename = path.basename(new URL(storedUrl).pathname)) {
-  const upstream = await deps.fetch(upstreamUrl(storedUrl));
+const UPSTREAM_TIMEOUT_MS = 60_000;
+
+/**
+ * Descarga de Cloudinary y reenvía al cliente. Si Cloudinary falla, 502 sin detalles; si se corta a
+ * mitad, se cierra la respuesta (sin tumbar el proceso).
+ * `sign`: solo la pasarela de materiales (tras comprobar el acceso) puede pedir URLs firmadas de assets
+ * «authenticated». Sin `sign`, una URL authenticated se rechaza.
+ */
+export async function pipeFromCloudinary(res, storedUrl, { sign = false, filename = path.basename(new URL(storedUrl).pathname) } = {}) {
+  if (!sign && cloudinaryRawAsset(storedUrl)?.type === 'authenticated') throw new Error('URL authenticated sin permiso para firmar');
+  let upstream;
+  try {
+    upstream = await deps.fetch(sign ? upstreamUrl(storedUrl) : storedUrl, { signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS) });
+  } catch (err) {
+    console.error('No se pudo contactar con Cloudinary:', err.message);
+    return res.status(502).json({ error: 'No se pudo obtener el archivo' });
+  }
   if (!upstream.ok || !upstream.body) {
     console.error(`Cloudinary respondió ${upstream.status} al pedir un archivo del curso`);
     return res.status(502).json({ error: 'No se pudo obtener el archivo' });
@@ -80,7 +95,13 @@ export async function pipeFromCloudinary(res, storedUrl, filename = path.basenam
   // Cloudinary sirve los raw como octet-stream: un .pdf se manda como PDF para que se vea en línea
   const type = /\.pdf$/i.test(filename) ? 'application/pdf' : upstream.headers.get('content-type') || 'application/octet-stream';
   privateHeaders(res, filename, type);
-  Readable.fromWeb(upstream.body).pipe(res);
+  try {
+    // pipeline propaga los errores de cualquiera de los dos lados y cierra ambos (pipe() no lo hace)
+    await pipeline(Readable.fromWeb(upstream.body), res);
+  } catch (err) {
+    console.error('Descarga de Cloudinary interrumpida:', err.message);
+    res.destroy();
+  }
 }
 
 // ============= PDFs de entregas (disco local) =============

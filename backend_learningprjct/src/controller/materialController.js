@@ -20,7 +20,8 @@ export const servirMaterial = async (req, res, next) => {
       noSharedCache(res);
       return res.json({ url: stored });
     }
-    return await pipeFromCloudinary(res, stored);
+    // Única llamada que puede firmar: el acceso ya lo ha comprobado requireCourseAccess('read')
+    return await pipeFromCloudinary(res, stored, { sign: true });
   } catch (err) {
     return next(err);
   }

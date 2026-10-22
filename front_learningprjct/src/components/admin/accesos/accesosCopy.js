@@ -11,7 +11,7 @@ export const COPY = {
     privateHint: 'Solo los miembros activos de una cohorte, dentro de sus fechas (y los administradores).',
     toPrivate: {
       title: 'Hacer privado el curso',
-      body: 'Solo podrán ver el contenido los miembros activos de sus cohortes y los administradores. Quien esté inscrito sin pertenecer a una cohorte dejará de tener acceso.',
+      body: 'Solo podrán ver el contenido los miembros activos de sus cohortes y los administradores. Quien esté inscrito sin pertenecer a una cohorte dejará de tener acceso. Los PDFs que subas a partir de ahora serán privados; los ya subidos siguen teniendo URL pública hasta que se pasen a privados con el script moverMaterialesAAuthenticated.js --course=<id>.',
       confirm: 'Hacer privado',
     },
     toPublic: {
