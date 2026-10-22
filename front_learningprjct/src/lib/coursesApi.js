@@ -37,6 +37,10 @@ const authHeaders = (token) => ({ Authorization: `Bearer ${token}` });
 export const fetchEnrollmentStatus = (id, token, signal) =>
   getJson(`${API_URL}/api/users/enrollment/${id}`, { signal, headers: authHeaders(token) });
 
+// Vídeo del curso: el backend decide si toca preview o completo según el token (si lo hay)
+export const fetchCourseVideo = (id, token, signal) =>
+  getJson(`${API_URL}/api/courses/${id}/video`, { signal, headers: token ? authHeaders(token) : {}, cache: 'no-store' });
+
 export async function enrollInCourse(id, token, body) {
   const res = await fetch(`${API_URL}/api/users/enroll/${id}`, {
     method: 'POST',
