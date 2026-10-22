@@ -148,6 +148,29 @@ export const PRIVATE = {
   },
 };
 
+// Página de invitación (/curso/:id/invitacion?token=…)
+export const INVITE = {
+  pageTitle: 'Invitación a un curso',
+  eyebrow: 'Invitación',
+  title: (course) => (course ? `Te han invitado a ${course}` : 'Te han invitado a un curso'),
+  lead: (cohort) => `${cohort ? `Edición «${cohort}». ` : ''}Inicia sesión o crea tu cuenta y quedará reservada tu plaza.`,
+  login: 'Iniciar sesión o crear cuenta',
+  joining: 'Reservando tu plaza…',
+  checking: 'Comprobando la invitación…',
+  joined: 'Listo: ya tienes plaza en el curso.',
+  alreadyMember: 'Ya tenías plaza en este curso.',
+  toCourse: 'Ver el curso',
+  toCatalog: 'Ver otros cursos',
+  retry: 'Reintentar',
+  errors: {
+    invalid: { title: 'Esta invitación no es válida', lead: 'Revisa que el enlace esté completo o pide uno nuevo a quien te invitó.' },
+    expired: { title: 'Esta invitación ha caducado', lead: 'Pide un enlace nuevo a quien te invitó.' },
+    revoked: { title: 'Esta invitación se ha anulado', lead: 'Pide un enlace nuevo a quien te invitó.' },
+    exhausted: { title: 'Esta invitación ya se ha usado', lead: 'Se ha usado todas las veces permitidas. Pide un enlace nuevo a quien te invitó.' },
+    network: { title: 'No hemos podido comprobar la invitación', lead: 'Revisa tu conexión y vuelve a intentarlo.' },
+  },
+};
+
 export const VIDEO = {
   previewEyebrow: 'Avance · 30 s',
   previewTitle: 'Un primer vistazo al curso',

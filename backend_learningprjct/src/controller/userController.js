@@ -31,7 +31,14 @@ export const registerUser = async (req, res) => {
     const user = new User({ name, email, password });
     await user.save();
     const claim = await claimPendingMembershipsSafely(user, { verified: false });
-    res.status(201).json({ message: 'Usuario registrado correctamente', user: { id: user._id, name: user.name, email: user.email }, ...claimSummary(claim) });
+    // Con token, como el login: el modal deja la sesión iniciada tras registrarse (antes guardaba «undefined»)
+    const token = signToken({ id: user._id, email: user.email });
+    res.status(201).json({
+      message: 'Usuario registrado correctamente',
+      token,
+      user: { id: user._id, name: user.name, email: user.email, role: user.role || 'usuario' },
+      ...claimSummary(claim),
+    });
   } catch (err) {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
   }

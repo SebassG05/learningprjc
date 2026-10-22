@@ -137,3 +137,21 @@ export async function acceptTerms(courseId, token, termsVersion) {
   if (!res.ok) throw new ApiError(data.error || `HTTP ${res.status}`, res.status, data);
   return data;
 }
+
+// ============= Invitaciones a cohortes =============
+
+// Datos de la invitación para pintar la página antes de iniciar sesión: { valid, code?, courseId, courseTitle, cohortName }
+export const previewInvite = (token, signal) =>
+  getJson(`${API_URL}/api/cohorts/invitations/preview?token=${encodeURIComponent(token)}`, { signal, cache: 'no-store' });
+
+// Canje con la sesión iniciada: { status: 'joined'|'already-member', courseId } o ApiError con body.code
+export async function redeemInvite(token) {
+  const res = await fetch(`${API_URL}/api/cohorts/invitations/redeem`, {
+    method: 'POST',
+    headers: { ...sessionHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new ApiError(data.error || `HTTP ${res.status}`, res.status, data);
+  return data;
+}

@@ -130,6 +130,15 @@ describe('plazas pendientes por email', () => {
       assert.ok(r.body.token);
     });
 
+    test('el registro devuelve un token válido (el modal entra directamente tras registrarse)', async () => {
+      const r = await register('nuevo@x.es');
+      assert.equal(r.status, 201);
+      assert.ok(r.body.token);
+      const me = await api.call('GET', '/api/users/me', { headers: { Authorization: `Bearer ${r.body.token}` } });
+      assert.equal(me.status, 200);
+      assert.equal(me.body.user.email, 'nuevo@x.es');
+    });
+
     test('login con contraseña de alguien con plaza pendiente → se le envía el enlace', async () => {
       await register('ana@x.es');
       sent.length = 0;
