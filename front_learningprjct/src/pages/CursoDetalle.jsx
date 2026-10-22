@@ -6,6 +6,9 @@ import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
 import TermsGate from '../components/courses/TermsGate';
+import { authFetch } from '../lib/courseFiles';
+import { PRIVATE } from '../components/courses/coursesCopy';
+import { formatCohortDate } from '../components/courses/sheet/privateAccess';
 import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { duration, ease, spring } from '../lib/motion';
@@ -96,9 +99,15 @@ export default function CursoDetalle() {
   }, [id, user, apiUrl, navigate]);
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/courses/${id}`)
+    // Con el token: en un curso privado el backend solo da el contenido a quien tiene acceso
+    authFetch(`${apiUrl}/api/courses/${id}`)
       .then(res => res.json())
       .then(data => {
+        // Curso privado sin acceso (plaza aún reservada, edición retirada…): la ficha lo explica
+        if (data.accessMode === 'private' && data.access && !['full', 'readonly'].includes(data.access.level)) {
+          navigate(`/curso/${id}/inscripcion`, { replace: true });
+          return;
+        }
         setCurso(data);
         setLoading(false);
         // Si el curso es bilingüe y el usuario no ha elegido idioma aún, mostrar modal
@@ -107,11 +116,11 @@ export default function CursoDetalle() {
           setShowLangModal(true);
         }
       });
-  }, [id, apiUrl]);
+  }, [id, apiUrl, navigate]);
 
   // Cargar ejercicios optativos
   useEffect(() => {
-    fetch(`${apiUrl}/api/ejercicios/curso/${id}?temaId=final`)
+    authFetch(`${apiUrl}/api/ejercicios/curso/${id}?temaId=final`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -363,6 +372,13 @@ export default function CursoDetalle() {
             <h1 className="max-w-4xl text-title-1 font-bold text-ink text-left">
               {t(curso.title, curso.titleEn)}
             </h1>
+            {/* Curso privado con la edición terminada: se puede repasar, no entregar */}
+            {curso.access?.level === 'readonly' ? (
+              <p role="note" className="mt-4 inline-flex max-w-2xl items-start gap-2 rounded-xl bg-white/[0.04] px-4 py-3 text-callout text-ink-2 ring-1 ring-inset ring-line-strong">
+                <Lock className="mt-0.5 h-4 w-4 shrink-0 text-dawn" aria-hidden="true" />
+                <span>{PRIVATE.lead.readonly(formatCohortDate(curso.access.endsAt))}</span>
+              </p>
+            ) : null}
             {/* Selector de idioma para cursos bilingües */}
             {curso.idiomasDisponibles?.includes('es') && curso.idiomasDisponibles?.includes('en') && (
               <div className="mt-5 inline-flex items-center gap-1 rounded-full bg-white/[0.05] p-1">
@@ -522,7 +538,7 @@ export default function CursoDetalle() {
             </div>
             <div className="space-y-6">
               {ejerciciosOptativos.map((ejercicio) => (
-                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} />
+                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} soloLectura={curso.access?.level === 'readonly'} />
               ))}
             </div>
           </div>

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import StatusBadge from '../components/admin/ui/StatusBadge';
+import { authFetch, loadSubmissionFile } from '../lib/courseFiles';
+import { PRIVATE } from '../components/courses/coursesCopy';
+import { formatCohortDate } from '../components/courses/sheet/privateAccess';
 import { 
   Upload, FileText, X, CheckCircle, AlertCircle, 
   ArrowLeft, Send, Loader, Download, Trash2 
@@ -21,12 +24,42 @@ export default function EntregaEjercicio() {
   const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  // Curso privado con la edición cerrada: se ve la entrega, pero no se envía ni se borra
+  const [soloLectura, setSoloLectura] = useState(null);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   useEffect(() => {
     cargarEntregaExistente();
   }, [ejercicioId]);
+
+  // El backend decide el acceso; aquí solo se adapta la pantalla (y se sale si no hay acceso)
+  useEffect(() => {
+    authFetch(`${apiUrl}/api/courses/${cursoId}`)
+      .then((res) => res.json())
+      .then((curso) => {
+        const level = curso?.accessMode === 'private' ? curso.access?.level : 'full';
+        if (level === 'denied') navigate(`/curso/${cursoId}/inscripcion`, { replace: true });
+        else setSoloLectura(level === 'readonly' ? { endsAt: curso.access?.endsAt } : null);
+      })
+      .catch(() => {});
+  }, [apiUrl, cursoId, navigate]);
+
+  // El PDF se pide con la sesión (ya no es un archivo público) y se descarga desde una URL blob:
+  const descargarEntrega = async () => {
+    try {
+      const { url } = await loadSubmissionFile(entregaExistente._id);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = entregaExistente.archivoPdf?.nombreOriginal || 'entrega.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    } catch (err) {
+      setError(err.message || 'No se pudo descargar el PDF');
+    }
+  };
 
   const cargarEntregaExistente = async () => {
     try {
@@ -201,6 +234,11 @@ export default function EntregaEjercicio() {
         }
       );
 
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        setError(data.error || 'Error al eliminar la entrega');
+        return;
+      }
       if (response.ok) {
         setSuccess('Entrega eliminada exitosamente');
         setEntregaExistente(null);
@@ -266,22 +304,21 @@ export default function EntregaEjercicio() {
                   </p>
                 </div>
                 <div className="flex gap-3 mt-4">
-                  <a
-                    href={entregaExistente.archivoPdf.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={descargarEntrega}
                     className="flex items-center gap-2 px-4 py-2 bg-brand-500/20 text-brand-500 rounded-lg hover:bg-brand-500/30 transition-colors text-sm"
                   >
                     <Download className="w-4 h-4" />
                     Descargar PDF
-                  </a>
-                  <button
+                  </button>
+                  {soloLectura ? null : <button
                     onClick={handleEliminarEntrega}
                     className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors text-sm"
                   >
                     <Trash2 className="w-4 h-4" />
                     Eliminar
-                  </button>
+                  </button>}
                 </div>
               </div>
             </div>
@@ -291,7 +328,13 @@ export default function EntregaEjercicio() {
           </motion.div>
         )}
 
-        {/* Formulario */}
+        {soloLectura ? (
+          <p role="note" className="flex items-start gap-3 rounded-2xl border border-line bg-surface/80 p-6 text-callout text-ink-2">
+            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-dawn" aria-hidden="true" />
+            <span>{PRIVATE.lead.readonly(formatCohortDate(soloLectura.endsAt))}</span>
+          </p>
+        ) : (
+        /* Formulario */
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -434,6 +477,7 @@ export default function EntregaEjercicio() {
             </div>
           </form>
         </motion.div>
+        )}
       </div>
     </div>
   );

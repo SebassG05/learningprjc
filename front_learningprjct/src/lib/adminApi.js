@@ -37,7 +37,6 @@ export const fetchSubmissions = (params, signal) => request('/api/entregas/admin
 export const gradeSubmission = (id, body, { keepalive = false } = {}) =>
   request(`/api/entregas/${id}/corregir`, { method: 'PUT', body, keepalive });
 
-export const submissionFileUrl = (entrega) => (entrega?.archivoPdf?.url ? `${API_URL}${entrega.archivoPdf.url}` : null);
 
 // ---- Cursos e inscripciones ----
 export const fetchEnrollments = (courseId, signal) => request(`/api/users/admin/courses/${courseId}/enrollments`, { signal });

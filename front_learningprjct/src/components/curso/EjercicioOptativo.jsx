@@ -5,7 +5,8 @@ import { BookOpen, ExternalLink, Clock, Target, CheckCircle, ChevronDown, Chevro
 import { useUser } from '../../context/UserContext';
 import { duration, ease } from '../../lib/motion';
 
-export default function EjercicioOptativo({ ejercicio, cursoId }) {
+// soloLectura: edición del curso privado ya cerrada (se ve todo, pero no se entrega)
+export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = false }) {
   const [expandido, setExpandido] = useState(false);
   const [entrega, setEntrega] = useState(null);
   const navigate = useNavigate();
@@ -293,7 +294,12 @@ export default function EjercicioOptativo({ ejercicio, cursoId }) {
                 )}
 
                 {/* Ejercicio bloqueado (2 rechazos) */}
-                {entrega?.bloqueado ? (
+                {soloLectura && entrega?.estado !== 'aprobado' ? (
+                  <div className="flex-1 px-6 py-3 bg-white/[0.04] border border-line-strong text-ink-2 font-semibold rounded-xl flex items-center justify-center gap-2">
+                    <Lock className="w-5 h-5" aria-hidden="true" />
+                    <span>Edición cerrada — ya no se admiten entregas</span>
+                  </div>
+                ) : entrega?.bloqueado ? (
                   <div className="flex-1 px-6 py-3 bg-red-900/20 border-2 border-red-500/40 text-red-400 font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
                     <Lock className="w-5 h-5" />
                     <span>Ejercicio bloqueado — intentos agotados</span>

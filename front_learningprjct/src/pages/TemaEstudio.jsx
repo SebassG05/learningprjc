@@ -4,6 +4,7 @@ import { X, ChevronLeft, ChevronRight, BookOpen, ClipboardCheck, Check } from 'l
 import { motion, AnimatePresence } from 'framer-motion';
 import TestEvaluacion from '../components/curso/TestEvaluacion';
 import { duration, ease } from '../lib/motion';
+import { isCloudinaryRaw, loadCourseFile } from '../lib/courseFiles';
 
 export default function TemaEstudio() {
   const { cursoId } = useParams();
@@ -33,28 +34,38 @@ export default function TemaEstudio() {
       return;
     }
 
-    // Construir URL del PDF
-    if (material.archivo) {
-      let finalUrl = material.archivo;
-      
-      // Si la URL ya es completa (Cloudinary), usar proxy para archivos raw
-      if (material.archivo.startsWith('http://') || material.archivo.startsWith('https://')) {
-        // Si es un archivo raw de Cloudinary, usar el proxy para visualización
-        if (material.archivo.includes('cloudinary.com/') && material.archivo.includes('/raw/')) {
-          finalUrl = `${apiUrl}/api/pdf-proxy?url=${encodeURIComponent(material.archivo)}`;
-        } else {
-          finalUrl = material.archivo;
-        }
-      } else {
-        // Si es una ruta relativa, agregar la URL base del servidor
-        finalUrl = `${apiUrl}${material.archivo}`;
-      }
-      
-      setPdfUrl(finalUrl);
+    // PDF de Cloudinary: lo sirve el backend tras comprobar el acceso (cursos privados), con el token.
+    // Se pide con fetch y se muestra desde una URL blob: (el <iframe> no puede mandar el token).
+    let blobUrl = null;
+    const ctrl = new AbortController();
+    if (material.archivo && material._id && isCloudinaryRaw(material.archivo)) {
+      const lang = material.archivoEn && material.archivo === material.archivoEn ? 'en' : 'es';
+      loadCourseFile(cursoId, material._id, lang, ctrl.signal)
+        .then(({ url, external }) => {
+          blobUrl = url ?? null;
+          setPdfUrl(url ?? external);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          if (err.name === 'AbortError') return;
+          // Sin acceso (curso privado): de vuelta a la ficha, que explica por qué
+          if (err.status === 401 || err.status === 403) navigate(`/curso/${cursoId}/inscripcion`, { replace: true });
+          else setIsLoading(false);
+        });
+      return () => {
+        ctrl.abort();
+        if (blobUrl) URL.revokeObjectURL(blobUrl);
+      };
     }
-    
+
+    // Otros enlaces: tal cual (o relativos al backend)
+    if (material.archivo) {
+      setPdfUrl(/^https?:\/\//.test(material.archivo) ? material.archivo : `${apiUrl}${material.archivo}`);
+    }
+
     // Simular carga suave
-    setTimeout(() => setIsLoading(false), 400);
+    const timer = setTimeout(() => setIsLoading(false), 400);
+    return () => clearTimeout(timer);
   }, [tema, material, cursoId, navigate, apiUrl, startPhase]);
 
   const handleClose = () => {

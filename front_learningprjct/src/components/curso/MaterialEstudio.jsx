@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { duration, ease } from '../../lib/motion';
+import { authFetch } from '../../lib/courseFiles';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck, Lock, Trophy } from 'lucide-react';
 
@@ -28,7 +29,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
       const infoTests = {};
       for (const tema of temas) {
         try {
-          const response = await fetch(`${apiUrl}/api/tests/${cursoId}/temas/${tema._id}/test`);
+          const response = await authFetch(`${apiUrl}/api/tests/${cursoId}/temas/${tema._id}/test`);
           if (response.ok) {
             const testData = await response.json();
             infoTests[tema._id] = {

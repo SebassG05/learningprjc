@@ -3,7 +3,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { Download, ExternalLink, FileX2 } from 'lucide-react';
 import Skeleton from '../ui/Skeleton';
 import { focusRing } from '../ui/tones';
-import { submissionFileUrl } from '../../../lib/adminApi';
+import { loadSubmissionFile } from '../../../lib/courseFiles';
 import { COPY } from './correccionesCopy';
 
 const linkClass = `inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-white/[0.04] px-4 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-white/[0.08] active:scale-[0.97] ${focusRing}`;
@@ -12,8 +12,36 @@ const linkClass = `inline-flex min-h-11 items-center gap-2 rounded-full border b
  * PDF de la entrega. En escritorio se incrusta (se carga solo al abrir el panel); en móvil los
  * visores incrustados no funcionan bien, así que se ofrece abrirlo en el visor del sistema.
  */
+// El PDF ya no es un archivo público: se pide con la sesión y se muestra desde una URL blob: local
+function useSubmissionFile(entrega) {
+  const [state, setState] = useState({ status: 'loading', url: null });
+  const id = entrega?._id;
+  const hasFile = Boolean(entrega?.archivoPdf?.url);
+  useEffect(() => {
+    if (!id || !hasFile) {
+      setState({ status: 'none', url: null });
+      return undefined;
+    }
+    const ctrl = new AbortController();
+    let blobUrl = null;
+    setState({ status: 'loading', url: null });
+    loadSubmissionFile(id, ctrl.signal)
+      .then(({ url }) => {
+        blobUrl = url;
+        setState({ status: 'ready', url });
+      })
+      .catch((err) => err.name !== 'AbortError' && setState({ status: 'none', url: null }));
+    return () => {
+      ctrl.abort();
+      if (blobUrl) URL.revokeObjectURL(blobUrl);
+    };
+  }, [id, hasFile]);
+  return state;
+}
+
 const SubmissionPreview = memo(function SubmissionPreview({ entrega, studentLabel, inline }) {
-  const url = submissionFileUrl(entrega);
+  const file = useSubmissionFile(entrega);
+  const url = file.url;
   const [loaded, setLoaded] = useState(false);
   const frameRef = useRef(null);
   const lastFocus = useRef(null);
@@ -38,6 +66,8 @@ const SubmissionPreview = memo(function SubmissionPreview({ entrega, studentLabe
     restore();
     setTimeout(restore, 150);
   };
+
+  if (file.status === 'loading') return <Skeleton className={inline ? 'h-[min(70svh,48rem)] rounded-2xl' : 'h-11 w-56 rounded-full'} />;
 
   if (!url) {
     return (

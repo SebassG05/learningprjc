@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, ChevronLeft, ChevronRight, Clock, Award, AlertCircle, Lock } from 'lucide-react';
 import { duration, ease, spring } from '../../lib/motion';
+import { authFetch } from '../../lib/courseFiles';
 
 export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = 'es' }) {
   const [test, setTest] = useState(null);
@@ -159,7 +160,7 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
         };
       });
 
-      const response = await fetch(
+      const response = await authFetch(
         `${apiUrl}/api/tests/${cursoId}/temas/${temaId}/test/validar`,
         {
           method: 'POST',
