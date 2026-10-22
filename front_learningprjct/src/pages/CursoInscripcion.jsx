@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import AuthModal from '../components/auth/LazyAuthModal';
 import CourseHero from '../components/courses/sheet/CourseHero';
 import CourseOutcomes from '../components/courses/sheet/CourseOutcomes';
+import CourseVideo from '../components/courses/sheet/CourseVideo';
+import useCourseVideo from '../components/courses/sheet/useCourseVideo';
 import CourseSyllabus from '../components/courses/sheet/CourseSyllabus';
 import CourseFacts from '../components/courses/sheet/CourseFacts';
 import CourseClosing from '../components/courses/sheet/CourseClosing';
@@ -59,6 +61,9 @@ export default function CursoInscripcion() {
     description ? courseSummary(description, 160) : PROVISIONAL.pageDescription
   );
 
+  // El vídeo se pide ya, con el token, en paralelo a la inscripción: el backend decide preview o completo
+  const video = useCourseVideo(id, userId, Boolean(enrollment.data?.enrolled));
+
   const enroll = useEnrollAction({ course, user, enrollment, language: lang, markEnrolled });
   // Mientras no se sabe si ya está inscrito, el botón no promete una acción equivocada
   const checking = Boolean(user) && enrollment.status === 'loading';
@@ -98,6 +103,7 @@ export default function CursoInscripcion() {
         cta={cta}
         ctaRef={heroCta}
       />
+      <CourseVideo state={video} courseId={id} title={title} cta={cta} />
       <CourseOutcomes description={description} objectives={objectives} lang={lang} />
       <CourseSyllabus course={course} lang={lang} enrolled={enrolled} />
       <CourseFacts course={course} />

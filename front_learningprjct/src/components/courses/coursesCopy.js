@@ -117,6 +117,20 @@ export const ENROLL = {
 };
 
 
+export const VIDEO = {
+  previewEyebrow: 'Avance · 30 s',
+  previewTitle: 'Un primer vistazo al curso',
+  fullEyebrow: 'Vídeo del curso',
+  fullTitle: 'El curso, en vídeo',
+  previewLabel: (title) => `Avance sin sonido del curso ${title}`,
+  fullLabel: (title) => `Vídeo del curso ${title}`,
+  play: 'Ver avance',
+  pauseLabel: 'Pausar el avance',
+  cta: { enroll: 'Inscríbete para ver el curso completo', reserve: 'Reserva tu plaza para verlo completo' },
+  ctaLead: 'Lo que ves son los primeros 30 segundos.',
+  reservedLead: 'Podrás verlo completo cuando abra el curso.',
+};
+
 export const TERMS_DIALOG = {
   eyebrow: { enroll: 'Antes de inscribirte', reaccept: 'Condiciones actualizadas' },
   reacceptLead: 'Hemos actualizado las condiciones de uso del material. Para seguir con el curso necesitamos que las aceptes de nuevo.',

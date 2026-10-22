@@ -4,6 +4,8 @@ import upload, { handleMulterError } from '../middleware/upload.js';
 import * as courseController from '../controller/courseController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
+import { optionalAuth } from '../middleware/optionalAuth.js';
+import { obtenerVideoCurso } from '../controller/courseVideoController.js';
 
 const router = express.Router();
 
@@ -99,6 +101,9 @@ router.get('/areas', courseController.obtenerCatalogo);
 
 // Obtener curso por id (público)
 router.get('/:id', courseController.obtenerCurso);
+
+// Vídeo del curso: preview o completo según la inscripción de quien lo pide (público, personalizado)
+router.get('/:id/video', optionalAuth, obtenerVideoCurso);
 
 // Crear curso (solo admin/superadmin) - con portada y foto del profesor opcionales
 router.post('/', autenticar, soloAdmin, uploadFieldsWrapper([{ name: 'image', maxCount: 1 }, { name: 'profesorFoto', maxCount: 1 }]), courseController.crearCurso);
