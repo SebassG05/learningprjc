@@ -6,16 +6,19 @@ import {
   actualizarEjercicio,
   eliminarEjercicio
 } from '../controller/ejercicioController.js';
+import { optionalAuth } from '../middleware/optionalAuth.js';
+import { autenticar, soloAdmin } from '../middleware/authorization.js';
+import { courseIdFromEjercicio, fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
 const router = Router();
 
-// Rutas públicas (para usuarios del curso)
-router.get('/curso/:cursoId', obtenerEjerciciosCurso);
-router.get('/:ejercicioId', obtenerEjercicioPorId);
+// Lectura: pública en cursos públicos; en privados, solo con acceso (cohorte o admin)
+router.get('/curso/:cursoId', optionalAuth, requireCourseAccess('read', fromParam('cursoId')), obtenerEjerciciosCurso);
+router.get('/:ejercicioId', optionalAuth, requireCourseAccess('read', courseIdFromEjercicio()), obtenerEjercicioPorId);
 
-// Rutas de administración (agregar middleware de autenticación si es necesario)
-router.post('/', crearEjercicio);
-router.put('/:ejercicioId', actualizarEjercicio);
-router.delete('/:ejercicioId', eliminarEjercicio);
+// Administración
+router.post('/', autenticar, soloAdmin, crearEjercicio);
+router.put('/:ejercicioId', autenticar, soloAdmin, actualizarEjercicio);
+router.delete('/:ejercicioId', autenticar, soloAdmin, eliminarEjercicio);
 
 export default router;

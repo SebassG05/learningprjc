@@ -10,6 +10,7 @@ import {
 } from '../controller/entregaEjercicioController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
+import { courseIdFromEjercicio, courseIdFromEntrega, fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
 const router = Router();
 
@@ -28,10 +29,12 @@ const upload = multer({
 });
 
 // Rutas protegidas (requieren autenticación)
-router.get('/ejercicio/:ejercicioId/usuario', authenticateJWT, obtenerEntregaUsuario);
-router.post('/ejercicio/:ejercicioId', authenticateJWT, upload.single('archivoPdf'), entregarEjercicio);
-router.get('/curso/:cursoId/usuario', authenticateJWT, obtenerEntregasUsuarioCurso);
-router.delete('/:entregaId', authenticateJWT, eliminarEntrega);
+// Entregar y borrar entregas exige acceso completo ('write'): en solo lectura no se entrega.
+// El acceso se comprueba antes de multer para no recibir el archivo de quien no puede entregar.
+router.get('/ejercicio/:ejercicioId/usuario', authenticateJWT, requireCourseAccess('read', courseIdFromEjercicio()), obtenerEntregaUsuario);
+router.post('/ejercicio/:ejercicioId', authenticateJWT, requireCourseAccess('write', courseIdFromEjercicio()), upload.single('archivoPdf'), entregarEjercicio);
+router.get('/curso/:cursoId/usuario', authenticateJWT, requireCourseAccess('read', fromParam('cursoId')), obtenerEntregasUsuarioCurso);
+router.delete('/:entregaId', authenticateJWT, requireCourseAccess('write', courseIdFromEntrega()), eliminarEntrega);
 
 // Rutas de administración (requieren rol admin o superadmin)
 router.get('/admin/todas', autenticar, soloAdmin, obtenerTodasLasEntregas);

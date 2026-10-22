@@ -23,6 +23,9 @@ import { autenticar, soloAdmin } from '../middleware/authorization.js';
 import createRateLimit from '../middleware/rateLimit.js';
 import { fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
+// Progreso, idioma y tests completados: permitidos también en solo lectura
+const readCourse = requireCourseAccess('read', fromParam('courseId'));
+
 // Inscribirse guarda la aceptación de los términos (una prueba): pocas por minuto y por IP
 const enrollRateLimit = createRateLimit({
   windowMs: 60 * 1000,
@@ -93,16 +96,16 @@ router.post('/enroll/:courseId', enrollRateLimit, authenticateJWT, requireCourse
 router.get('/enrollment/:courseId', authenticateJWT, getEnrollmentStatus);
 
 // Cambiar idioma preferido para un curso
-router.put('/enrollment/:courseId/language', authenticateJWT, changePreferredLanguage);
+router.put('/enrollment/:courseId/language', authenticateJWT, readCourse, changePreferredLanguage);
 
 // Actualizar progreso del curso
-router.put('/enrollment/:courseId/progress', authenticateJWT, updateCourseProgress);
+router.put('/enrollment/:courseId/progress', authenticateJWT, readCourse, updateCourseProgress);
 
 // Marcar curso como completado
-router.put('/enrollment/:courseId/complete', authenticateJWT, completeCourse);
+router.put('/enrollment/:courseId/complete', authenticateJWT, readCourse, completeCourse);
 
 // Marcar test como completado
-router.post('/enrollment/:courseId/test/:temaId/complete', authenticateJWT, completeTest);
+router.post('/enrollment/:courseId/test/:temaId/complete', authenticateJWT, readCourse, completeTest);
 
 // Obtener todos los cursos inscritos del usuario
 router.get('/enrollments', authenticateJWT, getUserEnrollments);

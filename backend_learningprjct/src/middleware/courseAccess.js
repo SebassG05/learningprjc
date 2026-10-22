@@ -5,6 +5,9 @@
 //   requireCourseAccess('write', fromParam('courseId')) → inscribirse, entregar, borrar entregas (solo full)
 //
 // courseIdFrom(req) devuelve el id del curso (o una promesa); null/undefined → 404.
+import mongoose from 'mongoose';
+import Ejercicio from '../models/Ejercicio.js';
+import EntregaEjercicio from '../models/EntregaEjercicio.js';
 import { allows, canAccessCourse, isPrivate, publicAccess } from '../service/courseAccess.js';
 
 export const fromParam = (name) => (req) => req.params[name];
@@ -40,4 +43,22 @@ export const requireCourseAccess = (action, courseIdFrom) => async (req, res, ne
   } catch (err) {
     return next(err);
   }
+};
+
+// El curso sale siempre de la base de datos (nunca del body): el ejercicio sabe a qué curso pertenece
+export const courseIdFromEjercicio = (param = 'ejercicioId') => async (req) => {
+  const id = req.params[param];
+  if (!mongoose.isValidObjectId(id)) return null;
+  return (await Ejercicio.findById(id).select('cursoId').lean())?.cursoId ?? null;
+};
+
+// Para una entrega manda el curso de su ejercicio; el cursoId guardado en la entrega es el respaldo
+// (en entregas antiguas llegaba del body y no está garantizado)
+export const courseIdFromEntrega = (param = 'entregaId') => async (req) => {
+  const id = req.params[param];
+  if (!mongoose.isValidObjectId(id)) return null;
+  const entrega = await EntregaEjercicio.findById(id).select('ejercicioId cursoId').lean();
+  if (!entrega) return null;
+  const ejercicio = await Ejercicio.findById(entrega.ejercicioId).select('cursoId').lean();
+  return ejercicio?.cursoId ?? entrega.cursoId ?? null;
 };

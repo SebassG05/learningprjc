@@ -57,7 +57,9 @@ export const entregarEjercicio = async (req, res) => {
   try {
     const { ejercicioId } = req.params;
     const userId = req.user.id;
-    const { cursoId, comentarios } = req.body;
+    const { comentarios } = req.body;
+    // El curso lo fija requireCourseAccess a partir del ejercicio (el del body no es de fiar)
+    const cursoId = req.courseAccess.course._id;
 
     console.log('📥 Nueva entrega recibida:', { ejercicioId, userId, cursoId });
 
