@@ -8,6 +8,15 @@ import { optionalAuth } from '../middleware/optionalAuth.js';
 import { obtenerVideoCurso } from '../controller/courseVideoController.js';
 import { servirMaterial } from '../controller/materialController.js';
 import { cambiarModoAcceso } from '../controller/cohortAdminController.js';
+import { apuntarInteresado, listarInteresados } from '../controller/courseInterestController.js';
+import createRateLimit from '../middleware/rateLimit.js';
+
+// Formulario público: pocas altas por IP y hora
+const interestRateLimit = createRateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  message: 'Ya nos has dejado varios emails. Prueba de nuevo más tarde.',
+});
 import { fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
 const router = express.Router();
@@ -122,6 +131,10 @@ router.delete('/:id', autenticar, soloAdmin, courseController.eliminarCurso);
 
 // Abrir / cerrar curso (admin)
 router.put('/:id/toggle-open', autenticar, soloAdmin, courseController.toggleCourseOpen);
+
+// «Avísame de la próxima edición» (cursos privados) y su listado para el admin
+router.post('/:id/interes', interestRateLimit, optionalAuth, express.json(), apuntarInteresado);
+router.get('/:id/interes', autenticar, soloAdmin, listarInteresados);
 
 // Público o privado (por cohortes)
 router.put('/:id/access', autenticar, soloAdmin, express.json(), cambiarModoAcceso);
