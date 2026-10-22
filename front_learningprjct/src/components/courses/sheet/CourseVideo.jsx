@@ -129,6 +129,18 @@ function CtaBlock({ cta, enrollable }) {
 function FullPlayer({ video, title, courseId }) {
   const ref = useRef(null);
   const lastSaved = useRef(0);
+  const resumed = useRef(false);
+
+  // Reanuda una sola vez y nunca si el alumno ya ha movido el cabezal
+  const resume = (e) => {
+    const v = e.currentTarget;
+    if (resumed.current || v.currentTime > 0) return;
+    const t = readResume(courseId, v.duration);
+    if (t > 0) {
+      resumed.current = true;
+      v.currentTime = t;
+    }
+  };
 
   useEffect(() => {
     const v = ref.current;
@@ -154,10 +166,10 @@ function FullPlayer({ video, title, courseId }) {
         preload="metadata"
         controlsList="nodownload"
         aria-label={VIDEO.fullLabel(title)}
-        onLoadedMetadata={(e) => {
-          const t = readResume(courseId, e.currentTarget.duration);
-          if (t > 0) e.currentTarget.currentTime = t;
-        }}
+        onLoadedMetadata={resume}
+        // La primera vez que Cloudinary genera la versión q_auto/f_auto puede anunciar una duración
+        // provisional: se reintenta cuando llega la definitiva
+        onDurationChange={resume}
         onTimeUpdate={(e) => {
           const t = e.currentTarget.currentTime;
           if (Math.abs(t - lastSaved.current) < SAVE_EVERY) return;
