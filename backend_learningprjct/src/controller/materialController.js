@@ -1,3 +1,4 @@
+import path from 'node:path';
 import Course from '../models/Course.js';
 import { findCourseFile, isOwnCloudinaryUrl, pipeFromCloudinary } from '../service/materialFiles.js';
 import { noSharedCache } from '../middleware/courseAccess.js';
@@ -20,8 +21,12 @@ export const servirMaterial = async (req, res, next) => {
       noSharedCache(res);
       return res.json({ url: stored });
     }
+    // upload.js sube los PDFs sin extensión en el public_id: sin «.pdf» se servirían como octet-stream
+    // y el navegador no los mostraría en el <iframe>
+    let filename = path.basename(new URL(stored).pathname);
+    if (file.tipo === 'pdf' && !/\.pdf$/i.test(filename)) filename += '.pdf';
     // Única llamada que puede firmar: el acceso ya lo ha comprobado requireCourseAccess('read')
-    return await pipeFromCloudinary(res, stored, { sign: true });
+    return await pipeFromCloudinary(res, stored, { sign: true, filename });
   } catch (err) {
     return next(err);
   }

@@ -115,6 +115,24 @@ describe('archivos de curso', () => {
       assert.deepEqual(fetched, [fx.MATERIAL_URL]);
     });
 
+    test('PDF subido sin extensión en el public_id (así sube upload.js) → se sirve como PDF', async () => {
+      const { course, ana } = await setup();
+      const sinExtension = 'https://res.cloudinary.com/demo-cloud/raw/upload/v1/learning-platform/materiales/Tema_1-1712345678-123';
+      course.temas[0].materiales[0].archivo = sinExtension;
+      await course.save();
+      const ok = deps.fetch;
+      // Cloudinary sirve los raw como octet-stream
+      deps.fetch = async () => new Response(PDF, { status: 200, headers: { 'Content-Type': 'application/octet-stream' } });
+      try {
+        const r = await api.get(materialPath(course, course.temas[0].materiales[0]._id), fx.authHeader(ana));
+        assert.equal(r.status, 200);
+        assert.equal(r.headers.get('content-type'), 'application/pdf');
+        assert.match(r.headers.get('content-disposition'), /filename="Tema_1-1712345678-123\.pdf"/);
+      } finally {
+        deps.fetch = ok;
+      }
+    });
+
     test('?lang=en sirve la versión en inglés', async () => {
       const { course, ana, material } = await setup();
       await api.get(materialPath(course, material._id, '?lang=en'), fx.authHeader(ana));
