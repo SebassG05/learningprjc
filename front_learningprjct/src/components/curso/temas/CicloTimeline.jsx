@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { HEADER_OFFSET, glideTo } from '../../../lib/smoothScroll';
 import { spring } from '../../../lib/motion';
-import { etapa } from './temasProgress';
+import { etapaDe, tituloTema } from './temasProgress';
 
 const scrollToScene = (id) => {
   const el = document.getElementById(id);
@@ -21,15 +22,29 @@ const scrollToScene = (id) => {
  * (cancela el padding del contenedor de CursoDetalle: px-4 / sm:px-6).
  * Cada punto lleva a su escena; el actual se anuncia con aria-current="step". El nombre accesible es el texto
  * visible (WCAG 2.5.3) más lo que solo se lee («Tema», «vídeo visto»).
+ * Fuera de Carbono no hay nombres de etapa; con muchos temas la barra (móvil) y el raíl (escritorio) se desplazan
+ * solos para dejar a la vista el tema actual, sin mover la página.
  */
-export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t }) {
+export default function CicloTimeline({ temas, ciclo, active, seen, sceneId, idioma, t }) {
   const reduce = useReducedMotion();
+  const barra = useRef(null);
+  const rail = useRef(null);
+
+  useEffect(() => {
+    const behavior = reduce ? 'auto' : 'smooth';
+    const b = barra.current;
+    const bi = b?.querySelector(`[data-i="${active}"]`);
+    if (bi && b.scrollWidth > b.clientWidth) b.scrollTo({ left: bi.offsetLeft - (b.clientWidth - bi.offsetWidth) / 2, behavior });
+    const r = rail.current;
+    const ri = r?.querySelector(`[data-i="${active}"]`);
+    if (ri && r.scrollHeight > r.clientHeight) r.scrollTo({ top: ri.offsetTop - (r.clientHeight - ri.offsetHeight) / 2, behavior });
+  }, [active, reduce]);
   const total = temas.length;
   const progress = total > 1 ? active / (total - 1) : 1;
   const fill = reduce ? { duration: 0 } : spring.glide;
 
   const items = temas.map((tema, i) => {
-    const e = etapa(i);
+    const e = etapaDe(i, ciclo);
     return { tema, i, e, label: idioma === 'en' ? e.en : e.es, isSeen: seen.has(String(tema._id)), isActive: i === active };
   });
 
@@ -37,9 +52,9 @@ export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t 
     <nav aria-label={t.timelineLabel} className="sticky top-header z-30 -mx-4 mb-8 sm:-mx-6 lg:static lg:mx-0 lg:mb-0">
       {/* ---- Móvil / tableta ---- */}
       <div className="glass-nav lg:hidden">
-        <ol className="relative flex px-2 sm:px-4">
+        <ol ref={barra} className="relative flex overflow-x-auto overscroll-x-contain px-2 [scrollbar-width:none] sm:px-4 [&::-webkit-scrollbar]:hidden">
           {items.map(({ tema, i, e, label, isSeen, isActive }) => (
-            <li key={tema._id} className="flex-1">
+            <li key={tema._id} data-i={i} className="min-w-14 flex-1">
               <button
                 type="button"
                 onClick={() => scrollToScene(sceneId(tema))}
@@ -52,10 +67,12 @@ export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t 
                   <span className="sr-only">{t.temaWord} </span>
                   {String(tema.numeroTema).padStart(2, '0')}
                 </span>
-                <span className={`text-[0.75rem] leading-none transition-colors duration-200 ${isActive ? 'text-ink' : 'text-ink-3'}`}>
-                  {label}
-                  {isSeen ? <span className="sr-only">, {t.seen}</span> : null}
-                </span>
+                {label || isSeen ? (
+                  <span className={`text-[0.75rem] leading-none transition-colors duration-200 ${isActive ? 'text-ink' : 'text-ink-3'}`}>
+                    {label}
+                    {isSeen ? <span className="sr-only">, {t.seen}</span> : null}
+                  </span>
+                ) : null}
                 {/* Tramo del ciclo: se rellena con el acento al pasar por él */}
                 <span aria-hidden="true" className="absolute inset-x-1 bottom-0 h-0.5 overflow-hidden rounded-full bg-white/[0.08]">
                   <motion.span
@@ -75,6 +92,7 @@ export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t 
       <div className="hidden h-full lg:block">
         <div className="sticky top-[calc(var(--spacing-header-lg)+2.5rem)]">
           <p className="eyebrow mb-6 text-ink-3">{t.timelineLabel}</p>
+          <div ref={rail} className={`-mx-2 max-h-[calc(100svh-var(--spacing-header-lg)-9rem)] overflow-y-auto overscroll-contain px-2 [scrollbar-width:thin] ${temas.length > 7 ? '[mask-image:linear-gradient(to_bottom,transparent,black_1.5rem,black_calc(100%-2.5rem),transparent)]' : ''}`}>
           <ol className="relative">
             {/* Trazo del ciclo: pista y relleno (scaleY, solo transform) */}
             <span aria-hidden="true" className="absolute bottom-6 left-[11px] top-6 w-0.5 rounded-full bg-white/[0.08]">
@@ -86,8 +104,8 @@ export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t 
                 className="absolute inset-0 origin-top rounded-full"
               />
             </span>
-            {items.map(({ tema, e, label, isSeen, isActive }) => (
-              <li key={tema._id} className="relative">
+            {items.map(({ tema, i, e, label, isSeen, isActive }) => (
+              <li key={tema._id} data-i={i} className="relative">
                 <button
                   type="button"
                   onClick={() => scrollToScene(sceneId(tema))}
@@ -110,10 +128,10 @@ export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t 
                   </span>
                   <span className="min-w-0">
                     <span className={`block text-footnote font-semibold uppercase tracking-[0.14em] transition-colors duration-200 ${isActive ? 'text-[var(--accent)]' : 'text-ink-3 group-hover:text-ink-2'}`}>
-                      {String(tema.numeroTema).padStart(2, '0')} · {label}
+                      {String(tema.numeroTema).padStart(2, '0')}{label ? ` · ${label}` : ''}
                     </span>
                     <span className={`mt-1 block text-callout leading-snug transition-colors duration-200 ${isActive ? 'text-ink' : 'text-ink-3 group-hover:text-ink-2'}`}>
-                      {idioma === 'en' && tema.tituloEn ? tema.tituloEn : tema.titulo}
+                      {tituloTema(tema, idioma)}
                       {isSeen ? <span className="sr-only">, {t.seen}</span> : null}
                     </span>
                   </span>
@@ -121,6 +139,7 @@ export default function CicloTimeline({ temas, active, seen, sceneId, idioma, t 
               </li>
             ))}
           </ol>
+          </div>
         </div>
       </div>
     </nav>

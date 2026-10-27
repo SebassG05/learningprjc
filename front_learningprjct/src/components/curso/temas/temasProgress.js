@@ -13,6 +13,21 @@ export const CICLO = [
 
 export const etapa = (index) => CICLO[Math.min(Math.max(index, 0), CICLO.length - 1)];
 
+// Las etapas con nombre (suelo → práctica) solo tienen sentido en Carbono. En el resto de cursos las escenas
+// alternan los mismos acentos, sin nombre de etapa.
+// Título a mostrar: sin el prefijo «Tema 01:» que traen algunos cursos (el número ya está en la escena)
+export const tituloTema = (tema, idioma = 'es') => {
+  const t = (idioma === 'en' && tema?.tituloEn) || tema?.titulo || '';
+  return t.replace(/^\s*(tema|topic|unit|unidad|m[oó]dulo|module)\s*\d+\s*[:.\-–—]\s*/i, '') || t;
+};
+export const CURSO_CICLO = '69d50406663e8648d7ee1f08';
+export const usaCiclo = (cursoId) => cursoId === CURSO_CICLO;
+export const etapaDe = (index, ciclo) => {
+  if (ciclo) return etapa(index);
+  const e = CICLO[((index % CICLO.length) + CICLO.length) % CICLO.length];
+  return { ...e, es: null, en: null };
+};
+
 // ¿Se pinta el curso como escenas? Solo si sus temas traen el temario nuevo (vídeo o índice)
 export const tieneEscenas = (temas) => Array.isArray(temas) && temas.some((t) => t.video || t.apartados?.length);
 

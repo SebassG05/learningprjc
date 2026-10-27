@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AlertCircle } from 'lucide-react';
 import { temarioLink } from '../components/curso/temas/temarioPdf';
 
@@ -10,12 +10,13 @@ import { temarioLink } from '../components/curso/temas/temarioPdf';
  */
 export default function TemarioPdf() {
   const { cursoId, materialId } = useParams();
+  const lang = useSearchParams()[0].get('lang') === 'en' ? 'en' : 'es';
   const navigate = useNavigate();
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const ctrl = new AbortController();
-    temarioLink(cursoId, materialId, ctrl.signal)
+    temarioLink(cursoId, materialId, ctrl.signal, lang)
       .then((url) => window.location.replace(url))
       .catch((err) => {
         if (err.name === 'AbortError') return;
@@ -23,7 +24,7 @@ export default function TemarioPdf() {
         else setError(true);
       });
     return () => ctrl.abort();
-  }, [cursoId, materialId, navigate]);
+  }, [cursoId, materialId, lang, navigate]);
 
   return (
     <div className="flex min-h-[70svh] flex-col items-center justify-center gap-4 px-6 text-center">

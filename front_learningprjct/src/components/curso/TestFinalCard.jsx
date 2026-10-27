@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { duration, ease, inView } from '../../lib/motion';
 import { IconArrowRight, IconCheck, IconLock, IconSeal } from './cierreIcons';
+import { tituloTema } from './temas/temasProgress';
 
 // El progreso del curso como perfil del suelo: un horizonte por módulo, de la superficie hacia abajo,
-// hasta el lecho, donde está la certificación. Más de seis módulos: se numeran.
-const letras = (n) => (n <= 4 ? ['O', 'A', 'B', 'C'] : ['O', 'A', 'E', 'B', 'C', 'R']);
+// hasta el lecho, donde está la certificación. Más de seis módulos: se numeran y las bandas se estrechan.
+const letras = (n) => (n <= 4 ? ['O', 'A', 'B', 'C'] : n <= 6 ? ['O', 'A', 'E', 'B', 'C', 'R'] : []);
 // Grosor de cada horizonte (rem), escritorio / móvil: los profundos son más gruesos, como en un perfil real
 const GROSOR = [[3, 2.25], [3.75, 2.5], [4.5, 2.75], [3.5, 2.5], [3.25, 2.25], [3, 2.25]];
-// Ámbar aprobado: cada horizonte un punto más profundo que el anterior (gradiente mínimo entre capas)
-const AMBAR = ['#f6d7a7', '#f1c98a', '#ebbb70', '#e4ad5b', '#dc9f4c', '#d3933f'];
-const FILL_STEP = 0.14;
+const GROSOR_DENSO = [2.25, 2];
+// Ámbar aprobado: del amanecer de la superficie al ámbar profundo (gradiente mínimo entre capas)
+const ambar = (i, n) => `color-mix(in oklab, #d3933f ${Math.round((n > 1 ? i / (n - 1) : 0) * 100)}%, #f6d7a7)`;
 
 // Test final de certificación: se desbloquea al aprobar los tests de todos los temas
 export default function TestFinalCard({ cursoId, temas, completedTests, className = '' }) {
@@ -40,6 +41,8 @@ export default function TestFinalCard({ cursoId, temas, completedTests, classNam
   const L = letras(temas.length);
   // Orden de tinte: solo cuentan los horizontes aprobados, de arriba abajo
   const ordenTinte = hechos.map((h, i) => (h ? hechos.slice(0, i).filter(Boolean).length : -1));
+  // La secuencia completa dura lo mismo con 4 módulos que con 20
+  const FILL_STEP = Math.min(0.14, 0.9 / Math.max(nHechos, 1));
   const revelarSello = (reduce ? 0 : nHechos * FILL_STEP + 0.35);
 
   const fill = {
@@ -79,8 +82,8 @@ export default function TestFinalCard({ cursoId, temas, completedTests, classNam
       <div className="[grid-area:perfil]">
         <ol aria-label={`Módulos aprobados: ${nHechos} de ${temas.length}`}>
           {temas.map((tema, i) => {
-            const [hLg, hSm] = GROSOR[Math.min(i, GROSOR.length - 1)];
-            const color = AMBAR[Math.min(i, AMBAR.length - 1)];
+            const [hLg, hSm] = temas.length > 6 ? GROSOR_DENSO : GROSOR[i];
+            const color = ambar(i, temas.length);
             return (
               <li
                 key={tema._id}
@@ -89,7 +92,7 @@ export default function TestFinalCard({ cursoId, temas, completedTests, classNam
               >
                 <div
                   className={`relative w-14 shrink-0 overflow-hidden sm:w-20 ${i === 0 ? 'rounded-t-xl' : ''}`}
-                  style={{ backgroundColor: `rgb(255 255 255 / ${0.075 - i * 0.01})` }}
+                  style={{ backgroundColor: `rgb(255 255 255 / ${0.075 - (i / Math.max(temas.length - 1, 1)) * 0.035})` }}
                 >
                   {hechos[i] && (
                     <motion.span
@@ -103,12 +106,12 @@ export default function TestFinalCard({ cursoId, temas, completedTests, classNam
                   {i > 0 && <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-black/35" />}
                 </div>
                 <div className={`flex min-w-0 flex-1 items-center gap-3 ${i === 0 ? '' : 'border-t border-line'}`}>
-                  <span aria-hidden="true" className="w-3 shrink-0 text-[0.6875rem] font-semibold tracking-[0.06em] text-ink-3">
+                  <span aria-hidden="true" className="w-4 shrink-0 text-[0.6875rem] font-semibold tabular-nums tracking-[0.06em] text-ink-3">
                     {L[i] ?? i + 1}
                   </span>
                   <span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap text-sm text-ink [mask-image:linear-gradient(to_right,black_calc(100%-2rem),transparent)]">
                     <span className="sr-only">Módulo {i + 1}: </span>
-                    {tema.titulo}
+                    {tituloTema(tema)}
                   </span>
                   <span className={`shrink-0 text-footnote ${hechos[i] ? 'text-[#f1c98a]' : 'text-ink-3'}`}>
                     {hechos[i] ? 'Aprobado' : 'Pendiente'}

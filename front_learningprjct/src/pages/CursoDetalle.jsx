@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from '../context/UserContext';
 import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
-import MaterialEstudio from '../components/curso/MaterialEstudio';
-import { tieneEscenas } from '../components/curso/temas/temasProgress';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
 import TestFinalCard from '../components/curso/TestFinalCard';
 import TermsGate from '../components/courses/TermsGate';
@@ -483,11 +481,10 @@ export default function CursoDetalle() {
         </div>
       </div>
 
-      {/* Material de Estudio - Temas y PDFs */}
-      {/* Temario nuevo (vídeo e índice por tema): escenas en un contenedor más ancho; el resto de cursos,
-          la lista de siempre. El padding móvil (px-4 / sm:px-6) es el que cancela la barra del ciclo. */}
-      <div className={`mx-auto px-4 sm:px-6 ${tieneEscenas(curso.temas) ? 'max-w-[1520px] lg:px-10' : 'max-w-[1200px] lg:px-8'}`}>
-        {tieneEscenas(curso.temas) ? (
+      {/* Temario: una escena por tema en todos los cursos (vídeo, conceptos e índice solo si el tema los trae).
+          El padding móvil (px-4 / sm:px-6) es el que cancela la barra del ciclo. */}
+      <div className="mx-auto max-w-[1520px] px-4 sm:px-6 lg:px-10">
+        {curso.temas?.length ? (
           <Suspense fallback={<div className="min-h-[100svh]" aria-hidden="true" />}>
           <TemasCiclo
             cursoId={id}
@@ -498,16 +495,7 @@ export default function CursoDetalle() {
             idioma={idiomaSeleccionado || 'es'}
           />
           </Suspense>
-        ) : (
-          <MaterialEstudio
-            cursoId={id}
-            temas={curso.temas}
-            completedMaterials={completedMaterials}
-            setCompletedMaterials={setCompletedMaterials}
-            completedTests={completedTests}
-            idioma={idiomaSeleccionado || 'es'}
-          />
-        )}
+        ) : null}
       </div>
 
       {/* Cierre del recorrido: test final y ejercicios en una misma escena (y un mismo ancho). Al llegar,

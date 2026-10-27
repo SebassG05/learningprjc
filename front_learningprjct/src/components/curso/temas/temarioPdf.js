@@ -7,25 +7,25 @@ export const temarioFilename = (numero, titulo) =>
   `Tema ${numero} - ${titulo}`.replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.pdf';
 
 // Ruta de la pestaña que abre el PDF con el visor nativo (táctil)
-export const temarioRoute = (cursoId, materialId) => `/curso/${cursoId}/temario/${materialId}`;
+export const temarioRoute = (cursoId, materialId, lang = 'es') => `/curso/${cursoId}/temario/${materialId}${lang === 'en' ? '?lang=en' : ''}`;
 
 /**
  * Enlace de corta duración (60 s) al PDF servido por el backend: la pestaña navega a una URL https real y el
  * sistema abre su visor (iOS, Android, escritorio) sin depender de URLs blob: entre pestañas.
  */
-export async function temarioLink(cursoId, materialId, signal) {
+export async function temarioLink(cursoId, materialId, signal, lang = 'es') {
   const res = await authFetch(`${API_URL}/api/courses/${cursoId}/materiales/${materialId}/enlace`, { method: 'POST', signal });
   const body = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(body?.error || `HTTP ${res.status}`, res.status, body);
-  return `${API_URL}${body.path}`;
+  return `${API_URL}${body.path}${lang === 'en' ? '&lang=en' : ''}`;
 }
 
 /** → { url } (blob:, revócala al terminar) o { external } */
-export const loadTemario = (cursoId, materialId, signal) => loadCourseFile(cursoId, materialId, 'es', signal);
+export const loadTemario = (cursoId, materialId, signal, lang = 'es') => loadCourseFile(cursoId, materialId, lang, signal);
 
 // Descarga con nombre legible. Revoca la URL un poco después: Safari la necesita viva al iniciar la descarga
-export async function downloadTemario(cursoId, materialId, filename) {
-  const { url, external } = await loadTemario(cursoId, materialId);
+export async function downloadTemario(cursoId, materialId, filename, lang = 'es') {
+  const { url, external } = await loadTemario(cursoId, materialId, undefined, lang);
   if (external) {
     window.open(external, '_blank', 'noopener');
     return;

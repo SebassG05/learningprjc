@@ -19,7 +19,7 @@ export default function TemarioModal({ open, ...props }) {
   return createPortal(<AnimatePresence>{open ? <Dialog key="temario" {...props} /> : null}</AnimatePresence>, document.body);
 }
 
-function Dialog({ cursoId, materialId, numero, titulo, filename, accent, onClose, onNotAllowed, t }) {
+function Dialog({ cursoId, materialId, lang = 'es', numero, titulo, filename, accent, onClose, onNotAllowed, t }) {
   const reduce = useReducedMotion();
   const ref = useRef(null);
   const titleId = useId();
@@ -33,7 +33,7 @@ function Dialog({ cursoId, materialId, numero, titulo, filename, accent, onClose
     const ctrl = new AbortController();
     let blobUrl = null;
     setState({ status: 'loading', url: null });
-    loadTemario(cursoId, materialId, ctrl.signal)
+    loadTemario(cursoId, materialId, ctrl.signal, lang)
       .then(({ url, external }) => {
         blobUrl = url ?? null;
         setState({ status: 'ready', url: url ?? external });
@@ -47,7 +47,7 @@ function Dialog({ cursoId, materialId, numero, titulo, filename, accent, onClose
       ctrl.abort();
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
-  }, [cursoId, materialId, attempt, onNotAllowed]);
+  }, [cursoId, materialId, lang, attempt, onNotAllowed]);
 
   const action =
     'inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full px-4 text-callout font-semibold transition-[background-color,transform] duration-150 ease-out-expo active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]';
