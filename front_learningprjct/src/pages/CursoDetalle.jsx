@@ -483,8 +483,9 @@ export default function CursoDetalle() {
       </div>
 
       {/* Material de Estudio - Temas y PDFs */}
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-        {/* Temario nuevo (vídeo e índice por tema): escenas; el resto de cursos, la lista de siempre */}
+      {/* Temario nuevo (vídeo e índice por tema): escenas en un contenedor más ancho; el resto de cursos,
+          la lista de siempre. El padding móvil (px-4 / sm:px-6) es el que cancela la barra del ciclo. */}
+      <div className={`mx-auto px-4 sm:px-6 ${tieneEscenas(curso.temas) ? 'max-w-[1520px] lg:px-10' : 'max-w-[1200px] lg:px-8'}`}>
         {tieneEscenas(curso.temas) ? (
           <Suspense fallback={<div className="min-h-[100svh]" aria-hidden="true" />}>
           <TemasCiclo
@@ -506,7 +507,9 @@ export default function CursoDetalle() {
             idioma={idiomaSeleccionado || 'es'}
           />
         )}
-        
+      </div>
+
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Mensaje de Curso Completado */}
         {isCursoCompletado() && (
           <div className="mt-16 mb-16">
