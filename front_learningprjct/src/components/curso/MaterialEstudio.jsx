@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { duration, ease } from '../../lib/motion';
-import { authFetch } from '../../lib/courseFiles';
+import useTestInfo from './useTestInfo';
+import TestFinalCard from './TestFinalCard';
 import { useNavigate } from 'react-router-dom';
-import { FileText, Download, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck, Lock, Trophy } from 'lucide-react';
+import { FileText, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck } from 'lucide-react';
 
 export default function MaterialEstudio({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests, idioma = 'es' }) {
   const [expandedTemas, setExpandedTemas] = useState({});
-  const [testInfo, setTestInfo] = useState({});
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
   // Devuelve el texto en el idioma seleccionado
   const t = (es, en) => {
@@ -23,32 +23,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
     return material.archivo || material.archivoEn || null;
   };
 
-  useEffect(() => {
-    // Cargar información de los tests para cada tema
-    const cargarInfoTests = async () => {
-      const infoTests = {};
-      for (const tema of temas) {
-        try {
-          const response = await authFetch(`${apiUrl}/api/tests/${cursoId}/temas/${tema._id}/test`);
-          if (response.ok) {
-            const testData = await response.json();
-            infoTests[tema._id] = {
-              totalPreguntas: testData.preguntas.length,
-              duracion: testData.duracionMinutos,
-              notaMinima: testData.notaMinima
-            };
-          }
-        } catch (error) {
-          console.error(`Error cargando info test tema ${tema._id}:`, error);
-        }
-      }
-      setTestInfo(infoTests);
-    };
-
-    if (temas && temas.length > 0) {
-      cargarInfoTests();
-    }
-  }, [temas, cursoId, apiUrl]);
+  const testInfo = useTestInfo(cursoId, temas);
 
   if (!temas || temas.length === 0) {
     return null;
@@ -390,88 +365,7 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
           })}
         </div>
 
-        {/* ── Test Final de Certificación ── */}
-        {(() => {
-          const todosAprobados = temas.length > 0 && temas.every(t => completedTests && completedTests.includes(t._id));
-          const aprobado = completedTests && completedTests.includes('test-final-certificacion');
-          return (
-            <div className="mt-8 rounded-3xl border border-amber-400/25 bg-surface p-6 shadow-card transition-colors hover:border-amber-400/40 sm:p-8">
-              {/* Header igual que los temas */}
-              <div className="flex items-start gap-4 mb-6">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 flex items-center justify-center text-on-brand font-bold text-sm">
-                  {temas.length + 1}
-                </span>
-                <div className="flex-1">
-                  <h3 className="mb-2 font-sans text-xl font-semibold text-ink">Test Final de Certificación</h3>
-                  <p className="text-sm leading-relaxed text-ink-2">
-                    Evaluación final integradora sobre todos los contenidos del curso. Cubre los {temas.length} módulos del curso para obtener la certificación.
-                  </p>
-                </div>
-              </div>
-
-              {/* Fila del test */}
-              <div className="mt-4 space-y-2">
-                <h4 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-amber-300">
-                  Test de Certificación
-                </h4>
-                <div
-                  onClick={() => {
-                    if (todosAprobados) {
-                      navigate(`/curso/${cursoId}/tema-estudio`, {
-                        state: {
-                          tema: { _id: 'test-final-certificacion', titulo: 'Test Final de Certificación', numeroTema: 5 },
-                          material: { titulo: 'Test Final de Certificación' },
-                          startPhase: 2,
-                          temaId: 'test-final-certificacion'
-                        }
-                      });
-                    }
-                  }}
-                  className={`group flex items-center justify-between rounded-xl py-3 px-4 transition-colors duration-200 border ${
-                    !todosAprobados
-                      ? 'bg-white/[0.02] border-transparent cursor-not-allowed opacity-50'
-                      : aprobado
-                        ? 'bg-yellow-400/10 border-yellow-400/50 cursor-pointer'
-                        : 'bg-surface/50 border-transparent hover:bg-surface hover:border-yellow-400/40 cursor-pointer'
-                  }`}
-                >
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className={`flex-shrink-0 ${todosAprobados ? 'text-yellow-400' : 'text-gray-600'}`}>
-                      {!todosAprobados ? (
-                        <Lock className="w-5 h-5" />
-                      ) : aprobado ? (
-                        <Trophy className="w-5 h-5" />
-                      ) : (
-                        <ClipboardCheck className="w-5 h-5" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className={`font-medium truncate ${todosAprobados ? 'text-ink' : 'text-gray-500'}`}>
-                        Test Final de Certificación
-                        {aprobado && (
-                          <span className="ml-2 text-xs bg-yellow-400/20 text-yellow-400 px-2 py-0.5 rounded-full">Aprobado ✓</span>
-                        )}
-                        {!todosAprobados && (
-                          <span className="ml-2 text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">🔒 Bloqueado</span>
-                        )}
-                      </p>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        {todosAprobados
-                          ? '40 preguntas • 90 minutos • Nota mínima: 70%'
-                          : `Aprueba los tests de los ${temas.length} módulos para desbloquear el test final`}
-                      </p>
-                    </div>
-                  </div>
-                  {todosAprobados && !aprobado && (
-                    <div className="flex-shrink-0 ml-3 px-3 py-1.5 rounded-full text-sm font-medium bg-amber-400 text-on-brand opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity duration-200">
-                      Iniciar Test
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-        })()}
+        <TestFinalCard cursoId={cursoId} temas={temas} completedTests={completedTests} className="mt-8" />
       </div>
     </div>
   );

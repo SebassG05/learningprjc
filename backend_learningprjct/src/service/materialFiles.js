@@ -40,12 +40,25 @@ export function cloudinaryRawAsset(value) {
   return match ? { type: match[1], publicId: decodeURIComponent(match[2]) } : null;
 }
 
+// PDF subido como imagen (así llegan los temarios de Carbono): el public_id va sin la extensión, que es
+// el formato. https://res.cloudinary.com/<cloud>/image/<upload|authenticated>/[s--firma--/][v123/]<id>.pdf
+const IMAGE_PDF_PATH = /^\/[^/]+\/image\/(upload|authenticated)\/(?:s--[\w-]+--\/)?(?:v\d+\/)?(.+)\.pdf$/i;
+
+/** Archivo de material en Cloudinary (raw, o PDF como image) → { resourceType, type, publicId, format } */
+export function cloudinaryFileAsset(value) {
+  const raw = cloudinaryRawAsset(value);
+  if (raw) return { resourceType: 'raw', ...raw, format: '' };
+  const url = parseUrl(value);
+  const match = url && IMAGE_PDF_PATH.exec(url.pathname);
+  return match ? { resourceType: 'image', type: match[1], publicId: decodeURIComponent(match[2]), format: 'pdf' } : null;
+}
+
 // URL desde la que el backend descarga el archivo
 export function upstreamUrl(storedUrl) {
-  const asset = cloudinaryRawAsset(storedUrl);
+  const asset = cloudinaryFileAsset(storedUrl);
   if (asset?.type !== 'authenticated') return storedUrl;
-  return cloudinary.utils.private_download_url(asset.publicId, '', {
-    resource_type: 'raw',
+  return cloudinary.utils.private_download_url(asset.publicId, asset.format, {
+    resource_type: asset.resourceType,
     type: 'authenticated',
     expires_at: Math.floor(Date.now() / 1000) + SIGNED_URL_TTL_SECONDS,
   });
@@ -80,7 +93,7 @@ const UPSTREAM_TIMEOUT_MS = 60_000;
  * «authenticated». Sin `sign`, una URL authenticated se rechaza.
  */
 export async function pipeFromCloudinary(res, storedUrl, { sign = false, filename = path.basename(new URL(storedUrl).pathname) } = {}) {
-  if (!sign && cloudinaryRawAsset(storedUrl)?.type === 'authenticated') throw new Error('URL authenticated sin permiso para firmar');
+  if (!sign && cloudinaryFileAsset(storedUrl)?.type === 'authenticated') throw new Error('URL authenticated sin permiso para firmar');
   let upstream;
   try {
     upstream = await deps.fetch(sign ? upstreamUrl(storedUrl) : storedUrl, { signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS) });

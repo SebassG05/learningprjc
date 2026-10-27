@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from '../context/UserContext';
 import ObjetivosSuelos from '../components/cursoSuelos/ObjetivosSuelos';
 import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
+import { tieneEscenas } from '../components/curso/temas/temasProgress';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
 import TermsGate from '../components/courses/TermsGate';
 import { authFetch } from '../lib/courseFiles';
@@ -12,6 +13,9 @@ import { courseIsOpen, formatCohortDate } from '../components/courses/sheet/priv
 import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { duration, ease, spring } from '../lib/motion';
+
+// Escenas del temario nuevo en su propio chunk: van bajo la portada y no deben retrasar el primer pintado
+const TemasCiclo = lazy(() => import('../components/curso/temas/TemasCiclo'));
 
 export default function CursoDetalle() {
   const { id } = useParams();
@@ -480,14 +484,28 @@ export default function CursoDetalle() {
 
       {/* Material de Estudio - Temas y PDFs */}
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-        <MaterialEstudio 
-          cursoId={id}
-          temas={curso.temas} 
-          completedMaterials={completedMaterials}
-          setCompletedMaterials={setCompletedMaterials}
-          completedTests={completedTests}
-          idioma={idiomaSeleccionado || 'es'}
-        />
+        {/* Temario nuevo (vídeo e índice por tema): escenas; el resto de cursos, la lista de siempre */}
+        {tieneEscenas(curso.temas) ? (
+          <Suspense fallback={<div className="min-h-[100svh]" aria-hidden="true" />}>
+          <TemasCiclo
+            cursoId={id}
+            temas={curso.temas}
+            completedMaterials={completedMaterials}
+            setCompletedMaterials={setCompletedMaterials}
+            completedTests={completedTests}
+            idioma={idiomaSeleccionado || 'es'}
+          />
+          </Suspense>
+        ) : (
+          <MaterialEstudio
+            cursoId={id}
+            temas={curso.temas}
+            completedMaterials={completedMaterials}
+            setCompletedMaterials={setCompletedMaterials}
+            completedTests={completedTests}
+            idioma={idiomaSeleccionado || 'es'}
+          />
+        )}
         
         {/* Mensaje de Curso Completado */}
         {isCursoCompletado() && (

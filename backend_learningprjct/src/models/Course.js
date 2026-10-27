@@ -26,12 +26,30 @@ const materialSchema = new mongoose.Schema({
   orden: { type: Number, default: 0 }
 }, { _id: true });
 
+// Vídeo explicativo del tema: asset de Cloudinary (resource_type video). Las URLs las construye el
+// backend (GET /api/courses/:id/temas/:temaId/video) y solo para quien puede leer el curso.
+// type 'authenticated': solo valen URLs firmadas (lo deja así scripts/moverMaterialesAAuthenticated.js).
+const temaVideoSchema = new mongoose.Schema({
+  publicId: { type: String, required: true, trim: true },
+  version: { type: Number },
+  type: { type: String, enum: ['upload', 'authenticated'], default: 'upload' },
+}, { _id: false });
+
+// Índice del temario agrupado por partes (como el índice del PDF)
+const apartadoSchema = new mongoose.Schema({
+  titulo: { type: String, required: true, trim: true },
+  items: [{ type: String, trim: true }],
+}, { _id: false });
+
 const temaSchema = new mongoose.Schema({
   numeroTema: { type: Number, required: true },
   titulo: { type: String }, // Título en español (opcional si tituloEn existe)
   tituloEn: { type: String }, // Título en inglés (opcional si titulo existe)
   descripcion: { type: String },
   descripcionEn: { type: String }, // Descripción en inglés (opcional)
+  video: { type: temaVideoSchema, default: undefined },
+  apartados: { type: [apartadoSchema], default: undefined },
+  conceptosClave: { type: [{ type: String, trim: true }], default: undefined },
   orden: { type: Number, default: 0 }, // Orden de visualización del tema
   materiales: [materialSchema],
   actividadesOptativas: [materialSchema], // Actividades optativas del tema

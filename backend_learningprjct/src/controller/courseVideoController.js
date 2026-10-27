@@ -3,7 +3,7 @@ import Course from '../models/Course.js';
 import UserProgress from '../models/UserProgress.js';
 import { accessFor, allows, isPrivate } from '../service/courseAccess.js';
 import { videoFor } from '../config/courseVideos.js';
-import { videoType, videoUrls } from '../service/courseVideoService.js';
+import { temaVideoUrls, videoType, videoUrls } from '../service/courseVideoService.js';
 
 /**
  * Vídeo del curso según quién lo pide: completo si está inscrito y el curso está abierto; si no, preview.
@@ -36,5 +36,27 @@ export const obtenerVideoCurso = async (req, res) => {
   } catch (err) {
     console.error('Error al obtener el vídeo del curso:', err);
     res.status(500).json({ error: 'Error al obtener el vídeo del curso' });
+  }
+};
+
+/**
+ * Vídeo explicativo de un tema: URLs (firmadas si el asset es «authenticated») y pósters.
+ * El acceso de lectura ya lo ha comprobado requireCourseAccess('read') en la ruta.
+ * @route GET /api/courses/:id/temas/:temaId/video
+ * @access Público en cursos públicos; en privados, miembros con acceso y admins
+ */
+export const obtenerVideoTema = async (req, res, next) => {
+  res.set('Cache-Control', 'private, no-store');
+  res.vary('Authorization');
+  try {
+    const { id, temaId } = req.params;
+    if (!mongoose.isValidObjectId(temaId)) return res.status(404).json({ error: 'Tema no encontrado' });
+    // Comparando como texto, igual que findCourseFile: no depende de cómo se guardó el _id del tema
+    const course = await Course.findById(id).select('temas._id temas.video').lean();
+    const video = course?.temas?.find((t) => String(t._id) === temaId)?.video;
+    if (!video?.publicId) return res.status(404).json({ error: 'Este tema no tiene vídeo' });
+    return res.json(temaVideoUrls(video));
+  } catch (err) {
+    return next(err);
   }
 };

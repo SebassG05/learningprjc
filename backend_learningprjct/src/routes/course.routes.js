@@ -5,8 +5,9 @@ import * as courseController from '../controller/courseController.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
 import { optionalAuth } from '../middleware/optionalAuth.js';
-import { obtenerVideoCurso } from '../controller/courseVideoController.js';
-import { servirMaterial } from '../controller/materialController.js';
+import { obtenerVideoCurso, obtenerVideoTema } from '../controller/courseVideoController.js';
+import { crearEnlaceMaterial, servirMaterial } from '../controller/materialController.js';
+import { materialTicket } from '../middleware/materialTicket.js';
 import { cambiarModoAcceso } from '../controller/cohortAdminController.js';
 import { apuntarInteresado, listarInteresados } from '../controller/courseInterestController.js';
 import createRateLimit from '../middleware/rateLimit.js';
@@ -118,7 +119,12 @@ router.get('/:id', optionalAuth, courseController.obtenerCurso);
 router.get('/:id/video', optionalAuth, obtenerVideoCurso);
 
 // Material o actividad de un tema, servido por el backend tras comprobar el acceso
-router.get('/:id/materiales/:materialId', optionalAuth, requireCourseAccess('read', fromParam('id')), servirMaterial);
+// Con ?ticket= (enlace de corta duración) en vez de la cabecera Authorization: pestaña nueva en móvil
+router.get('/:id/materiales/:materialId', optionalAuth, materialTicket, requireCourseAccess('read', fromParam('id')), servirMaterial);
+router.post('/:id/materiales/:materialId/enlace', optionalAuth, requireCourseAccess('read', fromParam('id')), crearEnlaceMaterial);
+
+// Vídeo explicativo de un tema, con las mismas reglas de acceso que sus materiales
+router.get('/:id/temas/:temaId/video', optionalAuth, requireCourseAccess('read', fromParam('id')), obtenerVideoTema);
 
 // Crear curso (solo admin/superadmin) - con portada y foto del profesor opcionales
 router.post('/', autenticar, soloAdmin, uploadFieldsWrapper([{ name: 'image', maxCount: 1 }, { name: 'profesorFoto', maxCount: 1 }]), courseController.crearCurso);
