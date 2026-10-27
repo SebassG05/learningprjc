@@ -1,310 +1,710 @@
 {
-  "cursoId": "69d50335b1e80c0e37ab562a",
-  "temaId": "69d50335b1e80c0e37ab5630",
-  "titulo": "Test de Evaluación - Tema 3: Modelos basados en procesos incluidos en el ensemble",
-  "descripcion": "Evaluación sobre los modelos RothC, ICBM, Century, Yasso07, AMG, SG y el enfoque multi-modelo",
+  "cursoId": "69d50406663e8648d7ee1f08",
+  "temaId": "69d5f26894dace2e10adae3c",
+  "titulo": "Test de Evaluación - Tema 3: Modelos de carbono del suelo",
+  "descripcion": "RothC, ICBM, Century, Yasso07, AMG y SG: estructuras, entradas, inicialización y lectura crítica del ensemble HoliSoils.",
   "duracionMinutos": 45,
   "notaMinima": 60,
   "preguntas": [
     {
       "numero": 1,
-      "bloque": "Modelo RothC",
-      "pregunta": "El modelo RothC representa el carbono del suelo mediante:",
+      "bloque": "Punto de partida",
+      "pregunta": "En la notación dC/dt = u + B·C, con B = (T − Id)·K, la diagonal de B recoge la pérdida bruta de cada compartimento. ¿Por qué no puede leerse directamente como emisión de CO₂?",
       "opciones": [
-        { "id": "a", "texto": "Dos compartimentos" },
-        { "id": "b", "texto": "Tres compartimentos" },
-        { "id": "c", "texto": "Cinco compartimentos" },
-        { "id": "d", "texto": "Siete compartimentos" }
+        {
+          "id": "a",
+          "texto": "Porque la diagonal de B siempre es positiva."
+        },
+        {
+          "id": "b",
+          "texto": "Porque parte de esa descomposición se redistribuye a otros compartimentos a través de T; solo la fracción no redistribuida sale del sistema."
+        },
+        {
+          "id": "c",
+          "texto": "Porque K está en meses y las emisiones en años."
+        },
+        {
+          "id": "d",
+          "texto": "Porque la diagonal solo incluye las entradas externas."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "b",
+      "explicacion": "La descomposición bruta y la emisión externa no son intercambiables. La salida del dominio se obtiene sumando las pérdidas que no se transfieren a otros pools."
     },
     {
       "numero": 2,
-      "bloque": "Modelo RothC",
-      "pregunta": "Los compartimentos principales del modelo RothC incluyen:",
+      "bloque": "Punto de partida",
+      "pregunta": "Un informe promedia entre modelos el stock de BIO de RothC, el pool activo de Century y el carbono activo de AMG. ¿Qué problema tiene?",
       "opciones": [
-        { "id": "a", "texto": "DPM y RPM" },
-        { "id": "b", "texto": "BIO y HUM" },
-        { "id": "c", "texto": "IOM" },
-        { "id": "d", "texto": "Todos los anteriores" }
+        {
+          "id": "a",
+          "texto": "Ninguno, porque los tres representan la biomasa microbiana medida."
+        },
+        {
+          "id": "b",
+          "texto": "Que habría que convertir los tres a Mg CO₂/ha antes de promediar."
+        },
+        {
+          "id": "c",
+          "texto": "Que son categorías con definiciones distintas en cada modelo y no miden una misma fracción del suelo."
+        },
+        {
+          "id": "d",
+          "texto": "Que solo puede promediarse si los tres usan SoilR."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "c",
+      "explicacion": "Los nombres parecidos no garantizan equivalencia. Una comparación válida usa variables armonizadas, como el SOC total o su cambio en un dominio común."
     },
     {
       "numero": 3,
-      "bloque": "Modelo RothC",
-      "pregunta": "En el modelo RothC, las tasas de descomposición están moduladas principalmente por:",
+      "bloque": "Seis modelos",
+      "pregunta": "En RothC, un aporte se reparte entre DPM (k = 10 año⁻¹) y RPM (k = 0,30 año⁻¹) según su calidad. Si un material se asigna en mayor proporción a DPM, ¿qué esperas?",
       "opciones": [
-        { "id": "a", "texto": "Temperatura y humedad" },
-        { "id": "b", "texto": "pH del suelo" },
-        { "id": "c", "texto": "Radiación solar" },
-        { "id": "d", "texto": "Altitud" }
+        {
+          "id": "a",
+          "texto": "Que una mayor parte del aporte se descomponga en los primeros meses."
+        },
+        {
+          "id": "b",
+          "texto": "Que aumente directamente el pool IOM."
+        },
+        {
+          "id": "c",
+          "texto": "Que el aporte quede retenido más tiempo como RPM."
+        },
+        {
+          "id": "d",
+          "texto": "Que no cambie nada, porque RothC trata igual todos los residuos."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "a",
+      "explicacion": "DPM se descompone unas 33 veces más rápido que RPM. El reparto DPM/RPM es la forma en que RothC introduce la calidad del residuo."
     },
     {
       "numero": 4,
-      "bloque": "Modelo RothC",
-      "pregunta": "Además del clima, RothC considera como factor del suelo:",
+      "bloque": "Seis modelos",
+      "pregunta": "Dos suelos simulados con RothC solo difieren en el contenido de arcilla. ¿Cómo actúa la arcilla en el modelo clásico?",
       "opciones": [
-        { "id": "a", "texto": "Densidad aparente" },
-        { "id": "b", "texto": "Contenido de arcilla" },
-        { "id": "c", "texto": "Salinidad" },
-        { "id": "d", "texto": "pH" }
+        {
+          "id": "a",
+          "texto": "Multiplica por igual todas las tasas de descomposición."
+        },
+        {
+          "id": "b",
+          "texto": "Aumenta el pool IOM en proporción al porcentaje de arcilla."
+        },
+        {
+          "id": "c",
+          "texto": "Solo modifica el modificador de humedad."
+        },
+        {
+          "id": "d",
+          "texto": "Condiciona el reparto entre carbono mineralizado como CO₂ y carbono retenido en BIO y HUM."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "En RothC la arcilla no es un multiplicador común de las tasas: cambia la proporción de lo descompuesto que se retiene frente a lo que sale como CO₂."
     },
     {
       "numero": 5,
-      "bloque": "Modelo ICBM",
-      "pregunta": "El modelo ICBM se caracteriza por:",
+      "bloque": "Seis modelos",
+      "pregunta": "En RothC, la descomposición bruta mensual de un pool es D = C·[1 − exp(−k·a·b·c·Δt)]. Para 1 Mg C/ha en DPM (k = 10 año⁻¹), con a·b·c = 1 y Δt = 1/12 año, ¿cuánto se descompone ese mes?",
       "opciones": [
-        { "id": "a", "texto": "Alta complejidad estructural" },
-        { "id": "b", "texto": "Gran número de compartimentos" },
-        { "id": "c", "texto": "Estructura simple con dos pools" },
-        { "id": "d", "texto": "Simulación química detallada" }
+        {
+          "id": "a",
+          "texto": "0,833 Mg C/ha"
+        },
+        {
+          "id": "b",
+          "texto": "0,435 Mg C/ha"
+        },
+        {
+          "id": "c",
+          "texto": "0,565 Mg C/ha"
+        },
+        {
+          "id": "d",
+          "texto": "10 Mg C/ha"
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "c",
+      "explicacion": "k·Δt = 0,833; 1 − e^(−0,833) = 0,565. 0,833 sería la aproximación lineal y 0,435 lo que queda. Es pérdida bruta: parte pasará a BIO y HUM."
     },
     {
       "numero": 6,
-      "bloque": "Modelo ICBM",
-      "pregunta": "En el modelo ICBM, el carbono del suelo se divide en:",
+      "bloque": "Seis modelos",
+      "pregunta": "En una simulación con RothC se asigna una proporción muy alta del SOC inicial a IOM. ¿Qué consecuencia tiene?",
       "opciones": [
-        { "id": "a", "texto": "Tres pools" },
-        { "id": "b", "texto": "Dos pools principales" },
-        { "id": "c", "texto": "Cinco pools" },
-        { "id": "d", "texto": "Un único pool" }
+        {
+          "id": "a",
+          "texto": "Demuestra que ese suelo no puede ganar ni perder carbono."
+        },
+        {
+          "id": "b",
+          "texto": "Limita la respuesta simulada al manejo, sin demostrar que el suelo real carezca de capacidad de cambio."
+        },
+        {
+          "id": "c",
+          "texto": "Acelera la descomposición del resto de pools."
+        },
+        {
+          "id": "d",
+          "texto": "Hace que el modelo deje de conservar masa."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "IOM constante es una hipótesis del modelo. Si gran parte del stock es inerte, queda menos carbono que pueda responder a las entradas o al clima."
     },
     {
       "numero": 7,
-      "bloque": "Modelo ICBM",
-      "pregunta": "La función principal de la fracción de humificación en ICBM es:",
+      "bloque": "Seis modelos",
+      "pregunta": "En ICBM básico, con i = 2 Mg C/ha/año, kY = 0,8 año⁻¹, kO = 0,006 año⁻¹, h = 0,125 y r = 1, ¿cuáles son los equilibrios Y* y O*?",
       "opciones": [
-        { "id": "a", "texto": "Eliminar carbono del sistema" },
-        { "id": "b", "texto": "Transferir carbono entre compartimentos" },
-        { "id": "c", "texto": "Reducir la mineralización" },
-        { "id": "d", "texto": "Aumentar la temperatura del suelo" }
+        {
+          "id": "a",
+          "texto": "Y* = 2,5 y O* ≈ 41,7 Mg C/ha."
+        },
+        {
+          "id": "b",
+          "texto": "Y* = 1,6 y O* = 0,012 Mg C/ha."
+        },
+        {
+          "id": "c",
+          "texto": "Y* = 2,5 y O* ≈ 333 Mg C/ha."
+        },
+        {
+          "id": "d",
+          "texto": "Y* = 41,7 y O* = 2,5 Mg C/ha."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "Y* = i/(kY·r) = 2/0,8 = 2,5. O* = h·i/(kO·r) = 0,25/0,006 ≈ 41,7. Sin la fracción h, i/kO daría 333."
     },
     {
       "numero": 8,
-      "bloque": "Modelo Century",
-      "pregunta": "El modelo Century describe el ciclo del carbono mediante:",
+      "bloque": "Seis modelos",
+      "pregunta": "Calibras ICBM con una sola serie corta de SOC total y la curva ajusta muy bien. ¿Qué no puedes afirmar con seguridad?",
       "opciones": [
-        { "id": "a", "texto": "Un único compartimento" },
-        { "id": "b", "texto": "Compartimentos estructurales y metabólicos" },
-        { "id": "c", "texto": "Solo residuos vegetales" },
-        { "id": "d", "texto": "Solo carbono atmosférico" }
+        {
+          "id": "a",
+          "texto": "Que el modelo reproduce esa serie de SOC total."
+        },
+        {
+          "id": "b",
+          "texto": "Que el modelo tiene dos pools."
+        },
+        {
+          "id": "c",
+          "texto": "Que el stock total depende de i, r, kY, kO y h."
+        },
+        {
+          "id": "d",
+          "texto": "Que la transferencia h y la entrada están bien identificadas por separado, porque pueden compensarse entre sí."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Un stock mayor puede deberse a más entradas, una tasa efectiva menor o un h mayor. Con pocos datos, h y la entrada pueden compensarse (equifinalidad)."
     },
     {
       "numero": 9,
-      "bloque": "Modelo Century",
-      "pregunta": "Century incluye explícitamente la influencia de:",
+      "bloque": "Seis modelos",
+      "pregunta": "Para obtener el factor ambiental r de ICBM introduces la temperatura media anual en una función no lineal de temperatura. ¿Qué hay que tener en cuenta?",
       "opciones": [
-        { "id": "a", "texto": "Textura del suelo" },
-        { "id": "b", "texto": "Calidad de los residuos orgánicos" },
-        { "id": "c", "texto": "Ambos" },
-        { "id": "d", "texto": "Ninguno" }
+        {
+          "id": "a",
+          "texto": "Que el resultado no equivale, en general, a promediar las respuestas a las temperaturas reales del año."
+        },
+        {
+          "id": "b",
+          "texto": "Que es equivalente, porque la media anual resume toda la información térmica."
+        },
+        {
+          "id": "c",
+          "texto": "Que r debe ser siempre igual a 1."
+        },
+        {
+          "id": "d",
+          "texto": "Que r solo modifica el pool viejo O."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "a",
+      "explicacion": "Evaluar una función no lineal en el valor medio no es lo mismo que promediar la función. Hay que documentar la función y el periodo usados para obtener r."
     },
     {
       "numero": 10,
-      "bloque": "Modelo Century",
-      "pregunta": "El modelo Century permite simular la dinámica del carbono a escala:",
+      "bloque": "Seis modelos",
+      "pregunta": "En ICBM básico se duplica el factor ambiental r (por ejemplo, un clima más cálido y húmedo) manteniendo constantes i, kY, kO y h. ¿Qué ocurre con los equilibrios?",
       "opciones": [
-        { "id": "a", "texto": "Diaria" },
-        { "id": "b", "texto": "Mensual" },
-        { "id": "c", "texto": "Anual" },
-        { "id": "d", "texto": "Decenal" }
+        {
+          "id": "a",
+          "texto": "Se duplican Y* y O*, porque el suelo es más activo."
+        },
+        {
+          "id": "b",
+          "texto": "No cambian, porque r solo afecta a la velocidad de ajuste."
+        },
+        {
+          "id": "c",
+          "texto": "Y* se reduce a la mitad y O* se duplica."
+        },
+        {
+          "id": "d",
+          "texto": "Y* y O* se reducen a la mitad, porque r aparece en el denominador de ambos."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Y* = i/(kY·r) y O* = h·i/(kO·r). Supone parámetros constantes, r positivo y que no cambia nada más, como las entradas, que en la realidad también podrían responder al clima."
     },
     {
       "numero": 11,
-      "bloque": "Modelo Yasso07",
-      "pregunta": "El modelo Yasso07 clasifica la materia orgánica según:",
+      "bloque": "Seis modelos",
+      "pregunta": "En Century, el pool «pasivo» de materia orgánica…",
       "opciones": [
-        { "id": "a", "texto": "Tipo de ecosistema" },
-        { "id": "b", "texto": "Calidad química de los residuos" },
-        { "id": "c", "texto": "Edad del suelo" },
-        { "id": "d", "texto": "Tipo de cultivo" }
+        {
+          "id": "a",
+          "texto": "…es inerte y no recibe ni pierde carbono."
+        },
+        {
+          "id": "b",
+          "texto": "…tiene recambio, aunque lento: «pasivo» no significa «inerte»."
+        },
+        {
+          "id": "c",
+          "texto": "…equivale a la fracción MAOM medida en laboratorio."
+        },
+        {
+          "id": "d",
+          "texto": "…solo existe en DayCent, no en Century."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Activo, lento y pasivo son reservas con distintas tasas y rutas de transferencia. Sus nombres son categorías del modelo, no fracciones de laboratorio."
     },
     {
       "numero": 12,
-      "bloque": "Modelo Yasso07",
-      "pregunta": "En Yasso07, los residuos orgánicos se clasifican en:",
+      "bloque": "Seis modelos",
+      "pregunta": "El ensemble usa un wrapper de Century que solo simula carbono. ¿Qué no debe atribuírsele?",
       "opciones": [
-        { "id": "a", "texto": "Fracciones solubles" },
-        { "id": "b", "texto": "Celulósicas" },
-        { "id": "c", "texto": "Ligninosas y recalcitrantes" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "Que distingue residuos metabólicos y estructurales."
+        },
+        {
+          "id": "b",
+          "texto": "Que tiene tres reservas de materia orgánica."
+        },
+        {
+          "id": "c",
+          "texto": "Las retroalimentaciones de N, P y S y las capacidades de DayCent descritas para el modelo biogeoquímico completo."
+        },
+        {
+          "id": "d",
+          "texto": "Que su descomposición combina cinética de primer orden y controles ambientales."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "c",
+      "explicacion": "El Century completo acopla los ciclos de C, N, P y S y la producción vegetal. Un submodelo de carbono aislado no reproduce esas retroalimentaciones ni equivale a DayCent."
     },
     {
       "numero": 13,
-      "bloque": "Modelo Yasso07",
-      "pregunta": "En el modelo Yasso07, la descomposición depende principalmente de:",
+      "bloque": "Seis modelos",
+      "pregunta": "En Yasso07, la fracción N de un residuo…",
       "opciones": [
-        { "id": "a", "texto": "Temperatura y precipitación" },
-        { "id": "b", "texto": "Textura del suelo" },
-        { "id": "c", "texto": "pH" },
-        { "id": "d", "texto": "Densidad aparente" }
+        {
+          "id": "a",
+          "texto": "…es exactamente la lignina del residuo."
+        },
+        {
+          "id": "b",
+          "texto": "…es el nitrógeno del residuo."
+        },
+        {
+          "id": "c",
+          "texto": "…corresponde a la materia orgánica particulada (POM)."
+        },
+        {
+          "id": "d",
+          "texto": "…agrupa los compuestos que no son solubles ni hidrolizables en las fracciones A, W y E del protocolo."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "d",
+      "explicacion": "AWEN son categorías operacionales definidas por extracción o hidrólisis. No equivalen a moléculas puras ni a una partición POM/MAOM."
     },
     {
       "numero": 14,
-      "bloque": "Modelo AMG",
-      "pregunta": "El modelo AMG describe el SOC mediante:",
+      "bloque": "Seis modelos",
+      "pregunta": "Introduces la hojarasca en Yasso07 solo como carbono total, sin su composición AWEN. ¿Qué pierdes?",
       "opciones": [
-        { "id": "a", "texto": "Cinco pools" },
-        { "id": "b", "texto": "Tres pools" },
-        { "id": "c", "texto": "Un pool" },
-        { "id": "d", "texto": "Dos pools principales" }
+        {
+          "id": "a",
+          "texto": "La información que reparte la entrada entre grupos con tasas y transferencias distintas; tendrías que suponer una composición y declarar su incertidumbre."
+        },
+        {
+          "id": "b",
+          "texto": "Nada, porque Yasso07 solo usa el carbono total."
+        },
+        {
+          "id": "c",
+          "texto": "La posibilidad de usar datos de temperatura."
+        },
+        {
+          "id": "d",
+          "texto": "El pool H, que deja de existir."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "a",
+      "explicacion": "La idea central de Yasso07 es conservar la calidad del residuo. Si se usan tablas por especie o material, esa elección añade incertidumbre de entrada."
     },
     {
       "numero": 15,
-      "bloque": "Modelo AMG",
-      "pregunta": "El modelo AMG está orientado principalmente a:",
+      "bloque": "Seis modelos",
+      "pregunta": "Con la extensión leñosa de Yasso07 introduces el mismo carbono total como ramillas o como madera gruesa. ¿Qué esperas?",
       "opciones": [
-        { "id": "a", "texto": "Ecosistemas marinos" },
-        { "id": "b", "texto": "Sistemas agrícolas" },
-        { "id": "c", "texto": "Ecosistemas polares" },
-        { "id": "d", "texto": "Bosques tropicales" }
+        {
+          "id": "a",
+          "texto": "El mismo resultado, porque solo importa la cantidad de carbono."
+        },
+        {
+          "id": "b",
+          "texto": "Respuestas distintas, porque esa extensión añade un control del tamaño sobre la descomposición."
+        },
+        {
+          "id": "c",
+          "texto": "Que la madera gruesa se descomponga más rápido."
+        },
+        {
+          "id": "d",
+          "texto": "Que la madera gruesa pase directamente al pool H."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "La extensión para residuos leñosos (Tuomi y colaboradores, 2011) hace que el tamaño modifique la velocidad de descomposición."
     },
     {
       "numero": 16,
-      "bloque": "Modelo SG",
-      "pregunta": "El modelo SG (Simple Gas model) se utiliza para estimar:",
+      "bloque": "Seis modelos",
+      "pregunta": "En AMG, los residuos aéreos aportan 2 Mg C/ha con un coeficiente de humificación h = 0,2 y las raíces 1 Mg C/ha con h = 0,4. ¿Cuánto carbono entra en la reserva activa?",
       "opciones": [
-        { "id": "a", "texto": "Stocks de carbono en pools" },
-        { "id": "b", "texto": "Flujos gaseosos del suelo" },
-        { "id": "c", "texto": "Biomasa microbiana" },
-        { "id": "d", "texto": "Textura del suelo" }
+        {
+          "id": "a",
+          "texto": "3,0 Mg C/ha"
+        },
+        {
+          "id": "b",
+          "texto": "0,6 Mg C/ha"
+        },
+        {
+          "id": "c",
+          "texto": "0,8 Mg C/ha"
+        },
+        {
+          "id": "d",
+          "texto": "2,2 Mg C/ha"
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "Σ hj·Ij = 2 × 0,2 + 1 × 0,4 = 0,8. Los 2,2 Mg C/ha no retenidos se mineralizan en el tratamiento de la materia fresca."
     },
     {
       "numero": 17,
-      "bloque": "Modelo SG",
-      "pregunta": "El modelo SG puede estimar emisiones de:",
+      "bloque": "Seis modelos",
+      "pregunta": "Con AMG, el mismo SOC inicial se reparte con un 40 % estable (pradera histórica) o un 65 % estable (cultivo histórico). ¿Qué cambia en la respuesta simulada a un nuevo manejo?",
       "opciones": [
-        { "id": "a", "texto": "CO₂" },
-        { "id": "b", "texto": "CH₄" },
-        { "id": "c", "texto": "N₂O" },
-        { "id": "d", "texto": "Todos los anteriores" }
+        {
+          "id": "a",
+          "texto": "Nada, porque el SOC total inicial es el mismo."
+        },
+        {
+          "id": "b",
+          "texto": "Con el 65 % estable el suelo responde más, porque hay más carbono protegido."
+        },
+        {
+          "id": "c",
+          "texto": "Con el 65 % estable desaparece la mineralización."
+        },
+        {
+          "id": "d",
+          "texto": "Con el 65 % estable queda menos carbono activo que pueda responder al manejo."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "d",
+      "explicacion": "El pool estable es constante durante la simulación. La partición inicial influye en el desempeño (Clivot y colaboradores) y debe declararse como decisión de inicialización."
     },
     {
       "numero": 18,
-      "bloque": "Modelo SG",
-      "pregunta": "A diferencia de otros modelos del ensemble, SG:",
+      "bloque": "Seis modelos",
+      "pregunta": "Quieres evaluar una rotación con AMG y tienes el rendimiento comercial de cada cultivo. ¿Qué debes hacer?",
       "opciones": [
-        { "id": "a", "texto": "No simula el carbono almacenado en el suelo" },
-        { "id": "b", "texto": "No usa datos climáticos" },
-        { "id": "c", "texto": "Solo usa temperatura" },
-        { "id": "d", "texto": "No estima emisiones" }
+        {
+          "id": "a",
+          "texto": "Estimar el carbono que realmente llega al suelo por cada origen (residuo aéreo, raíces, enmiendas) antes de aplicar sus coeficientes."
+        },
+        {
+          "id": "b",
+          "texto": "Introducir el rendimiento comercial directamente como entrada de carbono."
+        },
+        {
+          "id": "c",
+          "texto": "Usar el mismo coeficiente de humificación para todos los orígenes."
+        },
+        {
+          "id": "d",
+          "texto": "Sumar el rendimiento al pool estable."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "a",
+      "explicacion": "En AMG el origen y la calidad del aporte importan, porque sus coeficientes difieren. La biomasa cosechada no es carbono incorporado al suelo."
     },
     {
       "numero": 19,
-      "bloque": "Modelo SG",
-      "pregunta": "Los flujos de carbono calculados por SG se expresan normalmente en:",
+      "bloque": "Seis modelos",
+      "pregunta": "SG estima el CO₂ con temperatura, WFPS y C:N. ¿Puede tratarse ese CO₂ como la pérdida de SOC de un modelo compartimental?",
       "opciones": [
-        { "id": "a", "texto": "kg C ha⁻¹ día⁻¹" },
-        { "id": "b", "texto": "Mg C ha⁻¹ año⁻¹" },
-        { "id": "c", "texto": "g C m⁻² hora⁻¹" },
-        { "id": "d", "texto": "toneladas por década" }
+        {
+          "id": "a",
+          "texto": "Sí, porque ambos se expresan en Mg C/ha/año."
+        },
+        {
+          "id": "b",
+          "texto": "Sí, si se suma a la mineralización de los otros cinco modelos."
+        },
+        {
+          "id": "c",
+          "texto": "No: SG representa la respiración total del suelo, que incluye componentes autotróficos, y no tiene pools que cierren un balance de SOC."
+        },
+        {
+          "id": "d",
+          "texto": "No, porque SG solo calcula CH₄."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "Una coincidencia de unidades no corrige una diferencia de variable. SG es una estimación complementaria de flujos, no un sexto miembro de la media de stocks."
     },
     {
       "numero": 20,
-      "bloque": "Multi-model ensemble",
-      "pregunta": "El multi-model ensemble combina:",
+      "bloque": "Seis modelos",
+      "pregunta": "En los modelos SG, ¿qué propiedad del suelo interviene en la captación de CH₄?",
       "opciones": [
-        { "id": "a", "texto": "Datos de varios suelos" },
-        { "id": "b", "texto": "Resultados de varios modelos" },
-        { "id": "c", "texto": "Diferentes estaciones meteorológicas" },
-        { "id": "d", "texto": "Diferentes experimentos de laboratorio" }
+        {
+          "id": "a",
+          "texto": "El cociente C:N, igual que para CO₂ y N₂O."
+        },
+        {
+          "id": "b",
+          "texto": "La densidad aparente."
+        },
+        {
+          "id": "c",
+          "texto": "El contenido de arcilla."
+        },
+        {
+          "id": "d",
+          "texto": "El SOC inicial."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Cada gas combina funciones de temperatura, WFPS y una propiedad del suelo: C:N para CO₂ y N₂O, densidad aparente para CH₄. Además, la calibración es forestal."
     },
     {
       "numero": 21,
-      "bloque": "Multi-model ensemble",
-      "pregunta": "El objetivo principal del enfoque ensemble es:",
+      "bloque": "Comparar y combinar",
+      "pregunta": "Un miembro del ensemble entrega SOC de 0-20 cm y otro de 0-30 cm. ¿Pueden promediarse?",
       "opciones": [
-        { "id": "a", "texto": "Utilizar un único modelo" },
-        { "id": "b", "texto": "Reducir la incertidumbre estructural" },
-        { "id": "c", "texto": "Aumentar la complejidad del sistema" },
-        { "id": "d", "texto": "Reducir los datos climáticos" }
+        {
+          "id": "a",
+          "texto": "Sí, siempre que se etiquete el eje como «SOC»."
+        },
+        {
+          "id": "b",
+          "texto": "Sí, multiplicando el de 0-20 cm por 1,5."
+        },
+        {
+          "id": "c",
+          "texto": "Sí, porque ambos parten del mismo SOC observado."
+        },
+        {
+          "id": "d",
+          "texto": "No, hasta armonizar el dominio: misma profundidad y misma base de masa o superficie."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Una capa de 0-20 cm no se vuelve comparable con una de 0-30 cm cambiando la etiqueta. Escalar linealmente supone una distribución vertical que habría que justificar."
     },
     {
       "numero": 22,
-      "bloque": "Ecuaciones de modelos compartimentales",
-      "pregunta": "En los modelos compartimentales, el vector C(t) representa:",
+      "bloque": "Comparar y combinar",
+      "pregunta": "Cinco modelos se promedian con pesos de 1/5. ¿Qué significan esos pesos?",
       "opciones": [
-        { "id": "a", "texto": "Temperatura del suelo" },
-        { "id": "b", "texto": "Masa de carbono en cada pool" },
-        { "id": "c", "texto": "Precipitación" },
-        { "id": "d", "texto": "Actividad microbiana" }
+        {
+          "id": "a",
+          "texto": "Son una regla descriptiva explícita, no una probabilidad del 20 % de que cada modelo sea verdadero."
+        },
+        {
+          "id": "b",
+          "texto": "Que cada modelo tiene un 20 % de probabilidad de ser correcto."
+        },
+        {
+          "id": "c",
+          "texto": "Que los cinco modelos son experimentos independientes."
+        },
+        {
+          "id": "d",
+          "texto": "Que el ensemble ya ha sido validado."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "La media equiponderada resume el conjunto. Debe acompañarse de las trayectorias individuales y de su dispersión."
     },
     {
       "numero": 23,
-      "bloque": "Ecuaciones de modelos compartimentales",
-      "pregunta": "El término I(t) en la ecuación del modelo representa:",
+      "bloque": "Comparar y combinar",
+      "pregunta": "El rango de los cinco modelos va de −1 a +5 Mg C/ha. ¿Qué incertidumbre recoge?",
       "opciones": [
-        { "id": "a", "texto": "Transferencias entre pools" },
-        { "id": "b", "texto": "Entradas de carbono al suelo" },
-        { "id": "c", "texto": "Tasas de descomposición" },
-        { "id": "d", "texto": "Condiciones climáticas" }
+        {
+          "id": "a",
+          "texto": "Toda la incertidumbre del sistema, incluidos los errores de medida."
+        },
+        {
+          "id": "b",
+          "texto": "La dispersión de esos miembros con sus parámetros, entradas y estados iniciales; no los sesgos compartidos ni los procesos ausentes en todos."
+        },
+        {
+          "id": "c",
+          "texto": "Un intervalo de confianza del 95 %."
+        },
+        {
+          "id": "d",
+          "texto": "La incertidumbre de los escenarios climáticos alternativos."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Los miembros no son independientes y pueden compartir sesgos (Tebaldi y Knutti). El rango describe el desacuerdo estructural del conjunto evaluado, no la incertidumbre total."
     },
     {
       "numero": 24,
-      "bloque": "Ecuaciones de modelos compartimentales",
-      "pregunta": "La matriz K en los modelos compartimentales contiene:",
+      "bloque": "Comparar y combinar",
+      "pregunta": "Asignas pesos a cada modelo según su ajuste a unas observaciones y luego presentas el éxito del ensemble con esas mismas observaciones. ¿Qué riesgo hay?",
       "opciones": [
-        { "id": "a", "texto": "Tasas de descomposición" },
-        { "id": "b", "texto": "Variables climáticas" },
-        { "id": "c", "texto": "Entradas de carbono" },
-        { "id": "d", "texto": "Parámetros de textura" }
+        {
+          "id": "a",
+          "texto": "Ninguno, si los pesos suman 1."
+        },
+        {
+          "id": "b",
+          "texto": "Que los pesos dejen de ser positivos."
+        },
+        {
+          "id": "c",
+          "texto": "Sobreestimar la capacidad predictiva, porque los pesos se ajustaron con los mismos datos que usas para evaluar."
+        },
+        {
+          "id": "d",
+          "texto": "Que el ensemble pase a tener seis miembros."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "c",
+      "explicacion": "Si se ponderan por desempeño, hay que declarar el criterio, los datos y la sensibilidad. Un miembro con unidades erróneas se corrige; no se compensa con un peso."
     },
     {
       "numero": 25,
-      "bloque": "Ecuaciones de modelos compartimentales",
-      "pregunta": "El término ξ(t) representa:",
+      "bloque": "Del dato al ensemble",
+      "pregunta": "Durante el spin-up, el SOC total anual apenas cambia, pero un pool sigue subiendo y otro bajando. ¿Ha convergido la partición?",
       "opciones": [
-        { "id": "a", "texto": "Masa total de carbono" },
-        { "id": "b", "texto": "Efectos del clima y del suelo sobre la descomposición" },
-        { "id": "c", "texto": "Número de pools" },
-        { "id": "d", "texto": "Tipo de cultivo" }
+        {
+          "id": "a",
+          "texto": "Sí, porque el total es lo único que se compara con las observaciones."
+        },
+        {
+          "id": "b",
+          "texto": "Sí, si el spin-up ha durado 1.000 años."
+        },
+        {
+          "id": "c",
+          "texto": "No es relevante, porque luego se reescala."
+        },
+        {
+          "id": "d",
+          "texto": "No: hay que comprobar cada pool, en la misma fase del ciclo climático y durante varios ciclos."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Con clima estacional se llega a un ciclo periódico. El criterio debe aplicarse a cada pool con tolerancias absoluta y relativa; fijar «1.000 años» no demuestra equilibrio."
+    },
+    {
+      "numero": 26,
+      "bloque": "Del dato al ensemble",
+      "pregunta": "Un pool en equilibrio con I = 2 Mg C/ha/año y k = 0,05 año⁻¹ (C* = 40) se reescala al SOC observado de 60 Mg C/ha sin cambiar I ni k. ¿Qué ocurre al empezar la simulación?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Una pérdida inicial de 1 Mg C/ha/año, causada por el desajuste entre el stock reescalado y el forzamiento supuesto."
+        },
+        {
+          "id": "b",
+          "texto": "El stock se mantiene en 60, porque el reescalado lo fija."
+        },
+        {
+          "id": "c",
+          "texto": "Una ganancia inicial de 1 Mg C/ha/año."
+        },
+        {
+          "id": "d",
+          "texto": "Una pérdida que prueba un cambio reciente de manejo."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "dC/dt = 2 − 0,05 × 60 = −1. Esa tendencia es un artefacto de la inicialización; además, coincidir con el SOC observado tras reescalar es una construcción, no una validación."
+    },
+    {
+      "numero": 27,
+      "bloque": "Del dato al ensemble",
+      "pregunta": "La media del ensemble pasa de 40 a 42 Mg C/ha en 20 años con la intervención, y la del escenario de referencia termina en 41,5. ¿Cuál es el efecto atribuible a la intervención?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "+2 Mg C/ha, el cambio respecto al inicio."
+        },
+        {
+          "id": "b",
+          "texto": "+0,5 Mg C/ha frente a la referencia, condicionado a los escenarios y modelos usados."
+        },
+        {
+          "id": "c",
+          "texto": "+0,10 Mg C/ha/año de secuestro garantizado."
+        },
+        {
+          "id": "d",
+          "texto": "+1,5 Mg C/ha, la diferencia entre la referencia y el inicio."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "El cambio respecto al inicio responde a «qué cambia con el tiempo»; la diferencia con la referencia, a «qué cambia por el escenario». Conviene presentar las dos."
+    },
+    {
+      "numero": 28,
+      "bloque": "Del dato al ensemble",
+      "pregunta": "Un estudio con Century en ensayos franceses comparó nueve escenarios de inicialización (Dimassi y colaboradores). ¿Qué lección práctica se extrae?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Que la inicialización nunca afecta a las predicciones."
+        },
+        {
+          "id": "b",
+          "texto": "Que siempre es la principal fuente de incertidumbre en cualquier sistema."
+        },
+        {
+          "id": "c",
+          "texto": "Que sus efectos dependen del sistema y del procedimiento, así que conviene explorar particiones plausibles y declarar si la conclusión depende de ellas."
+        },
+        {
+          "id": "d",
+          "texto": "Que basta con reescalar al SOC observado para eliminar su efecto."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "No hay una contribución dominante universal. Comparar el efecto de la inicialización con el del manejo indica cuándo la conclusión depende del estado inicial."
     }
   ]
 }
