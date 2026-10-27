@@ -7,7 +7,7 @@ import { fadeUp, inView, staggerGroup, stagger } from '../../../lib/motion';
 import TemaPlayer from './TemaPlayer';
 import TemaCheckpoint from './TemaCheckpoint';
 import { downloadTemario, temarioFilename, temarioRoute } from './temarioPdf';
-import { etapa, numerarApartados, prefersNativePdf, totalApartados } from './temasProgress';
+import { etapaDe, tituloTema, numerarApartados, prefersNativePdf, totalApartados } from './temasProgress';
 
 const NEAR_MARGIN = '800px 0px'; // las URLs del vídeo se piden un poco antes de que la escena llegue
 
@@ -24,22 +24,22 @@ const temarioDe = (tema) => (tema.materiales ?? []).find((m) => m.tipo === 'pdf'
  * temario y del test e índice plegable. Entra con fundido y desplazamiento al llegar a la pantalla.
  */
 const TemaEscena = forwardRef(function TemaEscena(
-  { tema, index, sceneId, cursoId, idioma, t, isSeen, onSeen, completed, onToggleCompleted, testInfo, testPassed, onOpenTest, onOpenTemario },
+  { tema, index, ciclo, sceneId, cursoId, idioma, t, isSeen, onSeen, completed, onToggleCompleted, testInfo, testPassed, onOpenTest, onOpenTemario },
   ref,
 ) {
-  const e = etapa(index);
+  const e = etapaDe(index, ciclo);
   const nativePdf = prefersNativePdf({ coarse: useMediaQuery('(pointer: coarse)'), hoverNone: useMediaQuery('(hover: none)') });
   const localRef = useRef(null);
   const [near, setNear] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
-  const titulo = idioma === 'en' && tema.tituloEn ? tema.tituloEn : tema.titulo;
+  const titulo = tituloTema(tema, idioma);
   const descripcion = idioma === 'en' && tema.descripcionEn ? tema.descripcionEn : tema.descripcion;
   const material = temarioDe(tema);
   const apartados = numerarApartados(tema.apartados);
   const total = totalApartados(tema.apartados);
   const numero = String(tema.numeroTema).padStart(2, '0');
-  const filename = temarioFilename(tema.numeroTema, tema.titulo);
+  const filename = temarioFilename(tema.numeroTema, tituloTema(tema));
   const label = idioma === 'en' ? e.en : e.es;
   const titleId = `${sceneId}-titulo`;
 
@@ -59,7 +59,7 @@ const TemaEscena = forwardRef(function TemaEscena(
   const descargar = async () => {
     setDownloading(true);
     try {
-      await downloadTemario(cursoId, material._id, filename);
+      await downloadTemario(cursoId, material._id, filename, idioma);
     } catch (err) {
       console.error('No se pudo descargar el temario:', err);
     } finally {
@@ -158,7 +158,7 @@ const TemaEscena = forwardRef(function TemaEscena(
             {material ? (
               <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
                 {nativePdf ? (
-                  <a href={temarioRoute(cursoId, material._id)} target="_blank" rel="noopener" className={PRIMARY}>
+                  <a href={temarioRoute(cursoId, material._id, idioma)} target="_blank" rel="noopener" className={PRIMARY}>
                     <FileText className="h-5 w-5" aria-hidden="true" />
                     {t.verTemario}
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

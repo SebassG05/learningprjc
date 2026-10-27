@@ -1,7 +1,7 @@
 import { test, describe, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  CICLO, etapa, formatSpeed, formatTime, markSeen, numerarApartados, pickQuality, prefersNativePdf,
+  CICLO, etapa, etapaDe, tituloTema, usaCiclo, CURSO_CICLO, formatSpeed, formatTime, markSeen, numerarApartados, pickQuality, prefersNativePdf,
   reachedSeen, readSeen, readTemaResume, saveTemaResume, seenKey, tieneEscenas, totalApartados,
 } from './temasProgress.js';
 
@@ -83,6 +83,22 @@ test('etapas del ciclo y detección del temario nuevo', () => {
   assert.equal(tieneEscenas([{ titulo: 'x', apartados: [{ titulo: 'a' }] }]), true);
   assert.equal(tieneEscenas([{ video: { publicId: 'v' } }]), true);
   assert.equal(tieneEscenas(null), false);
+});
+
+test('etapas con nombre solo en Carbono; el resto alterna acentos', () => {
+  assert.equal(usaCiclo(CURSO_CICLO), true);
+  assert.equal(usaCiclo('otro'), false);
+  assert.equal(etapaDe(2, true).es, 'Modelos');
+  assert.equal(etapaDe(2, false).es, null);
+  assert.equal(etapaDe(5, false).accent, CICLO[1].accent);
+  assert.equal(etapaDe(9, true).key, 'practica');
+});
+
+test('título sin el prefijo «Tema NN:»', () => {
+  assert.equal(tituloTema({ titulo: 'Tema 01: Introducción a ANFORA' }), 'Introducción a ANFORA');
+  assert.equal(tituloTema({ titulo: 'Tema 01: X', tituloEn: 'Topic 01 - Y' }, 'en'), 'Y');
+  assert.equal(tituloTema({ titulo: 'Presentaciones' }), 'Presentaciones');
+  assert.equal(tituloTema({ titulo: 'Tema 3' }), 'Tema 3');
 });
 
 test('PDF nativo solo en táctil sin hover', () => {

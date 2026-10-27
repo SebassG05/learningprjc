@@ -7,18 +7,20 @@ import CicloTimeline from './CicloTimeline';
 import TemaEscena from './TemaEscena';
 import TemarioModal from './TemarioModal';
 import { copy } from './temasCopy';
-import { etapa, markSeen, readSeen } from './temasProgress';
+import { etapaDe, markSeen, readSeen, tituloTema, usaCiclo } from './temasProgress';
 import { temarioFilename } from './temarioPdf';
 
 const sceneId = (tema) => `tema-${tema.numeroTema}`;
 
 /**
  * Temario del curso como recorrido narrativo: una escena a pantalla completa por tema, unidas por la
- * línea del ciclo del carbono. Sustituye a MaterialEstudio cuando los temas traen el temario nuevo
- * (vídeo o índice) y mantiene su progreso: materiales estudiados, test de cada tema y test final.
+ * línea del recorrido (en Carbono, las etapas del ciclo del carbono). Es el temario de todos los cursos: el
+ * vídeo, los conceptos y el índice aparecen solo si el tema los trae. Mantiene el progreso (materiales
+ * estudiados y test de cada tema); el test final se pinta en el cierre de CursoDetalle.
  */
 export default function TemasCiclo({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests, idioma = 'es' }) {
   const t = copy(idioma);
+  const ciclo = usaCiclo(cursoId);
   const navigate = useNavigate();
   const testInfo = useTestInfo(cursoId, temas);
   const [active, setActive] = useState(0);
@@ -54,12 +56,12 @@ export default function TemasCiclo({ cursoId, temas, completedMaterials, setComp
     <section aria-labelledby="temario-titulo" className="relative mb-16">
       <Reveal group className="max-w-3xl border-t border-line pt-14 sm:pt-20">
         <Reveal.Item as="p" className="eyebrow">{t.eyebrow}</Reveal.Item>
-        <Reveal.Item as="h2" id="temario-titulo" className="mt-4 text-balance text-title-1 font-bold text-ink">{t.heading}</Reveal.Item>
-        <Reveal.Item as="p" className="mt-5 text-pretty text-lg leading-relaxed text-ink-2">{t.lead}</Reveal.Item>
+        <Reveal.Item as="h2" id="temario-titulo" className="mt-4 text-balance text-title-1 font-bold text-ink">{ciclo ? t.heading : t.headingCurso}</Reveal.Item>
+        <Reveal.Item as="p" className="mt-5 text-pretty text-lg leading-relaxed text-ink-2">{ciclo ? t.lead : t.leadCurso}</Reveal.Item>
       </Reveal>
 
       <div className="mt-10 lg:mt-6 lg:grid lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-20">
-        <CicloTimeline temas={temas} active={active} seen={seen} sceneId={sceneId} idioma={idioma} t={t} />
+        <CicloTimeline temas={temas} ciclo={ciclo} active={active} seen={seen} sceneId={sceneId} idioma={idioma} t={t} />
 
         <ol className="min-w-0">
           {temas.map((tema, i) => (
@@ -68,6 +70,7 @@ export default function TemasCiclo({ cursoId, temas, completedMaterials, setComp
               ref={(el) => { scenes.current[i] = el; }}
               tema={tema}
               index={i}
+              ciclo={ciclo}
               sceneId={sceneId(tema)}
               cursoId={cursoId}
               idioma={idioma}
@@ -89,10 +92,11 @@ export default function TemasCiclo({ cursoId, temas, completedMaterials, setComp
         open={Boolean(temario)}
         cursoId={cursoId}
         materialId={temario?.material._id}
+        lang={idioma}
         numero={temario?.tema.numeroTema}
-        titulo={temario ? (idioma === 'en' && temario.tema.tituloEn) || temario.tema.titulo : ''}
-        filename={temario ? temarioFilename(temario.tema.numeroTema, temario.tema.titulo) : ''}
-        accent={temario ? etapa(temario.index).accent : undefined}
+        titulo={temario ? tituloTema(temario.tema, idioma) : ''}
+        filename={temario ? temarioFilename(temario.tema.numeroTema, tituloTema(temario.tema)) : ''}
+        accent={temario ? etapaDe(temario.index, ciclo).accent : undefined}
         onClose={closeTemario}
         onNotAllowed={notAllowed}
         t={t}
