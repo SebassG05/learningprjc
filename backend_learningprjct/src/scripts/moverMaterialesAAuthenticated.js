@@ -1,6 +1,6 @@
-// Pasa los PDFs del curso de Carbono (materiales y actividades, ES/EN) de Cloudinary «upload» (URL pública)
-// a «authenticated»: las URLs antiguas dejan de funcionar y el contenido solo se sirve a través del
-// backend, que comprueba la cohorte. Guarda en el curso las URLs nuevas.
+// Pasa los PDFs del curso de Carbono (materiales y actividades, ES/EN) y los vídeos de sus temas de
+// Cloudinary «upload» (URL pública) a «authenticated»: las URLs antiguas dejan de funcionar y el contenido
+// solo se sirve a través del backend, que comprueba la cohorte. Guarda en el curso las URLs nuevas.
 //
 //   node src/scripts/moverMaterialesAAuthenticated.js            → simulacro: lista lo que movería
 //   node src/scripts/moverMaterialesAAuthenticated.js --apply    → upload → authenticated (+ invalida la CDN)

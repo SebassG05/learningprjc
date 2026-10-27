@@ -122,7 +122,8 @@ export function redactCourse(course) {
   if (!Array.isArray(course.temas)) return { ...course };
   return {
     ...course,
-    temas: course.temas.map((tema) => ({
+    // Sin el vídeo del tema (su public_id basta para construir la URL); el índice y los conceptos sí se ven
+    temas: course.temas.map(({ video, ...tema }) => ({
       ...tema,
       materiales: (tema.materiales ?? []).map(stripFiles),
       actividadesOptativas: (tema.actividadesOptativas ?? []).map(stripFiles),

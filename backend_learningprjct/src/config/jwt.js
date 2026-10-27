@@ -26,3 +26,19 @@ export const assertJwtConfig = () => void getJwtSecret();
 export const signToken = (payload) => jwt.sign(payload, getJwtSecret(), { algorithm: ALGORITHM, expiresIn: EXPIRES_IN });
 
 export const verifyToken = (token) => jwt.verify(token, getJwtSecret(), { algorithms: [ALGORITHM] });
+
+// ============= Tickets de un material =============
+// Para abrir un PDF del aula en una pestaña nueva (móvil: visor nativo) sin cabecera Authorization: la URL
+// lleva un ticket de 60 s ligado a un usuario, un curso y un material. Se firma con una clave DERIVADA,
+// así que un ticket nunca vale como sesión (verifyToken lo rechaza) ni una sesión como ticket.
+const TICKET_TTL = '60s';
+const TICKET_AUDIENCE = 'material-ticket';
+const ticketSecret = () => `${getJwtSecret()}|${TICKET_AUDIENCE}`;
+
+export const signMaterialTicket = ({ userId, courseId, materialId }) =>
+  jwt.sign({ id: String(userId), c: String(courseId), m: String(materialId) }, ticketSecret(), {
+    algorithm: ALGORITHM, expiresIn: TICKET_TTL, audience: TICKET_AUDIENCE,
+  });
+
+export const verifyMaterialTicket = (ticket) =>
+  jwt.verify(ticket, ticketSecret(), { algorithms: [ALGORITHM], audience: TICKET_AUDIENCE });
