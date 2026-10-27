@@ -13,7 +13,9 @@ const preguntaSchema = new mongoose.Schema({
   preguntaEn: String,
   opciones: [opcionSchema],
   opcionesEn: [opcionSchema],
-  respuestaCorrecta: String
+  respuestaCorrecta: String,
+  // Solo se devuelve al corregir (validarRespuestas), nunca con las preguntas.
+  explicacion: String
 }, { _id: false });
 
 const testSchema = new mongoose.Schema({

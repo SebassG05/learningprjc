@@ -1,0 +1,760 @@
+{
+  "cursoId": "69d50406663e8648d7ee1f08",
+  "temaId": "69d5f26894dace2e10adae3a",
+  "titulo": "Test de Evaluación - Tema 2: Dinámica, formas y equilibrio del carbono",
+  "descripcion": "Formas de carbono y fracciones medibles, procesos y controles ambientales, balances, equilibrio de uno y dos compartimentos, saturación, edad y tránsito.",
+  "duracionMinutos": 50,
+  "notaMinima": 60,
+  "preguntas": [
+    {
+      "numero": 1,
+      "bloque": "Formas del carbono",
+      "pregunta": "En un suelo semiárido aumenta el contenido de carbonatos tras unos años de manejo. Alguien lo presenta como «retirada neta de CO₂ atmosférico». ¿Qué es lo correcto?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Es correcto: todo carbonato nuevo procede del CO₂ del aire."
+        },
+        {
+          "id": "b",
+          "texto": "Es incorrecto: los carbonatos no participan en ningún intercambio con el CO₂."
+        },
+        {
+          "id": "c",
+          "texto": "No es automático: hay que conocer el origen del calcio o magnesio, la fuente de alcalinidad y si es carbonato preexistente redistribuido."
+        },
+        {
+          "id": "d",
+          "texto": "Es correcto si el aumento se mide en g/kg y no en Mg C/ha."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "La redistribución de carbonato heredado no es una nueva fijación. Para hablar de retirada neta hacen falta el origen de los cationes, la alcalinidad y los flujos de agua y gases (Zamanian y colaboradores)."
+    },
+    {
+      "numero": 2,
+      "bloque": "Formas del carbono",
+      "pregunta": "Un laboratorio separa POM con un tamiz de 53 µm tras dispersar la muestra. ¿Cómo debe interpretarse ese umbral?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Como una elección metodológica: otros procedimientos (densidad, otra dispersión) definen fracciones distintas."
+        },
+        {
+          "id": "b",
+          "texto": "Como la frontera natural entre carbono lábil y carbono estable."
+        },
+        {
+          "id": "c",
+          "texto": "Como garantía de que todo el carbono que pasa el tamiz está unido a minerales."
+        },
+        {
+          "id": "d",
+          "texto": "Como el tamaño a partir del cual el carbono deja de descomponerse."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "El corte de Cambardella y Elliott es una decisión operativa. Por eso hay que registrar dispersión, corte, recuperación de C y método antes de comparar fracciones."
+    },
+    {
+      "numero": 3,
+      "bloque": "Formas del carbono",
+      "pregunta": "Un perfil tiene una gran reserva de MAOC. ¿Qué se puede afirmar a partir de ese dato?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Que todo ese carbono es antiguo y no se renueva."
+        },
+        {
+          "id": "b",
+          "texto": "Que el suelo está saturado de carbono mineral."
+        },
+        {
+          "id": "c",
+          "texto": "Que la parcela acumulará MAOC a un ritmo alto en los próximos años."
+        },
+        {
+          "id": "d",
+          "texto": "Que hay mucho carbono en la fracción definida, sin que eso demuestre que cada átomo sea antiguo o inaccesible."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "Cantidad, capacidad y vulnerabilidad son preguntas distintas. En la fracción asociada a minerales coexisten materiales antiguos con otros intercambiables o recién incorporados."
+    },
+    {
+      "numero": 4,
+      "bloque": "Formas del carbono",
+      "pregunta": "Una solución con 10 mg C/L de DOC atraviesa la base de una capa a razón de 100 L/m² durante un periodo. ¿Cuánto carbono exporta esa capa?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "0,01 Mg C/ha/año, sea cual sea el periodo."
+        },
+        {
+          "id": "b",
+          "texto": "0,01 Mg C/ha en ese periodo; solo es una tasa anual si el periodo es un año."
+        },
+        {
+          "id": "c",
+          "texto": "1 Mg C/ha en ese periodo."
+        },
+        {
+          "id": "d",
+          "texto": "0,1 Mg C/ha en ese periodo."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "10 mg/L × 100 L/m² = 1.000 mg C/m² = 1 g C/m² = 0,01 Mg C/ha. El flujo necesita concentración y caudal, y su unidad temporal es la del intervalo observado."
+    },
+    {
+      "numero": 5,
+      "bloque": "Formas del carbono",
+      "pregunta": "Entran 1,0 Mg C/ha de residuo. Se liberan 0,6 como CO₂ y 0,4 pasan a biomasa; después 0,3 de esa biomasa mueren y pasan a necromasa. ¿Cuánto carbono del aporte sigue en el sistema antes de nuevas pérdidas?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "1,7 Mg C/ha (1,0 + 0,4 + 0,3)."
+        },
+        {
+          "id": "b",
+          "texto": "0,1 Mg C/ha, solo la biomasa viva."
+        },
+        {
+          "id": "c",
+          "texto": "0,4 Mg C/ha: 0,1 en biomasa viva y 0,3 en necromasa."
+        },
+        {
+          "id": "d",
+          "texto": "0,7 Mg C/ha (0,4 + 0,3)."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "La muerte microbiana es una transferencia interna, no una entrada nueva. Sumar el aporte, la biomasa y la necromasa contaría dos o tres veces el mismo carbono."
+    },
+    {
+      "numero": 6,
+      "bloque": "Formas del carbono",
+      "pregunta": "En un modelo, un compartimento recibe una entrada constante positiva y se le asigna k = 0 («inerte»). ¿Qué ocurre si se alarga la simulación?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Su reserva crece sin límite: no existe un equilibrio finito para ese compartimento."
+        },
+        {
+          "id": "b",
+          "texto": "Alcanza un equilibrio igual a la entrada dividida por una k muy pequeña."
+        },
+        {
+          "id": "c",
+          "texto": "Permanece constante en su valor inicial."
+        },
+        {
+          "id": "d",
+          "texto": "Converge al mismo valor que el resto de compartimentos."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "«Muy lento» y «sin salida» son hipótesis distintas. Con k = 0 y entrada positiva, dC/dt = I > 0 siempre; solo si no recibe nada conserva su valor inicial."
+    },
+    {
+      "numero": 7,
+      "bloque": "De la medida al modelo",
+      "pregunta": "En el método de fumigación-extracción, C_biomasa = (C_fumigado − C_control)/kEC. ¿Qué representa kEC?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "La constante de descomposición de la biomasa, en año⁻¹."
+        },
+        {
+          "id": "b",
+          "texto": "La eficiencia de uso del carbono de la comunidad microbiana."
+        },
+        {
+          "id": "c",
+          "texto": "La proporción de biomasa activa frente a la durmiente."
+        },
+        {
+          "id": "d",
+          "texto": "Una fracción de recuperación propia del procedimiento, que no debe tratarse como constante universal."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "kEC convierte el carbono extraíble en biomasa. No tiene nada que ver con la k de las ecuaciones de primer orden y depende del método y del suelo."
+    },
+    {
+      "numero": 8,
+      "bloque": "De la medida al modelo",
+      "pregunta": "Una capa tiene 40 Mg C/ha de SOC total. Un fraccionamiento recupera 8 de POC y 29 de MAOC. ¿Cómo tratas los 3 Mg C/ha que faltan?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Los asigno a un pool inerte, porque no se han mineralizado."
+        },
+        {
+          "id": "b",
+          "texto": "Calculo una recuperación del 92,5 % e investigo pérdidas o diferencias analíticas antes de interpretar la diferencia."
+        },
+        {
+          "id": "c",
+          "texto": "Los completo sumando el DOC y la biomasa microbiana medidos en otras alícuotas."
+        },
+        {
+          "id": "d",
+          "texto": "Ignoro la diferencia, porque los fraccionamientos siempre recuperan el 100 %."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "(8 + 29)/40 = 92,5 %. La falta de cierre es información que hay que investigar. DOC y biomasa medidos aparte pueden solaparse con las fracciones físicas."
+    },
+    {
+      "numero": 9,
+      "bloque": "De la medida al modelo",
+      "pregunta": "Para inicializar un modelo de dos pools igualas directamente «POC = pool rápido» y «MAOC = pool lento». ¿Cuál es el problema?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Ninguno: POC y MAOC son por definición los pools rápido y lento de cualquier modelo."
+        },
+        {
+          "id": "b",
+          "texto": "Que POC y MAOC se expresan en unidades distintas a las del modelo."
+        },
+        {
+          "id": "c",
+          "texto": "Que conviertes una hipótesis en un dato: la correspondencia exige una relación de observación justificada (y = HC + e)."
+        },
+        {
+          "id": "d",
+          "texto": "Que el modelo deja de conservar masa."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "Una fracción es el resultado de un método; un pool, una variable de estado. Las asociaciones empíricas (Zimmermann y colaboradores) valen en su ámbito, pero no autorizan a igualar ambos sin evaluación."
+    },
+    {
+      "numero": 10,
+      "bloque": "Procesos y controles",
+      "pregunta": "Se producen 6 Mg de residuo seco/ha, se retira el 50 % y el resto contiene un 45 % de C. Además se estima un aporte subterráneo independiente de 0,5 Mg C/ha. ¿Cuál es la entrada de carbono al suelo?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "1,85 Mg C/ha"
+        },
+        {
+          "id": "b",
+          "texto": "3,20 Mg C/ha"
+        },
+        {
+          "id": "c",
+          "texto": "1,35 Mg C/ha"
+        },
+        {
+          "id": "d",
+          "texto": "3,00 Mg C/ha"
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "Aporte superficial: 6 × 0,50 × 0,45 = 1,35 Mg C/ha; más 0,5 subterráneo = 1,85. La entrada al modelo debe expresarse en carbono, no en masa seca."
+    },
+    {
+      "numero": 11,
+      "bloque": "Procesos y controles",
+      "pregunta": "En una capa, las entradas al SOC son 2,4 Mg C/ha/año, la respiración heterotrófica 1,7 y otras exportaciones 0,1. La respiración total medida es 2,6, de la que 0,9 procede de raíces vivas. ¿Cuál es el balance del SOC?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "−0,2 Mg C/ha/año, restando la respiración total a las entradas."
+        },
+        {
+          "id": "b",
+          "texto": "+0,7 Mg C/ha/año, ignorando las exportaciones."
+        },
+        {
+          "id": "c",
+          "texto": "−0,3 Mg C/ha/año, restando respiración total y exportaciones."
+        },
+        {
+          "id": "d",
+          "texto": "+0,6 Mg C/ha/año: la respiración de raíces vivas no es una pérdida de SOC."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "2,4 − 1,7 − 0,1 = +0,6. Restar la respiración total, que incluye la autotrófica de raíces vivas, llevaría a la conclusión errónea de que el suelo pierde carbono."
+    },
+    {
+      "numero": 12,
+      "bloque": "Procesos y controles",
+      "pregunta": "Una comunidad microbiana capta 1,5 Mg C/ha/año con una CUE de 0,40 (balance solo entre crecimiento y respiración). ¿Qué se puede afirmar?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Que 0,60 Mg C/ha quedarán almacenados durante décadas."
+        },
+        {
+          "id": "b",
+          "texto": "Que el crecimiento es 0,60 y la respiración 0,90 Mg C/ha/año, sin que eso indique cuánto quedará retenido a largo plazo."
+        },
+        {
+          "id": "c",
+          "texto": "Que la respiración es 0,60 y el crecimiento 0,90 Mg C/ha/año."
+        },
+        {
+          "id": "d",
+          "texto": "Que una CUE alta garantiza un mayor SOC en cualquier modelo."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "G = ε·U = 0,60 y R = (1 − ε)·U = 0,90. La CUE describe una etapa metabólica: la retención final depende de la mortalidad, el reciclaje, la retención mineral y las pérdidas."
+    },
+    {
+      "numero": 13,
+      "bloque": "Procesos y controles",
+      "pregunta": "Para formar 0,5 Mg C/ha de material microbiano con una relación C:N másica de 10, ¿cuánto nitrógeno se incorpora y cómo debe leerse?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "5 kg N/ha; es la dosis de fertilizante necesaria."
+        },
+        {
+          "id": "b",
+          "texto": "500 kg N/ha; hay que convertir la relación a moles."
+        },
+        {
+          "id": "c",
+          "texto": "50 kg N/ha; describe la composición del material formado, no una dosis de fertilización."
+        },
+        {
+          "id": "d",
+          "texto": "50 kg N/ha; es la dosis mínima de abono nitrogenado."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "0,5/10 = 0,05 Mg N/ha = 50 kg. Parte del N puede venir del reciclaje interno. Si la relación fuera molar habría que convertirla con masas atómicas antes de calcular."
+    },
+    {
+      "numero": 14,
+      "bloque": "Procesos y controles",
+      "pregunta": "Incubación con un residuo marcado. El control libera 1,0 unidad de CO₂-C procedente del suelo. El tratamiento libera 1,8 en total, de las que 0,6 se atribuyen al residuo. ¿Cuál es el priming estimado?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "+0,2: el C preexistente mineralizado pasa de 1,0 a 1,2."
+        },
+        {
+          "id": "b",
+          "texto": "+0,8: la diferencia de CO₂ total entre tratamiento y control."
+        },
+        {
+          "id": "c",
+          "texto": "+0,6: el CO₂ procedente del residuo."
+        },
+        {
+          "id": "d",
+          "texto": "−0,2: el residuo protege el carbono antiguo."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "Preexistente en el tratamiento: 1,8 − 0,6 = 1,2; priming: 1,2 − 1,0 = +0,2. Sin separar fuentes, el CO₂ total no identifica el priming (Kuzyakov)."
+    },
+    {
+      "numero": 15,
+      "bloque": "Procesos y controles",
+      "pregunta": "Una muestra dispersada respira más que la misma muestra intacta. ¿Qué conclusión es la más prudente?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Que la dispersión ha cambiado la composición química del carbono."
+        },
+        {
+          "id": "b",
+          "texto": "Que la protección física es irreversible en la muestra intacta."
+        },
+        {
+          "id": "c",
+          "texto": "Que todo el carbono ocluido es lábil y se habría perdido igualmente."
+        },
+        {
+          "id": "d",
+          "texto": "Que es compatible con restricciones previas de accesibilidad, pero la perturbación también cambia la aireación y el agua, así que hacen falta controles."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "La protección física reduce la accesibilidad sin transformar el carbono. Aun así, romper agregados altera contacto, aireación y agua: atribuirlo todo a un mecanismo exige controles."
+    },
+    {
+      "numero": 16,
+      "bloque": "Procesos y controles",
+      "pregunta": "Con Q10 = 2, la temperatura sube 2 °C y la tasa k de un único pool se multiplica por ~1,149. Si la entrada no cambia, ¿qué ocurre con el stock?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Pierde un 14,9 % de forma inmediata."
+        },
+        {
+          "id": "b",
+          "texto": "Disminuye gradualmente hacia un nuevo equilibrio igual al anterior dividido entre 1,149."
+        },
+        {
+          "id": "c",
+          "texto": "No cambia, porque la entrada se mantiene constante."
+        },
+        {
+          "id": "d",
+          "texto": "Aumenta, porque el calentamiento acelera la formación de MAOM."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "Primero cambia el flujo y el stock responde con el tiempo. Ceq = I/k, así que el nuevo equilibrio es el anterior dividido entre 1,149; la pérdida a una fecha depende del horizonte."
+    },
+    {
+      "numero": 17,
+      "bloque": "Procesos y controles",
+      "pregunta": "Un modelo de un olivar de secano usa como forzamiento hídrico solo la precipitación media anual. ¿Qué limitación tiene en clima mediterráneo?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Ninguna: la humedad del aire representa bien la del suelo."
+        },
+        {
+          "id": "b",
+          "texto": "Que la precipitación anual siempre sobrestima la descomposición."
+        },
+        {
+          "id": "c",
+          "texto": "Que pierde la secuencia de sequías, lluvias y rehumectaciones, que puede ser decisiva para la respuesta."
+        },
+        {
+          "id": "d",
+          "texto": "Que la media anual impide calcular el equilibrio del modelo."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "Dos años con la misma lluvia total pueden diferir en secuencia de humedad y pulsos de rehumectación (Schimel). Su efecto depende de la resolución y la estructura del modelo."
+    },
+    {
+      "numero": 18,
+      "bloque": "Procesos y controles",
+      "pregunta": "Dos perfiles tienen el mismo porcentaje de arcilla y cantidades de MAOC muy distintas. ¿Qué explicación es compatible con el tema?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Pueden diferir en mineralogía, óxidos reactivos, pH, historia de entradas o método de fraccionamiento."
+        },
+        {
+          "id": "b",
+          "texto": "Uno de los dos análisis tiene que estar mal, porque la arcilla fija la capacidad."
+        },
+        {
+          "id": "c",
+          "texto": "El perfil con menos MAOC ya está saturado."
+        },
+        {
+          "id": "d",
+          "texto": "La arcilla solo influye en el POC, no en el MAOC."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "El porcentaje de arcilla no resume la superficie reactiva ni el contexto químico. La relación de Hassink es empírica y no convierte la textura en una capacidad exacta."
+    },
+    {
+      "numero": 19,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "Un pool sigue dC/dt = I − kC con I = 2,5 Mg C/ha/año y k = 0,05 año⁻¹. ¿Cuáles son su equilibrio y el tiempo para completar el 90 % del ajuste?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Ceq = 0,125 Mg C/ha; t90 = 20 años."
+        },
+        {
+          "id": "b",
+          "texto": "Ceq = 50 Mg C/ha; t90 = 20 años."
+        },
+        {
+          "id": "c",
+          "texto": "Ceq = 50 Mg C/ha; t90 = 13,86 años."
+        },
+        {
+          "id": "d",
+          "texto": "Ceq = 50 Mg C/ha; t90 = 46,05 años."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "Ceq = I/k = 2,5/0,05 = 50 Mg C/ha. t90 = ln(10)/k = 46,05 años; 20 años es τ = 1/k y 13,86 es la semivida del desvío."
+    },
+    {
+      "numero": 20,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "Un pool con I = 2 Mg C/ha/año y k = 0,05 año⁻¹ parte de C0 = 30 Mg C/ha. ¿Qué stock tendrá a los 20 años?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "40,00 Mg C/ha, porque ya habrá alcanzado su equilibrio."
+        },
+        {
+          "id": "b",
+          "texto": "36,32 Mg C/ha."
+        },
+        {
+          "id": "c",
+          "texto": "33,68 Mg C/ha."
+        },
+        {
+          "id": "d",
+          "texto": "30,00 Mg C/ha, porque las entradas igualan a las salidas."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "Ceq = 40. C(20) = 40 + (30 − 40)·e^(−1) = 40 − 3,68 = 36,32. Con τ = 20 años, a los 20 años solo se ha completado el 63 % del ajuste."
+    },
+    {
+      "numero": 21,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "Un suelo en equilibrio con I = 2 y k = 0,04 pasa a tener entrada y tasa un 25 % mayores (I = 2,5; k = 0,05). ¿Qué ocurre?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "El stock de equilibrio no cambia (50 Mg C/ha), pero la salida pasa de 2 a 2,5 y la renovación es más rápida."
+        },
+        {
+          "id": "b",
+          "texto": "El stock aumenta un 25 %, porque aumentan las entradas."
+        },
+        {
+          "id": "c",
+          "texto": "El stock disminuye un 25 %, porque aumenta la tasa de pérdida."
+        },
+        {
+          "id": "d",
+          "texto": "Nada cambia en el sistema, ni el stock ni los flujos."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "Ceq = I/k = 50 en ambos casos, pero entran y salen más carbono: el cociente stock/entrada baja de 25 a 20 años. Un total igual no significa que la renovación no haya cambiado."
+    },
+    {
+      "numero": 22,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "Un pool en equilibrio (I = 2, k = 0,05, C = 40) pasa a recibir I = 3. A los 20 años tiene 52,64 Mg C/ha. ¿Qué lectura es correcta?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "La ganancia de 12,64 ya es el efecto final del cambio."
+        },
+        {
+          "id": "b",
+          "texto": "La tasa media de 0,632 Mg C/ha/año puede extrapolarse linealmente a 50 años."
+        },
+        {
+          "id": "c",
+          "texto": "Tiende a 60 Mg C/ha; a los 20 años solo ha recorrido 12,64 de los 20 Mg C/ha de desplazamiento del equilibrio."
+        },
+        {
+          "id": "d",
+          "texto": "El aumento de entradas no cambia el equilibrio, solo la velocidad."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "El equilibrio, la velocidad de ajuste y el cambio a una fecha son tres preguntas distintas. La tasa media disminuye a medida que crece la salida kC."
+    },
+    {
+      "numero": 23,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "Modelo de dos pools: I = 2 Mg C/ha/año entra en C1; k1 = 0,5 año⁻¹; una fracción h = 0,25 de lo que sale de C1 pasa a C2, con k2 = 0,02 año⁻¹. ¿Cuál es el stock total de equilibrio y la pérdida externa en equilibrio?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "24 Mg C/ha y 2,5 Mg C/ha/año."
+        },
+        {
+          "id": "b",
+          "texto": "29 Mg C/ha y 2,5 Mg C/ha/año."
+        },
+        {
+          "id": "c",
+          "texto": "104 Mg C/ha y 2 Mg C/ha/año."
+        },
+        {
+          "id": "d",
+          "texto": "29 Mg C/ha y 2 Mg C/ha/año."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "C1 = I/k1 = 4; C2 = hI/k2 = 0,5/0,02 = 25; total 29. En equilibrio la salida externa iguala la entrada (2): sumar la salida bruta de C1 y la de C2 contaría la transferencia interna como pérdida."
+    },
+    {
+      "numero": 24,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "En el modelo de dos pools, la entrada sube de 2 a 2,5. A los 10 años C1 ya está en su nuevo nivel y la curva del total crece cada vez más despacio. ¿Qué haces antes de dar el sistema por equilibrado?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Nada: si el pool rápido se estabiliza, el sistema está en equilibrio."
+        },
+        {
+          "id": "b",
+          "texto": "Comprobar cada pool y los flujos: el modo lento de C2 puede seguir ajustándose durante décadas."
+        },
+        {
+          "id": "c",
+          "texto": "Alargar la simulación exactamente 1.000 años, que garantiza la convergencia."
+        },
+        {
+          "id": "d",
+          "texto": "Comprobar únicamente que la curva total parezca plana en el gráfico."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "Con autovalores de −0,5 y −0,02, la escala lenta es de 50 años: a los 20 años solo se han ganado 2,5 de los 6 Mg C/ha finales. La convergencia se comprueba en estados y flujos."
+    },
+    {
+      "numero": 25,
+      "bloque": "Equilibrio y compartimentos",
+      "pregunta": "El SOC total de una capa se mantiene en 50 Mg C/ha durante un periodo, pero un pool pierde 0,4 Mg C/ha/año y otro gana 0,4. ¿Qué es correcto?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "El balance total es nulo en ese intervalo, pero el vector de pools no está en estado estacionario."
+        },
+        {
+          "id": "b",
+          "texto": "El sistema está en equilibrio, porque el total no cambia."
+        },
+        {
+          "id": "c",
+          "texto": "Hay un error de balance de masa en el modelo."
+        },
+        {
+          "id": "d",
+          "texto": "Los dos pools se anulan, así que ninguno cambia."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "El estado estacionario exige dC/dt = 0 para cada pool. Una compensación interna da un total constante sin que haya equilibrio, ni garantía de que se mantenga en el futuro."
+    },
+    {
+      "numero": 26,
+      "bloque": "Más allá del primer orden",
+      "pregunta": "Tras aumentar los aportes, la curva de SOC de una parcela se aplana. Un informe concluye «saturación mineral». ¿Qué explicación alternativa debería descartarse antes?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Que el carbono se haya convertido en carbonato."
+        },
+        {
+          "id": "b",
+          "texto": "Que el modelo use una exponencial matricial."
+        },
+        {
+          "id": "c",
+          "texto": "Un equilibrio con pérdidas compensatorias, limitación de nutrientes o un aumento de entradas menor que el supuesto."
+        },
+        {
+          "id": "d",
+          "texto": "Que la arcilla haya aumentado durante el periodo."
+        }
+      ],
+      "respuestaCorrecta": "c",
+      "explicacion": "Una meseta no identifica un máximo mineral: un modelo de primer orden sin límite también tiene equilibrio. Hacen falta la definición de fracción, el método de capacidad y evidencias que distingan las alternativas."
+    },
+    {
+      "numero": 27,
+      "bloque": "Más allá del primer orden",
+      "pregunta": "Con la ecuación dM/dt = F0(1 − M/Mmax) − kM·M, F0 = 2 Mg C/ha/año, kM = 0,02 año⁻¹ y Mmax = 40 Mg C/ha, ¿cuál es el equilibrio y qué ocupación supone?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "M* = 100 Mg C/ha, por encima de la cota."
+        },
+        {
+          "id": "b",
+          "texto": "M* = 40 Mg C/ha: la cota se alcanza siempre."
+        },
+        {
+          "id": "c",
+          "texto": "M* = 20 Mg C/ha, un 50 % de la cota."
+        },
+        {
+          "id": "d",
+          "texto": "M* ≈ 28,6 Mg C/ha, un 71 % de la cota: un equilibrio, no una saturación completa."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "M* = F0/(kM + F0/Mmax) = 2/(0,02 + 0,05) = 28,57. Con kM > 0 el equilibrio queda siempre por debajo de Mmax; F0/k = 100 sería el pool sin cota."
+    },
+    {
+      "numero": 28,
+      "bloque": "Más allá del primer orden",
+      "pregunta": "En el modelo microbiano de ejemplo (sustrato D, biomasa X, captación saturante), el equilibrio es D* = mKD/(εVmax − m) y X* = εI/[m(1 − ε)]. Si se duplican las entradas I manteniendo los parámetros, ¿qué ocurre?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Se duplican D* y X*, igual que en un modelo lineal."
+        },
+        {
+          "id": "b",
+          "texto": "Aumenta X*, pero D* no cambia."
+        },
+        {
+          "id": "c",
+          "texto": "Aumenta D*, pero X* no cambia."
+        },
+        {
+          "id": "d",
+          "texto": "Ninguno cambia, porque la mortalidad retorna todo el carbono a D."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "I aparece en X* pero no en D*. Es una consecuencia de esas ecuaciones, no una ley general, e ilustra por qué la regla «Ceq proporcional a I» no vale para cualquier estructura."
+    },
+    {
+      "numero": 29,
+      "bloque": "Más allá del primer orden",
+      "pregunta": "En el sistema de dos pools en equilibrio con I = 2, k1 = 0,5, k2 = 0,02 y h = 0,25 (total 29 Mg C/ha), ¿cuál es el tiempo medio de tránsito?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "14,5 años."
+        },
+        {
+          "id": "b",
+          "texto": "2 años."
+        },
+        {
+          "id": "c",
+          "texto": "50 años."
+        },
+        {
+          "id": "d",
+          "texto": "29 años."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "En estado estacionario, tránsito medio = Ctot/I = 29/2 = 14,5 años; por rutas: 0,75 × 2 + 0,25 × (2 + 50) = 14,5. La edad media del stock será mayor, porque pesa la reserva lenta."
+    },
+    {
+      "numero": 30,
+      "bloque": "Más allá del primer orden",
+      "pregunta": "Con un forzamiento estacional, un modelo sustituye k(t) y C(t) por sus medias anuales para calcular la salida media. ¿Qué puede fallar?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Nada, porque la media de un producto siempre es el producto de las medias."
+        },
+        {
+          "id": "b",
+          "texto": "Que el modelo deja de ser lineal."
+        },
+        {
+          "id": "c",
+          "texto": "Que el régimen periódico se convierte en un equilibrio con stock constante todo el año."
+        },
+        {
+          "id": "d",
+          "texto": "Que se pierde el término cov(k, C), así que el balance cambia si k y C covarían."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "promedio[k·C] = promedio[k]·promedio[C] + cov(k, C). Además, una función no lineal del clima evaluada en el clima medio no coincide con la media de la función."
+    }
+  ]
+}

@@ -18,20 +18,18 @@ const cargarTestTema2 = async () => {
 
     // Leer el archivo JSON
     const testData = JSON.parse(
-      readFileSync(join(__dirname, '../data/test-tema2-entradas-salidas.json'), 'utf-8')
+      readFileSync(join(__dirname, '../data/test-tema2-dinamica-equilibrio.json'), 'utf-8')
     );
 
     // Validar que el temaId no sea el placeholder
     if (testData.temaId === 'TEMA2_ID_PLACEHOLDER') {
-      console.error('✗ ERROR: Debes actualizar el temaId en test-tema2-entradas-salidas.json');
+      console.error('✗ ERROR: Debes actualizar el temaId en test-tema2-dinamica-equilibrio.json');
       console.error('   Reemplaza "TEMA2_ID_PLACEHOLDER" con el ID real del Tema 2');
       process.exit(1);
     }
 
     // Buscar si ya existe un test para este tema
-    const testExistente = await Test.findOne({ 
-      temaId: testData.temaId 
-    });
+    const testExistente = await Test.findOne({ cursoId: testData.cursoId, temaId: testData.temaId });
 
     if (testExistente) {
       console.log('⚠️  Ya existe un test para este tema. Actualizando...');

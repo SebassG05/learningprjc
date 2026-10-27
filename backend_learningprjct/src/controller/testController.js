@@ -125,6 +125,7 @@ export const validarRespuestas = async (req, res) => {
         pregunta: pregunta.pregunta,
         respuestaUsuario: respuestaUsuario?.respuesta || null,
         respuestaCorrecta: pregunta.respuestaCorrecta,
+        explicacion: pregunta.explicacion,
         esCorrecta
       };
     });

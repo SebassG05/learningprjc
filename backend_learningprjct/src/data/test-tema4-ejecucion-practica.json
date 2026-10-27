@@ -1,310 +1,710 @@
 {
-  "cursoId": "69d50335b1e80c0e37ab562a",
-  "temaId": "69d50335b1e80c0e37ab5632",
-  "titulo": "Test de Evaluación - Tema 4: Ejecución y práctica con el modelo",
-  "descripcion": "Evaluación sobre entorno de programación R, paquetes, configuración y ejecución del ensemble HoliSoils",
-  "duracionMinutos": 40,
+  "cursoId": "69d50406663e8648d7ee1f08",
+  "temaId": "69d5f26894dace2e10adae3e",
+  "titulo": "Test de Evaluación - Tema 4: Práctica en R: SoilR y ensemble HoliSoils",
+  "descripcion": "Forzamientos y unidades, spin-up y reescalado, lectura de los wrappers, salidas, tasas frente a cantidades y comparación controlada de escenarios.",
+  "duracionMinutos": 45,
   "notaMinima": 60,
   "preguntas": [
     {
       "numero": 1,
-      "bloque": "Entorno de programación",
-      "pregunta": "El entorno de programación principal requerido para ejecutar el modelo es:",
+      "bloque": "Preparar los datos",
+      "pregunta": "Al ejecutar source() sobre los scripts del ensemble aparece un error antes de que empiece la simulación principal. ¿Qué explicación es coherente con cómo funciona source()?",
       "opciones": [
-        { "id": "a", "texto": "Python" },
-        { "id": "b", "texto": "Matlab" },
-        { "id": "c", "texto": "R" },
-        { "id": "d", "texto": "Julia" }
+        {
+          "id": "a",
+          "texto": "source() solo registra funciones, así que el error tiene que estar en SoilR."
+        },
+        {
+          "id": "b",
+          "texto": "source() ejecuta las instrucciones del archivo: S03 lee los datos y S10 lanza pruebas al cargarse, y cualquiera de las dos cosas puede fallar."
+        },
+        {
+          "id": "c",
+          "texto": "El error indica que falta instalar RStudio."
+        },
+        {
+          "id": "d",
+          "texto": "source() no puede cargar más de un script por sesión."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "b",
+      "explicacion": "Cargar un archivo con source() ejecuta todo su contenido. Por eso un fallo de lectura de datos o de las pruebas de S10 aparece antes de la simulación."
     },
     {
       "numero": 2,
-      "bloque": "Entorno de programación",
-      "pregunta": "El entorno recomendado para trabajar con R y ejecutar el modelo es:",
+      "bloque": "Preparar los datos",
+      "pregunta": "Mueves la carpeta del curso y corriges PATH_functions en el lanzador, pero el script sigue sin encontrar los ficheros climáticos. ¿Qué has olvidado?",
       "opciones": [
-        { "id": "a", "texto": "Spyder" },
-        { "id": "b", "texto": "RStudio" },
-        { "id": "c", "texto": "Eclipse" },
-        { "id": "d", "texto": "Visual Studio" }
+        {
+          "id": "a",
+          "texto": "Reinstalar SoilR."
+        },
+        {
+          "id": "b",
+          "texto": "Renombrar los ficheros a .csv."
+        },
+        {
+          "id": "c",
+          "texto": "Ejecutar sessionInfo()."
+        },
+        {
+          "id": "d",
+          "texto": "Actualizar también loc_forc en S03, que es desde donde se busca la subcarpeta SCENARIO."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Hay dos rutas: PATH_functions carga los scripts y loc_forc localiza los forzamientos. Corregir solo la primera no garantiza encontrar los datos."
     },
     {
       "numero": 3,
-      "bloque": "Paquetes y librerías",
-      "pregunta": "El paquete de R más importante para la simulación de modelos compartimentales de carbono es:",
+      "bloque": "Preparar los datos",
+      "pregunta": "La tabla de precipitación no tiene el mes de marzo de 2040, que sí está en la de temperatura. S03 une las tablas con merge() por year y month. ¿Qué ocurre?",
       "opciones": [
-        { "id": "a", "texto": "ggplot2" },
-        { "id": "b", "texto": "SoilR" },
-        { "id": "c", "texto": "readxl" },
-        { "id": "d", "texto": "dplyr" }
+        {
+          "id": "a",
+          "texto": "Ese mes desaparece del conjunto unido sin generar un NA, y la serie queda incompleta en silencio."
+        },
+        {
+          "id": "b",
+          "texto": "merge() rellena marzo con NA y S03 detiene la ejecución."
+        },
+        {
+          "id": "c",
+          "texto": "merge() interpola la precipitación de marzo."
+        },
+        {
+          "id": "d",
+          "texto": "merge() duplica febrero para completar el año."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "Por defecto merge() conserva solo las claves presentes en ambas tablas. Por eso conviene comprobar la secuencia mensual completa, además de los duplicados."
     },
     {
       "numero": 4,
-      "bloque": "Paquetes y librerías",
-      "pregunta": "El paquete matrixStats se utiliza principalmente para:",
+      "bloque": "Preparar los datos",
+      "pregunta": "Una serie climática salta de enero a marzo, sin febrero. ¿Detecta el problema check_monthly_forcing() de S02?",
       "opciones": [
-        { "id": "a", "texto": "Crear gráficos" },
-        { "id": "b", "texto": "Manipular archivos Excel" },
-        { "id": "c", "texto": "Realizar cálculos eficientes con matrices" },
-        { "id": "d", "texto": "Simular modelos climáticos" }
+        {
+          "id": "a",
+          "texto": "Sí, porque comprueba que haya exactamente 12 meses por año."
+        },
+        {
+          "id": "b",
+          "texto": "Sí, porque compara las fechas con un calendario completo."
+        },
+        {
+          "id": "c",
+          "texto": "No necesariamente: revisa fechas, duplicados y separaciones menores de 28 días, pero un mes ausente puede pasar esos controles."
+        },
+        {
+          "id": "d",
+          "texto": "No, porque esa función solo revisa la temperatura."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "c",
+      "explicacion": "Un salto de enero a marzo supera esos controles. La comprobación propuesta en el tema compara las fechas con seq(..., by = \"month\") y exige años completos."
     },
     {
       "numero": 5,
-      "bloque": "Paquetes y librerías",
-      "pregunta": "Si el paquete SoilR no está instalado:",
+      "bloque": "Preparar los datos",
+      "pregunta": "PR_monthly_sum es una tasa media mensual de 10⁻⁵ kg de agua/m²/s y el mes tiene 30 días. ¿Cuánta precipitación es, y qué hace el código actual de S03?",
       "opciones": [
-        { "id": "a", "texto": "El modelo funciona más lento" },
-        { "id": "b", "texto": "El modelo no puede simular la dinámica del SOC" },
-        { "id": "c", "texto": "Solo fallan los gráficos" },
-        { "id": "d", "texto": "No ocurre ningún problema" }
+        {
+          "id": "a",
+          "texto": "0,864 mm; el código es correcto."
+        },
+        {
+          "id": "b",
+          "texto": "25,92 mm; el código multiplica por 86.400 y obtendría 0,864 mm, porque esa conversión solo vale si cada valor representa un día."
+        },
+        {
+          "id": "c",
+          "texto": "864 mm; hay que multiplicar por 1.000."
+        },
+        {
+          "id": "d",
+          "texto": "25,92 mm; el código multiplica por los segundos del mes y lo calcula bien."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "10⁻⁵ × 30 × 86.400 = 25,92 mm (1 kg/m² ≈ 1 mm). Multiplicar por 86.400 es coherente solo si el dato es una suma de medias diarias; hay que recuperar los metadatos."
     },
     {
       "numero": 6,
-      "bloque": "Paquetes y librerías",
-      "pregunta": "La librería dplyr se utiliza para:",
+      "bloque": "Preparar los datos",
+      "pregunta": "Descubres que PR_monthly_sum ya era un acumulado mensual en milímetros. ¿Qué implica para la línea de S03 que multiplica por 60 × 60 × 24?",
       "opciones": [
-        { "id": "a", "texto": "Resolver ecuaciones diferenciales" },
-        { "id": "b", "texto": "Manipular y transformar datos" },
-        { "id": "c", "texto": "Generar gráficos" },
-        { "id": "d", "texto": "Ejecutar modelos climáticos" }
+        {
+          "id": "a",
+          "texto": "Nada: multiplicar por 86.400 es necesario en cualquier caso."
+        },
+        {
+          "id": "b",
+          "texto": "Que habría que dividir entre 1.000 para pasar a metros."
+        },
+        {
+          "id": "c",
+          "texto": "Que basta con dividir entre 12 para obtener valores mensuales."
+        },
+        {
+          "id": "d",
+          "texto": "Que no debe multiplicarse: el dato ya está en mm y la conversión lo inflaría 86.400 veces."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Un acumulado en mm se usa directamente. La etiqueta «monthly_sum» no basta para saber si es un acumulado, una media de tasas o una suma de tasas diarias."
     },
     {
       "numero": 7,
-      "bloque": "Paquetes y librerías",
-      "pregunta": "La librería ggplot2 se utiliza principalmente para:",
+      "bloque": "Preparar los datos",
+      "pregunta": "S03 entrega a SG la variable TAS (temperatura del aire) como temperatura del suelo a 5 cm. ¿Cómo debe tratarse?",
       "opciones": [
-        { "id": "a", "texto": "Resolver ecuaciones" },
-        { "id": "b", "texto": "Manipular datos" },
-        { "id": "c", "texto": "Visualizar resultados mediante gráficos" },
-        { "id": "d", "texto": "Leer archivos Excel" }
+        {
+          "id": "a",
+          "texto": "Como una aproximación de entrada que hay que declarar y evaluar; no se corrige con una conversión de unidades."
+        },
+        {
+          "id": "b",
+          "texto": "Como equivalente, porque ambas están en °C."
+        },
+        {
+          "id": "c",
+          "texto": "Restando 273,15 para pasarla a temperatura del suelo."
+        },
+        {
+          "id": "d",
+          "texto": "Ignorándola, porque SG no usa temperatura."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "a",
+      "explicacion": "Compartir columna y unidad no hace equivalentes dos variables físicas distintas. La denominación TAS obliga a verificar su definición en la fuente."
     },
     {
       "numero": 8,
-      "bloque": "Paquetes y librerías",
-      "pregunta": "La función readxl permite:",
+      "bloque": "Preparar los datos",
+      "pregunta": "Para trabajar en meses, un alumno divide Cinput_fwd = 2,5 entre 12 antes de llamar a Call_MULTIMODEL(). ¿Qué ocurre?",
       "opciones": [
-        { "id": "a", "texto": "Crear modelos matemáticos" },
-        { "id": "b", "texto": "Leer archivos Excel" },
-        { "id": "c", "texto": "Ejecutar scripts" },
-        { "id": "d", "texto": "Crear matrices" }
+        {
+          "id": "a",
+          "texto": "Todo queda correcto, porque la simulación es mensual."
+        },
+        {
+          "id": "b",
+          "texto": "Century recibe la conversión dos veces, porque ya divide la entrada entre 12, y los modelos con reloj anual reciben una entrada 12 veces menor."
+        },
+        {
+          "id": "c",
+          "texto": "Solo cambia la salida de SG."
+        },
+        {
+          "id": "d",
+          "texto": "Las entradas se suman doce veces en cada año."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Las tasas anuales se mantienen como tasas en los modelos cuyo reloj está en años. Century convierte por su cuenta: dividir antes de la llamada global duplica esa conversión."
     },
     {
       "numero": 9,
-      "bloque": "Configuración inicial",
-      "pregunta": "La variable PATH_functions define:",
+      "bloque": "Simular",
+      "pregunta": "La serie climática contiene 1.032 filas mensuales. ¿Qué duración configura el lanzador?",
       "opciones": [
-        { "id": "a", "texto": "La ubicación de los datos climáticos" },
-        { "id": "b", "texto": "La carpeta donde están los scripts de los modelos" },
-        { "id": "c", "texto": "La ruta de los resultados" },
-        { "id": "d", "texto": "El directorio de gráficos" }
+        {
+          "id": "a",
+          "texto": "10 años, el valor por defecto."
+        },
+        {
+          "id": "b",
+          "texto": "1.032 años."
+        },
+        {
+          "id": "c",
+          "texto": "86 años, porque simulation_length = nrow(Temp_month)/12."
+        },
+        {
+          "id": "d",
+          "texto": "1.000 años, como el spin-up."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "1.032/12 = 86 años, lo que corresponde a 2015-2100 si todos los meses están presentes. La duración depende del número de filas, así que una serie incompleta la cambia sin avisar."
     },
     {
       "numero": 10,
-      "bloque": "Configuración inicial",
-      "pregunta": "Un error frecuente en prácticas ocurre cuando:",
+      "bloque": "Simular",
+      "pregunta": "S02 construye t_fwd empezando en 1/12. ¿Cómo debe interpretarse la primera fila de la salida?",
       "opciones": [
-        { "id": "a", "texto": "Falta temperatura" },
-        { "id": "b", "texto": "La ruta de los scripts es incorrecta" },
-        { "id": "c", "texto": "Falta precipitación" },
-        { "id": "d", "texto": "El modelo tiene demasiados pools" }
+        {
+          "id": "a",
+          "texto": "Como el estado inicial del solucionador, no como un mes ya transcurrido."
+        },
+        {
+          "id": "b",
+          "texto": "Como el estado al final del primer mes."
+        },
+        {
+          "id": "c",
+          "texto": "Como la media del primer año."
+        },
+        {
+          "id": "d",
+          "texto": "Como la fecha que indica start_date_simulations, que alinea la malla."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "En un problema de valor inicial, el primer tiempo de la malla es el estado inicial. Además, start_date_simulations se pasa a S02 pero no se usa para alinear nada."
     },
     {
       "numero": 11,
-      "bloque": "Carga de modelos",
-      "pregunta": "La función source() en R se utiliza para:",
+      "bloque": "Simular",
+      "pregunta": "Durante el spin-up, un pool pasa de 10 a 11 Mg C/ha. El wrapper calcula deltai = (INIZ − pools_i)/INIZ y acepta si all(deltai < 0,001). ¿Qué ocurre?",
       "opciones": [
-        { "id": "a", "texto": "Crear gráficos" },
-        { "id": "b", "texto": "Cargar scripts externos en la memoria" },
-        { "id": "c", "texto": "Ejecutar ecuaciones diferenciales" },
-        { "id": "d", "texto": "Generar datos climáticos" }
+        {
+          "id": "a",
+          "texto": "El test lo rechaza, porque el cambio es del 10 %."
+        },
+        {
+          "id": "b",
+          "texto": "El test da un error de división por cero."
+        },
+        {
+          "id": "c",
+          "texto": "El test solo se aplica al SOC total, así que no afecta."
+        },
+        {
+          "id": "d",
+          "texto": "El test lo acepta, porque deltai = −0,1 < 0,001, aunque el pool haya aumentado un 10 %."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Sin valor absoluto, cualquier aumento pasa el test. Un «spinup ok» no acredita convergencia: hay que usar |cambio| con tolerancias absoluta y relativa en cada pool."
     },
     {
       "numero": 12,
-      "bloque": "Carga de modelos",
-      "pregunta": "La carga de múltiples modelos mediante source() permite implementar:",
+      "bloque": "Simular",
+      "pregunta": "Cambias el clima prospectivo de SSP126 por otro escenario y repites todo el procedimiento. ¿Por qué la diferencia de SOC no aísla el efecto del clima futuro?",
       "opciones": [
-        { "id": "a", "texto": "Un modelo único" },
-        { "id": "b", "texto": "Un sistema multi-modelo (ensemble)" },
-        { "id": "c", "texto": "Un sistema climático" },
-        { "id": "d", "texto": "Un modelo hidrológico" }
+        {
+          "id": "a",
+          "texto": "Porque SoilR no admite dos escenarios en la misma sesión."
+        },
+        {
+          "id": "b",
+          "texto": "Porque el spin-up de esta copia promedia la serie suministrada, incluido el periodo futuro, y también cambia la partición inicial."
+        },
+        {
+          "id": "c",
+          "texto": "Porque AMG no usa clima."
+        },
+        {
+          "id": "d",
+          "texto": "Porque el reescalado cambia el SOC inicial observado."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "No se carga un clima histórico independiente para el spin-up. Para aislar el efecto prospectivo hay que fijar una inicialización común y documentada."
     },
     {
       "numero": 13,
-      "bloque": "Ejecución del modelo",
-      "pregunta": "El spin-up del modelo tiene como objetivo principal:",
+      "bloque": "Simular",
+      "pregunta": "Con SOC_0 = 40 Mg C/ha, el wrapper de RothC calcula IOM = 0,049 × SOC_0^1,139 y reparte el resto. ¿Cuánto vale IOM y qué significa que el SOC simulado inicial coincida con 40?",
       "opciones": [
-        { "id": "a", "texto": "Aumentar la velocidad del modelo" },
-        { "id": "b", "texto": "Estabilizar los pools de carbono del suelo" },
-        { "id": "c", "texto": "Reducir el número de variables" },
-        { "id": "d", "texto": "Generar gráficos" }
+        {
+          "id": "a",
+          "texto": "≈ 3,27 Mg C/ha; la coincidencia con 40 es una condición impuesta por el reescalado, no una validación."
+        },
+        {
+          "id": "b",
+          "texto": "≈ 1,96 Mg C/ha; la coincidencia valida el modelo para ese suelo."
+        },
+        {
+          "id": "c",
+          "texto": "≈ 3,27 Mg C/ha; la coincidencia demuestra que el spin-up convergió."
+        },
+        {
+          "id": "d",
+          "texto": "≈ 45,6 Mg C/ha; IOM supera al SOC total."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "0,049 × 40^1,139 ≈ 3,27. Al repartir SOC_0 entre pools, coincidir con el stock observado es una consecuencia de la construcción (1,96 sería 0,049 × 40 sin el exponente)."
     },
     {
       "numero": 14,
-      "bloque": "Ejecución del modelo",
-      "pregunta": "En el ejemplo presentado, el spin-up se ejecuta durante:",
+      "bloque": "Simular",
+      "pregunta": "En las gráficas, ICBM aparece mucho más suave que RothC, y una sequía de tres meses apenas se nota en su curva. ¿Qué explica mejor esta copia del código?",
       "opciones": [
-        { "id": "a", "texto": "100 años" },
-        { "id": "b", "texto": "500 años" },
-        { "id": "c", "texto": "1000 años" },
-        { "id": "d", "texto": "2000 años" }
+        {
+          "id": "a",
+          "texto": "Que ICBM es intrínsecamente insensible al clima en cualquier implementación."
+        },
+        {
+          "id": "b",
+          "texto": "Que ICBM tiene más pools que RothC."
+        },
+        {
+          "id": "c",
+          "texto": "Que el wrapper calcula un único r con colMeans() y usa la media de la entrada, así que la sequía solo actúa a través del promedio."
+        },
+        {
+          "id": "d",
+          "texto": "Que ICBM usa el clima de SG."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "c",
+      "explicacion": "Una diferencia entre curvas puede venir de la estructura, la parametrización, la inicialización o el wrapper. Aquí la explicación está en el código, no en el modelo como tal."
     },
     {
       "numero": 15,
-      "bloque": "Ejecución del modelo",
-      "pregunta": "La simulación prospectiva del escenario real se realiza durante:",
+      "bloque": "Simular",
+      "pregunta": "S06 calcula APPT = mean(precipitation[, 2]) para repartir la entrada de Century entre parte aérea y subterránea. Con datos mensuales, ¿qué es APPT?",
       "opciones": [
-        { "id": "a", "texto": "5 años" },
-        { "id": "b", "texto": "10 años" },
-        { "id": "c", "texto": "50 años" },
-        { "id": "d", "texto": "100 años" }
+        {
+          "id": "a",
+          "texto": "La precipitación anual acumulada."
+        },
+        {
+          "id": "b",
+          "texto": "La precipitación máxima mensual."
+        },
+        {
+          "id": "c",
+          "texto": "La producción aérea medida en campo."
+        },
+        {
+          "id": "d",
+          "texto": "La media de los acumulados mensuales, no la precipitación anual: hay que verificar la escala de la fórmula de origen."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Pmax = −40 + 7,7·APPT y Rmax = 100 + 7·APPT dependen de la escala de APPT. Además, las proporciones deben quedar entre 0 y 1 y sumar 1."
     },
     {
       "numero": 16,
-      "bloque": "Ejecución del modelo",
-      "pregunta": "La variable plot_figures controla:",
+      "bloque": "Simular",
+      "pregunta": "Con historical_LU = «grassland» y SOC_initial = 40 Mg C/ha, ¿cómo inicializa AMG sus reservas en esta copia?",
       "opciones": [
-        { "id": "a", "texto": "El número de modelos ejecutados" },
-        { "id": "b", "texto": "La generación de gráficos de resultados" },
-        { "id": "c", "texto": "El clima del modelo" },
-        { "id": "d", "texto": "El número de pools" }
+        {
+          "id": "a",
+          "texto": "Estable 26, activa 14."
+        },
+        {
+          "id": "b",
+          "texto": "Estable 40, activa 0."
+        },
+        {
+          "id": "c",
+          "texto": "Estable 16, activa 24."
+        },
+        {
+          "id": "d",
+          "texto": "Por spin-up, igual que RothC."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "El wrapper asigna un 40 % estable: 0,4 × 40 = 16; activa 24. Con «arable» sería un 65 %, y «forest» sigue en esta copia el caso de «grassland»."
     },
     {
       "numero": 17,
-      "bloque": "Ejecución del modelo",
-      "pregunta": "La función Call_MULTIMODEL() representa:",
+      "bloque": "Simular",
+      "pregunta": "S07 construye el forzamiento mensual de AMG con rep(fT*fW*fCl*fCaCO3, length.out = length(ts_fwd_AMG)) a partir de un vector anual (q2015, q2016, …). ¿Qué produce?",
       "opciones": [
-        { "id": "a", "texto": "El cálculo de matrices" },
-        { "id": "b", "texto": "La ejecución del ensemble de modelos" },
-        { "id": "c", "texto": "La lectura de datos climáticos" },
-        { "id": "d", "texto": "La generación de gráficos" }
+        {
+          "id": "a",
+          "texto": "q2015 repetido en los doce meses de 2015, luego q2016…"
+        },
+        {
+          "id": "b",
+          "texto": "Un valor medio de todos los años."
+        },
+        {
+          "id": "c",
+          "texto": "q2015, q2016, q2017… en meses consecutivos, reciclando el vector: no alinea cada factor con su año."
+        },
+        {
+          "id": "d",
+          "texto": "Un error, porque las longitudes no coinciden."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "length.out repite el vector entero; para repetir cada elemento haría falta each = 12. Lo más seguro es asociar el factor al año de cada fecha con una unión explícita."
     },
     {
       "numero": 18,
-      "bloque": "Ejecución del modelo",
-      "pregunta": "El ensemble del modelo HoliSoils incluye modelos como:",
+      "bloque": "Simular",
+      "pregunta": "getReleaseFlux devuelve la salida de AMG. ¿Qué representa ese flujo en esta implementación?",
       "opciones": [
-        { "id": "a", "texto": "RothC" },
-        { "id": "b", "texto": "ICBM" },
-        { "id": "c", "texto": "Century" },
-        { "id": "d", "texto": "Todos los anteriores" }
+        {
+          "id": "a",
+          "texto": "Todo el CO₂ producido por los aportes brutos y el SOC."
+        },
+        {
+          "id": "b",
+          "texto": "La respiración total del suelo, comparable con SG."
+        },
+        {
+          "id": "c",
+          "texto": "La salida de la reserva estable."
+        },
+        {
+          "id": "d",
+          "texto": "Solo la salida de la reserva activa, sin el carbono fresco no retenido."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "d",
+      "explicacion": "OnepModel recibe la entrada ya humificada; el pool estable recibe una columna de ceros. El carbono fresco no retenido no se añade a esa salida."
     },
     {
       "numero": 19,
-      "bloque": "Datos de entrada",
-      "pregunta": "Las variables Temp_month, Precip_month y Potevap_month representan:",
+      "bloque": "Simular",
+      "pregunta": "En S09, el vector AWEN es c(0,52; 0,18; 0,08; 0,2; 0) y Cinput = 2,5 Mg C/ha/año. ¿Cuánto carbono entra efectivamente en Yasso07?",
       "opciones": [
-        { "id": "a", "texto": "Propiedades del suelo" },
-        { "id": "b", "texto": "Forzamientos climáticos" },
-        { "id": "c", "texto": "Entradas de carbono" },
-        { "id": "d", "texto": "Parámetros internos" }
+        {
+          "id": "a",
+          "texto": "2,45 Mg C/ha/año: las fracciones suman 0,98 y 0,05 queda sin asignar ni registrar como salida."
+        },
+        {
+          "id": "b",
+          "texto": "2,5 Mg C/ha/año, porque S11 normaliza las fracciones."
+        },
+        {
+          "id": "c",
+          "texto": "2,55 Mg C/ha/año."
+        },
+        {
+          "id": "d",
+          "texto": "0,98 Mg C/ha/año."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "S11 multiplica la entrada por las fracciones sin normalizarlas. Dividir por la suma es una opción matemática, pero no decide cuál era la composición correcta."
     },
     {
       "numero": 20,
-      "bloque": "Datos de entrada",
-      "pregunta": "La variable SOC_0 (SOC_initial) representa:",
+      "bloque": "Resultados",
+      "pregunta": "La serie mensual de Yasso07 sale en escalones: doce valores iguales cada año. ¿Qué significan?",
       "opciones": [
-        { "id": "a", "texto": "La temperatura inicial" },
-        { "id": "b", "texto": "El carbono orgánico inicial del suelo" },
-        { "id": "c", "texto": "El carbono atmosférico" },
-        { "id": "d", "texto": "El nitrógeno del suelo" }
+        {
+          "id": "a",
+          "texto": "Que el suelo real permanece constante durante cada año."
+        },
+        {
+          "id": "b",
+          "texto": "Que se repiten filas anuales en la malla mensual, sin integración ni información subanual."
+        },
+        {
+          "id": "c",
+          "texto": "Que el solucionador ha fallado y debe reducirse el paso."
+        },
+        {
+          "id": "d",
+          "texto": "Que Yasso07 interpola linealmente entre años."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Yasso07 se integra con paso anual y month_to_year repite filas con ceiling(t_fwd). Los escalones son una forma de presentar la salida, no un resultado sobre el suelo."
     },
     {
       "numero": 21,
-      "bloque": "Datos de entrada",
-      "pregunta": "Las variables C_input_spinup y C_input_fwd representan:",
+      "bloque": "Resultados",
+      "pregunta": "S03 define water_filled_pore_space = 0,32 y volumetric_soil_water_cont = 25 %, con una densidad aparente de 1,22 Mg/m³. ¿Qué WFPS usa SG?",
       "opciones": [
-        { "id": "a", "texto": "Emisiones de CO₂" },
-        { "id": "b", "texto": "Entradas de carbono al suelo" },
-        { "id": "c", "texto": "Variables climáticas" },
-        { "id": "d", "texto": "Parámetros hidrológicos" }
+        {
+          "id": "a",
+          "texto": "0,463, calculado con la humedad volumétrica."
+        },
+        {
+          "id": "b",
+          "texto": "La media de 0,32 y 0,463."
+        },
+        {
+          "id": "c",
+          "texto": "0,32, porque se ha informado explícitamente; el cálculo alternativo (≈ 0,463) solo se activa con un WFPS negativo."
+        },
+        {
+          "id": "d",
+          "texto": "25, porque SG trabaja en porcentaje."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "WFPS es una proporción entre 0 y 1. La estimación (vswc/100)/(1 − BD/2,65) solo se usa si se entrega un valor negativo; las dos opciones no se combinan."
     },
     {
       "numero": 22,
-      "bloque": "Datos de entrada",
-      "pregunta": "El porcentaje de arcilla (clay_p) influye principalmente en:",
+      "bloque": "Resultados",
+      "pregunta": "Para probar la sequía modificas solo la precipitación. ¿Cambian los flujos de SG?",
       "opciones": [
-        { "id": "a", "texto": "La precipitación" },
-        { "id": "b", "texto": "La estabilización del carbono orgánico" },
-        { "id": "c", "texto": "La temperatura" },
-        { "id": "d", "texto": "La evapotranspiración" }
+        {
+          "id": "a",
+          "texto": "Sí, porque WFPS se recalcula cada mes a partir de la lluvia."
+        },
+        {
+          "id": "b",
+          "texto": "Sí, pero solo el N₂O."
+        },
+        {
+          "id": "c",
+          "texto": "Solo si la sequía dura más de seis meses."
+        },
+        {
+          "id": "d",
+          "texto": "No a través de la humedad: Call_SG recorre la temperatura y mantiene WFPS constante."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "En esta corrida no se suministra una serie temporal de WFPS. Los picos de SG responden al predictor térmico, no a pulsos de humedad."
     },
     {
       "numero": 23,
-      "bloque": "Datos de entrada",
-      "pregunta": "El WFPS (Water Filled Pore Space) controla principalmente:",
+      "bloque": "Resultados",
+      "pregunta": "Quieres representar los tres gases de SG en una misma gráfica en «Mg C/ha/año». ¿Qué error cometes con el N₂O?",
       "opciones": [
-        { "id": "a", "texto": "La estructura mineral" },
-        { "id": "b", "texto": "La actividad microbiana y mineralización" },
-        { "id": "c", "texto": "La textura del suelo" },
-        { "id": "d", "texto": "La altitud del terreno" }
+        {
+          "id": "a",
+          "texto": "Ninguno, si se multiplica por 0,0000876."
+        },
+        {
+          "id": "b",
+          "texto": "El N₂O de SG está en µg N/m²/h: no contiene carbono, y para pasar a masa de N₂O habría que multiplicar por 44/28."
+        },
+        {
+          "id": "c",
+          "texto": "Que habría que multiplicarlo por 44/12."
+        },
+        {
+          "id": "d",
+          "texto": "Que el N₂O se expresa en ppb y no puede convertirse."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "CO₂ = C × 44/12; CH₄ = C × 16/12; N₂O = N × 44/28. La etiqueta común «tC» de la gráfica de S02 es incorrecta para el N₂O."
     },
     {
       "numero": 24,
-      "bloque": "Análisis de resultados",
-      "pregunta": "El SOC total de cada modelo se obtiene generalmente mediante:",
+      "bloque": "Resultados",
+      "pregunta": "Escribes test_mm[[6]] para recuperar los resultados de SG. ¿Qué ocurre?",
       "opciones": [
-        { "id": "a", "texto": "Multiplicación de pools" },
-        { "id": "b", "texto": "Suma de todos los compartimentos de carbono" },
-        { "id": "c", "texto": "División de pools" },
-        { "id": "d", "texto": "Media de variables climáticas" }
+        {
+          "id": "a",
+          "texto": "Devuelve los flujos de SG en Mg C/ha/año."
+        },
+        {
+          "id": "b",
+          "texto": "Devuelve la media multimodelo."
+        },
+        {
+          "id": "c",
+          "texto": "No existe: S02 devuelve solo cinco miembros (RothC, ICBM, Century, Yasso07, AMG), cada uno con [[1]] flujos y [[2]] stocks."
+        },
+        {
+          "id": "d",
+          "texto": "Devuelve los stocks de Century."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "SG se calcula y se dibuja dentro de S02, pero no aparece en return(list(...)). Para conservarlo habría que ampliar el retorno de forma explícita."
     },
     {
       "numero": 25,
-      "bloque": "Análisis de resultados",
-      "pregunta": "El objetivo principal de calcular la media multimodelo es:",
+      "bloque": "Resultados",
+      "pregunta": "Con stocks <- lapply(test_mm, function(x) rowSums(x[[2]])) y luego rowMeans() sobre los modelos, ¿qué hace cada operación?",
       "opciones": [
-        { "id": "a", "texto": "Aumentar el número de modelos" },
-        { "id": "b", "texto": "Reducir la incertidumbre estructural" },
-        { "id": "c", "texto": "Reducir el tiempo de ejecución" },
-        { "id": "d", "texto": "Eliminar variables climáticas" }
+        {
+          "id": "a",
+          "texto": "rowSums() suma los pools de cada modelo en cada instante; rowMeans() promedia esos totales entre modelos."
+        },
+        {
+          "id": "b",
+          "texto": "rowSums() suma los modelos; rowMeans() promedia los pools."
+        },
+        {
+          "id": "c",
+          "texto": "Las dos promedian en el tiempo."
+        },
+        {
+          "id": "d",
+          "texto": "rowSums() integra los flujos en el tiempo."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "Son operaciones distintas. Antes de comparar con un dato hay que definir el dominio: una matriz puede incluir residuos superficiales que el muestreo excluye."
+    },
+    {
+      "numero": 26,
+      "bloque": "Resultados",
+      "pregunta": "Century da una tasa de salida en Mg C/ha/mes y S02 la multiplica por 12. Si un modelo da una tasa constante de 3 Mg C/ha/año, ¿cuánto carbono sale en un intervalo de 1/12 de año?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "36 Mg C/ha."
+        },
+        {
+          "id": "b",
+          "texto": "3 Mg C/ha."
+        },
+        {
+          "id": "c",
+          "texto": "0,083 Mg C/ha."
+        },
+        {
+          "id": "d",
+          "texto": "0,25 Mg C/ha: la cantidad se obtiene integrando la tasa por la duración."
+        }
+      ],
+      "respuestaCorrecta": "d",
+      "explicacion": "Multiplicar por 12 anualiza una tasa; no la convierte en cantidad. 3 × 1/12 = 0,25 Mg C/ha. Sumar doce tasas de 3 y llamarlo «emisión anual de 36» es un error."
+    },
+    {
+      "numero": 27,
+      "bloque": "Comparar y revisar",
+      "pregunta": "En la gráfica de stocks, una trayectoria parece desaparecer en algunos años, aunque la matriz tiene datos. ¿Qué es lo primero que compruebas?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Si S02 fija ylim = c(30, 50) y la serie sale de ese rango, recortándose."
+        },
+        {
+          "id": "b",
+          "texto": "Si el modelo ha perdido todo el carbono."
+        },
+        {
+          "id": "c",
+          "texto": "Si la versión de R es anterior a 4.0."
+        },
+        {
+          "id": "d",
+          "texto": "Si write.csv ha borrado esas filas."
+        }
+      ],
+      "respuestaCorrecta": "a",
+      "explicacion": "Unos límites fijos pueden ocultar resultados. La propuesta es calcularlos a partir de todas las series o justificar escalas que no recorten."
+    },
+    {
+      "numero": 28,
+      "bloque": "Comparar y revisar",
+      "pregunta": "S03 crea Precip_month_drought (lluvia nula en mayo, junio y julio), pero los resultados son idénticos a los de referencia. ¿Por qué?",
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Porque SoilR ignora la precipitación."
+        },
+        {
+          "id": "b",
+          "texto": "Porque S01 sigue pasando Precip_month a Call_MULTIMODEL(); y si se pasa la serie seca, el spin-up se recalcula con ella, así que el contraste mezcla la inicialización."
+        },
+        {
+          "id": "c",
+          "texto": "Porque la sequía debe durar al menos un año entero."
+        },
+        {
+          "id": "d",
+          "texto": "Porque la sequía solo afecta a SG."
+        }
+      ],
+      "respuestaCorrecta": "b",
+      "explicacion": "Crear el objeto no lo usa. Para un contraste limpio hay que pasar la serie modificada y conservar la inicialización de la referencia."
     }
   ]
 }

@@ -1,490 +1,710 @@
 {
-  "cursoId": "69d50335b1e80c0e37ab562a",
-  "temaId": "69d50335b1e80c0e37ab562b",
-  "titulo": "Test de Evaluación - Tema 1: Introducción",
-  "descripcion": "Evaluación sobre modelización de la dinámica del carbono orgánico del suelo",
-  "duracionMinutos": 60,
+  "cursoId": "69d50406663e8648d7ee1f08",
+  "temaId": "69d5f26894dace2e10adae38",
+  "titulo": "Test de Evaluación - Tema 1: Carbono del suelo",
+  "descripcion": "Concentración y stock, flujos, límites del sistema, modelos y evidencia, incertidumbre, ensembles y afirmaciones climáticas.",
+  "duracionMinutos": 45,
   "notaMinima": 60,
   "preguntas": [
     {
       "numero": 1,
-      "bloque": "Conceptos generales del SOC",
-      "pregunta": "¿Qué significa SOC?",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "Una ficha de laboratorio indica «3 % de materia orgánica» y quieres usarla como dato de partida de un modelo de SOC. ¿Qué es lo correcto?",
       "opciones": [
-        { "id": "a", "texto": "Soil Organic Cycle" },
-        { "id": "b", "texto": "Soil Organic Carbon" },
-        { "id": "c", "texto": "System Organic Carbon" },
-        { "id": "d", "texto": "Soil Oxidation Carbon" }
+        {
+          "id": "a",
+          "texto": "Introducir 3 % como SOC, porque materia orgánica y carbono orgánico son la misma magnitud."
+        },
+        {
+          "id": "b",
+          "texto": "No introducirlo como 3 % de SOC: conservar la variable medida y, si se convierte, documentar el factor y tratar el SOC obtenido como estimación."
+        },
+        {
+          "id": "c",
+          "texto": "Sustituir el factor clásico 1,724 por otro más reciente y presentar el resultado como SOC medido."
+        },
+        {
+          "id": "d",
+          "texto": "Descartar el dato, porque la materia orgánica no guarda ninguna relación con el carbono orgánico."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "La materia orgánica contiene C, O, H, N y otros elementos. El factor 1,724 no es universal (Pribyl) y cambiarlo sin justificación tampoco resuelve nada: hay que documentar la conversión y tratar el SOC derivado como estimación."
     },
     {
       "numero": 2,
-      "bloque": "Conceptos generales del SOC",
-      "pregunta": "El carbono orgánico del suelo es importante porque:",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "En un suelo calizo, un informe da «C = 25 g/kg» sin más detalle. ¿Cuál es el principal riesgo de usarlo como SOC?",
       "opciones": [
-        { "id": "a", "texto": "Solo afecta a la fertilidad del suelo" },
-        { "id": "b", "texto": "Solo influye en la vegetación" },
-        { "id": "c", "texto": "Participa en la fertilidad, el ciclo del carbono y el cambio climático" },
-        { "id": "d", "texto": "Solo afecta a los microorganismos del suelo" }
+        {
+          "id": "a",
+          "texto": "Que el dato esté en Mg C/ha y no en g/kg."
+        },
+        {
+          "id": "b",
+          "texto": "Que el carbono orgánico de un suelo calizo sea siempre despreciable."
+        },
+        {
+          "id": "c",
+          "texto": "Que el valor corresponda a la materia orgánica multiplicada por 1,724."
+        },
+        {
+          "id": "d",
+          "texto": "Que sea carbono total e incluya carbono inorgánico de los carbonatos, lo que sobrestimaría el SOC."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "d",
+      "explicacion": "El carbono total suma el orgánico y el inorgánico. En suelos calizos la diferencia es importante, así que hay que saber qué fracción se midió y qué tratamiento se dio a los carbonatos."
     },
     {
       "numero": 3,
-      "bloque": "Conceptos generales del SOC",
-      "pregunta": "Los suelos contienen aproximadamente:",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "Una capa de 0-20 cm tiene c = 15 g C/kg, una densidad aparente de tierra fina de 1,20 Mg/m³ y no tiene fragmentos gruesos. Con S = c × ρ × z × 10 × (1 − f), ¿cuál es su stock?",
       "opciones": [
-        { "id": "a", "texto": "Menos carbono que la atmósfera" },
-        { "id": "b", "texto": "Más carbono que la vegetación pero menos que la atmósfera" },
-        { "id": "c", "texto": "Más carbono que la atmósfera y la vegetación juntas" },
-        { "id": "d", "texto": "Solo carbono inorgánico" }
+        {
+          "id": "a",
+          "texto": "36 Mg C/ha"
+        },
+        {
+          "id": "b",
+          "texto": "3,6 Mg C/ha"
+        },
+        {
+          "id": "c",
+          "texto": "360 Mg C/ha"
+        },
+        {
+          "id": "d",
+          "texto": "32,4 Mg C/ha"
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "a",
+      "explicacion": "S = 15 × 1,20 × 0,20 × 10 × 1 = 36 Mg C/ha. El espesor se expresa en metros y f = 0, así que no se descuenta nada."
     },
     {
       "numero": 4,
-      "bloque": "Conceptos generales del SOC",
-      "pregunta": "Pequeños cambios en el SOC pueden:",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "Un compañero calcula un stock con S = c × ρ × z × 10 × (1 − f), pero introduce c = 1,2 tal como venía en el informe (en %). ¿Qué le ocurrirá al resultado?",
       "opciones": [
-        { "id": "a", "texto": "No tener efectos significativos" },
-        { "id": "b", "texto": "Afectar a las emisiones de gases de efecto invernadero" },
-        { "id": "c", "texto": "Solo cambiar el color del suelo" },
-        { "id": "d", "texto": "Solo afectar al nitrógeno" }
+        {
+          "id": "a",
+          "texto": "Será correcto, porque la fórmula admite indistintamente % y g/kg."
+        },
+        {
+          "id": "b",
+          "texto": "Será 100 veces mayor de lo real."
+        },
+        {
+          "id": "c",
+          "texto": "Será 10 veces menor de lo real, porque la fórmula está pensada para g/kg y 1,2 % equivale a 12 g/kg."
+        },
+        {
+          "id": "d",
+          "texto": "Será correcto solo si la capa tiene más de 30 cm."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "La fórmula con el factor 10 usa la concentración en g/kg. Con % hay que usar el factor 100; si no, se comete un error de un factor diez."
     },
     {
       "numero": 5,
-      "bloque": "Conceptos generales del SOC",
-      "pregunta": "El SOC es un componente clave del:",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "Para calcular un stock usas una densidad aparente que ya expresa masa de tierra fina por volumen TOTAL de suelo, y además multiplicas por (1 − f). ¿Qué consecuencia tiene?",
       "opciones": [
-        { "id": "a", "texto": "Ciclo hidrológico" },
-        { "id": "b", "texto": "Ciclo biogeoquímico del carbono" },
-        { "id": "c", "texto": "Ciclo del nitrógeno exclusivamente" },
-        { "id": "d", "texto": "Ciclo del fósforo" }
+        {
+          "id": "a",
+          "texto": "Ninguna: corregir dos veces por fragmentos hace el cálculo más conservador y más correcto."
+        },
+        {
+          "id": "b",
+          "texto": "Se descuentan dos veces los fragmentos gruesos y se subestima el stock."
+        },
+        {
+          "id": "c",
+          "texto": "Se sobrestima el stock, porque (1 − f) siempre es mayor que 1."
+        },
+        {
+          "id": "d",
+          "texto": "Solo afecta a suelos sin piedras, donde f = 0."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Si la densidad ya está referida al volumen total, el efecto de los fragmentos está incorporado. Volver a multiplicar por (1 − f) es una doble corrección que sesga el stock a la baja (Poeplau y colaboradores)."
     },
     {
       "numero": 6,
-      "bloque": "Procesos que controlan la dinámica del carbono",
-      "pregunta": "¿Qué proceso introduce carbono en el suelo?",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "Comparas el stock de 0-30 cm de una parcela en dos campañas. Entre ambas el suelo se ha compactado y su densidad aparente ha aumentado. ¿Qué problema introduce la profundidad fija?",
       "opciones": [
-        { "id": "a", "texto": "Erosión" },
-        { "id": "b", "texto": "Entrada de residuos orgánicos" },
-        { "id": "c", "texto": "Evaporación" },
-        { "id": "d", "texto": "Sedimentación" }
+        {
+          "id": "a",
+          "texto": "Que en las dos campañas puedes estar comparando masas de suelo distintas, por lo que conviene expresar el stock sobre una masa de suelo equivalente."
+        },
+        {
+          "id": "b",
+          "texto": "Ninguno: si la profundidad es la misma, la comparación siempre es válida."
+        },
+        {
+          "id": "c",
+          "texto": "Que la concentración de carbono deja de poder medirse en g/kg."
+        },
+        {
+          "id": "d",
+          "texto": "Que la compactación convierte carbono orgánico en carbono inorgánico."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "Si cambia la densidad, 30 cm contienen otra masa de suelo. La base de masa de suelo equivalente (Wendt y Hauser) controla ese efecto al comparar campañas."
     },
     {
       "numero": 7,
-      "bloque": "Procesos que controlan la dinámica del carbono",
-      "pregunta": "¿Qué proceso transforma la materia orgánica mediante microorganismos?",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "Un informe afirma: «el suelo de la finca tiene 2 Mg C/ha/año». Si pretende describir la reserva de carbono, ¿qué error comete?",
       "opciones": [
-        { "id": "a", "texto": "Humificación" },
-        { "id": "b", "texto": "Descomposición microbiana" },
-        { "id": "c", "texto": "Oxidación química" },
-        { "id": "d", "texto": "Sedimentación" }
+        {
+          "id": "a",
+          "texto": "Ninguno: Mg C/ha/año es la unidad estándar de un stock."
+        },
+        {
+          "id": "b",
+          "texto": "Usa megagramos en lugar de toneladas, que no son equivalentes."
+        },
+        {
+          "id": "c",
+          "texto": "Debería expresarlo en Mg CO₂/ha para que sea un stock."
+        },
+        {
+          "id": "d",
+          "texto": "Mezcla dos categorías: un stock es una cantidad en un momento (Mg C/ha); Mg C/ha/año describe un flujo o una tasa."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Un stock se expresa en Mg C/ha; un flujo o una tasa necesitan una unidad de tiempo. Además, 1 t = 1 Mg, así que no hay diferencia entre toneladas y megagramos."
     },
     {
       "numero": 8,
-      "bloque": "Procesos que controlan la dinámica del carbono",
-      "pregunta": "La pérdida de carbono del suelo puede producirse por:",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "El stock de una parcela pasa de 50 a 54 Mg C/ha en 20 años. ¿Cuáles son la tasa media de cambio y la masa de CO₂ acumulada correspondiente?",
       "opciones": [
-        { "id": "a", "texto": "Fotosíntesis" },
-        { "id": "b", "texto": "Mineralización" },
-        { "id": "c", "texto": "Fijación biológica" },
-        { "id": "d", "texto": "Sedimentación" }
+        {
+          "id": "a",
+          "texto": "0,20 Mg C/ha/año y 1,09 Mg CO₂/ha acumulados"
+        },
+        {
+          "id": "b",
+          "texto": "4 Mg C/ha/año y 14,67 Mg CO₂/ha/año"
+        },
+        {
+          "id": "c",
+          "texto": "0,20 Mg C/ha/año y 14,67 Mg CO₂/ha acumulados"
+        },
+        {
+          "id": "d",
+          "texto": "0,20 Mg C/ha/año y 2,93 Mg CO₂/ha acumulados"
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "El cambio es +4 Mg C/ha; 4/20 = 0,20 Mg C/ha/año. La masa de CO₂ es 4 × 44/12 = 14,67 Mg CO₂/ha acumulados en el periodo."
     },
     {
       "numero": 9,
-      "bloque": "Procesos que controlan la dinámica del carbono",
-      "pregunta": "¿Qué factor ambiental influye en la dinámica del carbono del suelo?",
+      "bloque": "Del secuestro al clima",
+      "pregunta": "Tras convertir una ganancia de SOC a CO₂ con el factor 44/12, un proyecto anuncia ese valor como su «beneficio climático neto». ¿Qué falla en el razonamiento?",
       "opciones": [
-        { "id": "a", "texto": "Temperatura" },
-        { "id": "b", "texto": "Humedad" },
-        { "id": "c", "texto": "Precipitación" },
-        { "id": "d", "texto": "Todos los anteriores" }
+        {
+          "id": "a",
+          "texto": "La conversión 44/12 solo pasa de masa de C a masa de CO₂; no demuestra adicionalidad ni incluye otros gases, energía o transporte."
+        },
+        {
+          "id": "b",
+          "texto": "El factor correcto es 12/44, porque el CO₂ pesa menos que el carbono."
+        },
+        {
+          "id": "c",
+          "texto": "El CO₂ equivalente y el CO₂ son la misma magnitud, así que no falla nada."
+        },
+        {
+          "id": "d",
+          "texto": "El beneficio neto solo puede calcularse con datos de satélite."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "a",
+      "explicacion": "Multiplicar por 44/12 es una conversión estequiométrica. Un balance neto exige escenario de referencia, adicionalidad y los efectos de CH₄, N₂O, energía o transporte."
     },
     {
       "numero": 10,
-      "bloque": "Procesos que controlan la dinámica del carbono",
-      "pregunta": "¿Qué propiedad del suelo afecta al SOC?",
+      "bloque": "Conceptos y unidades",
+      "pregunta": "En un año entran 3,0 Mg C/ha en una capa; salen 2,2 por respiración y 0,3 por erosión y lixiviación incluidas en el balance. Un modelo que solo representa la respiración simula +0,8 Mg C/ha. ¿Cómo se interpreta la diferencia de 0,3 con el balance real de +0,5?",
       "opciones": [
-        { "id": "a", "texto": "Textura" },
-        { "id": "b", "texto": "Densidad aparente" },
-        { "id": "c", "texto": "Contenido de arcilla" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "Como un error aritmético del modelo, que no conserva masa."
+        },
+        {
+          "id": "b",
+          "texto": "Como una diferencia de alcance: el modelo omite salidas que sí forman parte del sistema observado."
+        },
+        {
+          "id": "c",
+          "texto": "Como prueba de que la erosión convierte el carbono en CO₂ de forma inmediata."
+        },
+        {
+          "id": "d",
+          "texto": "Como incertidumbre de medida, que siempre ronda el 10 %."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "b",
+      "explicacion": "El modelo puede conservar masa dentro de su formulación y aun así omitir procesos del sitio real. Antes de comparar simulación y observación hay que comprobar que se refieren al mismo sistema."
     },
     {
       "numero": 11,
-      "bloque": "Modelización del carbono del suelo",
-      "pregunta": "La modelización matemática del SOC se utiliza para:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "¿Cuál de estas preguntas de modelización es la más comprobable?",
       "opciones": [
-        { "id": "a", "texto": "Predecir la evolución del carbono del suelo" },
-        { "id": "b", "texto": "Analizar procesos biogeoquímicos" },
-        { "id": "c", "texto": "Evaluar escenarios climáticos" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "¿La cubierta vegetal aumenta el carbono?"
+        },
+        {
+          "id": "b",
+          "texto": "¿Cuánto carbono puede almacenar como máximo este suelo?"
+        },
+        {
+          "id": "c",
+          "texto": "¿Es mejor el modelo RothC que el modelo Century?"
+        },
+        {
+          "id": "d",
+          "texto": "¿Cómo difiere el stock de SOC de 0-30 cm en 20 años entre mantener el manejo actual e introducir una cubierta con entradas estimadas, bajo los mismos escenarios climáticos?"
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "d",
+      "explicacion": "Una pregunta comprobable fija variable, capa, horizonte, comparación y supuestos. Así se sabe qué habría que comprobar, aunque no garantiza una respuesta precisa."
     },
     {
       "numero": 12,
-      "bloque": "Modelización del carbono del suelo",
-      "pregunta": "Los modelos basados en procesos también se denominan:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "En un experimento de modelización aumentas las entradas un 20 % y mantienes todo lo demás constante. ¿Qué te permite concluir?",
       "opciones": [
-        { "id": "a", "texto": "Modelos empíricos" },
-        { "id": "b", "texto": "Modelos compartimentales" },
-        { "id": "c", "texto": "Modelos estadísticos" },
-        { "id": "d", "texto": "Modelos deterministas simples" }
+        {
+          "id": "a",
+          "texto": "Que la práctica agrícola correspondiente conseguirá exactamente ese aumento de entradas."
+        },
+        {
+          "id": "b",
+          "texto": "Que el clima permanecerá constante durante el horizonte simulado."
+        },
+        {
+          "id": "c",
+          "texto": "Cómo responde el modelo a ese cambio de entradas, sin demostrar que una práctica real lo consiga."
+        },
+        {
+          "id": "d",
+          "texto": "Que el modelo queda validado para ese suelo."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "Es un experimento para explorar la respuesta del modelo. La cadena entre práctica, datos de entrada y resultado debe justificarse aparte."
     },
     {
       "numero": 13,
-      "bloque": "Modelización del carbono del suelo",
-      "pregunta": "Los modelos compartimentales representan el carbono del suelo como:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "Dos modelos parten del mismo SOC total, 50 Mg C/ha, pero lo reparten de forma distinta entre sus compartimentos, que tienen velocidades distintas. ¿Qué cabe esperar?",
       "opciones": [
-        { "id": "a", "texto": "Una única variable" },
-        { "id": "b", "texto": "Un conjunto de compartimentos o pools" },
-        { "id": "c", "texto": "Solo materia orgánica estable" },
-        { "id": "d", "texto": "Solo carbono mineral" }
+        {
+          "id": "a",
+          "texto": "Que sus trayectorias futuras puedan diferir, porque el total inicial no determina de forma única el estado interno."
+        },
+        {
+          "id": "b",
+          "texto": "Que sigan trayectorias idénticas, porque el total inicial es lo único que importa."
+        },
+        {
+          "id": "c",
+          "texto": "Que ambos converjan al mismo stock en el primer año de simulación."
+        },
+        {
+          "id": "d",
+          "texto": "Que el reparto inicial solo afecte a las unidades de salida."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "a",
+      "explicacion": "Coincidir en el total inicial no demuestra que las variables internas sean correctas. Si las velocidades de respuesta difieren, las trayectorias también pueden diferir."
     },
     {
       "numero": 14,
-      "bloque": "Modelización del carbono del suelo",
-      "pregunta": "Cada compartimento representa:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "En un modelo clásico, un compartimento se denomina «inerte». ¿Cómo debe leerse esa etiqueta?",
       "opciones": [
-        { "id": "a", "texto": "Diferentes fracciones de materia orgánica" },
-        { "id": "b", "texto": "Diferentes tipos de suelo" },
-        { "id": "c", "texto": "Diferentes tipos de clima" },
-        { "id": "d", "texto": "Diferentes minerales" }
+        {
+          "id": "a",
+          "texto": "Como prueba de que ese carbono es químicamente indestructible."
+        },
+        {
+          "id": "b",
+          "texto": "Como una categoría operativa: el modelo no le asigna una pérdida apreciable durante la simulación."
+        },
+        {
+          "id": "c",
+          "texto": "Como una fracción que el laboratorio aísla directamente."
+        },
+        {
+          "id": "d",
+          "texto": "Como carbono inorgánico de los carbonatos."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "b",
+      "explicacion": "Los compartimentos son categorías del modelo, no fracciones medibles. «Inerte» no es una afirmación universal de permanencia física (Lehmann y Kleber; Schmidt y colaboradores)."
     },
     {
       "numero": 15,
-      "bloque": "Modelización del carbono del suelo",
-      "pregunta": "Los intercambios entre pools se describen mediante:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "Usas el valor de una celda de SoilGrids 2.0 (250 m) como stock inicial de tu parcela y simulas 20 años. ¿Qué es lo más correcto?",
       "opciones": [
-        { "id": "a", "texto": "Regresiones estadísticas" },
-        { "id": "b", "texto": "Sistemas de ecuaciones diferenciales" },
-        { "id": "c", "texto": "Tablas empíricas" },
-        { "id": "d", "texto": "Redes neuronales" }
+        {
+          "id": "a",
+          "texto": "Tratarlo como una medición de la parcela, porque el producto incluye incertidumbre."
+        },
+        {
+          "id": "b",
+          "texto": "Interpretar la celda como una serie observada de cambios en el tiempo."
+        },
+        {
+          "id": "c",
+          "texto": "Dar el resultado con muchos decimales para compensar la resolución de la celda."
+        },
+        {
+          "id": "d",
+          "texto": "Conservar la procedencia y la incertidumbre del dato de partida, porque la celda no equivale a una medición de la parcela."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "Un mapa aporta contexto o un valor inicial, pero no una medición local ni una trayectoria. Simular desde él añade etapas de inferencia; más decimales no aumentan la resolución real."
     },
     {
       "numero": 16,
-      "bloque": "Tipos de fracciones de carbono",
-      "pregunta": "Un ejemplo de pool de carbono es:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "Dispones de pocas observaciones de SOC y dudas entre un modelo sencillo y uno con muchos compartimentos. ¿Qué indica la evidencia del tema?",
       "opciones": [
-        { "id": "a", "texto": "Materia orgánica fresca" },
-        { "id": "b", "texto": "Biomasa microbiana" },
-        { "id": "c", "texto": "Humus estabilizado" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "Que el modelo complejo siempre predice mejor, porque representa más procesos."
+        },
+        {
+          "id": "b",
+          "texto": "Que el modelo sencillo siempre es superior."
+        },
+        {
+          "id": "c",
+          "texto": "Que con series escasas las estructuras complejas pueden sobreajustarse, así que hay que ajustar la complejidad a la información disponible."
+        },
+        {
+          "id": "d",
+          "texto": "Que el número de compartimentos no influye en la calidad del ajuste."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "c",
+      "explicacion": "Davoudabadi y colaboradores encontraron que, con datos escasos, modelos más simples pueden predecir mejor. Eso no demuestra que la simplicidad sea siempre superior."
     },
     {
       "numero": 17,
-      "bloque": "Tipos de fracciones de carbono",
-      "pregunta": "Las diferentes fracciones de carbono presentan:",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "Un equipo ajusta los parámetros a una serie de SOC y después presenta el buen ajuste a esa misma serie como prueba de capacidad predictiva. ¿Qué problema tiene?",
       "opciones": [
-        { "id": "a", "texto": "La misma velocidad de descomposición" },
-        { "id": "b", "texto": "Diferentes velocidades de descomposición" },
-        { "id": "c", "texto": "Ninguna descomposición" },
-        { "id": "d", "texto": "Descomposición constante" }
+        {
+          "id": "a",
+          "texto": "Ninguno: si el ajuste es bueno, el modelo está validado."
+        },
+        {
+          "id": "b",
+          "texto": "La evaluación puede ser demasiado optimista; conviene contrastar con datos independientes de otros periodos, tratamientos o sitios."
+        },
+        {
+          "id": "c",
+          "texto": "Calibrar y evaluar son la misma tarea, así que da igual qué datos se usen."
+        },
+        {
+          "id": "d",
+          "texto": "El problema es solo de unidades: habría que expresar la serie en Mg CO₂/ha."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "b",
+      "explicacion": "Calibrar, evaluar y comprobar la implementación son tareas distintas. La pregunta de control es si el modelo reprodujo datos que no usó para ajustarse."
     },
     {
       "numero": 18,
-      "bloque": "Modelos de carbono del suelo",
-      "pregunta": "¿Cuál de los siguientes es un modelo de carbono del suelo?",
+      "bloque": "Modelos y evidencia",
+      "pregunta": "Una serie simulada sigue bien las oscilaciones de la observada (correlación alta), pero siempre queda 8 Mg C/ha por encima. Quieres decidir sobre existencias absolutas. ¿Qué concluyes?",
       "opciones": [
-        { "id": "a", "texto": "RothC" },
-        { "id": "b", "texto": "Century" },
-        { "id": "c", "texto": "Yasso07" },
-        { "id": "d", "texto": "Todos los anteriores" }
+        {
+          "id": "a",
+          "texto": "Que el sesgo sistemático importa para esa decisión, aunque la correlación sea alta."
+        },
+        {
+          "id": "b",
+          "texto": "Que el modelo es adecuado, porque una correlación alta descarta los sesgos."
+        },
+        {
+          "id": "c",
+          "texto": "Que el desplazamiento no importa nunca, porque solo cuentan las tendencias."
+        },
+        {
+          "id": "d",
+          "texto": "Que la observación está mal medida, porque el modelo la sigue tan bien."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "a",
+      "explicacion": "Una correlación alta no descarta un sesgo sistemático. Para stocks absolutos el desplazamiento importa; para otra pregunta, como comparar tratamientos, podría pesar menos."
     },
     {
       "numero": 19,
-      "bloque": "Modelos de carbono del suelo",
-      "pregunta": "El modelo ICBM pertenece a:",
+      "bloque": "Incertidumbre y comparación de modelos",
+      "pregunta": "Al aumentar un 10 % la entrada anual, el stock final simulado cambia en 2 Mg C/ha. ¿Qué afirma correctamente ese resultado?",
       "opciones": [
-        { "id": "a", "texto": "Modelos de carbono del suelo" },
-        { "id": "b", "texto": "Modelos climáticos globales" },
-        { "id": "c", "texto": "Modelos hidrológicos" },
-        { "id": "d", "texto": "Modelos geológicos" }
+        {
+          "id": "a",
+          "texto": "Que el error real del stock es ±2 Mg C/ha."
+        },
+        {
+          "id": "b",
+          "texto": "Que la entrada anual tiene una incertidumbre del 10 %."
+        },
+        {
+          "id": "c",
+          "texto": "Que el parámetro de entrada es el que más contribuye a la incertidumbre total."
+        },
+        {
+          "id": "d",
+          "texto": "Describe la sensibilidad del modelo a ese cambio ensayado, no la incertidumbre del resultado."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "d",
+      "explicacion": "La sensibilidad mide cuánto cambia la salida al variar una entrada. La incertidumbre pregunta qué desconocemos y cómo afecta a la conclusión: son conceptos distintos."
     },
     {
       "numero": 20,
-      "bloque": "Modelos de carbono del suelo",
-      "pregunta": "Los modelos de SOC pueden diferenciarse por:",
+      "bloque": "Incertidumbre y comparación de modelos",
+      "pregunta": "Un gráfico muestra la banda que forman cinco trayectorias de modelos y la rotula «intervalo de confianza del 95 %». ¿Qué hay de incorrecto?",
       "opciones": [
-        { "id": "a", "texto": "Número de compartimentos" },
-        { "id": "b", "texto": "Complejidad estructural" },
-        { "id": "c", "texto": "Parametrización" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "Nada, siempre que las cinco trayectorias procedan de modelos publicados."
+        },
+        {
+          "id": "b",
+          "texto": "Que debería usarse la mediana en lugar de la media."
+        },
+        {
+          "id": "c",
+          "texto": "Cinco trayectorias no forman por sí solas una distribución de probabilidad; la banda describe el rango del conjunto ensayado."
+        },
+        {
+          "id": "d",
+          "texto": "Que las bandas solo pueden representar errores de medida."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "c",
+      "explicacion": "Debe indicarse qué representa la banda. Llamar «intervalo de confianza» al rango de un conjunto pequeño de modelos exige una justificación estadística que no existe."
     },
     {
       "numero": 21,
-      "bloque": "Incertidumbre en la modelización",
-      "pregunta": "La incertidumbre estructural se refiere a:",
+      "bloque": "Incertidumbre y comparación de modelos",
+      "pregunta": "Tres modelos dan cambios de +2, +3 y −2 Mg C/ha en 20 años. ¿Qué afirmación está respaldada?",
       "opciones": [
-        { "id": "a", "texto": "Diferencias entre modelos" },
-        { "id": "b", "texto": "Diferencias en sensores climáticos" },
-        { "id": "c", "texto": "Errores humanos" },
-        { "id": "d", "texto": "Errores de muestreo" }
+        {
+          "id": "a",
+          "texto": "«El suelo aumentará con seguridad, porque la media es positiva»."
+        },
+        {
+          "id": "b",
+          "texto": "«La media es +1 Mg C/ha y el rango va de −2 a +3; los modelos no coinciden en el signo»."
+        },
+        {
+          "id": "c",
+          "texto": "«Como dos de tres modelos ganan carbono, la probabilidad de ganancia es del 67 %»."
+        },
+        {
+          "id": "d",
+          "texto": "«La media de +1 Mg C/ha reduce la incertidumbre de cada modelo»."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "b",
+      "explicacion": "La media describe la aritmética del conjunto, pero no garantiza el resultado. Además, los miembros no son independientes y la media no reduce por sí sola la incertidumbre."
     },
     {
       "numero": 22,
-      "bloque": "Incertidumbre en la modelización",
-      "pregunta": "Dos modelos pueden dar resultados distintos porque:",
+      "bloque": "Del secuestro al clima",
+      "pregunta": "Stock inicial de 50 Mg C/ha. A los 20 años la referencia proyecta 46 y la intervención 49. ¿Qué frase describe bien el resultado?",
       "opciones": [
-        { "id": "a", "texto": "Tienen diferentes formulaciones matemáticas" },
-        { "id": "b", "texto": "Diferente número de pools" },
-        { "id": "c", "texto": "Diferentes parametrizaciones" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "«La intervención pierde 1 Mg C/ha respecto al inicio, pero conserva 3 Mg C/ha más que la referencia»."
+        },
+        {
+          "id": "b",
+          "texto": "«La intervención aumenta el stock en 3 Mg C/ha respecto al año inicial»."
+        },
+        {
+          "id": "c",
+          "texto": "«La intervención no aporta beneficio, porque el stock disminuye»."
+        },
+        {
+          "id": "d",
+          "texto": "«La intervención secuestra 49 Mg C/ha en 20 años»."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "a",
+      "explicacion": "Hay dos comparaciones distintas: frente al inicio (−1) y frente a la referencia (+3). Evitar una pérdida puede ser un beneficio aunque el stock no aumente."
     },
     {
       "numero": 23,
-      "bloque": "Multi-model ensemble",
-      "pregunta": "Un multi-model ensemble consiste en:",
+      "bloque": "Del secuestro al clima",
+      "pregunta": "Una parcela tiene 45 Mg C/ha. Según la referencia «4 por 1000», ¿cuánto supondría el primer año?",
       "opciones": [
-        { "id": "a", "texto": "Ejecutar un único modelo muchas veces" },
-        { "id": "b", "texto": "Ejecutar varios modelos simultáneamente" },
-        { "id": "c", "texto": "Usar datos de varios suelos" },
-        { "id": "d", "texto": "Usar varias estaciones meteorológicas" }
+        {
+          "id": "a",
+          "texto": "Pasar de 1,0 % a 1,4 % de concentración de SOC."
+        },
+        {
+          "id": "b",
+          "texto": "4 Mg C/ha."
+        },
+        {
+          "id": "c",
+          "texto": "1,8 Mg C/ha."
+        },
+        {
+          "id": "d",
+          "texto": "0,18 Mg C/ha, es decir, un aumento relativo del 0,4 %."
+        }
       ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "d",
+      "explicacion": "45 × 0,004 = 0,18 Mg C/ha. El 4 por 1000 es un aumento relativo anual del 0,4 %, no sumar 0,4 puntos porcentuales a la concentración; tampoco es una predicción para cualquier parcela."
     },
     {
       "numero": 24,
-      "bloque": "Multi-model ensemble",
-      "pregunta": "El objetivo del enfoque ensemble es:",
+      "bloque": "Del secuestro al clima",
+      "pregunta": "En los primeros años tras un cambio de manejo se observa una ganancia de 0,5 Mg C/ha/año. Alguien proyecta 50 Mg C/ha en un siglo. ¿Por qué no es defendible?",
       "opciones": [
-        { "id": "a", "texto": "Reducir la incertidumbre" },
-        { "id": "b", "texto": "Comparar modelos" },
-        { "id": "c", "texto": "Obtener estimaciones más robustas" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "Porque las tasas siempre se duplican con el tiempo."
+        },
+        {
+          "id": "b",
+          "texto": "Porque el carbono del suelo no puede aumentar nunca más de 10 Mg C/ha."
+        },
+        {
+          "id": "c",
+          "texto": "Porque la tasa depende del estado de partida y del tiempo transcurrido, y suele disminuir a medida que el sistema se acerca a un nuevo equilibrio."
+        },
+        {
+          "id": "d",
+          "texto": "Porque la tasa debe multiplicarse por 44/12 antes de proyectarla."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "c",
+      "explicacion": "Mantener una práctica no implica mantener su tasa inicial. La aritmética no valida que el ritmo se mantenga un siglo: la modelización dinámica sirve para explorar trayectorias que se alejan de una recta."
     },
     {
       "numero": 25,
-      "bloque": "Herramientas computacionales",
-      "pregunta": "El ensemble utilizado en la práctica está implementado en:",
+      "bloque": "Del secuestro al clima",
+      "pregunta": "En la matriz de escenarios mediterráneos (A referencia, B intervención, C clima alternativo con manejo de A, D clima alternativo con manejo de B), ¿qué comparación aísla el efecto del clima bajo el manejo actual?",
       "opciones": [
-        { "id": "a", "texto": "Python" },
-        { "id": "b", "texto": "MATLAB" },
-        { "id": "c", "texto": "R" },
-        { "id": "d", "texto": "Java" }
+        {
+          "id": "a",
+          "texto": "C frente a A."
+        },
+        {
+          "id": "b",
+          "texto": "B frente a A."
+        },
+        {
+          "id": "c",
+          "texto": "D frente a A."
+        },
+        {
+          "id": "d",
+          "texto": "D frente a B."
+        }
       ],
-      "respuestaCorrecta": "c"
+      "respuestaCorrecta": "a",
+      "explicacion": "A y C comparten el manejo actual y solo cambia el clima. B frente a A aísla el manejo; D frente a A mezcla clima y manejo; D frente a B es el clima bajo la intervención."
     },
     {
       "numero": 26,
-      "bloque": "Herramientas computacionales",
-      "pregunta": "El paquete utilizado para modelización de carbono del suelo es:",
+      "bloque": "Caso práctico y comunicación",
+      "pregunta": "Tras pasar a no laboreo, la concentración de SOC de 0-10 cm aumenta. Un informe concluye que «el suelo ha secuestrado carbono». ¿Qué falta comprobar ante todo?",
       "opciones": [
-        { "id": "a", "texto": "SoilR" },
-        { "id": "b", "texto": "SoilCarbon" },
-        { "id": "c", "texto": "CarbonSim" },
-        { "id": "d", "texto": "SoilDynamics" }
+        {
+          "id": "a",
+          "texto": "Si la concentración se midió en g/kg o en %."
+        },
+        {
+          "id": "b",
+          "texto": "Si el aumento superficial refleja una redistribución vertical del carbono y no una ganancia en todo el perfil."
+        },
+        {
+          "id": "c",
+          "texto": "Si el no laboreo reduce la densidad aparente a cero."
+        },
+        {
+          "id": "d",
+          "texto": "Si el resultado coincide con la media regional."
+        }
       ],
-      "respuestaCorrecta": "a"
+      "respuestaCorrecta": "b",
+      "explicacion": "Powlson y colaboradores advierten que parte de los aumentos atribuidos al no laboreo reflejan cambios en la distribución vertical. Un resultado de 0-10 cm no puede renombrarse como «carbono del suelo»."
     },
     {
       "numero": 27,
-      "bloque": "Herramientas computacionales",
-      "pregunta": "SoilR permite:",
+      "bloque": "Caso práctico y comunicación",
+      "pregunta": "Una parcela de 50 Mg C/ha espera un cambio de 0,2 Mg C/ha en un año. Tras muestrear, no se detecta ningún cambio. ¿Qué conclusión es correcta?",
       "opciones": [
-        { "id": "a", "texto": "Simular modelos compartimentales" },
-        { "id": "b", "texto": "Analizar stocks de carbono" },
-        { "id": "c", "texto": "Comparar modelos" },
-        { "id": "d", "texto": "Todas las anteriores" }
+        {
+          "id": "a",
+          "texto": "El cambio ha sido exactamente cero."
+        },
+        {
+          "id": "b",
+          "texto": "El modelo que predijo +0,2 queda refutado."
+        },
+        {
+          "id": "c",
+          "texto": "Hay que repetir el muestreo con la misma intensidad hasta que salga el cambio esperado."
+        },
+        {
+          "id": "d",
+          "texto": "No detectar un cambio no demuestra que sea cero: una señal del 0,4 % puede ser menor que la variabilidad y la precisión del estudio."
+        }
       ],
-      "respuestaCorrecta": "d"
+      "respuestaCorrecta": "d",
+      "explicacion": "La existencia de un stock grande no hace fácil detectar una variación pequeña. El diseño de seguimiento debe ser proporcional al cambio que se quiere distinguir."
     },
     {
       "numero": 28,
-      "bloque": "Flujo de trabajo de modelización",
-      "pregunta": "El primer paso en la modelización es:",
+      "bloque": "Caso práctico y comunicación",
+      "pregunta": "Una finca tiene dos unidades de igual superficie: una gana 4 Mg C/ha y otra pierde 4 Mg C/ha. El informe solo da la media de la finca. ¿Qué información se pierde?",
       "opciones": [
-        { "id": "a", "texto": "Simulación final" },
-        { "id": "b", "texto": "Preparación de datos de entrada" },
-        { "id": "c", "texto": "Validación" },
-        { "id": "d", "texto": "Visualización" }
+        {
+          "id": "a",
+          "texto": "Ninguna, porque la media es cero y eso resume bien la finca."
+        },
+        {
+          "id": "b",
+          "texto": "Solo la unidad en que se expresan los resultados."
+        },
+        {
+          "id": "c",
+          "texto": "Que existen respuestas opuestas y que una zona necesita atención específica."
+        },
+        {
+          "id": "d",
+          "texto": "Que la finca está en equilibrio y no necesita seguimiento."
+        }
       ],
-      "respuestaCorrecta": "b"
-    },
-    {
-      "numero": 29,
-      "bloque": "Flujo de trabajo de modelización",
-      "pregunta": "La fase de spin-up sirve para:",
-      "opciones": [
-        { "id": "a", "texto": "Acelerar el modelo" },
-        { "id": "b", "texto": "Estimar la distribución inicial del carbono" },
-        { "id": "c", "texto": "Reducir el tamaño de datos" },
-        { "id": "d", "texto": "Cambiar el clima del modelo" }
-      ],
-      "respuestaCorrecta": "b"
-    },
-    {
-      "numero": 30,
-      "bloque": "Flujo de trabajo de modelización",
-      "pregunta": "Durante el spin-up los modelos se ejecutan:",
-      "opciones": [
-        { "id": "a", "texto": "Un solo año" },
-        { "id": "b", "texto": "Durante largos periodos" },
-        { "id": "c", "texto": "Solo un mes" },
-        { "id": "d", "texto": "Durante una simulación corta" }
-      ],
-      "respuestaCorrecta": "b"
-    },
-    {
-      "numero": 31,
-      "bloque": "Flujo de trabajo de modelización",
-      "pregunta": "El objetivo del spin-up es alcanzar:",
-      "opciones": [
-        { "id": "a", "texto": "Estado estacionario" },
-        { "id": "b", "texto": "Estado cuasi estacionario" },
-        { "id": "c", "texto": "Equilibrio climático" },
-        { "id": "d", "texto": "Estado hidrológico" }
-      ],
-      "respuestaCorrecta": "b"
-    },
-    {
-      "numero": 32,
-      "bloque": "Datos utilizados",
-      "pregunta": "Los modelos utilizan series climáticas de:",
-      "opciones": [
-        { "id": "a", "texto": "Temperatura" },
-        { "id": "b", "texto": "Precipitación" },
-        { "id": "c", "texto": "Evapotranspiración potencial" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 33,
-      "bloque": "Datos utilizados",
-      "pregunta": "Un parámetro edáfico utilizado es:",
-      "opciones": [
-        { "id": "a", "texto": "SOC inicial" },
-        { "id": "b", "texto": "Textura del suelo" },
-        { "id": "c", "texto": "Densidad aparente" },
-        { "id": "d", "texto": "Todos los anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 34,
-      "bloque": "Datos utilizados",
-      "pregunta": "Las entradas de carbono al suelo provienen de:",
-      "opciones": [
-        { "id": "a", "texto": "Residuos orgánicos" },
-        { "id": "b", "texto": "Vegetación" },
-        { "id": "c", "texto": "Biomasa" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 35,
-      "bloque": "Objetivos de la práctica",
-      "pregunta": "El objetivo principal de la práctica es:",
-      "opciones": [
-        { "id": "a", "texto": "Comprender los modelos de carbono del suelo" },
-        { "id": "b", "texto": "Interpretar la dinámica temporal del SOC" },
-        { "id": "c", "texto": "Analizar diferencias entre modelos" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 36,
-      "bloque": "Objetivos de la práctica",
-      "pregunta": "La práctica también busca desarrollar habilidades en:",
-      "opciones": [
-        { "id": "a", "texto": "Modelización ambiental" },
-        { "id": "b", "texto": "Manejo de datos climáticos" },
-        { "id": "c", "texto": "Análisis multimodelo" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 37,
-      "bloque": "Objetivos de la práctica",
-      "pregunta": "Estas habilidades son importantes en:",
-      "opciones": [
-        { "id": "a", "texto": "Ciencia del suelo" },
-        { "id": "b", "texto": "Agricultura sostenible" },
-        { "id": "c", "texto": "Monitorización de carbono" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 38,
-      "bloque": "Objetivos de la práctica",
-      "pregunta": "Los outputs del modelo pueden ser:",
-      "opciones": [
-        { "id": "a", "texto": "Gráficos" },
-        { "id": "b", "texto": "Resultados numéricos" },
-        { "id": "c", "texto": "Análisis de flujos de carbono" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 39,
-      "bloque": "Objetivos de la práctica",
-      "pregunta": "La modelización reproducible implica:",
-      "opciones": [
-        { "id": "a", "texto": "Uso estructurado del código" },
-        { "id": "b", "texto": "Gestión de datos" },
-        { "id": "c", "texto": "Scripts reutilizables" },
-        { "id": "d", "texto": "Todas las anteriores" }
-      ],
-      "respuestaCorrecta": "d"
-    },
-    {
-      "numero": 40,
-      "bloque": "Objetivos de la práctica",
-      "pregunta": "El estudio del SOC requiere enfoques:",
-      "opciones": [
-        { "id": "a", "texto": "Estáticos" },
-        { "id": "b", "texto": "Dinámicos" },
-        { "id": "c", "texto": "Simplificados" },
-        { "id": "d", "texto": "Exclusivamente estadísticos" }
-      ],
-      "respuestaCorrecta": "b"
+      "respuestaCorrecta": "c",
+      "explicacion": "Una media territorial describe el balance agregado, pero puede ocultar respuestas opuestas dentro de la finca."
     }
   ]
 }

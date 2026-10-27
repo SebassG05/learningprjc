@@ -22,9 +22,7 @@ const cargarTestTema4 = async () => {
     );
 
     // Buscar si ya existe un test para este tema
-    const testExistente = await Test.findOne({ 
-      temaId: testData.temaId 
-    });
+    const testExistente = await Test.findOne({ cursoId: testData.cursoId, temaId: testData.temaId });
 
     if (testExistente) {
       console.log('⚠️  Ya existe un test para este tema. Actualizando...');
