@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { duration, ease } from '../../lib/motion';
 import useTestInfo from './useTestInfo';
-import TestFinalCard from './TestFinalCard';
 import { useNavigate } from 'react-router-dom';
 import { FileText, ExternalLink, ChevronDown, ChevronUp, Check, ClipboardCheck } from 'lucide-react';
 
@@ -364,8 +363,6 @@ export default function MaterialEstudio({ cursoId, temas, completedMaterials, se
           );
           })}
         </div>
-
-        <TestFinalCard cursoId={cursoId} temas={temas} completedTests={completedTests} className="mt-8" />
       </div>
     </div>
   );

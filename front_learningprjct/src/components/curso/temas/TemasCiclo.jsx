@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Reveal from '../../ui/Reveal';
-import TestFinalCard from '../TestFinalCard';
 import useTestInfo from '../useTestInfo';
 import CicloTimeline from './CicloTimeline';
 import TemaEscena from './TemaEscena';
@@ -85,8 +84,6 @@ export default function TemasCiclo({ cursoId, temas, completedMaterials, setComp
           ))}
         </ol>
       </div>
-
-      <TestFinalCard cursoId={cursoId} temas={temas} completedTests={completedTests} className="mt-4" />
 
       <TemarioModal
         open={Boolean(temario)}
