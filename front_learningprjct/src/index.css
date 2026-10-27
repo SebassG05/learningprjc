@@ -733,6 +733,12 @@
         outline-color: var(--color-danger) !important;
     }
 
+    /* Título de una escena de temas: recibe el foco al saltar desde la línea del ciclo (punto de llegada
+       para teclado y lectores de pantalla), no es un control: sin anillo */
+    .tema-titulo[tabindex="-1"]:focus-visible {
+        outline: none !important;
+    }
+
     button:not(:disabled),
     [role="button"]:not([aria-disabled="true"]) {
         cursor: pointer;
@@ -1081,4 +1087,59 @@ html[data-drawer-open] .toast-region {
     right: auto;
     align-items: flex-start;
   }
+}
+
+/* ---- Escenas de temas: barra del reproductor e índice plegable ---- */
+
+/* Barra de progreso y volumen: pista fina, zona táctil de 44 px; --p = parte reproducida, --accent = color */
+.tema-range {
+  --p: 0%;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 2.75rem;
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+}
+.tema-range:focus-visible { outline: 2px solid var(--accent, var(--color-brand)); outline-offset: -0.5rem; border-radius: 999px; }
+.tema-range::-webkit-slider-runnable-track {
+  height: 0.25rem;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--accent, var(--color-brand)) var(--p), rgb(255 255 255 / 0.22) var(--p));
+}
+.tema-range::-moz-range-track { height: 0.25rem; border-radius: 999px; background: rgb(255 255 255 / 0.22); }
+.tema-range::-moz-range-progress { height: 0.25rem; border-radius: 999px; background: var(--accent, var(--color-brand)); }
+.tema-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: -0.3125rem;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.45);
+  transition: transform 150ms var(--ease-out-expo);
+}
+.tema-range::-moz-range-thumb {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.45);
+}
+@media (hover: hover) {
+  .tema-range:hover::-webkit-slider-thumb { transform: scale(1.25); }
+}
+
+/* Índice: el contenido aparece con un fundido corto al abrir (solo opacidad y desplazamiento) */
+.tema-indice[open] .tema-indice-body { animation: tema-indice-in 320ms var(--ease-out-expo) both; }
+@keyframes tema-indice-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tema-indice[open] .tema-indice-body { animation: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .tema-indice, .tema-range { backdrop-filter: none; }
 }
