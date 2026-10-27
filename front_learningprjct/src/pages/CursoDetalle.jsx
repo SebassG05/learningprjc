@@ -6,13 +6,14 @@ import ObjetivosCurso from '../components/curso/ObjetivosCurso';
 import MaterialEstudio from '../components/curso/MaterialEstudio';
 import { tieneEscenas } from '../components/curso/temas/temasProgress';
 import EjercicioOptativo from '../components/curso/EjercicioOptativo';
+import TestFinalCard from '../components/curso/TestFinalCard';
 import TermsGate from '../components/courses/TermsGate';
 import { authFetch } from '../lib/courseFiles';
 import { PRIVATE } from '../components/courses/coursesCopy';
 import { courseIsOpen, formatCohortDate } from '../components/courses/sheet/privateAccess';
 import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { duration, ease, spring } from '../lib/motion';
+import { duration, ease, inView, spring } from '../lib/motion';
 
 // Escenas del temario nuevo en su propio chunk: van bajo la portada y no deben retrasar el primer pintado
 const TemasCiclo = lazy(() => import('../components/curso/temas/TemasCiclo'));
@@ -509,7 +510,22 @@ export default function CursoDetalle() {
         )}
       </div>
 
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      {/* Cierre del recorrido: test final y ejercicios en una misma escena (y un mismo ancho). Al llegar,
+          la luz cambia: negro cálido en estratos casi invisibles y un amanecer tenue sobre el perfil. */}
+      <section className="relative isolate overflow-hidden">
+        <motion.div
+          aria-hidden="true"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={inView}
+          transition={{ duration: duration.reveal * 1.6, ease: ease.outExpo }}
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(55%_38%_at_24%_14%,rgb(246_215_167/0.075),transparent_72%),linear-gradient(to_bottom,transparent,#0e0c09_14%,#0d0b09_62%,var(--color-canvas))]"
+        >
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_8%,rgb(246_215_167/0.014)_26%,rgb(246_215_167/0.022)_44%,rgb(246_215_167/0.012)_62%,transparent_84%)]" />
+        </motion.div>
+      <div className="mx-auto max-w-[1200px] px-4 pb-32 pt-24 sm:px-6 sm:pt-32 lg:px-8">
+        <TestFinalCard cursoId={id} temas={curso.temas ?? []} completedTests={completedTests} />
+
         {/* Mensaje de Curso Completado */}
         {isCursoCompletado() && (
           <div className="mt-16 mb-16">
@@ -548,16 +564,16 @@ export default function CursoDetalle() {
 
         {/* Ejercicios Optativos */}
         {ejerciciosOptativos.length > 0 && (
-          <div className="mt-16 mb-16">
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-ink mb-3">
-                🎯 Ejercicios Prácticos Optativos
+          <div className="mt-32 sm:mt-44">
+            <div className="mb-12 sm:mb-14">
+              <h2 className="font-sans text-title-2 font-semibold text-ink">
+                Ejercicios prácticos optativos
               </h2>
-              <p className="text-gray-400 text-lg">
+              <p className="mt-4 max-w-[60ch] text-lg leading-relaxed text-ink-2">
                 Complementa tu aprendizaje con estos ejercicios prácticos diseñados para aplicar los conocimientos del curso en escenarios reales.
               </p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-8">
               {ejerciciosOptativos.map((ejercicio) => (
                 <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} soloLectura={curso.access?.level === 'readonly'} />
               ))}
@@ -565,6 +581,7 @@ export default function CursoDetalle() {
           </div>
         )}
       </div>
+      </section>
 
       <div className="max-w-3xl mx-auto px-4">
         {/* Componente específico para el curso de Suelos (mantener compatibilidad) */}

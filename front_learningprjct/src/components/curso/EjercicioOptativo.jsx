@@ -1,9 +1,33 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
+import { Fragment, useState, useEffect, useId, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, ExternalLink, Clock, Target, CheckCircle, ChevronDown, ChevronUp, AlertCircle, FileUp, Lock, RefreshCw } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
-import { duration, ease } from '../../lib/motion';
+import { duration, ease, inView, spring } from '../../lib/motion';
+import {
+  IconArrowRight, IconArrowUpRight, IconChart, IconCheck, IconChevronDown, IconDoc, IconFlask, IconLock, IconRetry, IconSearch, IconUpload, IconWrench,
+} from './cierreIcons';
+
+const TIPOS = {
+  simulacion: ['Simulación', IconFlask],
+  practica: ['Práctica', IconWrench],
+  analisis: ['Análisis', IconChart],
+  investigacion: ['Investigación', IconSearch],
+};
+const NIVELES = { basico: ['Básico', 1], intermedio: ['Intermedio', 2], avanzado: ['Avanzado', 3] };
+// Alto del expediente plegado: el contexto se corta con un fundido, sin puntos suspensivos
+const PLEGADO = 132;
+
+// Franjas de estrato del borde superior: el perfil del test final, a escala de expediente
+const ESTRATOS = 'linear-gradient(to bottom, rgb(246 215 167 / 0.28) 0 1px, transparent 1px 4px, rgb(246 215 167 / 0.16) 4px 5px, transparent 5px 10px, rgb(246 215 167 / 0.09) 10px 11px, transparent 11px 17px, rgb(246 215 167 / 0.05) 17px 18px)';
+
+// Fila del expediente: rótulo a la izquierda y contenido a la derecha (apilado en móvil)
+const Apartado = ({ titulo, children }) => (
+  <section className="grid gap-3 border-t border-line pt-6 sm:grid-cols-[9.5rem_minmax(0,1fr)] sm:gap-10">
+    <h4 className="font-sans text-footnote font-semibold uppercase tracking-[0.12em] text-ink-3">{titulo}</h4>
+    <div className="min-w-0">{children}</div>
+  </section>
+);
 
 // soloLectura: edición del curso privado ya cerrada (se ve todo, pero no se entrega)
 export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = false }) {
@@ -11,6 +35,9 @@ export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = fa
   const [entrega, setEntrega] = useState(null);
   const navigate = useNavigate();
   const { user } = useUser();
+  const reduce = useReducedMotion();
+  const ids = useId();
+  const glow = useRef(null);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
@@ -27,334 +54,251 @@ export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = fa
 
   if (!ejercicio) return null;
 
-  const getDificultadColor = (dificultad) => {
-    switch (dificultad) {
-      case 'basico':
-        return 'text-green-400 bg-green-400/10 border-green-400/30';
-      case 'intermedio':
-        return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
-      case 'avanzado':
-        return 'text-red-400 bg-red-400/10 border-red-400/30';
-      default:
-        return 'text-gray-400 bg-gray-400/10 border-gray-400/30';
-    }
+  const [tipo, TipoIcon] = TIPOS[ejercicio.tipo] ?? ['Ejercicio', IconDoc];
+  const [nivel, nivelPasos] = NIVELES[ejercicio.dificultad] ?? [ejercicio.dificultad.charAt(0).toUpperCase() + ejercicio.dificultad.slice(1), 0];
+  const calificada = entrega && (entrega.calificacion != null || entrega.estado === 'aprobado' || entrega.estado === 'rechazado' || entrega.estado === 'revisado');
+  const notaColor = entrega?.calificacion == null
+    ? 'text-[#f6d7a7]'
+    : entrega.calificacion >= 9
+      ? 'text-brand-300'
+      : entrega.calificacion >= 7
+        ? 'text-brand-400'
+        : entrega.calificacion >= 5
+          ? 'text-[#f6d7a7]'
+          : 'text-danger';
+
+  const entregar = () => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, { state: { ejercicio } });
+
+  // Luz que sigue al cursor (solo ratón): se mueve con transform, sin tocar el layout
+  const moverLuz = (e) => {
+    if (e.pointerType !== 'mouse' || !glow.current) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    glow.current.style.transform = `translate(${e.clientX - r.left}px, ${e.clientY - r.top}px) translate(-50%, -50%)`;
   };
 
-  const getTipoIcon = (tipo) => {
-    switch (tipo) {
-      case 'simulacion':
-        return '🔬';
-      case 'practica':
-        return '🛠️';
-      case 'analisis':
-        return '📊';
-      case 'investigacion':
-        return '🔍';
-      default:
-        return '📋';
-    }
-  };
+  const primario = 'group/btn inline-flex items-center justify-center gap-4 rounded-full bg-brand py-1.5 pl-6 pr-1.5 text-button-lg font-semibold text-on-brand shadow-glow hover:bg-brand-300';
+  const flecha = 'grid size-9 place-items-center rounded-full bg-black/10 transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-expo)] group-hover/btn:translate-x-0.5';
+  const nota = 'inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-medium';
+
+  const ficha = [
+    ['Tipo', <Fragment key="tipo"><TipoIcon className="size-[1.125rem] text-[#f6d7a7]" />{tipo}</Fragment>],
+    ['Nivel', (
+      <Fragment key="nivel">
+        {nivelPasos > 0 && (
+          <span aria-hidden="true" className="flex items-end gap-[3px]">
+            {[1, 2, 3].map((n) => (
+              <span key={n} className={`w-[3px] rounded-full ${n <= nivelPasos ? 'bg-[#f6d7a7]' : 'bg-white/15'}`} style={{ height: `${6 + n * 3}px` }} />
+            ))}
+          </span>
+        )}
+        {nivel}
+      </Fragment>
+    )],
+    ['Duración', ejercicio.duracionEstimada],
+    ejercicio.esOptativo && ['Carácter', 'Optativo'],
+    calificada && ['Calificación', (
+      <span key="nota" className={`tabular-nums ${notaColor}`}>
+        {entrega.calificacion != null
+          ? (entrega.calificacion % 1 === 0 ? entrega.calificacion : Number(entrega.calificacion).toFixed(1))
+          : '—'}
+        <span className="text-ink-3"> / 10</span>
+      </span>
+    )],
+  ].filter(Boolean);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: duration.slow, ease: ease.outExpo }}
-      className="bg-gradient-to-br from-surface/80 to-surface/80 rounded-2xl border-2 border-line overflow-hidden shadow-card hover:shadow-2xl hover:shadow-brand-500/20 transition-all duration-300"
+    <motion.article
+      data-expediente
+      aria-labelledby={`${ids}-titulo`}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={inView}
+      transition={{ duration: duration.reveal, ease: ease.outExpo }}
+      onPointerMove={moverLuz}
+      className="group/exp relative isolate overflow-hidden rounded-[1.75rem] bg-surface shadow-card ring-1 ring-line transition-shadow duration-[var(--duration-slow)] ease-[var(--ease-out-expo)] hover:ring-line-strong"
     >
-      {/* Header */}
-      <div className="bg-gradient-to-r from-brand-500/20 to-brand-600/20 border-b border-line p-6">
-        <div className="flex items-center gap-4">
-          {/* Icono + título + badges */}
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <span className="text-3xl flex-shrink-0">{getTipoIcon(ejercicio.tipo)}</span>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <h3 className="text-xl font-bold text-ink">
-                  {ejercicio.titulo}
-                </h3>
-                {ejercicio.esOptativo && (
-                  <span className="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full border border-purple-500/30">
-                    Optativo
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <span className={`px-2 py-1 rounded-lg text-xs font-semibold border ${getDificultadColor(ejercicio.dificultad)}`}>
-                  {ejercicio.dificultad.charAt(0).toUpperCase() + ejercicio.dificultad.slice(1)}
-                </span>
-                <span className="flex items-center gap-1 text-gray-400">
-                  <Clock className="w-4 h-4" />
-                  {ejercicio.duracionEstimada}
-                </span>
-              </div>
+      <div
+        ref={glow}
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-0 -z-10 size-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(246_215_167/0.07),transparent)] opacity-0 transition-opacity duration-[var(--duration-slow)] ease-[var(--ease-out-expo)] group-hover/exp:opacity-100"
+      />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[18px] [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]" style={{ backgroundImage: ESTRATOS }} />
+
+      {/* Cabecera: título y ficha técnica */}
+      <header className="px-6 pb-8 pt-12 sm:px-10 sm:pt-14">
+        <h3 id={`${ids}-titulo`} className="max-w-[34ch] font-sans text-title-2 font-semibold text-ink">
+          {ejercicio.titulo}
+        </h3>
+        <dl className="mt-8 grid grid-cols-2 gap-y-5 border-t border-line pt-5 sm:flex sm:gap-y-0">
+          {ficha.map(([k, v], i) => (
+            <div key={k} className={`min-w-0 pr-4 sm:pr-8 ${i ? 'sm:border-l sm:border-line sm:pl-8' : ''}`}>
+              <dt className="text-footnote text-ink-3">{k}</dt>
+              <dd className="mt-1.5 flex items-center gap-2 text-sm font-medium text-ink">{v}</dd>
             </div>
-          </div>
+          ))}
+        </dl>
+      </header>
 
-          {/* Sello de calificación */}
-          {entrega && (entrega.calificacion != null || entrega.estado === 'aprobado' || entrega.estado === 'rechazado' || entrega.estado === 'revisado') && (
-            <div className="flex-shrink-0 flex items-center justify-center">
-              <div
-                className={`relative w-[84px] h-[84px] flex items-center justify-center rotate-[-8deg]
-                  ${entrega.calificacion == null
-                    ? 'text-yellow-400'
-                    : entrega.calificacion >= 9
-                    ? 'text-green-400'
-                    : entrega.calificacion >= 7
-                    ? 'text-blue-400'
-                    : entrega.calificacion >= 5
-                    ? 'text-yellow-400'
-                    : 'text-red-400'
-                  }`}
-              >
-                <svg width="84" height="84" viewBox="0 0 88 88" className="absolute inset-0 w-full h-full">
-                  <polygon
-                    points="44,4 82,24 82,64 44,84 6,64 6,24"
-                    fill="currentColor"
-                    opacity="0.15"
-                  />
-                  <polygon
-                    points="44,4 82,24 82,64 44,84 6,64 6,24"
-                    fill="none"
-                    strokeWidth="3"
-                    stroke="currentColor"
-                    opacity="0.9"
-                  />
-                </svg>
-                <div className="relative z-10 flex items-baseline gap-[1px]">
-                  <span className="text-[26px] font-black leading-none">
-                    {entrega.calificacion != null
-                      ? (entrega.calificacion % 1 === 0 ? entrega.calificacion : Number(entrega.calificacion).toFixed(1))
-                      : '—'}
-                  </span>
-                  <span className="text-[18px] font-black leading-none opacity-75">/10</span>
-                </div>
-              </div>
-            </div>
-          )}
+      {/* Cuerpo: plegado muestra el contexto con un fundido; desplegado, el expediente entero */}
+      <motion.div
+        id={`${ids}-cuerpo`}
+        initial={false}
+        animate={{ height: expandido ? 'auto' : PLEGADO }}
+        transition={reduce ? { duration: 0 } : spring.gentle}
+        className="relative overflow-hidden"
+      >
+        <div className="space-y-8 px-6 pb-4 sm:px-10">
+          <Apartado titulo="Contexto">
+            <p className="max-w-[68ch] leading-relaxed text-ink-2">{ejercicio.contexto}</p>
+          </Apartado>
 
-          <button
-            onClick={() => setExpandido(!expandido)}
-            className="flex-shrink-0 p-2 hover:bg-brand-500/10 rounded-lg transition-colors"
-          >
-            {expandido ? (
-              <ChevronUp className="w-6 h-6 text-brand-500" />
-            ) : (
-              <ChevronDown className="w-6 h-6 text-brand-500" />
-            )}
-          </button>
-        </div>
-      </div>
+          <div className="space-y-8" inert={expandido ? undefined : ''} aria-hidden={expandido ? undefined : true}>
+            <Apartado titulo="Enunciado">
+              <p className="max-w-[68ch] leading-relaxed text-ink-2">{ejercicio.enunciado}</p>
+            </Apartado>
 
-      {/* Content */}
-      <AnimatePresence>
-        {expandido && (
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.exit } }}
-            transition={{ duration: duration.base, ease: ease.outExpo }}
-            className="overflow-hidden"
-          >
-            <div className="p-6 space-y-6">
-              {/* Contexto */}
-              <div>
-                <h4 className="flex items-center gap-2 text-brand-500 font-semibold text-sm uppercase tracking-wide mb-3">
-                  <Target className="w-4 h-4" />
-                  Contexto
-                </h4>
-                <p className="text-gray-300 leading-relaxed ">
-                  {ejercicio.contexto}
-                </p>
-              </div>
-
-              {/* Enunciado */}
-              <div>
-                <h4 className="flex items-center gap-2 text-brand-500 font-semibold text-sm uppercase tracking-wide mb-3">
-                  <BookOpen className="w-4 h-4" />
-                  Enunciado
-                </h4>
-                <p className="text-gray-300 leading-relaxed ">
-                  {ejercicio.enunciado}
-                </p>
-              </div>
-
-              {/* Pasos */}
-              {ejercicio.pasos && ejercicio.pasos.length > 0 && (
-                <div>
-                  <h4 className="flex items-center gap-2 text-brand-500 font-semibold text-sm uppercase tracking-wide mb-4">
-                    <CheckCircle className="w-4 h-4" />
-                    Pasos a seguir
-                  </h4>
-                  <div className="space-y-4">
-                    {ejercicio.pasos.map((paso) => (
-                      <div key={paso.numero} className="bg-surface/50 rounded-lg p-4 border border-line">
-                        <div className="flex gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-brand hover:bg-brand-300 flex items-center justify-center text-on-brand font-bold text-sm">
-                            {paso.numero}
-                          </div>
-                          <div className="flex-1">
-                            <h5 className="font-semibold text-ink mb-1">
-                              {paso.titulo}
-                            </h5>
-                            <p className="text-gray-400 text-sm mb-2">
-                              {paso.descripcion}
-                            </p>
-                            {paso.detalles && paso.detalles.length > 0 && (
-                              <ul className="space-y-1 ml-4">
-                                {paso.detalles.map((detalle, idx) => (
-                                  <li key={idx} className="text-gray-400 text-sm flex items-start gap-2">
-                                    <span className="text-brand-500 mt-1">•</span>
-                                    <span>{detalle}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </div>
-                        </div>
+            {ejercicio.pasos && ejercicio.pasos.length > 0 && (
+              <Apartado titulo="Pasos a seguir">
+                <ol className="space-y-7">
+                  {ejercicio.pasos.map((paso) => (
+                    <li key={paso.numero} className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3">
+                      <span className="pt-px text-sm font-semibold tabular-nums text-[#f6d7a7]">{String(paso.numero).padStart(2, '0')}</span>
+                      <div>
+                        <h5 className="font-sans font-semibold text-ink">{paso.titulo}</h5>
+                        <p className="mt-1 text-sm text-ink-2">{paso.descripcion}</p>
+                        {paso.detalles && paso.detalles.length > 0 && (
+                          <ul className="mt-3 space-y-2">
+                            {paso.detalles.map((detalle, idx) => (
+                              <li key={idx} className="flex gap-3 text-sm leading-relaxed text-ink-2">
+                                <span aria-hidden="true" className="mt-[0.7rem] h-px w-2.5 shrink-0 bg-[#f6d7a7]/60" />
+                                <span className="max-w-[68ch]">{detalle}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                    </li>
+                  ))}
+                </ol>
+              </Apartado>
+            )}
 
-              {/* Entregable */}
-              {ejercicio.entregable && (
-                <div className="bg-gradient-to-br from-brand-500/10 to-brand-600/10 border border-line rounded-xl p-6">
-                  <h4 className="flex items-center gap-2 text-brand-500 font-semibold text-sm uppercase tracking-wide mb-3">
-                    <AlertCircle className="w-4 h-4" />
-                    Entregable
-                  </h4>
-                  <p className="text-gray-300 mb-3">
-                    {ejercicio.entregable.descripcion}
-                  </p>
+            {ejercicio.entregable && (
+              <Apartado titulo="Entregable">
+                <div className="rounded-2xl bg-white/[0.03] p-5 ring-1 ring-line sm:p-6">
+                  <p className="max-w-[68ch] text-ink">{ejercicio.entregable.descripcion}</p>
                   {ejercicio.entregable.preguntas && ejercicio.entregable.preguntas.length > 0 && (
-                    <ul className="space-y-2">
+                    <ol className="mt-4 space-y-3">
                       {ejercicio.entregable.preguntas.map((pregunta, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-gray-300">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 text-brand-500 flex items-center justify-center text-xs font-bold mt-0.5">
-                            {idx + 1}
-                          </span>
-                          <span className="flex-1">{pregunta}</span>
+                        <li key={idx} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-2 text-sm leading-relaxed text-ink-2">
+                          <span className="font-semibold tabular-nums text-ink-3">{idx + 1}.</span>
+                          <span className="max-w-[68ch]">{pregunta}</span>
                         </li>
                       ))}
-                    </ul>
+                    </ol>
                   )}
                   {ejercicio.entregable.limiteCaracteres && (
-                    <p className="text-xs text-gray-500 mt-3">
-                      * Límite sugerido: {ejercicio.entregable.limiteCaracteres} caracteres (aprox. {Math.round(ejercicio.entregable.limiteCaracteres / 6)} palabras)
+                    <p className="mt-4 text-footnote text-ink-3">
+                      Límite sugerido: {ejercicio.entregable.limiteCaracteres} caracteres (aprox. {Math.round(ejercicio.entregable.limiteCaracteres / 6)} palabras)
                     </p>
                   )}
                 </div>
-              )}
+              </Apartado>
+            )}
 
-              {/* Recursos */}
-              {ejercicio.recursos && ejercicio.recursos.length > 0 && (
-                <div>
-                  <h4 className="flex items-center gap-2 text-brand-500 font-semibold text-sm uppercase tracking-wide mb-3">
-                    <ExternalLink className="w-4 h-4" />
-                    Recursos necesarios
-                  </h4>
-                  <div className="space-y-2">
-                    {ejercicio.recursos.map((recurso, idx) => (
+            {ejercicio.recursos && ejercicio.recursos.length > 0 && (
+              <Apartado titulo="Recursos necesarios">
+                <ul className="divide-y divide-line">
+                  {ejercicio.recursos.map((recurso, idx) => (
+                    <li key={idx}>
                       <a
-                        key={idx}
                         href={recurso.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between p-4 bg-surface/50 hover:bg-surface border border-line hover:border-brand-500/30 rounded-lg transition-all duration-300"
+                        className="group/rec flex items-start justify-between gap-4 rounded-lg py-3.5 first:pt-0"
                       >
-                        <div className="flex-1">
-                          <p className="font-semibold text-ink group-hover:text-brand-500 transition-colors">
-                            {recurso.titulo}
-                          </p>
-                          {recurso.descripcion && (
-                            <p className="text-sm text-gray-400 mt-1">
-                              {recurso.descripcion}
-                            </p>
-                          )}
-                        </div>
-                        <ExternalLink className="w-5 h-5 text-brand-500 group-hover:scale-110 transition-transform" />
+                        <span className="min-w-0">
+                          <span className="block font-medium text-ink underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-[var(--duration-fast)] group-hover/rec:decoration-[#f6d7a7]/60">{recurso.titulo}</span>
+                          {recurso.descripcion && <span className="mt-1 block text-sm text-ink-2">{recurso.descripcion}</span>}
+                        </span>
+                        <IconArrowUpRight className="mt-0.5 size-5 shrink-0 text-[#f6d7a7] transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-expo)] group-hover/rec:-translate-y-0.5 group-hover/rec:translate-x-0.5" />
                       </a>
-                    ))}
-                  </div>
+                    </li>
+                  ))}
+                </ul>
+              </Apartado>
+            )}
+
+            {/* Acciones */}
+            <div className="flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:flex-wrap sm:items-center">
+              {/* Ejercicio bloqueado (2 rechazos) */}
+              {soloLectura && entrega?.estado !== 'aprobado' ? (
+                <div className={`${nota} bg-white/[0.04] text-ink-2 ring-1 ring-line-strong`}>
+                  <IconLock className="size-[1.125rem]" />
+                  <span>Edición cerrada — ya no se admiten entregas</span>
                 </div>
+              ) : entrega?.bloqueado ? (
+                <div className={`${nota} bg-danger/10 text-danger ring-1 ring-danger/30`}>
+                  <IconLock className="size-[1.125rem]" />
+                  <span>Ejercicio bloqueado — intentos agotados</span>
+                </div>
+              ) : entrega?.estado === 'rechazado' ? (
+                /* 1er rechazo: permitir reintentar */
+                <button type="button" onClick={entregar} className={primario}>
+                  Intentar de nuevo
+                  <span className={flecha}><IconRetry className="size-[1.125rem]" /></span>
+                </button>
+              ) : !entrega || entrega.estado === 'enviado' || entrega.estado === 'revisado' || entrega.estado === 'aprobado' ? (
+                /* Sin entrega, pendiente de corrección, o aprobado */
+                !entrega || entrega.estado !== 'aprobado' ? (
+                  <button type="button" onClick={entregar} className={primario}>
+                    {entrega ? 'Entrega enviada — en revisión' : 'Entregar ejercicio'}
+                    <span className={flecha}>{entrega ? <IconArrowRight className="size-[1.125rem]" /> : <IconUpload className="size-[1.125rem]" />}</span>
+                  </button>
+                ) : (
+                  <div className={`${nota} bg-brand/10 text-brand-300 ring-1 ring-brand/30`}>
+                    <IconCheck className="size-[1.125rem]" />
+                    <span>¡Ejercicio aprobado!</span>
+                  </div>
+                )
+              ) : null}
+
+              {ejercicio.recursos && ejercicio.recursos.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => window.open(ejercicio.recursos[0].url, '_blank')}
+                  className="inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3 text-button-lg font-medium text-ink ring-1 ring-line-strong hover:bg-white/[0.05]"
+                >
+                  Abrir herramienta
+                  <IconArrowUpRight className="size-[1.125rem] text-[#f6d7a7]" />
+                </button>
               )}
-
-              {/* Botón de acción */}
-              <div className="pt-4 border-t border-line flex gap-3">
-                {ejercicio.recursos && ejercicio.recursos.length > 0 && (
-                  <button
-                    onClick={() => window.open(ejercicio.recursos[0].url, '_blank')}
-                    className="cursor-pointer flex-1 px-6 py-3 bg-surface/80 border-2 border-line text-brand-500 font-semibold rounded-xl hover:bg-surface hover:border-brand-500/50 transition-all flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                    <span>Abrir Herramienta</span>
-                  </button>
-                )}
-
-                {/* Ejercicio bloqueado (2 rechazos) */}
-                {soloLectura && entrega?.estado !== 'aprobado' ? (
-                  <div className="flex-1 px-6 py-3 bg-white/[0.04] border border-line-strong text-ink-2 font-semibold rounded-xl flex items-center justify-center gap-2">
-                    <Lock className="w-5 h-5" aria-hidden="true" />
-                    <span>Edición cerrada — ya no se admiten entregas</span>
-                  </div>
-                ) : entrega?.bloqueado ? (
-                  <div className="flex-1 px-6 py-3 bg-red-900/20 border-2 border-red-500/40 text-red-400 font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
-                    <Lock className="w-5 h-5" />
-                    <span>Ejercicio bloqueado — intentos agotados</span>
-                  </div>
-                ) : entrega?.estado === 'rechazado' ? (
-                  /* 1er rechazo: permitir reintentar */
-                  <button
-                    onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
-                      state: { ejercicio }
-                    })}
-                    className="cursor-pointer flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-ink font-bold rounded-xl hover:shadow-xl hover:shadow-orange-500/40 transition-all flex items-center justify-center gap-2"
-                  >
-                    <RefreshCw className="w-5 h-5" />
-                    <span>Intentar de nuevo</span>
-                  </button>
-                ) : !entrega || entrega.estado === 'enviado' || entrega.estado === 'revisado' || entrega.estado === 'aprobado' ? (
-                  /* Sin entrega, pendiente de corrección, o aprobado */
-                  !entrega || entrega.estado !== 'aprobado' ? (
-                    <button
-                      onClick={() => navigate(`/curso/${cursoId}/ejercicio/${ejercicio._id}/entregar`, {
-                        state: { ejercicio }
-                      })}
-                      className="cursor-pointer flex-1 px-6 py-3 bg-brand hover:bg-brand-300 text-on-brand font-bold rounded-xl hover:shadow-xl hover:shadow-brand-500/50 transition-all flex items-center justify-center gap-2"
-                    >
-                      <FileUp className="w-5 h-5" />
-                      <span>{entrega ? 'Entrega enviada — en revisión' : 'Entregar Ejercicio'}</span>
-                    </button>
-                  ) : (
-                    <div className="flex-1 px-6 py-3 bg-green-900/20 border-2 border-green-500/40 text-green-400 font-bold rounded-xl flex items-center justify-center gap-2">
-                      <CheckCircle className="w-5 h-5" />
-                      <span>¡Ejercicio aprobado!</span>
-                    </div>
-                  )
-                ) : null}
-              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Preview cuando está colapsado */}
-      {!expandido && (
-        <div className="p-6">
-          <p className="text-gray-400 text-sm line-clamp-2">
-            {ejercicio.contexto}
-          </p>
-          <button
-            onClick={() => setExpandido(true)}
-            className="mt-3 text-brand-500 hover:text-brand-600 text-sm font-semibold flex items-center gap-1 transition-colors"
-          >
-            Ver detalles del ejercicio
-            <ChevronDown className="w-4 h-4" />
-          </button>
+          </div>
         </div>
-      )}
-    </motion.div>
+
+        {/* Fundido sobre el texto cortado */}
+        <motion.div
+          aria-hidden="true"
+          initial={false}
+          animate={{ opacity: expandido ? 0 : 1 }}
+          transition={{ duration: duration.base, ease: ease.outExpo }}
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-b from-transparent to-surface"
+        />
+      </motion.div>
+
+      <div className="px-6 pb-7 pt-3 sm:px-10 sm:pb-9">
+        <button
+          type="button"
+          aria-expanded={expandido}
+          aria-controls={`${ids}-cuerpo`}
+          onClick={() => setExpandido((v) => !v)}
+          className="group/tg -mx-3 inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-[#f6d7a7] hover:bg-white/[0.04]"
+        >
+          {expandido ? 'Plegar el expediente' : 'Ver el expediente completo'}
+          <IconChevronDown className={`size-[1.125rem] transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-expo)] ${expandido ? 'rotate-180' : ''}`} />
+        </button>
+      </div>
+    </motion.article>
   );
 }
