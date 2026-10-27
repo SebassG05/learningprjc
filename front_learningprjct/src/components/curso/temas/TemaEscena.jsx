@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Check, ChevronDown, Download, FileText, Loader } from 'lucide-react';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import { fadeUp, fadeUpSoft, inView, staggerGroup, stagger } from '../../../lib/motion';
+import { fadeUp, inView, staggerGroup, stagger } from '../../../lib/motion';
 import TemaPlayer from './TemaPlayer';
 import TemaCheckpoint from './TemaCheckpoint';
 import { downloadTemario, temarioFilename, temarioRoute } from './temarioPdf';
@@ -130,28 +130,23 @@ const TemaEscena = forwardRef(function TemaEscena(
         ) : null}
 
         <div className="mt-12 grid gap-10 lg:mt-16 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12 xl:gap-16">
-          {/* Conceptos clave: secuencia tipográfica (sin tarjetas). Al pasar por uno, los demás se apagan */}
+          {/* Conceptos clave: lista tipo ficha técnica, en dos columnas con filetes. Al pasar por encima,
+              una línea con el color del tema se dibuja bajo la fila (solo transform) */}
           {tema.conceptosClave?.length ? (
             <motion.div variants={fadeUp}>
               <h4 className="text-callout font-semibold uppercase tracking-[0.14em] text-ink-3">{t.conceptos}</h4>
-              <motion.ol
-                variants={staggerGroup(stagger.list, 0.1)}
-                className="group/conceptos mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-3 sm:gap-x-4"
-              >
+              <ol className="mt-4 grid border-t border-line sm:grid-cols-2 sm:gap-x-10">
                 {tema.conceptosClave.map((c, i) => (
-                  <motion.li key={c} variants={fadeUpSoft} className="group/concepto flex items-baseline gap-x-3 sm:gap-x-4">
-                    <span className="font-display text-[clamp(1.625rem,1.1rem+1.6vw,2.625rem)] font-light leading-[1.1] tracking-[-0.02em] text-ink transition-colors duration-300 ease-out-expo [@media(hover:hover)]:group-hover/conceptos:text-ink-3 [@media(hover:hover)]:group-hover/concepto:!text-ink">
-                      {c}
-                      <sup className="ml-1 align-super font-sans text-[0.8rem] font-semibold tabular-nums tracking-normal text-[var(--accent)] sm:text-sm">
-                        {String(i + 1).padStart(2, '0')}
-                      </sup>
-                    </span>
-                    {i < tema.conceptosClave.length - 1 ? (
-                      <span aria-hidden="true" className="select-none font-display text-[clamp(1.625rem,1.1rem+1.6vw,2.625rem)] font-extralight leading-none text-[color-mix(in_oklab,var(--accent)_55%,transparent)]">/</span>
-                    ) : null}
-                  </motion.li>
+                  <li key={c} className="group/concepto relative flex items-baseline gap-5 border-b border-line py-5">
+                    <span className="w-6 shrink-0 text-callout font-semibold tabular-nums text-[var(--accent)]">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="text-lg font-medium leading-snug text-ink xl:text-xl">{c}</span>
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 -bottom-px h-px origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-500 ease-out-expo [@media(hover:hover)]:group-hover/concepto:scale-x-100"
+                    />
+                  </li>
                 ))}
-              </motion.ol>
+              </ol>
             </motion.div>
           ) : null}
 

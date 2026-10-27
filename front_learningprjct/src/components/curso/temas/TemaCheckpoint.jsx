@@ -1,21 +1,21 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, ClipboardCheck } from 'lucide-react';
 import { ease } from '../../../lib/motion';
 
 const R = 26;
 const C = 2 * Math.PI * R;
 
 /**
- * Test del tema como «checkpoint» del recorrido: tarjeta con el color del tema y un anillo que marca la
- * nota para aprobar (y se completa al aprobar). Toda la tarjeta es el botón; el círculo de la flecha
- * crece al pasar por encima. En móvil: anillo y flecha arriba, texto debajo. El anillo se dibuja al entrar
- * en pantalla (nada con reduced motion).
+ * Test del tema como «checkpoint» del recorrido: tarjeta con el color del tema y un anillo de ESTADO:
+ * vacío mientras no se ha aprobado y completo con ✓ al aprobar (se dibuja al entrar en pantalla; nada con
+ * reduced motion). La nota para aprobar va solo en el texto: en el anillo parecería progreso.
+ * Toda la tarjeta es el botón; el círculo de la flecha crece al pasar por encima. En móvil: anillo y
+ * flecha arriba, texto debajo.
  */
 export default function TemaCheckpoint({ numero, info, passed, onOpen, t }) {
   const reduce = useReducedMotion();
-  const pass = Math.min(Math.max(Number(info?.notaMinima) || 0, 0), 100) / 100;
-  const fill = passed ? 1 : pass;
+  const fill = passed ? 1 : 0;
 
   return (
     <button
@@ -45,7 +45,7 @@ export default function TemaCheckpoint({ numero, info, passed, onOpen, t }) {
         {passed ? (
           <Check className="relative h-7 w-7 text-[var(--accent)]" strokeWidth={2.5} />
         ) : (
-          <span className="relative text-base font-semibold tabular-nums text-ink sm:text-lg">{Math.round(pass * 100)}%</span>
+          <ClipboardCheck className="relative h-6 w-6 text-ink-2 sm:h-7 sm:w-7" strokeWidth={1.75} />
         )}
       </span>
 
