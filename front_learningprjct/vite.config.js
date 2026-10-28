@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import routeModulePreload from './vite/routeModulePreload.js'
+import notFoundStatus from './vite/notFoundStatus.js'
 
 export default defineConfig(({ mode }) => {
   // VITE_API_URL del .env (process.env no lo trae en la config): lo usa la precarga de datos de la ficha
@@ -10,6 +11,8 @@ export default defineConfig(({ mode }) => {
   base: '/',
   plugins: [
     react(),
+    // Rutas que la SPA no conoce: index.html con estado 404 (no un soft 404)
+    notFoundStatus(),
     // Entrada directa por URL a rutas con lazy(): su chunk (y en la ficha, los datos del curso)
     // bajan en paralelo con el bundle principal
     routeModulePreload(
