@@ -8,6 +8,7 @@ import { distance, duration, ease } from './lib/motion';
 import { glideToHash, jumpTo, startSmoothScroll, stopSmoothScroll } from './lib/smoothScroll';
 import { lazyRoute, preloadAllWhenIdle, preloadOnIntent, routePending } from './lib/lazyRoute';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 // Fuera del bundle inicial (la home no las necesita). Se pintan sin estado intermedio: ver lib/lazyRoute.js.
 // Si al navegar el chunk aún no ha llegado, AnimatedRoutes suspende la navegación (ver allí) y la
@@ -151,6 +152,8 @@ function AnimatedRoutes() {
           <Route path="/terminos" element={<PageTransition><TerminosUso /></PageTransition>} />
           <Route path="/aviso-legal" element={<PageTransition><AvisoLegal /></PageTransition>} />
           <Route path="/guia-usuario" element={<PageTransition><GuiaUsuario /></PageTransition>} />
+          {/* Cualquier otra dirección. El servidor la sirve con estado 404 (vite/knownRoutes.js) */}
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
   );

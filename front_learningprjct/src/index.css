@@ -1143,3 +1143,53 @@ html[data-drawer-open] .toast-region {
 @media (prefers-reduced-transparency: reduce) {
   .tema-indice, .tema-range { backdrop-filter: none; }
 }
+
+/* ---------- 404: fuera de órbita (capas SVG con parallax; solo transform y opacity) ---------- */
+/* Ancho limitado también por la altura: en horizontal en móvil la escena no se come la pantalla */
+.lost-scene {
+  --px: 0;
+  --py: 0;
+  display: grid;
+  width: min(100%, 44rem, 90svh);
+  aspect-ratio: 720 / 320;
+}
+
+.lost-layer {
+  grid-area: 1 / 1;
+  transform: translate3d(calc(var(--px) * var(--depth) * 1px), calc(var(--py) * var(--depth) * 1px), 0);
+  will-change: transform;
+}
+
+/* Más profundidad = más desplazamiento: estrellas al fondo, satélite delante */
+.lost-depth-1 { --depth: 4; }
+.lost-depth-2 { --depth: 9; }
+.lost-depth-3 { --depth: 14; }
+.lost-depth-4 { --depth: 24; }
+
+.lost-twinkle { animation: lost-twinkle 6s ease-in-out infinite; }
+.lost-twinkle-late { animation-delay: -3s; }
+
+@keyframes lost-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.85; }
+}
+
+/* El satélite deriva y gira despacio alrededor de sí mismo (origen: su posición en el viewBox) */
+.lost-adrift {
+  height: 100%;
+  transform-origin: 83.9% 9.4%;
+  animation: lost-adrift 9s var(--ease-in-out-quart) infinite alternate;
+  will-change: transform;
+}
+
+@keyframes lost-adrift {
+  from { transform: translate3d(0, 0, 0) rotate(-5deg); }
+  to { transform: translate3d(1.5%, -3%, 0) rotate(7deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lost-twinkle,
+  .lost-adrift {
+    animation: none;
+  }
+}
