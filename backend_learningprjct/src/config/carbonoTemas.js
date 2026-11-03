@@ -12,7 +12,7 @@ export const CARBONO_TEMAS = Object.freeze([
     descripcion:
       'Qué medimos al hablar de carbono orgánico del suelo, cómo se pasa de una concentración a un stock y qué hace creíble una simulación: escalas, evaluación, incertidumbre y enfoque multimodelo, con un caso mediterráneo.',
     pdf: `${CLOUD}/image/upload/v1793020848/Tema_1_Carbono_del_Suelo_Ampliado_1_1_axmsja.pdf`,
-    video: { publicId: 'tema01_mvwphs', version: 1793022076 },
+    video: { publicId: 'tema01_voz_luis_2_qlu2pu', version: 1793711561 },
     conceptosClave: ['Concentración y stock', 'Stocks y flujos', 'Compartimentos', 'Incertidumbre', 'Enfoque multimodelo'],
     apartados: [
       {
@@ -71,7 +71,7 @@ export const CARBONO_TEMAS = Object.freeze([
     descripcion:
       'Cómo entra, se transforma y se pierde el carbono en el suelo: fracciones POM, MAOM y DOC, papel de los microorganismos y controles ambientales, y la base matemática de los compartimentos, el estado estacionario y la edad del carbono.',
     pdf: `${CLOUD}/image/upload/v1793020848/Tema_2_Dinamica_Formas_y_Equilibrio_del_Carbono_1_kvrlgm.pdf`,
-    video: { publicId: 'tema02_ckaimu', version: 1793022078 },
+    video: { publicId: 'tema02_voz_luis_zdjklw', version: 1793711523 },
     conceptosClave: ['POM y MAOM', 'Cinética de primer orden', 'Estado estacionario', 'Efecto priming', 'Edad y tiempo de tránsito'],
     apartados: [
       {
