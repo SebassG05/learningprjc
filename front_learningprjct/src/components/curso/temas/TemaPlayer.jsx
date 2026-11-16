@@ -4,20 +4,34 @@ import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } fr
 import { AlertCircle, Gauge, Maximize, Minimize, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { duration as dur, ease, panel } from '../../../lib/motion';
 import useTemaVideo from './useTemaVideo';
+import YoutubeTemaPlayer from './YoutubeTemaPlayer';
 import {
-  SPEEDS, clearTemaResume, currentQuality, formatSpeed, formatTime, reachedSeen, readTemaResume, saveTemaResume,
+  PLAY_EVENT, SPEEDS, clearTemaResume, currentQuality, formatSpeed, formatTime, reachedSeen, readTemaResume, saveTemaResume,
 } from './temasProgress';
 
 const SAVE_EVERY = 5; // segundos entre guardados de la posición
 const HIDE_AFTER = 2600; // ms sin actividad para ocultar los controles mientras se reproduce
-const PLAY_EVENT = 'tema-video-play'; // un solo vídeo sonando a la vez
 const POSTER_SIZES = '(min-width: 1280px) 1100px, (min-width: 768px) 90vw, 100vw';
 
 const ICON_BTN =
   'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink transition-[background-color,transform] duration-150 ease-out-expo active:scale-[0.94] [@media(hover:hover)]:hover:bg-white/[0.12] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]';
 
 /**
- * Vídeo explicativo de un tema con controles propios sobre <video> nativo.
+ * Vídeo explicativo de un tema. El backend dice dónde está: YouTube (oculto) → reproductor de YouTube;
+ * Cloudinary → <video> nativo con controles propios.
+ */
+export default function TemaPlayer(props) {
+  const [attempt, setAttempt] = useState(0);
+  const { status, video } = useTemaVideo(props.cursoId, props.temaId, props.near, attempt);
+  const retry = useCallback(() => setAttempt((n) => n + 1), []);
+  if (status === 'ready' && video?.provider === 'youtube') {
+    return <YoutubeTemaPlayer {...props} youtubeId={video.youtubeId} />;
+  }
+  return <NativeTemaPlayer {...props} status={status} video={video} onRetry={retry} />;
+}
+
+/**
+ * Vídeo de Cloudinary con controles propios sobre <video> nativo.
  * - Carga diferida: las URLs (firmadas) se piden cuando la escena se acerca (`near`); el <video> va con
  *   preload="metadata", playsinline y nunca arranca solo.
  * - Calidad: 720p en móvil, ahorro de datos o red lenta; la original en el resto.
@@ -25,7 +39,7 @@ const ICON_BTN =
  * - Sin JavaScript de controles (o si fallan) quedan los controles nativos: `controls` hasta montar.
  * Teclado (con el foco dentro del reproductor): espacio/K, ←/→ 5 s, J/L 10 s, ↑/↓ volumen, M, F, 0–9.
  */
-export default function TemaPlayer({ cursoId, temaId, numero, titulo, near, onSeen, t }) {
+function NativeTemaPlayer({ cursoId, temaId, numero, titulo, onSeen, t, status, video, onRetry }) {
   const reduce = useReducedMotion();
   const frameRef = useRef(null);
   const videoRef = useRef(null);
@@ -38,8 +52,6 @@ export default function TemaPlayer({ cursoId, temaId, numero, titulo, near, onSe
   const instanceId = useId();
   const shortcutsId = useId();
 
-  const [attempt, setAttempt] = useState(0);
-  const { status, video } = useTemaVideo(cursoId, temaId, near, attempt);
   const [quality, setQuality] = useState(currentQuality);
   const [enhanced, setEnhanced] = useState(false);
   const [started, setStarted] = useState(false);
@@ -238,7 +250,7 @@ export default function TemaPlayer({ cursoId, temaId, numero, titulo, near, onSe
 
   const retry = () => {
     setFailed(false);
-    setAttempt((n) => n + 1);
+    onRetry();
   };
 
   const accentRing = 'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]';

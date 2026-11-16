@@ -81,6 +81,12 @@ export function currentQuality() {
 
 // ---- Reproductor ----
 export const SPEEDS = [0.75, 1, 1.25, 1.5, 1.75, 2];
+export const PLAY_EVENT = 'tema-video-play'; // un solo vídeo sonando a la vez (nativo o YouTube)
+
+// Pósters de YouTube: maxresdefault no existe en todos los vídeos (YouTube responde con una imagen gris
+// de 120×90), así que hay que caer a hqdefault, que siempre existe.
+export const youtubePoster = (id, size = 'maxresdefault') => `https://i.ytimg.com/vi/${encodeURIComponent(id)}/${size}.jpg`;
+export const isYoutubePlaceholder = (img) => Boolean(img) && img.naturalWidth > 0 && img.naturalWidth <= 120;
 
 export function formatTime(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return '0:00';

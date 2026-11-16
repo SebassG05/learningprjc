@@ -1,6 +1,7 @@
 // Temario de «Modelización de la dinámica del carbono del suelo» (edición octubre 2026), sacado de los
 // PDFs de cada tema. Lo aplica scripts/actualizarTemasCarbono.js; el orden de los apartados y sus
-// títulos siguen el índice de cada PDF.
+// títulos siguen el índice de cada PDF. Los vídeos están en YouTube como «ocultos» (noviembre 2026; antes
+// en Cloudinary): el id solo lo recibe quien tiene acceso de lectura al curso.
 export const CARBONO_COURSE_ID = '69d50406663e8648d7ee1f08';
 
 const CLOUD = 'https://res.cloudinary.com/dgbmy60sc';
@@ -12,7 +13,7 @@ export const CARBONO_TEMAS = Object.freeze([
     descripcion:
       'Qué medimos al hablar de carbono orgánico del suelo, cómo se pasa de una concentración a un stock y qué hace creíble una simulación: escalas, evaluación, incertidumbre y enfoque multimodelo, con un caso mediterráneo.',
     pdf: `${CLOUD}/image/upload/v1793020848/Tema_1_Carbono_del_Suelo_Ampliado_1_1_axmsja.pdf`,
-    video: { publicId: 'tema01_voz_luis_2_qlu2pu', version: 1793711561 },
+    video: { youtubeId: 'iuTZ63Iwb6k' },
     conceptosClave: ['Concentración y stock', 'Stocks y flujos', 'Compartimentos', 'Incertidumbre', 'Enfoque multimodelo'],
     apartados: [
       {
@@ -71,7 +72,7 @@ export const CARBONO_TEMAS = Object.freeze([
     descripcion:
       'Cómo entra, se transforma y se pierde el carbono en el suelo: fracciones POM, MAOM y DOC, papel de los microorganismos y controles ambientales, y la base matemática de los compartimentos, el estado estacionario y la edad del carbono.',
     pdf: `${CLOUD}/image/upload/v1793020848/Tema_2_Dinamica_Formas_y_Equilibrio_del_Carbono_1_kvrlgm.pdf`,
-    video: { publicId: 'tema02_voz_luis_zdjklw', version: 1793711523 },
+    video: { youtubeId: 'TYHjZd4UpO4' },
     conceptosClave: ['POM y MAOM', 'Cinética de primer orden', 'Estado estacionario', 'Efecto priming', 'Edad y tiempo de tránsito'],
     apartados: [
       {
@@ -154,7 +155,7 @@ export const CARBONO_TEMAS = Object.freeze([
     descripcion:
       'RothC, ICBM, Century, Yasso07, AMG y SG: qué representa cada estructura, qué datos necesita y cómo se inicializa, y cómo interpretar una síntesis multimodelo como la del ensemble HoliSoils.',
     pdf: `${CLOUD}/image/upload/v1793020848/Tema_3_Modelos_de_Carbono_del_Suelo_zorhae.pdf`,
-    video: { publicId: 'Tema03_Modelos_carbono_suelo_aoavy1', version: 1793020851 },
+    video: { youtubeId: 'cp16ZAwiV0Y' },
     conceptosClave: ['Arquitecturas de pools', 'Modificadores ambientales', 'Spin-up y reescalado', 'Síntesis multimodelo', 'Ensemble HoliSoils'],
     apartados: [
       {
@@ -196,7 +197,7 @@ export const CARBONO_TEMAS = Object.freeze([
     descripcion:
       'De los once scripts R del curso a un resultado interpretable: forzamientos climáticos, parámetros del sitio, spin-up y reescalado, ejecución de los modelos y extracción de stocks y flujos sin perder sus unidades.',
     pdf: `${CLOUD}/image/upload/v1793020848/Tema_4_Practica_R_SoilR_y_Ensemble_HoliSoils_qozgct.pdf`,
-    video: { publicId: 'Tema04_Practica_R_SoilR_HoliSoils_avxzfy', version: 1793020852 },
+    video: { youtubeId: 'ej9LCnTU_dM' },
     conceptosClave: ['Forzamientos mensuales', 'SoilR', 'Spin-up y convergencia', 'Tasas y acumulados', 'Exportación reproducible'],
     apartados: [
       {

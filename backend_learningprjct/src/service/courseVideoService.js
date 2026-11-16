@@ -49,6 +49,16 @@ export function temaVideoUrls(video) {
   };
 }
 
+/**
+ * Lo que recibe el reproductor de un tema: { provider: 'youtube', youtubeId } o
+ * { provider: 'cloudinary', sd, hd, poster, posters }.
+ */
+export function temaVideoPayload(video) {
+  if (video?.youtubeId) return { provider: 'youtube', youtubeId: video.youtubeId };
+  if (video?.publicId) return { provider: 'cloudinary', ...temaVideoUrls(video) };
+  return null;
+}
+
 export function videoUrls(video, mode, type = 'upload') {
   const poster = build(video, type, 'jpg', [{ start_offset: 0, quality: 'auto' }]);
   if (mode === 'full') {

@@ -26,7 +26,12 @@ function planTema(tema, def) {
   for (const field of ['apartados', 'conceptosClave']) {
     if (!same(plain(tema[field]), def[field])) set(field, def[field], () => { tema[field] = def[field]; });
   }
-  if (tema.video?.publicId !== def.video.publicId) {
+  // Vídeo: de YouTube (por id) o de Cloudinary (por public_id, sin tocar su tipo si ya es el mismo asset)
+  if (def.video.youtubeId) {
+    if (tema.video?.youtubeId !== def.video.youtubeId) {
+      set('video', `youtube:${def.video.youtubeId}`, () => { tema.video = { youtubeId: def.video.youtubeId }; });
+    }
+  } else if (tema.video?.youtubeId || tema.video?.publicId !== def.video.publicId) {
     set('video', def.video.publicId, () => { tema.video = { ...def.video, type: 'upload' }; });
   }
 

@@ -26,13 +26,15 @@ const materialSchema = new mongoose.Schema({
   orden: { type: Number, default: 0 }
 }, { _id: true });
 
-// Vídeo explicativo del tema: asset de Cloudinary (resource_type video). Las URLs las construye el
-// backend (GET /api/courses/:id/temas/:temaId/video) y solo para quien puede leer el curso.
-// type 'authenticated': solo valen URLs firmadas (lo deja así scripts/moverMaterialesAAuthenticated.js).
+// Vídeo explicativo del tema: un vídeo de YouTube (oculto) o un asset de Cloudinary (resource_type video).
+// Se entrega por GET /api/courses/:id/temas/:temaId/video y solo a quien puede leer el curso.
+// - youtubeId: id del vídeo (11 caracteres). Si está, manda sobre Cloudinary.
+// - publicId/version/type: Cloudinary. type 'authenticated': solo valen URLs firmadas.
 const temaVideoSchema = new mongoose.Schema({
-  publicId: { type: String, required: true, trim: true },
+  youtubeId: { type: String, trim: true, match: /^[\w-]{11}$/ },
+  publicId: { type: String, trim: true, required() { return !this.youtubeId; } },
   version: { type: Number },
-  type: { type: String, enum: ['upload', 'authenticated'], default: 'upload' },
+  type: { type: String, enum: ['upload', 'authenticated'], default() { return this.youtubeId ? undefined : 'upload'; } },
 }, { _id: false });
 
 // Índice del temario agrupado por partes (como el índice del PDF)
