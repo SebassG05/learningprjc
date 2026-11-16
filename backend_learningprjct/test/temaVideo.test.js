@@ -96,8 +96,29 @@ describe('con base de datos', () => {
       assert.equal((await srv.call('GET', videoPath(course, tema), { headers: fx.authHeader(luis) })).status, 403);
       const ok = await srv.call('GET', videoPath(course, tema), { headers: fx.authHeader(ana) });
       assert.equal(ok.status, 200);
+      assert.equal(ok.body.provider, 'cloudinary');
       assert.match(ok.body.hd, /\/video\/authenticated\/s--/);
       assert.match(ok.headers.get('cache-control'), /no-store/);
+    });
+
+    test('vídeo de YouTube: solo el id y solo con acceso (anónimo 401, no miembro 403)', async () => {
+      const { course, tema } = await withVideo('private', { youtubeId: 'iuTZ63Iwb6k' });
+      const ana = await fx.createUser();
+      const luis = await fx.createUser();
+      await fx.createCohort(course, { members: [ana] });
+      assert.equal((await srv.call('GET', videoPath(course, tema))).status, 401);
+      assert.equal((await srv.call('GET', videoPath(course, tema), { headers: fx.authHeader(luis) })).status, 403);
+      const ok = await srv.call('GET', videoPath(course, tema), { headers: fx.authHeader(ana) });
+      assert.equal(ok.status, 200);
+      assert.deepEqual(ok.body, { provider: 'youtube', youtubeId: 'iuTZ63Iwb6k' });
+      const ficha = await srv.call('GET', `/api/courses/${course._id}`);
+      assert.equal(ficha.body.temas[0].video, undefined);
+    });
+
+    test('un id de YouTube mal formado no se guarda', async () => {
+      const course = await fx.createCourse();
+      course.temas[0].video = { youtubeId: 'https://youtu.be/iuTZ63Iwb6k' };
+      await assert.rejects(course.save(), /youtubeId/);
     });
 
     test('cohorte aún no empezada: 403; terminada en solo lectura: 200', async () => {
@@ -267,21 +288,39 @@ describe('con base de datos', () => {
       assert.equal(t1.titulo, 'Carbono del suelo');
       assert.equal(t1.materiales.length, 1);
       assert.equal(t1.materiales[0].archivo, CARBONO_TEMAS[0].pdf);
-      assert.deepEqual(t1.video, { ...CARBONO_TEMAS[0].video, type: 'upload' });
+      assert.deepEqual(t1.video, { youtubeId: CARBONO_TEMAS[0].video.youtubeId });
       assert.ok(t1.apartados.length >= 4 && t1.conceptosClave.length >= 3);
 
-      // Simula la migración: mismo public_id, URL authenticated y vídeo authenticated
+      // Simula la migración de los PDFs: mismo public_id, URL authenticated
       const doc = await Course.findById(course._id);
-      for (const t of doc.temas) {
-        t.materiales[0].archivo = t.materiales[0].archivo.replace('/image/upload/', '/image/authenticated/');
-        t.video.type = 'authenticated';
-      }
+      for (const t of doc.temas) t.materiales[0].archivo = t.materiales[0].archivo.replace('/image/upload/', '/image/authenticated/');
       await doc.save();
       const r = await applyTemasContent({ courseId: course._id, temas: CARBONO_TEMAS, apply: true });
       assert.deepEqual(r.changes, []);
       const after = (await Course.findById(course._id).lean()).temas[0];
       assert.match(after.materiales[0].archivo, /\/image\/authenticated\//);
-      assert.equal(after.video.type, 'authenticated');
+      assert.equal(after.video.youtubeId, CARBONO_TEMAS[0].video.youtubeId);
+    });
+
+    test('un vídeo de Cloudinary se sustituye por el de YouTube (sin restos de public_id)', async () => {
+      const course = await cuatroTemas();
+      const doc = await Course.findById(course._id);
+      doc.temas[0].video = { ...VIDEO, type: 'authenticated' };
+      await doc.save();
+      const r = await applyTemasContent({ courseId: course._id, temas: CARBONO_TEMAS, apply: true });
+      assert.ok(r.changes.some((c) => c.tema === 1 && c.field === 'video' && c.to === `youtube:${CARBONO_TEMAS[0].video.youtubeId}`));
+      const t1 = (await Course.findById(course._id).lean()).temas[0];
+      assert.deepEqual(t1.video, { youtubeId: CARBONO_TEMAS[0].video.youtubeId });
+    });
+
+    test('la migración a authenticated ignora los vídeos de YouTube', async () => {
+      const course = await cuatroTemas();
+      await applyTemasContent({ courseId: course._id, temas: CARBONO_TEMAS, apply: true });
+      const calls = [];
+      const api = { rename: async (...a) => { calls.push(a); throw new Error('no debería llamarse'); } };
+      const r = await migrateCourseMaterials({ courseId: course._id, to: 'authenticated', apply: false, api });
+      assert.ok(r.files.every((f) => f.field !== 'video'), JSON.stringify(r.files));
+      assert.deepEqual(calls, []);
     });
 
     test('un tema que falta se informa y no se crea', async () => {
