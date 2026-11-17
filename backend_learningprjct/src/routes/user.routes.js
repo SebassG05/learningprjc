@@ -1,5 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
+import { GOOGLE_ID_PASSWORD_MESSAGE, looksLikeGoogleId } from '../utils/passwordPolicy.js';
 import { 
   registerUser, 
   loginUser, 
@@ -41,6 +42,7 @@ router.post(
     body('name').notEmpty().withMessage('El nombre es obligatorio'),
     body('email').isEmail().withMessage('Email inválido'),
     body('password').isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
+    body('password').not().custom(looksLikeGoogleId).withMessage(GOOGLE_ID_PASSWORD_MESSAGE),
     body('confirmPassword').custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error('Las contraseñas no coinciden');
@@ -76,7 +78,8 @@ router.post(
   [
     body('userId').notEmpty().withMessage('ID de usuario requerido'),
     body('token').notEmpty().withMessage('Token requerido'),
-    body('newPassword').isLength({ min: 6 }).withMessage('La nueva contraseña debe tener al menos 6 caracteres')
+    body('newPassword').isLength({ min: 6 }).withMessage('La nueva contraseña debe tener al menos 6 caracteres'),
+    body('newPassword').not().custom(looksLikeGoogleId).withMessage(GOOGLE_ID_PASSWORD_MESSAGE)
   ],
   resetPassword
 );

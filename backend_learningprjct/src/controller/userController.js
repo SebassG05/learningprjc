@@ -12,7 +12,8 @@ import { validationResult } from 'express-validator';
 import crypto from 'crypto';
 import PasswordResetToken from '../models/PasswordResetToken.js';
 import { sendPasswordResetEmail, sendCourseCompletionEmailToUser, sendCourseCompletionNotificationToAdmin } from '../service/mailService.js';
-import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT } from '../service/googleAuthService.js';
+import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT, GoogleAuthError } from '../service/googleAuthService.js';
+import { looksLikeGoogleId } from '../utils/passwordPolicy.js';
 import { resumenCurso, resumenVacio } from '../service/progresoService.js';
 import { buildInscripcionesPipeline, formatInscripciones, ListadoError, parseInscripciones } from '../service/inscripcionesQueryService.js';
 
@@ -50,6 +51,11 @@ export const loginUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const { email, password } = req.body;
+  // Con forma de `sub` de Google: es lo que guardaban como contraseña las cuentas creadas con Google,
+  // y ese número no es secreto. Se rechaza siempre, con el mismo mensaje que un fallo normal.
+  if (looksLikeGoogleId(password)) {
+    return res.status(401).json({ error: 'Credenciales inválidas' });
+  }
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -119,6 +125,10 @@ export const requestPasswordReset = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ error: errors.array()[0].msg, errors: errors.array() });
+  }
   const { userId, token, newPassword } = req.body;
   if (process.env.NODE_ENV !== 'production') {
     console.log('resetPassword body:', { userId, token, newPassword });
@@ -175,8 +185,14 @@ export const googleLogin = async (req, res, next) => {
     } catch (err) {
       return res.status(401).json({ message: 'Invalid Google token', error: err.message });
     }
-    // 2. Buscar o crear usuario
-    const user = await findOrCreateGoogleUser(googlePayload);
+    // 2. Buscar o crear usuario (solo con el correo verificado por Google)
+    let user;
+    try {
+      user = await findOrCreateGoogleUser(googlePayload);
+    } catch (err) {
+      if (err instanceof GoogleAuthError) return res.status(err.status).json({ message: err.message });
+      throw err;
+    }
     // 3. Generar JWT propio
     const token = generateJWT(user);
     // 4. Actualizar lastLogin
