@@ -7,6 +7,7 @@ import Course from '../models/Course.js';
 import User from '../models/User.js';
 import Duda from '../models/Duda.js';
 import { canModerate, canPublish, isAdminViewer, loadViewer } from '../service/courseAccess.js';
+import { lanzarAviso, notificarDudaNueva, notificarRespuesta } from '../service/dudaNotifications.js';
 import { nombrePublico, recalcularEstado, retirarDuda, rolDe, toPublic } from '../service/dudaRules.js';
 
 export const ESTADOS = ['abierta', 'respondida', 'resuelta'];
@@ -112,6 +113,7 @@ export async function crearDuda(req, res) {
     texto,
     ultimaActividad: new Date(),
   });
+  lanzarAviso(notificarDudaNueva(duda), 'nueva');
   return res.status(201).json(publicOf(req, viewer, duda));
 }
 
@@ -171,6 +173,7 @@ export async function responder(req, res) {
   if (rol !== 'alumno' && duda.autorId && !same(duda.autorId, viewer.id)) duda.respuestaNoVista = true;
   touch(duda);
   await duda.save();
+  lanzarAviso(notificarRespuesta(duda, duda.respuestas[duda.respuestas.length - 1]._id), 'respuesta');
   return res.status(201).json(publicOf(req, viewer, duda));
 }
 

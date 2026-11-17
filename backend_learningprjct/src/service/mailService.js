@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import { buildContactEmail, singleLine } from './contactEmailTemplate.js';
 import { buildCohortInviteEmail } from './cohortInviteEmailTemplate.js';
 import { buildTeacherInviteEmail, buildTeacherLinkedEmail } from './teacherEmailTemplate.js';
+import { buildDudaNuevaEmail, buildDudaRespuestaEmail } from './dudaEmailTemplate.js';
 import { etiquetaEstado } from './correccionService.js';
 
 dotenv.config();
@@ -268,6 +269,17 @@ export const sendCohortInviteEmail = async ({ to, url, courseTitle, cohortName, 
 // Aviso a quien han añadido como profesor de un curso: el enlace de un solo uso activa el acceso.
 export const sendTeacherInviteEmail = async ({ to, url, courseTitle, expiresAt }) => {
   const { subject, html, text } = buildTeacherInviteEmail({ url, courseTitle, expiresAt });
+  await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
+};
+
+// Avisos de Dudas: al profesorado cuando hay una duda nueva y al autor cuando le responden.
+export const sendDudaNuevaEmail = async ({ to, ...data }) => {
+  const { subject, html, text } = buildDudaNuevaEmail(data);
+  await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
+};
+
+export const sendDudaRespuestaEmail = async ({ to, ...data }) => {
+  const { subject, html, text } = buildDudaRespuestaEmail(data);
   await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
 };
 
