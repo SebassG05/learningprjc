@@ -9,6 +9,7 @@ import TermsGate from '../components/courses/TermsGate';
 import { authFetch } from '../lib/courseFiles';
 import { PRIVATE } from '../components/courses/coursesCopy';
 import { courseIsOpen, formatCohortDate } from '../components/courses/sheet/privateAccess';
+import { dudasCopy } from '../components/dudas/dudasCopy';
 import { BookOpen, Lock, AlertCircle, Clock, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { duration, ease, inView, spring } from '../lib/motion';
@@ -88,16 +89,11 @@ export default function CursoDetalle() {
           });
           setCompletedMaterials(materialsObj);
         }
-        
-        // Si no está inscrito, redirigir a la página de inscripción
-        if (!data.enrolled) {
-          navigate(`/curso/${id}/inscripcion`);
-        }
       })
       .catch(err => {
         console.error('Error al verificar inscripción:', err);
+        setEnrollmentStatus(null);
         setCheckingEnrollment(false);
-        navigate(`/curso/${id}/inscripcion`);
       });
   }, [id, user, apiUrl, navigate]);
 
@@ -120,6 +116,14 @@ export default function CursoDetalle() {
         }
       });
   }, [id, apiUrl, navigate]);
+
+  // Sin inscripción solo pasa el profesor del curso: se decide cuando hay inscripción y curso a la vez
+  useEffect(() => {
+    if (loading || checkingEnrollment || !curso) return;
+    if (!enrollmentStatus?.enrolled && !curso.access?.teacher) {
+      navigate(`/curso/${id}/inscripcion`);
+    }
+  }, [loading, checkingEnrollment, curso, enrollmentStatus, id, navigate]);
 
   // Cargar ejercicios optativos
   useEffect(() => {
@@ -270,8 +274,12 @@ export default function CursoDetalle() {
     );
   }
 
-  // Si no está inscrito, no mostrar contenido
-  if (!enrollmentStatus?.enrolled) {
+  // Profesor del curso sin inscripción: ve el aula, sin progreso ni entregas
+  const esProfesor = Boolean(curso.access?.teacher) && !enrollmentStatus?.enrolled;
+  const lang = idiomaSeleccionado === 'en' ? 'en' : 'es';
+
+  // Si no está inscrito (y no es profesor), no mostrar contenido
+  if (!enrollmentStatus?.enrolled && !esProfesor) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md px-4">
@@ -294,7 +302,7 @@ export default function CursoDetalle() {
   return (
     <>
       {/* Condiciones de confidencialidad: se vuelven a pedir si cambió la versión */}
-      <TermsGate courseId={id} courseTitle={t(curso.title, curso.titleEn)} enabled={Boolean(enrollmentStatus?.enrolled)} />
+      <TermsGate courseId={id} courseTitle={t(curso.title, curso.titleEn)} enabled={Boolean(enrollmentStatus?.enrolled) || esProfesor} />
       {/* Modal de selección de idioma para cursos bilingües */}
       <AnimatePresence>
         {showLangModal && (
@@ -376,7 +384,12 @@ export default function CursoDetalle() {
               {t(curso.title, curso.titleEn)}
             </h1>
             {/* Curso privado con la edición terminada: se puede repasar, no entregar */}
-            {curso.access?.level === 'readonly' ? (
+            {esProfesor ? (
+              <p role="note" className="mt-4 inline-flex max-w-2xl items-start gap-2 rounded-xl bg-white/[0.04] px-4 py-3 text-callout text-ink-2 ring-1 ring-inset ring-line-strong">
+                <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-dawn" aria-hidden="true" />
+                <span>{dudasCopy(lang).profesorCurso}</span>
+              </p>
+            ) : curso.access?.level === 'readonly' ? (
               <p role="note" className="mt-4 inline-flex max-w-2xl items-start gap-2 rounded-xl bg-white/[0.04] px-4 py-3 text-callout text-ink-2 ring-1 ring-inset ring-line-strong">
                 <Lock className="mt-0.5 h-4 w-4 shrink-0 text-dawn" aria-hidden="true" />
                 <span>{PRIVATE.lead.readonly(formatCohortDate(curso.access.endsAt))}</span>
@@ -411,7 +424,8 @@ export default function CursoDetalle() {
               </div>
             )}
           </div>
-          {/* Círculo de progreso a la derecha */}
+          {/* Círculo de progreso a la derecha (el profesor no tiene progreso) */}
+          {!esProfesor && (
           <div className="relative w-24 h-24 flex items-center justify-center">
             <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
               {/* Círculo de fondo */}
@@ -442,6 +456,7 @@ export default function CursoDetalle() {
               {progress}%
             </span>
           </div>
+          )}
         </div>
 
         {/* Descripción del curso */}
@@ -493,6 +508,7 @@ export default function CursoDetalle() {
             setCompletedMaterials={setCompletedMaterials}
             completedTests={completedTests}
             idioma={idiomaSeleccionado || 'es'}
+            esProfesor={esProfesor}
           />
           </Suspense>
         ) : null}
@@ -563,7 +579,7 @@ export default function CursoDetalle() {
             </div>
             <div className="space-y-8">
               {ejerciciosOptativos.map((ejercicio) => (
-                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} soloLectura={curso.access?.level === 'readonly'} />
+                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} soloLectura={curso.access?.level === 'readonly'} esProfesor={esProfesor} idioma={lang} />
               ))}
             </div>
           </div>

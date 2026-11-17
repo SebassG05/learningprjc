@@ -2,6 +2,7 @@
 import { Fragment, useState, useEffect, useId, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import { dudasCopy } from '../dudas/dudasCopy';
 import { useUser } from '../../context/UserContext';
 import { duration, ease, inView, spring } from '../../lib/motion';
 import {
@@ -29,8 +30,9 @@ const Apartado = ({ titulo, children }) => (
   </section>
 );
 
+// esProfesor: el profesor del curso lo ve todo, pero no entrega
 // soloLectura: edición del curso privado ya cerrada (se ve todo, pero no se entrega)
-export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = false }) {
+export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = false, esProfesor = false, idioma = 'es' }) {
   const [expandido, setExpandido] = useState(false);
   const [entrega, setEntrega] = useState(null);
   const navigate = useNavigate();
@@ -232,7 +234,12 @@ export default function EjercicioOptativo({ ejercicio, cursoId, soloLectura = fa
             {/* Acciones */}
             <div className="flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:flex-wrap sm:items-center">
               {/* Ejercicio bloqueado (2 rechazos) */}
-              {soloLectura && entrega?.estado !== 'aprobado' ? (
+              {esProfesor ? (
+                <div className={`${nota} bg-white/[0.04] text-ink-2 ring-1 ring-line-strong`}>
+                  <IconLock className="size-[1.125rem]" />
+                  <span>{dudasCopy(idioma).profesorCurso}</span>
+                </div>
+              ) : soloLectura && entrega?.estado !== 'aprobado' ? (
                 <div className={`${nota} bg-white/[0.04] text-ink-2 ring-1 ring-line-strong`}>
                   <IconLock className="size-[1.125rem]" />
                   <span>Edición cerrada — ya no se admiten entregas</span>

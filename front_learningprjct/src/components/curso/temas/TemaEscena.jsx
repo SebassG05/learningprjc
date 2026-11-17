@@ -24,7 +24,7 @@ const temarioDe = (tema) => (tema.materiales ?? []).find((m) => m.tipo === 'pdf'
  * temario y del test e índice plegable. Entra con fundido y desplazamiento al llegar a la pantalla.
  */
 const TemaEscena = forwardRef(function TemaEscena(
-  { tema, index, ciclo, sceneId, cursoId, idioma, t, isSeen, onSeen, completed, onToggleCompleted, testInfo, testPassed, onOpenTest, onOpenTemario },
+  { tema, index, ciclo, sceneId, cursoId, idioma, t, isSeen, onSeen, completed, onToggleCompleted, testInfo, testPassed, onOpenTest, onOpenTemario, esProfesor = false }, // eslint-disable-line no-unused-vars -- Task 9
   ref,
 ) {
   const e = etapaDe(index, ciclo);
