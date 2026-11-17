@@ -29,3 +29,6 @@ test-results
 playwright-report
 .lighthouseci
 perf/runs
+
+# Build de la prueba e2e de Dudas (VITE_API_URL local)
+dist-e2e
