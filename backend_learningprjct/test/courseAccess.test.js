@@ -2,7 +2,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 
-const { resolveAccess, allows, redactCourse } = await import('../src/service/courseAccess.js');
+const { resolveAccess, allows, redactCourse, isCourseTeacher, canPublish, canModerate, publicAccess } = await import('../src/service/courseAccess.js');
 
 const COURSE = '69d50406663e8648d7ee1f08';
 const OTRO_CURSO = '64b0000000000000000000aa';
@@ -152,5 +152,83 @@ describe('redactCourse', () => {
   });
   test('curso sin temas no rompe', () => {
     assert.deepEqual(redactCourse({ _id: COURSE }), { _id: COURSE });
+  });
+});
+
+describe('profesores del curso', () => {
+  const teacherRow = (userId, status = 'active') => ({ email: 'p@x.es', status, userId });
+  const withTeachers = (course, ...rows) => ({ ...course, profesores: rows });
+  const prof = { id: LUIS, role: 'usuario' };
+
+  test('isCourseTeacher: solo una fila activa con el userId del visitante', () => {
+    assert.equal(isCourseTeacher(prof, withTeachers(privateCourse, teacherRow(LUIS))), true);
+    assert.equal(isCourseTeacher(prof, withTeachers(privateCourse, teacherRow(LUIS, 'pending'))), false);
+    assert.equal(isCourseTeacher(prof, withTeachers(privateCourse, teacherRow(null, 'pending'))), false);
+    assert.equal(isCourseTeacher(prof, withTeachers(privateCourse, teacherRow(ANA))), false);
+    assert.equal(isCourseTeacher(null, withTeachers(privateCourse, teacherRow(LUIS))), false);
+    assert.equal(isCourseTeacher(prof, privateCourse), false);
+  });
+
+  test('profesor activo de curso privado sin cohorte → readonly/teacher', () => {
+    const r = access(prof, withTeachers(privateCourse, teacherRow(LUIS)), []);
+    assert.deepEqual(r, { level: 'readonly', reason: 'teacher', teacher: true });
+  });
+
+  test('profesor pendiente (userId null) → not-member', () => {
+    const r = access(prof, withTeachers(privateCourse, teacherRow(null, 'pending')), []);
+    assert.equal(r.reason, 'not-member');
+    assert.notEqual(r.teacher, true);
+  });
+
+  test('profesor de otro curso (este curso no lo lista) → not-member', () => {
+    const r = access(prof, privateCourse, []);
+    assert.equal(r.reason, 'not-member');
+    assert.notEqual(r.teacher, true);
+  });
+
+  test('profesor que además es miembro activo → full/member con teacher', () => {
+    const c = cohort({ members: [{ user: LUIS, email: 'l@x.es', status: 'active' }] });
+    const r = access(prof, withTeachers(privateCourse, teacherRow(LUIS)), [c]);
+    assert.equal(r.level, 'full');
+    assert.equal(r.reason, 'member');
+    assert.equal(r.teacher, true);
+  });
+
+  test('profesor con cohorte ya terminada: la lectura de profesor gana a ended', () => {
+    const c = cohort({ members: [{ user: LUIS, email: 'l@x.es', status: 'active' }] });
+    const r = access(prof, withTeachers(privateCourse, teacherRow(LUIS)), [c], AFTER);
+    assert.equal(r.reason, 'teacher');
+    assert.equal(r.level, 'readonly');
+  });
+
+  test('curso público → full/public con teacher', () => {
+    const r = access(prof, withTeachers(publicCourse, teacherRow(LUIS)), []);
+    assert.deepEqual(r, { level: 'full', reason: 'public', teacher: true });
+  });
+
+  test('admin no profesor → full/admin sin teacher; admin profesor → teacher', () => {
+    const admin = { id: LUIS, role: 'admin' };
+    assert.notEqual(access(admin, privateCourse, []).teacher, true);
+    assert.equal(access(admin, withTeachers(privateCourse, teacherRow(LUIS)), []).teacher, true);
+  });
+
+  test('publicAccess incluye teacher solo si es true', () => {
+    assert.equal('teacher' in publicAccess({ level: 'full', reason: 'member' }), false);
+    assert.equal('teacher' in publicAccess({ level: 'full', reason: 'member', teacher: false }), false);
+    assert.equal(publicAccess({ level: 'readonly', reason: 'teacher', teacher: true }).teacher, true);
+  });
+
+  test('canPublish: falso para readonly/ended, verdadero para readonly/teacher, full y admin', () => {
+    assert.equal(canPublish({ level: 'readonly', reason: 'ended' }, ana), false);
+    assert.equal(canPublish({ level: 'readonly', reason: 'teacher', teacher: true }, prof), true);
+    assert.equal(canPublish({ level: 'full', reason: 'member' }, ana), true);
+    assert.equal(canPublish({ level: 'denied', reason: 'not-member' }, { id: LUIS, role: 'admin' }), true);
+    assert.equal(canPublish({ level: 'denied', reason: 'not-member' }, null), false);
+  });
+
+  test('canModerate: falso para miembro, verdadero para profesor y admin', () => {
+    assert.equal(canModerate({ level: 'full', reason: 'member' }, ana), false);
+    assert.equal(canModerate({ level: 'full', reason: 'member', teacher: true }, prof), true);
+    assert.equal(canModerate({ level: 'full', reason: 'member' }, { id: LUIS, role: 'superadmin' }), true);
   });
 });

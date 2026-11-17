@@ -12,3 +12,6 @@ export const AREA_SLUGS = COURSE_AREAS.map((a) => a.slug);
 export const COURSE_LEVELS = Object.freeze(['inicial', 'intermedio', 'avanzado']);
 
 export const PROFESOR_LIMITS = Object.freeze({ nombre: 120, bio: 400 });
+
+// Máximo de profesores asignados a un curso (activos + invitaciones pendientes)
+export const TEACHERS_MAX = 10;

@@ -63,6 +63,52 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(r.body.access.reason, 'member');
     });
 
+    test('privado, profesor activo sin cohorte: contenido en solo lectura y sin profesores en el cuerpo', async () => {
+      const course = await fx.createCourse({ accessMode: 'private' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{
+        email: profe.email, status: 'active', userId: profe._id, tokenHash: 'hash-secreto', addedBy: profe._id,
+      }] } });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(hasFiles(r.text), true);
+      assert.deepEqual(r.body.access, { level: 'readonly', reason: 'teacher', teacher: true });
+      assert.equal(r.text.includes('profesores'), false);
+      assert.equal(r.text.includes('tokenHash'), false);
+      assert.equal(r.text.includes('hash-secreto'), false);
+
+      const admin = await fx.createUser({ role: 'admin' });
+      const ra = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(admin) });
+      assert.equal(ra.body.access.reason, 'admin');
+      assert.equal(ra.text.includes('profesores'), false);
+      assert.equal(ra.text.includes('tokenHash'), false);
+
+      const list = await api.call('GET', '/api/courses', { headers: fx.authHeader(admin) });
+      assert.equal(list.text.includes('profesores'), false);
+      assert.equal(list.text.includes('tokenHash'), false);
+    });
+
+    test('profesor pendiente, o profesor de otro curso: sin acceso', async () => {
+      const course = await fx.createCourse({ accessMode: 'private' });
+      const otro = await fx.createCourse({ accessMode: 'private' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'pending' }] } });
+      await Course.updateOne({ _id: otro._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(hasFiles(r.text), false);
+      assert.equal(r.body.access.reason, 'not-member');
+    });
+
+    test('curso público: accessFor marca teacher aunque el curso cargado no traiga la lista', async () => {
+      const course = await fx.createCourse();
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      const { accessFor } = await import('../src/service/courseAccess.js');
+      const loaded = await Course.findById(course._id).lean();
+      assert.equal(loaded.profesores, undefined);
+      assert.equal((await accessFor({ id: String(profe._id) }, loaded)).teacher, true);
+      assert.notEqual((await accessFor({ id: String((await fx.createUser())._id) }, loaded)).teacher, true);
+    });
+
     test('privado, miembro antes de startsAt: plaza reservada sin contenido', async () => {
       const course = await fx.createCourse({ accessMode: 'private' });
       const ana = await fx.createUser();
