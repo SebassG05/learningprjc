@@ -13,6 +13,7 @@ const { default: mongoose } = await import('mongoose');
 const { default: Course } = await import('../src/models/Course.js');
 const { default: User } = await import('../src/models/User.js');
 const { default: Duda } = await import('../src/models/Duda.js');
+const { default: UserProgress } = await import('../src/models/UserProgress.js');
 const { buildDudaRouters, DUDA_RATE_LIMITS } = await import('../src/routes/duda.routes.js');
 const { buildProfesorRouter } = await import('../src/routes/profesor.routes.js');
 const { removeTeacher } = await import('../src/service/courseTeachers.js');
@@ -125,11 +126,66 @@ describe('rutas de dudas', () => {
       assert.equal((await api.call('GET', '/api/admin/dudas')).status, 401);
     });
 
-    test('curso público: anónimo lee pero no publica', async () => {
-      const pub = await fx.createCourse({ accessMode: 'public' });
-      assert.equal((await api.call('GET', `/api/courses/${pub._id}/dudas`)).status, 200);
-      const r = await api.call('POST', `/api/courses/${pub._id}/dudas`, { body: { temaId: 'general', titulo: 't', texto: 'x' } });
-      assert.equal(r.status, 401);
+    // Antes un anónimo podía leer las dudas de un curso público. Ahora solo los inscritos, los profesores
+    // del curso y los admins las leen o escriben: anónimo 401, con sesión sin inscripción 403.
+    describe('curso público: solo inscritos, profesores del curso y admins', () => {
+      let pub; let inscrito; let profePub; let ajeno; let dudaPub;
+      const pubBase = () => `/api/courses/${pub._id}/dudas`;
+      const askPub = (u) => api.call('POST', pubBase(), { headers: H(u), body: { temaId: 'general', titulo: 't', texto: 'x' } });
+      const reply = (u) => api.call('POST', `/api/dudas/${dudaPub._id}/respuestas`, { headers: H(u), body: { texto: 'Hola' } });
+      beforeEach(async () => {
+        pub = await fx.createCourse({ accessMode: 'public' });
+        inscrito = await fx.createUser();
+        profePub = await fx.createUser();
+        ajeno = await fx.createUser();
+        await UserProgress.create({ userId: inscrito._id, courseId: pub._id });
+        await makeTeacher(pub, profePub);
+        dudaPub = await Duda.create({ cursoId: pub._id, temaId: 'general', autorId: inscrito._id, autorNombre: 'Ins C.', titulo: 'Semilla', texto: 'Texto' });
+      });
+
+      test('anónimo: 401 al listar y al publicar', async () => {
+        assert.equal((await api.call('GET', pubBase())).status, 401);
+        assert.equal((await askPub(null)).status, 401);
+        assert.equal((await reply(null)).status, 401);
+      });
+
+      test('con sesión sin inscripción: 403 al listar, preguntar, responder y reportar', async () => {
+        const l = await api.call('GET', pubBase(), { headers: H(ajeno) });
+        assert.equal(l.status, 403);
+        assert.equal(Array.isArray(l.body), false);
+        assert.equal(l.text.includes('Semilla'), false);
+        assert.equal((await askPub(ajeno)).status, 403);
+        assert.equal((await reply(ajeno)).status, 403);
+        assert.equal((await api.call('POST', `/api/dudas/${dudaPub._id}/reportar`, { headers: H(ajeno), body: {} })).status, 403);
+        assert.equal(await Duda.countDocuments({ cursoId: pub._id }), 1);
+      });
+
+      test('inscrito: lista 200, pregunta 201 y responde 201', async () => {
+        const l = await api.call('GET', pubBase(), { headers: H(inscrito) });
+        assert.equal(l.status, 200);
+        assert.deepEqual(l.body.map((d) => d.titulo), ['Semilla']);
+        assert.equal((await askPub(inscrito)).status, 201);
+        assert.equal((await reply(inscrito)).status, 201);
+      });
+
+      test('profesor activo sin inscripción: lista, pregunta, responde como profesor y modera', async () => {
+        assert.equal((await api.call('GET', pubBase(), { headers: H(profePub) })).status, 200);
+        assert.equal((await askPub(profePub)).status, 201);
+        const r = await reply(profePub);
+        assert.equal(r.status, 201);
+        assert.equal(r.body.respuestas.at(-1).rol, 'profesor');
+        assert.equal((await api.call('PATCH', `/api/dudas/${dudaPub._id}/estado`, { headers: H(profePub), body: { accion: 'fijar' } })).status, 200);
+      });
+
+      test('admin sin inscripción: lista 200 y pregunta 201', async () => {
+        assert.equal((await api.call('GET', pubBase(), { headers: H(admin) })).status, 200);
+        assert.equal((await askPub(admin)).status, 201);
+      });
+
+      test('profesor de otro curso sin inscripción: 403', async () => {
+        assert.equal((await api.call('GET', pubBase(), { headers: H(profeOtro) })).status, 403);
+        assert.equal((await reply(profeOtro)).status, 403);
+      });
     });
 
     test('usuario desactivado con JWT válido en curso público: no publica ni modera', async () => {

@@ -5,7 +5,9 @@
 //   profesorRouter → /api/profesor            (GET /dudas)
 //   adminRouter    → /api/admin/dudas         (autenticar + soloAdmin)
 //
-// Orden en cada ruta de escritura: sesión → acceso al curso (lectura) → límite → validación → controlador.
+// Orden en cada ruta de escritura: sesión → acceso al curso (lectura) → participante → límite → validación → controlador.
+// «Participante» solo filtra en los cursos públicos: inscritos, profesores del curso y admins (los privados
+// ya los filtran las cohortes).
 // La regla de publicar / moderar se aplica dentro del controlador con canPublish / canModerate.
 import express from 'express';
 import { body, query } from 'express-validator';
@@ -15,7 +17,7 @@ import { optionalAuth } from '../middleware/optionalAuth.js';
 import createRateLimit from '../middleware/rateLimit.js';
 import { clientIp } from '../utils/requestInfo.js';
 import { canModerate, loadViewer } from '../service/courseAccess.js';
-import { courseIdFromDuda, fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
+import { courseIdFromDuda, fromParam, requireCourseAccess, requirePublicCourseParticipant } from '../middleware/courseAccess.js';
 import { noStore } from '../controller/courseTeacherController.js';
 import { DUDA_LIMITS } from '../models/Duda.js';
 import {
@@ -83,12 +85,13 @@ export function buildDudaRouters({ limits } = {}) {
 
   const courseRouter = express.Router({ mergeParams: true });
   courseRouter.use(noStore, express.json());
-  courseRouter.get('/', optionalAuth, requireCourseAccess('read', fromParam('id')), listaRules, listarDudas);
-  courseRouter.post('/', authenticateJWT, requireCourseAccess('read', fromParam('id')), preguntas, crearRules, crearDuda);
+  const cursoLeible = [requireCourseAccess('read', fromParam('id')), requirePublicCourseParticipant];
+  courseRouter.get('/', optionalAuth, ...cursoLeible, listaRules, listarDudas);
+  courseRouter.post('/', authenticateJWT, ...cursoLeible, preguntas, crearRules, crearDuda);
 
   const dudaRouter = express.Router();
   dudaRouter.use(noStore, express.json(), authenticateJWT);
-  const acceso = requireCourseAccess('read', courseIdFromDuda('dudaId'));
+  const acceso = [requireCourseAccess('read', courseIdFromDuda('dudaId')), requirePublicCourseParticipant];
   dudaRouter.patch('/:dudaId', acceso, ediciones, editarRules, editarDuda);
   dudaRouter.delete('/:dudaId', acceso, ediciones, borrarDuda);
   dudaRouter.post('/:dudaId/respuestas', acceso, respuestas, respuestaRules, responder);

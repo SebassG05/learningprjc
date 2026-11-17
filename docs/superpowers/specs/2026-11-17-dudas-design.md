@@ -20,11 +20,11 @@ No es un foro de hilos libres. No cuenta para el anillo de progreso.
 | Límite | 10 profesores por curso. |
 | Acceso del profesor | `isCourseTeacher(viewer, course)` en `service/courseAccess.js`, única regla. Curso privado sin cohorte → `{ level: 'readonly', reason: 'teacher' }`; con cohorte gana el mejor. Siempre se devuelve `teacher: boolean`. El front solo lee `curso.access.teacher`. |
 | Condiciones | El profesor las acepta con el mismo `TermsGate` la primera vez; se guarda igual que la de un alumno. |
-| Visibilidad | Todo el que puede leer el curso, de todas las cohortes. Las ocultas solo las ven profesores del curso y admins. |
+| Visibilidad | Todo el que puede leer el curso, de todas las cohortes. En un curso **público**, solo los inscritos (`UserProgress`), los profesores activos del curso y los admins (anónimo 401, con sesión sin inscripción 403); el resto de reglas se aplican igual. Las ocultas solo las ven profesores del curso y admins. |
 | Quién publica | Preguntar y responder: escritura en el curso (`allows(level,'write')`), o profesor del curso, o admin. Cohorte cerrada: solo lee. |
 | Firma | Alumno: «Nombre I.» (nunca sale el apellido completo). Profesor del curso: nombre real + «Profesor». Admin que no es profesor del curso: nombre real + «Equipo docente». Se guarda al publicar; quitar a un profesor no cambia sus respuestas. |
 | Estado | `abierta` → `respondida` (solo con respuesta visible de profesor o equipo) → `resuelta` (autor, profesor o admin). Reabrir vuelve a `respondida`/`abierta`. |
-| Moderación | Profesores del curso y admins: fijar, ocultar (sin borrar), resolver, ver reportes. Un profesor de otro curso no modera. |
+| Moderación | Profesores del curso y admins: fijar, ocultar (sin borrar), resolver, ver reportes (cuántos, el motivo y cuándo; nunca quién reportó). Un profesor de otro curso no modera. |
 | Editar y borrar | Lo propio. Una duda sin respuestas se borra; con respuestas se **retira**: se borran de la BD `titulo`, `texto`, `autorNombre` y `autorId`, y se muestra «Duda retirada por su autor»; las respuestas siguen. Las respuestas propias se editan («editada») o se borran. |
 | Idioma | `lang` (`es`/`en`) en cada duda; se mezclan en la lista. |
 | Avisos | Pregunta nueva → correo a los profesores vinculados del curso (si no hay, a `EMAIL_USER`). Respuesta de profesor o equipo → correo al autor, una vez por respuesta. «Respuesta nueva» en la app hasta que el autor la ve. |
