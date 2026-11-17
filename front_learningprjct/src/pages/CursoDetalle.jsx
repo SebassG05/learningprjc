@@ -277,6 +277,9 @@ export default function CursoDetalle() {
   // Profesor del curso sin inscripción: ve el aula, sin progreso ni entregas
   const esProfesor = Boolean(curso.access?.teacher) && !enrollmentStatus?.enrolled;
   const lang = idiomaSeleccionado === 'en' ? 'en' : 'es';
+  // Publicar dudas: edición abierta, profesor del curso o admin (el servidor lo vuelve a comprobar)
+  const puedePublicar =
+    curso.access?.level === 'full' || curso.access?.teacher === true || user?.role === 'admin' || user?.role === 'superadmin';
 
   // Si no está inscrito (y no es profesor), no mostrar contenido
   if (!enrollmentStatus?.enrolled && !esProfesor) {
@@ -509,6 +512,7 @@ export default function CursoDetalle() {
             completedTests={completedTests}
             idioma={idiomaSeleccionado || 'es'}
             esProfesor={esProfesor}
+            puedePublicar={puedePublicar}
           />
           </Suspense>
         ) : null}

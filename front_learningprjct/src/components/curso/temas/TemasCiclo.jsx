@@ -18,7 +18,7 @@ const sceneId = (tema) => `tema-${tema.numeroTema}`;
  * vídeo, los conceptos y el índice aparecen solo si el tema los trae. Mantiene el progreso (materiales
  * estudiados y test de cada tema); el test final se pinta en el cierre de CursoDetalle.
  */
-export default function TemasCiclo({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests, idioma = 'es', esProfesor = false }) {
+export default function TemasCiclo({ cursoId, temas, completedMaterials, setCompletedMaterials, completedTests, idioma = 'es', esProfesor = false, puedePublicar = false }) {
   const t = copy(idioma);
   const ciclo = usaCiclo(cursoId);
   const navigate = useNavigate();
@@ -75,6 +75,7 @@ export default function TemasCiclo({ cursoId, temas, completedMaterials, setComp
               cursoId={cursoId}
               idioma={idioma}
               esProfesor={esProfesor}
+              puedePublicar={puedePublicar}
               t={t}
               isSeen={seen.has(String(tema._id))}
               onSeen={onSeen}
