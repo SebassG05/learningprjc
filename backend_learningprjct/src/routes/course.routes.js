@@ -18,6 +18,10 @@ const interestRateLimit = createRateLimit({
   max: 5,
   message: 'Ya nos has dejado varios emails. Prueba de nuevo más tarde.',
 });
+import { param, body } from 'express-validator';
+import {
+  altaProfesor, bajaProfesor, listarProfesores, noStore, reenviarProfesor,
+} from '../controller/courseTeacherController.js';
 import { fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 
 const router = express.Router();
@@ -144,6 +148,14 @@ router.get('/:id/interes', autenticar, soloAdmin, listarInteresados);
 
 // Público o privado (por cohortes)
 router.put('/:id/access', autenticar, soloAdmin, express.json(), cambiarModoAcceso);
+
+// Profesores del curso (solo admin): nunca devuelven hashes ni el enlace de un solo uso
+const courseIdRule = param('id').isMongoId();
+const teacherIdRule = param('profesorId').isMongoId();
+router.get('/:id/profesores', noStore, autenticar, soloAdmin, courseIdRule, listarProfesores);
+router.post('/:id/profesores', noStore, autenticar, soloAdmin, express.json(), courseIdRule, body('email').isString().isLength({ max: 254 }), altaProfesor);
+router.post('/:id/profesores/:profesorId/reenviar', noStore, autenticar, soloAdmin, courseIdRule, teacherIdRule, reenviarProfesor);
+router.delete('/:id/profesores/:profesorId', noStore, autenticar, soloAdmin, courseIdRule, teacherIdRule, bajaProfesor);
 
 // ============= RUTAS PARA TEMAS =============
 
