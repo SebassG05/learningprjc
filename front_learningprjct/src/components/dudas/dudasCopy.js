@@ -59,6 +59,8 @@ export const DUDAS = {
     editada: 'editada',
     tuDuda: 'Tu duda',
     reportes: (n) => (n === 1 ? '1 reporte' : `${n} reportes`),
+    verMotivos: (n) => (n === 1 ? 'Ver el motivo del reporte' : `Ver los motivos de los ${n} reportes`),
+    sinMotivo: 'Sin motivo',
     respuestas: (n) => (n === 1 ? '1 respuesta' : `${n} respuestas`),
     sinRespuestas: 'Sin respuestas todavía',
 
@@ -162,6 +164,7 @@ export const DUDAS = {
       filtroEstado: 'Filter by status',
       todosLosTemas: 'All topics',
       pendientes: 'Pending',
+      resueltas: 'Resolved',
       vacio: 'There are no questions in this course yet. If something was not clear, ask it: the answer will stay here for the whole course.',
       sinResultados: 'No question matches these filters.',
       noEncontrado: 'We could not find this course.',
@@ -190,6 +193,8 @@ export const DUDAS = {
     editada: 'edited',
     tuDuda: 'Your question',
     reportes: (n) => (n === 1 ? '1 report' : `${n} reports`),
+    verMotivos: (n) => (n === 1 ? 'See the report reason' : `See the reasons for the ${n} reports`),
+    sinMotivo: 'No reason given',
     respuestas: (n) => (n === 1 ? '1 reply' : `${n} replies`),
     sinRespuestas: 'No replies yet',
 

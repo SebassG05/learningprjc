@@ -116,14 +116,17 @@ describe('toPublic', () => {
     assert.equal(p.respuestas[0].autorId, undefined);
     assert.equal(p.respuestas[0].mine, true);
     assert.equal(JSON.stringify(p).includes(String(autor)), false);
+    assert.equal(JSON.stringify(p).includes(String(otro)), false);
   });
 
-  test('moderador: ve respuestas ocultas marcadas y reportesCount', () => {
-    const p = toPublic(duda(), { viewerId: String(oid()), moderador: true });
+  test('moderador: ve respuestas ocultas marcadas, reportesCount y los motivos sin quién reporta', () => {
+    const d = duda();
+    const p = toPublic(d, { viewerId: String(oid()), moderador: true });
     assert.equal(p.respuestas.length, 2);
     assert.equal(p.respuestas[1].oculta, true);
-    assert.equal(p.reportes, undefined);
+    assert.deepEqual(p.reportes, [{ motivo: 'm', at: d.reportes[0].at }]);
     assert.equal(p.reportesCount, 1);
+    assert.equal(JSON.stringify(p.reportes).includes(String(otro)), false);
     assert.equal(p.mine, false);
     assert.equal(p.puedeModerar, true);
     assert.equal(p.autorId, undefined);

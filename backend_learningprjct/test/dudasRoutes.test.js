@@ -261,7 +261,7 @@ describe('rutas de dudas', () => {
       assert.equal(del.body.estado, 'abierta');
     });
 
-    test('segundo reporte del mismo usuario → 409; reportesCount solo para moderadores', async () => {
+    test('segundo reporte del mismo usuario → 409; reportesCount y motivos solo para moderadores', async () => {
       const d = await seed();
       const url = `/api/dudas/${d._id}/reportar`;
       assert.equal((await api.call('POST', url, { headers: H(alumno), body: { motivo: 'spam' } })).status, 201);
@@ -270,9 +270,14 @@ describe('rutas de dudas', () => {
       assert.equal((await api.call('POST', url, { headers: H(sinAcceso), body: {} })).status, 403);
       const mod = await api.call('GET', base(), { headers: H(profe) });
       assert.equal(mod.body[0].reportesCount, 2);
-      assert.equal(mod.text.includes('spam'), false);
+      assert.deepEqual(mod.body[0].reportes.map((r) => r.motivo), ['spam', '']);
+      assert.ok(mod.body[0].reportes.every((r) => r.at && !('userId' in r)));
+      assert.equal(mod.text.includes(String(alumno._id)), false);
+      assert.equal(mod.text.includes(String(cerrada._id)), false);
       const al = await api.call('GET', base(), { headers: H(alumno) });
       assert.equal(al.body[0].reportesCount, undefined);
+      assert.equal(al.body[0].reportes, undefined);
+      assert.equal(al.text.includes('spam'), false);
     });
 
     test('alumno no ve dudas ocultas; profesor sí; mostrar la recupera', async () => {

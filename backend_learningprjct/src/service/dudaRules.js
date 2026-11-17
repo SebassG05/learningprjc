@@ -45,7 +45,7 @@ export function retirarDuda(duda) {
 
 const same = (a, b) => Boolean(a && b && String(a) === String(b));
 
-/** Vista pública: nunca expone autorId, reportes ni datos de avisos (notificado, notificadoAt); respuestaNoVista solo al autor. null si la duda está oculta y no se modera. */
+/** Vista pública: nunca expone autorId, quién reporta (los motivos solo a moderadores) ni datos de avisos (notificado, notificadoAt); respuestaNoVista solo al autor. null si la duda está oculta y no se modera. */
 export function toPublic(duda, { viewerId, moderador } = {}) {
   const src = typeof duda?.toObject === 'function' ? duda.toObject() : duda;
   if (src.oculta && !moderador) return null;
@@ -59,6 +59,10 @@ export function toPublic(duda, { viewerId, moderador } = {}) {
     respuestas: visibles.map(({ autorId: rAutor, notificadoAt, ...r }) => ({ ...r, mine: same(viewerId, rAutor) })),
   };
   if (mine) out.respuestaNoVista = Boolean(respuestaNoVista);
-  if (moderador) out.reportesCount = (reportes ?? []).length;
+  if (moderador) {
+    // Quien modera ve por qué se reportó y cuándo, nunca quién lo hizo
+    out.reportesCount = (reportes ?? []).length;
+    out.reportes = (reportes ?? []).map(({ motivo, at }) => ({ motivo: motivo ?? '', at }));
+  }
   return out;
 }

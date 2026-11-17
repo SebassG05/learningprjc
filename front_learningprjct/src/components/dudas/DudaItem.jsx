@@ -72,6 +72,24 @@ export default function DudaItem({ duda, lang = 'es', puedePublicar = false, onA
         </p>
       ) : null}
 
+      {/* Motivos de los reportes: solo llegan a quien modera (nunca quién reportó) */}
+      {duda.reportes?.length ? (
+        <details className="mb-3 text-footnote text-ink-3">
+          <summary className="inline-flex min-h-11 cursor-pointer items-center rounded-full px-1 font-medium text-ink-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]">
+            {c.verMotivos(duda.reportes.length)}
+          </summary>
+          <ul className="mt-1 space-y-1.5 border-l border-line pl-3">
+            {duda.reportes.map((r, i) => (
+              <li key={`${r.at}-${i}`} className="flex flex-wrap gap-x-2">
+                <span className={r.motivo ? 'whitespace-pre-line text-ink-2' : 'italic'}>{r.motivo || c.sinMotivo}</span>
+                <span aria-hidden="true">·</span>
+                <time dateTime={r.at}>{tiempoRelativo(r.at, lang)}</time>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
+
       {duda.retirada ? (
         <h5 id={titleId} className="text-lg font-medium italic text-ink-3">
           {c.retirada}
