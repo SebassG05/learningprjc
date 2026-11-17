@@ -12,6 +12,7 @@ import { courseName } from '../shared/adminFormat';
 import DudaItem from '../../dudas/DudaItem';
 import useDudaAcciones from '../../dudas/useDudaAcciones';
 import { temaLabel } from '../../dudas/dudasFormat';
+import { useToast } from '../../../context/ToastContext';
 import { fetchAdminDudas } from '../../../lib/adminApi';
 
 const LIMIT = 20;
@@ -31,6 +32,7 @@ const COPY = {
   reportadas: 'Solo reportadas',
   verEnCurso: 'Ver en el curso',
   vacio: { title: 'No hay dudas', description: 'Ninguna duda coincide con estos filtros.' },
+  errorMas: 'No se han podido cargar más dudas. Inténtalo de nuevo.',
   error: { title: 'No se han podido cargar las dudas', action: 'Reintentar' },
   cargando: 'Cargando dudas',
   resultados: (n) => (n === 1 ? '1 duda' : `${n} dudas`),
@@ -40,6 +42,7 @@ const INITIAL = { curso: '', estado: '', reportadas: false };
 
 // Pestaña Dudas: las dudas de todos los cursos, con las acciones de moderación sobre cada una
 export default function DudasTab() {
+  const { showToast } = useToast();
   const { courses } = useAdminCourses();
   const [filters, setFilters] = useState(INITIAL);
   const [dudas, setDudas] = useState([]);
@@ -73,6 +76,7 @@ export default function DudasTab() {
     setStatus((s) => (s === 'loading' || s === 'error' ? 'loading' : 'refreshing'));
     fetchAdminDudas(params(1), c.signal)
       .then((r) => {
+        if (c.signal.aborted) return;
         setDudas(Array.isArray(r.items) ? r.items : []);
         setMeta({ page: r.page ?? 1, total: r.total ?? 0 });
         setStatus('ready');
@@ -83,22 +87,28 @@ export default function DudasTab() {
 
   const hasMore = meta.page * LIMIT < meta.total;
 
+  // Cada cambio de filtros abre una generación nueva (un AbortController nuevo en `ctrl`): la página
+  // que llega de una generación anterior se descarta sin tocar la lista, las cifras ni el estado.
   const loadMore = useCallback(async () => {
     if (status !== 'ready' || !hasMore) return;
+    const gen = ctrl.current;
+    if (!gen || gen.signal.aborted) return;
     setStatus('loadingMore');
     try {
-      const r = await fetchAdminDudas(params(meta.page + 1));
+      const r = await fetchAdminDudas(params(meta.page + 1), gen.signal);
+      if (gen.signal.aborted) return;
       setDudas((list) => {
         const seen = new Set(list.map((d) => d._id));
         return [...list, ...(r.items ?? []).filter((d) => !seen.has(d._id))];
       });
       setMeta({ page: r.page ?? meta.page + 1, total: r.total ?? meta.total });
-    } catch {
-      // La lista ya cargada sigue ahí; el botón «Cargar más» permite reintentar
-    } finally {
+      setStatus('ready');
+    } catch (err) {
+      if (gen.signal.aborted || err?.name === 'AbortError') return;
+      showToast(COPY.errorMas, 'error', 4000);
       setStatus('ready');
     }
-  }, [status, hasMore, params, meta]);
+  }, [status, hasMore, params, meta, showToast]);
 
   const accionDe = useCallback((id) => (nombre, ...args) => acciones[nombre](id, ...args), [acciones]);
   const active = (filters.curso ? 1 : 0) + (filters.estado ? 1 : 0) + (filters.reportadas ? 1 : 0);

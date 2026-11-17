@@ -96,7 +96,8 @@ export default function TeachersEditor({ courseId }) {
       showToast(T.resent, 'success');
     } catch (err) {
       showToast(errorMessage(err), 'error', 5000);
-      if (err?.body?.code === 'already-linked') reload();
+      // «mail-failed»: el servidor pudo rotar el token y la fecha de envío; «already-linked»: ya está vinculado
+      if (err?.body?.code === 'already-linked' || err?.body?.code === 'mail-failed') reload();
     } finally {
       setBusyId(null);
     }
