@@ -2,7 +2,7 @@
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { ChevronDown, LogOut, Menu, Settings } from 'lucide-react';
+import { ChevronDown, LogOut, Menu, MessageCircleQuestion, Settings } from 'lucide-react';
 import AuthModal from '../auth/LazyAuthModal';
 import { preloadAuthModal } from '../auth/loadAuthModal';
 import { useUser } from '../../context/UserContext.jsx';
@@ -12,6 +12,8 @@ import Logo from './Logo';
 import Button from '../ui/Button';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { spring } from '../../lib/motion';
+import { fetchMisCursosProfesor } from '../../lib/dudasApi';
+import { dudasCopy } from '../dudas/dudasCopy';
 import { getNavLinks, isActivePath } from './navigation';
 
 // Compactación de la barra en escritorio: de 88 a 68 px (solo transform y opacity)
@@ -43,6 +45,34 @@ const Avatar = ({ user, className }) => (
   </span>
 );
 
+const MENU_PROFESOR = dudasCopy('es').profesor;
+
+// Dudas pendientes de los cursos del profesor (abiertas + reportadas); null si no es profesor de ninguno
+const usePendientesProfesor = (user) => {
+  const [pendientes, setPendientes] = useState(null);
+  const userId = user?._id ?? user?.id ?? user?.email;
+  useEffect(() => {
+    setPendientes(null);
+    if (!userId) return undefined;
+    const ctrl = new AbortController();
+    fetchMisCursosProfesor(ctrl.signal)
+      .then((cursos) => {
+        if (!Array.isArray(cursos) || !cursos.length) return;
+        setPendientes(cursos.reduce((n, c) => n + (c.abiertas || 0) + (c.reportadas || 0), 0));
+      })
+      .catch(() => {});
+    return () => ctrl.abort();
+  }, [userId]);
+  return pendientes;
+};
+
+const PendientesBadge = ({ n }) =>
+  n > 0 ? (
+    <span className="ml-auto rounded-full bg-brand px-2 py-0.5 text-xs font-bold text-on-brand" aria-label={MENU_PROFESOR.pendientesAria(n)}>
+      {n}
+    </span>
+  ) : null;
+
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
@@ -51,6 +81,7 @@ const Header = () => {
   const { showToast } = useToast();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
+  const pendientes = usePendientesProfesor(user);
   const { pathname } = useLocation();
   const desktop = useMediaQuery('(min-width: 1024px)');
   const reduce = useReducedMotion();
@@ -93,6 +124,12 @@ const Header = () => {
     setUserMenuOpen(false);
     setMobileMenuOpen(false);
     navigate('/ajustes');
+  };
+
+  const goToDudas = () => {
+    setUserMenuOpen(false);
+    setMobileMenuOpen(false);
+    navigate('/profesor/dudas');
   };
 
   const handleLogout = async () => {
@@ -169,6 +206,16 @@ const Header = () => {
                             <span className="truncate text-xs text-ink-3">{user.email}</span>
                           </div>
                         </div>
+                        {pendientes !== null ? (
+                          <button
+                            className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-glass-strong hover:text-ink"
+                            onClick={goToDudas}
+                          >
+                            <MessageCircleQuestion className="h-4 w-4 opacity-60" aria-hidden="true" />
+                            {MENU_PROFESOR.menu}
+                            <PendientesBadge n={pendientes} />
+                          </button>
+                        ) : null}
                         <button
                           className="flex min-h-11 w-full items-center gap-2.5 rounded-xl px-3 text-left text-sm font-medium text-ink-2 transition-colors duration-150 hover:bg-glass-strong hover:text-ink"
                           onClick={goToSettings}
@@ -222,6 +269,12 @@ const Header = () => {
                   <span className="truncate text-sm text-ink-3">{user.email}</span>
                 </div>
               </div>
+              {pendientes !== null ? (
+                <button className="flex min-h-12 items-center gap-3 rounded-2xl px-3 text-left text-lg font-medium text-ink-2 transition-colors hover:bg-glass-strong hover:text-ink" onClick={goToDudas}>
+                  <MessageCircleQuestion className="h-5 w-5 opacity-60" aria-hidden="true" /> {MENU_PROFESOR.menu}
+                  <PendientesBadge n={pendientes} />
+                </button>
+              ) : null}
               <button className="flex min-h-12 items-center gap-3 rounded-2xl px-3 text-left text-lg font-medium text-ink-2 transition-colors hover:bg-glass-strong hover:text-ink" onClick={goToSettings}>
                 <Settings className="h-5 w-5 opacity-60" aria-hidden="true" /> Ajustes
               </button>

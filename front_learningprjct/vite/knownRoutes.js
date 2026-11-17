@@ -8,6 +8,7 @@ export const KNOWN_ROUTES = [
   /^\/(reset-password|forgot-password|login|contacto|cursos|reseñas|ajustes|sobre)\/?$/,
   /^\/(cookies|politica-cookies|privacidad|terminos|aviso-legal|guia-usuario)\/?$/,
   /^\/admin\/correcciones\/?$/,
+  /^\/profesor\/(invitacion|dudas)\/?$/,
   new RegExp(`^/curso/${ID}(/(inscripcion|invitacion|estructura|dudas|tema-estudio))?/?$`),
   new RegExp(`^/curso/${ID}/temario/${ID}/?$`),
   new RegExp(`^/curso/${ID}/ejercicio/${ID}/entregar/?$`),
