@@ -13,6 +13,8 @@ import { authenticateJWT } from '../middleware/auth.js';
 import { autenticar, soloAdmin } from '../middleware/authorization.js';
 import { optionalAuth } from '../middleware/optionalAuth.js';
 import createRateLimit from '../middleware/rateLimit.js';
+import { clientIp } from '../utils/requestInfo.js';
+import { canModerate, loadViewer } from '../service/courseAccess.js';
 import { courseIdFromDuda, fromParam, requireCourseAccess } from '../middleware/courseAccess.js';
 import { noStore } from '../controller/courseTeacherController.js';
 import { DUDA_LIMITS } from '../models/Duda.js';
@@ -66,10 +68,17 @@ const adminRules = [
 
 export function buildDudaRouters({ limits } = {}) {
   const max = { ...DUDA_RATE_LIMITS, ...limits };
-  const limiter = (n, message) => createRateLimit({ windowMs: HORA, max: n, message });
+  // Por usuario (el JWT ya está verificado): la IP sale de cabeceras y no es fiable ni sirve tras un proxy
+  const keyFn = (req) => (req.user?.id ? `u:${req.user.id}` : clientIp(req));
+  const limiter = (n, message) => createRateLimit({ windowMs: HORA, max: n, message, keyFn });
   const preguntas = limiter(max.preguntas, 'Has hecho demasiadas preguntas. Prueba de nuevo más tarde.');
   const respuestas = limiter(max.respuestas, 'Has respondido demasiadas veces. Prueba de nuevo más tarde.');
   const ediciones = limiter(max.ediciones, 'Demasiados cambios seguidos. Prueba de nuevo más tarde.');
+  // Quien modera (profesor del curso o admin) no gasta cupo en acciones de moderación
+  const salvoModeracion = (limit) => async (req, res, next) => {
+    const viewer = await loadViewer(req.user);
+    return canModerate(req.courseAccess, viewer) ? next() : limit(req, res, next);
+  };
   const reportes = limiter(max.reportes, 'Has enviado demasiados reportes. Prueba de nuevo más tarde.');
 
   const courseRouter = express.Router({ mergeParams: true });
@@ -85,7 +94,7 @@ export function buildDudaRouters({ limits } = {}) {
   dudaRouter.post('/:dudaId/respuestas', acceso, respuestas, respuestaRules, responder);
   dudaRouter.patch('/:dudaId/respuestas/:respuestaId', acceso, ediciones, respuestaRules, editarRespuesta);
   dudaRouter.delete('/:dudaId/respuestas/:respuestaId', acceso, ediciones, borrarRespuesta);
-  dudaRouter.patch('/:dudaId/estado', acceso, ediciones, estadoRules, cambiarEstado);
+  dudaRouter.patch('/:dudaId/estado', acceso, salvoModeracion(ediciones), estadoRules, cambiarEstado);
   dudaRouter.post('/:dudaId/vista', acceso, marcarVista);
   dudaRouter.post('/:dudaId/reportar', acceso, reportes, reporteRules, reportar);
 

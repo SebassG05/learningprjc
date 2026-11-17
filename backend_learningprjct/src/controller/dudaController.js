@@ -51,13 +51,13 @@ const publicOf = (req, viewer, duda) => toPublic(duda, view(req, viewer));
 
 // Duda de la petición (el middleware ya comprobó que el curso existe y que se puede leer).
 // Una duda oculta no existe para quien no modera.
-async function loadDuda(req, res, viewer) {
+async function loadDuda(req, res, viewer, { allowAuthor = false } = {}) {
   const duda = await Duda.findById(req.params.dudaId);
   if (!duda) {
     fail(res, 404, 'Duda no encontrada');
     return null;
   }
-  if (duda.oculta && !canModerate(req.courseAccess, viewer)) {
+  if (duda.oculta && !canModerate(req.courseAccess, viewer) && !(allowAuthor && same(duda.autorId, viewer?.id))) {
     fail(res, 404, 'Duda no encontrada');
     return null;
   }
@@ -136,22 +136,22 @@ export async function editarDuda(req, res) {
 export async function borrarDuda(req, res) {
   const viewer = await viewerOrFail(req, res);
   if (!viewer) return;
-  const duda = await loadDuda(req, res, viewer);
+  // El autor puede retirar también su duda oculta; el resto de acciones sobre una oculta siguen siendo 404
+  const duda = await loadDuda(req, res, viewer, { allowAuthor: true });
   if (!duda) return;
+  const autor = same(duda.autorId, viewer.id);
+  if (!autor && !canModerate(req.courseAccess, viewer)) return fail(res, 403, 'No puedes borrar esta duda');
 
-  if (same(duda.autorId, viewer.id)) {
-    if (retirarDuda(duda) === 'borrar') {
-      await duda.deleteOne();
-      return res.json({ borrada: true });
-    }
-    touch(duda);
-    await duda.save();
-    return res.json({ retirada: true, duda: publicOf(req, viewer, duda) });
-  }
-  if (!canModerate(req.courseAccess, viewer)) return fail(res, 403, 'No puedes borrar esta duda');
-  if (duda.respuestas.length > 0) return fail(res, 409, 'La duda tiene respuestas: ocúltala en lugar de borrarla');
-  await duda.deleteOne();
-  return res.json({ borrada: true });
+  // Borrado atómico: si mientras tanto llegó una respuesta, no borra nada
+  const sinRespuestas = { _id: duda._id, 'respuestas.0': { $exists: false } };
+  if ((await Duda.deleteOne(sinRespuestas)).deletedCount === 1) return res.json({ borrada: true });
+  if (!autor) return fail(res, 409, 'La duda tiene respuestas: ocúltala en lugar de borrarla');
+
+  const actual = await Duda.findById(duda._id);
+  if (!actual) return res.json({ borrada: true });
+  retirarDuda(actual);
+  await actual.save();
+  return res.json({ retirada: true, duda: publicOf(req, viewer, actual) });
 }
 
 // ---------- Respuestas ----------
@@ -208,7 +208,6 @@ export async function borrarRespuesta(req, res) {
   if (!same(respuesta.autorId, viewer.id)) return fail(res, 403, 'Solo el autor puede borrar su respuesta');
   duda.respuestas.pull(respuesta._id);
   duda.estado = recalcularEstado(duda);
-  touch(duda);
   await duda.save();
   return res.json(publicOf(req, viewer, duda));
 }
@@ -226,6 +225,9 @@ export async function cambiarEstado(req, res) {
 
   if (accion === 'resolver' || accion === 'reabrir') {
     if (!moderador && !same(duda.autorId, viewer.id)) return fail(res, 403, 'Solo el autor o el profesorado pueden cambiar el estado');
+    // Reabrir devuelve la duda a la bandeja del profesorado: no desde una cohorte de solo lectura
+    if (accion === 'reabrir' && !moderador && !canPublish(req.courseAccess, viewer)) return fail(res, 403, 'Este curso está en modo solo lectura');
+    touch(duda);
     duda.estado = 'abierta';
     if (accion === 'resolver') duda.estado = 'resuelta';
     else duda.estado = recalcularEstado(duda);
@@ -243,7 +245,6 @@ export async function cambiarEstado(req, res) {
       duda.oculta = oculta;
     }
   }
-  touch(duda);
   await duda.save();
   return res.json(publicOf(req, viewer, duda));
 }
@@ -255,7 +256,6 @@ export async function marcarVista(req, res) {
   if (!duda) return;
   if (!same(duda.autorId, viewer.id)) return fail(res, 403, 'Solo el autor puede marcar las respuestas como vistas');
   duda.respuestaNoVista = false;
-  touch(duda);
   await duda.save();
   return res.json(publicOf(req, viewer, duda));
 }
@@ -268,7 +268,6 @@ export async function reportar(req, res) {
   if (!duda) return;
   if (duda.reportes.some((r) => same(r.userId, viewer.id))) return fail(res, 409, 'Ya has reportado esta duda');
   duda.reportes.push({ userId: viewer.id, motivo: req.body.motivo ?? '' });
-  touch(duda);
   await duda.save();
   return res.status(201).json({ reportada: true });
 }

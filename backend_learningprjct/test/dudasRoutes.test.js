@@ -203,6 +203,9 @@ describe('rutas de dudas', () => {
       const raw = await Duda.collection.findOne({ _id: d._id });
       assert.equal(raw.retirada, true);
       assert.equal(raw.autorId, null);
+      assert.equal(raw.titulo, null);
+      assert.equal(raw.texto, null);
+      assert.equal(raw.autorNombre, null);
       const list = await api.call('GET', base(), { headers: H(alumno) });
       assert.equal(list.body[0].retirada, true);
       assert.equal(list.body[0].respuestas.length, 1);
@@ -359,6 +362,82 @@ describe('rutas de dudas', () => {
       await Duda.updateOne({ _id: a._id }, { estado: 'resuelta' });
       assert.equal((await api.call('GET', `${base()}?estado=resuelta`, { headers: H(alumno) })).body.length, 1);
       assert.ok(b);
+    });
+
+    test('ultimaActividad solo se mueve con contenido nuevo: no con vista, reportar, fijar, ocultar', async () => {
+      const antes = new Date(Date.now() - 60000);
+      const d = await seed(alumno, { ultimaActividad: antes });
+      await api.call('POST', `/api/dudas/${d._id}/respuestas`, { headers: H(profe), body: { texto: 'P' } });
+      assert.ok((await Duda.findById(d._id)).ultimaActividad > antes);
+      await Duda.updateOne({ _id: d._id }, { ultimaActividad: antes });
+      await api.call('POST', `/api/dudas/${d._id}/vista`, { headers: H(alumno) });
+      await api.call('POST', `/api/dudas/${d._id}/reportar`, { headers: H(cerrada), body: {} });
+      for (const accion of ['fijar', 'desfijar', 'ocultar', 'mostrar']) {
+        await api.call('PATCH', `/api/dudas/${d._id}/estado`, { headers: H(profe), body: { accion } });
+      }
+      assert.equal((await Duda.findById(d._id)).ultimaActividad.getTime(), antes.getTime());
+      await api.call('PATCH', `/api/dudas/${d._id}/estado`, { headers: H(alumno), body: { accion: 'resolver' } });
+      assert.ok((await Duda.findById(d._id)).ultimaActividad > antes);
+    });
+
+    test('el autor retira su duda oculta; el resto de acciones sobre una oculta siguen en 404', async () => {
+      const d = await seed(alumno, { oculta: true });
+      assert.equal((await api.call('PATCH', `/api/dudas/${d._id}`, { headers: H(alumno), body: { titulo: 'x' } })).status, 404);
+      assert.equal((await api.call('POST', `/api/dudas/${d._id}/reportar`, { headers: H(alumno), body: {} })).status, 404);
+      assert.equal((await api.call('DELETE', `/api/dudas/${d._id}`, { headers: H(alumno) })).status, 200);
+      assert.equal(await Duda.countDocuments({ _id: d._id }), 0);
+      const otro = await fx.createUser();
+      await fx.createCohort(course, { members: [otro] });
+      const e = await seed(alumno, { oculta: true });
+      assert.equal((await api.call('DELETE', `/api/dudas/${e._id}`, { headers: H(otro) })).status, 404);
+    });
+
+    test('borrado atómico: con una respuesta no se borra (autor retira, moderador 409)', async () => {
+      const d = await seed(alumno, { respuestas: [{ autorId: profe._id, autorNombre: 'M', rol: 'profesor', texto: 'R' }] });
+      assert.equal((await api.call('DELETE', `/api/dudas/${d._id}`, { headers: H(profe) })).status, 409);
+      const r = await api.call('DELETE', `/api/dudas/${d._id}`, { headers: H(alumno) });
+      assert.equal(r.status, 200);
+      assert.equal(r.body.retirada, true);
+      assert.equal(await Duda.countDocuments({ _id: d._id }), 1);
+    });
+
+    test('reabrir exige poder publicar; resolver la propia vale en solo lectura', async () => {
+      const d = await seed(cerrada);
+      const est = (accion) => api.call('PATCH', `/api/dudas/${d._id}/estado`, { headers: H(cerrada), body: { accion } });
+      assert.equal((await est('resolver')).status, 200);
+      assert.equal((await est('reabrir')).status, 403);
+      assert.equal((await Duda.findById(d._id)).estado, 'resuelta');
+      const e = await seed(alumno, { estado: 'resuelta' });
+      const r = await api.call('PATCH', `/api/dudas/${e._id}/estado`, { headers: H(alumno), body: { accion: 'reabrir' } });
+      assert.equal(r.body.estado, 'abierta');
+    });
+
+    test('límites por usuario: cupo propio aunque comparta IP; x-forwarded-for no lo reinicia', async () => {
+      const real = fx.listen(mount({ preguntas: 10 }));
+      try {
+        const post = (u, ip) => real.call('POST', base(), { headers: { ...H(u), 'x-forwarded-for': ip }, body: { temaId: 'general', titulo: 't', texto: 'x' } });
+        for (let i = 0; i < 10; i += 1) assert.equal((await post(alumno, `1.1.1.${i}`)).status, 201);
+        assert.equal((await post(alumno, '9.9.9.9')).status, 429);
+        assert.equal((await post(admin, '1.1.1.0')).status, 201);
+      } finally {
+        await real.close();
+      }
+    });
+
+    test('un moderador hace más de 30 acciones de moderación sin 429; un alumno sí se limita', async () => {
+      const real = fx.listen(mount({ ediciones: 30 }));
+      try {
+        const d = await seed();
+        for (let i = 0; i < 35; i += 1) {
+          const r = await real.call('PATCH', `/api/dudas/${d._id}/estado`, { headers: H(profe), body: { accion: i % 2 ? 'desfijar' : 'fijar' } });
+          assert.equal(r.status, 200);
+        }
+        let last;
+        for (let i = 0; i < 31; i += 1) last = await real.call('PATCH', `/api/dudas/${d._id}/estado`, { headers: H(alumno), body: { accion: 'resolver' } });
+        assert.equal(last.status, 429);
+      } finally {
+        await real.close();
+      }
     });
 
     test('«solo lectura» no publica ni responde ni edita lo suyo', async () => {
