@@ -5,9 +5,9 @@ import Skeleton from '../components/admin/ui/Skeleton';
 import EmptyState from '../components/admin/ui/EmptyState';
 import DudaItem from '../components/dudas/DudaItem';
 import { dudasCopy } from '../components/dudas/dudasCopy';
+import useDudaAcciones from '../components/dudas/useDudaAcciones';
 import { agruparPorCurso } from '../components/dudas/dudasFormat';
 import { useUser } from '../context/UserContext';
-import { useToast } from '../context/ToastContext';
 import usePageMeta from '../hooks/usePageMeta';
 import * as api from '../lib/dudasApi';
 
@@ -20,7 +20,6 @@ const CONTENEDOR = 'mx-auto max-w-[1200px] px-4 pt-14 pb-24 sm:px-6 sm:pt-20 lg:
 export default function ProfesorDudas() {
   const navigate = useNavigate();
   const { user, loading } = useUser();
-  const { showToast } = useToast();
   usePageMeta(p.titulo);
 
   const [dudas, setDudas] = useState([]);
@@ -51,34 +50,7 @@ export default function ProfesorDudas() {
     return () => ctrl.abort();
   }, [user, loading, navigate, intento]);
 
-  // Mismas llamadas de dudasApi que useDudas; cada acción sustituye la duda que devuelve el servidor
-  const acciones = useMemo(() => {
-    const sustituir = (duda) => setDudas((l) => l.map((d) => (d._id === duda._id ? { ...d, ...duda, curso: d.curso } : d)));
-    const run = async (peticion, aplicar = sustituir, { silencioso = false } = {}) => {
-      try {
-        const res = await peticion();
-        aplicar(res);
-        return res ?? true;
-      } catch (err) {
-        if (!silencioso) showToast(err?.body?.error || c.errorGuardar, 'error', 4000);
-        return null;
-      }
-    };
-    return {
-      editar: (id, cambios) => run(() => api.updateDuda(id, cambios)),
-      borrar: (id) =>
-        run(
-          () => api.deleteDuda(id),
-          (res) => (res?.duda ? sustituir(res.duda) : setDudas((l) => l.filter((d) => d._id !== id))),
-        ),
-      responder: (id, texto) => run(() => api.addRespuesta(id, texto)),
-      editarRespuesta: (id, rid, texto) => run(() => api.updateRespuesta(id, rid, texto)),
-      borrarRespuesta: (id, rid) => run(() => api.deleteRespuesta(id, rid)),
-      estado: (id, accion, rid) => run(() => api.setEstado(id, accion, rid)),
-      marcarVista: (id) => run(() => api.marcarVista(id), sustituir, { silencioso: true }),
-      reportar: (id, motivo) => run(() => api.reportar(id, motivo), () => showToast(c.reportado, 'success', 3500)),
-    };
-  }, [showToast]);
+  const { acciones } = useDudaAcciones({ setDudas, lang: 'es', conservarCurso: true });
 
   const accionDe = useCallback((id) => (nombre, ...args) => acciones[nombre](id, ...args), [acciones]);
   const grupos = useMemo(() => agruparPorCurso(dudas), [dudas]);

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useEffect, useRef, useState } from 'react';
-import { FileText, ListOrdered, Loader } from 'lucide-react';
+import { FileText, GraduationCap, ListOrdered, Loader } from 'lucide-react';
 import Button from '../../ui/Button';
 import { useToast } from '../../../context/ToastContext';
 import { createCourse, updateCourse } from '../../../lib/adminApi';
@@ -8,6 +8,7 @@ import Drawer from '../ui/Drawer';
 import SegmentedControl from '../ui/SegmentedControl';
 import { courseName } from '../shared/adminFormat';
 import CourseForm from './CourseForm';
+import TeachersEditor from './TeachersEditor';
 import TopicsEditor from './TopicsEditor';
 import { appendCatalogFields, catalogFieldsError, catalogFormValues } from './courseCatalogForm';
 import { courseFormData, emptyCourseForm, firstError, formFromCourse, isDirty, validateCourse } from './courseFormModel';
@@ -86,6 +87,7 @@ export default function CourseEditor({ open, course, onClose, onSaved, onDirtyCh
   const sections = [
     { value: 'info', label: COPY.editor.sections.info, icon: FileText },
     { value: 'topics', label: COPY.editor.sections.topics, icon: ListOrdered },
+    { value: 'teachers', label: COPY.editor.sections.teachers, icon: GraduationCap },
   ];
 
   return (
@@ -118,6 +120,10 @@ export default function CourseEditor({ open, course, onClose, onSaved, onDirtyCh
           >
             <CourseForm form={form} setForm={setForm} errors={errors} catalog={catalog} setCatalog={setCatalog} onCatalogError={(m) => showToast(m, 'error')} />
           </form>
+        ) : section === 'teachers' ? (
+          <div className="mx-auto max-w-3xl">
+            <TeachersEditor courseId={saved._id} />
+          </div>
         ) : (
           <div className="mx-auto max-w-3xl">
             <TopicsEditor

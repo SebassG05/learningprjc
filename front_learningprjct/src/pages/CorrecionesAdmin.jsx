@@ -14,6 +14,7 @@ const PANELS = {
   reservas: lazy(() => import('../components/admin/reservas/ReservasTab.jsx')),
   progreso: lazy(() => import('../components/admin/progreso/ProgresoTab.jsx')),
   accesos: lazy(() => import('../components/admin/accesos/AccesosTab.jsx')),
+  dudas: lazy(() => import('../components/admin/dudas/DudasTab.jsx')),
   gestion: lazy(() => import('../components/admin/gestion-cursos/GestionCursosTab.jsx')),
 };
 
