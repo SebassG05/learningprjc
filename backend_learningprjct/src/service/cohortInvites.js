@@ -23,7 +23,7 @@ export class InviteError extends Error {
 
 export const hashToken = (token) => crypto.createHash('sha256').update(token).digest('hex');
 
-const frontendUrl = () => (process.env.FRONTEND_URL || 'https://campus.evenor-tech.com').replace(/\/+$/, '');
+export const frontendUrl = () => (process.env.FRONTEND_URL || 'https://campus.evenor-tech.com').replace(/\/+$/, '');
 export const inviteUrl = (courseId, token) => `${frontendUrl()}/curso/${courseId}/invitacion?token=${encodeURIComponent(token)}`;
 
 /**

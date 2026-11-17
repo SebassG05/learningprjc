@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import { buildContactEmail, singleLine } from './contactEmailTemplate.js';
 import { buildCohortInviteEmail } from './cohortInviteEmailTemplate.js';
+import { buildTeacherInviteEmail, buildTeacherLinkedEmail } from './teacherEmailTemplate.js';
 import { etiquetaEstado } from './correccionService.js';
 
 dotenv.config();
@@ -261,5 +262,17 @@ export const sendExerciseCorrectionEmail = async ({ userName, userEmail, ejercic
 // (tenía plaza por email y ha entrado con contraseña: el enlace demuestra que el email es suyo).
 export const sendCohortInviteEmail = async ({ to, url, courseTitle, cohortName, startsAt, expiresAt, reason = 'invite' }) => {
   const { subject, html, text } = buildCohortInviteEmail({ url, courseTitle, cohortName, startsAt, expiresAt, reason });
+  await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
+};
+
+// Aviso a quien han añadido como profesor de un curso: el enlace de un solo uso activa el acceso.
+export const sendTeacherInviteEmail = async ({ to, url, courseTitle, expiresAt }) => {
+  const { subject, html, text } = buildTeacherInviteEmail({ url, courseTitle, expiresAt });
+  await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
+};
+
+// Aviso a la dirección invitada cuando el enlace se canjeó desde una cuenta con otro correo.
+export const sendTeacherLinkedEmail = async ({ to, courseTitle, accountMasked }) => {
+  const { subject, html, text } = buildTeacherLinkedEmail({ courseTitle, accountMasked });
   await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
 };

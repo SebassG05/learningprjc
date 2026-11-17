@@ -16,6 +16,7 @@ const profesorAsignadoSchema = new mongoose.Schema({
   status: { type: String, enum: ['pending', 'active'], default: 'pending' },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   tokenHash: { type: String, default: null },
+  redeemedTokenHash: { type: String, default: null }, // hash del enlace ya canjeado: un segundo intento responde «usado»
   tokenExpiresAt: { type: Date, default: null },
   lastSentAt: { type: Date, default: Date.now },
   addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
