@@ -129,6 +129,19 @@ describe('toPublic', () => {
     assert.equal(p.autorId, undefined);
   });
 
+  test('no expone notificado ni notificadoAt; respuestaNoVista solo al autor', () => {
+    const d = { ...duda(), respuestaNoVista: true, notificado: { nuevaAt: new Date() } };
+    d.respuestas[0].notificadoAt = new Date();
+    for (const opts of [{ viewerId: String(autor), moderador: false }, { viewerId: String(otro), moderador: true }, { viewerId: null, moderador: false }]) {
+      const p = toPublic(d, opts);
+      assert.equal(p.notificado, undefined);
+      assert.equal(JSON.stringify(p).includes('notificadoAt'), false);
+    }
+    assert.equal(toPublic(d, { viewerId: String(autor) }).respuestaNoVista, true);
+    assert.equal(toPublic(d, { viewerId: String(otro), moderador: true }).respuestaNoVista, undefined);
+    assert.equal(toPublic(d, { viewerId: null }).respuestaNoVista, undefined);
+  });
+
   test('duda oculta: null para quien no modera', () => {
     assert.equal(toPublic({ ...duda(), oculta: true }, { viewerId: null, moderador: false }), null);
     assert.notEqual(toPublic({ ...duda(), oculta: true }, { viewerId: null, moderador: true }), null);

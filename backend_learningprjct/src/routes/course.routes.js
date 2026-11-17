@@ -11,6 +11,7 @@ import { materialTicket } from '../middleware/materialTicket.js';
 import { cambiarModoAcceso } from '../controller/cohortAdminController.js';
 import { apuntarInteresado, listarInteresados } from '../controller/courseInterestController.js';
 import createRateLimit from '../middleware/rateLimit.js';
+import dudaRouters from './duda.routes.js';
 
 // Formulario público: pocas altas por IP y hora
 const interestRateLimit = createRateLimit({
@@ -117,6 +118,7 @@ router.get('/', optionalAuth, courseController.obtenerCursos);
 router.get('/areas', courseController.obtenerCatalogo);
 
 // Obtener curso por id (público)
+router.use('/:id/dudas', dudaRouters.courseRouter);
 router.get('/:id', optionalAuth, courseController.obtenerCurso);
 
 // Vídeo del curso: preview o completo según la inscripción de quien lo pide (público, personalizado)

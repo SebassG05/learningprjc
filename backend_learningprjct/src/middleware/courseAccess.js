@@ -7,6 +7,7 @@
 // courseIdFrom(req) devuelve el id del curso (o una promesa); null/undefined → 404.
 import mongoose from 'mongoose';
 import Ejercicio from '../models/Ejercicio.js';
+import Duda from '../models/Duda.js';
 import EntregaEjercicio from '../models/EntregaEjercicio.js';
 import { allows, canAccessCourse, isPrivate, publicAccess } from '../service/courseAccess.js';
 
@@ -52,6 +53,13 @@ export const courseIdFromEjercicio = (param = 'ejercicioId') => async (req) => {
   const id = req.params[param];
   if (!mongoose.isValidObjectId(id)) return null;
   return (await Ejercicio.findById(id).select('cursoId').lean())?.cursoId ?? null;
+};
+
+// El curso de una duda sale de la propia duda en la base de datos, nunca del body
+export const courseIdFromDuda = (param = 'dudaId') => async (req) => {
+  const id = req.params[param];
+  if (!mongoose.isValidObjectId(id)) return null;
+  return (await Duda.findById(id).select('cursoId').lean())?.cursoId ?? null;
 };
 
 // Para una entrega manda el curso de su ejercicio; el cursoId guardado en la entrega es el respaldo

@@ -9,6 +9,7 @@ import entregaEjercicioRoutes from './entregaEjercicio.routes.js';
 import termsRoutes from './terms.routes.js';
 import cohortRoutes from './cohort.routes.js';
 import profesorRoutes from './profesor.routes.js';
+import dudaRouters from './duda.routes.js';
 import { proxyPdf } from '../controller/pdfProxyController.js';
 import { optionalAuth } from '../middleware/optionalAuth.js';
 
@@ -25,6 +26,9 @@ router.use('/entregas', entregaEjercicioRoutes);
 router.use('/terms', termsRoutes);
 router.use('/cohorts', cohortRoutes);
 router.use('/profesor', profesorRoutes);
+router.use('/profesor', dudaRouters.profesorRouter);
+router.use('/dudas', dudaRouters.dudaRouter);
+router.use('/admin/dudas', dudaRouters.adminRouter);
 
 // Ruta proxy para PDFs de Cloudinary
 router.get('/pdf-proxy', optionalAuth, proxyPdf);

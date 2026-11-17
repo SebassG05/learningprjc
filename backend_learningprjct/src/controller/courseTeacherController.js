@@ -1,6 +1,7 @@
 // Profesores de un curso: gestión (admin), invitación por enlace de un solo uso y «mis cursos».
 // Nunca se devuelven hashes ni la URL de un solo uso: el correo es la prueba de propiedad.
 import { validationResult } from 'express-validator';
+import { contarDudasPorCurso } from './dudaController.js';
 import Course from '../models/Course.js';
 import User from '../models/User.js';
 import {
@@ -113,8 +114,14 @@ export async function misCursosProfesor(req, res, next) {
   try {
     const courses = await Course.find({ profesores: { $elemMatch: { userId: req.user.id, status: 'active' } } })
       .select('title titleEn').sort({ title: 1 }).lean();
-    // abiertas y reportadas las rellenará el módulo de dudas
-    res.json(courses.map((c) => ({ _id: c._id, title: c.title, titleEn: c.titleEn ?? null, abiertas: 0, reportadas: 0 })));
+    const counts = await contarDudasPorCurso(courses.map((c) => c._id));
+    res.json(courses.map((c) => ({
+      _id: c._id,
+      title: c.title,
+      titleEn: c.titleEn ?? null,
+      abiertas: counts.get(String(c._id))?.abiertas ?? 0,
+      reportadas: counts.get(String(c._id))?.reportadas ?? 0,
+    })));
   } catch (err) {
     fail(res, next, err);
   }
