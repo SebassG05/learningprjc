@@ -12,6 +12,7 @@ export const DUDAS = {
     resuelta: 'Resuelta',
     retirada: 'Duda retirada por su autor',
     etiqueta: { profesor: 'Profesor', equipo: 'Equipo docente' },
+    enlace: 'Dudas',
     nuevas: (n) => `Dudas · ${n} nuevas`,
     avisoDuda:
       'Tu duda la verán los alumnos y profesores de este curso, también los de próximas ediciones, con tu nombre y la inicial de tu apellido. No incluyas datos personales. Puedes editarla o retirarla cuando quieras.',
@@ -19,6 +20,19 @@ export const DUDAS = {
       'Tu respuesta la verán los alumnos y profesores de este curso, también los de próximas ediciones, con tu nombre y la inicial de tu apellido. No incluyas datos personales. Puedes editarla o borrarla cuando quieras.',
     soloLectura: 'La edición ha terminado: puedes leer las dudas, pero no publicar.',
     profesorCurso: 'Estás viendo el curso como profesor',
+
+    // Página del curso
+    pagina: {
+      titulo: 'Dudas del curso',
+      volver: 'Volver al curso',
+      filtroTema: 'Filtrar por tema',
+      filtroEstado: 'Filtrar por estado',
+      todosLosTemas: 'Todos los temas',
+      pendientes: 'Pendientes',
+      vacio: 'Aún no hay dudas en este curso. Si algo no te ha quedado claro, pregúntalo: la respuesta quedará aquí para todo el curso.',
+      sinResultados: 'Ninguna duda coincide con estos filtros.',
+      noEncontrado: 'No hemos encontrado este curso.',
+    },
 
     // Acciones
     responder: 'Responder',
@@ -96,6 +110,7 @@ export const DUDAS = {
     resuelta: 'Resolved',
     retirada: 'Question withdrawn by its author',
     etiqueta: { profesor: 'Instructor', equipo: 'Teaching team' },
+    enlace: 'Questions',
     nuevas: (n) => `Questions · ${n} new`,
     avisoDuda:
       'Your question will be seen by the students and instructors of this course, including future editions, with your first name and the initial of your surname. Do not include personal data. You can edit or withdraw it at any time.',
@@ -103,6 +118,18 @@ export const DUDAS = {
       'Your answer will be seen by the students and instructors of this course, including future editions, with your first name and the initial of your surname. Do not include personal data. You can edit or delete it at any time.',
     soloLectura: 'This edition has ended: you can read the questions, but not post.',
     profesorCurso: 'You are viewing the course as an instructor',
+
+    pagina: {
+      titulo: 'Course questions',
+      volver: 'Back to course',
+      filtroTema: 'Filter by topic',
+      filtroEstado: 'Filter by status',
+      todosLosTemas: 'All topics',
+      pendientes: 'Pending',
+      vacio: 'There are no questions in this course yet. If something was not clear, ask it: the answer will stay here for the whole course.',
+      sinResultados: 'No question matches these filters.',
+      noEncontrado: 'We could not find this course.',
+    },
 
     responder: 'Reply',
     editar: 'Edit',

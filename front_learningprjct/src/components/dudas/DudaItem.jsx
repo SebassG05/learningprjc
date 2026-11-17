@@ -10,11 +10,11 @@ import { tiempoRelativo } from './dudasFormat';
 import { MARCA, MARCA_ACENTO } from './dudasUi';
 
 /**
- * Una duda con sus respuestas y acciones. `onAccion(nombre, ...args)` llama a la acción del hook sobre
+ * Una duda con sus respuestas y acciones. `temaTexto` (opcional) rotula el tema de la duda cuando la lista mezcla temas. `onAccion(nombre, ...args)` llama a la acción del hook sobre
  * esta duda y resuelve con algo verdadero si salió bien. Una duda propia con respuesta sin ver lleva
  * «Respuesta nueva» mientras se muestra y se marca como vista al aparecer (una sola vez).
  */
-export default function DudaItem({ duda, lang = 'es', puedePublicar = false, onAccion }) {
+export default function DudaItem({ duda, lang = 'es', puedePublicar = false, onAccion, temaTexto }) {
   const c = dudasCopy(lang);
   const [nueva] = useState(Boolean(duda.mine && duda.respuestaNoVista));
   const [modo, setModo] = useState(null); // null | 'editar' | 'responder'
@@ -40,6 +40,7 @@ export default function DudaItem({ duda, lang = 'es', puedePublicar = false, onA
 
   return (
     <li id={`duda-${duda._id}`} aria-labelledby={titleId} className="border-t border-line py-6 first:border-t-0 first:pt-2">
+      {temaTexto ? <p className="mb-2 text-footnote font-semibold text-[var(--accent)]">{temaTexto}</p> : null}
       {/* Marcas: fijada, oculta, reportes, resuelta y respuesta nueva */}
       {duda.fijada || duda.oculta || duda.reportesCount || duda.estado === 'resuelta' || nueva ? (
         <p className="mb-3 flex flex-wrap gap-2">

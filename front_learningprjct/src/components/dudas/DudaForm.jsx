@@ -4,21 +4,24 @@ import { AlertCircle } from 'lucide-react';
 import Button from '../ui/Button';
 import Field from '../ui/Field';
 import TextAreaField from '../ui/TextAreaField';
+import SelectField from '../admin/ui/SelectField';
 import { dudasCopy } from './dudasCopy';
 
 /**
  * Formulario para preguntar (`modo="duda"`), responder (`"respuesta"`) o editar (`"editar"`; con título
  * si `initial.titulo` existe, es decir, si se edita una duda). Valida lo mismo que el servidor y deja el
  * aviso de privacidad justo encima del botón de enviar. `onSubmit(valores)` resuelve con algo verdadero si
- * se guardó; si falla, el texto se conserva. `children` se pinta antes de los campos (p. ej. un selector).
+ * se guardó; si falla, el texto se conserva. `children` se pinta antes de los campos.
+ * Con `temas` (`[{ value, label }]`) la duda lleva un selector de tema (`temaInicial`) y `onSubmit` recibe `temaId`.
  */
-export default function DudaForm({ modo = 'duda', lang = 'es', initial = {}, onSubmit, onCancel, autoFocus = false, children }) {
+export default function DudaForm({ modo = 'duda', lang = 'es', initial = {}, onSubmit, onCancel, autoFocus = false, temas, temaInicial, children }) {
   const c = dudasCopy(lang);
   const { limites } = c;
   const conTitulo = modo === 'duda' || (modo === 'editar' && initial.titulo !== undefined);
   const esRespuesta = modo === 'respuesta' || (modo === 'editar' && !conTitulo);
   const [titulo, setTitulo] = useState(initial.titulo ?? '');
   const [texto, setTexto] = useState(initial.texto ?? '');
+  const [temaId, setTemaId] = useState(temaInicial ?? temas?.[0]?.value ?? 'general');
   const [errores, setErrores] = useState({});
   const [enviando, setEnviando] = useState(false);
   const firstRef = useRef(null);
@@ -54,6 +57,7 @@ export default function DudaForm({ modo = 'duda', lang = 'es', initial = {}, onS
     }
     setEnviando(true);
     const valores = conTitulo ? { titulo: titulo.trim(), texto: texto.trim() } : { texto: texto.trim() };
+    if (modo === 'duda' && temas) valores.temaId = temaId;
     const ok = await onSubmit(valores);
     setEnviando(false);
     if (ok && modo !== 'editar') {
@@ -68,6 +72,9 @@ export default function DudaForm({ modo = 'duda', lang = 'es', initial = {}, onS
   return (
     <form onSubmit={enviar} noValidate className="flex flex-col gap-5" aria-busy={enviando || undefined}>
       {children}
+      {modo === 'duda' && temas ? (
+        <SelectField label={c.campos.tema} hideLabel={false} value={temaId} onChange={setTemaId} options={temas} />
+      ) : null}
       {conTitulo ? (
         <div className="flex flex-col gap-2">
           <Field
