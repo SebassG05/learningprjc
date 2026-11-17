@@ -32,25 +32,25 @@ const access = (user, course, cohorts, now = DURING) => resolveAccess({ user, co
 
 describe('resolveAccess', () => {
   test('admin entra con acceso completo aunque el curso sea privado y no tenga cohortes', () => {
-    assert.deepEqual(access({ id: LUIS, role: 'admin' }, privateCourse, []), { level: 'full', reason: 'admin' });
+    assert.deepEqual(access({ id: LUIS, role: 'admin' }, privateCourse, []), { level: 'full', reason: 'admin', teacher: false });
     assert.equal(access({ id: LUIS, role: 'superadmin' }, privateCourse, []).level, 'full');
   });
 
   test('curso público: full/public para cualquiera, también sin sesión', () => {
-    assert.deepEqual(access(null, publicCourse, []), { level: 'full', reason: 'public' });
-    assert.deepEqual(access(ana, publicCourse, []), { level: 'full', reason: 'public' });
+    assert.deepEqual(access(null, publicCourse, []), { level: 'full', reason: 'public', teacher: false });
+    assert.deepEqual(access(ana, publicCourse, []), { level: 'full', reason: 'public', teacher: false });
   });
 
   test('curso sin accessMode se trata como público', () => {
-    assert.deepEqual(access(null, legacyCourse, []), { level: 'full', reason: 'public' });
+    assert.deepEqual(access(null, legacyCourse, []), { level: 'full', reason: 'public', teacher: false });
   });
 
   test('privado sin sesión → denied/anonymous', () => {
-    assert.deepEqual(access(null, privateCourse, [cohort()]), { level: 'denied', reason: 'anonymous' });
+    assert.deepEqual(access(null, privateCourse, [cohort()]), { level: 'denied', reason: 'anonymous', teacher: false });
   });
 
   test('privado sin membresía → denied/not-member', () => {
-    assert.deepEqual(access({ id: LUIS, role: 'usuario' }, privateCourse, [cohort()]), { level: 'denied', reason: 'not-member' });
+    assert.deepEqual(access({ id: LUIS, role: 'usuario' }, privateCourse, [cohort()]), { level: 'denied', reason: 'not-member', teacher: false });
   });
 
   test('miembro pending con el mismo user no cuenta', () => {
@@ -63,11 +63,11 @@ describe('resolveAccess', () => {
   });
 
   test('miembro activo antes de startsAt → denied/reserved con la fecha', () => {
-    assert.deepEqual(access(ana, privateCourse, [cohort()], BEFORE), { level: 'denied', reason: 'reserved', startsAt: START, endsAt: END });
+    assert.deepEqual(access(ana, privateCourse, [cohort()], BEFORE), { level: 'denied', reason: 'reserved', startsAt: START, endsAt: END, teacher: false });
   });
 
   test('miembro activo dentro de la ventana → full/member', () => {
-    assert.deepEqual(access(ana, privateCourse, [cohort()]), { level: 'full', reason: 'member', startsAt: START, endsAt: END });
+    assert.deepEqual(access(ana, privateCourse, [cohort()]), { level: 'full', reason: 'member', startsAt: START, endsAt: END, teacher: false });
   });
 
   test('now === startsAt ya es full', () => {
@@ -75,7 +75,7 @@ describe('resolveAccess', () => {
   });
 
   test('now === endsAt ya es fin de la ventana (readonly)', () => {
-    assert.deepEqual(access(ana, privateCourse, [cohort()], new Date(END)), { level: 'readonly', reason: 'ended', startsAt: START, endsAt: END });
+    assert.deepEqual(access(ana, privateCourse, [cohort()], new Date(END)), { level: 'readonly', reason: 'ended', startsAt: START, endsAt: END, teacher: false });
   });
 
   test('tras endsAt con afterEnd=revoke → denied/revoked', () => {
@@ -199,6 +199,13 @@ describe('profesores del curso', () => {
     const r = access(prof, withTeachers(privateCourse, teacherRow(LUIS)), [c], AFTER);
     assert.equal(r.reason, 'teacher');
     assert.equal(r.level, 'readonly');
+  });
+
+  test('profesor cuya única cohorte está reservada o revocada → readonly/teacher', () => {
+    const mine = [{ user: LUIS, email: 'l@x.es', status: 'active' }];
+    const course = withTeachers(privateCourse, teacherRow(LUIS));
+    assert.deepEqual(access(prof, course, [cohort({ members: mine })], BEFORE), { level: 'readonly', reason: 'teacher', teacher: true });
+    assert.deepEqual(access(prof, course, [cohort({ members: mine, afterEnd: 'revoke' })], AFTER), { level: 'readonly', reason: 'teacher', teacher: true });
   });
 
   test('curso público → full/public con teacher', () => {

@@ -87,6 +87,33 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(list.text.includes('tokenHash'), false);
     });
 
+    test('privado, profesor que además es miembro activo: full/member con teacher', async () => {
+      const course = await fx.createCourse({ accessMode: 'private' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      await fx.createCohort(course, { members: [profe] });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(hasFiles(r.text), true);
+      assert.equal(r.body.access.level, 'full');
+      assert.equal(r.body.access.reason, 'member');
+      assert.equal(r.body.access.teacher, true);
+    });
+
+    test('profesor desactivado con JWT válido: sin teacher en público y anónimo en privado', async () => {
+      const profe = await fx.createUser({ activo: false });
+      const row = { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } };
+      const publico = await fx.createCourse();
+      const privado = await fx.createCourse({ accessMode: 'private' });
+      await Course.updateOne({ _id: publico._id }, row);
+      await Course.updateOne({ _id: privado._id }, row);
+      const { accessFor } = await import('../src/service/courseAccess.js');
+      const user = { id: String(profe._id) };
+      const a = await accessFor(user, await Course.findById(publico._id).select('accessMode').lean());
+      assert.deepEqual(a, { level: 'full', reason: 'public', teacher: false });
+      const b = await accessFor(user, await Course.findById(privado._id).select('accessMode').lean());
+      assert.deepEqual(b, { level: 'denied', reason: 'anonymous', teacher: false });
+    });
+
     test('profesor pendiente, o profesor de otro curso: sin acceso', async () => {
       const course = await fx.createCourse({ accessMode: 'private' });
       const otro = await fx.createCourse({ accessMode: 'private' });

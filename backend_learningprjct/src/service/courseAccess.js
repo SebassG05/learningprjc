@@ -12,7 +12,7 @@
 //   miembro activo, now ≥ endsAt            → readonly (ended)  si afterEnd = 'readonly'
 //                                             denied   (revoked) si afterEnd = 'revoke'
 //   profesor activo del curso (privado)     → readonly (teacher)  salvo que una cohorte le dé algo mejor
-// Con varias cohortes gana la mejor. Un profesor lleva además `teacher: true` en cualquier caso.
+// Con varias cohortes gana la mejor. Un profesor lleva además `teacher: true` en cualquier caso (el resto, `teacher: false`).
 import mongoose from 'mongoose';
 import Course from '../models/Course.js';
 import Cohort from '../models/Cohort.js';
@@ -50,11 +50,9 @@ function cohortAccess(cohort, now) {
  */
 export function resolveAccess({ user, course, cohorts = [], now = new Date() }) {
   const teacher = isCourseTeacher(user, course);
-  // `teacher` solo aparece cuando es true
-  const flag = teacher ? { teacher: true } : {};
-  if (user && ADMIN_ROLES.has(user.role)) return { level: 'full', reason: 'admin', ...flag };
-  if (!isPrivate(course)) return { level: 'full', reason: 'public', ...flag };
-  if (!user?.id) return { level: 'denied', reason: 'anonymous' };
+  if (user && ADMIN_ROLES.has(user.role)) return { level: 'full', reason: 'admin', teacher };
+  if (!isPrivate(course)) return { level: 'full', reason: 'public', teacher };
+  if (!user?.id) return { level: 'denied', reason: 'anonymous', teacher: false };
 
   let best = null;
   for (const cohort of cohorts) {
@@ -65,8 +63,8 @@ export function resolveAccess({ user, course, cohorts = [], now = new Date() }) 
     if (!best || RANK[candidate.reason] > RANK[best.reason]) best = candidate;
   }
   if (teacher && (!best || RANK[best.reason] < RANK.teacher)) return { level: 'readonly', reason: 'teacher', teacher: true };
-  if (best) return { ...best, ...flag };
-  return { level: 'denied', reason: 'not-member' };
+  if (best) return { ...best, teacher };
+  return { level: 'denied', reason: 'not-member', teacher: false };
 }
 
 // ============= Carga desde la base de datos =============
@@ -103,7 +101,7 @@ const teacherQuery = (courseId, userId) => Course.exists({
 /**
  * Acceso a un curso ya cargado (necesita _id y accessMode). Con sesión consulta si el usuario es
  * profesor del curso, también en los públicos (el flag `teacher` hace falta en todos).
- * @returns {Promise<{ level, reason, startsAt?, endsAt?, teacher?: true }>}
+ * @returns {Promise<{ level, reason, startsAt?, endsAt?, teacher: boolean }>}
  */
 export async function accessFor(reqUser, course, now = new Date()) {
   const userId = reqUser?.id ?? reqUser?._id;
@@ -119,8 +117,12 @@ export async function accessFor(reqUser, course, now = new Date()) {
     ? course
     : { _id: course._id, accessMode: course.accessMode, profesores: asTeacher ? [{ status: 'active', userId }] : [] };
 
-  // Público: no hace falta saber quién es (ni su rol) más que para el flag de profesor
-  if (!isPrivate(course)) return resolveAccess({ user: { id: String(userId) }, course: known, cohorts: [], now });
+  // Público: solo importa el flag de profesor. Si la consulta acierta, se comprueba que el usuario siga
+  // activo (un JWT válido de un usuario desactivado o borrado cuenta como anónimo); si no, ni se consulta.
+  if (!isPrivate(course)) {
+    const user = loaded || asTeacher ? await loadViewer(reqUser) : { id: String(userId) };
+    return resolveAccess({ user, course: loaded ? course : known, cohorts: [], now });
+  }
 
   const viewer = await loadViewer(reqUser);
   const cohorts = viewer && !isAdminViewer(viewer) ? await activeCohortsOf(course._id, viewer.id) : [];
