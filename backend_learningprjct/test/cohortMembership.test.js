@@ -157,11 +157,14 @@ describe('plazas pendientes por email', () => {
       assert.deepEqual(r.body.cohortClaim, { activated: 1, emailed: 0 });
     });
 
-    test('Google sin email verificado → no activa, manda enlace', async () => {
+    // Desde fix/google-auth un inicio con Google sin el correo verificado no entra: ni sesión ni enlace
+    test('Google sin email verificado → 401, no activa ni manda enlace', async () => {
       googlePayload = { email: 'ana@x.es', email_verified: false, name: 'Ana', sub: 'g-123' };
-      await api.call('POST', '/api/users/auth/google', { body: { credential: 'id-token' } });
+      const r = await api.call('POST', '/api/users/auth/google', { body: { credential: 'id-token' } });
+      assert.equal(r.status, 401);
+      assert.equal(r.body.token, undefined);
       assert.equal((await seat()).status, 'pending');
-      assert.equal(sent.length, 1);
+      assert.equal(sent.length, 0);
     });
 
     test('si el correo falla, el login sigue funcionando', async () => {
