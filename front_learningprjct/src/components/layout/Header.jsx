@@ -47,22 +47,40 @@ const Avatar = ({ user, className }) => (
 
 const MENU_PROFESOR = dudasCopy('es').profesor;
 
+// Rutas tras las que el contador puede haber cambiado: el curso (p. ej. al llegar tras canjear una
+// invitación de profesor) y las páginas del profesor. Fuera de ellas no se vuelve a pedir.
+const RUTA_DE_CURSO = /^\/(curso|profesor)\//;
+const ESPERA_RECARGA = 250;
+
 // Dudas pendientes de los cursos del profesor (abiertas + reportadas); null si no es profesor de ninguno
-const usePendientesProfesor = (user) => {
+const usePendientesProfesor = (user, pathname) => {
   const [pendientes, setPendientes] = useState(null);
   const userId = user?._id ?? user?.id ?? user?.email;
+  // Una petición como mucho por navegación a una ruta de curso: misma clave, misma respuesta
+  const clave = RUTA_DE_CURSO.test(pathname) ? pathname : '';
+
+  // Otra cuenta (o sin sesión): el contador anterior no vale
   useEffect(() => {
     setPendientes(null);
+  }, [userId]);
+
+  useEffect(() => {
     if (!userId) return undefined;
     const ctrl = new AbortController();
-    fetchMisCursosProfesor(ctrl.signal)
-      .then((cursos) => {
-        if (!Array.isArray(cursos) || !cursos.length) return;
-        setPendientes(cursos.reduce((n, c) => n + (c.abiertas || 0) + (c.reportadas || 0), 0));
-      })
-      .catch(() => {});
-    return () => ctrl.abort();
-  }, [userId]);
+    // Breve espera: si se encadenan redirecciones (canje → curso → condiciones) solo cuenta la última
+    const timer = setTimeout(() => {
+      fetchMisCursosProfesor(ctrl.signal)
+        .then((cursos) => {
+          if (!Array.isArray(cursos) || !cursos.length) return setPendientes(null);
+          return setPendientes(cursos.reduce((n, c) => n + (c.abiertas || 0) + (c.reportadas || 0), 0));
+        })
+        .catch(() => {});
+    }, ESPERA_RECARGA);
+    return () => {
+      clearTimeout(timer);
+      ctrl.abort();
+    };
+  }, [userId, clave]);
   return pendientes;
 };
 
@@ -81,8 +99,8 @@ const Header = () => {
   const { showToast } = useToast();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
-  const pendientes = usePendientesProfesor(user);
   const { pathname } = useLocation();
+  const pendientes = usePendientesProfesor(user, pathname);
   const desktop = useMediaQuery('(min-width: 1024px)');
   const reduce = useReducedMotion();
 

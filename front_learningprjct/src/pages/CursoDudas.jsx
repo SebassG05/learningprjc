@@ -88,7 +88,7 @@ export default function CursoDudas() {
   const opcionesEstado = [
     { value: 'todas', label: c.estado.todas },
     { value: 'abierta', label: c.pagina.pendientes },
-    { value: 'resuelta', label: c.estado.resuelta },
+    { value: 'resuelta', label: c.pagina.resueltas },
   ];
 
   const visibles = useMemo(

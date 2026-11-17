@@ -29,6 +29,7 @@ export const DUDAS = {
       filtroEstado: 'Filtrar por estado',
       todosLosTemas: 'Todos los temas',
       pendientes: 'Pendientes',
+      resueltas: 'Resueltas',
       vacio: 'Aún no hay dudas en este curso. Si algo no te ha quedado claro, pregúntalo: la respuesta quedará aquí para todo el curso.',
       sinResultados: 'Ninguna duda coincide con estos filtros.',
       noEncontrado: 'No hemos encontrado este curso.',
