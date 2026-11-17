@@ -219,9 +219,10 @@ describe('profesores del curso', () => {
     assert.equal(access(admin, withTeachers(privateCourse, teacherRow(LUIS)), []).teacher, true);
   });
 
-  test('publicAccess incluye teacher solo si es true', () => {
-    assert.equal('teacher' in publicAccess({ level: 'full', reason: 'member' }), false);
-    assert.equal('teacher' in publicAccess({ level: 'full', reason: 'member', teacher: false }), false);
+  test('publicAccess lleva siempre teacher como booleano', () => {
+    assert.equal(publicAccess({ level: 'full', reason: 'member' }).teacher, false);
+    assert.equal(publicAccess({ level: 'full', reason: 'member', teacher: false }).teacher, false);
+    assert.equal(publicAccess({ level: 'full', reason: 'member', teacher: 'yes' }).teacher, false);
     assert.equal(publicAccess({ level: 'readonly', reason: 'teacher', teacher: true }).teacher, true);
   });
 

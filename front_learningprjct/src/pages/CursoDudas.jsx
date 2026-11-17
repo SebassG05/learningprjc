@@ -15,7 +15,7 @@ import DudaItem from '../components/dudas/DudaItem';
 import useDudas from '../components/dudas/useDudas';
 import { dudasCopy } from '../components/dudas/dudasCopy';
 import { temaLabel } from '../components/dudas/dudasFormat';
-import { esAdmin, puedeEntrarAlAula, puedePublicarDudas } from '../components/dudas/dudasAcceso';
+import { accesoDelCurso, esAdmin, puedeEntrarAlAula, puedePublicarDudas } from '../components/dudas/dudasAcceso';
 
 const readLang = (id) => {
   try {
@@ -46,7 +46,7 @@ export default function CursoDudas() {
   const [preguntando, setPreguntando] = useState(false);
 
   const admin = esAdmin(user);
-  const acceso = curso?.access;
+  const acceso = accesoDelCurso(curso);
   const entra = puedeEntrarAlAula({ enrolled: enrollment?.enrolled, access: acceso, admin });
   const puedePublicar = puedePublicarDudas({ access: acceso, admin });
   const esProfesor = Boolean(acceso?.teacher) && !enrollment?.enrolled;

@@ -54,7 +54,13 @@ export const obtenerCurso = async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: 'Curso no encontrado' });
     }
-    if (!isPrivate(course)) return res.json(course);
+    if (!isPrivate(course)) {
+      // Anónimo: el cuerpo de siempre (cacheable). Con sesión, `access` lleva el flag de profesor, que
+      // depende de quién pregunta: sin caché compartida.
+      if (!req.user) return res.json(course);
+      noSharedCache(res);
+      return res.json({ ...course.toJSON(), access: publicAccess(await accessFor(req.user, course)) });
+    }
 
     // Curso privado: la ficha se ve siempre; los materiales solo con acceso. `access` le dice al front
     // qué pintar (invitación, plaza reservada, solo lectura…).

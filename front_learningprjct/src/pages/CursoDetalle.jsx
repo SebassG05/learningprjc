@@ -11,7 +11,7 @@ import { PRIVATE } from '../components/courses/coursesCopy';
 import { courseIsOpen, formatCohortDate } from '../components/courses/sheet/privateAccess';
 import { dudasCopy } from '../components/dudas/dudasCopy';
 import { contarNuevas } from '../components/dudas/dudasFormat';
-import { esAdmin, puedePublicarDudas } from '../components/dudas/dudasAcceso';
+import { accesoDelCurso, esAdmin, puedePublicarDudas } from '../components/dudas/dudasAcceso';
 import { fetchDudas } from '../lib/dudasApi';
 import { BookOpen, Lock, AlertCircle, Clock, Globe, MessageCircleQuestion } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -34,6 +34,8 @@ export default function CursoDetalle() {
   const [idiomaSeleccionado, setIdiomaSeleccionado] = useState(() => localStorage.getItem(`lang_${id}`) || null);
   const [showLangModal, setShowLangModal] = useState(false);
   const [dudasNuevas, setDudasNuevas] = useState(0);
+  // `access` del curso (con un backend anterior, los públicos no lo traen: ver accesoDelCurso)
+  const acceso = accesoDelCurso(curso);
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8547';
 
@@ -129,13 +131,13 @@ export default function CursoDetalle() {
   // Sin inscripción solo pasa el profesor del curso: se decide cuando hay inscripción y curso a la vez
   useEffect(() => {
     if (loading || checkingEnrollment || !curso) return;
-    if (!enrollmentStatus?.enrolled && !curso.access?.teacher) {
+    if (!enrollmentStatus?.enrolled && !accesoDelCurso(curso)?.teacher) {
       navigate(`/curso/${id}/inscripcion`);
     }
   }, [loading, checkingEnrollment, curso, enrollmentStatus, id, navigate]);
 
   // Respuestas nuevas a las dudas propias, para el enlace de la cabecera (si falla, el enlace sale sin contador)
-  const puedeVerDudas = Boolean(curso) && !checkingEnrollment && Boolean(enrollmentStatus?.enrolled || curso.access?.teacher);
+  const puedeVerDudas = Boolean(curso) && !checkingEnrollment && Boolean(enrollmentStatus?.enrolled || acceso?.teacher);
   useEffect(() => {
     if (!puedeVerDudas) return undefined;
     const ctrl = new AbortController();
@@ -295,10 +297,10 @@ export default function CursoDetalle() {
   }
 
   // Profesor del curso sin inscripción: ve el aula, sin progreso ni entregas
-  const esProfesor = Boolean(curso.access?.teacher) && !enrollmentStatus?.enrolled;
+  const esProfesor = Boolean(acceso?.teacher) && !enrollmentStatus?.enrolled;
   const lang = idiomaSeleccionado === 'en' ? 'en' : 'es';
   // Publicar dudas: edición abierta, profesor del curso o admin (el servidor lo vuelve a comprobar)
-  const puedePublicar = puedePublicarDudas({ access: curso.access, admin: esAdmin(user) });
+  const puedePublicar = puedePublicarDudas({ access: acceso, admin: esAdmin(user) });
 
   // Si no está inscrito (y no es profesor), no mostrar contenido
   if (!enrollmentStatus?.enrolled && !esProfesor) {
@@ -411,10 +413,10 @@ export default function CursoDetalle() {
                 <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-dawn" aria-hidden="true" />
                 <span>{dudasCopy(lang).profesorCurso}</span>
               </p>
-            ) : curso.access?.level === 'readonly' ? (
+            ) : acceso?.level === 'readonly' ? (
               <p role="note" className="mt-4 inline-flex max-w-2xl items-start gap-2 rounded-xl bg-white/[0.04] px-4 py-3 text-callout text-ink-2 ring-1 ring-inset ring-line-strong">
                 <Lock className="mt-0.5 h-4 w-4 shrink-0 text-dawn" aria-hidden="true" />
-                <span>{PRIVATE.lead.readonly(formatCohortDate(curso.access.endsAt))}</span>
+                <span>{PRIVATE.lead.readonly(formatCohortDate(acceso.endsAt))}</span>
               </p>
             ) : null}
             {/* Selector de idioma para cursos bilingües */}
@@ -611,7 +613,7 @@ export default function CursoDetalle() {
             </div>
             <div className="space-y-8">
               {ejerciciosOptativos.map((ejercicio) => (
-                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} soloLectura={curso.access?.level === 'readonly'} esProfesor={esProfesor} idioma={lang} />
+                <EjercicioOptativo key={ejercicio._id} ejercicio={ejercicio} cursoId={id} soloLectura={acceso?.level === 'readonly'} esProfesor={esProfesor} idioma={lang} />
               ))}
             </div>
           </div>

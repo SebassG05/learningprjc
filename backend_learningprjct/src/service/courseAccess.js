@@ -146,7 +146,7 @@ export const publicAccess = ({ level, reason, startsAt, endsAt, teacher }) => ({
   reason,
   ...(startsAt && { startsAt }),
   ...(endsAt && { endsAt }),
-  ...(teacher === true && { teacher: true }),
+  teacher: teacher === true,
 });
 
 // 'read': ver contenido, progreso, tests autocorregidos. 'write': inscribirse, entregar, borrar entregas.

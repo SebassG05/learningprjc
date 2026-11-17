@@ -40,7 +40,7 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(hasFiles(r.text), false);
       assert.equal(r.body.title, 'Curso');
       assert.equal(r.body.temas[0].materiales[0].titulo, 'Guía');
-      assert.deepEqual(r.body.access, { level: 'denied', reason: 'anonymous' });
+      assert.deepEqual(r.body.access, { level: 'denied', reason: 'anonymous', teacher: false });
       assert.match(r.headers.get('cache-control'), /private/);
     });
 
@@ -186,6 +186,30 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(r.status, 200);
       assert.deepEqual(r.body, JSON.parse(JSON.stringify(await Course.findById(course._id))));
       assert.equal('access' in r.body, false);
+      assert.doesNotMatch(r.headers.get('cache-control') ?? '', /no-store/);
+    });
+
+    test('curso público con sesión: profesor activo → access full con teacher true y sin caché compartida', async () => {
+      const course = await fx.createCourse({ accessMode: 'public' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(r.status, 200);
+      assert.deepEqual(r.body.access, { level: 'full', reason: 'public', teacher: true });
+      assert.equal(hasFiles(r.text), true);
+      assert.equal('profesores' in r.body, false);
+      assert.match(r.headers.get('cache-control'), /private, no-store/);
+      assert.match(r.headers.get('vary') ?? '', /Authorization/);
+    });
+
+    test('curso público con sesión: alumno inscrito → access full con teacher false', async () => {
+      const course = await fx.createCourse({ accessMode: 'public' });
+      const ana = await fx.createUser();
+      await UserProgress.create({ userId: ana._id, courseId: course._id });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(ana) });
+      assert.equal(r.status, 200);
+      assert.deepEqual(r.body.access, { level: 'full', reason: 'public', teacher: false });
+      assert.equal(r.body.title, 'Curso');
     });
 
     test('id inválido → 404', async () => {
