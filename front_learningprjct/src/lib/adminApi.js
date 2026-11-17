@@ -76,3 +76,10 @@ export const fetchCohortInvites = (id, signal) => request(`/api/cohorts/${id}/in
 export const createCohortInvite = (id, body) => request(`/api/cohorts/${id}/invites`, { method: 'POST', body });
 export const revokeCohortInvite = (id, inviteId) => request(`/api/cohorts/${id}/invites/${inviteId}/revoke`, { method: 'POST' });
 export const fetchCourseInterest = (courseId, signal) => request(`/api/courses/${courseId}/interes`, { signal });
+
+// ---- Dudas y profesores ----
+export const fetchAdminDudas = (params, signal) => request('/api/admin/dudas', { params, signal });
+export const fetchTeachers = (cursoId, signal) => request(`/api/courses/${cursoId}/profesores`, { signal });
+export const addTeacher = (cursoId, email) => request(`/api/courses/${cursoId}/profesores`, { method: 'POST', body: { email } });
+export const resendTeacher = (cursoId, id) => request(`/api/courses/${cursoId}/profesores/${id}/reenviar`, { method: 'POST' });
+export const removeTeacher = (cursoId, id) => request(`/api/courses/${cursoId}/profesores/${id}`, { method: 'DELETE' });
