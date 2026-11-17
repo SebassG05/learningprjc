@@ -9,6 +9,8 @@
 // - Escucha en http://localhost:8551 (E2E_PORT). Rutas propias de la prueba (solo aquí):
 //     GET  /__e2e/seed   → ids y datos sembrados
 //     POST /__e2e/reset  → vacía la base y el registro de correos y vuelve a sembrar
+// - Siembra dos cursos privados («Suelos vivos», «Agua y riego») y uno público («Compost en casa») con
+//   un alumno inscrito (Pablo) y una profesora activa sin inscripción (Clara).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -67,6 +69,8 @@ const PEOPLE = {
   laura: { name: 'Laura Pérez', email: 'laura@e2e.test' },
   oscar: { name: 'Óscar Gil', email: 'oscar@e2e.test' },
   marta: { name: 'Marta Soler', email: 'marta@e2e.test' }, // sin rol: se la invita como profesora en la prueba
+  pablo: { name: 'Pablo Núñez', email: 'pablo@e2e.test' }, // inscrito en el curso público
+  clara: { name: 'Clara Vidal', email: 'clara@e2e.test' }, // profesora del curso público, sin inscripción
   admin: { name: 'Admin E2E', email: 'admin@e2e.test', role: 'admin' },
 };
 
@@ -106,12 +110,23 @@ async function seed() {
     temas: [{ numeroTema: 1, titulo: 'Balance hídrico' }],
   });
 
+  // Curso público: Pablo inscrito; Clara es su profesora activa y no está inscrita
+  const cursoPublico = await Course.create({
+    title: 'Compost en casa (E2E)',
+    description: 'Curso público de prueba: dudas solo para inscritos y profesores.',
+    accessMode: 'public',
+    isOpen: true,
+    idiomasDisponibles: ['es'],
+    temas: [{ numeroTema: 1, titulo: 'Qué es el compost', descripcion: 'Tema del curso público.' }],
+  });
+
   const profesorActivo = (userId, email) => ({
     _id: new mongoose.Types.ObjectId(), email, status: 'active', userId, tokenHash: null, redeemedTokenHash: null,
     tokenExpiresAt: null, lastSentAt: new Date(), addedBy: users.admin, addedAt: new Date(), linkedAt: new Date(),
   });
   await Course.updateOne({ _id: curso._id }, { $set: { profesores: [profesorActivo(users.laura, PEOPLE.laura.email)] } });
   await Course.updateOne({ _id: otroCurso._id }, { $set: { profesores: [profesorActivo(users.oscar, PEOPLE.oscar.email)] } });
+  await Course.updateOne({ _id: cursoPublico._id }, { $set: { profesores: [profesorActivo(users.clara, PEOPLE.clara.email)] } });
 
   const member = (key) => ({ user: users[key], email: PEOPLE[key].email, status: 'active', source: 'email' });
   const abierta = await Cohort.create({
@@ -127,6 +142,7 @@ async function seed() {
   await UserProgress.create([
     { userId: users.ana, courseId: curso._id },
     { userId: users.bruno, courseId: curso._id },
+    { userId: users.pablo, courseId: cursoPublico._id },
   ]);
 
   // Condiciones aceptadas: Ana, Bruno y Laura en el curso. Óscar (en el suyo) y Marta, NO: así se
@@ -134,6 +150,9 @@ async function seed() {
   const termsVersion = currentTermsVersion();
   await TermsAcceptance.create(['ana', 'bruno', 'laura'].map((k) => ({
     userId: users[k], courseId: curso._id, termsVersion, acceptedAt: new Date(), ip: '127.0.0.1', userAgent: 'e2e-seed',
+  })));
+  await TermsAcceptance.create(['pablo', 'clara'].map((k) => ({
+    userId: users[k], courseId: cursoPublico._id, termsVersion, acceptedAt: new Date(), ip: '127.0.0.1', userAgent: 'e2e-seed',
   })));
 
   const temas = curso.temas.map((t) => ({ _id: String(t._id), numeroTema: t.numeroTema, titulo: t.titulo }));
@@ -144,6 +163,9 @@ async function seed() {
     otherCourseId: String(otroCurso._id),
     otherCourseTitle: otroCurso.title,
     temas,
+    publicCourseId: String(cursoPublico._id),
+    publicCourseTitle: cursoPublico.title,
+    publicTemas: cursoPublico.temas.map((t) => ({ _id: String(t._id), numeroTema: t.numeroTema, titulo: t.titulo })),
     users: Object.fromEntries(Object.entries(PEOPLE).map(([k, p]) => [k, { ...p, id: String(users[k]) }])),
   };
 }

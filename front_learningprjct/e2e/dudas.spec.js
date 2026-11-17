@@ -389,6 +389,11 @@ test('10. Marta activa la invitación y entra como profesora', async ({ browser 
 
   await expect(page.getByRole('note').filter({ hasText: 'Estás viendo el curso como profesor' })).toBeVisible();
   expect(page.url()).not.toContain('token');
+
+  // Sin recargar, el menú de usuario ya ofrece «Mis dudas pendientes» (se vuelve a pedir al llegar al curso)
+  await page.getByRole('button', { name: /Marta Soler/ }).first().click();
+  await expect(page.getByRole('button', { name: /Mis dudas pendientes/ })).toBeVisible();
+  await page.keyboard.press('Escape');
   // Solo la carga del enlace llevaba el token (Chrome la notifica dos veces: confirmación y fragmento); en
   // cuanto la página lo lee, la barra queda sin él y ya no vuelve a aparecer
   const firstClean = urls.findIndex((u) => !u.includes('token'));
@@ -396,4 +401,83 @@ test('10. Marta activa la invitación y entra como profesora', async ({ browser 
   expect(urls.slice(0, firstClean).every((u) => u === inviteLink)).toBe(true);
   expect(urls.slice(firstClean).filter((u) => u.includes('token'))).toEqual([]);
   await ctx.close();
+});
+
+// ---------- curso público: dudas solo para inscritos y profesores ----------
+const PUBLICA = {
+  titulo: '¿Puedo echar cáscaras de cítricos al compost?',
+  texto: 'He leído que acidifican la mezcla; ¿conviene limitarlas o no pasa nada en pequeñas cantidades?',
+};
+const RESPUESTA_PUBLICA = 'En pequeñas cantidades no hay problema: trocéalas y mézclalas con material seco.';
+let dudaPublicaId;
+
+async function openPublicCourse(page) {
+  await page.goto(`/curso/${seed.publicCourseId}`);
+  await expect(page.getByRole('heading', { level: 1, name: seed.publicCourseTitle })).toBeVisible();
+}
+
+test('11. Pablo (inscrito en un curso público) pregunta sin aviso de solo lectura', async ({ browser }) => {
+  const ctx = await newUserContext(browser);
+  const page = await ctx.newPage();
+  await loginUI(page, seed.users.pablo.email);
+  await openPublicCourse(page);
+  expect(new URL(page.url()).pathname).toBe(`/curso/${seed.publicCourseId}`);
+
+  const block = await openTemaDudas(page);
+  await expect(block.getByText('La edición ha terminado', { exact: false })).toHaveCount(0);
+  await block.getByRole('button', { name: 'Preguntar una duda' }).click();
+  await block.getByLabel('Título').fill(PUBLICA.titulo);
+  await block.getByLabel('Tu duda').fill(PUBLICA.texto);
+  const created = page.waitForResponse((r) => r.url().endsWith(`/api/courses/${seed.publicCourseId}/dudas`) && r.request().method() === 'POST');
+  await block.getByRole('button', { name: 'Publicar' }).click();
+  expect((await created).status()).toBe(201);
+
+  const item = block.locator('li[id^="duda-"]').filter({ hasText: PUBLICA.titulo });
+  await expect(item).toBeVisible();
+  dudaPublicaId = (await item.getAttribute('id')).replace(/^duda-/, '');
+  await block.screenshot({ path: path.join(SHOTS, 'publico-alumno-1440x900.png'), animations: 'disabled' });
+  await ctx.close();
+});
+
+test('12. Clara (profesora del curso público, sin inscripción) entra, ve el motivo del reporte y responde', async ({ browser }) => {
+  expect(dudaPublicaId).toMatch(/^[a-f0-9]{24}$/);
+  // Un reporte con motivo: la profesora lo ve (motivo y cuándo), nunca quién lo hizo
+  const pabloToken = await apiLogin(seed.users.pablo.email);
+  const rep = await api(`/api/dudas/${dudaPublicaId}/reportar`, { method: 'POST', token: pabloToken, body: { motivo: 'Motivo de prueba E2E' } });
+  expect(rep.status).toBe(201);
+  const ctx = await newUserContext(browser);
+  const page = await ctx.newPage();
+  await loginUI(page, seed.users.clara.email);
+  await openPublicCourse(page);
+  // No la manda a la inscripción: entra como profesora
+  await expect(page.getByRole('note').filter({ hasText: 'Estás viendo el curso como profesor' })).toBeVisible();
+  expect(new URL(page.url()).pathname).toBe(`/curso/${seed.publicCourseId}`);
+
+  const block = await openTemaDudas(page);
+  const item = block.locator(`li#duda-${dudaPublicaId}`);
+  await expect(item.getByText(PUBLICA.titulo)).toBeVisible();
+  await expect(item.getByText('1 reporte', { exact: true })).toBeVisible();
+  await item.getByText('Ver el motivo del reporte').click();
+  await expect(item.getByText('Motivo de prueba E2E')).toBeVisible();
+  await item.getByRole('button', { name: 'Responder' }).first().click();
+  await item.getByLabel('Tu respuesta').fill(RESPUESTA_PUBLICA);
+  const answered = page.waitForResponse((r) => r.url().endsWith(`/api/dudas/${dudaPublicaId}/respuestas`) && r.request().method() === 'POST');
+  await item.locator('form').getByRole('button', { name: 'Responder' }).click();
+  expect((await answered).status()).toBe(201);
+  const respuesta = item.locator('li').filter({ hasText: RESPUESTA_PUBLICA });
+  await expect(respuesta.getByText('Profesor', { exact: true })).toBeVisible();
+  await block.screenshot({ path: path.join(SHOTS, 'publico-profesora-1440x900.png'), animations: 'disabled' });
+  await ctx.close();
+});
+
+test('13. Curso público: sin inscripción no se leen sus dudas (API)', async () => {
+  const oscar = await apiLogin(seed.users.oscar.email);
+  const ajeno = await api(`/api/courses/${seed.publicCourseId}/dudas`, { token: oscar });
+  expect(ajeno.status).toBe(403);
+  expect(Array.isArray(ajeno.body)).toBe(false);
+  expect((await api(`/api/courses/${seed.publicCourseId}/dudas`)).status).toBe(401);
+  const pablo = await apiLogin(seed.users.pablo.email);
+  const propio = await api(`/api/courses/${seed.publicCourseId}/dudas`, { token: pablo });
+  expect(propio.status).toBe(200);
+  expect(propio.body.map((d) => d._id)).toContain(dudaPublicaId);
 });
