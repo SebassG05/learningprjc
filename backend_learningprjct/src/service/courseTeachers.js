@@ -28,6 +28,7 @@ const STATUS = {
   'already-teacher': 409,
   expired: 410,
   used: 410,
+  'mail-failed': 502,
 };
 
 export class TeacherError extends Error {
@@ -35,6 +36,27 @@ export class TeacherError extends Error {
     super(code);
     this.code = code;
     this.status = STATUS[code] ?? 400;
+  }
+}
+
+// Lo único que sale del servicio de una fila: nunca los hashes del token ni nada interno
+export const publicTeacher = (row) => ({
+  _id: row._id,
+  email: row.email,
+  status: row.status,
+  addedAt: row.addedAt,
+  lastSentAt: row.lastSentAt,
+  tokenExpiresAt: row.tokenExpiresAt,
+  linkedAt: row.linkedAt,
+});
+
+// La fila ya está guardada: si el correo falla se avisa con un código propio y se puede reenviar
+async function sendInvite(args) {
+  try {
+    await sendTeacherInviteEmail(args);
+  } catch (err) {
+    console.error('No se pudo enviar el correo de profesor:', err.message);
+    throw new TeacherError('mail-failed');
   }
 }
 
@@ -96,11 +118,11 @@ export async function addTeacher({ courseId, email, addedBy, now = new Date() })
 
   const course = await Course.findById(courseId).select('title titleEn').lean();
   const url = teacherUrl(token);
-  await sendTeacherInviteEmail({ to: target, url, courseTitle: courseTitle(course), expiresAt: tokenExpiresAt });
-  return { teacher, url };
+  await sendInvite({ to: target, url, courseTitle: courseTitle(course), expiresAt: tokenExpiresAt });
+  return { teacher: publicTeacher(teacher), url };
 }
 
-/** Nuevo enlace para un profesor pendiente; el anterior deja de valer. */
+/** Nuevo enlace para un profesor pendiente; el anterior deja de valer. @returns {Promise<{ teacher, url }>} */
 export async function resendTeacher({ courseId, teacherId, now = new Date() }) {
   if (!mongoose.isValidObjectId(courseId) || !mongoose.isValidObjectId(teacherId)) throw new TeacherError('not-found');
 
@@ -117,8 +139,8 @@ export async function resendTeacher({ courseId, teacherId, now = new Date() }) {
   }
   const row = course.profesores.find((p) => String(p._id) === String(teacherId));
   const url = teacherUrl(token);
-  await sendTeacherInviteEmail({ to: row.email, url, courseTitle: courseTitle(course), expiresAt: tokenExpiresAt });
-  return { url };
+  await sendInvite({ to: row.email, url, courseTitle: courseTitle(course), expiresAt: tokenExpiresAt });
+  return { teacher: publicTeacher(row), url };
 }
 
 /** Quita al profesor (pendiente o activo). Con la fila desaparece su tokenHash: el enlace da «inválido». */

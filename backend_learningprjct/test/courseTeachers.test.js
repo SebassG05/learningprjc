@@ -11,7 +11,13 @@ process.env.NODE_ENV = 'production';
 // El transporte de correo se crea al importar mailService: se sustituye antes
 const sent = [];
 const { default: nodemailer } = await import('nodemailer');
-nodemailer.createTransport = () => ({ sendMail: async (opts) => { sent.push(opts); } });
+let failMail = false;
+nodemailer.createTransport = () => ({
+  sendMail: async (opts) => {
+    if (failMail) throw new Error('SMTP caído');
+    sent.push(opts);
+  },
+});
 
 const { startMemoryMongo } = await import('./helpers/memoryMongo.js');
 const fx = await import('./helpers/cohortFixtures.js');
@@ -37,6 +43,7 @@ describe('profesores de un curso', () => {
   beforeEach(async () => {
     await db.reset();
     sent.length = 0;
+    failMail = false;
     course = await fx.createCourse({ title: 'Suelos <b>y</b> clima' });
     admin = await fx.createUser({ role: 'admin' });
   });
@@ -97,6 +104,29 @@ describe('profesores de un curso', () => {
     assert.equal(row.tokenExpiresAt.getTime(), now.getTime() + 14 * DAY);
     assert.equal(String(row.addedBy), String(admin._id));
     assert.ok(!JSON.stringify(row).includes(token));
+  });
+
+  test('addTeacher y resendTeacher no devuelven ningún hash', async () => {
+    const added = await addTeacher({ courseId: course._id, email: 'laura@uco.es', addedBy: admin._id });
+    const resent = await resendTeacher({ courseId: course._id, teacherId: added.teacher._id });
+    for (const { teacher } of [added, resent]) {
+      assert.deepEqual(Object.keys(teacher).sort(), ['_id', 'addedAt', 'email', 'lastSentAt', 'linkedAt', 'status', 'tokenExpiresAt']);
+      assert.ok(!Object.keys(teacher).some((k) => k.endsWith('Hash')));
+    }
+    assert.equal(added.teacher.email, 'laura@uco.es');
+    assert.ok(!JSON.stringify(resent).includes('Hash'));
+  });
+
+  test('si el correo falla → mail-failed (502) y la fila queda pendiente', async () => {
+    failMail = true;
+    await rejectsWith(addTeacher({ courseId: course._id, email: 'laura@uco.es', addedBy: admin._id }), 'mail-failed', 502);
+    const rows = await teachersOf(course);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].status, 'pending');
+    await rejectsWith(resendTeacher({ courseId: course._id, teacherId: rows[0]._id }), 'mail-failed', 502);
+    failMail = false;
+    await resendTeacher({ courseId: course._id, teacherId: rows[0]._id });
+    assert.equal(sent.length, 1);
   });
 
   test('canje válido activa y borra tokenHash', async () => {
