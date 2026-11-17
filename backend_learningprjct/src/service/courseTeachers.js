@@ -5,6 +5,8 @@
 //   el navegador no lo envía al servidor, así que no llega a logs ni al Referer.
 // - Canjear marca la fila como activa con un único update condicional; el hash pasa de `tokenHash` a
 //   `redeemedTokenHash`, así un segundo intento responde «usado» y una fila borrada responde «inválido».
+//   Activar al entrar con Google hace lo mismo con el hash. Si quien vuelve a abrir el enlace es la cuenta
+//   que ya tiene la fila activa, el canje responde con éxito (idempotente) en lugar de «usado».
 // - `profesores` es select:false: toda lectura pide '+profesores'.
 import crypto from 'node:crypto';
 import mongoose from 'mongoose';
@@ -154,7 +156,7 @@ export async function removeTeacher({ courseId, teacherId }) {
 }
 
 // Explica por qué un token no se puede canjear (o devuelve el curso y la fila si todavía vale)
-async function lookupToken(token, now) {
+async function lookupToken(token, now, { redeemedBy } = {}) {
   if (typeof token !== 'string' || token.length === 0 || token.length > MAX_TOKEN_LENGTH) throw new TeacherError('invalid');
   const hash = hashToken(token);
   const course = await Course.findOne({ $or: [{ 'profesores.tokenHash': hash }, { 'profesores.redeemedTokenHash': hash }] })
@@ -162,6 +164,10 @@ async function lookupToken(token, now) {
     .lean();
   const row = course?.profesores.find((p) => p.tokenHash === hash || p.redeemedTokenHash === hash);
   if (!row) throw new TeacherError('invalid');
+  // Ya canjeado (o activado al entrar con Google) por la misma cuenta que lo vuelve a abrir: no es un error
+  if (row.redeemedTokenHash === hash && redeemedBy && row.status === 'active' && String(row.userId) === String(redeemedBy)) {
+    return { course, row, alreadyMine: true };
+  }
   if (row.redeemedTokenHash === hash) throw new TeacherError('used');
   if (row.status !== 'pending' || !row.tokenExpiresAt || row.tokenExpiresAt <= now) throw new TeacherError('expired');
   return { course, row };
@@ -179,7 +185,8 @@ export async function previewTeacherInvite(token, now = new Date()) {
  * @returns {Promise<{ courseId, mismatch: boolean }>}
  */
 export async function redeemTeacherInvite({ token, user, now = new Date() }) {
-  const { course: found } = await lookupToken(token, now); // invalid / used / expired
+  const { course: found, alreadyMine } = await lookupToken(token, now, { redeemedBy: user._id }); // invalid / used / expired
+  if (alreadyMine) return { courseId: found._id, mismatch: false };
   const hash = hashToken(token);
 
   const course = await Course.findOneAndUpdate(
@@ -205,7 +212,8 @@ export async function redeemTeacherInvite({ token, user, now = new Date() }) {
     // No se pudo: otro canje se adelantó, venció justo ahora o ya era profesor con otra fila
     const again = await Course.findById(found._id).select('+profesores').lean();
     if (again?.profesores.some((p) => String(p.userId) === String(user._id) && p.status === 'active')) throw new TeacherError('already-teacher');
-    await lookupToken(token, now);
+    const retry = await lookupToken(token, now, { redeemedBy: user._id });
+    if (retry.alreadyMine) return { courseId: found._id, mismatch: false };
     throw new TeacherError('used');
   }
 
@@ -231,20 +239,40 @@ export async function redeemTeacherInvite({ token, user, now = new Date() }) {
 export async function claimTeacherSlotsByGoogle(user, { verified = false, now = new Date() } = {}) {
   const email = normalizeEmail(user?.email);
   if (verified !== true || !user?._id || !isValidEmail(email)) return 0;
+  // Pipeline: el hash del enlace pasa de tokenHash a redeemedTokenHash (como en el canje), así el enlace
+  // del correo, abierto después, sabe que ya está usado y por quién en lugar de responder «inválido»
+  const claimable = { $and: [{ $eq: ['$$p.email', email] }, { $eq: ['$$p.status', 'pending'] }] };
   const { modifiedCount } = await Course.updateMany(
     {
       profesores: { $elemMatch: { email, status: 'pending' } },
       'profesores.userId': { $ne: user._id }, // si ya es profesor activo de ese curso, no se toca
     },
-    {
+    [{
       $set: {
-        'profesores.$[r].status': 'active',
-        'profesores.$[r].userId': user._id,
-        'profesores.$[r].linkedAt': now,
-        'profesores.$[r].tokenHash': null,
+        profesores: {
+          $map: {
+            input: '$profesores',
+            as: 'p',
+            in: {
+              $cond: [
+                claimable,
+                {
+                  $mergeObjects: ['$$p', {
+                    status: 'active',
+                    userId: user._id,
+                    linkedAt: now,
+                    tokenHash: null,
+                    redeemedTokenHash: { $ifNull: ['$$p.tokenHash', '$$p.redeemedTokenHash'] },
+                  }],
+                },
+                '$$p',
+              ],
+            },
+          },
+        },
       },
-    },
-    { arrayFilters: [{ 'r.email': email, 'r.status': 'pending' }] },
+    }],
+    { updatePipeline: true },
   );
   return modifiedCount;
 }

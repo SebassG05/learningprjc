@@ -247,6 +247,47 @@ describe('profesores de un curso', () => {
     assert.equal((await teachersOf(other)).find((r) => r.email === 'ajeno@uco.es').status, 'pending');
   });
 
+  test('Google verificado guarda el hash como canjeado: el enlace lo canjea la misma cuenta sin error', async () => {
+    const { url } = await addTeacher({ courseId: course._id, email: 'laura@uco.es', addedBy: admin._id });
+    const user = await fx.createUser({ email: 'laura@uco.es' });
+    assert.equal(await claimTeacherSlotsByGoogle(user, { verified: true }), 1);
+    const [row] = await teachersOf(course);
+    assert.equal(row.tokenHash, null);
+    assert.equal(row.redeemedTokenHash, hashToken(tokenOf(url)));
+    const out = await redeemTeacherInvite({ token: tokenOf(url), user });
+    assert.deepEqual({ courseId: String(out.courseId), mismatch: out.mismatch }, { courseId: String(course._id), mismatch: false });
+    const rows = await teachersOf(course);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].status, 'active');
+    assert.equal(String(rows[0].userId), String(user._id));
+    assert.equal(sent.length, 1, 'sin correo de vinculación');
+  });
+
+  test('Google verificado y luego el enlace con otra cuenta → used (410)', async () => {
+    const { url } = await addTeacher({ courseId: course._id, email: 'laura@uco.es', addedBy: admin._id });
+    const laura = await fx.createUser({ email: 'laura@uco.es' });
+    await claimTeacherSlotsByGoogle(laura, { verified: true });
+    const otra = await fx.createUser();
+    await rejectsWith(redeemTeacherInvite({ token: tokenOf(url), user: otra }), 'used', 410);
+    await rejectsWith(previewTeacherInvite(tokenOf(url)), 'used', 410);
+    const [row] = await teachersOf(course);
+    assert.equal(String(row.userId), String(laura._id));
+  });
+
+  test('Google verificado no toca el curso del que ya es profesor activo con otra fila', async () => {
+    const user = await fx.createUser({ email: 'laura@uco.es' });
+    const first = await addTeacher({ courseId: course._id, email: 'otro@uco.es', addedBy: admin._id });
+    await redeemTeacherInvite({ token: tokenOf(first.url), user }); // mismatch: queda activa con su cuenta
+    await addTeacher({ courseId: course._id, email: 'laura@uco.es', addedBy: admin._id });
+    const other = await fx.createCourse({ title: 'Otro curso' });
+    await addTeacher({ courseId: other._id, email: 'laura@uco.es', addedBy: admin._id });
+    assert.equal(await claimTeacherSlotsByGoogle(user, { verified: true }), 1);
+    const rows = await teachersOf(course);
+    assert.equal(rows.find((r) => r.email === 'laura@uco.es').status, 'pending');
+    assert.equal(rows.filter((r) => r.status === 'active').length, 1);
+    assert.equal((await teachersOf(other))[0].status, 'active');
+  });
+
   test('Google no verificado no activa', async () => {
     await addTeacher({ courseId: course._id, email: 'laura@uco.es', addedBy: admin._id });
     const user = await fx.createUser({ email: 'laura@uco.es' });

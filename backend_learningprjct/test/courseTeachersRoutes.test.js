@@ -160,8 +160,16 @@ describe('rutas de profesores', () => {
     const get = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(otra) });
     assert.equal(get.body.access.reason, 'teacher');
 
+    // Volver a abrir el enlace con la misma cuenta ya vinculada es idempotente (mismo curso, sin segundo aviso)
     const again = await api.call('POST', '/api/profesor/invitacion/canjear', { headers: fx.authHeader(otra), body: { token } });
-    assert.equal(again.status, 410);
+    assert.equal(again.status, 200);
+    assert.equal(String(again.body.courseId), String(course._id));
+    assert.equal(again.body.mismatch, false);
+
+    // Con cualquier otra cuenta, el enlace ya está usado
+    const tercera = await fx.createUser({ email: 'tercera@uco.es' });
+    const ajeno = await api.call('POST', '/api/profesor/invitacion/canjear', { headers: fx.authHeader(tercera), body: { token } });
+    assert.equal(ajeno.status, 410);
   });
 
   test('/api/profesor/cursos solo lista cursos con fila activa del usuario', async () => {
