@@ -1,5 +1,5 @@
 import express from 'express';
-import { body } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import { GOOGLE_ID_PASSWORD_MESSAGE, looksLikeGoogleId } from '../utils/passwordPolicy.js';
 import { 
   registerUser, 
@@ -8,6 +8,8 @@ import {
   requestPasswordReset, 
   resetPassword, 
   googleLogin,
+  verificarCorreo,
+  reenviarCodigoCorreo,
   enrollInCourse,
   getEnrollmentStatus,
   changePreferredLanguage,
@@ -34,10 +36,29 @@ const enrollRateLimit = createRateLimit({
   message: 'Demasiadas peticiones. Espera un momento e inténtalo de nuevo.',
 });
 
+// Registro: cada uno manda un correo con código. Pocos por IP para que no se use para enviar correos a terceros.
+const registerRateLimit = createRateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 20,
+  message: 'Demasiados registros desde esta conexión. Inténtalo más tarde.',
+});
+// Comprobar el código: además del límite de 5 intentos por código
+const verifyRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: 'Demasiados intentos. Espera unos minutos.',
+});
+const resendRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: 'Demasiadas peticiones de código. Espera unos minutos.',
+});
+
 const router = express.Router();
 
 router.post(
   '/register',
+  registerRateLimit,
   [
     body('name').notEmpty().withMessage('El nombre es obligatorio'),
     body('email').isEmail().withMessage('Email inválido'),
@@ -61,6 +82,30 @@ router.post(
     body('password').notEmpty().withMessage('La contraseña es obligatoria')
   ],
   loginUser
+);
+
+// Confirmar el correo con el código (abre la sesión) y pedir otro
+router.post(
+  '/verificar-correo',
+  verifyRateLimit,
+  [body('email').isEmail().withMessage('Email inválido'), body('codigo').notEmpty().withMessage('Escribe el código')],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ error: errors.array()[0].msg });
+    return next();
+  },
+  verificarCorreo
+);
+router.post(
+  '/verificar-correo/reenviar',
+  resendRateLimit,
+  [body('email').isEmail().withMessage('Email inválido')],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ error: errors.array()[0].msg });
+    return next();
+  },
+  reenviarCodigoCorreo
 );
 
 // Cerrar sesión

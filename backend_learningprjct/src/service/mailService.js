@@ -4,6 +4,7 @@ import { buildContactEmail, singleLine } from './contactEmailTemplate.js';
 import { buildCohortInviteEmail } from './cohortInviteEmailTemplate.js';
 import { buildTeacherInviteEmail, buildTeacherLinkedEmail } from './teacherEmailTemplate.js';
 import { buildDudaNuevaEmail, buildDudaRespuestaEmail } from './dudaEmailTemplate.js';
+import { buildEmailVerificationEmail } from './emailVerificationTemplate.js';
 import { etiquetaEstado } from './correccionService.js';
 
 dotenv.config();
@@ -286,5 +287,11 @@ export const sendDudaRespuestaEmail = async ({ to, ...data }) => {
 // Aviso a la dirección invitada cuando el enlace se canjeó desde una cuenta con otro correo.
 export const sendTeacherLinkedEmail = async ({ to, courseTitle, accountMasked }) => {
   const { subject, html, text } = buildTeacherLinkedEmail({ courseTitle, accountMasked });
+  await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
+};
+
+// Código para confirmar el correo al registrarse con contraseña
+export const sendEmailVerificationCode = async ({ to, name, code, minutes }) => {
+  const { subject, html, text } = buildEmailVerificationEmail({ name, code, minutes });
   await transporter.sendMail({ from: `Campus Evenor <${process.env.EMAIL_USER}>`, to, subject, html, text });
 };

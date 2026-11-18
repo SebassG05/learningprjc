@@ -39,6 +39,24 @@ const userSchema = new mongoose.Schema({
   googleLinkedAt: {
     type: Date
   },
+  // Registro con contraseña desde que existe la verificación: true hasta que se confirma el código enviado al
+  // correo. Mientras tanto no hay sesión. Las cuentas anteriores no lo tienen y siguen como estaban.
+  emailPendiente: {
+    type: Boolean
+  },
+  emailVerificadoAt: {
+    type: Date
+  },
+  // Código de verificación en curso (solo su hash). Nunca sale en las consultas normales.
+  verificacionCorreo: {
+    type: new mongoose.Schema({
+      codigoHash: String,
+      expiresAt: Date,
+      intentos: { type: Number, default: 0 },
+      enviadoAt: Date,
+    }, { _id: false }),
+    select: false
+  },
   // Última reseña publicada: limita a una reseña cada 24 h (borrarla no reabre el plazo)
   lastReviewAt: {
     type: Date

@@ -15,6 +15,8 @@ import PasswordResetToken from '../models/PasswordResetToken.js';
 import { sendPasswordResetEmail, sendCourseCompletionEmailToUser, sendCourseCompletionNotificationToAdmin } from '../service/mailService.js';
 import { verifyGoogleToken, findOrCreateGoogleUser, generateJWT, GoogleAuthError } from '../service/googleAuthService.js';
 import { looksLikeGoogleId } from '../utils/passwordPolicy.js';
+import { normalizeEmail } from '../utils/email.js';
+import { enviarCodigoSafely, marcarVerificado, verificarCodigo, VerificationError } from '../service/emailVerification.js';
 import { resumenCurso, resumenVacio } from '../service/progresoService.js';
 import { buildInscripcionesPipeline, formatInscripciones, ListadoError, parseInscripciones } from '../service/inscripcionesQueryService.js';
 
@@ -23,23 +25,30 @@ export const registerUser = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { name, email, password } = req.body;
+  const { name, password } = req.body;
+  const email = normalizeEmail(req.body.email);
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    let user = await User.findOne({ email });
+    if (user && !user.emailPendiente) {
       return res.status(409).json({ error: 'El email ya está registrado.' });
     }
-    // La contraseña la hashea el modelo (pre('save')); hashearla también aquí impedía iniciar sesión
-    const user = new User({ name, email, password });
+    if (user) {
+      // Registro anterior sin confirmar: lo sustituye este. Si lo hizo otra persona con este correo, su
+      // contraseña deja de valer; la cuenta solo se activa con el código que llega a ese correo.
+      user.name = name;
+      user.password = password;
+    } else {
+      // La contraseña la hashea el modelo (pre('save')); hashearla también aquí impedía iniciar sesión
+      user = new User({ name, email, password, emailPendiente: true });
+    }
     await user.save();
-    const claim = await claimPendingMembershipsSafely(user, { verified: false });
-    // Con token, como el login: el modal deja la sesión iniciada tras registrarse (antes guardaba «undefined»)
-    const token = signToken({ id: user._id, email: user.email });
+    // Sin sesión hasta confirmar el correo. Las plazas pendientes se activan al confirmarlo.
+    const envio = await enviarCodigoSafely(user);
     res.status(201).json({
-      message: 'Usuario registrado correctamente',
-      token,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role || 'usuario' },
-      ...claimSummary(claim),
+      message: 'Te hemos enviado un código para confirmar tu correo.',
+      verificacionPendiente: true,
+      email: user.email,
+      codigoEnviado: envio.sent || envio.reason === 'cooldown',
     });
   } catch (err) {
     res.status(500).json({ error: 'Error en el servidor', details: err.message });
@@ -51,7 +60,8 @@ export const loginUser = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const email = normalizeEmail(req.body.email);
   // Con forma de `sub` de Google: es lo que guardaban como contraseña las cuentas creadas con Google,
   // y ese número no es secreto. Se rechaza siempre, con el mismo mensaje que un fallo normal.
   if (looksLikeGoogleId(password)) {
@@ -65,6 +75,16 @@ export const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
+    }
+    // Correo sin confirmar: sin sesión. Se le manda un código nuevo (como mucho uno por minuto).
+    if (user.emailPendiente) {
+      const envio = await enviarCodigoSafely(user);
+      return res.status(403).json({
+        code: 'email-pendiente',
+        error: 'Confirma tu correo para entrar. Te hemos enviado un código.',
+        email: user.email,
+        codigoEnviado: envio.sent || envio.reason === 'cooldown',
+      });
     }
     const token = signToken({ id: user._id, email: user.email });
     
@@ -97,6 +117,59 @@ export const logoutUser = async (req, res) => {
   res.json({
     message: 'Sesión cerrada correctamente'
   });
+};
+
+/**
+ * Confirma el correo con el código recibido y abre la sesión.
+ * @route POST /api/users/verificar-correo  { email, codigo }
+ */
+export const verificarCorreo = async (req, res, next) => {
+  try {
+    let user;
+    try {
+      user = await verificarCodigo({ email: req.body?.email, codigo: req.body?.codigo });
+    } catch (err) {
+      if (!(err instanceof VerificationError)) throw err;
+      const mensajes = {
+        invalid: 'No hay ningún código pendiente para este correo. Pide uno nuevo.',
+        expired: 'El código ha caducado. Pide uno nuevo.',
+        'too-many': 'Demasiados intentos con este código. Pide uno nuevo.',
+        wrong: 'El código no es correcto.',
+      };
+      return res.status(400).json({ code: err.code, error: mensajes[err.code], ...(err.code === 'wrong' ? { restantes: err.restantes } : {}) });
+    }
+    user.lastLogin = new Date();
+    await user.save();
+    // Correo demostrado: las plazas y accesos de profesor pendientes para él se activan como con Google
+    const claim = await claimPendingMembershipsSafely(user, { verified: true });
+    await claimTeacherSlotsSafely(user, { verified: true });
+    return res.json({
+      message: 'Correo confirmado',
+      ...claimSummary(claim),
+      token: signToken({ id: user._id, email: user.email }),
+      user: { id: user._id, name: user.name, email: user.email, role: user.role || 'usuario' },
+    });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+/**
+ * Manda otro código. Responde igual exista o no la cuenta (no revela qué correos están registrados).
+ * @route POST /api/users/verificar-correo/reenviar  { email }
+ */
+export const reenviarCodigoCorreo = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: normalizeEmail(req.body?.email) });
+    let envio = { sent: false };
+    if (user?.emailPendiente) envio = await enviarCodigoSafely(user);
+    if (envio.reason === 'cooldown') {
+      return res.status(429).json({ code: 'cooldown', error: 'Espera un minuto antes de pedir otro código.' });
+    }
+    return res.json({ message: 'Si el correo tiene una cuenta pendiente de confirmar, le llegará un código nuevo.' });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const requestPasswordReset = async (req, res) => {
@@ -132,10 +205,11 @@ export const resetPassword = async (req, res) => {
   }
   const { userId, token, newPassword } = req.body;
   if (process.env.NODE_ENV !== 'production') {
-    console.log('resetPassword body:', { userId, token, newPassword });
+    console.log('resetPassword body:', { userId, token: token ? '[presente]' : token });
   }
   if (!userId || !token || !newPassword) {
-    console.error('Datos incompletos:', { userId, token, newPassword });
+    // Nunca la contraseña ni el token en los registros
+    console.error('Datos incompletos:', { userId: Boolean(userId), token: Boolean(token), newPassword: Boolean(newPassword) });
     return res.status(400).json({ error: 'Datos incompletos.' });
   }
   try {
@@ -158,6 +232,8 @@ export const resetPassword = async (req, res) => {
     user.password = newPassword;
     await user.save();
     await PasswordResetToken.deleteMany({ userId });
+    // El enlace llegó a su correo: también vale como verificación
+    await marcarVerificado(user._id);
     if (process.env.NODE_ENV !== 'production') {
       console.log('Contraseña actualizada y tokens eliminados');
     }
@@ -194,6 +270,8 @@ export const googleLogin = async (req, res, next) => {
       if (err instanceof GoogleAuthError) return res.status(err.status).json({ message: err.message });
       throw err;
     }
+    // Un registro con contraseña sin confirmar queda confirmado: Google garantiza el correo
+    if (user.emailPendiente) await marcarVerificado(user._id);
     // 3. Generar JWT propio
     const token = generateJWT(user);
     // 4. Actualizar lastLogin

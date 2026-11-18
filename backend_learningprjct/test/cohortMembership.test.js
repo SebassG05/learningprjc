@@ -110,12 +110,24 @@ describe('plazas pendientes por email', () => {
   });
 
   describe('flujos', () => {
-    test('pendiente → se registra con ese email → enlace → canjea → activo con acceso', async () => {
+    // Desde la verificación del correo, registrarse no da sesión: la plaza se activa al confirmar el código
+    // (emailVerification.test.js). Aquí, las cuentas con contraseña de antes (sin verificar) siguen con el enlace.
+    test('pendiente → se registra con ese email → solo llega el código, la plaza sigue pendiente', async () => {
       const r = await register('Ana@X.es');
       assert.equal(r.status, 201);
+      assert.equal(r.body.token, undefined);
       assert.equal(sent.length, 1);
+      assert.match(sent[0].subject, /^\d{6} /);
+      assert.equal((await seat()).status, 'pending');
+    });
+
+    test('cuenta antigua con contraseña y plaza pendiente → al entrar se le envía el enlace → canjea → activo', async () => {
+      await new User({ name: 'Ana', email: 'ana@x.es', password: 'secreta1' }).save();
+      const r = await api.call('POST', '/api/users/login', { body: { email: 'ana@x.es', password: 'secreta1' } });
+      assert.equal(r.status, 200);
+      assert.equal(sent.length, 1);
+      assert.deepEqual(r.body.cohortClaim, { activated: 0, emailed: 1 });
       const ana = await User.findOne({ email: 'ana@x.es' });
-      assert.equal((await seat()).status, 'pending'); // registrarse no basta: hay que demostrar el email
       const redeemed = await redeemInvite({ token: tokenFromMail(sent[0]), user: ana });
       assert.equal(redeemed.status, 'joined');
       const m = await seat();
@@ -123,30 +135,11 @@ describe('plazas pendientes por email', () => {
       assert.equal(String(m.user), String(ana._id));
     });
 
-    test('quien se registra puede iniciar sesión después (contraseña hasheada una sola vez)', async () => {
-      await register('luis@x.es');
+    test('cuenta antigua: contraseña hasheada una sola vez, el login funciona', async () => {
+      await new User({ name: 'Luis', email: 'luis@x.es', password: 'secreta1' }).save();
       const r = await api.call('POST', '/api/users/login', { body: { email: 'luis@x.es', password: 'secreta1' } });
       assert.equal(r.status, 200);
       assert.ok(r.body.token);
-    });
-
-    test('el registro devuelve un token válido (el modal entra directamente tras registrarse)', async () => {
-      const r = await register('nuevo@x.es');
-      assert.equal(r.status, 201);
-      assert.ok(r.body.token);
-      const me = await api.call('GET', '/api/users/me', { headers: { Authorization: `Bearer ${r.body.token}` } });
-      assert.equal(me.status, 200);
-      assert.equal(me.body.user.email, 'nuevo@x.es');
-    });
-
-    test('login con contraseña de alguien con plaza pendiente → se le envía el enlace', async () => {
-      await register('ana@x.es');
-      sent.length = 0;
-      await CohortInvite.deleteMany({}); // como si el del registro fuese de hace días
-      const r = await api.call('POST', '/api/users/login', { body: { email: 'ana@x.es', password: 'secreta1' } });
-      assert.equal(r.status, 200);
-      assert.equal(sent.length, 1);
-      assert.deepEqual(r.body.cohortClaim, { activated: 0, emailed: 1 });
     });
 
     test('login con Google y email verificado → plaza activa al momento', async () => {
@@ -168,8 +161,7 @@ describe('plazas pendientes por email', () => {
     });
 
     test('si el correo falla, el login sigue funcionando', async () => {
-      await register('ana@x.es');
-      await CohortInvite.deleteMany({});
+      await new User({ name: 'Ana', email: 'ana@x.es', password: 'secreta1' }).save();
       mailFails = true;
       const r = await api.call('POST', '/api/users/login', { body: { email: 'ana@x.es', password: 'secreta1' } });
       assert.equal(r.status, 200);
