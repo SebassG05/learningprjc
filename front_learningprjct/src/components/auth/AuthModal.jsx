@@ -17,6 +17,7 @@ import useNativeValidation from './useNativeValidation';
 import AuthTabs from './AuthTabs';
 import { panelId, tabId } from './tabIds';
 import AutoHeight from './AutoHeight';
+import VerifyEmailForm from './VerifyEmailForm';
 
 // Cambio de texto con la pestaña: fundido cruzado corto (sin desplazamiento con reduced motion)
 function Swap({ id, children }) {
@@ -78,6 +79,13 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
   const [loginError, setLoginError] = useState('');
   const [, setLoginSuccess] = useState('');
 
+  // Correo por confirmar (registro con contraseña): { email, codigoEnviado } o null
+  const [pending, setPending] = useState(null);
+  const codeRef = useRef(null);
+  React.useEffect(() => {
+    if (pending) codeRef.current?.focus();
+  }, [pending]);
+
   // Limpiar mensajes al abrir modal
   React.useEffect(() => {
     if (open) {
@@ -106,6 +114,7 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
     register.reset();
     setLoginError('');
     setRegisterError('');
+    setPending(null);
     if (!dismissed.current) return;
     dismissed.current = false;
     onClose && onClose();
@@ -142,18 +151,13 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
         }),
       });
       const data = await res.json();
-      if (!res.ok) {
+      if (res.status === 403 && data.code === 'email-pendiente') {
+        setPending({ email: data.email || loginData.email, codigoEnviado: data.codigoEnviado !== false });
+      } else if (!res.ok) {
         setLoginError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al iniciar sesión');
       } else {
-        setUserLogin(data.user, data.token);
         setLoginSuccess('');
-        showToast('¡Bienvenido! Has iniciado sesión correctamente.', 'info');
-        // Cierra el modal y elimina el overlay inmediatamente y sin retardo
-        setIsVisible(false);
-        onClose && onClose();
-        setTimeout(() => {
-          if (redirectTo !== null) navigate(redirectTo, { replace: true });
-        }, 10);
+        enterWith(data, '¡Bienvenido! Has iniciado sesión correctamente.', 'info');
       }
     } catch (err) {
       setLoginError('Error de red');
@@ -183,14 +187,9 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
       if (!res.ok) {
         setRegisterError(data.error || (data.errors && data.errors[0]?.msg) || 'Error al registrar');
       } else {
-        setUserLogin(data.user, data.token);
+        // Sin sesión todavía: hay que confirmar el correo con el código
         setRegisterSuccess('');
-        showToast('¡Registro exitoso! Ya puedes disfrutar del campus.', 'success');
-        setIsVisible(false);
-        onClose && onClose();
-        setTimeout(() => {
-          if (redirectTo !== null) navigate(redirectTo, { replace: true });
-        }, 10);
+        setPending({ email: data.email || registerData.email, codigoEnviado: data.codigoEnviado !== false });
         setRegisterData({ email: '', password: '', confirmPassword: '', name: '' });
       }
     } catch (err) {
@@ -199,6 +198,21 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
       setRegisterLoading(false);
     }
 
+  };
+  // Sesión abierta (login o correo confirmado): se cierra el modal y se va a `redirectTo`
+  const enterWith = (data, message, kind) => {
+    setUserLogin(data.user, data.token);
+    showToast(message, kind);
+    // Cierra el modal y elimina el overlay inmediatamente y sin retardo
+    setIsVisible(false);
+    onClose && onClose();
+    setTimeout(() => {
+      if (redirectTo !== null) navigate(redirectTo, { replace: true });
+    }, 10);
+  };
+  const handleVerified = (data) => {
+    setPending(null);
+    enterWith(data, '¡Correo confirmado! Ya puedes disfrutar del campus.', 'success');
   };
   const handleForgotPassword = () => {
     setIsVisible(false);
@@ -239,19 +253,37 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
           </button>
           <motion.div variants={item}>
           <h2 id={titleId} className="relative pr-12 text-title-2 font-bold text-ink">
-            <Swap id={tab}>{tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}</Swap>
+            <Swap id={pending ? 'verify' : tab}>{pending ? 'Revisa tu correo' : tab === 'login' ? 'Bienvenido de nuevo' : 'Empieza tu formación'}</Swap>
           </h2>
           <p className="relative mt-2 text-sm text-ink-2">
-            <Swap id={tab}>{tab === 'login' ? 'Accede para seguir con tus cursos.' : 'Empieza a formarte hoy. Solo te llevará un minuto.'}</Swap>
+            <Swap id={pending ? 'verify' : tab}>
+              {pending ? (
+                <>Te hemos enviado un código a <strong className="font-semibold text-ink [overflow-wrap:anywhere]">{pending.email}</strong>. Escríbelo para confirmar que el correo es tuyo.</>
+              ) : tab === 'login' ? 'Accede para seguir con tus cursos.' : 'Empieza a formarte hoy. Solo te llevará un minuto.'}
+            </Swap>
           </p>
           </motion.div>
-          <motion.div variants={item} className="mt-6">
-            <AuthTabs value={tab} onChange={setTab} idPrefix={tabsId} />
-          </motion.div>
+          {!pending && (
+            <motion.div variants={item} className="mt-6">
+              <AuthTabs value={tab} onChange={setTab} idPrefix={tabsId} />
+            </motion.div>
+          )}
           <motion.div variants={item}>
-          <AutoHeight className="mt-4">
+          <AutoHeight className={pending ? 'mt-6' : 'mt-4'}>
             <AnimatePresence mode="popLayout" initial={false}>
-              {tab === 'login' ? (
+              {pending ? (
+                <motion.div key="verify" {...panelMotion(1)}>
+                  <VerifyEmailForm
+                    key={pending.email}
+                    email={pending.email}
+                    codigoEnviado={pending.codigoEnviado}
+                    inputRef={codeRef}
+                    ServerAlert={ServerAlert}
+                    onVerified={handleVerified}
+                    onBack={() => { setPending(null); setTab('register'); }}
+                  />
+                </motion.div>
+              ) : tab === 'login' ? (
                 <motion.form
                   key="login"
                   id={panelId(tabsId, 'login')}
@@ -380,10 +412,12 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
             </AnimatePresence>
           </AutoHeight>
           </motion.div>
-          <motion.div variants={item} className="mt-6 flex flex-col gap-6">
-            <AuthDivider />
-            <GoogleAuthButton onSuccess={handleGoogleSuccess} />
-          </motion.div>
+          {!pending && (
+            <motion.div variants={item} className="mt-6 flex flex-col gap-6">
+              <AuthDivider />
+              <GoogleAuthButton onSuccess={handleGoogleSuccess} />
+            </motion.div>
+          )}
         </motion.div>
     </AuthDialog>
   );

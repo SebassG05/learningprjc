@@ -10,7 +10,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: '.',
-  testMatch: /dudas\.spec\.js$/,
+  testMatch: /(dudas|verificarCorreo)\.spec\.js$/,
   timeout: 300_000,
   expect: { timeout: 15_000 },
   fullyParallel: false,
