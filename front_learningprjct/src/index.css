@@ -1075,6 +1075,10 @@ body.loading {
 
 /* Con un panel lateral abierto (correcciones), los avisos no tapan sus botones:
    arriba en móvil (la hoja ocupa la pantalla) y a la izquierda desde 768 px (el panel está a la derecha) */
+/* Con un panel del admin abierto, «Volver arriba» no pinta nada y tapaba los botones del pie del panel */
+html[data-drawer-open] .scroll-to-top {
+  display: none;
+}
 html[data-drawer-open] .toast-region {
   top: max(1rem, env(safe-area-inset-top));
   bottom: auto;

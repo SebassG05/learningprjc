@@ -117,8 +117,14 @@ export default function MembersPanel({ cohort, onAdd, onRemove }) {
                       {m.user?.name ? `${m.email} · ` : ''}
                       {COPY.members.source[m.source]} · <RelativeTime date={m.addedAt} />
                     </p>
+                    {/* En móvil el estado va debajo: al lado dejaba el nombre en unas pocas letras */}
+                    <span className="mt-1.5 flex sm:hidden">
+                      <Badge label={COPY.members.status[m.status]} toneName={m.status === 'active' ? 'brand' : 'dawn'} size="sm" />
+                    </span>
                   </div>
-                  <Badge label={COPY.members.status[m.status]} toneName={m.status === 'active' ? 'brand' : 'dawn'} size="sm" />
+                  <span className="hidden shrink-0 sm:flex">
+                    <Badge label={COPY.members.status[m.status]} toneName={m.status === 'active' ? 'brand' : 'dawn'} size="sm" />
+                  </span>
                   <button
                     type="button"
                     onClick={() => setToRemove(m)}

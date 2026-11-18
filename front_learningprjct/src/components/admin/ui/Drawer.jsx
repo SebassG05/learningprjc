@@ -82,7 +82,7 @@ function Panel({ title, subtitle, headerExtra, footer, children, onClose, size =
         aria-labelledby={titleId}
         aria-describedby={subtitle ? subtitleId : undefined}
         {...motionProps}
-        className={`relative flex h-[calc(100svh-0.5rem)] w-full flex-col overflow-hidden rounded-t-3xl border border-line-strong bg-surface shadow-overlay md:h-full md:rounded-none md:rounded-l-3xl md:border-y-0 md:border-r-0 ${WIDTH[size] ?? WIDTH.md}`}
+        className={`relative flex h-[calc(100svh-0.5rem)] w-full flex-col overflow-clip rounded-t-3xl border border-line-strong bg-surface shadow-overlay md:h-full md:rounded-none md:rounded-l-3xl md:border-y-0 md:border-r-0 ${WIDTH[size] ?? WIDTH.md}`}
       >
         {!side && !reduce ? (
           <div

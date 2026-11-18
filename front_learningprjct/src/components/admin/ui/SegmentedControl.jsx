@@ -34,7 +34,7 @@ export default function SegmentedControl({ options, value, onChange, label, layo
             aria-checked={active}
             tabIndex={active ? 0 : -1}
             onClick={() => onChange(v)}
-            className={`relative flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors duration-200 ${focusRing} ${
+            className={`relative flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors duration-200 ${focusRing} ${
               active ? 'text-ink' : 'text-ink-2 hover:text-ink'
             }`}
           >
