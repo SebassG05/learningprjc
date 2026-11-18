@@ -100,7 +100,8 @@ export default function CourseEditor({ open, course, onClose, onSaved, onDirtyCh
       title={saved ? courseName(saved) : COPY.editor.newTitle}
       subtitle={saved ? `${saved.temas?.length ?? 0} temas · ${saved.isOpen ? COPY.open : COPY.closed}` : undefined}
     >
-      <div className="shrink-0 border-b border-line px-5 py-3 md:px-6">
+      {/* En móvil las secciones no caben: la fila se desplaza sola (y no arrastra el panel al enfocar la última) */}
+      <div className="shrink-0 overflow-x-auto overscroll-x-contain border-b border-line px-5 py-3 scrollbar-hide md:px-6">
         {saved ? (
           <SegmentedControl options={sections} value={section} onChange={setSection} label="Secciones del editor" layoutId="editor-seccion" />
         ) : (
