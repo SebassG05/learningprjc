@@ -6,6 +6,7 @@ import useMediaQuery from '../../../hooks/useMediaQuery';
 import { fadeUp, inView, staggerGroup, stagger } from '../../../lib/motion';
 import TemaPlayer from './TemaPlayer';
 import TemaCheckpoint from './TemaCheckpoint';
+import DudasTema from '../../dudas/DudasTema';
 import { downloadTemario, temarioFilename, temarioRoute } from './temarioPdf';
 import { etapaDe, tituloTema, numerarApartados, prefersNativePdf, totalApartados } from './temasProgress';
 
@@ -21,10 +22,10 @@ const temarioDe = (tema) => (tema.materiales ?? []).find((m) => m.tipo === 'pdf'
 
 /**
  * Un tema como escena a pantalla completa: número grande, título, vídeo, conceptos clave, acciones del
- * temario y del test e índice plegable. Entra con fundido y desplazamiento al llegar a la pantalla.
+ * temario y del test, índice plegable y dudas del tema. Entra con fundido y desplazamiento al llegar a la pantalla.
  */
 const TemaEscena = forwardRef(function TemaEscena(
-  { tema, index, ciclo, sceneId, cursoId, idioma, t, isSeen, onSeen, completed, onToggleCompleted, testInfo, testPassed, onOpenTest, onOpenTemario },
+  { tema, index, ciclo, sceneId, cursoId, idioma, t, isSeen, onSeen, completed, onToggleCompleted, testInfo, testPassed, onOpenTest, onOpenTemario, esProfesor = false, puedePublicar = false },
   ref,
 ) {
   const e = etapaDe(index, ciclo);
@@ -223,6 +224,11 @@ const TemaEscena = forwardRef(function TemaEscena(
             </details>
           </motion.div>
         ) : null}
+
+        {/* Dudas del tema: mismo plegable que el índice; la lista se pide al acercarse */}
+        <motion.div variants={fadeUp} className="mt-8 lg:mt-10">
+          <DudasTema cursoId={cursoId} temaId={tema._id} lang={idioma === 'en' ? 'en' : 'es'} puedePublicar={puedePublicar} esProfesor={esProfesor} />
+        </motion.div>
       </motion.div>
     </li>
   );

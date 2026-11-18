@@ -7,8 +7,10 @@
 // courseIdFrom(req) devuelve el id del curso (o una promesa); null/undefined → 404.
 import mongoose from 'mongoose';
 import Ejercicio from '../models/Ejercicio.js';
+import Duda from '../models/Duda.js';
 import EntregaEjercicio from '../models/EntregaEjercicio.js';
-import { allows, canAccessCourse, isPrivate, publicAccess } from '../service/courseAccess.js';
+import UserProgress from '../models/UserProgress.js';
+import { allows, canAccessCourse, isAdminViewer, isPrivate, loadViewer, publicAccess } from '../service/courseAccess.js';
 
 export const fromParam = (name) => (req) => req.params[name];
 
@@ -54,6 +56,13 @@ export const courseIdFromEjercicio = (param = 'ejercicioId') => async (req) => {
   return (await Ejercicio.findById(id).select('cursoId').lean())?.cursoId ?? null;
 };
 
+// El curso de una duda sale de la propia duda en la base de datos, nunca del body
+export const courseIdFromDuda = (param = 'dudaId') => async (req) => {
+  const id = req.params[param];
+  if (!mongoose.isValidObjectId(id)) return null;
+  return (await Duda.findById(id).select('cursoId').lean())?.cursoId ?? null;
+};
+
 // Para una entrega manda el curso de su ejercicio; el cursoId guardado en la entrega es el respaldo
 // (en entregas antiguas llegaba del body y no está garantizado)
 export const courseIdFromEntrega = (param = 'entregaId') => async (req) => {
@@ -67,3 +76,21 @@ export async function courseIdOfEntrega(entrega) {
   const ejercicio = await Ejercicio.findById(entrega.ejercicioId).select('cursoId').lean();
   return ejercicio?.cursoId ?? entrega.cursoId ?? null;
 }
+
+// Dudas de un curso PÚBLICO: solo para quien participa en él (inscrito, profesor activo del curso o admin).
+// Va después de requireCourseAccess. Un curso privado ya lo filtran las cohortes y no cambia aquí.
+// Sin sesión (o cuenta desactivada) → 401; con sesión sin inscripción → 403.
+export const requirePublicCourseParticipant = async (req, res, next) => {
+  try {
+    const access = req.courseAccess;
+    if (isPrivate(access.course)) return next();
+    noSharedCache(res);
+    const viewer = await loadViewer(req.user);
+    if (!viewer) return res.status(401).json({ error: 'Inicia sesión para ver las dudas de este curso' });
+    if (access.teacher === true || isAdminViewer(viewer)) return next();
+    if (await UserProgress.exists({ userId: viewer.id, courseId: access.course._id })) return next();
+    return res.status(403).json({ error: 'Inscríbete en el curso para ver y publicar dudas' });
+  } catch (err) {
+    return next(err);
+  }
+};

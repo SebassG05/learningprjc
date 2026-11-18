@@ -40,7 +40,7 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(hasFiles(r.text), false);
       assert.equal(r.body.title, 'Curso');
       assert.equal(r.body.temas[0].materiales[0].titulo, 'Guía');
-      assert.deepEqual(r.body.access, { level: 'denied', reason: 'anonymous' });
+      assert.deepEqual(r.body.access, { level: 'denied', reason: 'anonymous', teacher: false });
       assert.match(r.headers.get('cache-control'), /private/);
     });
 
@@ -61,6 +61,79 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(hasFiles(r.text), true);
       assert.equal(r.body.access.level, 'full');
       assert.equal(r.body.access.reason, 'member');
+    });
+
+    test('privado, profesor activo sin cohorte: contenido en solo lectura y sin profesores en el cuerpo', async () => {
+      const course = await fx.createCourse({ accessMode: 'private' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{
+        email: profe.email, status: 'active', userId: profe._id, tokenHash: 'hash-secreto', addedBy: profe._id,
+      }] } });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(hasFiles(r.text), true);
+      assert.deepEqual(r.body.access, { level: 'readonly', reason: 'teacher', teacher: true });
+      assert.equal(r.text.includes('profesores'), false);
+      assert.equal(r.text.includes('tokenHash'), false);
+      assert.equal(r.text.includes('hash-secreto'), false);
+
+      const admin = await fx.createUser({ role: 'admin' });
+      const ra = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(admin) });
+      assert.equal(ra.body.access.reason, 'admin');
+      assert.equal(ra.text.includes('profesores'), false);
+      assert.equal(ra.text.includes('tokenHash'), false);
+
+      const list = await api.call('GET', '/api/courses', { headers: fx.authHeader(admin) });
+      assert.equal(list.text.includes('profesores'), false);
+      assert.equal(list.text.includes('tokenHash'), false);
+    });
+
+    test('privado, profesor que además es miembro activo: full/member con teacher', async () => {
+      const course = await fx.createCourse({ accessMode: 'private' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      await fx.createCohort(course, { members: [profe] });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(hasFiles(r.text), true);
+      assert.equal(r.body.access.level, 'full');
+      assert.equal(r.body.access.reason, 'member');
+      assert.equal(r.body.access.teacher, true);
+    });
+
+    test('profesor desactivado con JWT válido: sin teacher en público y anónimo en privado', async () => {
+      const profe = await fx.createUser({ activo: false });
+      const row = { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } };
+      const publico = await fx.createCourse();
+      const privado = await fx.createCourse({ accessMode: 'private' });
+      await Course.updateOne({ _id: publico._id }, row);
+      await Course.updateOne({ _id: privado._id }, row);
+      const { accessFor } = await import('../src/service/courseAccess.js');
+      const user = { id: String(profe._id) };
+      const a = await accessFor(user, await Course.findById(publico._id).select('accessMode').lean());
+      assert.deepEqual(a, { level: 'full', reason: 'public', teacher: false });
+      const b = await accessFor(user, await Course.findById(privado._id).select('accessMode').lean());
+      assert.deepEqual(b, { level: 'denied', reason: 'anonymous', teacher: false });
+    });
+
+    test('profesor pendiente, o profesor de otro curso: sin acceso', async () => {
+      const course = await fx.createCourse({ accessMode: 'private' });
+      const otro = await fx.createCourse({ accessMode: 'private' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'pending' }] } });
+      await Course.updateOne({ _id: otro._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(hasFiles(r.text), false);
+      assert.equal(r.body.access.reason, 'not-member');
+    });
+
+    test('curso público: accessFor marca teacher aunque el curso cargado no traiga la lista', async () => {
+      const course = await fx.createCourse();
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      const { accessFor } = await import('../src/service/courseAccess.js');
+      const loaded = await Course.findById(course._id).lean();
+      assert.equal(loaded.profesores, undefined);
+      assert.equal((await accessFor({ id: String(profe._id) }, loaded)).teacher, true);
+      assert.notEqual((await accessFor({ id: String((await fx.createUser())._id) }, loaded)).teacher, true);
     });
 
     test('privado, miembro antes de startsAt: plaza reservada sin contenido', async () => {
@@ -113,6 +186,30 @@ describe('rutas de curso con acceso por cohortes', () => {
       assert.equal(r.status, 200);
       assert.deepEqual(r.body, JSON.parse(JSON.stringify(await Course.findById(course._id))));
       assert.equal('access' in r.body, false);
+      assert.doesNotMatch(r.headers.get('cache-control') ?? '', /no-store/);
+    });
+
+    test('curso público con sesión: profesor activo → access full con teacher true y sin caché compartida', async () => {
+      const course = await fx.createCourse({ accessMode: 'public' });
+      const profe = await fx.createUser();
+      await Course.updateOne({ _id: course._id }, { $set: { profesores: [{ email: profe.email, status: 'active', userId: profe._id }] } });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(profe) });
+      assert.equal(r.status, 200);
+      assert.deepEqual(r.body.access, { level: 'full', reason: 'public', teacher: true });
+      assert.equal(hasFiles(r.text), true);
+      assert.equal('profesores' in r.body, false);
+      assert.match(r.headers.get('cache-control'), /private, no-store/);
+      assert.match(r.headers.get('vary') ?? '', /Authorization/);
+    });
+
+    test('curso público con sesión: alumno inscrito → access full con teacher false', async () => {
+      const course = await fx.createCourse({ accessMode: 'public' });
+      const ana = await fx.createUser();
+      await UserProgress.create({ userId: ana._id, courseId: course._id });
+      const r = await api.call('GET', `/api/courses/${course._id}`, { headers: fx.authHeader(ana) });
+      assert.equal(r.status, 200);
+      assert.deepEqual(r.body.access, { level: 'full', reason: 'public', teacher: false });
+      assert.equal(r.body.title, 'Curso');
     });
 
     test('id inválido → 404', async () => {

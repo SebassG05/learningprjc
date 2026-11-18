@@ -126,6 +126,21 @@ function AnimatedRoutes() {
               <PageTransition><EstructuraCursoPage /></PageTransition>
             </Suspense>
           } />
+          <Route path="/curso/:id/dudas" element={
+            <Suspense fallback={<RouteFallback />}>
+              <PageTransition><CursoDudas /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/profesor/invitacion" element={
+            <Suspense fallback={<RouteFallback />}>
+              <PageTransition><ProfesorInvitacion /></PageTransition>
+            </Suspense>
+          } />
+          <Route path="/profesor/dudas" element={
+            <Suspense fallback={<RouteFallback />}>
+              <PageTransition><ProfesorDudas /></PageTransition>
+            </Suspense>
+          } />
           <Route path="/curso/:cursoId/tema-estudio" element={
             <Suspense fallback={<RouteFallback />}>
               <PageTransition><TemaEstudio /></PageTransition>
@@ -226,6 +241,9 @@ const CursoDetalle = lazy(() => import('./pages/CursoDetalle.jsx'));
 const CursoInscripcion = lazy(() => import('./pages/CursoInscripcion.jsx'));
 const CursoInvitacion = lazy(() => import('./pages/CursoInvitacion.jsx'));
 const EstructuraCursoPage = lazy(() => import('./pages/EstructuraCursoPage.jsx'));
+const CursoDudas = lazy(() => import('./pages/CursoDudas.jsx'));
+const ProfesorInvitacion = lazy(() => import('./pages/ProfesorInvitacion.jsx'));
+const ProfesorDudas = lazy(() => import('./pages/ProfesorDudas.jsx'));
 const TemaEstudio = lazy(() => import('./pages/TemaEstudio.jsx'));
 const TemarioPdf = lazy(() => import('./pages/TemarioPdf.jsx'));
 const EntregaEjercicio = lazy(() => import('./pages/EntregaEjercicio.jsx'));

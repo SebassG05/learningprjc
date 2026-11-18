@@ -18,7 +18,7 @@ export const COPY = {
 
   editor: {
     newTitle: 'Nuevo curso',
-    sections: { info: 'Información', topics: 'Temas' },
+    sections: { info: 'Información', topics: 'Temas', teachers: 'Profesores' },
     topicsLocked: 'Guarda el curso para añadir temas',
     close: 'Cerrar el editor',
     save: 'Guardar cambios',
@@ -28,6 +28,44 @@ export const COPY = {
     saved: 'Cambios guardados',
     fixErrors: (n) => (n === 1 ? 'Revisa el campo marcado.' : `Revisa los ${n} campos marcados.`),
     unsaved: 'Hay cambios sin guardar.',
+  },
+
+  teachers: {
+    title: 'Profesores del curso',
+    hint: 'Responden las dudas de los alumnos con su nombre. Los cambios se guardan al momento, sin pulsar «Guardar cambios».',
+    emailLabel: 'Correo del profesor',
+    emailPlaceholder: 'profesor@correo.com',
+    add: 'Añadir',
+    adding: 'Añadiendo…',
+    count: (n, max) => `${n} de ${max}`,
+    max: 10,
+    empty: 'Este curso aún no tiene profesores.',
+    loadError: 'No se han podido cargar los profesores.',
+    retry: 'Reintentar',
+    pending: (rel) => `Pendiente · enviado ${rel}`,
+    pendingNoDate: 'Pendiente · sin enviar',
+    linked: (name, email) => `Vinculado · ${name} (${email})`,
+    linkedOther: (email) => `Vinculado a otra cuenta: ${email}`,
+    resend: 'Reenviar',
+    resendLabel: (email) => `Reenviar la invitación a ${email}`,
+    resent: 'Invitación reenviada.',
+    remove: 'Quitar',
+    removeLabel: (email) => `Quitar a ${email}`,
+    removeConfirm: {
+      title: (email) => `¿Quitar a ${email}?`,
+      body: 'Sus respuestas seguirán firmadas con su nombre.',
+      confirm: 'Quitar',
+    },
+    removed: 'Profesor quitado.',
+    added: 'Profesor añadido. Le hemos enviado la invitación.',
+    errors: {
+      badEmail: 'Escribe un correo válido.',
+      duplicate: 'Ese correo ya es profesor de este curso.',
+      limit: 'Un curso puede tener como máximo 10 profesores.',
+      mailFailed: 'Se ha guardado, pero no se ha podido enviar el correo. Usa «Reenviar» para intentarlo de nuevo.',
+      alreadyLinked: 'Este profesor ya ha vinculado su cuenta.',
+      generic: 'No se ha podido completar la acción. Inténtalo de nuevo.',
+    },
   },
 
   form: {

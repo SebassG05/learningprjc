@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import { signToken } from '../config/jwt.js';
 import { accessFor, allows, isPrivate, redactCourse } from '../service/courseAccess.js';
 import { claimPendingMembershipsSafely, claimSummary } from '../service/cohortMembership.js';
+import { claimTeacherSlotsSafely } from '../service/courseTeachers.js';
 import { hasAcceptedCurrentTerms, isValidAcceptance, recordAcceptance, termsRequired } from '../service/termsService.js';
 import UserProgress from '../models/UserProgress.js';
 import Course from '../models/Course.js';
@@ -201,6 +202,7 @@ export const googleLogin = async (req, res, next) => {
 
     // 5. Plazas pendientes por email: Google garantiza el email solo si viene verificado
     const claim = await claimPendingMembershipsSafely(user, { verified: googlePayload.email_verified === true });
+    await claimTeacherSlotsSafely(user, { verified: googlePayload.email_verified === true });
     
     // 5. Responder con datos de usuario y token
     return res.status(200).json({

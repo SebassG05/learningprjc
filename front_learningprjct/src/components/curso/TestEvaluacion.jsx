@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, ChevronLeft, ChevronRight, Clock, Award, AlertCircle, Lock } from 'lucide-react';
 import { duration, ease, spring } from '../../lib/motion';
 import { authFetch } from '../../lib/courseFiles';
+import { fetchCourse, peekCourse } from '../../lib/coursesApi';
 
 export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = 'es' }) {
   const [test, setTest] = useState(null);
@@ -176,7 +177,13 @@ export default function TestEvaluacion({ cursoId, temaId, onComplete, idioma = '
       // Si se aprobó el test, marcarlo como completado
       if (data.aprobado) {
         const token = localStorage.getItem('token');
-        if (token) {
+        // El profesor puede hacer y validar el test, pero no está inscrito: no hay nada que marcar
+        let esProfesor = false;
+        try {
+          const curso = peekCourse(cursoId) ?? await fetchCourse(cursoId);
+          esProfesor = Boolean(curso?.access?.teacher);
+        } catch { /* sin dato del curso: se trata como alumno */ }
+        if (token && !esProfesor) {
           try {
             const completeResponse = await fetch(
               `${apiUrl}/api/users/enrollment/${cursoId}/test/${temaId}/complete`,

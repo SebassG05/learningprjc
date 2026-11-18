@@ -28,7 +28,8 @@ const match = (r, f) => same(r.userId, f.userId) && same(r.courseId, f.courseId)
 // Imita una consulta de Mongoose: se puede esperar directamente o encadenar .select().lean()
 const query = (value) => ({ select: () => query(value), lean: async () => value, then: (ok, ko) => Promise.resolve(value).then(ok, ko) });
 Course.findById = (id) => query(same(id, CURSO) ? { _id: CURSO, isOpen: true, idiomasDisponibles: ['es', 'en'] } : null);
-Course.exists = async ({ _id }) => (same(_id, CURSO) ? { _id } : null);
+// La consulta de profesor del acceso (filtra por profesores) no encuentra a nadie: aquí no hay profesores
+Course.exists = async ({ _id, profesores }) => (!profesores && same(_id, CURSO) ? { _id } : null);
 UserProgress.findOne = async ({ userId, courseId }) => enrollments.find((e) => same(e.userId, userId) && same(e.courseId, courseId)) ?? null;
 UserProgress.prototype.save = async function () {
   enrollments.push(this.toObject());

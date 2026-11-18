@@ -3,7 +3,8 @@
 
 import { clientIp } from '../utils/requestInfo.js';
 
-export default function createRateLimit({ windowMs, max, message }) {
+// keyFn(req) elige la clave del contador (por defecto la IP)
+export default function createRateLimit({ windowMs, max, message, keyFn = clientIp }) {
   const hits = new Map();
 
   // Limpieza periódica para que el mapa no crezca sin fin
@@ -14,7 +15,7 @@ export default function createRateLimit({ windowMs, max, message }) {
 
   return function rateLimit(req, res, next) {
     const now = Date.now();
-    const ip = clientIp(req);
+    const ip = keyFn(req);
     const entry = hits.get(ip);
 
     if (!entry || entry.resetAt <= now) {

@@ -8,6 +8,22 @@ const profesorSchema = new mongoose.Schema({
   bio: { type: String, trim: true, maxlength: PROFESOR_LIMITS.bio }
 }, { _id: false });
 
+// Profesor asignado al curso (puede resolver dudas y moderar el foro del curso). Se invita por email:
+// 'pending' hasta que esa persona acepta el enlace y queda enlazada a su cuenta (userId) como 'active'.
+// Solo guardamos el hash del token de invitación, nunca el token.
+const profesorAsignadoSchema = new mongoose.Schema({
+  email: { type: String, required: true, trim: true, lowercase: true },
+  status: { type: String, enum: ['pending', 'active'], default: 'pending' },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+  tokenHash: { type: String, default: null },
+  redeemedTokenHash: { type: String, default: null }, // hash del enlace ya canjeado: un segundo intento responde «usado»
+  tokenExpiresAt: { type: Date, default: null },
+  lastSentAt: { type: Date, default: Date.now },
+  addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  addedAt: { type: Date, default: Date.now },
+  linkedAt: { type: Date, default: null },
+}, { _id: true });
+
 const materialSchema = new mongoose.Schema({
   tipo: { 
     type: String, 
@@ -94,7 +110,11 @@ const courseSchema = new mongoose.Schema({
   // La regla vive en service/courseAccess.js; los cursos sin el campo se tratan como públicos.
   accessMode: { type: String, enum: ['public', 'private'], default: 'public' },
   cohorts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cohort' }],
+  // Profesores asignados. select:false: no viaja con el curso (lleva emails y hashes); se pide a propósito.
+  profesores: { type: [profesorAsignadoSchema], select: false },
 }, { timestamps: true });
+
+courseSchema.index({ 'profesores.userId': 1 }); // ¿es este usuario profesor de algún curso?
 
 // Validación personalizada: al menos uno de los títulos debe existir
 courseSchema.pre('validate', async function() {
