@@ -17,10 +17,11 @@ export function getNavLinks(user) {
   return baseLinks;
 }
 
-// Acciones de cuenta del menú móvil sin sesión (destinos actuales, sin cambios)
-export const accountLinks = [
-  { to: '/login', label: 'Iniciar sesión' },
-  { to: '/registro', label: 'Regístrate' },
+// Acciones de cuenta del menú móvil sin sesión: abren la ventana de acceso en esa pestaña
+// (como «Acceder» en escritorio). `tab` son los valores de AuthTabs.
+export const accountActions = [
+  { tab: 'login', label: 'Iniciar sesión' },
+  { tab: 'register', label: 'Regístrate' },
 ];
 
 export const isActivePath = (pathname, to) => (to === '/' ? pathname === '/' : pathname.startsWith(to));
