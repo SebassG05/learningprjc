@@ -94,6 +94,12 @@ const PendientesBadge = ({ n }) =>
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  // Pestaña con la que se abre el acceso: «Regístrate» del menú móvil abre directamente el registro
+  const [authTab, setAuthTab] = useState('login');
+  const openAuth = (tab = 'login') => {
+    setAuthTab(tab);
+    setAuthOpen(true);
+  };
   const { user, logout } = useUser();
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -187,7 +193,7 @@ const Header = () => {
             {/* Acciones */}
             <div className="hidden items-center gap-3 xl:flex">
               {!user ? (
-                <Button size="md" className="text-nav shadow-glow" onClick={() => setAuthOpen(true)} onPointerEnter={preloadAuthModal} onFocus={preloadAuthModal} data-auth-trigger aria-label="Acceder al campus">
+                <Button size="md" className="text-nav shadow-glow" onClick={() => openAuth('login')} onPointerEnter={preloadAuthModal} onFocus={preloadAuthModal} data-auth-trigger aria-label="Acceder al campus">
                   <span className="min-[1400px]:hidden">Acceder</span>
                   <span className="hidden min-[1400px]:inline">Acceder al campus</span>
                 </Button>
@@ -277,6 +283,7 @@ const Header = () => {
         isOpen={mobileMenuOpen}
         links={navLinks}
         onClose={() => setMobileMenuOpen(false)}
+        onAuth={openAuth}
         account={
           user ? (
             <div className="flex flex-col gap-1">
@@ -303,7 +310,7 @@ const Header = () => {
           ) : null
         }
       />
-      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
+      <AuthModal open={authOpen} initialTab={authTab} onClose={() => setAuthOpen(false)} />
     </>
   );
 };

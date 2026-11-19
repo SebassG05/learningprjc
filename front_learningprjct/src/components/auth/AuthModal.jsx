@@ -62,11 +62,12 @@ function ServerAlert({ message }) {
 }
 
 // `redirectTo`: adónde ir tras entrar (la home por defecto); null = quedarse en la página actual
-const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
+// `initialTab`: pestaña con la que se abre ('login' | 'register')
+const AuthModal = ({ open, onClose, redirectTo = '/', initialTab = 'login' }) => {
   const navigate = useNavigate();
   const { login: setUserLogin } = useUser();
   const { showToast } = useToast();
-  const [tab, setTab] = useState('login');
+  const [tab, setTab] = useState(initialTab);
   // Registro
   const [registerData, setRegisterData] = useState({ email: '', password: '', confirmPassword: '', name: '' });
   const [registerLoading, setRegisterLoading] = useState(false);
@@ -89,12 +90,13 @@ const AuthModal = ({ open, onClose, redirectTo = '/' }) => {
   // Limpiar mensajes al abrir modal
   React.useEffect(() => {
     if (open) {
+      setTab(initialTab);
       setLoginError('');
       setLoginSuccess('');
       setRegisterError('');
       setRegisterSuccess('');
     }
-  }, [open]);
+  }, [open, initialTab]);
 
   // Visible = el diálogo se ve. Al cerrar con × o Escape se anima la salida y después se avisa al
   // padre (antes: 350 ms fijos). Los cierres por éxito u olvido mantienen su secuencia original.

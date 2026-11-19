@@ -5,12 +5,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, X } from 'lucide-react';
 import useFocusTrap from '../../hooks/useFocusTrap';
 import { duration, ease, spring, stagger } from '../../lib/motion';
-import { accountLinks, isActivePath } from './navigation';
+import { preloadAuthModal } from '../auth/loadAuthModal';
+import { accountActions, isActivePath } from './navigation';
 import Logo from './Logo';
 
 // Menú a pantalla completa (por debajo de xl): mismos enlaces que la cabecera de escritorio,
 // en letra grande, y debajo las acciones de cuenta. Foco atrapado, Escape cierra.
-const MobileMenu = ({ id, isOpen, links, account, onClose }) => {
+// `onAuth(tab)`: abre la ventana de acceso en esa pestaña (sin sesión)
+const MobileMenu = ({ id, isOpen, links, account, onAuth, onClose }) => {
   const { pathname } = useLocation();
   const panelRef = useRef(null);
   const reduce = useReducedMotion();
@@ -96,16 +98,19 @@ const MobileMenu = ({ id, isOpen, links, account, onClose }) => {
             >
               {account ?? (
                 <ul className="flex flex-col gap-3 sm:flex-row">
-                  {accountLinks.map((a, i) => (
-                    <li key={a.to} className="sm:flex-1">
-                      <Link
-                        to={a.to}
-                        onClick={onClose}
-                        className={`flex h-14 items-center justify-center gap-2 rounded-full px-6 text-button-lg font-semibold transition-colors duration-200 ${i === 0 ? 'border border-line-strong bg-glass text-ink hover:bg-glass-strong' : 'bg-brand text-on-brand shadow-glow hover:bg-brand-300'}`}
+                  {accountActions.map((a, i) => (
+                    <li key={a.tab} className="sm:flex-1">
+                      <button
+                        type="button"
+                        onClick={() => { onClose(); onAuth(a.tab); }}
+                        onPointerEnter={preloadAuthModal}
+                        onFocus={preloadAuthModal}
+                        aria-haspopup="dialog"
+                        className={`flex h-14 w-full items-center justify-center gap-2 rounded-full px-6 text-button-lg font-semibold transition-colors duration-200 ${i === 0 ? 'border border-line-strong bg-glass text-ink hover:bg-glass-strong' : 'bg-brand text-on-brand shadow-glow hover:bg-brand-300'}`}
                       >
                         {a.label}
                         {i === 1 && <ArrowRight className="h-5 w-5" aria-hidden="true" />}
-                      </Link>
+                      </button>
                     </li>
                   ))}
                 </ul>
