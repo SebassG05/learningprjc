@@ -1,7 +1,8 @@
 // Modo ligero: en equipos que no llegan a una animación fluida se quitan los efectos más caros
 // (el globo 3D se queda quieto, los fondos animados se paran y los cristales pasan a sólidos).
-// Se detecta solo, midiendo los fps reales: por debajo de LOW_FPS durante 3 s seguidos (tras un
-// calentamiento, para no contar la carga). La decisión se recuerda 3 días en este navegador para que
+// Se detecta solo, midiendo los fps reales: 3 segundos por debajo de LOW_FPS dentro de los últimos 8
+// (tras un calentamiento, para no contar la carga). No hace falta que sean seguidos: en el móvil los
+// tirones llegan a ráfagas de 1-2 s con cada gesto de scroll, y en reposo puede ir bien. La decisión se recuerda 3 días en este navegador para que
 // las visitas siguientes empiecen ya ligeras; pasado ese plazo se vuelve a probar con todo.
 // Solo con «Animaciones: auto» en Ajustes: con «completas» nunca se activa y con «reducidas» ya
 // está todo quieto. Se refleja en <html data-lite> para el CSS (ver index.css, «Modo ligero»).
@@ -10,6 +11,18 @@ import { getMotionPreference, subscribeMotionPreference } from './motionPreferen
 const KEY = 'perf-lite';
 const DAYS = 3;
 export const LOW_FPS = 45;
+const WINDOW = 8;
+const SLOW_SECONDS = 3;
+
+// Contador de segundos lentos en una ventana móvil: devuelve true cuando el equipo no da la talla
+export function slowSeconds() {
+  const last = [];
+  return (fps) => {
+    last.push(fps < LOW_FPS);
+    if (last.length > WINDOW) last.shift();
+    return last.filter(Boolean).length >= SLOW_SECONDS;
+  };
+}
 
 function remembered() {
   try {
@@ -57,7 +70,7 @@ export function startLiteProbe() {
   probing = true;
   let frames = 0;
   let warmup = 2;
-  let slow = 0;
+  let slow = slowSeconds();
   let raf = 0;
   const tick = () => { frames += 1; raf = requestAnimationFrame(tick); };
   raf = requestAnimationFrame(tick);
@@ -65,13 +78,12 @@ export function startLiteProbe() {
     const fps = frames;
     frames = 0;
     if (detected || getMotionPreference() !== 'auto') {
-      slow = 0;
+      slow = slowSeconds();
       return;
     }
-    if (document.hidden) { warmup = 1; slow = 0; return; }
+    if (document.hidden) { warmup = 1; slow = slowSeconds(); return; }
     if (warmup > 0) { warmup -= 1; return; }
-    slow = fps < LOW_FPS ? slow + 1 : 0;
-    if (slow >= 3) {
+    if (slow(fps)) {
       clearInterval(id);
       cancelAnimationFrame(raf);
       probing = false;

@@ -10,7 +10,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerformanceMonitor } from '@react-three/drei';
 import { useLiteMode, useMotionPreference } from '../../hooks/useReducedMotion';
-import { LOW_FPS, markLite } from '../../lib/liteMode';
+import { markLite, slowSeconds } from '../../lib/liteMode';
 import { Vector3 } from 'three';
 import { GLOBE, LIGHT_DIR, QUALITY } from './config';
 import { getPalette } from './palette';
@@ -201,22 +201,22 @@ function StillInvalidator({ still, lite }) {
   return null;
 }
 
-// Gama baja: fps del globo por debajo de LOW_FPS durante 3 s seguidos, tras el calentamiento (compilar
-// shaders, cargar). Activa el modo ligero de toda la web (lib/liteMode.js), que lo recuerda 3 días.
+// Gama baja: 3 s con el globo por debajo de LOW_FPS dentro de los últimos 8, tras el calentamiento
+// (compilar shaders, cargar); ver slowSeconds en lib/liteMode.js. Activa el modo ligero de toda la
+// web, que lo recuerda 3 días.
 // Con «Animaciones: completas» en Ajustes no hay detección: siempre se anima.
 function LowEndGuard({ active, onLow }) {
   const frames = useRef(0);
   useFrame(() => { frames.current += 1; });
   useEffect(() => {
     if (!active) return undefined;
-    let slow = 0;
+    const slow = slowSeconds();
     let warmup = 2;
     const id = setInterval(() => {
       const fps = frames.current;
       frames.current = 0;
       if (document.hidden || warmup > 0) { warmup -= 1; return; }
-      slow = fps < LOW_FPS ? slow + 1 : 0;
-      if (slow >= 3) { clearInterval(id); onLow(); }
+      if (slow(fps)) { clearInterval(id); onLow(); }
     }, 1000);
     return () => clearInterval(id);
   }, [active, onLow]);
@@ -304,7 +304,9 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
       {/* Si el equipo va justo: menos resolución y calidad móvil; con fps bajos sostenidos, fotograma estático */}
       <PerformanceMonitor onDecline={() => { setDpr(1); setQuality('low'); }} />
       <LowEndGuard active={!still && running && motionPref === 'auto'} onLow={markLite} />
-      <StillInvalidator still={still} lite={lowEnd} />
+      {/* Quieto (modo ligero o «reducir movimiento»): se pinta al parar el scroll, no en cada evento;
+          redibujar el globo entero siguiendo el dedo pesa casi lo mismo que animarlo */}
+      <StillInvalidator still={still} lite={still} />
       <ambientLight intensity={0.35} />
       <directionalLight position={light} intensity={2.4} />
 
