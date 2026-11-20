@@ -1242,3 +1242,44 @@ html[data-drawer-open] .toast-region {
         scroll-behavior: auto !important;
     }
 }
+
+/* ---------- Modo ligero (equipos lentos detectados, ver lib/liteMode.js) ----------
+   Mismo aspecto, menos trabajo de GPU: los fondos animados se quedan quietos donde están (no se
+   ocultan), el grano en modo de fusión desaparece (obliga a recomponer toda la página en cada frame)
+   y los cristales pasan a sólidos, como con «reducir transparencia» (el desenfoque de fondo se
+   recalcula al hacer scroll). */
+:root[data-lite] {
+    .contact-aurora,
+    .contact-pulse,
+    .reviews-aurora,
+    .reviews-twinkle,
+    .about-drift,
+    .lost-twinkle,
+    .lost-adrift {
+        animation-play-state: paused;
+    }
+
+    .contact-grain {
+        display: none;
+    }
+
+    .material,
+    .material-thick,
+    .glass-panel {
+        background-color: var(--color-surface-2);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    /* La cabecera, casi opaca con su tono oscuro: el gris de surface-2 se ve más claro que la normal */
+    .glass-nav {
+        background-color: rgb(10 10 11 / 0.94);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    [class*="backdrop-blur"] {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}
