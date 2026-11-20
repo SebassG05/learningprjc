@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, X } from 'lucide-react';
 import useFocusTrap from '../../hooks/useFocusTrap';

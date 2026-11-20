@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // "Así se verá tu reseña": mientras escribes, la tarjeta tal cual saldrá en el muro. Solo lee el
 // estado del formulario; es un espejo visual (aria-hidden e inert), el formulario ya lo dice todo.
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import ReviewCard from './ReviewCard';
 import { initialsOf, toneOf } from './reviewFormat';
 import { PREVIEW } from './reviewsCopy';

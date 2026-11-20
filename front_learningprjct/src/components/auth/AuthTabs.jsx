@@ -2,7 +2,8 @@
 // Pestañas "Iniciar sesión / Registrarse": tablist con flechas, Inicio y Fin (tabindex itinerante).
 // La activa se distingue por la píldora (forma), el peso de la letra y el color.
 import { useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { spring } from '../../lib/motion';
 import { panelId, tabId } from './tabIds';
 

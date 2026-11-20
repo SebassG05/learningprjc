@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useReducedMotion from '../../../hooks/useReducedMotion';
 import { AlertCircle, Download, ExternalLink, RotateCcw, X } from 'lucide-react';
 import useFocusTrap from '../../../hooks/useFocusTrap';
 import { lockPage } from '../../../lib/modalLock';

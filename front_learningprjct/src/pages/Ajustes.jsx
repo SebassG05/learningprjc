@@ -5,6 +5,7 @@ import { stagger, staggerGroup } from '../lib/motion';
 import SettingsHeader from '../components/settings/SettingsHeader';
 import SecuritySection from '../components/settings/SecuritySection';
 import PrivacySection from '../components/settings/PrivacySection';
+import MotionSection from '../components/settings/MotionSection';
 import { PAGE_DESCRIPTION, PAGE_TITLE } from '../components/settings/settingsCopy';
 
 const page = staggerGroup(stagger.cards);
@@ -25,6 +26,7 @@ export default function Ajustes() {
       >
         <SettingsHeader user={user} />
         <SecuritySection />
+        <MotionSection />
         <PrivacySection />
       </motion.div>
     </div>

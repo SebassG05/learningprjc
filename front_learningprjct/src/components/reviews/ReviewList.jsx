@@ -4,7 +4,8 @@
 // la misma silueta para que nada salte. Solo las tarjetas que entran en pantalla se animan. Al borrar
 // una, primero se desvanece encogiendo en su sitio y después el resto cierra el hueco con una animación
 // de layout (transform), sin saltos; con reduced motion, solo un fundido.
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import ReviewCard from './ReviewCard';
 import { MAX_VOICES } from './ReviewsVoiceprint';
 import { WALL_TITLE } from './reviewsCopy';

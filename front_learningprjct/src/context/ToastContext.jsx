@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useReducedMotion from '../hooks/useReducedMotion';
 import { duration as dur, ease } from '../lib/motion';
 
 const ToastContext = createContext();

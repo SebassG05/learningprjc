@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // Extra "Tarjetas flotantes" del boceto, en HTML (texto real y legible) sobre el lienzo.
 // Los textos salen de las ventajas que ya muestra la home; no se inventan datos.
-import { motion, useReducedMotion, useTransform } from 'framer-motion';
+import { motion, useTransform } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { Award, Download } from 'lucide-react';
 import { duration, ease } from '../../lib/motion';
 

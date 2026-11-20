@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { prefersReducedMotion } from '../lib/motionPreference';
 
 const clamp = (v) => Math.max(-1, Math.min(1, v));
 
@@ -8,7 +9,7 @@ const clamp = (v) => Math.max(-1, Math.min(1, v));
 export default function usePointerParallax(ref) {
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!el || prefersReducedMotion()) return;
 
     const target = { x: 0, y: 0 };
     const current = { x: 0, y: 0 };

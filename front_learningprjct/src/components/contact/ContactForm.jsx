@@ -5,7 +5,8 @@
 // solo muestra esos fallos junto a cada campo en lugar de en el globo del navegador.
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { AlertCircle, ArrowRight, Plus } from 'lucide-react';
 import TextField from '../auth/TextField';
 import SubmitButton from '../auth/SubmitButton';

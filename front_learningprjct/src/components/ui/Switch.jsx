@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { memo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { Check, Lock } from 'lucide-react';
 import { duration, ease, spring } from '../../lib/motion';
 

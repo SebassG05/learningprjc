@@ -4,7 +4,8 @@
 // ligera parallax de las auroras con el scroll. Sin espacio ni WebGL: CSS y SVG, solo transform y
 // opacidad. En móvil, menos capas y sin destellos; con reduced motion, todo quieto.
 import { useEffect, useRef } from 'react';
-import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 
 // Destellos en posiciones fijas (pseudoaleatorias y estables entre renders)
 const SPARKLES = Array.from({ length: 34 }, (_, i) => {

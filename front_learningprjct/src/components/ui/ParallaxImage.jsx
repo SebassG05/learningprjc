@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 
 // Imagen con parallax ligado al scroll: la foto se desplaza más despacio que su marco.
 const ParallaxImage = ({ src, srcSet, sizes, alt = '', className = '', children, strength = 12 }) => {

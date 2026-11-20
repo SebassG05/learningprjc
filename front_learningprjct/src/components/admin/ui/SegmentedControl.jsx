@@ -7,8 +7,9 @@ import { focusRing } from './tones';
 /**
  * Conmutador de opciones excluyentes (p. ej. Lista / Calendario): grupo de radios con flechas.
  * El fondo de la opción activa se desplaza con un muelle corto (sin movimiento con reduced motion).
+ * `fill`: ocupa todo el ancho disponible en móvil (opciones a partes iguales); desde sm, como siempre.
  */
-export default function SegmentedControl({ options, value, onChange, label, layoutId }) {
+export default function SegmentedControl({ options, value, onChange, label, layoutId, fill = false }) {
   const refs = useRef({});
   const onKeyDown = (e) => {
     const i = options.findIndex((o) => o.value === value);
@@ -20,7 +21,7 @@ export default function SegmentedControl({ options, value, onChange, label, layo
     refs.current[next]?.focus();
   };
   return (
-    <div role="radiogroup" aria-label={label} onKeyDown={onKeyDown} className="inline-flex gap-1 rounded-full border border-line bg-white/[0.03] p-1">
+    <div role="radiogroup" aria-label={label} onKeyDown={onKeyDown} className={`${fill ? 'flex w-full sm:inline-flex sm:w-auto' : 'inline-flex'} gap-1 rounded-full border border-line bg-white/[0.03] p-1`}>
       {options.map(({ value: v, label: text, icon: Icon }) => {
         const active = v === value;
         return (
@@ -34,7 +35,7 @@ export default function SegmentedControl({ options, value, onChange, label, layo
             aria-checked={active}
             tabIndex={active ? 0 : -1}
             onClick={() => onChange(v)}
-            className={`relative flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors duration-200 ${focusRing} ${
+            className={`relative flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full text-sm ${fill ? 'min-w-0 flex-1 justify-center px-2 sm:flex-none sm:px-4' : 'shrink-0 px-4'} font-semibold transition-colors duration-200 ${focusRing} ${
               active ? 'text-ink' : 'text-ink-2 hover:text-ink'
             }`}
           >

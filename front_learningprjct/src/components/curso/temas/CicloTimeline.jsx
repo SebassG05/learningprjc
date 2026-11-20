@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useEffect, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../../hooks/useReducedMotion';
 import { Check } from 'lucide-react';
 import { HEADER_OFFSET, glideTo } from '../../../lib/smoothScroll';
 import { spring } from '../../../lib/motion';

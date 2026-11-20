@@ -3,7 +3,8 @@
 // La altura se mide con ResizeObserver y solo cambia cuando cambia el contenido, nunca por frame.
 // El relleno interior compensado (-m / p) evita recortar los anillos de foco con overflow-hidden.
 import { useLayoutEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { spring } from '../../lib/motion';
 
 export default function AutoHeight({ children, className = '' }) {

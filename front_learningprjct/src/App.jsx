@@ -7,6 +7,7 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import { distance, duration, ease } from './lib/motion';
 import { glideToHash, jumpTo, startSmoothScroll, stopSmoothScroll } from './lib/smoothScroll';
 import { lazyRoute, preloadAllWhenIdle, preloadOnIntent, routePending } from './lib/lazyRoute';
+import { useMotionPreference } from './hooks/useReducedMotion';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
@@ -211,17 +212,25 @@ function RouteFallback({ fill = false }) {
 }
 
 function App() {
-  // Scroll con inercia (solo ratón/trackpad y sin reduced-motion) y restauración manual del scroll
+  const motionPref = useMotionPreference();
+
+  // Restauración manual del scroll y precarga de rutas
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
-    startSmoothScroll();
     preloadAllWhenIdle();
     preloadOnIntent();
-    return stopSmoothScroll;
   }, []);
 
+  // Scroll con inercia (solo ratón/trackpad y sin movimiento reducido); se rehace si cambia la
+  // preferencia de animaciones en Ajustes
+  useEffect(() => {
+    startSmoothScroll();
+    return stopSmoothScroll;
+  }, [motionPref]);
+
   return (
-    <MotionConfig reducedMotion="user">
+    // «Reducidas» en Ajustes equivale a «reducir movimiento» del sistema
+    <MotionConfig reducedMotion={motionPref === 'reduced' ? 'always' : 'user'}>
       <Router>
         <ScrollToTop />
         <Layout>

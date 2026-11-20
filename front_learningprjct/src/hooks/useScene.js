@@ -1,4 +1,5 @@
-import { useReducedMotion, useScroll, useSpring } from 'framer-motion';
+import { useScroll, useSpring } from 'framer-motion';
+import useReducedMotion from './useReducedMotion';
 import useMediaQuery from './useMediaQuery';
 import { scrollSpring } from '../lib/motion';
 

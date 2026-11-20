@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useReducedMotion } from 'framer-motion';
+import useReducedMotion from '../hooks/useReducedMotion';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { useUser } from '../context/UserContext';
 import usePageMeta from '../hooks/usePageMeta';

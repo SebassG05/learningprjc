@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useUser } from '../context/UserContext';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../hooks/useReducedMotion';
 import { duration, ease, stagger } from '../lib/motion';
 import { glideTo } from '../lib/smoothScroll';
 import usePageMeta from '../hooks/usePageMeta';
