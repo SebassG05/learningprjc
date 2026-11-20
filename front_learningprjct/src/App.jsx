@@ -8,6 +8,7 @@ import { distance, duration, ease } from './lib/motion';
 import { glideToHash, jumpTo, startSmoothScroll, stopSmoothScroll } from './lib/smoothScroll';
 import { lazyRoute, preloadAllWhenIdle, preloadOnIntent, routePending } from './lib/lazyRoute';
 import { useMotionPreference } from './hooks/useReducedMotion';
+import { startLiteProbe } from './lib/liteMode';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
@@ -226,6 +227,11 @@ function App() {
   useEffect(() => {
     startSmoothScroll();
     return stopSmoothScroll;
+  }, [motionPref]);
+
+  // Detección de equipo lento en toda la web (modo ligero, ver lib/liteMode.js); solo en «auto»
+  useEffect(() => {
+    if (motionPref === 'auto') startLiteProbe();
   }, [motionPref]);
 
   return (

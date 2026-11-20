@@ -29,7 +29,7 @@ export const MOTION = {
     {
       value: 'auto',
       label: 'Auto',
-      description: 'Se adaptan a tu equipo: si va justo, el globo 3D del inicio se queda quieto para que todo vaya fluido.',
+      description: 'Se adaptan a tu equipo: si va justo, el globo 3D y los fondos animados se quedan quietos para que todo vaya fluido.',
     },
     {
       value: 'full',

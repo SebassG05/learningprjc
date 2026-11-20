@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
 import { useReducedMotion as useSystemReducedMotion } from 'framer-motion';
 import { getMotionPreference, subscribeMotionPreference } from '../lib/motionPreference';
+import { isLite, subscribeLite } from '../lib/liteMode';
 
 // Preferencia de Ajustes ('auto' | 'full' | 'reduced'), reactiva
 export function useMotionPreference() {
@@ -12,4 +13,9 @@ export function useMotionPreference() {
 export default function useReducedMotion() {
   const system = useSystemReducedMotion();
   return useMotionPreference() === 'reduced' || Boolean(system);
+}
+
+// Modo ligero detectado en este equipo (ver lib/liteMode.js), reactivo
+export function useLiteMode() {
+  return useSyncExternalStore(subscribeLite, isLite, () => false);
 }

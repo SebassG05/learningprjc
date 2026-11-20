@@ -2,7 +2,7 @@
 // Fondo de Contacto: una estación nocturna sobre el planeta. Cielo verde y petróleo, estrellas,
 // auroras que derivan despacio, una órbita decorativa y, al final, el horizonte con la luz de Sevilla y
 // los tipos de curso girando a su alrededor. Mismo universo que el globo de la home, sin WebGL (CSS + SVG).
-import useReducedMotion from '../../hooks/useReducedMotion';
+import useReducedMotion, { useLiteMode } from '../../hooks/useReducedMotion';
 import { BookOpen, CodeXml, GraduationCap, Lightbulb } from 'lucide-react';
 import Horizon from '../ui/Horizon';
 
@@ -88,6 +88,8 @@ function Sevilla() {
 
 export default function ContactBackdrop() {
   const reduce = useReducedMotion();
+  // En modo ligero el anillo también se queda quieto (como las auroras, ver index.css)
+  const lite = useLiteMode();
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 -top-header -z-10 overflow-hidden lg:-top-header-lg">
@@ -107,7 +109,7 @@ export default function ContactBackdrop() {
         planetClassName="top-[calc(100%-16rem)] w-[max(240vw,150rem)]"
       >
         <Sevilla />
-        <CampusRing animate={!reduce} />
+        <CampusRing animate={!reduce && !lite} />
       </Horizon>
 
       <div className="contact-grain absolute inset-0" />

@@ -6,10 +6,11 @@
 //   espacio profundo (FAQ), órbita (reseñas) y horizonte al amanecer (llamada final).
 // El director lee el scroll (motion values) y el puente de journey/store.js dentro de useFrame:
 // ningún estado de React cambia por frame.
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerformanceMonitor } from '@react-three/drei';
-import { useMotionPreference } from '../../hooks/useReducedMotion';
+import { useLiteMode, useMotionPreference } from '../../hooks/useReducedMotion';
+import { LOW_FPS, markLite } from '../../lib/liteMode';
 import { Vector3 } from 'three';
 import { GLOBE, LIGHT_DIR, QUALITY } from './config';
 import { getPalette } from './palette';
@@ -200,25 +201,9 @@ function StillInvalidator({ still, lite }) {
   return null;
 }
 
-// Gama baja: fps por debajo de LOW_FPS durante 3 s seguidos (no los picos al compilar shaders o al
-// cargar, que dura el calentamiento). La decisión se recuerda 3 días en este navegador para que
-// las visitas siguientes empiecen ya en modo ligero, sin los primeros segundos a trompicones; pasado
-// ese plazo se vuelve a probar con la animación completa (un mal momento puntual no lo deja fijo).
+// Gama baja: fps del globo por debajo de LOW_FPS durante 3 s seguidos, tras el calentamiento (compilar
+// shaders, cargar). Activa el modo ligero de toda la web (lib/liteMode.js), que lo recuerda 3 días.
 // Con «Animaciones: completas» en Ajustes no hay detección: siempre se anima.
-const LOW_FPS = 45;
-const LITE_KEY = 'globe-lite';
-const LITE_DAYS = 3;
-function rememberedLite() {
-  try {
-    const at = Number(localStorage.getItem(LITE_KEY));
-    return at > 0 && Date.now() - at < LITE_DAYS * 864e5;
-  } catch {
-    return false;
-  }
-}
-function rememberLite() {
-  try { localStorage.setItem(LITE_KEY, String(Date.now())); } catch { /* sin almacenamiento: solo esta visita */ }
-}
 function LowEndGuard({ active, onLow }) {
   const frames = useRef(0);
   useFrame(() => { frames.current += 1; });
@@ -291,18 +276,13 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
   const [quality, setQuality] = useState(initialQuality);
   const [dpr, setDpr] = useState(QUALITY[initialQuality].dpr);
   const motionPref = useMotionPreference();
-  const [detectedLow, setLowEnd] = useState(rememberedLite);
-  const lowEnd = motionPref !== 'full' && detectedLow;
+  const lowEnd = useLiteMode();
   const cfg = QUALITY[quality];
   const palette = useMemo(getPalette, []);
   const light = useMemo(() => LIGHT_DIR.map((v) => v * 6), []);
   const near = useNearSections();
   const still = !animate || lowEnd;
   const moonMaterial = useRef();
-  const onLow = useCallback(() => {
-    rememberLite();
-    setLowEnd(true);
-  }, []);
   const [compiled, setCompiled] = useState(false);
   const onCompiled = () => {
     setCompiled(true);
@@ -323,7 +303,7 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
     >
       {/* Si el equipo va justo: menos resolución y calidad móvil; con fps bajos sostenidos, fotograma estático */}
       <PerformanceMonitor onDecline={() => { setDpr(1); setQuality('low'); }} />
-      <LowEndGuard active={!still && running && motionPref !== 'full'} onLow={onLow} />
+      <LowEndGuard active={!still && running && motionPref === 'auto'} onLow={markLite} />
       <StillInvalidator still={still} lite={lowEnd} />
       <ambientLight intensity={0.35} />
       <directionalLight position={light} intensity={2.4} />
