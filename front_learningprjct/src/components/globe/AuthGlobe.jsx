@@ -3,7 +3,8 @@
 // solo mientras el diálogo está abierto y ya encajada junto al panel (modo `portal`). Se pausa con
 // la pestaña oculta. Sin WebGL (o si el lienzo falla) queda el horizonte al amanecer en CSS.
 import { Component, lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease } from '../../lib/motion';
 
 const GlobeCanvas = lazy(() => import('./GlobeCanvas'));

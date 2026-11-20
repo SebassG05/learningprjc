@@ -13,7 +13,8 @@ function validateContactForm(data) {
 }
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../hooks/useReducedMotion';
 import ContactHero from '../components/contact/ContactHero';
 import ContactChannels from '../components/contact/ContactChannels';
 import ContactForm from '../components/contact/ContactForm';

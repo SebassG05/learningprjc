@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Children, Fragment, isValidElement } from 'react';
-import { motion, useReducedMotion, useTransform } from 'framer-motion';
+import { motion, useTransform } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, inView, stagger } from '../../lib/motion';
 
 // Convierte el contenido (texto y spans con estilo) en una lista de palabras conservando el estilo de cada una.

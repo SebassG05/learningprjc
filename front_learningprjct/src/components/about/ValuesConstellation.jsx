@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 // Constelación de los valores: una estrella por valor unidas por un trazo que se dibuja una vez al aparecer.
 // Al pasar por un valor, su estrella se enciende (CSS :has() en .about-values, sin estado de React).
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, inView } from '../../lib/motion';
 
 // Posiciones en el viewBox 0 0 320 300, en el orden de la lista

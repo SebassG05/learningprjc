@@ -2,7 +2,7 @@
 // Fondo de Contacto: una estación nocturna sobre el planeta. Cielo verde y petróleo, estrellas,
 // auroras que derivan despacio, una órbita decorativa y, al final, el horizonte con la luz de Sevilla y
 // los tipos de curso girando a su alrededor. Mismo universo que el globo de la home, sin WebGL (CSS + SVG).
-import { useReducedMotion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { BookOpen, CodeXml, GraduationCap, Lightbulb } from 'lucide-react';
 import Horizon from '../ui/Horizon';
 

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import useReducedMotion from '../../../hooks/useReducedMotion';
 import { AlertCircle, Gauge, Maximize, Minimize, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { duration as dur, ease, panel } from '../../../lib/motion';
 import useTemaVideo from './useTemaVideo';

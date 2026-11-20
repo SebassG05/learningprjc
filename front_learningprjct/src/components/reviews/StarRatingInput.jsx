@@ -5,7 +5,8 @@
 // asienta con un muelle. Con teclado ocurre lo mismo (la chispa sale del cambio del radio, no del
 // clic). El valor se lee también en texto. Con reduced motion, se encienden sin chispas.
 import { useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { AlertCircle } from 'lucide-react';
 import { StarShape } from './StarRating';
 import { MAX_RATING, starsLabel } from './reviewFormat';

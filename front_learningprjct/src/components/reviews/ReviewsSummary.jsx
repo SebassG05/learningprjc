@@ -3,7 +3,8 @@
 // Sin reseñas no hay nota: estrellas vacías y "Sin reseñas todavía", nunca "0.00 / 5".
 // Las barras crecen al entrar (scaleX desde la izquierda); con reduced motion aparecen ya llenas.
 import { useEffect, useRef } from 'react';
-import { animate, motion, useInView, useReducedMotion } from 'framer-motion';
+import { animate, motion, useInView } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import StarRating, { StarShape } from './StarRating';
 import { formatAverage, MAX_RATING, reviewsLabel } from './reviewFormat';
 import { duration, ease, inView, stagger } from '../../lib/motion';

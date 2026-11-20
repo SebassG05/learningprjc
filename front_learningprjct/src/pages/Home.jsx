@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Star, ChevronDown, Clock, ArrowRight, Award, FileText, Video, ListChecks, Check } from 'lucide-react';
 import { useRef, useState, useEffect, useSyncExternalStore } from 'react';
-import { AnimatePresence, LayoutGroup, motion, motion as m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion, motion as m, useScroll, useTransform } from 'framer-motion';
+import useReducedMotion from '../hooks/useReducedMotion';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import Reveal from '../components/ui/Reveal';

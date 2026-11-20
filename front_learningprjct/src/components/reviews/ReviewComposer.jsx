@@ -3,7 +3,8 @@
 // sin reseña, el formulario para escribirla; con ella, la reseña propia con Editar y Borrar; al
 // editar, el mismo formulario relleno. Los errores del servidor van junto a su campo
 // (aria-invalid / aria-describedby); el general se anuncia (role="alert") con un desplazamiento leve.
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { AlertCircle } from 'lucide-react';
 import TextAreaField from '../ui/TextAreaField';
 import Button from '../ui/Button';

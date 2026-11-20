@@ -3,12 +3,14 @@
 // Escape, fondo inerte, bloqueo de scroll sin salto y vuelta del foco al cerrar. No sabe nada de
 // autenticación: solo abre, cierra y avisa al lienzo del viaje (journey.overlay).
 import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
-import { AnimatePresence, motion, useDragControls, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion, useDragControls } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, overlay, spring } from '../../lib/motion';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { shouldDismissSheet } from './validation';
 import { setOverlay } from '../globe/journey/store';
 import { inertOutside as inertOutsideKeeping } from '../../lib/modalLock';
+import { prefersReducedMotion } from '../../lib/motionPreference';
 
 const AuthGlobe = lazy(() => import('../globe/AuthGlobe'));
 
@@ -45,7 +47,7 @@ function lockPage() {
   const root = document.getElementById('root');
   const inerted = root ? inertOutside(root, []) : [];
   const stage = root && window.matchMedia('(min-width: 640px)').matches
-    ? fadeStage(root, [], window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    ? fadeStage(root, [], prefersReducedMotion())
     : [];
 
   const html = document.documentElement;

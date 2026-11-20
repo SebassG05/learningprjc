@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useEffect, useRef, useState } from 'react';
-import { animate, useInView, useReducedMotion } from 'framer-motion';
+import { animate, useInView } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { ease } from '../../lib/motion';
 import { PROVISIONAL, STATS } from './coursesCopy';
 import { formatHours } from './courseFormat';

@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { Fragment, useState, useEffect, useId, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { dudasCopy } from '../dudas/dudasCopy';
 import { useUser } from '../../context/UserContext';
 import { duration, ease, inView, spring } from '../../lib/motion';

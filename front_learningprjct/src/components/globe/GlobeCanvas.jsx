@@ -9,6 +9,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerformanceMonitor } from '@react-three/drei';
+import { useMotionPreference } from '../../hooks/useReducedMotion';
 import { Vector3 } from 'three';
 import { GLOBE, LIGHT_DIR, QUALITY } from './config';
 import { getPalette } from './palette';
@@ -157,36 +158,67 @@ function Director({ still, portal, moonMaterial, children, spinChildren, staticC
 }
 
 // Modos estáticos (reduced motion o equipo de gama baja): se pinta solo cuando cambia algo,
-// y el cambio de estación entra con un fundido de opacidad del contenedor
-function StillInvalidator({ still }) {
+// y el cambio de estación entra con un fundido de opacidad del contenedor.
+// `lite` (gama baja): durante el scroll no se pinta nada (el lienzo queda quieto como un fondo y la
+// GPU libre para el scroll de la página); al parar, un solo frame, con fundido si el globo se movió
+const SCROLL_END_MS = 140;
+const FADE = { duration: 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' };
+function StillInvalidator({ still, lite }) {
   const { invalidate, gl } = useThree();
   useEffect(() => {
     if (!still) return undefined;
     let station = Math.round(readPosition());
+    let paintedY = window.scrollY;
+    let timer;
     const wrapper = gl.domElement.parentElement;
+    const fade = () => wrapper?.animate?.([{ opacity: 0 }, { opacity: 1 }], FADE);
     const onChange = () => {
       const next = Math.round(readPosition());
-      if (next !== station) {
-        station = next;
-        wrapper?.animate?.([{ opacity: 0 }, { opacity: 1 }], { duration: 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
-      }
+      // Con `lite`, también hay fundido si el scroll movió el encaje del globo (p. ej. en la portada)
+      const moved = lite && Math.abs(window.scrollY - paintedY) > 48;
+      if (next !== station || moved) fade();
+      station = next;
+      paintedY = window.scrollY;
       invalidate();
     };
+    const onScroll = () => {
+      if (!lite) { onChange(); return; }
+      clearTimeout(timer);
+      timer = setTimeout(onChange, SCROLL_END_MS);
+    };
     const unsub = subscribe(onChange);
-    window.addEventListener('scroll', onChange, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onChange);
     onChange();
     return () => {
+      clearTimeout(timer);
       unsub();
-      window.removeEventListener('scroll', onChange);
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onChange);
     };
-  }, [still, invalidate, gl]);
+  }, [still, lite, invalidate, gl]);
   return null;
 }
 
-// Gama baja de verdad: fps bajos sostenidos (no los picos al compilar shaders o al cargar)
-const LOW_FPS = 20;
+// Gama baja: fps por debajo de LOW_FPS durante 3 s seguidos (no los picos al compilar shaders o al
+// cargar, que dura el calentamiento). La decisión se recuerda 3 días en este navegador para que
+// las visitas siguientes empiecen ya en modo ligero, sin los primeros segundos a trompicones; pasado
+// ese plazo se vuelve a probar con la animación completa (un mal momento puntual no lo deja fijo).
+// Con «Animaciones: completas» en Ajustes no hay detección: siempre se anima.
+const LOW_FPS = 45;
+const LITE_KEY = 'globe-lite';
+const LITE_DAYS = 3;
+function rememberedLite() {
+  try {
+    const at = Number(localStorage.getItem(LITE_KEY));
+    return at > 0 && Date.now() - at < LITE_DAYS * 864e5;
+  } catch {
+    return false;
+  }
+}
+function rememberLite() {
+  try { localStorage.setItem(LITE_KEY, String(Date.now())); } catch { /* sin almacenamiento: solo esta visita */ }
+}
 function LowEndGuard({ active, onLow }) {
   const frames = useRef(0);
   useFrame(() => { frames.current += 1; });
@@ -195,12 +227,12 @@ function LowEndGuard({ active, onLow }) {
     let slow = 0;
     let warmup = 2;
     const id = setInterval(() => {
-      const fps = frames.current / 2;
+      const fps = frames.current;
       frames.current = 0;
       if (document.hidden || warmup > 0) { warmup -= 1; return; }
       slow = fps < LOW_FPS ? slow + 1 : 0;
       if (slow >= 3) { clearInterval(id); onLow(); }
-    }, 2000);
+    }, 1000);
     return () => clearInterval(id);
   }, [active, onLow]);
   return null;
@@ -258,14 +290,19 @@ function useNearSections() {
 export default function GlobeCanvas({ quality: initialQuality = 'high', animate = true, running = true, portal = false, onReady }) {
   const [quality, setQuality] = useState(initialQuality);
   const [dpr, setDpr] = useState(QUALITY[initialQuality].dpr);
-  const [lowEnd, setLowEnd] = useState(false);
+  const motionPref = useMotionPreference();
+  const [detectedLow, setLowEnd] = useState(rememberedLite);
+  const lowEnd = motionPref !== 'full' && detectedLow;
   const cfg = QUALITY[quality];
   const palette = useMemo(getPalette, []);
   const light = useMemo(() => LIGHT_DIR.map((v) => v * 6), []);
   const near = useNearSections();
   const still = !animate || lowEnd;
   const moonMaterial = useRef();
-  const onLow = useCallback(() => setLowEnd(true), []);
+  const onLow = useCallback(() => {
+    rememberLite();
+    setLowEnd(true);
+  }, []);
   const [compiled, setCompiled] = useState(false);
   const onCompiled = () => {
     setCompiled(true);
@@ -286,8 +323,8 @@ export default function GlobeCanvas({ quality: initialQuality = 'high', animate 
     >
       {/* Si el equipo va justo: menos resolución y calidad móvil; con fps bajos sostenidos, fotograma estático */}
       <PerformanceMonitor onDecline={() => { setDpr(1); setQuality('low'); }} />
-      <LowEndGuard active={!still && running} onLow={onLow} />
-      <StillInvalidator still={still} />
+      <LowEndGuard active={!still && running && motionPref !== 'full'} onLow={onLow} />
+      <StillInvalidator still={still} lite={lowEnd} />
       <ambientLight intensity={0.35} />
       <directionalLight position={light} intensity={2.4} />
 

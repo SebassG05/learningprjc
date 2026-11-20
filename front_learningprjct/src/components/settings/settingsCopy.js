@@ -3,7 +3,7 @@
 
 export const PAGE_TITLE = 'Ajustes · Evenor-Tech Campus';
 export const PAGE_DESCRIPTION =
-  'Gestiona la contraseña y las preferencias de cookies de tu cuenta en Evenor-Tech Campus.';
+  'Gestiona la contraseña, las animaciones y las preferencias de cookies de tu cuenta en Evenor-Tech Campus.';
 
 export const HEADER = {
   title: 'Ajustes',
@@ -20,6 +20,29 @@ export const SECURITY = {
     description: 'Te enviaremos un enlace por email para crear una nueva.',
     action: 'Restablecer contraseña',
   },
+};
+
+export const MOTION = {
+  title: 'Visualización',
+  row: 'Animaciones',
+  options: [
+    {
+      value: 'auto',
+      label: 'Auto',
+      description: 'Se adaptan a tu equipo: si va justo, el globo 3D del inicio se queda quieto para que todo vaya fluido.',
+    },
+    {
+      value: 'full',
+      label: 'Completas',
+      description: 'Todas las animaciones siempre, aunque tu equipo vaya justo.',
+    },
+    {
+      value: 'reduced',
+      label: 'Reducidas',
+      description: 'Casi sin movimiento: sin animaciones de fondo ni transiciones, y el globo 3D quieto.',
+    },
+  ],
+  systemNote: 'Tu sistema tiene activado «reducir movimiento»: se respeta aunque elijas otra opción.',
 };
 
 export const PRIVACY = {

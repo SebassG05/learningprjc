@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
 import { useId } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, inView } from '../../lib/motion';
 import { IconArrowRight, IconCheck, IconLock, IconSeal } from './cierreIcons';
 import { tituloTema } from './temas/temasProgress';

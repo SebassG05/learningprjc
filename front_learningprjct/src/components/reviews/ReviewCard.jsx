@@ -3,7 +3,8 @@
 // Enlazada a su barra de la huella de voces: al pasar o enfocar la tarjeta se ilumina su barra y al
 // revés (estado `active`). El brillo es una capa aparte que solo cambia de opacidad.
 import { memo } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import StarRating from './StarRating';
 import { formatFullDate, formatRelativeDate, starsLabel } from './reviewFormat';
 import { LATEST, MINE, NO_TEXT } from './reviewsCopy';

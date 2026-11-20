@@ -2,7 +2,8 @@
 // Momento de éxito: tu voz se suma a la huella. Las barras de los demás esperan quietas y la tuya
 // sube con un muelle al final de la fila, más brillante. Cabe en el segundo que la página espera antes
 // de volver al inicio. Solo transform y opacidad; con reduced motion, el estado final con un fundido.
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, spring } from '../../lib/motion';
 
 // Alturas fijas de las voces de fondo (decorativas)

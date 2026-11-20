@@ -5,7 +5,8 @@
 // value: sin re-render por frame, solo transform y opacidad; se pausa fuera de pantalla o con la
 // pestaña oculta y queda quieta con reduced motion. Con `waiting`, línea plana y un cursor.
 import { useEffect, useId, useRef } from 'react';
-import { AnimatePresence, animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
+import { AnimatePresence, animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, spring } from '../../lib/motion';
 
 export const MAX_VOICES = 40;

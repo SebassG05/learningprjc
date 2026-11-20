@@ -3,7 +3,8 @@
 // abierto). El vuelo lo mueve Motion punto a punto sobre el arco, así empieza justo al aparecer el
 // panel. Con reduced motion se muestra el estado final, sin recorrido.
 import { useEffect, useRef } from 'react';
-import { animate, motion, useReducedMotion } from 'framer-motion';
+import { animate, motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { BookOpen, Send } from 'lucide-react';
 import { duration, ease, spring } from '../../lib/motion';
 

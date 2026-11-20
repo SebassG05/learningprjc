@@ -1197,3 +1197,48 @@ html[data-drawer-open] .toast-region {
     animation: none;
   }
 }
+
+/* Animaciones reducidas desde Ajustes (src/lib/motionPreference.js): las mismas reglas que los
+   bloques @media (prefers-reduced-motion: reduce) de este archivo. Si se cambia uno, cambiar el otro */
+:root[data-motion="reduced"] {
+    .contact-pulse {
+        animation: none;
+        opacity: 0.4;
+    }
+
+    .contact-aurora,
+    .reviews-caret,
+    .reviews-ring,
+    .group\/card:hover .reviews-ring,
+    .reviews-aurora,
+    .reviews-twinkle,
+    .reviews-sweep,
+    .about-drift,
+    .about-rise,
+    .about-light,
+    .about-horizon,
+    .about-cue-dot,
+    .tema-indice[open] .tema-indice-body,
+    .lost-twinkle,
+    .lost-adrift {
+        animation: none;
+    }
+
+    .reviews-sweep {
+        opacity: 0;
+    }
+
+    .about-star,
+    .grade-range::-webkit-slider-thumb {
+        transition: none;
+    }
+
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

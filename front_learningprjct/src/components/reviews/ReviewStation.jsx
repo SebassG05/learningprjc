@@ -2,7 +2,8 @@
 // Superficie del panel "Tu turno": cristal translúcido con borde de luz. Responde a la puntuación:
 // el halo crece con cada estrella y un haz en el borde superior se va cargando; con 5 estrellas se
 // tiñe de amanecer. Solo opacidad y transform (scaleX del haz); con reduced motion, sin muelles.
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease, spring } from '../../lib/motion';
 
 export default function ReviewStation({ rating = 0, className = '', children }) {

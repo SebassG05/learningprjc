@@ -6,7 +6,8 @@
 // layout), pinta un resplandor CSS mientras carga y, sin WebGL (o si el lienzo falla), la imagen
 // estática.
 import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { duration, ease } from '../../lib/motion';
 import { getStatus, resetJourney, setStatus, subscribe, useJourneyHero } from './journey/store';
 

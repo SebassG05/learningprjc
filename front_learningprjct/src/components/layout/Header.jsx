@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types -- el proyecto no usa PropTypes */
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import useReducedMotion from '../../hooks/useReducedMotion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { ChevronDown, LogOut, Menu, MessageCircleQuestion, Settings } from 'lucide-react';
